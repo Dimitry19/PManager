@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "instance": {
+    "url": "https://helixteamhub.cloud"
+  },
+  "company": {
+    "short_name": "tjd",
+    "uuid": "cec58b5d-09ee-4dd1-ad3b-1aaf5124342c"
+  },
+  "project": {
+    "short_name": "packagemanager",
+    "uuid": "48ffc342-a659-46de-91fb-857704d59d8c"
+  },
+  "repositories": [
+
+  ]
+}
