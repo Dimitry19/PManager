@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PM" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="PManager" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="cm.packagemanager.pmanager.PackageApplication" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method />
+  </configuration>
+</component>
