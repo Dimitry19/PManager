@@ -3,12 +3,11 @@ package cm.packagemanager.pmanager.user.ent.vo;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.constant.FieldConstants;
-
 import javax.persistence.*;
 
 
 @Entity
-@Table(name="USER")
+@Table(name="USER", schema = "PUBLIC")
 public class UserVO extends CommonVO  {
 
 
@@ -21,9 +20,6 @@ public class UserVO extends CommonVO  {
 	private String phone;
 
 	private Gender gender;
-
-
-	//private AuthUserVO authUsr;
 
 
 	@EmbeddedId
@@ -59,11 +55,7 @@ public class UserVO extends CommonVO  {
 	}
 
 
-	/*@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "ID", nullable = false)
-	public AuthUserVO getAuthUsr() {
-		return authUsr;
-	}*/
+
 
 	@Enumerated(EnumType.STRING)
 	@Column(length = 10)
@@ -91,11 +83,6 @@ public class UserVO extends CommonVO  {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	/*public void setAuthUsr(AuthUserVO authUsr) {
-		this.authUsr = authUsr;
-	}
-	*/
 
 
 	public void setGender(Gender gender) {

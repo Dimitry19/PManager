@@ -47,7 +47,7 @@ public class UserIdVO extends CommonIdVO {
 	@Override
 	public int hashCode() {
 		int result = userId.hashCode();
-		result = 31 * result + token.hashCode();
+		result = 31 * result + userId.hashCode();
 		return result;
 	}
 }

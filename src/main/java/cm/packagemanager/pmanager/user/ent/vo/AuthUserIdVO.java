@@ -23,7 +23,7 @@ public class AuthUserIdVO extends CommonIdVO {
 	}
 
 	@Basic(optional = false)
-	@Column(name = "USER_ID", nullable = false)
+	@Column(name = "USERNAME", nullable = false)
 	public String getUsername() {
 		return username;
 	}
