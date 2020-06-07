@@ -49,6 +49,7 @@
         last_updated timestamp,
         cancelled boolean not null,
         content varchar(255),
+        r_announce_id integer,
         primary key (id, token)
     )
 
@@ -86,3 +87,8 @@ create sequence hibernate_sequence start with 1 increment by 1
        add constraint FK6wp4nfq1f57e13ejryo6w0q8j 
        foreign key (user_user_id, user_token) 
        references public.user
+
+    alter table public.message 
+       add constraint FKmphjqe8onn2djytekd7e9gms9 
+       foreign key (r_announce_id) 
+       references public.announce

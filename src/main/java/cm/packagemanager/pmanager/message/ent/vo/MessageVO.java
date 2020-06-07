@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.user.ent.vo.UserIdVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
+import org.omg.IOP.TAG_ALTERNATE_IIOP_ADDRESS;
 
 import javax.persistence.*;
 
@@ -20,7 +21,7 @@ public class MessageVO extends CommonVO {
 
 	//private UserVO user;
 
-	//private AnnounceVO announce;
+	private AnnounceVO announce;
 
 	private String content;
 
@@ -48,19 +49,20 @@ public class MessageVO extends CommonVO {
 		this.content = content;
 	}
 
-
-	/*@MapsId
+	@Access(AccessType.PROPERTY)
 	@ManyToOne
+	@JoinColumn(name="R_ANNOUNCE_ID", referencedColumnName = "ID")
 	public AnnounceVO getAnnounce() {
 		return announce;
 	}
 
 	public void setAnnounce(AnnounceVO announce) {
 		this.announce = announce;
-	}*/
+	}
 
-	/*@ManyToOne
-	@JoinColumn(name="USER_ID")
+	/*@Access(AccessType.PROPERTY)
+	@ManyToOne
+	@JoinColumn(name="R_USER", referencedColumnName = "R_USER_ID")
 	public UserVO getUser(){
 		return user;
 	}
@@ -69,8 +71,8 @@ public class MessageVO extends CommonVO {
 
 	public void setUser(UserVO user) {
 		this.user = user;
-	}*/
-
+	}
+*/
 	@Basic(optional = false)
 	@Column(name="CANCELLED")
 	public boolean isCancelled() {

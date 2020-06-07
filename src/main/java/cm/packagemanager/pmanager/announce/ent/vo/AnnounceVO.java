@@ -4,12 +4,18 @@ import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
-import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
+import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+import cm.packagemanager.pmanager.user.ent.vo.UserIdVO;
+import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -40,7 +46,10 @@ public class AnnounceVO extends CommonVO {
 
 	private boolean cancelled;
 
-	//private Set<MessageVO> messages=new HashSet<>();
+	private Set<MessageVO> messages=new HashSet<>();
+
+
+	private UserVO user;
 
 
 	private AnnounceIdVO announceId;
@@ -161,14 +170,32 @@ public class AnnounceVO extends CommonVO {
 		this.announceId = announceId;
 	}
 
-	/*@OneToMany(mappedBy = "announce")
+
+	@Access(AccessType.PROPERTY)
+	@OneToMany(targetEntity=MessageVO.class, mappedBy="announce", fetch=FetchType.EAGER)
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
 
 	public void setMessages(Set<MessageVO> messages) {
 		this.messages = messages;
-	}*/
+	}
+
+
+	/*@Access(AccessType.PROPERTY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumns({
+			@JoinColumn(name = "TOKEN", insertable=false, updatable=false),
+			@JoinColumn(name = "USER_ID",insertable=false, updatable=false)
+	})
+	public UserVO getUser() {
+		return user;
+	}
+
+	public void setUser(UserVO user) {
+		this.user = user;
+	}
+	*/
 
 	@Basic(optional = false)
 	@Column(name="CANCELLED")
