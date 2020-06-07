@@ -21,6 +21,7 @@ public class CommonVO implements Auditable {
 
 	private Timestamp lastUpdated;
 
+
 	@Override
 	public Timestamp getDateCreated() {
 		return  dateCreated;

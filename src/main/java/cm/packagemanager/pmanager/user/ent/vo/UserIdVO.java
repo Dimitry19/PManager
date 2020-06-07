@@ -2,29 +2,27 @@ package cm.packagemanager.pmanager.user.ent.vo;
 
 
 import cm.packagemanager.pmanager.common.ent.vo.CommonIdVO;
-import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import java.io.Serializable;
+import cm.packagemanager.pmanager.constant.FieldConstants;
+import javax.persistence.*;
 
 
 @Embeddable
+@Access(AccessType.PROPERTY)
 public class UserIdVO extends CommonIdVO {
 
 	private String userId;
 
 	public UserIdVO() {
-		super();
+
 	}
 
-	public UserIdVO(String userId) {
+	public UserIdVO(String userId, String token) {
 		this.userId=userId;
+		this.token=token;
 	}
 
 	@Basic(optional = false)
-	@Column(name = "USER_ID", nullable = false)
+	@Column(name = "USER_ID", nullable = false, length = FieldConstants.USER_ID)
 	public String getUserId() {
 		return userId;
 	}

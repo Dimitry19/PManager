@@ -32,6 +32,8 @@ public final class FieldConstants {
 
 	public static final int AUTH_USER_LEN = 15;
 
+	public static final int USER_ID=15;
+	
 	public static final boolean MENU_STD_NULLABLE=true;
 
 	public static final int CUSTOMER_SERIAL_CODE_LEN = 17;
@@ -45,6 +47,7 @@ public final class FieldConstants {
 
 
 	public static final int ENV_ID_LEN = 5;
+	public static final int AIR_ID_LEN = 5;
 	public static final int ART_COD_LEN = 45;
 	public static final int DESC_ATV_LEN = 35;
 	public static final int STATUS_STD_LEN =1;

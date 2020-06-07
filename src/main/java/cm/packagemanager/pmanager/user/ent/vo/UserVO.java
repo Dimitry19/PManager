@@ -3,10 +3,14 @@ package cm.packagemanager.pmanager.user.ent.vo;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.constant.FieldConstants;
+import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
-@Entity
+@Entity(name = "UserVO")
 @Table(name="USER", schema = "PUBLIC")
 public class UserVO extends CommonVO  {
 
@@ -21,6 +25,10 @@ public class UserVO extends CommonVO  {
 
 	private Gender gender;
 
+	private boolean cancelled;
+
+	//private List<MessageVO>  messages =new ArrayList<>();
+
 
 	@EmbeddedId
 	private UserIdVO id;
@@ -31,6 +39,7 @@ public class UserVO extends CommonVO  {
 
 	@Basic(optional = false)
 	@Column(name="FIRST_NAME")
+
 	public String getFirstName() {
 
 		return firstName;
@@ -55,14 +64,30 @@ public class UserVO extends CommonVO  {
 	}
 
 
-
-
 	@Enumerated(EnumType.STRING)
 	@Column(length = 10)
 	public Gender getGender(){
 		return gender;
 	}
 
+
+
+	//@OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+	//@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER,targetEntity = MessageVO.class,mappedBy = "user")
+	//@JoinTable(name = "MESSAGE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ID") })
+
+	/*@Column(name = "ID")
+	@ElementCollection(targetClass=MessageVO.class)
+	@Access(AccessType.PROPERTY)
+	public List<MessageVO> getMessages() {
+		return messages;
+	}
+
+
+
+	public void setMessages(List<MessageVO> messages) {
+		this.messages = messages;
+	}*/
 
 	public void setId(UserIdVO id) {
 		this.id = id;
@@ -89,7 +114,15 @@ public class UserVO extends CommonVO  {
 		this.gender = gender;
 	}
 
+	@Basic(optional = false)
+	@Column(name="CANCELLED")
+	public boolean isCancelled() {
+		return cancelled;
+	}
 
+	public void setCancelled(boolean cancelled) {
+		this.cancelled = cancelled;
+	}
 
 	@Override
 	public String toString() {

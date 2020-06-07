@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.user.ent.vo;
 
 
 import cm.packagemanager.pmanager.common.ent.vo.CommonIdVO;
+import cm.packagemanager.pmanager.constant.FieldConstants;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,17 +19,19 @@ public class AuthUserIdVO extends CommonIdVO {
 
 	}
 
-	public AuthUserIdVO(String userId) {
+	public AuthUserIdVO(String username, String token) {
+
 		this.username=username;
+		this.token=token;
 	}
 
 	@Basic(optional = false)
-	@Column(name = "USERNAME", nullable = false)
+	@Column(name = "USERNAME", nullable = false,length = FieldConstants.AUTH_USER_LEN)
 	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String userId) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 

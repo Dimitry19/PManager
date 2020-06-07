@@ -5,7 +5,7 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 
 
-@Entity
+@Entity(name ="AuthUserVO")
 @Table(name = "AUTH_USER", schema = "PUBLIC")
 public class AuthUserVO extends CommonVO{
 
@@ -17,6 +17,10 @@ public class AuthUserVO extends CommonVO{
 
 	private UserVO user;
 
+
+	private boolean cancelled;
+
+
 	@NaturalId
 	private AuthUserIdVO authUserId;
 
@@ -25,7 +29,7 @@ public class AuthUserVO extends CommonVO{
 
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="ID")
 	public int getId() {
 		return id;
@@ -74,5 +78,16 @@ public class AuthUserVO extends CommonVO{
 
 	public void setAuthUserId(AuthUserIdVO authUserId) {
 		this.authUserId = authUserId;
+	}
+
+
+	@Basic(optional = false)
+	@Column(name="CANCELLED")
+	public boolean isCancelled() {
+		return cancelled;
+	}
+
+	public void setCancelled(boolean cancelled) {
+		this.cancelled = cancelled;
 	}
 }
