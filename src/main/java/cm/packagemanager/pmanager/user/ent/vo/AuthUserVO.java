@@ -13,6 +13,10 @@ public class AuthUserVO extends CommonVO{
 
 	private int id;
 
+	private String facebookId;
+
+	private String googleId;
+
 	private String password;
 
 	private UserVO user;
@@ -89,5 +93,26 @@ public class AuthUserVO extends CommonVO{
 
 	public void setCancelled(boolean cancelled) {
 		this.cancelled = cancelled;
+	}
+
+
+	@Basic(optional = false)
+	@Column(name="FACEBOOK_ID")
+	public String getFacebookId() {
+		return facebookId;
+	}
+
+	public void setFacebookId(String facebookId) {
+		this.facebookId = facebookId;
+	}
+
+	@Basic(optional = false)
+	@Column(name="GOOGLE_ID")
+	public String getGoogleId() {
+		return googleId;
+	}
+
+	public void setGoogleId(String googleId) {
+		this.googleId = googleId;
 	}
 }

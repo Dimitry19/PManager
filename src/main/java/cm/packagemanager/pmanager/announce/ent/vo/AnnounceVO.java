@@ -4,12 +4,8 @@ import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
-import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
-import cm.packagemanager.pmanager.user.ent.vo.UserIdVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -182,11 +178,11 @@ public class AnnounceVO extends CommonVO {
 	}
 
 
-	/*@Access(AccessType.PROPERTY)
+	@Access(AccessType.PROPERTY)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumns({
-			@JoinColumn(name = "TOKEN", insertable=false, updatable=false),
-			@JoinColumn(name = "USER_ID",insertable=false, updatable=false)
+			@JoinColumn(name="R_USER_ID", referencedColumnName = "USER_ID",insertable=false ,updatable=false),
+			@JoinColumn(name="TOKEN", referencedColumnName = "TOKEN",insertable=false ,updatable=false)
 	})
 	public UserVO getUser() {
 		return user;
@@ -195,7 +191,7 @@ public class AnnounceVO extends CommonVO {
 	public void setUser(UserVO user) {
 		this.user = user;
 	}
-	*/
+
 
 	@Basic(optional = false)
 	@Column(name="CANCELLED")
