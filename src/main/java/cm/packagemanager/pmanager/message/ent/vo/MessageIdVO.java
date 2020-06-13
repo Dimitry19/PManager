@@ -7,6 +7,7 @@ import javax.persistence.*;
  *
  */
 @Embeddable
+@Access(AccessType.PROPERTY)
 public class MessageIdVO extends CommonIdVO {
 
 
@@ -21,8 +22,8 @@ public class MessageIdVO extends CommonIdVO {
 	}
 
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="ID")
 	public int getId() {
 		return id;

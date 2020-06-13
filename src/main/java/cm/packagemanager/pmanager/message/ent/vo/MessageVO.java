@@ -19,7 +19,7 @@ public class MessageVO extends CommonVO {
 
 	private static final long serialVersionUID = 1L;
 
-	//private UserVO user;
+	private UserVO user;
 
 	private AnnounceVO announce;
 
@@ -60,9 +60,12 @@ public class MessageVO extends CommonVO {
 		this.announce = announce;
 	}
 
-	/*@Access(AccessType.PROPERTY)
-	@ManyToOne
-	@JoinColumn(name="R_USER", referencedColumnName = "R_USER_ID")
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumns({
+			@JoinColumn(name="R_USER_ID", referencedColumnName = "USER_ID",insertable=false ,updatable=false),
+			@JoinColumn(name="TOKEN", referencedColumnName = "TOKEN",insertable=false ,updatable=false)
+	})
 	public UserVO getUser(){
 		return user;
 	}
@@ -72,7 +75,7 @@ public class MessageVO extends CommonVO {
 	public void setUser(UserVO user) {
 		this.user = user;
 	}
-*/
+
 	@Basic(optional = false)
 	@Column(name="CANCELLED")
 	public boolean isCancelled() {

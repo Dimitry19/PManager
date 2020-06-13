@@ -29,9 +29,12 @@ public class UserVO extends CommonVO  {
 
 	private boolean cancelled;
 
-	//private Set<MessageVO> messages=new HashSet<>();
+	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", fetch=FetchType.EAGER)
+	private Set<MessageVO> messages=new HashSet<>();
 
-	//private Set<AnnounceVO> announces=new HashSet<>();
+
+	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", fetch=FetchType.EAGER)
+	private Set<AnnounceVO> announces=new HashSet<>();
 
 
 	@EmbeddedId
@@ -78,8 +81,6 @@ public class UserVO extends CommonVO  {
 
 
 
-	/*@Access(AccessType.PROPERTY)
-	@OneToMany(targetEntity=MessageVO.class, mappedBy="user", fetch=FetchType.EAGER)
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
@@ -88,14 +89,6 @@ public class UserVO extends CommonVO  {
 		this.messages = messages;
 	}
 
-
-	@Access(AccessType.PROPERTY)
-	@OneToMany(targetEntity=AnnounceVO.class, mappedBy="user", fetch=FetchType.EAGER)
-
-	//@OneToMany(cascade=CascadeType.ALL)
-	//@JoinTable(name="ANNOUNCE",joinColumns=@JoinColumn(name="R_USER_ID"),	inverseJoinColumns=@JoinColumn(name="R_USER"))
-
-	//@OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<AnnounceVO> getAnnounces() {
 		return announces;
 	}
@@ -103,7 +96,7 @@ public class UserVO extends CommonVO  {
 	public void setAnnounces(Set<AnnounceVO> announces) {
 		this.announces = announces;
 	}
-*/
+
 
 	public void setId(UserIdVO id) {
 		this.id = id;
