@@ -7,6 +7,7 @@ import cm.packagemanager.pmanager.common.listener.audit.TableListener;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -14,7 +15,7 @@ import java.sql.Timestamp;
  */
 @MappedSuperclass
 @EntityListeners(TableListener.class)
-public class CommonVO implements Auditable {
+public class CommonVO implements Auditable, Serializable {
 
 
 	private Timestamp dateCreated;

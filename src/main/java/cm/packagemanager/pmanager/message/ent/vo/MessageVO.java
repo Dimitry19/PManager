@@ -45,36 +45,23 @@ public class MessageVO extends CommonVO {
 		return content;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+
 
 	@Access(AccessType.PROPERTY)
 	@ManyToOne
-	@JoinColumn(name="R_ANNOUNCE_ID", referencedColumnName = "ID")
+	@JoinColumn(name="R_ANNOUNCE", referencedColumnName = "ID")
 	public AnnounceVO getAnnounce() {
 		return announce;
 	}
 
-	public void setAnnounce(AnnounceVO announce) {
-		this.announce = announce;
-	}
 
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumns({
-			@JoinColumn(name="R_USER_ID", referencedColumnName = "USER_ID",insertable=false ,updatable=false),
-			@JoinColumn(name="TOKEN", referencedColumnName = "TOKEN",insertable=false ,updatable=false)
-	})
+	@JoinColumn(name="R_USER", referencedColumnName = "USERNAME",insertable=false ,updatable=false)
 	public UserVO getUser(){
 		return user;
 	}
 
-
-
-	public void setUser(UserVO user) {
-		this.user = user;
-	}
 
 	@Basic(optional = false)
 	@Column(name="CANCELLED")
@@ -84,6 +71,18 @@ public class MessageVO extends CommonVO {
 
 	public void setCancelled(boolean cancelled) {
 		this.cancelled = cancelled;
+	}
+
+	public void setUser(UserVO user) {
+		this.user = user;
+	}
+
+	public void setAnnounce(AnnounceVO announce) {
+		this.announce = announce;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }

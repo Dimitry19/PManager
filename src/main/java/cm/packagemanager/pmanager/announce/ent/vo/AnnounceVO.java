@@ -20,7 +20,7 @@ public class AnnounceVO extends CommonVO {
 
 
 
-	private int id;
+	private Long id;
 
 	private String departure;
 
@@ -53,11 +53,11 @@ public class AnnounceVO extends CommonVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -180,10 +180,7 @@ public class AnnounceVO extends CommonVO {
 
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumns({
-			@JoinColumn(name="R_USER_ID", referencedColumnName = "USER_ID",insertable=false ,updatable=false),
-			@JoinColumn(name="TOKEN", referencedColumnName = "TOKEN",insertable=false ,updatable=false)
-	})
+	@JoinColumn(name="R_USER", referencedColumnName = "USERNAME",insertable=false ,updatable=false)
 	public UserVO getUser() {
 		return user;
 	}
@@ -201,5 +198,33 @@ public class AnnounceVO extends CommonVO {
 
 	public void setCancelled(boolean cancelled) {
 		this.cancelled = cancelled;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id.intValue();
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AnnounceVO other = (AnnounceVO) obj;
+		if (id != other.id)
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
 	}
 }

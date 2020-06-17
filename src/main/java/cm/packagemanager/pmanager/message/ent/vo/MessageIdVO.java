@@ -11,11 +11,11 @@ import javax.persistence.*;
 public class MessageIdVO extends CommonIdVO {
 
 
-	private int  id;
+	private Long  id;
 
 	public MessageIdVO(){}
 
-	public MessageIdVO(int id, String token) {
+	public MessageIdVO(Long id, String token) {
 
 		this.id=id;
 		this.token=token;
@@ -23,14 +23,14 @@ public class MessageIdVO extends CommonIdVO {
 
 
 	//@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")
-	public int getId() {
+	public Long getId() {
 		return id;
 
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -49,8 +49,8 @@ public class MessageIdVO extends CommonIdVO {
 
 	@Override
 	public int hashCode() {
-		int result = id+id;
+		Long result = id+id;
 		result = 31 * result + token.hashCode();
-		return result;
+		return result.intValue();
 	}
 }

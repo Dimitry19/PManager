@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager;
 
-import cm.packagemanager.pmanager.user.ent.bo.AuthUserBO;
+import cm.packagemanager.pmanager.user.ent.bo.RoleBO;
 import cm.packagemanager.pmanager.user.ent.bo.UserBO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class PackageApplicationDemo {
 		UserBO userBO;
 
 		@Autowired
-		AuthUserBO authUserBO;
+		RoleBO roleBO;
 
 		@Override
 		public void run(String... string) throws Exception {

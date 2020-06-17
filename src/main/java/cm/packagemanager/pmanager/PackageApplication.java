@@ -1,41 +1,16 @@
 package cm.packagemanager.pmanager;
 
-import cm.packagemanager.pmanager.springboot.configuration.CustomWebSecurityConfigurerAdapter;
-import cm.packagemanager.pmanager.user.ent.bo.AuthUserBO;
-import cm.packagemanager.pmanager.user.ent.bo.UserBO;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.core.env.Environment;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-import javax.sql.DataSource;
-import java.util.Properties;
-
-
-
-
 
 
 //@ComponentScan
 //@Configuration
 //@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class,DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 //@EnableJpaRepositories(basePackages = "cm.packagemanager.pmanager")
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cm.packagemanager.pmanager")
 public class PackageApplication {
 
 	private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);
