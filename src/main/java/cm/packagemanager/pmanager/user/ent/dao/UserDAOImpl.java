@@ -3,7 +3,10 @@ package cm.packagemanager.pmanager.user.ent.dao;
 import cm.packagemanager.pmanager.PackageApplication;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import org.hibernate.Filter;
+import org.hibernate.IdentifierLoadAccess;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -11,9 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -31,6 +33,9 @@ public  class UserDAOImpl implements UserDAO{
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@Autowired
+	HibernateTransactionManager tx;
+
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public void setSessionFactory(SessionFactory sf) {
@@ -40,6 +45,7 @@ public  class UserDAOImpl implements UserDAO{
 
 
 	public UserDAOImpl() {
+
 	}
 
 	@Override
@@ -85,13 +91,11 @@ public  class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public void deleteUser(Long id) {
+	public boolean deleteUser(Long id) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		UserVO p = (UserVO) session.load(UserVO.class, id);
-		if (null != p) {
-			session.delete(p);
-		}
+		UserVO user=updateDelete(id);
+
+		return  (user!=null) ? user.isCancelled() : false;
 
 	}
 
@@ -101,6 +105,24 @@ public  class UserDAOImpl implements UserDAO{
 		if(user!=null){
 			session.save(user);
 			return user;
+		}
+		return null;
+	}
+
+	private UserVO updateDelete(Long id) throws BusinessResourceException {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);//.setParameter("canc",false);
+
+		Query query=session.getNamedQuery(UserVO.FINDBYID);
+		query.setParameter("id", id);
+		List<UserVO> users=query.getResultList();
+
+		UserVO user=(!users.isEmpty())?users.get(0):null;
+		if(user!=null){
+			user.setCancelled(true);
+			session.save(user);
+			//return (UserVO) session.get(UserVO.class, id);
 		}
 		return null;
 	}
@@ -156,5 +178,26 @@ public  class UserDAOImpl implements UserDAO{
 		Session session = this.sessionFactory.getCurrentSession();
 		return session.get(UserVO.class, username);
 	}
+
+
+	/*@Override
+	public boolean deleteUser(Long id) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+
+		UserVO user=updateDelete(id);
+
+		if(user!=null){
+			user = (UserVO) session.load(UserVO.class, id);
+			if (user!= null) {
+				session.delete(user);
+				return true;
+			}
+		}
+		else {
+			return false;
+		}
+		return false;
+	}*/
 
 }
