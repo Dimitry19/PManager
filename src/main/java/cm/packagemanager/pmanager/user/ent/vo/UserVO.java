@@ -3,8 +3,11 @@ package cm.packagemanager.pmanager.user.ent.vo;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
+import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.NaturalId;
 
 
@@ -21,6 +24,10 @@ import java.util.Set;
 		@NamedQuery(name = UserVO.ALL, query = "select u from UserVO u   order by firstName"),
 		@NamedQuery(name = UserVO.FINDBYID, query = "select u from UserVO u where id  =:id"),
 		@NamedQuery(name = UserVO.USERNAME, query = "select u from UserVO u where username like :username "),
+})
+@Filters({
+		@Filter(name = FilterConstants.CANCELLED),
+		@Filter(name=FilterConstants.ACTIVE_MBR)
 })
 
 public class UserVO extends CommonVO  {

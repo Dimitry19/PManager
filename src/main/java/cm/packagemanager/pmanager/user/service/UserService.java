@@ -1,4 +1,4 @@
-package cm.packagemanager.pmanager.user.ent.service;
+package cm.packagemanager.pmanager.user.service;
 
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
@@ -45,7 +45,7 @@ public class UserService{
 	}
 
 	@Transactional
-	public void deleteUser(Long id) {
-		userDAO.deleteUser(id);
+	public boolean deleteUser(Long id) {
+		return userDAO.deleteUser(id);
 	}
 }
