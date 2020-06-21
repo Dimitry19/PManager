@@ -15,7 +15,21 @@ import java.util.Set;
 
 @Entity(name = "UserVO")
 @Table(name="USER", schema = "PUBLIC")
+@NamedQueries({
+		@NamedQuery(name = UserVO.Q_AC_ITEM, query = "select u from UserVO u where (upper(lastName) like :searchFilter) or(upper(firstName) like :" +
+				"searchFilter ) or(username like :searchFilter) or( email like :searchFilter)  order by firstName"),
+		@NamedQuery(name = UserVO.ALL, query = "select u from UserVO u   order by firstName"),
+		@NamedQuery(name = UserVO.FINDBYID, query = "select u from UserVO u where id  =:id"),
+		@NamedQuery(name = UserVO.USERNAME, query = "select u from UserVO u where username like :username "),
+})
+
 public class UserVO extends CommonVO  {
+
+
+	public static final String FINDBYID="cm.packagemanager.pmanager.user.ent.vo.UserVO.findById";
+	public static final String Q_AC_ITEM = "cm.packagemanager.pmanager.user.ent.vo.UserVO.QAutocompleteItem";
+	public static final String ALL = "cm.packagemanager.pmanager.user.ent.vo.UserVO.All";
+	public static final String USERNAME="cm.packagemanager.pmanager.user.ent.vo.UserVO.findLikeId";
 
 
 	private Long id;

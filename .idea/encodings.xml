@@ -2,6 +2,13 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/CustomExceptionHandler.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/ErrorResponse.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/MissingHeaderInfoException.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/RecordNotFoundException.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/servlet" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/servlet" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/EmployeeController.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/log4j2.xml" charset="windows-1252" />
   </component>
 </project>

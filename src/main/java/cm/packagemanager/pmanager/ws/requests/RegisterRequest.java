@@ -1,49 +1,42 @@
 package cm.packagemanager.pmanager.ws.requests;
 
 public class RegisterRequest extends LoginRequest{
-	private String email;
-	private String provider;
-	private String password;
-	private String socialId;
-	private String username;
 
-	public String getEmail() {
-		return email;
+	private String userName;
+	private String firstName;
+	private String lastName;
+	private String phone;
+
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
-	public String getProvider() {
-		return provider;
+
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setProvider(String provider) {
-		this.provider = provider;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getSocialId() {
-		return socialId;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setSocialId(String socialId) {
-		this.socialId = socialId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 }

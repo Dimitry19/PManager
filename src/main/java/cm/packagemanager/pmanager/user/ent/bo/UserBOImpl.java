@@ -1,8 +1,9 @@
 package cm.packagemanager.pmanager.user.ent.bo;
 
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
-import cm.packagemanager.pmanager.user.ent.rep.RoleRP;
-import cm.packagemanager.pmanager.user.ent.rep.UserRP;
+import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.user.ent.dao.RoleDAO;
+import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.apache.commons.collections4.IteratorUtils;
@@ -12,12 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,53 +26,38 @@ import java.util.stream.Stream;
 
 
 
-@Service
-public class UserBOImpl implements UserBO {
+public class UserBOImpl {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserBOImpl.class);
-	private UserRP userRepository;
-	private RoleRP roleRepository;
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+/*
+
+	@Autowired
+	private UserDAO userDAO;
+
+
+	@Autowired
+	private RoleDAO roleDAO;
+
 
 	public UserBOImpl() {
 		super();
 	}
 
-	@Autowired
-	public UserBOImpl(UserRP userRepository, RoleRP roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-		super();
-		this.userRepository = userRepository;
-		this.roleRepository = roleRepository;
-		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-	}
 
-	@Override
-	public Optional<UserVO> findByUsername(String username) throws BusinessResourceException {
 
-		Optional<UserVO> userFound = userRepository.findByUsername(username);
-		if (Boolean.FALSE.equals(userFound.isPresent())) {
-			throw new BusinessResourceException("User Not Found", "L'utilisateur avec ce login n'existe pas :" + username);
-		}
-		return userFound;
-	}
-
-	@Override
 	public Collection<UserVO> getAllUsers() {
-		List<UserVO> users=userRepository.findAll();
+		List<UserVO> users=userDAO.getAllUsers();
 		return IteratorUtils.toList(users.iterator());
 	}
 
-	@Override
-	public UserVO findUserById(Long id) throws  BusinessResourceException{
 
-		Optional<UserVO> userFound = userRepository.findById(id);
-		if (Boolean.FALSE.equals(userFound.isPresent())){
-			throw new BusinessResourceException("User Not Found", "Aucun utilisateur avec l'identifiant :" + id);
-		}
-		return userFound.get();
+	public UserVO findUserById(Long id) throws BusinessResourceException {
+		return  userDAO.getUser(id.intValue());
+
 	}
 
-	@Override
+
+
 	@Transactional(readOnly=false)
 	public UserVO saveOrUpdateUser(UserVO user) throws BusinessResourceException {
 		try{
@@ -91,8 +75,8 @@ public class UserBOImpl implements UserBO {
 				}
 				updateUserRole(user);//On extrait le rôle en cas de mise à jour
 			}
-			UserVO result = userRepository.save(user);
-			return  result;
+			UserVO usr = userDAO.save(user);
+			return  usr;
 		} catch(DataIntegrityViolationException ex){
 			logger.error("Utilisateur non existant", ex);
 			throw new BusinessResourceException("DuplicateValueError", "Un utilisateur existe déjà avec le compte : "+user.getUsername(), HttpStatus.CONFLICT);
@@ -105,11 +89,11 @@ public class UserBOImpl implements UserBO {
 		}
 	}
 
-	@Override
+
 	@Transactional(readOnly=false)
 	public void deleteUser(Long id) throws BusinessResourceException {
 		try{
-			userRepository.deleteById(id);
+			//userDAO.deleteById(id);
 		}catch(EmptyResultDataAccessException ex){
 			logger.error(String.format("Aucun utilisateur n'existe avec l'identifiant: "+id, ex));
 			throw new BusinessResourceException("DeleteUserError", "Erreur de suppression de l'utilisateur avec l'identifiant: "+id, HttpStatus.NOT_FOUND);
@@ -118,23 +102,7 @@ public class UserBOImpl implements UserBO {
 		}
 	}
 
-	@Override
-	public Optional<UserVO> findByUsernameAndPassword(String username, String password) throws BusinessResourceException{
-		try {
-			Optional<UserVO> userFound = this.findByUsername(username);
-			if(bCryptPasswordEncoder.matches(password, userFound.get().getPassword())) {
-				return userFound;
-			} else {
-				throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
-			}
-		} catch (BusinessResourceException ex) {
-			logger.error("Login ou mot de passe incorrect", ex);
-			throw new BusinessResourceException("UserNotFound", "Login ou mot de passe incorrect", HttpStatus.NOT_FOUND);
-		}catch (Exception ex) {
-			logger.error("Une erreur technique est survenue", ex);
-			throw new BusinessResourceException("TechnicalError", "Une erreur technique est survenue", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+
 
 	private void addUserRole(UserVO user) {
 		Set<RoleVO> roles= new HashSet<>();
@@ -142,13 +110,15 @@ public class UserBOImpl implements UserBO {
 		roles.add(roleUser);
 		user.setActive(0);
 
-		Set<RoleVO> roleFromDB = extractRole_Java8(roles, roleRepository.getAllRolesStream());
+		//Set<RoleVO> roleFromDB = extractRole_Java8(roles, roleDAO.getAllRolesStream());
+		Set<RoleVO> roleFromDB = extractRole_Java8(roles, null);
 		user.setRoles(roleFromDB);
 	}
 
 	private void updateUserRole(UserVO user) {
 
-		Set<RoleVO> roleFromDB = extractRole_Java8(user.getRoles(), roleRepository.getAllRolesStream());
+		//Set<RoleVO> roleFromDB = extractRole_Java8(user.getRoles(), roleDAO.getAllRolesStream());
+		Set<RoleVO> roleFromDB = extractRole_Java8(user.getRoles(), null);
 		user.setRoles(roleFromDB);
 	}
 
@@ -185,7 +155,6 @@ public class UserBOImpl implements UserBO {
 		return rolesToAdd;
 	}
 
-
-
+*/
 
 }

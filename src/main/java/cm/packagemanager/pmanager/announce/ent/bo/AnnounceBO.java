@@ -5,6 +5,6 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface AnnounceBO extends JpaRepository<AnnounceVO, AnnounceIdVO> {
+
+public interface AnnounceBO  {
 }

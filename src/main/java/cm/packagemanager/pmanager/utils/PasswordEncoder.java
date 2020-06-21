@@ -23,10 +23,6 @@ public class PasswordEncoder {
 		System.out.println("Le mot de passe est bien haché : "+bCryptPasswordEncoder.matches(password, encodedPassword));
 		System.out.println("Decrypt : "+toDecrypt);
 
-
-
-
-
 	}
 
 }
