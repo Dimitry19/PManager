@@ -4,6 +4,7 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.LoginRequest;
+import cm.packagemanager.pmanager.ws.requests.MailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,16 @@ public class UserService{
 	@Transactional
 	public void updateUser(UserVO user) {
 		userDAO.updateUser(user);
+	}
 
+	@Transactional
+	public void managePassword(UserVO user) {
+		userDAO.managePassword(user);
+	}
+
+	@Transactional
+	public boolean sendMail(MailRequest mr) {
+		return userDAO.sendMail(mr);
 	}
 
 	@Transactional

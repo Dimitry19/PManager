@@ -4,6 +4,7 @@ package cm.packagemanager.pmanager.user.ent.dao;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import cm.packagemanager.pmanager.ws.requests.MailRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.core.userdetails.User;
@@ -36,9 +37,15 @@ public interface UserDAO {
 	public UserVO register(UserVO user)  throws BusinessResourceException;
 
 	public void updateUser(UserVO user)  throws BusinessResourceException;
+	
+	
+	public void managePassword(UserVO user)  throws BusinessResourceException;
 
 	public boolean deleteUser(Long id)  throws BusinessResourceException;
 
 	public UserVO save(UserVO user)  throws BusinessResourceException;
+
+
+	public boolean sendMail(MailRequest mr)  throws BusinessResourceException;
 
 }

@@ -24,6 +24,7 @@ import java.util.Set;
 		@NamedQuery(name = UserVO.ALL, query = "select u from UserVO u   order by firstName"),
 		@NamedQuery(name = UserVO.FINDBYID, query = "select u from UserVO u where id  =:id"),
 		@NamedQuery(name = UserVO.USERNAME, query = "select u from UserVO u where username like :username "),
+		@NamedQuery(name = UserVO.EMAIL, query = "select u from UserVO u where  u.email =:email "),
 })
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED),
@@ -37,6 +38,7 @@ public class UserVO extends CommonVO  {
 	public static final String Q_AC_ITEM = "cm.packagemanager.pmanager.user.ent.vo.UserVO.QAutocompleteItem";
 	public static final String ALL = "cm.packagemanager.pmanager.user.ent.vo.UserVO.All";
 	public static final String USERNAME="cm.packagemanager.pmanager.user.ent.vo.UserVO.findLikeId";
+	public static final String EMAIL="cm.packagemanager.pmanager.user.ent.vo.UserVO.findByEmail";
 
 
 	private Long id;

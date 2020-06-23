@@ -4,8 +4,9 @@ import cm.packagemanager.pmanager.common.exception.ResponseException;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.service.UserService;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.controller.CommonControler;
 import cm.packagemanager.pmanager.ws.requests.LoginRequest;
+import cm.packagemanager.pmanager.ws.requests.MailRequest;
+import cm.packagemanager.pmanager.ws.requests.PasswordRequest;
 import cm.packagemanager.pmanager.ws.requests.RegisterRequest;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
@@ -16,16 +17,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sun.jvm.hotspot.debugger.AddressException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
 @RestController
 @RequestMapping("/ws/user/*")
-public class UserController extends CommonControler {
+public class UserController {
 
 	protected final Log logger = LogFactory.getLog(UserController.class);
 
@@ -120,6 +124,8 @@ public class UserController extends CommonControler {
 		return userService.getUser(id);
 	}
 
+
+
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	String  add(HttpServletResponse response, HttpServletRequest request,
@@ -172,18 +178,19 @@ public class UserController extends CommonControler {
 
 	@RequestMapping(value = "/password", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	String  password(HttpServletResponse response, HttpServletRequest request, @RequestBody RegisterRequest registerRequest){
+	String  password(HttpServletResponse response, HttpServletRequest request, @RequestBody PasswordRequest passwordRequest){
 
-		if(registerRequest!=null){
+		if(passwordRequest!=null){
 
 			UserVO user = new UserVO();
-			user.setEmail(registerRequest.getEmail());
+			user.setEmail(passwordRequest.getEmail());
 			userService.updateUser(user);
 		}
 
 
 		return redirect;
 	}
+
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 	public String update(@PathVariable("id") Long id,Model model) {
@@ -205,10 +212,10 @@ public class UserController extends CommonControler {
 			logger.info("delete request out");
 			if (id!=null){
 				if(userService.deleteUser(id)){
-					pmResponse.setRetCode(WebServiceResponseCode.DELETE_USER_CODE_OK);
-					pmResponse.setRetDescription("OK");
+					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+					pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_USER_LABEL);
 				}else{
-					pmResponse.setRetCode(WebServiceResponseCode.ERROR_DELETE_USER_CODE);
+					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_USER_CODE_LABEL);
 				}
 
@@ -217,6 +224,37 @@ public class UserController extends CommonControler {
 		catch (Exception e)
 		{
 			logger.error("Errore eseguendo login: ", e);
+			response.setStatus(400);
+			response.getWriter().write(e.getMessage());
+		}
+
+		return pmResponse;
+	}
+
+	@RequestMapping(value = "/mail")
+	public Response sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailRequest mailRequest) throws AddressException, MessagingException, IOException {
+
+
+		logger.info("mail request in");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		Response pmResponse = new Response();
+
+		try
+		{
+			if (mailRequest!=null){
+				if(userService.sendMail(mailRequest)){
+					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+					pmResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
+				}else{
+					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_MAIL_SENT_LABEL);
+				}
+
+			}
+		}
+		catch (Exception e)
+		{
+			logger.error("Errore eseguendo send mail: ", e);
 			response.setStatus(400);
 			response.getWriter().write(e.getMessage());
 		}
