@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.ws.requests;
 
 public class LoginRequest {
+
 	private String email;
 	private String provider;
 	private String password;

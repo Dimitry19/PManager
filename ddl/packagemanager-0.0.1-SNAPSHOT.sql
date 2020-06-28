@@ -72,6 +72,7 @@
         password varchar(255) not null,
         phone varchar(35),
         username varchar(15) not null,
+        confirm_token VARCHAR(255),
         primary key (id)
     )
 

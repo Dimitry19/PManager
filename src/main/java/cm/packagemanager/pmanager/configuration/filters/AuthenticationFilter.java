@@ -51,7 +51,7 @@ public class AuthenticationFilter  implements Filter {
 
 		String apiKey=request.getHeader("AUTH_API_KEY");
 		String calledUrl=request.getRequestURI();
-		if(calledUrl.contains(service) && (apiKey.isEmpty() || !apiKey.equals(token))){
+		if(!calledUrl.contains("confirm")&&calledUrl.contains(service) && (apiKey.isEmpty() || !apiKey.equals(token))){
 			ErrorResponse errorResponse = new ErrorResponse();
 			errorResponse.setCode(401);
 			errorResponse.setMessage("Unauthorized Access");

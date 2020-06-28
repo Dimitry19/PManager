@@ -1,14 +1,22 @@
 package cm.packagemanager.pmanager.ws.requests;
 
+import java.util.List;
+
 public class MailRequest{
 
 	private String body;
 
-	private String to;
+	private List<String> to;
+
+	private List<String> cc;
+
+	private List<String> bcc;
 
 	private String from;
 
 	private String subject;
+
+	private List<String> attachements;
 
 
 	public String getBody() {
@@ -19,11 +27,11 @@ public class MailRequest{
 		this.body = body;
 	}
 
-	public String getTo() {
+	public List<String> getTo() {
 		return to;
 	}
 
-	public void setTo(String to) {
+	public void setTo(List<String> to) {
 		this.to = to;
 	}
 
@@ -41,5 +49,29 @@ public class MailRequest{
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public List<String> getAttachements() {
+		return attachements;
+	}
+
+	public void setAttachements(List<String> attachements) {
+		this.attachements = attachements;
+	}
+
+	public List<String> getCc() {
+		return cc;
+	}
+
+	public void setCc(List<String> cc) {
+		this.cc = cc;
+	}
+
+	public List<String> getBcc() {
+		return bcc;
+	}
+
+	public void setBcc(List<String> bcc) {
+		this.bcc = bcc;
 	}
 }

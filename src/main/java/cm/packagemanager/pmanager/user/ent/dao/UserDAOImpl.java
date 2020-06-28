@@ -20,7 +20,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,10 +52,6 @@ public  class UserDAOImpl implements UserDAO{
 		return  internalLogin( username,  password).get();
 	}
 
-	@Override
-	public User findUserWithName(String username) {
-		return null;
-	}
 
 	@Override
 	public List<UserVO> getAllUsers() {
@@ -77,8 +72,6 @@ public  class UserDAOImpl implements UserDAO{
 	@Override
 	public UserVO register(UserVO user) {
 		Session session = this.sessionFactory.getCurrentSession();
-
-		user.setPassword(PasswordGenerator.encrypt(user.getPassword()));
 		session.save(user);
 		return user;
 	}
@@ -92,26 +85,31 @@ public  class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public void managePassword(UserVO user) throws BusinessResourceException {
+	public boolean managePassword(UserVO user) throws BusinessResourceException {
 
 
 		UserVO usr=findByEmail(user.getEmail());
 
 		if(usr!=null){
 
+			UserVO transientUser=usr;
+
 			String decrypt=PasswordGenerator.decrypt(usr.getPassword());
-			usr.setPassword(decrypt);
+			//transientUser.setPassword(decrypt);
 
 			List<String> labels=new ArrayList<String>();
+			List<String> emails=new ArrayList<String>();
+
 			labels.add(MailType.PASSWORD_KEY);
 			labels.add(MailType.USERNAME_KEY);
 
+			emails.add(transientUser.getEmail());
+
 			MailSender mailSender = new MailSender();
-			mailSender.sendMailMessage(MailType.PASSWORD_TEMPLATE,
-					MailType.PASSWORD_TEMPLATE_TITLE,
-					MailSender.replace(usr,labels,null,true),
-					user.getEmail(), user.getUsername());
+			return mailSender.sendMailMessage(MailType.PASSWORD_TEMPLATE,MailType.PASSWORD_TEMPLATE_TITLE,	MailSender.replace(transientUser,labels,null,decrypt),
+					emails,null,null, null,transientUser.getUsername());
 		}
+		return false;
 	}
 
 	@Override
@@ -135,14 +133,13 @@ public  class UserDAOImpl implements UserDAO{
 
 			labels.add(MailType.BODY_KEY);
 
-			mailSender.sendMailMessage(MailType.SEND_MAIL_TEMPLATE,
-					mr.getSubject(),MailSender.replace(user,labels,mr.getBody(),false),mr.getTo(), user.getUsername());
-
+			return mailSender.sendMailMessage(MailType.SEND_MAIL_TEMPLATE,
+					mr.getSubject(),MailSender.replace(user,labels,mr.getBody(),null),mr.getTo(),mr.getCc(),mr.getBcc(), mr.getFrom(),user.getUsername());
 
 		}
 
 
-		return  (user!=null) ? user.isCancelled() : false;
+		return  false;
 
 	}
 
@@ -150,7 +147,18 @@ public  class UserDAOImpl implements UserDAO{
 	public UserVO save(UserVO user) throws BusinessResourceException {
 		Session session = this.sessionFactory.getCurrentSession();
 		if(user!=null){
-			session.save(user);
+			session.update(user);
+			return user;
+		}
+		return null;
+	}
+
+
+	@Override
+	public UserVO update(UserVO user) throws BusinessResourceException {
+		Session session = this.sessionFactory.getCurrentSession();
+		if(user!=null){
+			session.update(user);
 			return user;
 		}
 		return null;
@@ -171,6 +179,40 @@ public  class UserDAOImpl implements UserDAO{
 		List<UserVO> users=query.list();
 		if(users!=null && users.size()>0) {
 			return Optional.of(users.get(0));
+		}
+		return null;
+	}
+
+
+	@Override
+	public UserVO findByOnlyUsername(String username) throws BusinessResourceException {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		Query query=session.getNamedQuery(UserVO.USERNAME);
+		query.setParameter("username", username);
+
+		List<UserVO> users=query.list();
+		if(users!=null && users.size()>0) {
+			return users.get(0);
+		}
+		return null;
+	}
+
+
+	@Override
+	public UserVO findByToken(String token) throws BusinessResourceException {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		//session.enableFilter(FilterConstants.ACTIVE_MBR);
+		Query query=session.getNamedQuery(UserVO.CONF_TOKEN);
+		query.setParameter("ctoken", token);
+
+		List<UserVO> users=query.list();
+		if(users!=null && users.size()>0) {
+			return users.get(0);
 		}
 		return null;
 	}
@@ -196,7 +238,8 @@ public  class UserDAOImpl implements UserDAO{
 		return session.get(UserVO.class, username);
 	}
 
-	private UserVO findByEmail(String email) throws BusinessResourceException{
+	@Override
+	public UserVO findByEmail(String email) throws BusinessResourceException{
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
@@ -212,6 +255,41 @@ public  class UserDAOImpl implements UserDAO{
 		}
 		return null;
 	}
+
+	@Override
+	public UserVO findByFacebookId(String facebookId) throws BusinessResourceException {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		Query query=session.getNamedQuery(UserVO.FACEBOOK);
+		query.setParameter("facebookId", facebookId);
+
+
+		List<UserVO> users=query.list();
+		if(users!=null && users.size()>0) {
+			return users.get(0);
+
+		}
+		return null;
+	}
+
+	@Override
+	public UserVO findByGoogleId(String googleId) throws BusinessResourceException {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		Query query=session.getNamedQuery(UserVO.GOOGLE);
+		query.setParameter("googleId", googleId);
+
+
+		List<UserVO> users=query.list();
+		if(users!=null && users.size()>0) {
+			return users.get(0);
+
+		}
+		return null;
+	}
+
 	private UserVO updateDelete(Long id) throws BusinessResourceException {
 
 		Session session = this.sessionFactory.getCurrentSession();

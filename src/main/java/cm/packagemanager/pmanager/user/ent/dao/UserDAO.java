@@ -5,11 +5,6 @@ import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.MailRequest;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.security.core.userdetails.User;
-
-
 
 import java.util.List;
 import java.util.Optional;
@@ -20,12 +15,16 @@ public interface UserDAO {
 
 	Optional<UserVO> findByUsername(String username) throws BusinessResourceException, UserException;
 
-	void registerUser(UserVO user) throws Exception;
+	UserVO findByOnlyUsername(String username) throws BusinessResourceException;
+
+
+	UserVO findByToken(String token) throws BusinessResourceException;
+
 
 	UserVO login(String username) throws UserException;
-	UserVO login(String username, String password) throws UserException;
 
-	User findUserWithName(String username);
+
+	UserVO login(String username, String password) throws UserException;
 
 
 	public List<UserVO> getAllUsers()  throws BusinessResourceException;
@@ -39,13 +38,26 @@ public interface UserDAO {
 	public void updateUser(UserVO user)  throws BusinessResourceException;
 	
 	
-	public void managePassword(UserVO user)  throws BusinessResourceException;
+	public boolean managePassword(UserVO user)  throws BusinessResourceException;
 
 	public boolean deleteUser(Long id)  throws BusinessResourceException;
 
 	public UserVO save(UserVO user)  throws BusinessResourceException;
+	public UserVO update(UserVO user)  throws BusinessResourceException;
+
+
+	public UserVO findByEmail(String email)  throws BusinessResourceException;
+
+
+	public UserVO findByFacebookId(String facebookId)  throws BusinessResourceException;
+
+
+	public UserVO findByGoogleId(String googleId)  throws BusinessResourceException;
 
 
 	public boolean sendMail(MailRequest mr)  throws BusinessResourceException;
+
+
+
 
 }

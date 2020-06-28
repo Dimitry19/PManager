@@ -25,6 +25,9 @@ import java.util.Set;
 		@NamedQuery(name = UserVO.FINDBYID, query = "select u from UserVO u where id  =:id"),
 		@NamedQuery(name = UserVO.USERNAME, query = "select u from UserVO u where username like :username "),
 		@NamedQuery(name = UserVO.EMAIL, query = "select u from UserVO u where  u.email =:email "),
+		@NamedQuery(name = UserVO.CONF_TOKEN, query = "select u from UserVO u where  u.confirmationToken =:ctoken "),
+		@NamedQuery(name = UserVO.FACEBOOK, query = "select u from UserVO u where  u.facebookId =:facebookId "),
+		@NamedQuery(name = UserVO.GOOGLE, query = "select u from UserVO u where  u.googleId =:googleId "),
 })
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED),
@@ -38,7 +41,10 @@ public class UserVO extends CommonVO  {
 	public static final String Q_AC_ITEM = "cm.packagemanager.pmanager.user.ent.vo.UserVO.QAutocompleteItem";
 	public static final String ALL = "cm.packagemanager.pmanager.user.ent.vo.UserVO.All";
 	public static final String USERNAME="cm.packagemanager.pmanager.user.ent.vo.UserVO.findLikeId";
+	public static final String CONF_TOKEN="cm.packagemanager.pmanager.user.ent.vo.UserVO.findCToken";
 	public static final String EMAIL="cm.packagemanager.pmanager.user.ent.vo.UserVO.findByEmail";
+	public static final String FACEBOOK="cm.packagemanager.pmanager.user.ent.vo.UserVO.findByFacebookId";
+	public static final String GOOGLE="cm.packagemanager.pmanager.user.ent.vo.UserVO.findByGoogleId";
 
 
 	private Long id;
@@ -70,6 +76,10 @@ public class UserVO extends CommonVO  {
 	private Set<AnnounceVO> announces=new HashSet<>();
 
 	private Set<RoleVO> roles= new HashSet<>();
+
+
+	private String confirmationToken;
+
 
 
 	public UserVO() {
@@ -202,6 +212,13 @@ public class UserVO extends CommonVO  {
 		return announces;
 	}
 
+	@Basic(optional = true)
+	@Column(name="CONFIRM_TOKEN")
+	public String getConfirmationToken() {
+		return confirmationToken;
+	}
+
+
 
 	public void setActive(Integer active) {
 		this.active = active;
@@ -255,6 +272,10 @@ public class UserVO extends CommonVO  {
 
 	public void setFacebookId(String facebookId) {
 		this.facebookId = facebookId;
+	}
+
+	public void setConfirmationToken(String confirmationToken) {
+		this.confirmationToken = confirmationToken;
 	}
 
 

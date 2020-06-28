@@ -1,0 +1,19 @@
+http://localhost:8080/pmanager/ws/user/mail
+
+{
+
+    "from":"packagemanager2020@gmail.com",
+
+	"to":["unkutnation@gmail.com","dimipasc@yahoo.fr"],
+
+	"body":"Test mail",
+
+	"cc":["unkutnation@gmail.com","dimipasc@yahoo.fr"],
+
+	"bcc":["unkutnation@gmail.com","dimipasc@yahoo.fr"],
+
+	"subject":"Test ws send mail",
+
+	"attachements":[ "Ford", "BMW", "Fiat" ]
+
+}

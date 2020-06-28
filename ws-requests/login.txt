@@ -1,0 +1,11 @@
+http://localhost:8080/pmanager/ws/user/ulogin
+
+{
+
+     "username":"liond",
+     "password":"password2",
+     "email":"dimipasc@yahoo.fr",
+     "provider":"Google",
+     "socialId":"testeusr"
+
+}

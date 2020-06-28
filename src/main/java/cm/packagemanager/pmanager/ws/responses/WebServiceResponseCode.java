@@ -9,20 +9,22 @@ public class WebServiceResponseCode
 	 
 	// OK LABEL
 	public static final String MAIL_SENT_LABEL = "Le mail envoyé correttement";
-	public static final String CANCELLED_USER_LABEL = "[Dati non compatibili] - Intervento non modificabile";
+	public static final String CANCELLED_USER_LABEL = "L'utilisateur a été eliminé correctement";
+	public static final String RETRIVEVE_PASSWORD_LABEL = "Le mot de posse a été envoyé correctement à <<";
+	public static final String LOGIN_OK_LABEL = "Login effectué correctement";
+
+	public static final String USER_REGISTER_LABEL = "Enregistrement completé, consultez votre email pour confirmer votre enregistrement";
+
+	public static final String USER_REGISTER_ACTIVE_LABEL = "Votre compte a été activé.. effectuez le login";
 
 	// NOK LABEL
 	public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre eliminé ccar n'existe plus";
-	public static final String ERROR_MAIL_SENT_LABEL = "Le mail n'apas pu etre envoyé";
-
-
-	public static final String INTERVENTION_DA_PIANNIFICARE_LABEL = "Intervento da pianificare";
-	public static final String UPDATE_INTERVENTION_SUCCESS_LABEL = "Intervento aggiornato correttamente";
-	public static final String CANNOT_UPDATE_INTERVENTION_FROM_TO_CODE_LABEL = "[Errore Stato ] - Intervento non modificabile causa del suo stato";
-	public static final String CANNOT_CANCEL_INTERVENTION_CODE_LABEL = "[Dati non compatibili] - Dati non compatibili con l’operazioni di cancelS30Intervention";
-	public static final String CANNOT_CANCEL_INTERVENTION_INCONSISTENT_INTERVENTION_STATUS_CODE_LABEL = "[Error Stato] - Intervento non cancellabile causa del suo Stato.";
-	public static final String INTERVENTION_CANCELLATO_LABEL = "Intervento Cancellato";
-	public static final String ERROR_CANCEL_INTERVENTION_TIMESTAMP_LABEL ="Timestamp della data non valido";
-	public static final String ERROR_ADD_INTERVENTION_LABEL ="Errore aggiunta intervento";
-
+	public static final String ERROR_MAIL_SENT_LABEL = "Le mail n'a pas pu etre envoyé";
+	public static final String ERROR_RETRIVEVE_PASSWORD_LABEL = "Le mot de posse n'a été envoyé ";
+	public static final String ERROR_EMAIL_REGISTER_LABEL = "C'est email a deja été utilisé";
+	public static final String ERROR_USERNAME_REGISTER_LABEL = "Nom utilisateur non disponible";
+	public static final String ERROR_USER_REGISTER_LABEL = "Enregistrement non completé";
+	public static final String ERROR_INVALID_TOKEN_REGISTER_LABEL = "Token invalide , peut etre le lien a deja expiré";
+	public static final String ERROR_USED_TOKEN_REGISTER_LABEL = "Le compte a dejà été activé";
+	public static final String ERROR_LOGIN_LABEL = "Verifier les données d'accès";
 }
