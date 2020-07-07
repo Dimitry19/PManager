@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.ws.requests;
 
-public class LoginRequest {
+public class LoginDTO {
 
 	private String email;
 	private String provider;
