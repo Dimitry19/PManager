@@ -298,15 +298,16 @@ public class UserController {
 	}
 
 
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
-	public String update(@PathVariable("id") Long id,Model model) {
-		model.addAttribute("customer", this.userService.getUser(id));
-		model.addAttribute("listOfCustomers", this.userService.getAllUsers());
-		return "customerDetails";
+	//@RequestMapping(value = "/update/{id}", method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	@GetMapping("/update/{id}")
+	public ResponseEntity<String> update(@PathVariable Long id) {
+		
+		  return new ResponseEntity<String>("Réponse du serveur: "+HttpStatus.OK.name(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/delete/user", method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
-	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("userId")  Long id) throws Exception{
+	//@RequestMapping(value = "/delete/user", method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
+	@GetMapping("/delete/user/{userId}")
+	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam Long userId) throws Exception{
 		logger.info("delete request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
@@ -316,7 +317,7 @@ public class UserController {
 
 			logger.info("delete request out");
 			if (id!=null){
-				if(userService.deleteUser(id)){
+				if(userService.deleteUser(userId)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_USER_LABEL);
 				}else{
