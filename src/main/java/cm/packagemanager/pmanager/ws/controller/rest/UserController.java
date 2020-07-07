@@ -30,7 +30,8 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
-
+/*L'annotation @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600) permet de favoriser une communication distante entre le client et le serveur,
+		c'est-à-dire lorsque le client et le serveur sont déployés dans deux serveurs distincts, ce qui permet d'éviter des problèmes réseaux.*/
 @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
 @RestController
 @RequestMapping("/ws/user/*")
@@ -78,24 +79,23 @@ public class UserController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	Response  register(HttpServletResponse response, HttpServletRequest request,
-	            @RequestBody RegisterRequest registerRequest) throws Exception{
+	Response  register(HttpServletResponse response, HttpServletRequest request,@RequestBody RegisterDTO register) throws Exception{
 
 		logger.info("register request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
 
 		try{
-			if(registerRequest!=null){
+			if(register!=null){
 
-				UserVO user = userService.findByEmail(registerRequest.getEmail());
+				UserVO user = userService.findByEmail(register.getEmail());
 				if(user!=null){
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
 					return pmResponse;
 				}
 
-				user=userService.findByUsername(registerRequest.getUserName());
+				user=userService.findByUsername(register.getUserName());
 
 				if(user!=null){
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
@@ -105,12 +105,12 @@ public class UserController {
 				}
 
 				user=new UserVO();
-				user.setEmail(registerRequest.getEmail());
-				user.setUsername(registerRequest.getUserName());
-				user.setPassword(PasswordGenerator.encrypt(registerRequest.getPassword()));
-				user.setFirstName(registerRequest.getFirstName());
-				user.setLastName(registerRequest.getLastName());
-				user.setPhone(registerRequest.getPhone());
+				user.setEmail(register.getEmail());
+				user.setUsername(register.getUserName());
+				user.setPassword(PasswordGenerator.encrypt(register.getPassword()));
+				user.setFirstName(register.getFirstName());
+				user.setLastName(register.getLastName());
+				user.setPhone(register.getPhone());
 				user.setActive(0);
 				user.setConfirmationToken(UUID.randomUUID().toString());
 				UserVO usr=userService.register(user);
@@ -186,7 +186,7 @@ public class UserController {
 
 	@RequestMapping(value = "/ulogin", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 	public @ResponseBody
-	Response login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginRequest loginRequest)
+	Response login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)
 			throws Exception
 	{
 		logger.info("login request in");
@@ -196,8 +196,8 @@ public class UserController {
 		try
 		{
 			logger.info("login request out");
-			if (loginRequest!=null){
-				UserVO user=userService.login(loginRequest);
+			if (login!=null){
+				UserVO user=userService.login(login);
 				if(user!=null){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
@@ -229,7 +229,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/users", method = RequestMethod.GET,headers = WSConstants.HEADER_ACCEPT)
 	@ResponseBody
-	String   allUsers(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginRequest loginRequest)throws Exception
+	String   allUsers(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)throws Exception
 	{
 
 
@@ -268,14 +268,14 @@ public class UserController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	String  update(HttpServletResponse response, HttpServletRequest request, @RequestBody RegisterRequest registerRequest){
+	String  update(HttpServletResponse response, HttpServletRequest request, @RequestBody RegisterDTO register){
 
-		if(registerRequest!=null){
+		if(register!=null){
 
 			UserVO user = new UserVO();
-			user.setEmail(registerRequest.getEmail());
-			user.setUsername(registerRequest.getUserName());
-			user.setPassword(registerRequest.getPassword());
+			user.setEmail(register.getEmail());
+			user.setUsername(register.getUserName());
+			user.setPassword(register.getPassword());
 
 
 			userService.updateUser(user);
@@ -288,7 +288,7 @@ public class UserController {
 
 	@RequestMapping(value = "/password", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	Response  password(HttpServletResponse response, HttpServletRequest request, @RequestBody PasswordRequest passwordRequest){
+	Response  password(HttpServletResponse response, HttpServletRequest request, @RequestBody PasswordDTO password){
 
 
 		logger.info("password request in");
@@ -297,7 +297,7 @@ public class UserController {
 		if(passwordRequest!=null){
 
 			UserVO user = new UserVO();
-			user.setEmail(passwordRequest.getEmail());
+			user.setEmail(password.getEmail());
 
 			if(userService.managePassword(user)){
 				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -353,7 +353,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/mail")
-	public Response sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailRequest mailRequest) throws AddressException, MessagingException, IOException {
+	public Response sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailDTO mail) throws AddressException, MessagingException, IOException {
 
 
 		logger.info("mail request in");
@@ -362,8 +362,8 @@ public class UserController {
 
 		try
 		{
-			if (mailRequest!=null){
-				if(userService.sendMail(mailRequest)){
+			if (mail!=null){
+				if(userService.sendMail(mail)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
 				}else{
