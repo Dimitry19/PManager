@@ -2,7 +2,7 @@ package cm.packagemanager.pmanager.ws.requests;
 
 import java.util.List;
 
-public class MailRequest{
+public class MailDTO{
 
 	private String body;
 
