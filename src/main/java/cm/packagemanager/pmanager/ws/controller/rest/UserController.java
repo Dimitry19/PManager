@@ -68,7 +68,13 @@ public class UserController {
 	@Value("${ws.redirect.user}")
 	private String redirect;
 
-
+	/*@PostMapping(value = "/register")
+	@Transactional
+	public ResponseEntity<UserVO> register(@RequestBody RegisterRequest registerRequest) {
+		
+		UserVO userSaved = userService.saveOrUpdateUser(user);		
+ 		return new ResponseEntity<UserVO>(userSaved, HttpStatus.CREATED);
+ 	}*/
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
