@@ -21,6 +21,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!--remplace la version embarquée de Tomcat &ndash;&gt;-->
 		<!--<tomcat.version>8.0.46</tomcat.version>-->
+		<tomcat.version>9.0.24</tomcat.version>
 	</properties>
 
 	<dependencies>
