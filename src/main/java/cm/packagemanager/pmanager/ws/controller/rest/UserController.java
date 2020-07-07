@@ -212,6 +212,15 @@ public class UserController {
 	}
 
 
+	/*  TODO cette methode est encore à tester
+	@GetMapping(value = "/users")
+	public ResponseEntity<Collection<User>> getAllUsers() {
+		Collection<UserVO> users = userService.getAllUsers();
+		return new ResponseEntity<Collection<UserVO>>(users, HttpStatus.FOUND);
+	}
+	
+	*/
+	
 	@RequestMapping(value = "/users", method = RequestMethod.GET,headers = WSConstants.HEADER_ACCEPT)
 	@ResponseBody
 	String   allUsers(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginRequest loginRequest)throws Exception
