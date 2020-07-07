@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.ws.requests;
 
-public class RegisterRequest extends LoginRequest{
+public class RegisterDTO extends LoginDTO{
 
 	private String userName;
 	private String firstName;
