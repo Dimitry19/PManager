@@ -80,6 +80,8 @@ public class UserVO extends CommonVO  {
 
 	private String confirmationToken;
 
+	private String error;
+
 
 
 	public UserVO() {
@@ -195,7 +197,7 @@ public class UserVO extends CommonVO  {
 	}
 
 
-	@ManyToMany(cascade = CascadeType.DETACH)
+	@ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	public Set<RoleVO> getRoles() {
 		return roles;
@@ -218,7 +220,14 @@ public class UserVO extends CommonVO  {
 		return confirmationToken;
 	}
 
+	@Transient
+	public String getError() {
+		return error;
+	}
 
+	public void setError(String error) {
+		this.error = error;
+	}
 
 	public void setActive(Integer active) {
 		this.active = active;

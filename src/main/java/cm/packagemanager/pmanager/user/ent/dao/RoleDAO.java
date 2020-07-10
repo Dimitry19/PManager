@@ -10,7 +10,7 @@ public interface RoleDAO {
 
 	Collection<RoleVO> getAllRoles();
 
-	void addRole(RoleVO role);
+	RoleVO addRole(RoleVO role);
 
 	//@Query("select role from RoleVO role")
 	//Stream<RoleVO> getAllRolesStream();// Java8 Stream : on place la liste des rôles dans un Stream

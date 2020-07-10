@@ -1,0 +1,6 @@
+GET http://localhost:8080/pmanager/ws/user/all?page=0&size=3
+
+
+
+
+x-users-total →nombre total renvoyé dans le header

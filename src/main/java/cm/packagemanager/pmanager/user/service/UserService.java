@@ -3,11 +3,16 @@ package cm.packagemanager.pmanager.user.service;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.MailType;
+import cm.packagemanager.pmanager.user.ent.dao.RoleDAO;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
+import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.LoginRequest;
-import cm.packagemanager.pmanager.ws.requests.MailRequest;
+import cm.packagemanager.pmanager.ws.requests.LoginDTO;
+import cm.packagemanager.pmanager.ws.requests.MailDTO;
+import cm.packagemanager.pmanager.ws.requests.RegisterDTO;
+import cm.packagemanager.pmanager.ws.requests.RoleToUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +30,10 @@ public class UserService{
 	UserDAO userDAO;
 
 
+
+
 	@Transactional
-	public UserVO login(LoginRequest lr ) throws UserException {
+	public UserVO login(LoginDTO lr ) throws UserException {
 
 		UserVO user=null;
 		if(lr.getUsername()!=null){
@@ -62,6 +69,11 @@ public class UserService{
 	}
 
 	@Transactional
+	public List<UserVO> getAllUsers(int page, int size) {
+		return userDAO.getAllUsers(page, size);
+	}
+
+	@Transactional
 	public List<UserVO> getAllUsers() {
 		return userDAO.getAllUsers();
 	}
@@ -72,8 +84,8 @@ public class UserService{
 	}
 
 	@Transactional
-	public UserVO register(UserVO user) {
-		return userDAO.register(user);
+	public UserVO register(RegisterDTO register) {
+		return userDAO.register(register);
 	}
 
 	@Transactional
@@ -87,7 +99,7 @@ public class UserService{
 	}
 
 	@Transactional
-	public boolean sendMail(MailRequest mr) {
+	public boolean sendMail(MailDTO mr) {
 		return userDAO.sendMail(mr);
 	}
 
@@ -101,6 +113,12 @@ public class UserService{
 		return userDAO.findByEmail(email);
 	}
 
+
+	@Transactional
+	public boolean setRoleToUser(RoleToUserDTO roleToUser) {
+
+		return userDAO.setRole(roleToUser.getEmail(),roleToUser.getRole());
+	}
 
 	@Transactional
 	public UserVO findByUsername(String username) {

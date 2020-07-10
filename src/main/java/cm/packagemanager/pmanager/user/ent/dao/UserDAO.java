@@ -1,16 +1,17 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
 
+import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.MailRequest;
+import cm.packagemanager.pmanager.ws.requests.MailDTO;
+import cm.packagemanager.pmanager.ws.requests.RegisterDTO;
 
 import java.util.List;
 import java.util.Optional;
 
-
-public interface UserDAO {
+public interface UserDAO{
 
 
 	Optional<UserVO> findByUsername(String username) throws BusinessResourceException, UserException;
@@ -29,11 +30,13 @@ public interface UserDAO {
 
 	public List<UserVO> getAllUsers()  throws BusinessResourceException;
 
+	public List<UserVO> getAllUsers(int page, int size)  throws BusinessResourceException;
+
 	//public UserVO getUser(int id)  throws BusinessResourceException;
 
 	public UserVO getUser(Long id) throws BusinessResourceException;
 
-	public UserVO register(UserVO user)  throws BusinessResourceException;
+	public UserVO register(RegisterDTO register)  throws BusinessResourceException;
 
 	public void updateUser(UserVO user)  throws BusinessResourceException;
 	
@@ -55,7 +58,10 @@ public interface UserDAO {
 	public UserVO findByGoogleId(String googleId)  throws BusinessResourceException;
 
 
-	public boolean sendMail(MailRequest mr)  throws BusinessResourceException;
+	public boolean sendMail(MailDTO mr)  throws BusinessResourceException;
+
+
+	public boolean setRole(String username, RoleEnum roleId)  throws BusinessResourceException;
 
 
 

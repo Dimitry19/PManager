@@ -1,24 +1,23 @@
 package cm.packagemanager.pmanager.ws.controller.rest;
 
+import cm.packagemanager.pmanager.api.ApiError;
 import cm.packagemanager.pmanager.common.exception.ResponseException;
-import cm.packagemanager.pmanager.common.mail.MailSender;
-import cm.packagemanager.pmanager.common.mail.MailType;
+import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
+import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
-import cm.packagemanager.pmanager.user.service.UserService;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.LoginRequest;
-import cm.packagemanager.pmanager.ws.requests.MailRequest;
-import cm.packagemanager.pmanager.ws.requests.PasswordRequest;
-import cm.packagemanager.pmanager.ws.requests.RegisterRequest;
+import cm.packagemanager.pmanager.user.service.UserService;
+import cm.packagemanager.pmanager.ws.requests.*;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sun.jvm.hotspot.debugger.AddressException;
 
@@ -26,10 +25,17 @@ import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 /*L'annotation @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600) permet de favoriser une communication distante entre le client et le serveur,
 		c'est-à-dire lorsque le client et le serveur sont déployés dans deux serveurs distincts, ce qui permet d'éviter des problèmes réseaux.*/
 @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
@@ -76,45 +82,26 @@ public class UserController {
 		UserVO userSaved = userService.saveOrUpdateUser(user);		
  		return new ResponseEntity<UserVO>(userSaved, HttpStatus.CREATED);
  	}*/
-
-	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
-	public @ResponseBody
-	Response  register(HttpServletResponse response, HttpServletRequest request,@RequestBody RegisterDTO register) throws Exception{
+	@PostMapping(value = "/register")
+	public  Response register(HttpServletRequest request ,@RequestBody @Valid RegisterDTO register) throws Exception{
 
 		logger.info("register request in");
-		response.setHeader("Access-Control-Allow-Origin", "*");
+
 		Response pmResponse = new Response();
 
 		try{
+
 			if(register!=null){
 
-				UserVO user = userService.findByEmail(register.getEmail());
-				if(user!=null){
-					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
-					return pmResponse;
-				}
+				UserVO usr=userService.register(register);
 
-				user=userService.findByUsername(register.getUserName());
+				if(usr!=null && StringUtils.isNotEmpty(usr.getError())){
 
-				if(user!=null){
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USERNAME_REGISTER_LABEL);
+					pmResponse.setRetDescription(usr.getError());
 
 					return pmResponse;
 				}
-
-				user=new UserVO();
-				user.setEmail(register.getEmail());
-				user.setUsername(register.getUserName());
-				user.setPassword(PasswordGenerator.encrypt(register.getPassword()));
-				user.setFirstName(register.getFirstName());
-				user.setLastName(register.getLastName());
-				user.setPhone(register.getPhone());
-				user.setActive(0);
-				user.setConfirmationToken(UUID.randomUUID().toString());
-				UserVO usr=userService.register(user);
-
 
 				if(usr==null){
 
@@ -136,8 +123,7 @@ public class UserController {
 			}
 		}catch (Exception e){
 			logger.error("Errore eseguendo register: ", e);
-			response.setStatus(400);
-			response.getWriter().write(e.getMessage());
+
 		}
 
 
@@ -294,14 +280,14 @@ public class UserController {
 		logger.info("password request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
-		if(passwordRequest!=null){
+		if(password!=null){
 
 			UserVO user = new UserVO();
 			user.setEmail(password.getEmail());
 
 			if(userService.managePassword(user)){
 				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-				pmResponse.setRetDescription(WebServiceResponseCode.RETRIVEVE_PASSWORD_LABEL+passwordRequest.getEmail() +">>");
+				pmResponse.setRetDescription(WebServiceResponseCode.RETRIVEVE_PASSWORD_LABEL+password.getEmail() +">>");
 			}else{
 				pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 				pmResponse.setRetDescription(WebServiceResponseCode.ERROR_RETRIVEVE_PASSWORD_LABEL);
@@ -320,9 +306,22 @@ public class UserController {
 		  return new ResponseEntity<String>("Réponse du serveur: "+HttpStatus.OK.name(), HttpStatus.OK);
 	}
 
-	//@RequestMapping(value = "/delete/user", method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
+
+	@PostMapping(value = "/role")
+	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) {
+
+		  if (userService.setRoleToUser(roleToUser)){
+		  	  userService.findByEmail(roleToUser.getEmail());
+			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.FOUND);
+		  }else{
+			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.NOT_FOUND);
+		  }
+
+	}
+
+
 	@GetMapping("/delete/user/{userId}")
-	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam Long userId) throws Exception{
+	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long userId) throws Exception{
 		logger.info("delete request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
@@ -331,7 +330,7 @@ public class UserController {
 		{
 
 			logger.info("delete request out");
-			if (id!=null){
+			if (userId!=null){
 				if(userService.deleteUser(userId)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_USER_LABEL);
@@ -381,5 +380,39 @@ public class UserController {
 		}
 
 		return pmResponse;
+	}
+
+
+
+	@GetMapping("/all")
+	public ResponseEntity<List<UserVO>> findAll(
+			@Valid @Positive(message = "Page number should be a positive number") @RequestParam(required = false, defaultValue = "1") int page,
+			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "10") int size) {
+
+		HttpHeaders headers = new HttpHeaders();
+		List<UserVO> users = userService.getAllUsers(page,size);
+		headers.add("X-Users-Total", Long.toString(users.size()));
+		return new ResponseEntity<List<UserVO>>(users, headers, HttpStatus.OK);
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(ConstraintViolationException.class)
+	public List<ApiError> handleValidationExceptions(ConstraintViolationException ex) {
+		return ex.getConstraintViolations()
+				.stream()
+				.map(err -> new ApiError(err.getPropertyPath().toString(), err.getMessage()))
+				.collect(Collectors.toList());
+	}
+
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ExceptionHandler(UserNotFoundException.class)
+	public List<ApiError> handleNotFoundExceptions(UserNotFoundException ex) {
+		return Collections.singletonList(new ApiError("user.notfound", ex.getMessage()));
+	}
+
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(Exception.class)
+	public List<ApiError> handleOtherException(Exception ex) {
+		return Collections.singletonList(new ApiError(ex.getClass().getCanonicalName(), ex.getMessage()));
 	}
 }

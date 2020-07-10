@@ -1,13 +1,18 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
+import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.MailType;
+import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
+import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.MailRequest;
+import cm.packagemanager.pmanager.ws.requests.MailDTO;
+import cm.packagemanager.pmanager.ws.requests.RegisterDTO;
+import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -16,17 +21,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Repository
-public  class UserDAOImpl implements UserDAO{
+public  class UserDAOImpl implements UserDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 
@@ -35,6 +40,11 @@ public  class UserDAOImpl implements UserDAO{
 
 	@Autowired
 	HibernateTransactionManager tx;
+
+	@Autowired
+	RoleDAO roleDAO;
+
+
 
 	public void setSessionFactory(SessionFactory sf) {
 		this.sessionFactory = sf;
@@ -55,9 +65,35 @@ public  class UserDAOImpl implements UserDAO{
 
 	@Override
 	public List<UserVO> getAllUsers() {
+
 		Session session = this.sessionFactory.getCurrentSession();
 		List<UserVO>  users = session.createQuery("from UserVO").list();
 		return users;
+	}
+
+	@Override
+	public List<UserVO>  getAllUsers(int firstResult, int maxResults) {
+
+		int paginatedCount = 0;
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		Query query = session.createQuery("from UserVO");
+		query.setFirstResult(firstResult);
+		query.setMaxResults(maxResults);
+
+		List<UserVO> users = (List) query.list();
+
+		if (users != null) {
+			paginatedCount = users.size();
+			System.out.println("Total Results: " + paginatedCount);
+			for (UserVO user : users) {
+				System.out.println("Retrieved Product using Query. Name: " + user.getUsername());
+			}
+		}
+
+		return users;
+
 	}
 
 	@Override
@@ -70,10 +106,46 @@ public  class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public UserVO register(UserVO user) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.save(user);
-		return user;
+	public UserVO register(RegisterDTO register) {
+
+		try {
+			UserVO userError=new UserVO();
+			UserVO user = findByEmail(register.getEmail());
+			if(user!=null){
+
+				userError.setError(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
+				return userError;
+			}
+
+			if(findByUsername(register.getUsername())!=null){
+				userError.setError(WebServiceResponseCode.ERROR_USERNAME_REGISTER_LABEL);
+				return userError;
+			}
+
+
+			user=new UserVO();
+			user.setEmail(register.getEmail());
+			user.setUsername(register.getUserName());
+			user.setPassword(PasswordGenerator.encrypt(register.getPassword()));
+			user.setFirstName(register.getFirstName());
+			user.setLastName(register.getLastName());
+			user.setPhone(register.getPhone());
+			user.setActive(0);
+			user.setConfirmationToken(UUID.randomUUID().toString());
+			Session session = this.sessionFactory.getCurrentSession();
+			session.save(user);
+
+			if(StringUtils.equals(register.getRole().name(), RoleEnum.ADMIN.name())){
+						setRole(user.getEmail(), RoleEnum.ADMIN);
+			}else{
+				setRole(user.getEmail(), RoleEnum.USER);
+			}
+			return findByEmail(user.getEmail());
+
+		} catch (UserException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -123,7 +195,7 @@ public  class UserDAOImpl implements UserDAO{
 
 
 	@Override
-	public boolean sendMail(MailRequest mr) {
+	public boolean sendMail(MailDTO mr) {
 
 		UserVO user=findByEmail(mr.getFrom());
 
@@ -332,8 +404,23 @@ public  class UserDAOImpl implements UserDAO{
 		}
 	}
 
+	@Override
+	public boolean setRole(String email, RoleEnum roleId) throws BusinessResourceException {
 
-	/*@Override
+		UserVO user= findByEmail(email);
+		RoleVO role = roleDAO.findByDescription(roleId.name());
+
+
+		if (user!=null && role!=null){
+			user.getRoles().add(role);
+			return (save(user)!=null);
+		}else{
+			return false;
+		}
+	}
+
+
+/*@Override
 	public boolean deleteUser(Long id) {
 
 		Session session = this.sessionFactory.getCurrentSession();
