@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.configuration.filters;
 
 
 import cm.packagemanager.pmanager.common.exception.ErrorResponse;
+import cm.packagemanager.pmanager.common.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,9 +50,12 @@ public class AuthenticationFilter  implements Filter {
 
 		logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
 
-		String apiKey=request.getHeader("AUTH_API_KEY");
+		String apiKey=request.getHeader("token");
 		String calledUrl=request.getRequestURI();
-		if(!calledUrl.contains("confirm")&&calledUrl.contains(service) && (apiKey.isEmpty() || !apiKey.equals(token))){
+		/*if(StringUtils.isEmpty(apiKey)){
+			return ;
+		}
+		if(!calledUrl.contains("confirm")&&calledUrl.contains(service) && (StringUtils.isEmpty(apiKey)|| !apiKey.equals(token))){
 			ErrorResponse errorResponse = new ErrorResponse();
 			errorResponse.setCode(401);
 			errorResponse.setMessage("Unauthorized Access");
@@ -61,7 +65,7 @@ public class AuthenticationFilter  implements Filter {
 			((HttpServletResponse) response).setStatus(401);
 			response.getOutputStream().write(responseToSend);
 			return;
-		}
+		}*/
 
 			//call next filter in the filter chain
 			filterChain.doFilter(request, response);

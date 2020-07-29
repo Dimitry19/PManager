@@ -15,6 +15,7 @@ import cm.packagemanager.pmanager.ws.requests.RegisterDTO;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +39,8 @@ public  class UserDAOImpl implements UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Autowired
-	HibernateTransactionManager tx;
+	//@Autowired
+	Transaction tx;
 
 	@Autowired
 	RoleDAO roleDAO;
@@ -110,7 +111,7 @@ public  class UserDAOImpl implements UserDAO {
 
 		try {
 			UserVO userError=new UserVO();
-			UserVO user = findByEmail(register.getEmail());
+			UserVO user = findByEmail(register.getEmail(),true);
 			if(user!=null){
 
 				userError.setError(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
@@ -132,15 +133,28 @@ public  class UserDAOImpl implements UserDAO {
 			user.setPhone(register.getPhone());
 			user.setActive(0);
 			user.setConfirmationToken(UUID.randomUUID().toString());
-			Session session = this.sessionFactory.getCurrentSession();
-			session.save(user);
+			Session session = this.sessionFactory.openSession();
+
+			try {
+				tx = session.beginTransaction();
+				session.save(user);
+
+				tx.commit();
+			}
+			catch (Exception e) {
+				if (tx!=null) tx.rollback();
+				throw e;
+			}
+			finally {
+				session.close();
+			}
 
 			if(StringUtils.equals(register.getRole().name(), RoleEnum.ADMIN.name())){
-						setRole(user.getEmail(), RoleEnum.ADMIN);
+				setRole(user.getEmail(), RoleEnum.ADMIN);
 			}else{
 				setRole(user.getEmail(), RoleEnum.USER);
 			}
-			return findByEmail(user.getEmail());
+			return findByEmail(user.getEmail(),false);
 
 		} catch (UserException e) {
 			e.printStackTrace();
@@ -160,7 +174,7 @@ public  class UserDAOImpl implements UserDAO {
 	public boolean managePassword(UserVO user) throws BusinessResourceException {
 
 
-		UserVO usr=findByEmail(user.getEmail());
+		UserVO usr=findByEmail(user.getEmail(),true);
 
 		if(usr!=null){
 
@@ -195,9 +209,9 @@ public  class UserDAOImpl implements UserDAO {
 
 
 	@Override
-	public boolean sendMail(MailDTO mr) {
+	public boolean sendMail(MailDTO mr, boolean active) {
 
-		UserVO user=findByEmail(mr.getFrom());
+		UserVO user=findByEmail(mr.getFrom(),active);
 
 		if(user!=null){
 			MailSender mailSender = new MailSender();
@@ -311,11 +325,14 @@ public  class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public UserVO findByEmail(String email) throws BusinessResourceException{
+	public UserVO findByEmail(String email, boolean active) throws BusinessResourceException{
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		if(active){
+			session.enableFilter(FilterConstants.ACTIVE_MBR);
+		}
+
 		Query query=session.getNamedQuery(UserVO.EMAIL);
 		query.setParameter("email", email);
 
@@ -407,7 +424,7 @@ public  class UserDAOImpl implements UserDAO {
 	@Override
 	public boolean setRole(String email, RoleEnum roleId) throws BusinessResourceException {
 
-		UserVO user= findByEmail(email);
+		UserVO user= findByEmail(email, false);
 		RoleVO role = roleDAO.findByDescription(roleId.name());
 
 

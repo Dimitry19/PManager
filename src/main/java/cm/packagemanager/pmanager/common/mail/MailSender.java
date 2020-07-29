@@ -188,6 +188,7 @@ public class MailSender {
 		catch (Exception e)
 		{
 			logger.error(String.format("Error sending email with templateName[%s], error[%s].", templateName, e.getMessage()));
+			e.printStackTrace();
 		}
 		return false;
 	}

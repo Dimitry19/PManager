@@ -2,7 +2,8 @@
   <configuration default="false" name="PM" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <module name="PManager" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="cm.packagemanager.pmanager.PackageApplication" />
-    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="ALTERNATIVE_JRE_PATH" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home" />
     <method />
   </configuration>
 </component>

@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 
 /*L'annotation @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600) permet de favoriser une communication distante entre le client et le serveur,
 		c'est-à-dire lorsque le client et le serveur sont déployés dans deux serveurs distincts, ce qui permet d'éviter des problèmes réseaux.*/
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/ws/user/*")
 public class UserController {
@@ -83,9 +83,10 @@ public class UserController {
  		return new ResponseEntity<UserVO>(userSaved, HttpStatus.CREATED);
  	}*/
 	@PostMapping(value = "/register")
-	public  Response register(HttpServletRequest request ,@RequestBody @Valid RegisterDTO register) throws Exception{
+	public  Response register(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid RegisterDTO register) throws Exception{
 
 		logger.info("register request in");
+		response.setHeader("Access-Control-Allow-Origin", "*");
 
 		Response pmResponse = new Response();
 
@@ -107,6 +108,7 @@ public class UserController {
 
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
+					response.setStatus(400);
 
 					return pmResponse;
 				}
@@ -116,6 +118,7 @@ public class UserController {
 				if(sent){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
+					response.setStatus(200);
 
 					return pmResponse;
 				}
@@ -123,6 +126,7 @@ public class UserController {
 			}
 		}catch (Exception e){
 			logger.error("Errore eseguendo register: ", e);
+			response.setStatus(400);
 
 		}
 
@@ -311,10 +315,10 @@ public class UserController {
 	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) {
 
 		  if (userService.setRoleToUser(roleToUser)){
-		  	  userService.findByEmail(roleToUser.getEmail());
-			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.FOUND);
+		  	  userService.findByEmail(roleToUser.getEmail(), true);
+			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail(),true), HttpStatus.FOUND);
 		  }else{
-			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.NOT_FOUND);
+			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail(),true), HttpStatus.NOT_FOUND);
 		  }
 
 	}
@@ -362,7 +366,7 @@ public class UserController {
 		try
 		{
 			if (mail!=null){
-				if(userService.sendMail(mail)){
+				if(userService.sendMail(mail,true)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
 				}else{

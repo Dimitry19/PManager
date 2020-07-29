@@ -49,7 +49,7 @@ public interface UserDAO{
 	public UserVO update(UserVO user)  throws BusinessResourceException;
 
 
-	public UserVO findByEmail(String email)  throws BusinessResourceException;
+	public UserVO findByEmail(String email, boolean active)  throws BusinessResourceException;
 
 
 	public UserVO findByFacebookId(String facebookId)  throws BusinessResourceException;
@@ -58,7 +58,7 @@ public interface UserDAO{
 	public UserVO findByGoogleId(String googleId)  throws BusinessResourceException;
 
 
-	public boolean sendMail(MailDTO mr)  throws BusinessResourceException;
+	public boolean sendMail(MailDTO mr, boolean active)  throws BusinessResourceException;
 
 
 	public boolean setRole(String username, RoleEnum roleId)  throws BusinessResourceException;

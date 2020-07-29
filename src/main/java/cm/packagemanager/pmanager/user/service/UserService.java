@@ -42,7 +42,7 @@ public class UserService{
 
 		if(user== null){
 			if(lr.getEmail()!=null){
-				user=userDAO.findByEmail(lr.getEmail());
+				user=userDAO.findByEmail(lr.getEmail(),true);
 			}
 
 			if(lr.getProvider()!=null){
@@ -99,8 +99,8 @@ public class UserService{
 	}
 
 	@Transactional
-	public boolean sendMail(MailDTO mr) {
-		return userDAO.sendMail(mr);
+	public boolean sendMail(MailDTO mr, boolean active) {
+		return userDAO.sendMail(mr,active);
 	}
 
 	@Transactional
@@ -109,8 +109,8 @@ public class UserService{
 	}
 
 	@Transactional
-	public UserVO findByEmail(String email) {
-		return userDAO.findByEmail(email);
+	public UserVO findByEmail(String email, boolean active) {
+		return userDAO.findByEmail(email,active);
 	}
 
 
