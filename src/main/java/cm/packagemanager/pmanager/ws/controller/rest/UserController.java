@@ -5,7 +5,6 @@ import cm.packagemanager.pmanager.common.exception.ResponseException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
-import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.user.service.UserService;
 import cm.packagemanager.pmanager.ws.requests.*;
@@ -75,13 +74,7 @@ public class UserController {
 	@Value("${ws.redirect.user}")
 	private String redirect;
 
-	/*@PostMapping(value = "/register")
-	@Transactional
-	public ResponseEntity<UserVO> register(@RequestBody RegisterRequest registerRequest) {
-		
-		UserVO userSaved = userService.saveOrUpdateUser(user);		
- 		return new ResponseEntity<UserVO>(userSaved, HttpStatus.CREATED);
- 	}*/
+
 	@PostMapping(value = "/register")
 	public  Response register(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid RegisterDTO register) throws Exception{
 
@@ -121,16 +114,15 @@ public class UserController {
 					response.setStatus(200);
 
 					return pmResponse;
+				}else{
+					// cancellare l'utente appena creato
 				}
 
 			}
 		}catch (Exception e){
 			logger.error("Errore eseguendo register: ", e);
 			response.setStatus(400);
-
 		}
-
-
 		return null;
 	}
 
@@ -176,24 +168,26 @@ public class UserController {
 
 	@RequestMapping(value = "/ulogin", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 	public @ResponseBody
-	Response login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)
+	UserVO login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)
 			throws Exception
 	{
 		logger.info("login request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
-		Response pmResponse = new Response();
+		UserVO user = null;
 
 		try
 		{
 			logger.info("login request out");
 			if (login!=null){
-				UserVO user=userService.login(login);
+				 user=userService.login(login);
+
 				if(user!=null){
-					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-					pmResponse.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+					user.setRetCode(WebServiceResponseCode.OK_CODE);
+					user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
 				}else{
-					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_LOGIN_LABEL);
+					user=new UserVO();
+					user.setRetCode(WebServiceResponseCode.NOK_CODE);
+					user.setRetDescription(WebServiceResponseCode.ERROR_LOGIN_LABEL);
 				}
 			}
 		}
@@ -204,7 +198,7 @@ public class UserController {
 			response.getWriter().write(e.getMessage());
 		}
 
-		return pmResponse;
+		return  user;
 	}
 
 
@@ -264,7 +258,7 @@ public class UserController {
 
 			UserVO user = new UserVO();
 			user.setEmail(register.getEmail());
-			user.setUsername(register.getUserName());
+			user.setUsername(register.getUsername());
 			user.setPassword(register.getPassword());
 
 

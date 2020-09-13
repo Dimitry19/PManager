@@ -81,6 +81,10 @@ public class UserVO extends CommonVO  {
 
 	private String error;
 
+	private long retCode;
+
+	private String retDescription;
+
 
 
 	public UserVO() {
@@ -286,6 +290,24 @@ public class UserVO extends CommonVO  {
 		this.confirmationToken = confirmationToken;
 	}
 
+
+	@Transient
+	public long getRetCode() {
+		return retCode;
+	}
+
+	public void setRetCode(long retCode) {
+		this.retCode = retCode;
+	}
+
+	@Transient
+	public String getRetDescription() {
+		return retDescription;
+	}
+
+	public void setRetDescription(String retDescription) {
+		this.retDescription = retDescription;
+	}
 
 
 

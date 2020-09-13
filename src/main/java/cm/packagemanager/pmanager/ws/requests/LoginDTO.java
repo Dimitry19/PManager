@@ -1,12 +1,19 @@
 package cm.packagemanager.pmanager.ws.requests;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class LoginDTO {
 
 	private String email;
 	private String provider;
 	private String password;
 	private String socialId;
+
+	@NotNull(message = "username should not be empty")
+	@Size(min = 1, max = 10, message = "username  should be between 1 and 10 characters")
 	private String username;
+
 
 	public String getEmail() {
 		return email;

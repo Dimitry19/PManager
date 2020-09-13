@@ -2,7 +2,7 @@ http://localhost:8080/pmanager/ws/user/register
 
 {
 
-   "userName":"dimitria",
+   "username":"dimitria",
    "password":"password2",
    "email":"dimipasc@yahoo.fr",
    "provider":"ijiigbbiiii",

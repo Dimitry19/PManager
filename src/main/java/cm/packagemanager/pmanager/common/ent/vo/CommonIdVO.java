@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.common.ent.vo;
 
+import cm.packagemanager.pmanager.airline.ent.vo.AirlineIdVO;
 import cm.packagemanager.pmanager.common.ent.bo.Auditable;
 import cm.packagemanager.pmanager.common.listener.audit.TableListener;
 
@@ -28,4 +29,21 @@ public class CommonIdVO implements Serializable {
 		this.token = token;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		AirlineIdVO that = (AirlineIdVO) o;
+
+		if (!token.equals(that.token)) return false;
+		return token.equals(that.token);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = token.hashCode();
+		result = 31 * result + token.hashCode();
+		return result;
+	}
 }

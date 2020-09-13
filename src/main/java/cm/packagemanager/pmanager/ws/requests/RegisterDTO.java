@@ -17,9 +17,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class RegisterDTO extends LoginDTO{
 
-	@NotNull(message = "username should not be empty")
-	@Size(min = 1, max = 10, message = "username  should be between 1 and 10 characters")
-	private String userName;
+
 
 
 	@NotNull(message = "First name should not be empty")
@@ -54,14 +52,6 @@ public class RegisterDTO extends LoginDTO{
 		this.phone = phone;
 	}
 
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 
 	public String getFirstName() {
 		return firstName;

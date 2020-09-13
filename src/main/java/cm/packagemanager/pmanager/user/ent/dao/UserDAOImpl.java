@@ -126,7 +126,7 @@ public  class UserDAOImpl implements UserDAO {
 
 			user=new UserVO();
 			user.setEmail(register.getEmail());
-			user.setUsername(register.getUserName());
+			user.setUsername(register.getUsername());
 			user.setPassword(PasswordGenerator.encrypt(register.getPassword()));
 			user.setFirstName(register.getFirstName());
 			user.setLastName(register.getLastName());
@@ -134,20 +134,9 @@ public  class UserDAOImpl implements UserDAO {
 			user.setActive(0);
 			user.setConfirmationToken(UUID.randomUUID().toString());
 			Session session = this.sessionFactory.openSession();
-
-			try {
-				tx = session.beginTransaction();
-				session.save(user);
-
-				tx.commit();
-			}
-			catch (Exception e) {
-				if (tx!=null) tx.rollback();
-				throw e;
-			}
-			finally {
-				session.close();
-			}
+			tx = session.beginTransaction();
+			session.save(user);
+			tx.commit();
 
 			if(StringUtils.equals(register.getRole().name(), RoleEnum.ADMIN.name())){
 				setRole(user.getEmail(), RoleEnum.ADMIN);
