@@ -20,8 +20,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!--remplace la version embarquée de Tomcat &ndash;&gt;-->
-		<!--<tomcat.version>8.0.46</tomcat.version>-->
-		<tomcat.version>9.0.24</tomcat.version>
+		<!--<tomcat.version>8.0.46</tomcat.version>
+		<tomcat.version>9.0.35</tomcat.version>-->
 	</properties>
 
 	<dependencies>
@@ -58,12 +58,12 @@
 		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-quartz</artifactId>
 		</dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>-->
@@ -81,10 +81,10 @@
 					<artifactId>spring-boot-starter-tomcat</artifactId>
 				</exclusion>
 
-				<!--<exclusion>
+				<exclusion>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-security</artifactId>
-				</exclusion>-->
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -129,12 +129,6 @@
 			<artifactId>spring-integration-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	<!--	<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>-->
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>

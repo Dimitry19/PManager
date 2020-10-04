@@ -11,12 +11,13 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @SpringBootApplication
 @EnableAspectJAutoProxy(proxyTargetClass=true)
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, 	DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
-//@EnableJpaRepositories(basePackages = "cm.packagemanager.pmanager")
+@EnableJpaRepositories(basePackages = "cm.packagemanager.pmanager")
 //@SpringBootApplication(scanBasePackages = "cm.packagemanager.pmanager")
 public class PackageApplication extends SpringBootServletInitializer {
 

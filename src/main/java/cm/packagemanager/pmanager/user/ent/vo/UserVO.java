@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.NaturalId;
@@ -85,8 +86,6 @@ public class UserVO extends CommonVO  {
 
 	private String retDescription;
 
-
-
 	public UserVO() {
 		super();
 	}
@@ -113,6 +112,15 @@ public class UserVO extends CommonVO  {
 		this.active = active;
 	}
 
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="ID")
+	public Long getId() {
+		return id;
+
+	}
+
 	@NaturalId
 	@Basic(optional = false)
 	@Column(name = "USERNAME", unique=true, insertable=true, updatable=true, nullable=false,length = FieldConstants.AUTH_USER_LEN)
@@ -128,13 +136,7 @@ public class UserVO extends CommonVO  {
 	}
 
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID")
-	public Long getId() {
-		return id;
 
-	}
 
 	@Basic(optional = false)
 	@Column(name="FIRST_NAME")
@@ -208,11 +210,13 @@ public class UserVO extends CommonVO  {
 
 
 	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", fetch=FetchType.EAGER)
+	@JsonManagedReference
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL,targetEntity=AnnounceVO.class, mappedBy="user", fetch=FetchType.EAGER)
+	@JsonManagedReference
 	public Set<AnnounceVO> getAnnounces() {
 		return announces;
 	}
@@ -309,8 +313,16 @@ public class UserVO extends CommonVO  {
 		this.retDescription = retDescription;
 	}
 
+	public void addAnnounces(AnnounceVO announce){
+		announces.add(announce);
+
+	}
 
 
+	public void addMessages(MessageVO message){
+		messages.add(message);
+
+	}
 
 	@Override
 	public String toString() {

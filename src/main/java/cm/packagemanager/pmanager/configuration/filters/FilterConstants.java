@@ -6,4 +6,5 @@ public class FilterConstants {
 	public static  final String CANCELLED_PRM="canc";
 	public static  final String ACTIVE_MBR="active";
 	public static  final String ACTIVE_MBR_PRM="act";
+
 }

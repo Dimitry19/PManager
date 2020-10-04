@@ -1,8 +1,5 @@
 package cm.packagemanager.pmanager.ws.controller.rest;
 
-import cm.packagemanager.pmanager.api.ApiError;
-import cm.packagemanager.pmanager.common.exception.ResponseException;
-import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -13,69 +10,36 @@ import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sun.jvm.hotspot.debugger.AddressException;
-
 import javax.mail.MessagingException;
-import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
-/*L'annotation @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600) permet de favoriser une communication distante entre le client et le serveur,
-		c'est-à-dire lorsque le client et le serveur sont déployés dans deux serveurs distincts, ce qui permet d'éviter des problèmes réseaux.*/
-@CrossOrigin(origins = "*", maxAge = 3600)
+import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.USER_WS;
+
+
 @RestController
-@RequestMapping("/ws/user/*")
-public class UserController {
+@RequestMapping(USER_WS)
+public class UserController extends CommonController{
 
 	protected final Log logger = LogFactory.getLog(UserController.class);
-
-
-	@Autowired
-	private ServletContext servletContext;
-
-	@ExceptionHandler(
-			{ ResponseException.class, Exception.class })
-
-	@ResponseBody
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	public String handleException(Exception e)
-	{
-		if (e instanceof ResponseException)
-		{
-			//logger.warn(e.getMessage());
-			return e.getMessage();
-		}
-		else
-		{
-			//logger.error("Error", e);
-		}
-		return "internal server error";
-	}
-
 
 	@Autowired
 	protected  UserService userService;
 
-	@Value("${ws.redirect.user}")
-	private String redirect;
-
-
-	@PostMapping(value = "/register")
+	@PostMapping(value = USER_WS_REGISTRATION)
 	public  Response register(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid RegisterDTO register) throws Exception{
 
 		logger.info("register request in");
@@ -115,7 +79,7 @@ public class UserController {
 
 					return pmResponse;
 				}else{
-					// cancellare l'utente appena creato
+					//userService.delete(usr);
 				}
 
 			}
@@ -127,7 +91,7 @@ public class UserController {
 	}
 
 
-	@RequestMapping(value="/confirm", method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
+	@RequestMapping(value=USER_WS_CONFIRMATION, method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
 	public Response showConfirmationPage(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception{
 
 
@@ -166,11 +130,9 @@ public class UserController {
 		return pmResponse;
 	}
 
-	@RequestMapping(value = "/ulogin", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
+	@RequestMapping(value = USER_WS_LOGIN, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 	public @ResponseBody
-	UserVO login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)
-			throws Exception
-	{
+	UserVO login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)	throws Exception{
 		logger.info("login request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		UserVO user = null;
@@ -202,55 +164,14 @@ public class UserController {
 	}
 
 
-	/*  TODO cette methode est encore à tester
-	@GetMapping(value = "/users")
-	public ResponseEntity<Collection<User>> getAllUsers() {
-		Collection<UserVO> users = userService.getAllUsers();
-		return new ResponseEntity<Collection<UserVO>>(users, HttpStatus.FOUND);
-	}
-	
-	*/
-	
-	@RequestMapping(value = "/users", method = RequestMethod.GET,headers = WSConstants.HEADER_ACCEPT)
-	@ResponseBody
-	String   allUsers(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)throws Exception
-	{
-
-
-		logger.info("all request in");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-
-		try
-		{
-			logger.info("login request out");
-			List<UserVO>  users=userService.getAllUsers();
-
-		}
-		catch (Exception e)
-		{
-			logger.error("Errore eseguendo login: ", e);
-			response.setStatus(400);
-			response.getWriter().write(e.getMessage());
-		}
-
-		return "" ;
-	}
-
-	@RequestMapping(value = "/", method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
-	public String goToHomePage() {
-		return redirect;
-	}
-
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
 	public UserVO getUser(@PathVariable("id") Long id) {
 		return userService.getUser(id);
 	}
 
 
 
-
-
-	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	@RequestMapping(value = USER_WS_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	String  update(HttpServletResponse response, HttpServletRequest request, @RequestBody RegisterDTO register){
 
@@ -270,7 +191,7 @@ public class UserController {
 	}
 
 
-	@RequestMapping(value = "/password", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	@RequestMapping(value = USER_WS_PASSWORD, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	Response  password(HttpServletResponse response, HttpServletRequest request, @RequestBody PasswordDTO password){
 
@@ -298,14 +219,14 @@ public class UserController {
 
 
 	//@RequestMapping(value = "/update/{id}", method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
-	@GetMapping("/update/{id}")
+	@GetMapping(USER_WS_UPDATE_ID)
 	public ResponseEntity<String> update(@PathVariable Long id) {
 		
 		  return new ResponseEntity<String>("Réponse du serveur: "+HttpStatus.OK.name(), HttpStatus.OK);
 	}
 
 
-	@PostMapping(value = "/role")
+	@PostMapping(value = USER_WS_ROLE)
 	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) {
 
 		  if (userService.setRoleToUser(roleToUser)){
@@ -318,7 +239,7 @@ public class UserController {
 	}
 
 
-	@GetMapping("/delete/user/{userId}")
+	@GetMapping(USER_WS_DELETE_USER)
 	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long userId) throws Exception{
 		logger.info("delete request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -349,7 +270,7 @@ public class UserController {
 		return pmResponse;
 	}
 
-	@RequestMapping(value = "/mail")
+	@RequestMapping(value = USER_WS_MAIL)
 	public Response sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailDTO mail) throws AddressException, MessagingException, IOException {
 
 
@@ -382,10 +303,11 @@ public class UserController {
 
 
 
-	@GetMapping("/all")
+	// Retrieve All Users
+	@GetMapping(USER_WS_USERS)
 	public ResponseEntity<List<UserVO>> findAll(
 			@Valid @Positive(message = "Page number should be a positive number") @RequestParam(required = false, defaultValue = "1") int page,
-			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "10") int size) {
+			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "20") int size) {
 
 		HttpHeaders headers = new HttpHeaders();
 		List<UserVO> users = userService.getAllUsers(page,size);
@@ -393,24 +315,11 @@ public class UserController {
 		return new ResponseEntity<List<UserVO>>(users, headers, HttpStatus.OK);
 	}
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(ConstraintViolationException.class)
-	public List<ApiError> handleValidationExceptions(ConstraintViolationException ex) {
-		return ex.getConstraintViolations()
-				.stream()
-				.map(err -> new ApiError(err.getPropertyPath().toString(), err.getMessage()))
-				.collect(Collectors.toList());
-	}
+	@RequestMapping(USER_WS_USERS_PAGE_NO)
+	@ResponseBody
+	public List<UserVO> users(@PathVariable int pageno,@PageableDefault(value=10, page=0) SpringDataWebProperties.Pageable pageable) throws ServletException {
 
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ExceptionHandler(UserNotFoundException.class)
-	public List<ApiError> handleNotFoundExceptions(UserNotFoundException ex) {
-		return Collections.singletonList(new ApiError("user.notfound", ex.getMessage()));
-	}
+		return userService.getAllUsers(pageno,size);
 
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(Exception.class)
-	public List<ApiError> handleOtherException(Exception ex) {
-		return Collections.singletonList(new ApiError(ex.getClass().getCanonicalName(), ex.getMessage()));
 	}
 }

@@ -6,6 +6,9 @@ import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -17,8 +20,6 @@ import java.util.Set;
 @Entity
 @Table(name = "ANNOUNCE", schema = "PUBLIC")
 public class AnnounceVO extends CommonVO {
-
-
 
 	private Long id;
 
@@ -38,17 +39,18 @@ public class AnnounceVO extends CommonVO {
 
 	private AnnounceType announceType;
 
+	private UserVO user;
+
 	private StatusEnum status;
 
 	private boolean cancelled;
 
 	private Set<MessageVO> messages=new HashSet<>();
 
-
-	private UserVO user;
-
-
 	private AnnounceIdVO announceId;
+
+	public AnnounceVO(){ super();}
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -158,17 +160,10 @@ public class AnnounceVO extends CommonVO {
 		this.status = status;
 	}
 
-	public AnnounceIdVO getAnnounceId() {
-		return announceId;
-	}
-
-	public void setAnnounceId(AnnounceIdVO announceId) {
-		this.announceId = announceId;
-	}
-
 
 	@Access(AccessType.PROPERTY)
 	@OneToMany(targetEntity=MessageVO.class, mappedBy="announce", fetch=FetchType.EAGER)
+	@JsonManagedReference
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
@@ -179,8 +174,9 @@ public class AnnounceVO extends CommonVO {
 
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="R_USER", referencedColumnName = "USERNAME",insertable=false ,updatable=false)
+	@ManyToOne(targetEntity=UserVO.class,fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinColumn(name="R_USER_ID")
+	@JsonBackReference
 	public UserVO getUser() {
 		return user;
 	}
@@ -200,6 +196,14 @@ public class AnnounceVO extends CommonVO {
 		this.cancelled = cancelled;
 	}
 
+	@NaturalId
+	public AnnounceIdVO getAnnounceId() {
+		return announceId;
+	}
+
+	public void setAnnounceId(AnnounceIdVO announceId) {
+		this.announceId = announceId;
+	}
 
 	@Override
 	public int hashCode() {

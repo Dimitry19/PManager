@@ -4,6 +4,7 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserIdVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
 import org.omg.IOP.TAG_ALTERNATE_IIOP_ADDRESS;
@@ -50,6 +51,7 @@ public class MessageVO extends CommonVO {
 	@Access(AccessType.PROPERTY)
 	@ManyToOne
 	@JoinColumn(name="R_ANNOUNCE", referencedColumnName = "ID")
+	@JsonBackReference
 	public AnnounceVO getAnnounce() {
 		return announce;
 	}
@@ -57,7 +59,8 @@ public class MessageVO extends CommonVO {
 
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="R_USER", referencedColumnName = "USERNAME",insertable=false ,updatable=false)
+	@JoinColumn(name="R_USER_ID")
+	@JsonBackReference
 	public UserVO getUser(){
 		return user;
 	}

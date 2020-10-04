@@ -1,0 +1,2 @@
+@JsonBackReference and @JsonManagedReference utilisés pour resourdre le probleme de recursivité json entre User et Annonce.
+    Error message : Could not write JSON: Infinite recursion (StackOverflowError); nested exception is com.fasterxml.jackson.databind.JsonMappingException: Infinite recursion

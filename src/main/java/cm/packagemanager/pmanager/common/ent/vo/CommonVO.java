@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.common.listener.audit.TableListener;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -42,4 +43,8 @@ public class CommonVO implements Auditable, Serializable {
 	public void setLastUpdated(Timestamp lastUpdated) {
 		this.lastUpdated=lastUpdated;
 	}
+
+
+
+
 }

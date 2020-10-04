@@ -3,9 +3,7 @@ package cm.packagemanager.pmanager.user.service;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.MailType;
-import cm.packagemanager.pmanager.user.ent.dao.RoleDAO;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
-import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.MailDTO;
@@ -13,9 +11,11 @@ import cm.packagemanager.pmanager.ws.requests.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.RoleToUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +30,9 @@ public class UserService{
 	UserDAO userDAO;
 
 
-
-
 	@Transactional
 	public UserVO login(LoginDTO lr ) throws UserException {
+
 
 		UserVO user=null;
 		if(lr.getUsername()!=null){
@@ -67,6 +66,10 @@ public class UserService{
 	public UserVO update(UserVO user) throws UserException {
 		return userDAO.update(user);
 	}
+	@Transactional
+	public boolean delete(UserVO user) throws UserException {
+		return userDAO.deleteUser(user);
+	}
 
 	@Transactional
 	public List<UserVO> getAllUsers(int page, int size) {
@@ -77,6 +80,7 @@ public class UserService{
 	public List<UserVO> getAllUsers() {
 		return userDAO.getAllUsers();
 	}
+
 
 	@Transactional
 	public UserVO getUser(Long id) {
@@ -129,6 +133,11 @@ public class UserService{
 	public UserVO findByToken(String token) {
 		return userDAO.findByToken(token);
 	}
+
+	/*@Transactional
+	public Page<UserVO> findAll(Pageable pageable) {
+		return userDAO.findAll(pageable);
+	}*/
 
 	public boolean buildAndSendMail(HttpServletRequest request , UserVO user){
 

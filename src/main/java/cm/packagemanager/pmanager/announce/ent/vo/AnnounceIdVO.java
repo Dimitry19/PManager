@@ -1,6 +1,8 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 import cm.packagemanager.pmanager.common.ent.vo.CommonIdVO;
+import cm.packagemanager.pmanager.user.ent.vo.UserIdVO;
+
 import javax.persistence.*;
 
 
@@ -8,6 +10,12 @@ import javax.persistence.*;
 public class AnnounceIdVO extends CommonIdVO {
 
 
+	public AnnounceIdVO(String token){
+		setToken(token);
+	}
+	public AnnounceIdVO(){
+
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -16,13 +24,12 @@ public class AnnounceIdVO extends CommonIdVO {
 
 		AnnounceIdVO that = (AnnounceIdVO) o;
 
-		if (!token.equals(that.token)) return false;
+		if (!that.token.equals(that.token)) return false;
 		return token.equals(that.token);
 	}
-
 	@Override
 	public int hashCode() {
-		int result = token.hashCode();
+		int result = 1;
 		result = 31 * result + token.hashCode();
 		return result;
 	}

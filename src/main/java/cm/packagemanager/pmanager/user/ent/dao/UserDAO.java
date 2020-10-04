@@ -7,11 +7,14 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.RegisterDTO;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDAO{
+public interface UserDAO {
 
 
 	Optional<UserVO> findByUsername(String username) throws BusinessResourceException, UserException;
@@ -20,6 +23,8 @@ public interface UserDAO{
 
 
 	UserVO findByToken(String token) throws BusinessResourceException;
+
+	UserVO findById(Long userId) throws BusinessResourceException;
 
 
 	UserVO login(String username) throws UserException;
@@ -62,6 +67,8 @@ public interface UserDAO{
 
 
 	public boolean setRole(String username, RoleEnum roleId)  throws BusinessResourceException;
+
+	public boolean deleteUser(UserVO user)  throws BusinessResourceException;
 
 
 

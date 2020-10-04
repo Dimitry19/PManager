@@ -3,13 +3,14 @@ package cm.packagemanager.pmanager.user.ent.bo;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
 
 
-public interface UserBO{
+public interface UserBO  {
 
 	Collection<UserVO> getAllUsers();
 

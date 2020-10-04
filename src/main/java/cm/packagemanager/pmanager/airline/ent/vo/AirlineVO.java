@@ -1,6 +1,11 @@
 package cm.packagemanager.pmanager.airline.ent.vo;
 
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
+import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
+import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.Filters;
+
 import javax.persistence.*;
 
 /**
@@ -9,7 +14,18 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="AIRLINE", schema = "PUBLIC")
+@NamedQueries({
+		@NamedQuery(name = AirlineVO.FINDBYCODE, query = "select a from AirlineVO a where id.code  =:code"),
+		@NamedQuery(name = AirlineVO.ALL, query = "select a from AirlineVO a order by description"),
+})
+@Filters({
+		@Filter(name = FilterConstants.CANCELLED)
+		//@Filter(name=FilterConstants.ACTIVE_MBR)
+})
 public class AirlineVO extends CommonVO {
+
+	public static final String FINDBYCODE="cm.packagemanager.pmanager.airline.ent.vo.AirlineVO.findByCode";
+	public static final String ALL="cm.packagemanager.pmanager.airline.ent.vo.AirlineVO.all";
 
 	@EmbeddedId
 	private AirlineIdVO id;

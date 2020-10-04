@@ -1,0 +1,15 @@
+http://localhost:8080/pmanager/ws/announce/create
+
+{
+
+   "departure":"Douala",
+   "arrival":"Bologna",
+   "startDate":"12/09/2020",
+    "endDate":"30/09/2020",
+   "airline":"AIRFRANCE",
+   "price":"19.50",
+   "weigth":"7.8",
+   "announceType":"B",
+   "userId":48
+
+}

@@ -12,10 +12,11 @@ public class WebServiceResponseCode
 	public static final String CANCELLED_USER_LABEL = "L'utilisateur a été eliminé correctement";
 	public static final String RETRIVEVE_PASSWORD_LABEL = "Le mot de posse a été envoyé correctement à <<";
 	public static final String LOGIN_OK_LABEL = "Login effectué correctement";
-
 	public static final String USER_REGISTER_LABEL = "Enregistrement completé, consultez votre email pour confirmer votre enregistrement";
-
 	public static final String USER_REGISTER_ACTIVE_LABEL = "Votre compte a été activé.. effectuez le login";
+
+
+	public static final String ANNOUNCE_CREATE_LABEL="Annonce créee correctement";
 
 	// NOK LABEL
 	public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre eliminé ccar n'existe plus";
@@ -27,4 +28,6 @@ public class WebServiceResponseCode
 	public static final String ERROR_INVALID_TOKEN_REGISTER_LABEL = "Token invalide , peut etre le lien a deja expiré";
 	public static final String ERROR_USED_TOKEN_REGISTER_LABEL = "Le compte a dejà été activé";
 	public static final String ERROR_LOGIN_LABEL = "Verifier les données d'accès";
+
+	public static final String ERROR_ANNOUNCE_CREATE_LABEL = "Annonce n'a pas pu etre cree";
 }

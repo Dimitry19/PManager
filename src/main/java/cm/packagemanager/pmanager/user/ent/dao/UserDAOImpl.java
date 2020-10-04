@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +58,6 @@ public  class UserDAOImpl implements UserDAO {
 
 	@Override
 	public UserVO login(String username, String password) {
-
 		return  internalLogin( username,  password).get();
 	}
 
@@ -99,9 +97,7 @@ public  class UserDAOImpl implements UserDAO {
 
 	@Override
 	public UserVO getUser(Long id) {
-
-		Session session = this.sessionFactory.getCurrentSession();
-		UserVO user = (UserVO) session.get(UserVO.class, id);
+		UserVO user = findById(id);
 		return user;
 
 	}
@@ -292,6 +288,22 @@ public  class UserDAOImpl implements UserDAO {
 		return null;
 	}
 
+	@Override
+	public UserVO findById(Long userId) throws BusinessResourceException {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		Query query=session.getNamedQuery(UserVO.FINDBYID);
+		query.setParameter("id", userId);
+
+		List<UserVO> users=query.list();
+		if(users!=null && users.size()>0) {
+			return users.get(0);
+		}
+		return null;
+	}
+
 	// MANDATORY: Transaction must be created before.
 	@Transactional(propagation = Propagation.MANDATORY)
 	public void registerUser(UserVO user) throws UserException {
@@ -381,10 +393,12 @@ public  class UserDAOImpl implements UserDAO {
 		UserVO user=(!users.isEmpty())?users.get(0):null;
 		if(user!=null){
 			user.setCancelled(true);
-			session.save(user);
-			//return (UserVO) session.get(UserVO.class, id);
+			session.merge(user);
+			return session.get(UserVO.class,user);
+		}else{
+			return null;
 		}
-		return null;
+
 	}
 
 	private Optional<UserVO> internalLogin(String username, String password) throws BusinessResourceException{
@@ -423,6 +437,15 @@ public  class UserDAOImpl implements UserDAO {
 		}else{
 			return false;
 		}
+	}
+
+	@Override
+	public boolean deleteUser(UserVO user) throws BusinessResourceException {
+		if(user!=null){
+
+			return updateDelete(user.getId())!=null;
+		}
+		return false;
 	}
 
 
