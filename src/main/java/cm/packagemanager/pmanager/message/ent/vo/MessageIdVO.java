@@ -15,14 +15,16 @@ public class MessageIdVO extends CommonIdVO {
 
 	public MessageIdVO(){}
 
+	public MessageIdVO(String token) {
+		this.token=token;
+	}
+
 	public MessageIdVO(Long id, String token) {
 
 		this.id=id;
 		this.token=token;
 	}
 
-
-	//@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")
 	public Long getId() {

@@ -1,4 +1,4 @@
-package cm.packagemanager.pmanager.ws.requests;
+package cm.packagemanager.pmanager.ws.requests.users;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

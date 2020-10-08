@@ -5,11 +5,8 @@ import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.MailDTO;
-import cm.packagemanager.pmanager.ws.requests.RegisterDTO;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
+import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
+import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 
 import java.util.List;
 import java.util.Optional;

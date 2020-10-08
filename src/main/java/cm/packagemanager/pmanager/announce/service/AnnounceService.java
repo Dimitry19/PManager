@@ -3,7 +3,9 @@ package cm.packagemanager.pmanager.announce.service;
 
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.ws.requests.AnnounceDTO;
+import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,12 +39,12 @@ public class AnnounceService {
 
 
 	@Transactional
-	public List<AnnounceVO> announces(int page, int size) {
-		return announceDAO.announces(page, size);
+	public MessageVO addMessage(MessageDTO mdto) {
+		return announceDAO.addMessage(mdto);
 	}
 
 	@Transactional
-	public List<AnnounceVO> announces() {
-		return announceDAO.announces();
+	public List<AnnounceVO> announces(int page, int size ) {
+		return announceDAO.announces(page, size);
 	}
 }

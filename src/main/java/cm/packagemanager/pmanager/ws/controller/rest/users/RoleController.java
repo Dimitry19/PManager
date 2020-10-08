@@ -1,10 +1,9 @@
-package cm.packagemanager.pmanager.ws.controller.rest;
+package cm.packagemanager.pmanager.ws.controller.rest.users;
 
 
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
-import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.user.service.RoleService;
-import cm.packagemanager.pmanager.ws.requests.RoleDTO;
+import cm.packagemanager.pmanager.ws.requests.users.RoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

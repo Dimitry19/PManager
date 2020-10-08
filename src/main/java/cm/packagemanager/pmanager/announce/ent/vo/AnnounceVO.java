@@ -4,10 +4,13 @@ import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
+import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -19,7 +22,16 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ANNOUNCE", schema = "PUBLIC")
+@NamedQueries({
+		@NamedQuery(name = AnnounceVO.FINDBYID,  query="select a from AnnounceVO a where id =:id"),
+
+})
+@Filters({
+		@Filter(name = FilterConstants.CANCELLED)
+})
 public class AnnounceVO extends CommonVO {
+
+	public static final String FINDBYID="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findById";
 
 	private Long id;
 
@@ -162,7 +174,7 @@ public class AnnounceVO extends CommonVO {
 
 
 	@Access(AccessType.PROPERTY)
-	@OneToMany(targetEntity=MessageVO.class, mappedBy="announce", fetch=FetchType.EAGER)
+	@OneToMany(cascade = {CascadeType.ALL},targetEntity=MessageVO.class, mappedBy="announce", fetch=FetchType.EAGER)
 	@JsonManagedReference
 	public Set<MessageVO> getMessages() {
 		return messages;
@@ -174,7 +186,7 @@ public class AnnounceVO extends CommonVO {
 
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=UserVO.class,fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name="R_USER_ID")
 	@JsonBackReference
 	public UserVO getUser() {
@@ -205,6 +217,17 @@ public class AnnounceVO extends CommonVO {
 		this.announceId = announceId;
 	}
 
+
+	public void addMessages(MessageVO message){
+		messages.add(message);
+	}
+
+	public void removeMessages(MessageVO message){
+
+		if(messages.contains(message)){
+			messages.remove(message);
+		}
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

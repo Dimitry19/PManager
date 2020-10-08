@@ -26,51 +26,47 @@ public class CommonController {
 
 
 	protected final Log logger = LogFactory.getLog(CommonController.class);
-	protected static final String INTERNAL_SERVER_ERROR="internal server error";
+	public static final String INTERNAL_SERVER_ERROR="internal server error";
 
 	/************ USER REQUEST*************/
-	protected static final String USER_WS="/ws/user/*";
-	protected static final String USER_WS_REGISTRATION="/register";
-	protected static final String USER_WS_CONFIRMATION="/confirm";
-	protected static final String USER_WS_LOGIN="/ulogin";
-	protected static final String USER_WS_USERS="/users";
-	protected static final String USER_WS_USERS_PAGE_NO="/users/{pageno}";
-	protected static final String USER_WS_MAIL="/mail";
-	protected static final String USER_WS_DELETE_USER= "/delete/user/{userId}";
-	protected static final String USER_WS_ROLE="/role";
-	protected static final String USER_WS_UPDATE_ID="/update/{id}";
-	protected static final String USER_WS_UPDATE="/update";
-	protected static final String USER_WS_PASSWORD="/password";
-	protected static final String USER_WS_USER_ID="/info/{id}";
+	public static final String USER_WS="/ws/user/*";
+	public static final String USER_WS_REGISTRATION="/register";
+	public static final String USER_WS_CONFIRMATION="/confirm";
+	public static final String USER_WS_LOGIN="/ulogin";
+	public static final String USER_WS_USERS="/users";
+	public static final String USER_WS_USERS_PAGE_NO="/users/{pageno}";
+	public static final String USER_WS_MAIL="/mail";
+	public static final String USER_WS_DELETE_USER= "/delete/user/{userId}";
+	public static final String USER_WS_ROLE="/role";
+	public static final String USER_WS_UPDATE_ID="/update/{id}";
+	public static final String USER_WS_UPDATE="/update";
+	public static final String USER_WS_PASSWORD="/password";
+	public static final String USER_WS_USER_ID="/info/{id}";
 
 
 	/************ ANNOUNCE REQUEST*************/
-	protected static final String ANNOUNCE_WS="/ws/announce/*";
-	protected static final String ANNOUNCE_WS_CREATE="/create";
-	protected static final String ANNOUNCE__WS_CONFIRMATION="/confirm";
-	protected static final String ANNOUNCE__WS_LOGIN="/ulogin";
-	protected static final String ANNOUNCE__WS_USERS="/users";
-	protected static final String ANNOUNCE__WS_USERS_PAGE_NO="/users/{pageno}";
-	protected static final String ANNOUNCE__WS_MAIL="/mail";
-	protected static final String ANNOUNCE__WS_DELETE_USER= "/delete/user/{userId}";
-	protected static final String ANNOUNCE__WS_ROLE="/role";
-	protected static final String ANNOUNCE__WS_UPDATE_ID="/update/{id}";
-
-
-
-
+	public static final String ANNOUNCE_WS="/ws/announce/*";
+	public static final String ANNOUNCE_WS_CREATE="/create";
+	public static final String ANNOUNCE__WS_ADD_MESSAGE="/add";
+	public static final String ANNOUNCE__WS_LOGIN="/ulogin";
+	public static final String ANNOUNCE__WS_USERS="/users";
+	public static final String ANNOUNCE__WS_USERS_PAGE_NO="/users/{pageno}";
+	public static final String ANNOUNCE__WS_MAIL="/mail";
+	public static final String ANNOUNCE__WS_DELETE_USER= "/delete/user/{userId}";
+	public static final String ANNOUNCE__WS_ROLE="/role";
+	public static final String ANNOUNCE__WS_UPDATE_ID="/update/{id}";
 
 
 
 	@Autowired
-	protected ServletContext servletContext;
+	public ServletContext servletContext;
 
 
 	@Value("${pagination.size}")
-	protected Integer size;
+	public Integer size;
 
 	@Value("${ws.redirect.user}")
-	protected String redirect;
+	public String redirect;
 
 	//@ExceptionHandler({ ResponseException.class, Exception.class })
 

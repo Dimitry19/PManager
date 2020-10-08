@@ -136,15 +136,12 @@ public class UserVO extends CommonVO  {
 	}
 
 
-
-
 	@Basic(optional = false)
 	@Column(name="FIRST_NAME")
 	public String getFirstName() {
 
 		return firstName;
 	}
-
 
 
 	@Basic(optional = false)
@@ -324,11 +321,7 @@ public class UserVO extends CommonVO  {
 
 	}
 
-	@Override
-	public String toString() {
-		return "User [phone=" + phone + ", firstName=" + firstName +
-				", lastName=" + lastName + ", email=" + email   + "]";
-	}
+
 
 	@Override
 	public int hashCode() {
@@ -379,4 +372,8 @@ public class UserVO extends CommonVO  {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "UserVO{" + "id=" + id + ", firstName='" + firstName + '\'' + ", username='" + username + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\'' + ", gender=" + gender + ", facebookId='" + facebookId + '\'' + ", googleId='" + googleId + '\'' + ", password='" + password + '\'' + ", active=" + active + ", cancelled=" + cancelled +  ", confirmationToken='" + confirmationToken + '\'' + '}';
+	}
 }

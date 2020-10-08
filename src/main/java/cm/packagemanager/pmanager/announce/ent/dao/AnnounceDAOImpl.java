@@ -1,33 +1,41 @@
 package cm.packagemanager.pmanager.announce.ent.dao;
 
-
+/**
+ * Dans la methode addMessage() La recherche entre user et announce a été faite dans cet ordre pour eviter le
+ * fait que l'attrbut utisateur ne soit pas dechiffré dans l'entité announce
+ *  et aussi eviter HibernateException: Found two representations of same collection
+ *
+ * */
 import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
 import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
-import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.utils.BigDecimalUtils;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
+import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
+import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
-import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.AnnounceDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+
 
 import static cm.packagemanager.pmanager.common.Constants.BUYER;
 import static cm.packagemanager.pmanager.common.Constants.SELLER;
@@ -54,13 +62,63 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 	}
 
 	@Override
-	public List<AnnounceVO> announces() throws BusinessResourceException {
+	public MessageVO addMessage(MessageDTO mdto) throws BusinessResourceException {
+
+
+		try {
+
+
+			UserVO user = userDAO.findByOnlyUsername(mdto.getUsername());
+			AnnounceVO announce=findById(mdto.getAnnounceId());
+
+			if(user!=null && announce!=null){
+				MessageVO message =new MessageVO();
+				message.setAnnounce(announce);
+				message.setContent(mdto.getContent());
+				message.setCancelled(false);
+				message.setUser(user);
+
+				Long id=calcolateId(MessageVO.GET_ID_SQL);
+
+				MessageIdVO messageId=new MessageIdVO(id,announce.getAnnounceId().getToken());
+				message.setId(messageId);
+				announce.addMessages(message);
+				Session session =sessionFactory.getCurrentSession();
+				tx = session.getTransaction();
+				session.save(message);
+				tx.commit();
+				return message;
+			}
+		} catch (Exception e) {
+
+			if (tx != null) {
+				tx.rollback();
+			}
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+
+
+
 		return null;
 	}
 
 	@Override
 	public AnnounceVO findByUser(UserVO user) throws BusinessResourceException {
 		return null;
+	}
+
+	@Override
+	public AnnounceVO findById(Long id) throws BusinessResourceException {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		Query query=session.getNamedQuery(AnnounceVO.FINDBYID);
+		query.setParameter("id", id);
+
+		AnnounceVO announce= (AnnounceVO) query.uniqueResult();
+
+		return announce;
 	}
 
 	@Override
@@ -136,6 +194,15 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 		return null;
 	}
 
+
+	private Long  calcolateId(String sqlnative){
+		Session sess = sessionFactory.openSession();
+		BigInteger id = (BigInteger)sess.createSQLQuery(sqlnative).getResultList().get(0);
+		sess.close();
+
+
+		return new Long(String.valueOf(id))+ new Long(1);
+	}
 	public UserVO addAnnounceToUser(AnnounceVO announce) throws BusinessResourceException {
 
 		UserVO user= announce.getUser();

@@ -18,6 +18,8 @@ import javax.persistence.*;
 @Table(name="MESSAGE", schema = "PUBLIC")
 public class MessageVO extends CommonVO {
 
+	public  final static String GET_ID_SQL="SELECT MAX(ID) FROM MESSAGE WHERE CANCELLED IS FALSE ";
+
 	private static final long serialVersionUID = 1L;
 
 	private UserVO user;

@@ -1,10 +1,15 @@
-package cm.packagemanager.pmanager.ws.controller.rest;
+package cm.packagemanager.pmanager.ws.controller.rest.users;
 
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.user.service.UserService;
-import cm.packagemanager.pmanager.ws.requests.*;
+import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
+import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
+import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
+import cm.packagemanager.pmanager.ws.requests.users.PasswordDTO;
+import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
+import cm.packagemanager.pmanager.ws.requests.users.RoleToUserDTO;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.apache.commons.logging.Log;
@@ -32,7 +37,7 @@ import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.USE
 
 @RestController
 @RequestMapping(USER_WS)
-public class UserController extends CommonController{
+public class UserController extends CommonController {
 
 	protected final Log logger = LogFactory.getLog(UserController.class);
 

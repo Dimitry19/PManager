@@ -1,0 +1,7 @@
+POST  http://localhost:8080/pmanager/ws/announce/add
+
+{
+   "announceId":1,
+   "username":"ftname",
+   "content":"demonstration"
+}

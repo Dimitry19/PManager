@@ -1,4 +1,4 @@
-package cm.packagemanager.pmanager.ws.requests;
+package cm.packagemanager.pmanager.ws.requests.users;
 
 public class PasswordDTO{
 

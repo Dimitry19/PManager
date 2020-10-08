@@ -1,13 +1,16 @@
-package cm.packagemanager.pmanager.ws.controller.rest;
+package cm.packagemanager.pmanager.ws.controller.rest.announce;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.service.AnnounceService;
 import cm.packagemanager.pmanager.constant.WSConstants;
+import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.*;
+import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
+import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.responses.Response;
-import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +32,9 @@ import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.ANN
 
 @RestController
 @RequestMapping(ANNOUNCE_WS)
-public class AnnouncesController extends CommonController {
+public class AnnounceController extends CommonController {
 
-	protected final Log logger = LogFactory.getLog(AnnouncesController.class);
+	protected final Log logger = LogFactory.getLog(AnnounceController.class);
 
 
 	@Autowired
@@ -77,13 +80,19 @@ public class AnnouncesController extends CommonController {
 	}
 
 
-	@PostMapping(value = USER_WS_ROLE)
-	public ResponseEntity<AnnounceVO> addMessage(@RequestBody @Valid RoleToUserDTO roleToUser) {
-
-			return null;
-			//return new ResponseEntity<AnnounceVO>(announceService.update(roleToUser.getEmail(),true), HttpStatus.NOT_FOUND);
+	@PostMapping(value = ANNOUNCE__WS_ADD_MESSAGE)
+	public  ResponseEntity<MessageVO> addMessage(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid MessageDTO mdto) throws Exception{
+		HttpHeaders headers = new HttpHeaders();
 
 
+		if (mdto!=null){
+			MessageVO message = announceService.addMessage(mdto);
+
+			if(message!=null){
+				return new ResponseEntity<MessageVO>(message, headers, HttpStatus.OK);
+			}
+		}
+		return null;
 	}
 
 

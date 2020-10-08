@@ -1,4 +1,4 @@
-package cm.packagemanager.pmanager.ws.requests;
+package cm.packagemanager.pmanager.ws.requests.users;
 
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 

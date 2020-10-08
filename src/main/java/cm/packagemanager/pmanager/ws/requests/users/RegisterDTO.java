@@ -1,6 +1,7 @@
-package cm.packagemanager.pmanager.ws.requests;
+package cm.packagemanager.pmanager.ws.requests.users;
 
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
+import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import javax.validation.constraints.Size;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterDTO extends LoginDTO{
+public class RegisterDTO extends LoginDTO {
 
 
 
