@@ -1,9 +1,11 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
-import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
+
+import cm.packagemanager.pmanager.common.ent.vo.CommonIdVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
+import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -12,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -24,7 +25,6 @@ import java.util.Set;
 @Table(name = "ANNOUNCE", schema = "PUBLIC")
 @NamedQueries({
 		@NamedQuery(name = AnnounceVO.FINDBYID,  query="select a from AnnounceVO a where id =:id"),
-
 })
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
@@ -43,9 +43,11 @@ public class AnnounceVO extends CommonVO {
 
 	private Date endDate;
 
-	private AirlineVO airline;
+	private TransportEnum transport;
 
 	private BigDecimal price;
+	private BigDecimal priceFastest;
+	private BigDecimal priceFast;
 
 	private BigDecimal weigth;
 
@@ -60,7 +62,6 @@ public class AnnounceVO extends CommonVO {
 	private Set<MessageVO> messages=new HashSet<>();
 
 	private AnnounceIdVO announceId;
-
 	public AnnounceVO(){ super();}
 
 
@@ -118,13 +119,14 @@ public class AnnounceVO extends CommonVO {
 	}
 
 
-	@OneToOne(cascade = CascadeType.ALL)
-	public AirlineVO getAirline() {
-		return airline;
+	@Enumerated(EnumType.STRING)
+	@Column(name="TRANSPORT", updatable = true, nullable = false)
+	public TransportEnum  getTransport() {
+		return transport;
 	}
 
-	public void setAirline(AirlineVO airline) {
-		this.airline = airline;
+	public void setTransport(TransportEnum transport) {
+		this.transport = transport;
 	}
 
 	@Basic(optional = false)
@@ -136,7 +138,27 @@ public class AnnounceVO extends CommonVO {
 	public void setWeigth(BigDecimal weigth) {
 		this.weigth = weigth;
 	}
+/*
+	@Basic(optional = false)
+	@Column(name = "PRICE_FASTEST", nullable = false)
+	public BigDecimal getPriceFastest() {
+		return priceFastest;
+	}
 
+	public void setPriceFastest(BigDecimal priceFastest) {
+		this.priceFastest = priceFastest;
+	}
+
+	@Basic(optional = false)
+	@Column(name = "PRICE_FAST", nullable = false)
+	public BigDecimal getPriceFast() {
+		return priceFast;
+	}
+
+	public void setPriceFast(BigDecimal priceFast) {
+		this.priceFast = priceFast;
+	}
+*/
 	@Basic(optional = false)
 	@Column(name = "PRICE", nullable = false)
 	public BigDecimal getPrice() {
@@ -150,7 +172,7 @@ public class AnnounceVO extends CommonVO {
 
 
 	@Enumerated(EnumType.STRING)
-	@Column(length = 10)
+	@Column(name = "ANNOUNCE_TYPE",length = 10)
 	public AnnounceType getAnnounceType(){
 		return announceType;
 	}
@@ -162,7 +184,7 @@ public class AnnounceVO extends CommonVO {
 
 
 	@Enumerated(EnumType.STRING)
-	@Column(length = 10)
+	@Column(name = "STATUS",length = 10)
 	public StatusEnum getStatus(){
 		return status;
 	}
@@ -187,7 +209,7 @@ public class AnnounceVO extends CommonVO {
 
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name="R_USER_ID")
+	@JoinColumn(name="R_USER_ID", updatable = false)
 	@JsonBackReference
 	public UserVO getUser() {
 		return user;

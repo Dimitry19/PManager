@@ -10,13 +10,13 @@ public class AnnounceDTO {
 
 	private String endDate;
 
-	private String airline;
-
 	private String price;
 
 	private String weigth;
 
 	private String announceType;
+
+	private String transport;
 
 	private Long userId;
 
@@ -53,13 +53,6 @@ public class AnnounceDTO {
 		this.endDate = endDate;
 	}
 
-	public String getAirline() {
-		return airline;
-	}
-
-	public void setAirline(String airline) {
-		this.airline = airline;
-	}
 
 	public String getPrice() {
 		return price;
@@ -91,5 +84,13 @@ public class AnnounceDTO {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getTransport() {
+		return transport;
+	}
+
+	public void setTransport(String transport) {
+		this.transport = transport;
 	}
 }

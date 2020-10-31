@@ -46,10 +46,9 @@ public class CommonController {
 
 	/************ ANNOUNCE REQUEST*************/
 	public static final String ANNOUNCE_WS="/ws/announce/*";
+	public static final String ANNOUNCES_WS="/announces/{pageno}";
 	public static final String ANNOUNCE_WS_CREATE="/create";
 	public static final String ANNOUNCE__WS_ADD_MESSAGE="/add";
-	public static final String ANNOUNCE__WS_LOGIN="/ulogin";
-	public static final String ANNOUNCE__WS_USERS="/users";
 	public static final String ANNOUNCE__WS_USERS_PAGE_NO="/users/{pageno}";
 	public static final String ANNOUNCE__WS_MAIL="/mail";
 	public static final String ANNOUNCE__WS_DELETE_USER= "/delete/user/{userId}";

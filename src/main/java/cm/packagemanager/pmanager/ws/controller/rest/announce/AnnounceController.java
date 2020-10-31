@@ -9,8 +9,8 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
-import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.responses.Response;
+import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +43,11 @@ public class AnnounceController extends CommonController {
 
 	@RequestMapping(value = ANNOUNCE_WS_CREATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	AnnounceVO  create(HttpServletResponse response, HttpServletRequest request, @RequestBody AnnounceDTO ar) throws Exception {
+	Response  create(HttpServletResponse response, HttpServletRequest request, @RequestBody AnnounceDTO ar) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		AnnounceVO announce = null;
+		Response res=new Response();
 
 		try
 		{
@@ -55,22 +56,22 @@ public class AnnounceController extends CommonController {
 				announce=announceService.create(ar);
 
 				if(announce!=null){
-					//announce.setRetCode(WebServiceResponseCode.OK_CODE);
-					//announce.setRetDescription(WebServiceResponseCode.ANNOUNCE_CREATE_LABEL);
+					res.setRetCode(WebServiceResponseCode.OK_CODE);
+					res.setRetDescription(WebServiceResponseCode.ANNOUNCE_CREATE_LABEL);
 				}else{
 					announce=new AnnounceVO();
-					//announce.setRetCode(WebServiceResponseCode.NOK_CODE);
-					//announce.setRetDescription(WebServiceResponseCode.ERROR_ANNOUNCE_CREATE_LABEL);
+					res.setRetCode(WebServiceResponseCode.NOK_CODE);
+					res.setRetDescription(WebServiceResponseCode.ERROR_ANNOUNCE_CREATE_LABEL);
 				}
 			}
 		}
 		catch (Exception e)	{
-			logger.error("Errore eseguendo login: ", e);
+			logger.error("Errore eseguendo add announce: ", e);
 			response.setStatus(400);
 			response.getWriter().write(e.getMessage());
 		}
 
-		return  announce;
+		return  res;
 	}
 
 	@GetMapping(USER_WS_UPDATE_ID)
@@ -121,14 +122,13 @@ public class AnnounceController extends CommonController {
 
 
 
-	// Retrieve All Users
-	@GetMapping(USER_WS_USERS)
+	@GetMapping(ANNOUNCES_WS)
 	public ResponseEntity<List<AnnounceVO>> findAll(
 			@Valid @Positive(message = "Page number should be a positive number") @RequestParam(required = false, defaultValue = "1") int page,
-			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "10") int size) {
+			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "12") int size) {
 
 		HttpHeaders headers = new HttpHeaders();
-		List<AnnounceVO> announces = null;//announceService.getAllUsers(page,size);
+		List<AnnounceVO> announces = announceService.announces(page,size);
 		headers.add("X-Users-Total", Long.toString(announces.size()));
 		return new ResponseEntity<List<AnnounceVO>>(announces, headers, HttpStatus.OK);
 	}

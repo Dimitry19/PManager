@@ -10,11 +10,14 @@ import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
 import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
+import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.utils.BigDecimalUtils;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
+import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
@@ -37,8 +40,9 @@ import java.util.Date;
 import java.util.List;
 
 
-import static cm.packagemanager.pmanager.common.Constants.BUYER;
-import static cm.packagemanager.pmanager.common.Constants.SELLER;
+import static cm.packagemanager.pmanager.common.Constants.*;
+
+
 
 @Repository
 public class AnnounceDAOImpl implements AnnounceDAO {
@@ -58,7 +62,26 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 
 	@Override
 	public List<AnnounceVO> announces(int page, int size) throws BusinessResourceException {
-		return null;
+
+		int paginatedCount = 0;
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		Query query = session.createQuery("from AnnounceVO");
+		query.setFirstResult(page);
+		//query.setMaxResults(size);
+
+		List<AnnounceVO> announces = (List) query.list();
+
+		if (announces != null) {
+			paginatedCount = announces.size();
+			System.out.println("Total Results: " + paginatedCount);
+			for (AnnounceVO announce : announces) {
+				System.out.println("Retrieved Product using Query. Name: " + announce.getId());
+			}
+		}
+
+		return announces;
 	}
 
 	@Override
@@ -125,6 +148,7 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 	public AnnounceVO create(AnnounceDTO adto) throws  BusinessResourceException{
 
 
+
 		if(adto!=null){
 
 			BigDecimal price =BigDecimalUtils.convertStringToBigDecimal(adto.getPrice());
@@ -132,15 +156,13 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 			Date startDate =DateUtils.StringToDate(adto.getStartDate());
 			Date endDate =DateUtils.StringToDate(adto.getEndDate());
 
-			AirlineVO airline = airlineDAO.findByCode(adto.getAirline());
 			UserVO user = userDAO.findById(adto.getUserId());
 
-			if(airline==null || user==null){
+			if(user==null){
 				return null;
 			}
 
 			AnnounceVO announce= new AnnounceVO();
-			announce.setAirline(airline);
 			announce.setPrice(price);
 			announce.setWeigth(weigth);
 			announce.setUser(user);
@@ -151,7 +173,7 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 			announce.setStatus(StatusEnum.VALID);
 			announce.setMessages(null);
 			announce.setCancelled(false);
-			announce.setAnnounceId(new AnnounceIdVO(airline.getId().getToken()));
+			announce.setAnnounceId(new AnnounceIdVO(DEFAULT_TOKEN));
 
 
 			switch (adto.getAnnounceType()){
@@ -160,6 +182,18 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 					break;
 				case SELLER:
 					announce.setAnnounceType(AnnounceType.SELLER);
+					break;
+			}
+
+			switch (adto.getTransport()){
+				case AP:
+					announce.setTransport(TransportEnum.PLANE);
+					break;
+				case Constants.AUT:
+					announce.setTransport(TransportEnum.AUTO);
+					break;
+				case Constants.NV:
+					announce.setTransport(TransportEnum.NAVE);
 					break;
 			}
 			Session session = this.sessionFactory.getCurrentSession();
