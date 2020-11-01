@@ -47,4 +47,9 @@ public class AnnounceService {
 	public List<AnnounceVO> announces(int page, int size ) {
 		return announceDAO.announces(page, size);
 	}
+
+	@Transactional
+	public int  count(int page, int size) {
+		return announceDAO.count( page,  size);
+	}
 }

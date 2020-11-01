@@ -61,6 +61,24 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 	Transaction tx;
 
 	@Override
+	public int count(int page, int size) throws BusinessResourceException {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		Query query = session.createQuery("from AnnounceVO");
+		query.setFirstResult(page);
+		query.setMaxResults(size);
+
+		//query.setMaxResults(size);
+
+		int count = query.list()!=null ? (int)query.list().size():0;
+
+
+		return count;
+	}
+
+	@Override
 	public List<AnnounceVO> announces(int page, int size) throws BusinessResourceException {
 
 		int paginatedCount = 0;
@@ -69,7 +87,7 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 		session.enableFilter(FilterConstants.ACTIVE_MBR);
 		Query query = session.createQuery("from AnnounceVO");
 		query.setFirstResult(page);
-		//query.setMaxResults(size);
+		query.setMaxResults(size);
 
 		List<AnnounceVO> announces = (List) query.list();
 
@@ -234,8 +252,12 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 		BigInteger id = (BigInteger)sess.createSQLQuery(sqlnative).getResultList().get(0);
 		sess.close();
 
+		if(id!=null){
+			 return new Long(String.valueOf(id))+ new Long(1);
+		}
 
-		return new Long(String.valueOf(id))+ new Long(1);
+
+		return new Long(1);
 	}
 	public UserVO addAnnounceToUser(AnnounceVO announce) throws BusinessResourceException {
 

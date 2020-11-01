@@ -206,7 +206,7 @@ public class UserVO extends CommonVO  {
 	}
 
 
-	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", fetch=FetchType.LAZY)
 	@JsonManagedReference
 	public Set<MessageVO> getMessages() {
 		return messages;

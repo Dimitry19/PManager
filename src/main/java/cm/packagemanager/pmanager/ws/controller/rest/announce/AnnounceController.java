@@ -9,6 +9,7 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
+import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.apache.commons.logging.Log;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.ANNOUNCE_WS;
@@ -123,14 +125,30 @@ public class AnnounceController extends CommonController {
 
 
 	@GetMapping(ANNOUNCES_WS)
-	public ResponseEntity<List<AnnounceVO>> findAll(
-			@Valid @Positive(message = "Page number should be a positive number") @RequestParam(required = false, defaultValue = "1") int page,
+	public ResponseEntity<PaginateResponse> findAll(
+			@Valid @Positive(message = "Page number should be a positive number") @RequestParam int page,
 			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "12") int size) {
 
 		HttpHeaders headers = new HttpHeaders();
-		List<AnnounceVO> announces = announceService.announces(page,size);
-		headers.add("X-Users-Total", Long.toString(announces.size()));
-		return new ResponseEntity<List<AnnounceVO>>(announces, headers, HttpStatus.OK);
+		PaginateResponse paginateResponse=new PaginateResponse();
+
+		int count = announceService.count(page,size);
+		if(count==0){
+			paginateResponse.setCount(count);
+			paginateResponse.setResults(new ArrayList());
+			headers.add("X-Users-Total", Long.toString(count));
+
+
+		}else{
+			List<AnnounceVO> announces = announceService.announces(page,size);
+			paginateResponse.setCount(count);
+			paginateResponse.setResults(announces);
+			headers.add("X-Users-Total", Long.toString(announces.size()));
+		}
+
+
+
+		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
 
 	@RequestMapping(USER_WS_USERS_PAGE_NO)

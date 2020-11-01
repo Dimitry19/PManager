@@ -12,6 +12,7 @@ import java.util.List;
 public interface AnnounceDAO {
 
 	List<AnnounceVO> announces(int page, int size) throws BusinessResourceException;
+	int count(int page, int size) throws BusinessResourceException;
 
 	MessageVO addMessage(MessageDTO messageDTO) throws BusinessResourceException;
 
