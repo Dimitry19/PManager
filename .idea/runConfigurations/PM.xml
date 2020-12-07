@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="PM" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <log_file alias="LOG" path="$PROJECT_DIR$/src/main/resources/log4j2.xml" />
     <module name="PManager" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="cm.packagemanager.pmanager.PackageApplication" />
     <option name="DEBUG_MODE" value="true" />

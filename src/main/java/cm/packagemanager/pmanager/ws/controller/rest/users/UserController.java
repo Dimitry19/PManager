@@ -6,10 +6,7 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.user.service.UserService;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
-import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
-import cm.packagemanager.pmanager.ws.requests.users.PasswordDTO;
-import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
-import cm.packagemanager.pmanager.ws.requests.users.RoleToUserDTO;
+import cm.packagemanager.pmanager.ws.requests.users.*;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.apache.commons.logging.Log;
@@ -171,28 +168,26 @@ public class UserController extends CommonController {
 
 	@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
 	public UserVO getUser(@PathVariable("id") Long id) {
-		return userService.getUser(id);
+		try{
+
+				return userService.getUser(id);
+		}catch (Exception e){
+
+		}
+		return null;
 	}
 
 
 
 	@RequestMapping(value = USER_WS_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	String  update(HttpServletResponse response, HttpServletRequest request, @RequestBody RegisterDTO register){
+	UserVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateUserDTO userDTO){
 
-		if(register!=null){
-
-			UserVO user = new UserVO();
-			user.setEmail(register.getEmail());
-			user.setUsername(register.getUsername());
-			user.setPassword(register.getPassword());
-
-
-			userService.updateUser(user);
+		if(userDTO!=null){
+			return  userService.updateUser(userDTO);
 		}
 
-
-		return redirect;
+		return null;
 	}
 
 
@@ -220,14 +215,6 @@ public class UserController extends CommonController {
 
 
 		return pmResponse;
-	}
-
-
-	//@RequestMapping(value = "/update/{id}", method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
-	@GetMapping(USER_WS_UPDATE_ID)
-	public ResponseEntity<String> update(@PathVariable Long id) {
-		
-		  return new ResponseEntity<String>("Réponse du serveur: "+HttpStatus.OK.name(), HttpStatus.OK);
 	}
 
 

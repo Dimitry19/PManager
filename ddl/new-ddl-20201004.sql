@@ -1,5 +1,4 @@
-create schema PUBLIC
-;
+create schema PUBLIC;
 
 create table AIRLINE
 (
@@ -62,13 +61,14 @@ create table ANNOUNCE
 		primary key,
 	DATECREATED TIMESTAMP(26,6),
 	LASTUPDATED TIMESTAMP(26,6),
-	TOKEN VARCHAR(255) not null
-		unique,
+	TOKEN VARCHAR(255) not null unique,
 	ANNOUNCETYPE VARCHAR(10),
 	ARRIVAL VARCHAR(255) not null,
 	CANCELLED BOOLEAN not null,
 	DEPARTURE VARCHAR(255) not null,
 	END_DATE DATE(10) not null,
+	PRENIUM_PRICE DECIMAL(19,2) not null,
+	GOLD_PRICE DECIMAL(19,2) not null,
 	PRICE DECIMAL(19,2) not null,
 	START_DATE DATE(10) not null,
 	STATUS VARCHAR(10),

@@ -5,10 +5,10 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.service.AnnounceService;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
-import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
@@ -76,14 +76,16 @@ public class AnnounceController extends CommonController {
 		return  res;
 	}
 
-	@GetMapping(USER_WS_UPDATE_ID)
-	public ResponseEntity<String> update(@PathVariable Long id) {
+	@PostMapping(value = ANNOUNCE_WS_UPDATE)
+	AnnounceVO  update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
 
-		return new ResponseEntity<String>("Réponse du serveur: "+HttpStatus.OK.name(), HttpStatus.OK);
+		if (uar==null)
+			return null;
+		return announceService.update(uar);
 	}
 
 
-	@PostMapping(value = ANNOUNCE__WS_ADD_MESSAGE)
+	@PostMapping(value = ANNOUNCE_WS_ADD_MESSAGE)
 	public  ResponseEntity<MessageVO> addMessage(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid MessageDTO mdto) throws Exception{
 		HttpHeaders headers = new HttpHeaders();
 
@@ -99,8 +101,8 @@ public class AnnounceController extends CommonController {
 	}
 
 
-	@GetMapping(USER_WS_DELETE_USER)
-	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long userId) throws Exception{
+	@GetMapping(ANNOUNCE_WS_DELETE)
+	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long announceId) throws Exception{
 		logger.info("delete request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
@@ -151,11 +153,11 @@ public class AnnounceController extends CommonController {
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
 
-	@RequestMapping(USER_WS_USERS_PAGE_NO)
+	@RequestMapping(ANNOUNCE_WS_USER_ID_PAGE_NO)
 	@ResponseBody
-	public List<UserVO> getAllPosts(@PathVariable int pageno,@PageableDefault(value=10, page=0) SpringDataWebProperties.Pageable pageable) throws ServletException {
+	public List<AnnounceVO> getAllPosts(@PathVariable int pageno,@PageableDefault(value=10, page=0) SpringDataWebProperties.Pageable pageable) throws ServletException {
 
-		return null;//userService.getAllUsers(pageno,size);
+		return announceService.announces(pageno,size);
 
 	}
 

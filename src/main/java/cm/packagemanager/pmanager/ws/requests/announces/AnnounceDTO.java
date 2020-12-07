@@ -12,6 +12,10 @@ public class AnnounceDTO {
 
 	private String price;
 
+	private String preniumPrice;
+
+	private String goldPrice;
+
 	private String weigth;
 
 	private String announceType;
@@ -62,6 +66,14 @@ public class AnnounceDTO {
 		this.price = price;
 	}
 
+	public String getPreniumPrice() {
+		return preniumPrice;
+	}
+
+	public void setPreniumPrice(String preniumPrice) {
+		this.preniumPrice = preniumPrice;
+	}
+
 	public String getWeigth() {
 		return weigth;
 	}
@@ -92,5 +104,13 @@ public class AnnounceDTO {
 
 	public void setTransport(String transport) {
 		this.transport = transport;
+	}
+
+	public String getGoldPrice() {
+		return goldPrice;
+	}
+
+	public void setGoldPrice(String goldPrice) {
+		this.goldPrice = goldPrice;
 	}
 }

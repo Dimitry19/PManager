@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class AnnounceService {
 
 
 	@Transactional
-	public AnnounceVO update(AnnounceVO announce) throws Exception {
+	public AnnounceVO update(UpdateAnnounceDTO announce) throws Exception {
 		return announceDAO.update(announce);
 	}
 

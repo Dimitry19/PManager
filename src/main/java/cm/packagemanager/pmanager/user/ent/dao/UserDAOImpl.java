@@ -12,6 +12,7 @@ import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
+import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -146,6 +147,24 @@ public  class UserDAOImpl implements UserDAO {
 		}
 		return null;
 	}
+
+	@Override
+	public UserVO updateUser(UpdateUserDTO userDTO) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+
+		UserVO user=findById(userDTO.getId());
+
+		if (user!=null){
+			user.setEmail(userDTO.getEmail());
+			user.setPhone(userDTO.getPhone());
+			session.update(user);
+			return user;
+
+		}else throw new BusinessResourceException("Aucun utilisateur trouvé");
+
+	}
+
 
 	@Override
 	public void updateUser(UserVO user) {

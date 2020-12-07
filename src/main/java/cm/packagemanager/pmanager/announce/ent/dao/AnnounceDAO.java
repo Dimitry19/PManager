@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 
 import java.util.List;
 
@@ -27,6 +28,8 @@ public interface AnnounceDAO {
 	AnnounceVO delete(Integer id) throws BusinessResourceException;
 
 	AnnounceVO addComment(MessageVO message) throws BusinessResourceException;
+
+	AnnounceVO update(UpdateAnnounceDTO announceDTO) throws BusinessResourceException;
 
 	AnnounceVO update(AnnounceVO announce) throws BusinessResourceException;
 

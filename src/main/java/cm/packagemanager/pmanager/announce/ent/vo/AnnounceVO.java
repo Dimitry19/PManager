@@ -1,7 +1,6 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 
-import cm.packagemanager.pmanager.common.ent.vo.CommonIdVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
@@ -46,8 +45,8 @@ public class AnnounceVO extends CommonVO {
 	private TransportEnum transport;
 
 	private BigDecimal price;
-	private BigDecimal priceFastest;
-	private BigDecimal priceFast;
+	private BigDecimal goldPrice;
+	private BigDecimal preniumPrice;
 
 	private BigDecimal weigth;
 
@@ -138,27 +137,27 @@ public class AnnounceVO extends CommonVO {
 	public void setWeigth(BigDecimal weigth) {
 		this.weigth = weigth;
 	}
-/*
-	@Basic(optional = false)
-	@Column(name = "PRICE_FASTEST", nullable = false)
-	public BigDecimal getPriceFastest() {
-		return priceFastest;
-	}
-
-	public void setPriceFastest(BigDecimal priceFastest) {
-		this.priceFastest = priceFastest;
-	}
 
 	@Basic(optional = false)
-	@Column(name = "PRICE_FAST", nullable = false)
-	public BigDecimal getPriceFast() {
-		return priceFast;
+	@Column(name = "GOLD_PRICE", nullable = false)
+	public BigDecimal getGoldPrice() {
+		return goldPrice;
 	}
 
-	public void setPriceFast(BigDecimal priceFast) {
-		this.priceFast = priceFast;
+	public void setGoldPrice(BigDecimal goldPrice) {
+		this.goldPrice = goldPrice;
 	}
-*/
+
+	@Basic(optional = false)
+	@Column(name = "PRENIUM_PRICE", nullable = false)
+	public BigDecimal getPreniumPrice() {
+		return preniumPrice;
+	}
+
+	public void setPreniumPrice(BigDecimal preniumPrice) {
+		this.preniumPrice = preniumPrice;
+	}
+
 	@Basic(optional = false)
 	@Column(name = "PRICE", nullable = false)
 	public BigDecimal getPrice() {

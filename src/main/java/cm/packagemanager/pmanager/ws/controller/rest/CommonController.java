@@ -48,12 +48,19 @@ public class CommonController {
 	public static final String ANNOUNCE_WS="/ws/announce/*";
 	public static final String ANNOUNCES_WS="/announces";
 	public static final String ANNOUNCE_WS_CREATE="/create";
-	public static final String ANNOUNCE__WS_ADD_MESSAGE="/add";
-	public static final String ANNOUNCE__WS_USERS_PAGE_NO="/users/{pageno}";
-	public static final String ANNOUNCE__WS_MAIL="/mail";
-	public static final String ANNOUNCE__WS_DELETE_USER= "/delete/user/{userId}";
-	public static final String ANNOUNCE__WS_ROLE="/role";
-	public static final String ANNOUNCE__WS_UPDATE_ID="/update/{id}";
+	public static final String ANNOUNCE_WS_ADD_MESSAGE="/add";
+	public static final String ANNOUNCE_WS_USER_ID_PAGE_NO="/announces/{pageno}";
+	public static final String ANNOUNCE_WS_DELETE= "/delete/announce/{announceId}";
+	public static final String ANNOUNCE_WS_UPDATE="/update";
+
+
+
+	/************ MESSAGE REQUEST*************/
+	public static final String MESSAGE_WS="/ws/message/*";
+	public static final String MESSAGES_WS="/messages";
+	public static final String MESSAGE_WS_USER_ID_PAGE_NO="/messages/{pageno}";
+	public static final String MESSAGE_WS_DELETE= "/delete/message/{messageId}";
+	public static final String MESSAGE_WS_UPDATE="/update";
 
 
 
@@ -67,7 +74,7 @@ public class CommonController {
 	@Value("${ws.redirect.user}")
 	public String redirect;
 
-	//@ExceptionHandler({ ResponseException.class, Exception.class })
+	@ExceptionHandler({ ResponseException.class, Exception.class })
 
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)

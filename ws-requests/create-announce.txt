@@ -2,12 +2,14 @@ http://localhost:8080/pmanager/ws/announce/create
 
 {
 
-    "announceType": "B",
+      "announceType": "B",
       "arrival": "YAOUNDE",
       "compagnie": "",
       "departure": "BOLOGNE",
       "endDate": "28/11/2020, 17:29:30",
-      "price": 7,
+      "price": 90,
+      "preniumPrice":150,
+      "goldPrice":150,
       "startDate": "14/11/2020, 17:29:30",
       "transport": "A",
       "userId": 2,

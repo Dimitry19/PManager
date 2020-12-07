@@ -9,6 +9,7 @@ import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RoleToUserDTO;
+import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,6 +64,7 @@ public class UserService{
 	public UserVO update(UserVO user) throws UserException {
 		return userDAO.update(user);
 	}
+
 	@Transactional
 	public boolean delete(UserVO user) throws UserException {
 		return userDAO.deleteUser(user);
@@ -90,8 +92,8 @@ public class UserService{
 	}
 
 	@Transactional
-	public void updateUser(UserVO user) {
-		userDAO.updateUser(user);
+	public UserVO updateUser(UpdateUserDTO userDTO) {
+		return userDAO.updateUser(userDTO);
 	}
 
 	@Transactional

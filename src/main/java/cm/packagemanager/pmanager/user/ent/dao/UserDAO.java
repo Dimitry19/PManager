@@ -7,6 +7,7 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
+import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,13 +42,16 @@ public interface UserDAO {
 	public UserVO register(RegisterDTO register)  throws BusinessResourceException;
 
 	public void updateUser(UserVO user)  throws BusinessResourceException;
-	
+
+	public UserVO updateUser(UpdateUserDTO user)  throws BusinessResourceException;
+
 	
 	public boolean managePassword(UserVO user)  throws BusinessResourceException;
 
 	public boolean deleteUser(Long id)  throws BusinessResourceException;
 
 	public UserVO save(UserVO user)  throws BusinessResourceException;
+
 	public UserVO update(UserVO user)  throws BusinessResourceException;
 
 

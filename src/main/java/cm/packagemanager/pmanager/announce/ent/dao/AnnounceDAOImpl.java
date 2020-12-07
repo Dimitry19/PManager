@@ -7,7 +7,6 @@ package cm.packagemanager.pmanager.announce.ent.dao;
  *
  * */
 import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
-import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.Constants;
@@ -17,7 +16,7 @@ import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.utils.BigDecimalUtils;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
-import cm.packagemanager.pmanager.common.utils.StringUtils;
+import cm.packagemanager.pmanager.common.utils.SQLUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
@@ -25,6 +24,8 @@ import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
+import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -108,7 +109,7 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 
 		try {
 
-
+			Session session=null;
 			UserVO user = userDAO.findByOnlyUsername(mdto.getUsername());
 			AnnounceVO announce=findById(mdto.getAnnounceId());
 
@@ -119,15 +120,14 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 				message.setCancelled(false);
 				message.setUser(user);
 
-				Long id=calcolateId(MessageVO.GET_ID_SQL);
+				Long id=SQLUtils.calcolateId(sessionFactory,MessageVO.GET_ID_SQL);
 
 				MessageIdVO messageId=new MessageIdVO(id,announce.getAnnounceId().getToken());
 				message.setId(messageId);
 				announce.addMessages(message);
-				Session session =sessionFactory.getCurrentSession();
-				tx = session.getTransaction();
+
+				session=sessionFactory.getCurrentSession();
 				session.save(message);
-				tx.commit();
 				return message;
 			}
 		} catch (Exception e) {
@@ -165,8 +165,6 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 	@Override
 	public AnnounceVO create(AnnounceDTO adto) throws  BusinessResourceException{
 
-
-
 		if(adto!=null){
 
 			BigDecimal price =BigDecimalUtils.convertStringToBigDecimal(adto.getPrice());
@@ -193,27 +191,8 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 			announce.setCancelled(false);
 			announce.setAnnounceId(new AnnounceIdVO(DEFAULT_TOKEN));
 
-
-			switch (adto.getAnnounceType()){
-				case BUYER:
-					announce.setAnnounceType(AnnounceType.BUYER);
-					break;
-				case SELLER:
-					announce.setAnnounceType(AnnounceType.SELLER);
-					break;
-			}
-
-			switch (adto.getTransport()){
-				case AP:
-					announce.setTransport(TransportEnum.PLANE);
-					break;
-				case Constants.AUT:
-					announce.setTransport(TransportEnum.AUTO);
-					break;
-				case Constants.NV:
-					announce.setTransport(TransportEnum.NAVE);
-					break;
-			}
+			setAnnounceType(adto.getAnnounceType(),announce);
+			setTransport(adto.getTransport(), announce);
 			Session session = this.sessionFactory.getCurrentSession();
 			session.save(announce);
 			return announce;
@@ -242,23 +221,51 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 	}
 
 	@Override
+	public AnnounceVO update(UpdateAnnounceDTO adto) throws BusinessResourceException {
+
+
+		UserVO user = userDAO.findById(adto.getUserId());
+
+		if(user==null){
+			 throw new BusinessResourceException("Aucun utilisateur trouvé");
+		}
+
+		AnnounceVO announce = findById(adto.getId());
+		if(announce==null){
+			throw new BusinessResourceException("Aucun annonce  trouvée");
+		}
+
+		BigDecimal price =BigDecimalUtils.convertStringToBigDecimal(adto.getPrice());
+		BigDecimal preniumPrice =BigDecimalUtils.convertStringToBigDecimal(adto.getPreniumPrice());
+		BigDecimal weigth =BigDecimalUtils.convertStringToBigDecimal(adto.getWeigth());
+		Date startDate =DateUtils.StringToDate(adto.getStartDate());
+		Date endDate =DateUtils.StringToDate(adto.getEndDate());
+
+
+		announce.setPrice(price);
+		announce.setPreniumPrice(preniumPrice);
+		announce.setWeigth(weigth);
+		announce.setUser(user);
+		announce.setStartDate(startDate);
+		announce.setEndDate(endDate);
+		announce.setArrival(adto.getArrival());
+		announce.setDeparture(adto.getDeparture());
+		setAnnounceType(adto.getAnnounceType(),announce);
+		setTransport(adto.getTransport(), announce);
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.update(user);
+		return announce;
+
+	}
+
+	@Override
 	public AnnounceVO update(Integer id) throws BusinessResourceException {
 		return null;
 	}
 
 
-	private Long  calcolateId(String sqlnative){
-		Session sess = sessionFactory.openSession();
-		BigInteger id = (BigInteger)sess.createSQLQuery(sqlnative).getResultList().get(0);
-		sess.close();
 
-		if(id!=null){
-			 return new Long(String.valueOf(id))+ new Long(1);
-		}
-
-
-		return new Long(1);
-	}
 	public UserVO addAnnounceToUser(AnnounceVO announce) throws BusinessResourceException {
 
 		UserVO user= announce.getUser();
@@ -268,6 +275,33 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 			return userDAO.save(user);
 		}else{
 			return null;
+		}
+	}
+
+
+
+	private void setTransport(String transport, AnnounceVO announce){
+		switch (transport){
+			case AP:
+				announce.setTransport(TransportEnum.PLANE);
+				break;
+			case Constants.AUT:
+				announce.setTransport(TransportEnum.AUTO);
+				break;
+			case Constants.NV:
+				announce.setTransport(TransportEnum.NAVE);
+				break;
+		}
+	}
+
+	private void setAnnounceType(String announceType, AnnounceVO announce){
+		switch (announceType){
+			case BUYER:
+				announce.setAnnounceType(AnnounceType.BUYER);
+				break;
+			case SELLER:
+				announce.setAnnounceType(AnnounceType.SELLER);
+				break;
 		}
 	}
 }

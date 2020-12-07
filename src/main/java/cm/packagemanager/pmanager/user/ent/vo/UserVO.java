@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
@@ -34,6 +35,7 @@ import java.util.Set;
 		@Filter(name = FilterConstants.CANCELLED)
 		//@Filter(name=FilterConstants.ACTIVE_MBR)
 })
+@JsonIgnoreProperties({"roles"})
 public class UserVO extends CommonVO  {
 
 
@@ -201,12 +203,13 @@ public class UserVO extends CommonVO  {
 
 	@ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+
 	public Set<RoleVO> getRoles() {
 		return roles;
 	}
 
 
-	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", fetch=FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", fetch=FetchType.EAGER)
 	@JsonManagedReference
 	public Set<MessageVO> getMessages() {
 		return messages;
