@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.user.service;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.MailType;
+import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
@@ -12,8 +13,10 @@ import cm.packagemanager.pmanager.ws.requests.users.RoleToUserDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +24,24 @@ import java.util.List;
 import static cm.packagemanager.pmanager.constant.FieldConstants.FACEBOOK_PROVIDER;
 import static cm.packagemanager.pmanager.constant.FieldConstants.GOOGLE_PROVIDER;
 
+/*
+Le fait d’avoir des singletons a un impact en environnement multi-threadé
+○ Les variables de classe sont partagées entre les threads
+○ Les beans doivent donc être thread-safe (d'où le transactional)
+*
+* */
 @Service("userService")
 public class UserService{
 
 	@Autowired
 	UserDAO userDAO;
 
+	@PostConstruct
+	public void init() {
+		System.out.println("User service starts...." );
+	}
 
-	@Transactional
+	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public UserVO login(LoginDTO lr ) throws UserException {
 
 
@@ -65,45 +78,83 @@ public class UserService{
 		return userDAO.update(user);
 	}
 
+
 	@Transactional
 	public boolean delete(UserVO user) throws UserException {
 		return userDAO.deleteUser(user);
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<UserVO> getAllUsers(int page, int size) {
 		return userDAO.getAllUsers(page, size);
 	}
 
-	@Transactional
+
+	@Transactional(readOnly = true)
 	public List<UserVO> getAllUsers() {
 		return userDAO.getAllUsers();
 	}
 
-
-	@Transactional
+	@Transactional(readOnly = true)
 	public UserVO getUser(Long id) {
 		return userDAO.getUser(id);
 	}
 
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRED)
 	public UserVO register(RegisterDTO register) {
 		return userDAO.register(register);
 	}
 
-	@Transactional
+
 	public UserVO updateUser(UpdateUserDTO userDTO) {
 		return userDAO.updateUser(userDTO);
 	}
 
-	@Transactional
+
 	public boolean managePassword(UserVO user) {
-		return userDAO.managePassword(user);
+		UserVO usr=findByEmail(user.getEmail(),true);
+
+		if(usr!=null){
+
+			UserVO transientUser=usr;
+
+			String decrypt=PasswordGenerator.decrypt(usr.getPassword());
+			//transientUser.setPassword(decrypt);
+
+			List<String> labels=new ArrayList<String>();
+			List<String> emails=new ArrayList<String>();
+
+			labels.add(MailType.PASSWORD_KEY);
+			labels.add(MailType.USERNAME_KEY);
+
+			emails.add(transientUser.getEmail());
+
+			MailSender mailSender = new MailSender();
+			return mailSender.sendMailMessage(MailType.PASSWORD_TEMPLATE,MailType.PASSWORD_TEMPLATE_TITLE,	MailSender.replace(transientUser,labels,null,decrypt),
+					emails,null,null, null,transientUser.getUsername());
+		}
+		return false;
 	}
 
-	@Transactional
+
 	public boolean sendMail(MailDTO mr, boolean active) {
-		return userDAO.sendMail(mr,active);
+
+		UserVO user=findByEmail(mr.getFrom(),active);
+
+		if(user!=null){
+			MailSender mailSender = new MailSender();
+			List<String> labels=new ArrayList<String>();
+
+			labels.add(MailType.BODY_KEY);
+
+			return mailSender.sendMailMessage(MailType.SEND_MAIL_TEMPLATE,
+					mr.getSubject(),MailSender.replace(user,labels,mr.getBody(),null),mr.getTo(),mr.getCc(),mr.getBcc(), mr.getFrom(),user.getUsername());
+
+		}
+
+
+		return  false;
+
 	}
 
 	@Transactional
@@ -111,7 +162,7 @@ public class UserService{
 		return userDAO.deleteUser(id);
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public UserVO findByEmail(String email, boolean active) {
 		return userDAO.findByEmail(email,active);
 	}
@@ -123,17 +174,17 @@ public class UserService{
 		return userDAO.setRole(roleToUser.getEmail(),roleToUser.getRole());
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public UserVO findByUsername(String username) {
 		return userDAO.findByOnlyUsername(username);
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public UserVO findByToken(String token) {
 		return userDAO.findByToken(token);
 	}
 
-	/*@Transactional
+	/*
 	public Page<UserVO> findAll(Pageable pageable) {
 		return userDAO.findAll(pageable);
 	}*/

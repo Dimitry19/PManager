@@ -7,11 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
+
 @Service("roleService")
 public class RoleService {
 
 	@Autowired
 	RoleDAO roleDAO;
+
+	@PostConstruct
+	public void init() {
+		System.out.println("Role service starts...." );
+	}
 
 	@Transactional
 	public RoleVO add(RoleDTO role) {

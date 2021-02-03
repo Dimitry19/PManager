@@ -26,8 +26,8 @@ public  class RoleDAOImpl implements RoleDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Autowired
-	HibernateTransactionManager tx;
+	//@Autowired
+	//HibernateTransactionManager tx;
 
 
 	public void setSessionFactory(SessionFactory sf) {
@@ -65,7 +65,7 @@ public  class RoleDAOImpl implements RoleDAO {
 	@Override
 	public RoleVO findByDescription(String description) {
 
-		Session session = this.sessionFactory.getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 
 		Query query=session.getNamedQuery(RoleVO.FINDBYDESC);
 		if(description.equals(RoleEnum.USER.name())){

@@ -45,9 +45,6 @@ public interface UserDAO {
 
 	public UserVO updateUser(UpdateUserDTO user)  throws BusinessResourceException;
 
-	
-	public boolean managePassword(UserVO user)  throws BusinessResourceException;
-
 	public boolean deleteUser(Long id)  throws BusinessResourceException;
 
 	public UserVO save(UserVO user)  throws BusinessResourceException;
@@ -62,9 +59,6 @@ public interface UserDAO {
 
 
 	public UserVO findByGoogleId(String googleId)  throws BusinessResourceException;
-
-
-	public boolean sendMail(MailDTO mr, boolean active)  throws BusinessResourceException;
 
 
 	public boolean setRole(String username, RoleEnum roleId)  throws BusinessResourceException;

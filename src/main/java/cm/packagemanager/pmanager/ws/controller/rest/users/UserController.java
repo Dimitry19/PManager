@@ -298,7 +298,7 @@ public class UserController extends CommonController {
 	// Retrieve All Users
 	@GetMapping(USER_WS_USERS)
 	public ResponseEntity<List<UserVO>> findAll(
-			@Valid @Positive(message = "Page number should be a positive number") @RequestParam(required = false, defaultValue = "1") int page,
+			@Valid @Positive(message = "Page number should be a positive number") @RequestParam(required = false, defaultValue = "0") int page,
 			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "20") int size) {
 
 		HttpHeaders headers = new HttpHeaders();

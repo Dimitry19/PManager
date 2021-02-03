@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.configuration.cfg;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -85,7 +86,6 @@ public class HibernateConfiguration {
 		hibernateProperties.put("current_session_context_class", CURRENT_SESSION_CONEXT_CLASS);
 
 		sessionFactory.setHibernateProperties(hibernateProperties);
-
 		return sessionFactory;
 	}
 

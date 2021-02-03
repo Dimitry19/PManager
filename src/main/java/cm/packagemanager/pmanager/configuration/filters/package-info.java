@@ -17,4 +17,4 @@
 package cm.packagemanager.pmanager.configuration.filters;
 
 import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.ParamDef;
+

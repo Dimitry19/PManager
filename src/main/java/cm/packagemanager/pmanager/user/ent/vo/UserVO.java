@@ -32,8 +32,8 @@ import java.util.Set;
 		@NamedQuery(name = UserVO.GOOGLE, query = "select u from UserVO u where  u.googleId =:googleId "),
 })
 @Filters({
-		@Filter(name = FilterConstants.CANCELLED)
-		//@Filter(name=FilterConstants.ACTIVE_MBR)
+		@Filter(name = FilterConstants.CANCELLED),
+		@Filter(name=FilterConstants.ACTIVE_MBR)
 })
 @JsonIgnoreProperties({"roles"})
 public class UserVO extends CommonVO  {

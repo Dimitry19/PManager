@@ -59,8 +59,6 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 	@Autowired
 	private UserDAO userDAO;
 
-	Transaction tx;
-
 	@Override
 	public int count(int page, int size) throws BusinessResourceException {
 
@@ -131,10 +129,6 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 				return message;
 			}
 		} catch (Exception e) {
-
-			if (tx != null) {
-				tx.rollback();
-			}
 			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
@@ -253,7 +247,7 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 		setAnnounceType(adto.getAnnounceType(),announce);
 		setTransport(adto.getTransport(), announce);
 
-		Session session = this.sessionFactory.getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.update(user);
 		return announce;
 

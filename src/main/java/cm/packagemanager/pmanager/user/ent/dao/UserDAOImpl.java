@@ -3,14 +3,11 @@ package cm.packagemanager.pmanager.user.ent.dao;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.common.mail.MailSender;
-import cm.packagemanager.pmanager.common.mail.MailType;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
@@ -23,9 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,7 +34,7 @@ public  class UserDAOImpl implements UserDAO {
 	private SessionFactory sessionFactory;
 
 	//@Autowired
-	Transaction tx;
+	//Transaction tx;
 
 	@Autowired
 	RoleDAO roleDAO;
@@ -74,23 +68,13 @@ public  class UserDAOImpl implements UserDAO {
 	@Override
 	public List<UserVO>  getAllUsers(int firstResult, int maxResults) {
 
-		int paginatedCount = 0;
+
 		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
 		Query query = session.createQuery("from UserVO");
 		query.setFirstResult(firstResult);
 		query.setMaxResults(maxResults);
 
 		List<UserVO> users = (List) query.list();
-
-		if (users != null) {
-			paginatedCount = users.size();
-			System.out.println("Total Results: " + paginatedCount);
-			for (UserVO user : users) {
-				System.out.println("Retrieved Product using Query. Name: " + user.getUsername());
-			}
-		}
 
 		return users;
 
@@ -131,9 +115,9 @@ public  class UserDAOImpl implements UserDAO {
 			user.setActive(0);
 			user.setConfirmationToken(UUID.randomUUID().toString());
 			Session session = this.sessionFactory.openSession();
-			tx = session.beginTransaction();
+			//tx = session.beginTransaction();
 			session.save(user);
-			tx.commit();
+			//tx.commit();
 
 			if(StringUtils.equals(register.getRole().name(), RoleEnum.ADMIN.name())){
 				setRole(user.getEmail(), RoleEnum.ADMIN);
@@ -175,34 +159,6 @@ public  class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean managePassword(UserVO user) throws BusinessResourceException {
-
-
-		UserVO usr=findByEmail(user.getEmail(),true);
-
-		if(usr!=null){
-
-			UserVO transientUser=usr;
-
-			String decrypt=PasswordGenerator.decrypt(usr.getPassword());
-			//transientUser.setPassword(decrypt);
-
-			List<String> labels=new ArrayList<String>();
-			List<String> emails=new ArrayList<String>();
-
-			labels.add(MailType.PASSWORD_KEY);
-			labels.add(MailType.USERNAME_KEY);
-
-			emails.add(transientUser.getEmail());
-
-			MailSender mailSender = new MailSender();
-			return mailSender.sendMailMessage(MailType.PASSWORD_TEMPLATE,MailType.PASSWORD_TEMPLATE_TITLE,	MailSender.replace(transientUser,labels,null,decrypt),
-					emails,null,null, null,transientUser.getUsername());
-		}
-		return false;
-	}
-
-	@Override
 	public boolean deleteUser(Long id) {
 
 		UserVO user=updateDelete(id);
@@ -212,26 +168,6 @@ public  class UserDAOImpl implements UserDAO {
 	}
 
 
-	@Override
-	public boolean sendMail(MailDTO mr, boolean active) {
-
-		UserVO user=findByEmail(mr.getFrom(),active);
-
-		if(user!=null){
-			MailSender mailSender = new MailSender();
-			List<String> labels=new ArrayList<String>();
-
-			labels.add(MailType.BODY_KEY);
-
-			return mailSender.sendMailMessage(MailType.SEND_MAIL_TEMPLATE,
-					mr.getSubject(),MailSender.replace(user,labels,mr.getBody(),null),mr.getTo(),mr.getCc(),mr.getBcc(), mr.getFrom(),user.getUsername());
-
-		}
-
-
-		return  false;
-
-	}
 
 	@Override
 	public UserVO save(UserVO user) throws BusinessResourceException {
@@ -324,7 +260,6 @@ public  class UserDAOImpl implements UserDAO {
 	}
 
 	// MANDATORY: Transaction must be created before.
-	@Transactional(propagation = Propagation.MANDATORY)
 	public void registerUser(UserVO user) throws UserException {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
