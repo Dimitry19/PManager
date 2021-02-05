@@ -8,14 +8,25 @@ import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.Filters;
-import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.*;
 
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
+
+/**
+ *  le @Fetch(value = SELECT) permet de corriger le probleme de chargement des elements (Set et List) meme
+ *  quand ils sont vides quand on utilise la methode find() de la session.
+ *  Corrige l'erreur  fail-safe cleanup (collections) : org.hibernate.engine.loading.CollectionLoadContext
+ */
+
+import static org.hibernate.annotations.FetchMode.SELECT;
 
 
 @Entity(name = "UserVO")
@@ -31,9 +42,10 @@ import java.util.Set;
 		@NamedQuery(name = UserVO.FACEBOOK, query = "select u from UserVO u where  u.facebookId =:facebookId "),
 		@NamedQuery(name = UserVO.GOOGLE, query = "select u from UserVO u where  u.googleId =:googleId "),
 })
+
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED),
-		@Filter(name=FilterConstants.ACTIVE_MBR)
+		@Filter(name= FilterConstants.ACTIVE_MBR)
 })
 @JsonIgnoreProperties({"roles"})
 public class UserVO extends CommonVO  {
@@ -203,7 +215,6 @@ public class UserVO extends CommonVO  {
 
 	@ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-
 	public Set<RoleVO> getRoles() {
 		return roles;
 	}
@@ -211,12 +222,14 @@ public class UserVO extends CommonVO  {
 
 	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", fetch=FetchType.EAGER)
 	@JsonManagedReference
+	@Fetch(value = SELECT)
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL,targetEntity=AnnounceVO.class, mappedBy="user", fetch=FetchType.EAGER)
 	@JsonManagedReference
+	@Fetch(value = SELECT)
 	public Set<AnnounceVO> getAnnounces() {
 		return announces;
 	}
@@ -313,18 +326,38 @@ public class UserVO extends CommonVO  {
 		this.retDescription = retDescription;
 	}
 
-	public void addAnnounces(AnnounceVO announce){
+	public void addAnnounce(AnnounceVO announce){
 		announces.add(announce);
+
+	}
+	public void removeAnnounce(AnnounceVO announce){
+		if(!announces.isEmpty())
+			announces.remove(announce);
 
 	}
 
 
-	public void addMessages(MessageVO message){
+	public void addMessage(MessageVO message){
 		messages.add(message);
 
 	}
 
+	public void removeMessage(MessageVO message){
+		if(!messages.isEmpty())
+		messages.remove(message);
 
+	}
+
+	public void addRole(RoleVO role){
+		roles.add(role);
+
+	}
+
+	public void removeRole(RoleVO role){
+		if(!roles.isEmpty())
+			roles.remove(role);
+
+	}
 
 	@Override
 	public int hashCode() {

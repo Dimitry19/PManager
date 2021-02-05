@@ -24,8 +24,6 @@ public class AirlineDAOImpl implements AirlineDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	//@Autowired
-	Transaction tx;
 
 	@Override
 	public AirlineVO findByCode(String code) throws BusinessResourceException {

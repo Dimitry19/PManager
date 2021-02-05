@@ -21,15 +21,12 @@ public class CommonAspect {
 		@Before(value = "execution(* cm.packagemanager.pmanager.user.service.UserService.*(..)) && args(userId)")
 		public void beforeAdvice(JoinPoint joinPoint, Long  userId ) {
 			logger.info("Before method:" + joinPoint.getSignature());
-
-			logger.info("Creating Employee with   id - " + userId);
 		}
 
 		@After(value = "execution(* cm.packagemanager.pmanager.user.service.UserService.*(..)) && args(userId)")
 		public void afterAdvice(JoinPoint joinPoint, Long  userId) {
 			logger.info("After method:" + joinPoint.getSignature());
 
-			logger.info("Successfully created Employee with  id - " + userId);
 		}
 
 }

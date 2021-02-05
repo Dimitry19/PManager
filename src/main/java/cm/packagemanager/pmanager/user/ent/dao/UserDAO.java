@@ -17,7 +17,7 @@ public interface UserDAO {
 
 	Optional<UserVO> findByUsername(String username) throws BusinessResourceException, UserException;
 
-	UserVO findByOnlyUsername(String username) throws BusinessResourceException;
+	UserVO findByOnlyUsername(String username, boolean isRegistration) throws BusinessResourceException;
 
 
 	UserVO findByToken(String token) throws BusinessResourceException;
@@ -39,7 +39,7 @@ public interface UserDAO {
 
 	public UserVO getUser(Long id) throws BusinessResourceException;
 
-	public UserVO register(RegisterDTO register)  throws BusinessResourceException;
+	public UserVO register(RegisterDTO register) throws BusinessResourceException, UserException;
 
 	public void updateUser(UserVO user)  throws BusinessResourceException;
 
@@ -61,7 +61,8 @@ public interface UserDAO {
 	public UserVO findByGoogleId(String googleId)  throws BusinessResourceException;
 
 
-	public boolean setRole(String username, RoleEnum roleId)  throws BusinessResourceException;
+	public boolean setRole(UserVO user, RoleEnum roleId)  throws BusinessResourceException;
+	public boolean setRole(String email, RoleEnum roleId)  throws BusinessResourceException;
 
 	public boolean deleteUser(UserVO user)  throws BusinessResourceException;
 

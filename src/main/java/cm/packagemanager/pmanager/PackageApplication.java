@@ -14,6 +14,10 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
+/***
+ * https://o7planning.org/11665/spring-boot-hibernate-and-spring-transaction
+ */
+
 @SpringBootApplication
 @EnableAspectJAutoProxy(proxyTargetClass=true)
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, 	DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class })

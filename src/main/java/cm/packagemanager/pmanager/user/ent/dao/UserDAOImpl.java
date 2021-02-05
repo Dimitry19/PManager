@@ -13,13 +13,15 @@ import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.TypeMismatchException;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,18 +35,9 @@ public  class UserDAOImpl implements UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	//@Autowired
-	//Transaction tx;
 
 	@Autowired
 	RoleDAO roleDAO;
-
-
-
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
-	}
-
 
 
 	public UserDAOImpl() {
@@ -71,8 +64,11 @@ public  class UserDAOImpl implements UserDAO {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from UserVO");
+		session.enableFilter(FilterConstants.CANCELLED);
+		session.enableFilter(FilterConstants.ACTIVE_MBR);
 		query.setFirstResult(firstResult);
 		query.setMaxResults(maxResults);
+
 
 		List<UserVO> users = (List) query.list();
 
@@ -82,26 +78,26 @@ public  class UserDAOImpl implements UserDAO {
 
 	@Override
 	public UserVO getUser(Long id) {
-		UserVO user = findById(id);
-		return user;
 
+		return  findById(id);
 	}
 
 	@Override
-	public UserVO register(RegisterDTO register) {
+	public UserVO register(RegisterDTO register) throws UserException {
 
 		try {
-			UserVO userError=new UserVO();
-			UserVO user = findByEmail(register.getEmail(),true);
+
+			UserVO user = findByEmail(register.getEmail(),false);
 			if(user!=null){
 
-				userError.setError(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
-				return userError;
+				user.setError(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
+				return user;
 			}
 
-			if(findByUsername(register.getUsername())!=null){
-				userError.setError(WebServiceResponseCode.ERROR_USERNAME_REGISTER_LABEL);
-				return userError;
+			user=findByOnlyUsername(register.getUsername(), true);
+			if(user!=null){
+				user.setError(WebServiceResponseCode.ERROR_USERNAME_REGISTER_LABEL);
+				return user;
 			}
 
 
@@ -114,22 +110,25 @@ public  class UserDAOImpl implements UserDAO {
 			user.setPhone(register.getPhone());
 			user.setActive(0);
 			user.setConfirmationToken(UUID.randomUUID().toString());
-			Session session = this.sessionFactory.openSession();
-			//tx = session.beginTransaction();
+			Session session = this.sessionFactory.getCurrentSession();
 			session.save(user);
-			//tx.commit();
+			session.flush();
+			session.refresh(user);
 
+			user=session.get(UserVO.class,user.getId());
 			if(StringUtils.equals(register.getRole().name(), RoleEnum.ADMIN.name())){
-				setRole(user.getEmail(), RoleEnum.ADMIN);
+				setRole(user, RoleEnum.ADMIN);
 			}else{
-				setRole(user.getEmail(), RoleEnum.USER);
+				setRole(user, RoleEnum.USER);
 			}
-			return findByEmail(user.getEmail(),false);
+			return session.get(UserVO.class,user.getId());//findByEmail(user.getEmail(),false);
 
-		} catch (UserException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			throw new UserException("Erreur durant la register");
+			//sessionFactory.getCurrentSession().getTransaction().rollback();
 		}
-		return null;
+		//return null;
 	}
 
 	@Override
@@ -211,11 +210,13 @@ public  class UserDAOImpl implements UserDAO {
 
 
 	@Override
-	public UserVO findByOnlyUsername(String username) throws BusinessResourceException {
+	public UserVO findByOnlyUsername(String username,boolean isresgistration) throws BusinessResourceException {
 
 		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		if(!isresgistration){
+			session.enableFilter(FilterConstants.CANCELLED);
+			session.enableFilter(FilterConstants.ACTIVE_MBR);
+		}
 		Query query=session.getNamedQuery(UserVO.USERNAME);
 		query.setParameter("username", username);
 
@@ -244,19 +245,12 @@ public  class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public UserVO findById(Long userId) throws BusinessResourceException {
+	public UserVO findById(Long id) throws BusinessResourceException {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
+		Session session = sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.ACTIVE_MBR);
-		Query query=session.getNamedQuery(UserVO.FINDBYID);
-		query.setParameter("id", userId);
-
-		List<UserVO> users=query.list();
-		if(users!=null && users.size()>0) {
-			return users.get(0);
-		}
-		return null;
+		session.enableFilter(FilterConstants.CANCELLED);
+		return  session.find(UserVO.class,id);
 	}
 
 	// MANDATORY: Transaction must be created before.
@@ -336,15 +330,9 @@ public  class UserDAOImpl implements UserDAO {
 
 	private UserVO updateDelete(Long id) throws BusinessResourceException {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		Session session=sessionFactory.getCurrentSession();
 
-		Query query=session.getNamedQuery(UserVO.FINDBYID);
-		query.setParameter("id", id);
-		List<UserVO> users=query.getResultList();
-
-		UserVO user=(!users.isEmpty())?users.get(0):null;
+		UserVO user=findById(id);
 		if(user!=null){
 			user.setCancelled(true);
 			session.merge(user);
@@ -379,20 +367,27 @@ public  class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean setRole(String email, RoleEnum roleId) throws BusinessResourceException {
+	public boolean setRole(UserVO user, RoleEnum roleId) throws BusinessResourceException {
 
-		UserVO user= findByEmail(email, false);
+		//UserVO user= findByEmail(email, false);
 		RoleVO role = roleDAO.findByDescription(roleId.name());
 
 
 		if (user!=null && role!=null){
-			user.getRoles().add(role);
+			user.addRole(role);
 			return (save(user)!=null);
 		}else{
 			return false;
 		}
 	}
 
+	@Override
+	public boolean setRole(String email , RoleEnum roleId) throws BusinessResourceException {
+
+		UserVO user= findByEmail(email, false);
+		return  setRole( user, roleId);
+
+	}
 	@Override
 	public boolean deleteUser(UserVO user) throws BusinessResourceException {
 		if(user!=null){
@@ -401,26 +396,4 @@ public  class UserDAOImpl implements UserDAO {
 		}
 		return false;
 	}
-
-
-/*@Override
-	public boolean deleteUser(Long id) {
-
-		Session session = this.sessionFactory.getCurrentSession();
-
-		UserVO user=updateDelete(id);
-
-		if(user!=null){
-			user = (UserVO) session.load(UserVO.class, id);
-			if (user!= null) {
-				session.delete(user);
-				return true;
-			}
-		}
-		else {
-			return false;
-		}
-		return false;
-	}*/
-
 }

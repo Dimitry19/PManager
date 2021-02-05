@@ -25,10 +25,8 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
-import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +34,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -82,13 +79,13 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 
 		int paginatedCount = 0;
 		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		//session.enableFilter(FilterConstants.CANCELLED);
+		//session.enableFilter(FilterConstants.ACTIVE_MBR);
 		Query query = session.createQuery("from AnnounceVO");
 		query.setFirstResult(page);
 		query.setMaxResults(size);
 
-		List<AnnounceVO> announces = (List) query.list();
+		List<AnnounceVO> announces =(List) query.list();
 
 		if (announces != null) {
 			paginatedCount = announces.size();
@@ -108,7 +105,7 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 		try {
 
 			Session session=null;
-			UserVO user = userDAO.findByOnlyUsername(mdto.getUsername());
+			UserVO user = userDAO.findByOnlyUsername(mdto.getUsername(),false);
 			AnnounceVO announce=findById(mdto.getAnnounceId());
 
 			if(user!=null && announce!=null){
@@ -148,11 +145,7 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
-		Query query=session.getNamedQuery(AnnounceVO.FINDBYID);
-		query.setParameter("id", id);
-
-		AnnounceVO announce= (AnnounceVO) query.uniqueResult();
-
+		AnnounceVO announce=session.find(AnnounceVO.class,id);
 		return announce;
 	}
 
@@ -265,7 +258,7 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 		UserVO user= announce.getUser();
 
 		if (user!=null){
-			user.addAnnounces(announce);
+			user.addAnnounce(announce);
 			return userDAO.save(user);
 		}else{
 			return null;

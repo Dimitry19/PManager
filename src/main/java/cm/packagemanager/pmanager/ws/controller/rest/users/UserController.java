@@ -1,9 +1,11 @@
 package cm.packagemanager.pmanager.ws.controller.rest.users;
 
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.user.service.UserService;
+import cm.packagemanager.pmanager.user.service.UserServiceImpl;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
@@ -39,7 +41,7 @@ public class UserController extends CommonController {
 	protected final Log logger = LogFactory.getLog(UserController.class);
 
 	@Autowired
-	protected  UserService userService;
+	protected UserServiceImpl userService;
 
 	@PostMapping(value = USER_WS_REGISTRATION)
 	public  Response register(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid RegisterDTO register) throws Exception{
@@ -184,7 +186,11 @@ public class UserController extends CommonController {
 	UserVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateUserDTO userDTO){
 
 		if(userDTO!=null){
-			return  userService.updateUser(userDTO);
+			try {
+				return  userService.updateUser(userDTO);
+			} catch (UserException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return null;
