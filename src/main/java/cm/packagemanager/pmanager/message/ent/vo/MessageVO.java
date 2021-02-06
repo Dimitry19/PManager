@@ -7,6 +7,7 @@ import cm.packagemanager.pmanager.user.ent.vo.UserIdVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.NaturalId;
@@ -37,6 +38,7 @@ public class MessageVO extends CommonVO {
 
 	private boolean cancelled;
 
+
 	@EmbeddedId
 	MessageIdVO id;
 
@@ -51,6 +53,7 @@ public class MessageVO extends CommonVO {
 
 	@Basic(optional = false)
 	@Column(name = "CONTENT")
+	@JsonProperty
 	private String getContent(){
 		return content;
 	}

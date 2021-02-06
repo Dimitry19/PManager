@@ -10,6 +10,7 @@ import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.NaturalId;
@@ -18,6 +19,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.hibernate.annotations.FetchMode.SELECT;
 
 
 @Entity
@@ -197,6 +200,7 @@ public class AnnounceVO extends CommonVO {
 	@Access(AccessType.PROPERTY)
 	@OneToMany(cascade = {CascadeType.ALL},targetEntity=MessageVO.class, mappedBy="announce", fetch=FetchType.EAGER)
 	@JsonManagedReference
+	@Fetch(value = SELECT)
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
