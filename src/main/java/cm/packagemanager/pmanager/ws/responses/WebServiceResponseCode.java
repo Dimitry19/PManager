@@ -19,15 +19,17 @@ public class WebServiceResponseCode
 	public static final String ANNOUNCE_CREATE_LABEL="Annonce créee correctement";
 
 	// NOK LABEL
-	public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre eliminé ccar n'existe plus";
+	public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre eliminé car inexistant";
 	public static final String ERROR_MAIL_SENT_LABEL = "Le mail n'a pas pu etre envoyé";
-	public static final String ERROR_RETRIVEVE_PASSWORD_LABEL = "Le mot de posse n'a été envoyé ";
+	public static final String ERROR_RETRIVEVE_PASSWORD_LABEL = "Le mot de posse n'a pas été envoyé ";
 	public static final String ERROR_EMAIL_REGISTER_LABEL = "C'est email a deja été utilisé";
 	public static final String ERROR_USERNAME_REGISTER_LABEL = "Nom utilisateur non disponible";
 	public static final String ERROR_USER_REGISTER_LABEL = "Enregistrement non completé";
 	public static final String ERROR_INVALID_TOKEN_REGISTER_LABEL = "Token invalide , peut etre le lien a deja expiré";
 	public static final String ERROR_USED_TOKEN_REGISTER_LABEL = "Le compte a dejà été activé";
 	public static final String ERROR_LOGIN_LABEL = "Verifier les données d'accès";
+
+	public static final String ERROR_UPD_EMAIL_LABEL = "Email non valide ou deja utilisé";
 
 	public static final String ERROR_ANNOUNCE_CREATE_LABEL = "Annonce n'a pas pu etre cree";
 }

@@ -38,14 +38,14 @@ public interface UserService{
 	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException;
 
 
-	public boolean managePassword(UserVO user) throws UserException;
+	public boolean managePassword(String email) throws UserException;
 
 
 	public boolean sendMail(MailDTO mr, boolean active) throws Exception;
 
 	public boolean deleteUser(Long id)throws UserException;
 
-	public UserVO findByEmail(String email, boolean active)throws UserException;
+	public UserVO findByEmail(String email)throws UserException;
 
 
 	public boolean setRoleToUser(RoleToUserDTO roleToUser)  throws UserException;

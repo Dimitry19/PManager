@@ -47,7 +47,7 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 		@Filter(name = FilterConstants.CANCELLED),
 		@Filter(name= FilterConstants.ACTIVE_MBR)
 })
-@JsonIgnoreProperties({"roles"})
+//@JsonIgnoreProperties({"roles"})
 public class UserVO extends CommonVO  {
 
 

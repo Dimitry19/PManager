@@ -2,7 +2,7 @@ package cm.packagemanager.pmanager.ws.controller.rest.announce;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.announce.service.AnnounceService;
+import cm.packagemanager.pmanager.announce.service.AnnounceServiceImpl;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
@@ -40,7 +40,7 @@ public class AnnounceController extends CommonController {
 
 
 	@Autowired
-	protected AnnounceService announceService;
+	protected AnnounceServiceImpl announceService;
 
 
 	@RequestMapping(value = ANNOUNCE_WS_CREATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
@@ -55,7 +55,7 @@ public class AnnounceController extends CommonController {
 		{
 			logger.info("create request out");
 			if (ar!=null){
-				announce=announceService.create(ar);
+				announce= announceService.create(ar);
 
 				if(announce!=null){
 					res.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -78,10 +78,17 @@ public class AnnounceController extends CommonController {
 
 	@PostMapping(value = ANNOUNCE_WS_UPDATE)
 	AnnounceVO  update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
+		try {
+			if (uar==null)
+				return null;
+			return announceService.update(uar);
+		}catch (Exception e){
+			//response.setStatus();
+			response.getWriter().write(e.getMessage());
 
-		if (uar==null)
-			return null;
-		return announceService.update(uar);
+		}
+
+		return null;
 	}
 
 
@@ -147,8 +154,6 @@ public class AnnounceController extends CommonController {
 			paginateResponse.setResults(announces);
 			headers.add("X-Users-Total", Long.toString(announces.size()));
 		}
-
-
 
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}

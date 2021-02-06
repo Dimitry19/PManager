@@ -1,5 +1,8 @@
 package cm.packagemanager.pmanager.common.utils;
 
+import org.springframework.http.HttpRequest;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.Hashtable;
 
 
@@ -570,6 +573,13 @@ public class HTMLEntities {
 	public static String unhtmlAmpersand(String str)
 	{
 		return str.replaceAll("&amp;", "&");
+	}
+
+
+	public static String buildUrl(HttpServletRequest request, String params){
+
+		String appUrl = request.getScheme() + "://" + request.getServerName()+":"+request.getServerPort() +request.getContextPath()+params;
+		return appUrl;
 	}
 
 

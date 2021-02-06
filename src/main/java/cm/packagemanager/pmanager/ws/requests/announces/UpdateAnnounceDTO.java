@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class UpdateAnnounceDTO extends AnnounceDTO {
 
-	@NotNull(message = "Id user should not be empty")
+	@NotNull(message = "L'id de l'annonce doit etre valorisé")
 	private Long id;
 
 

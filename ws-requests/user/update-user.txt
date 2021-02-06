@@ -2,7 +2,7 @@ POST http://localhost:8080/pmanager/ws/user/update
 
 {
    "id":2,
-   "userName":"dimitria",
+   "username":"dimitria",
    "password":"password2",
    "email":"dimipasc@yahoo.fr",
    "provider":"ijiigbbiiii",

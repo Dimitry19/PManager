@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
+import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
@@ -13,14 +14,12 @@ import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.TypeMismatchException;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +27,7 @@ import java.util.UUID;
 
 
 @Repository
-public  class UserDAOImpl implements UserDAO {
+public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 
@@ -69,7 +68,6 @@ public  class UserDAOImpl implements UserDAO {
 		query.setFirstResult(firstResult);
 		query.setMaxResults(maxResults);
 
-
 		List<UserVO> users = (List) query.list();
 
 		return users;
@@ -79,7 +77,13 @@ public  class UserDAOImpl implements UserDAO {
 	@Override
 	public UserVO getUser(Long id) {
 
-		return  findById(id);
+		try {
+			return  findById(id);
+
+		} catch (UserException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -87,14 +91,14 @@ public  class UserDAOImpl implements UserDAO {
 
 		try {
 
-			UserVO user = findByEmail(register.getEmail(),false);
+			UserVO user = findByEmail(register.getEmail());
 			if(user!=null){
 
 				user.setError(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
 				return user;
 			}
 
-			user=findByOnlyUsername(register.getUsername(), true);
+			user=findByOnlyUsername(register.getUsername(),true);
 			if(user!=null){
 				user.setError(WebServiceResponseCode.ERROR_USERNAME_REGISTER_LABEL);
 				return user;
@@ -116,35 +120,36 @@ public  class UserDAOImpl implements UserDAO {
 			session.refresh(user);
 
 			user=session.get(UserVO.class,user.getId());
-			if(StringUtils.equals(register.getRole().name(), RoleEnum.ADMIN.name())){
-				setRole(user, RoleEnum.ADMIN);
-			}else{
-				setRole(user, RoleEnum.USER);
-			}
-			return session.get(UserVO.class,user.getId());//findByEmail(user.getEmail(),false);
+			manageRole(user,register.getRole().name());
+			return session.get(UserVO.class,user.getId());//findByEmail(user.getEmail());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new UserException("Erreur durant la register");
-			//sessionFactory.getCurrentSession().getTransaction().rollback();
 		}
-		//return null;
 	}
 
 	@Override
-	public UserVO updateUser(UpdateUserDTO userDTO) {
+	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException {
 
 		Session session = this.sessionFactory.getCurrentSession();
 
-		UserVO user=findById(userDTO.getId());
+		UserVO user=findByEmail(userDTO.getEmail());
+
+		if(user!=null && !user.getId().equals(userDTO.getId()) ){
+			return null;
+		}
+
+		 user=findById(userDTO.getId());
 
 		if (user!=null){
 			user.setEmail(userDTO.getEmail());
 			user.setPhone(userDTO.getPhone());
+			manageRole(user, userDTO.getRole().name());
 			session.update(user);
 			return user;
 
-		}else throw new BusinessResourceException("Aucun utilisateur trouvé");
+		}else throw  new UserException("Aucun utilisateur trouvé");
 
 	}
 
@@ -154,11 +159,10 @@ public  class UserDAOImpl implements UserDAO {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(user);
-
 	}
 
 	@Override
-	public boolean deleteUser(Long id) {
+	public boolean deleteUser(Long id) throws UserException{
 
 		UserVO user=updateDelete(id);
 
@@ -245,24 +249,23 @@ public  class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public UserVO findById(Long id) throws BusinessResourceException {
+	public UserVO findById(Long id) throws UserException {
 
-		Session session = sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
-		session.enableFilter(FilterConstants.CANCELLED);
-		return  session.find(UserVO.class,id);
+		try{
+
+			Session session = sessionFactory.getCurrentSession();
+			session.enableFilter(FilterConstants.ACTIVE_MBR);
+			session.enableFilter(FilterConstants.CANCELLED);
+			return  (UserVO) manualFilter(session.find(UserVO.class,id));
+		}catch (Exception e){
+			throw  new UserException(e.getMessage());
+		}
 	}
 
-	// MANDATORY: Transaction must be created before.
-	public void registerUser(UserVO user) throws UserException {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
-		UserVO usr = this.login(user.getUsername());
-		if (usr != null) {
-			throw new UserException(" Username deja existant " + user.getUsername());
-		}
-		session.save(user);
+	@Override
+	public Object manualFilter(Object o) {
+
+		return super.manualFilter(o);
 	}
 
 	@Override
@@ -274,17 +277,11 @@ public  class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public UserVO findByEmail(String email, boolean active) throws BusinessResourceException{
+	public UserVO findByEmail(String email) throws BusinessResourceException{
 
 		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		if(active){
-			session.enableFilter(FilterConstants.ACTIVE_MBR);
-		}
-
 		Query query=session.getNamedQuery(UserVO.EMAIL);
 		query.setParameter("email", email);
-
 
 		List<UserVO> users=query.list();
 		if(users!=null && users.size()>0) {
@@ -328,19 +325,65 @@ public  class UserDAOImpl implements UserDAO {
 		return null;
 	}
 
-	private UserVO updateDelete(Long id) throws BusinessResourceException {
+	@Override
+	public boolean setRole(UserVO user, RoleEnum roleId) throws BusinessResourceException {
 
-		Session session=sessionFactory.getCurrentSession();
+		RoleVO role = roleDAO.findByDescription(roleId.name());
 
-		UserVO user=findById(id);
-		if(user!=null){
-			user.setCancelled(true);
-			session.merge(user);
-			return session.get(UserVO.class,user);
+		if (user!=null && role!=null){
+			user.addRole(role);
+			return (save(user)!=null);
 		}else{
-			return null;
+			return false;
+		}
+	}
+
+	@Override
+	public boolean setRole(String email , RoleEnum roleId) throws BusinessResourceException {
+
+		UserVO user= findByEmail(email);
+		return  setRole( user, roleId);
+
+	}
+
+	@Override
+	public boolean deleteUser(UserVO user) throws BusinessResourceException, UserException {
+		if(user!=null){
+
+			return updateDelete(user.getId())!=null;
+		}
+		return false;
+	}
+
+
+	private UserVO updateDelete(Long id) throws BusinessResourceException ,UserException{
+
+		try{
+
+			Session session=sessionFactory.getCurrentSession();
+
+			UserVO user=findById(id);
+			if(user!=null){
+				user.setCancelled(true);
+				session.merge(user);
+				return session.get(UserVO.class,id);
+			}else{
+				return null;
+			}
+		}catch (Exception e){
+			throw new UserException(e.getMessage());
 		}
 
+
+	}
+
+
+	private void manageRole(UserVO user,String role){
+		if(StringUtils.equals(role, RoleEnum.ADMIN.name())){
+			setRole(user, RoleEnum.ADMIN);
+		}else{
+			setRole(user, RoleEnum.USER);
+		}
 	}
 
 	private Optional<UserVO> internalLogin(String username, String password) throws BusinessResourceException{
@@ -366,34 +409,4 @@ public  class UserDAOImpl implements UserDAO {
 		}
 	}
 
-	@Override
-	public boolean setRole(UserVO user, RoleEnum roleId) throws BusinessResourceException {
-
-		//UserVO user= findByEmail(email, false);
-		RoleVO role = roleDAO.findByDescription(roleId.name());
-
-
-		if (user!=null && role!=null){
-			user.addRole(role);
-			return (save(user)!=null);
-		}else{
-			return false;
-		}
-	}
-
-	@Override
-	public boolean setRole(String email , RoleEnum roleId) throws BusinessResourceException {
-
-		UserVO user= findByEmail(email, false);
-		return  setRole( user, roleId);
-
-	}
-	@Override
-	public boolean deleteUser(UserVO user) throws BusinessResourceException {
-		if(user!=null){
-
-			return updateDelete(user.getId())!=null;
-		}
-		return false;
-	}
 }

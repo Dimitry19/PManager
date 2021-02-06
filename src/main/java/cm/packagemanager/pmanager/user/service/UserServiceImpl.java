@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.user.service;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.MailType;
+import cm.packagemanager.pmanager.common.utils.HTMLEntities;
 import cm.packagemanager.pmanager.configuration.cfg.HibernateConfiguration;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
@@ -12,6 +13,7 @@ import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RoleToUserDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -34,6 +36,8 @@ Le fait d’avoir des singletons a un impact en environnement multi-threadé
 * */
 @Service("userService")
 public class UserServiceImpl  implements  UserService{
+
+	public static final String USER_WS="/ws/user";
 	@Autowired
 	UserDAO userDAO;
 
@@ -56,7 +60,7 @@ public class UserServiceImpl  implements  UserService{
 
 		if(user== null){
 			if(lr.getEmail()!=null){
-				user=userDAO.findByEmail(lr.getEmail(),true);
+				user=userDAO.findByEmail(lr.getEmail());
 			}
 
 			if(lr.getProvider()!=null){
@@ -111,20 +115,18 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException{
 		return userDAO.updateUser(userDTO);
 	}
 
+	@Transactional(readOnly = true)
+	public boolean managePassword(String email) {
+		UserVO user=findByEmail(email);
 
-	public boolean managePassword(UserVO user) {
-		UserVO usr=findByEmail(user.getEmail(),true);
+		if(user!=null){
 
-		if(usr!=null){
-
-			UserVO transientUser=usr;
-
-			String decrypt=PasswordGenerator.decrypt(usr.getPassword());
-			//transientUser.setPassword(decrypt);
+			String decrypt=PasswordGenerator.decrypt(user.getPassword());
 
 			List<String> labels=new ArrayList<String>();
 			List<String> emails=new ArrayList<String>();
@@ -132,11 +134,11 @@ public class UserServiceImpl  implements  UserService{
 			labels.add(MailType.PASSWORD_KEY);
 			labels.add(MailType.USERNAME_KEY);
 
-			emails.add(transientUser.getEmail());
+			emails.add(email);
 
 			MailSender mailSender = new MailSender();
-			return mailSender.sendMailMessage(MailType.PASSWORD_TEMPLATE,MailType.PASSWORD_TEMPLATE_TITLE,	MailSender.replace(transientUser,labels,null,decrypt),
-					emails,null,null, null,transientUser.getUsername());
+			return mailSender.sendMailMessage(MailType.PASSWORD_TEMPLATE,MailType.PASSWORD_TEMPLATE_TITLE,	MailSender.replace(user,labels,null,decrypt),
+					emails,null,null, null,user.getUsername());
 		}
 		return false;
 	}
@@ -144,7 +146,7 @@ public class UserServiceImpl  implements  UserService{
 
 	public boolean sendMail(MailDTO mr, boolean active) {
 
-		UserVO user=findByEmail(mr.getFrom(),active);
+		UserVO user=findByEmail(mr.getFrom());
 
 		if(user!=null){
 			MailSender mailSender = new MailSender();
@@ -162,18 +164,18 @@ public class UserServiceImpl  implements  UserService{
 
 	}
 
-	@Transactional
-	public boolean deleteUser(Long id) {
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
+	public boolean deleteUser(Long id) throws UserException{
 		return userDAO.deleteUser(id);
 	}
 
-	@Transactional(readOnly = true)
-	public UserVO findByEmail(String email, boolean active) {
-		return userDAO.findByEmail(email,active);
+	@Transactional(readOnly = true,propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
+	public UserVO findByEmail(String email) {
+		return userDAO.findByEmail(email);
 	}
 
 
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public boolean setRoleToUser(RoleToUserDTO roleToUser) {
 
 		return userDAO.setRole(roleToUser.getEmail(),roleToUser.getRole());
@@ -189,15 +191,11 @@ public class UserServiceImpl  implements  UserService{
 		return userDAO.findByToken(token);
 	}
 
-	/*
-	public Page<UserVO> findAll(Pageable pageable) {
-		return userDAO.findAll(pageable);
-	}*/
 
 	public boolean buildAndSendMail(HttpServletRequest request , UserVO user){
 
-		String appUrl = request.getScheme() + "://" + request.getServerName()+":"+request.getServerPort() +request.getContextPath()+"/ws/user";
-
+		//String appUrl = request.getScheme() + "://" + request.getServerName()+":"+request.getServerPort() +request.getContextPath()+"/ws/user";
+		String appUrl=HTMLEntities.buildUrl(request,USER_WS);
 		StringBuilder sblink= new StringBuilder("<a href=");
 		sblink.append(appUrl);
 		sblink.append("/confirm?token=");

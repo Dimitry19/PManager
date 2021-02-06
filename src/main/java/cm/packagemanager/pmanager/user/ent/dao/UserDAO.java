@@ -22,7 +22,7 @@ public interface UserDAO {
 
 	UserVO findByToken(String token) throws BusinessResourceException;
 
-	UserVO findById(Long userId) throws BusinessResourceException;
+	UserVO findById(Long userId) throws UserException;
 
 
 	UserVO login(String username) throws UserException;
@@ -43,16 +43,16 @@ public interface UserDAO {
 
 	public void updateUser(UserVO user)  throws BusinessResourceException;
 
-	public UserVO updateUser(UpdateUserDTO user)  throws BusinessResourceException;
+	public UserVO updateUser(UpdateUserDTO user) throws BusinessResourceException, UserException;
 
-	public boolean deleteUser(Long id)  throws BusinessResourceException;
+	public boolean deleteUser(Long id)  throws UserException;
 
 	public UserVO save(UserVO user)  throws BusinessResourceException;
 
 	public UserVO update(UserVO user)  throws BusinessResourceException;
 
 
-	public UserVO findByEmail(String email, boolean active)  throws BusinessResourceException;
+	public UserVO findByEmail(String email)  throws BusinessResourceException;
 
 
 	public UserVO findByFacebookId(String facebookId)  throws BusinessResourceException;
@@ -64,7 +64,7 @@ public interface UserDAO {
 	public boolean setRole(UserVO user, RoleEnum roleId)  throws BusinessResourceException;
 	public boolean setRole(String email, RoleEnum roleId)  throws BusinessResourceException;
 
-	public boolean deleteUser(UserVO user)  throws BusinessResourceException;
+	public boolean deleteUser(UserVO user) throws BusinessResourceException, UserException;
 
 
 

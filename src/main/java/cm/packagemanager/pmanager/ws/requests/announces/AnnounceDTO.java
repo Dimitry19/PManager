@@ -1,27 +1,38 @@
 package cm.packagemanager.pmanager.ws.requests.announces;
 
+import javax.validation.constraints.NotNull;
+
 public class AnnounceDTO {
 
+	@NotNull(message = "Le lieu de depart de l'annonce doit etre valorisé")
 	private String departure;
 
+	@NotNull(message = "Le lieu d'arrivée de l'annonce doit etre valorisé")
 	private String arrival;
 
+	@NotNull(message = "La date de depart de l'annonce doit etre valorisé")
 	private String startDate;
 
+	@NotNull(message = "La date d'arrivée de l'annonce doit etre valorisé")
 	private String endDate;
 
+	@NotNull(message = "Le prix au Kg doit etre valorisé")
 	private String price;
 
 	private String preniumPrice;
 
 	private String goldPrice;
 
+	@NotNull(message = "Le nombre de Kg disponibles doit etre valorisé")
 	private String weigth;
 
+	@NotNull(message = "Le type d'annonce doit etre valorisé")
 	private String announceType;
 
+	@NotNull(message = "La modalité de transport doit etre valorisé")
 	private String transport;
 
+	@NotNull(message = "L'id  de l'utilisateur de l'annonce doit etre valorisé")
 	private Long userId;
 
 

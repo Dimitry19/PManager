@@ -9,6 +9,7 @@ http://localhost:8080/pmanager/ws/announce/update
    "endDate": "28/10/2020, 17:29:30",
    "price": 90,
    "preniumPrice":150,
+   "goldPrice":235,
    "goldPrice":150,
    "startDate": "13/11/2020, 17:29:30",
    "transport": "A",

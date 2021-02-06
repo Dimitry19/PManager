@@ -36,7 +36,7 @@ public class CommonController {
 	public static final String USER_WS_USERS="/users";
 	public static final String USER_WS_USERS_PAGE_NO="/users/{pageno}";
 	public static final String USER_WS_MAIL="/mail";
-	public static final String USER_WS_DELETE_USER= "/delete/user/{userId}";
+	public static final String USER_WS_DELETE_USER= "/delete";
 	public static final String USER_WS_ROLE="/role";
 	public static final String USER_WS_UPDATE_ID="/update/{id}";
 	public static final String USER_WS_UPDATE="/update";

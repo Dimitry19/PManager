@@ -10,10 +10,14 @@ import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.Constants;
+import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
+import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
+import cm.packagemanager.pmanager.common.exception.ResponseException;
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.BigDecimalUtils;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.common.utils.SQLUtils;
@@ -43,7 +47,7 @@ import static cm.packagemanager.pmanager.common.Constants.*;
 
 
 @Repository
-public class AnnounceDAOImpl implements AnnounceDAO {
+public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(AnnounceDAOImpl.class);
 
@@ -79,21 +83,12 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 
 		int paginatedCount = 0;
 		Session session = this.sessionFactory.getCurrentSession();
-		//session.enableFilter(FilterConstants.CANCELLED);
-		//session.enableFilter(FilterConstants.ACTIVE_MBR);
-		Query query = session.createQuery("from AnnounceVO");
+		session.enableFilter(FilterConstants.CANCELLED);
+		Query query = session.createQuery("from AnnounceVO ");
 		query.setFirstResult(page);
 		query.setMaxResults(size);
 
 		List<AnnounceVO> announces =(List) query.list();
-
-		if (announces != null) {
-			paginatedCount = announces.size();
-			System.out.println("Total Results: " + paginatedCount);
-			for (AnnounceVO announce : announces) {
-				System.out.println("Retrieved Product using Query. Name: " + announce.getId());
-			}
-		}
 
 		return announces;
 	}
@@ -144,42 +139,32 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 	public AnnounceVO findById(Long id) throws BusinessResourceException {
 
 		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		AnnounceVO announce=session.find(AnnounceVO.class,id);
+		AnnounceVO announce=(AnnounceVO) manualFilter(session.find(AnnounceVO.class,id));
 		return announce;
 	}
 
 	@Override
-	public AnnounceVO create(AnnounceDTO adto) throws  BusinessResourceException{
+	public AnnounceVO create(AnnounceDTO adto) throws BusinessResourceException, Exception {
 
 		if(adto!=null){
 
-			BigDecimal price =BigDecimalUtils.convertStringToBigDecimal(adto.getPrice());
-			BigDecimal weigth =BigDecimalUtils.convertStringToBigDecimal(adto.getWeigth());
-			Date startDate =DateUtils.StringToDate(adto.getStartDate());
-			Date endDate =DateUtils.StringToDate(adto.getEndDate());
 
 			UserVO user = userDAO.findById(adto.getUserId());
 
 			if(user==null){
-				return null;
+				throw new Exception("Aucun utilisateur trouvé avec cet id " +adto.getUserId());
 			}
 
 			AnnounceVO announce= new AnnounceVO();
-			announce.setPrice(price);
-			announce.setWeigth(weigth);
-			announce.setUser(user);
-			announce.setStartDate(startDate);
-			announce.setEndDate(endDate);
-			announce.setArrival(adto.getArrival());
-			announce.setDeparture(adto.getDeparture());
+			setAnnounce(announce,user,adto);
+
+
 			announce.setStatus(StatusEnum.VALID);
+			announce.setAnnounceId(new AnnounceIdVO(DEFAULT_TOKEN));
 			announce.setMessages(null);
 			announce.setCancelled(false);
-			announce.setAnnounceId(new AnnounceIdVO(DEFAULT_TOKEN));
 
-			setAnnounceType(adto.getAnnounceType(),announce);
-			setTransport(adto.getTransport(), announce);
+
 			Session session = this.sessionFactory.getCurrentSession();
 			session.save(announce);
 			return announce;
@@ -208,38 +193,22 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 	}
 
 	@Override
-	public AnnounceVO update(UpdateAnnounceDTO adto) throws BusinessResourceException {
+	public AnnounceVO update(UpdateAnnounceDTO adto) throws BusinessResourceException, UserException,RecordNotFoundException
+	{
 
 
 		UserVO user = userDAO.findById(adto.getUserId());
 
 		if(user==null){
-			 throw new BusinessResourceException("Aucun utilisateur trouvé");
+			 throw new RecordNotFoundException("Aucun utilisateur trouvé");
 		}
 
 		AnnounceVO announce = findById(adto.getId());
 		if(announce==null){
-			throw new BusinessResourceException("Aucun annonce  trouvée");
+			throw new RecordNotFoundException("Aucune annonce  trouvée");
 		}
 
-		BigDecimal price =BigDecimalUtils.convertStringToBigDecimal(adto.getPrice());
-		BigDecimal preniumPrice =BigDecimalUtils.convertStringToBigDecimal(adto.getPreniumPrice());
-		BigDecimal weigth =BigDecimalUtils.convertStringToBigDecimal(adto.getWeigth());
-		Date startDate =DateUtils.StringToDate(adto.getStartDate());
-		Date endDate =DateUtils.StringToDate(adto.getEndDate());
-
-
-		announce.setPrice(price);
-		announce.setPreniumPrice(preniumPrice);
-		announce.setWeigth(weigth);
-		announce.setUser(user);
-		announce.setStartDate(startDate);
-		announce.setEndDate(endDate);
-		announce.setArrival(adto.getArrival());
-		announce.setDeparture(adto.getDeparture());
-		setAnnounceType(adto.getAnnounceType(),announce);
-		setTransport(adto.getTransport(), announce);
-
+		setAnnounce(announce,user,adto);
 		Session session = sessionFactory.getCurrentSession();
 		session.update(user);
 		return announce;
@@ -252,6 +221,10 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 	}
 
 
+	@Override
+	public Object manualFilter(Object o) {
+		return super.manualFilter(o);
+	}
 
 	public UserVO addAnnounceToUser(AnnounceVO announce) throws BusinessResourceException {
 
@@ -266,7 +239,28 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 	}
 
 
+    private void setAnnounce(AnnounceVO announce,UserVO user,AnnounceDTO adto){
 
+	    BigDecimal price =BigDecimalUtils.convertStringToBigDecimal(adto.getPrice());
+	    BigDecimal preniumPrice =BigDecimalUtils.convertStringToBigDecimal(adto.getPreniumPrice());
+	    BigDecimal goldenPrice=BigDecimalUtils.convertStringToBigDecimal(adto.getGoldPrice());
+	    BigDecimal weigth =BigDecimalUtils.convertStringToBigDecimal(adto.getWeigth());
+	    Date startDate =DateUtils.StringToDate(adto.getStartDate());
+	    Date endDate =DateUtils.StringToDate(adto.getEndDate());
+
+
+	    announce.setPrice(price);
+	    announce.setPreniumPrice(preniumPrice);
+	    announce.setGoldPrice(goldenPrice);
+	    announce.setWeigth(weigth);
+	    announce.setUser(user);
+	    announce.setStartDate(startDate);
+	    announce.setEndDate(endDate);
+	    announce.setArrival(adto.getArrival());
+	    announce.setDeparture(adto.getDeparture());
+	    setAnnounceType(adto.getAnnounceType(),announce);
+	    setTransport(adto.getTransport(), announce);
+    }
 	private void setTransport(String transport, AnnounceVO announce){
 		switch (transport){
 			case AP:

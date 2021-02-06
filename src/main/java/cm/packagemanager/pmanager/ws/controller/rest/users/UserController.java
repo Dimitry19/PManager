@@ -82,8 +82,6 @@ public class UserController extends CommonController {
 					response.setStatus(200);
 
 					return pmResponse;
-				}else{
-					//userService.delete(usr);
 				}
 
 			}
@@ -168,30 +166,25 @@ public class UserController extends CommonController {
 	}
 
 
-	@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
-	public UserVO getUser(@PathVariable("id") Long id) {
-		try{
-
-				return userService.getUser(id);
-		}catch (Exception e){
-
-		}
-		return null;
-	}
-
-
 
 	@RequestMapping(value = USER_WS_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	UserVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateUserDTO userDTO){
 
-		if(userDTO!=null){
+
 			try {
-				return  userService.updateUser(userDTO);
+				if(userDTO!=null){
+					UserVO user=userService.updateUser(userDTO);
+					if (user==null){
+						user= new UserVO();
+						user.setRetCode(-1);
+						user.setRetDescription(WebServiceResponseCode.ERROR_UPD_EMAIL_LABEL);
+					}
+					return  user;
+				}
 			} catch (UserException e) {
 				e.printStackTrace();
 			}
-		}
 
 		return null;
 	}
@@ -207,10 +200,8 @@ public class UserController extends CommonController {
 		Response pmResponse = new Response();
 		if(password!=null){
 
-			UserVO user = new UserVO();
-			user.setEmail(password.getEmail());
 
-			if(userService.managePassword(user)){
+			if(userService.managePassword(password.getEmail())){
 				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 				pmResponse.setRetDescription(WebServiceResponseCode.RETRIVEVE_PASSWORD_LABEL+password.getEmail() +">>");
 			}else{
@@ -228,46 +219,55 @@ public class UserController extends CommonController {
 	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) {
 
 		  if (userService.setRoleToUser(roleToUser)){
-		  	  userService.findByEmail(roleToUser.getEmail(), true);
-			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail(),true), HttpStatus.FOUND);
+		  	  userService.findByEmail(roleToUser.getEmail());
+			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.FOUND);
 		  }else{
-			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail(),true), HttpStatus.NOT_FOUND);
+			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.NOT_FOUND);
 		  }
 
 	}
 
 
-	@GetMapping(USER_WS_DELETE_USER)
-	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long userId) throws Exception{
+	@RequestMapping(value =USER_WS_DELETE_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") Long id) throws Exception{
 		logger.info("delete request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
 
-		try
-		{
-
+		try{
 			logger.info("delete request out");
-			if (userId!=null){
-				if(userService.deleteUser(userId)){
+			if (id!=null){
+				if(userService.deleteUser(id)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_USER_LABEL);
 				}else{
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_USER_CODE_LABEL);
 				}
-
 			}
 		}
-		catch (Exception e)
-		{
+		catch (Exception e){
 			logger.error("Errore eseguendo login: ", e);
 			response.setStatus(400);
 			response.getWriter().write(e.getMessage());
+			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+			pmResponse.setRetDescription(e.getMessage());
+
 		}
 
 		return pmResponse;
 	}
 
+	@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
+	public UserVO getUser(@PathVariable("id") Long id) {
+		try{
+
+			return userService.getUser(id);
+		}catch (Exception e){
+
+		}
+		return null;
+	}
 	@RequestMapping(value = USER_WS_MAIL)
 	public Response sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailDTO mail) throws AddressException, MessagingException, IOException {
 
