@@ -212,21 +212,21 @@ public class UserVO extends CommonVO  {
 	}
 
 
-	@ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	public Set<RoleVO> getRoles() {
 		return roles;
 	}
 
 
-	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL,targetEntity=AnnounceVO.class, mappedBy="user", fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL,targetEntity=AnnounceVO.class, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	public Set<AnnounceVO> getAnnounces() {

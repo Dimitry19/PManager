@@ -9,6 +9,7 @@ import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 
 
 @Repository
@@ -45,7 +47,9 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public UserVO login(String username, String password) {
-		return  internalLogin( username,  password).get();
+		Optional optional=internalLogin(username,password);
+		if (optional==null) return null;
+		return  (UserVO) optional.get();
 	}
 
 
@@ -214,10 +218,10 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
-	public UserVO findByOnlyUsername(String username,boolean isresgistration) throws BusinessResourceException {
+	public UserVO findByOnlyUsername(String username,boolean disableFilter) throws BusinessResourceException {
 
 		Session session = this.sessionFactory.getCurrentSession();
-		if(!isresgistration){
+		if(!disableFilter){
 			session.enableFilter(FilterConstants.CANCELLED);
 			session.enableFilter(FilterConstants.ACTIVE_MBR);
 		}
@@ -355,6 +359,12 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		return false;
 	}
 
+	@Override
+	public boolean checkLogin(LoginDTO lr) throws BusinessResourceException, UserException {
+		UserVO user=findByOnlyUsername(lr.getUsername(), true);
+		return  (UserVO)manualFilter(user)!=null;
+	}
+
 
 	private UserVO updateDelete(Long id) throws BusinessResourceException ,UserException{
 
@@ -373,8 +383,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		}catch (Exception e){
 			throw new UserException(e.getMessage());
 		}
-
-
 	}
 
 
@@ -386,15 +394,20 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		}
 	}
 
+
+
 	private Optional<UserVO> internalLogin(String username, String password) throws BusinessResourceException{
 		try {
 
-			String encryptedPassword=PasswordGenerator.encrypt(password);
+			String encryptedPassword= PasswordGenerator.encrypt(password);
 
 			if(encryptedPassword==null)
 				throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
 
 			Optional<UserVO> userFound = findByUsername(username);
+			if (userFound==null){
+				return null;
+			}
 			if(encryptedPassword.equals(userFound.get().getPassword())) {
 				return userFound;
 			} else {
@@ -402,7 +415,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			}
 		} catch (BusinessResourceException ex) {
 			logger.error("Login ou mot de passe incorrect", ex);
-			throw new BusinessResourceException("UserNotFound", "Login ou mot de passe incorrect", HttpStatus.NOT_FOUND);
+			throw new BusinessResourceException("UserNotFound", " Nom utilisateur ou mot de passe incorrect", HttpStatus.NOT_FOUND);
 		}catch (Exception ex) {
 			logger.error("Une erreur technique est survenue", ex);
 			throw new BusinessResourceException("TechnicalError", "Une erreur technique est survenue", HttpStatus.INTERNAL_SERVER_ERROR);

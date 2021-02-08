@@ -141,7 +141,6 @@ public class UserController extends CommonController {
 
 		try
 		{
-			logger.info("login request out");
 			if (login!=null){
 				 user=userService.login(login);
 
@@ -155,13 +154,11 @@ public class UserController extends CommonController {
 				}
 			}
 		}
-		catch (Exception e)
-		{
+		catch (Exception e){
 			logger.error("Errore eseguendo login: ", e);
-			response.setStatus(400);
+			//response.setStatus(400);
 			response.getWriter().write(e.getMessage());
 		}
-
 		return  user;
 	}
 
@@ -199,7 +196,6 @@ public class UserController extends CommonController {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
 		if(password!=null){
-
 
 			if(userService.managePassword(password.getEmail())){
 				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -247,12 +243,9 @@ public class UserController extends CommonController {
 			}
 		}
 		catch (Exception e){
-			logger.error("Errore eseguendo login: ", e);
-			response.setStatus(400);
 			response.getWriter().write(e.getMessage());
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(e.getMessage());
-
 		}
 
 		return pmResponse;

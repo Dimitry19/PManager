@@ -57,4 +57,7 @@ public interface UserService{
 
 
 	public boolean buildAndSendMail(HttpServletRequest request , UserVO user) throws UserException;
+
+	public boolean checkLogin(LoginDTO lr ) throws BusinessResourceException, UserException;
+
 }

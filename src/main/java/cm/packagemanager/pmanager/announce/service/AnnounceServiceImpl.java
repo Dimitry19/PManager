@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.announce.service;
 
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
@@ -53,9 +54,14 @@ public class AnnounceServiceImpl implements AnnounceService {
 		return announceDAO.update(id);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public boolean delete(Long id) throws Exception {
+		return announceDAO.delete(id);
+	}
+
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public MessageVO addMessage(MessageDTO mdto) {
+	public MessageVO addMessage(MessageDTO mdto) throws Exception{
 		return announceDAO.addMessage(mdto);
 	}
 

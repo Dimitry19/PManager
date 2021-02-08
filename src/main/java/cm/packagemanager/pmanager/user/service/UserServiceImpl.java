@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.user.service;
 
+import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.MailType;
@@ -13,7 +14,6 @@ import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RoleToUserDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -47,6 +47,12 @@ public class UserServiceImpl  implements  UserService{
 	@PostConstruct
 	public void init() {
 		System.out.println("User service starts...." );
+	}
+
+
+	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
+	public boolean checkLogin(LoginDTO lr) throws BusinessResourceException, UserException {
+		return userDAO.checkLogin(lr);
 	}
 
 	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
@@ -214,5 +220,7 @@ public class UserServiceImpl  implements  UserService{
 		return mailSender.sendMailMessage(MailType.CONFIRM_TEMPLATE,MailType.CONFIRM_TEMPLATE_TITLE,	MailSender.replace(user,labels,body,null),
 				emails,null,null, null,user.getUsername());
 	}
+
+
 }
 

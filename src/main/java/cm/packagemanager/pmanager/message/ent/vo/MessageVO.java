@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.message.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserIdVO;
@@ -36,6 +37,9 @@ public class MessageVO extends CommonVO {
 
 	private String content;
 
+	@Transient
+	private String username;
+
 	private boolean cancelled;
 
 
@@ -62,7 +66,7 @@ public class MessageVO extends CommonVO {
 
 	@Access(AccessType.PROPERTY)
 	@ManyToOne
-	@JoinColumn(name="R_ANNOUNCE", referencedColumnName = "ID")
+	@JoinColumn(name="R_ANNOUNCE", referencedColumnName = "ID",updatable = false)
 	@JsonBackReference
 	public AnnounceVO getAnnounce() {
 		return announce;
@@ -71,7 +75,7 @@ public class MessageVO extends CommonVO {
 
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="R_USER_ID")
+	@JoinColumn(name="R_USER_ID", updatable = false)
 	@JsonBackReference
 	public UserVO getUser(){
 		return user;
@@ -90,6 +94,7 @@ public class MessageVO extends CommonVO {
 
 	public void setUser(UserVO user) {
 		this.user = user;
+		setUsername(user.getUsername());
 	}
 
 	public void setAnnounce(AnnounceVO announce) {
@@ -100,4 +105,13 @@ public class MessageVO extends CommonVO {
 		this.content = content;
 	}
 
+
+	@JsonProperty
+	public String getUsername() {
+		return username;//.getUsername();
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 }

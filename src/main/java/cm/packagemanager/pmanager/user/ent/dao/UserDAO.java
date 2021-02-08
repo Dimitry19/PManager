@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
+import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 
@@ -65,6 +66,8 @@ public interface UserDAO {
 	public boolean setRole(String email, RoleEnum roleId)  throws BusinessResourceException;
 
 	public boolean deleteUser(UserVO user) throws BusinessResourceException, UserException;
+
+	public boolean checkLogin(LoginDTO lr ) throws BusinessResourceException, UserException;
 
 
 

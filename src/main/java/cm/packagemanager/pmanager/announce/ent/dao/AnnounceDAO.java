@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.announce.ent.dao;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.common.exception.*;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -13,6 +14,7 @@ import java.util.List;
 public interface AnnounceDAO {
 
 	List<AnnounceVO> announces(int page, int size) throws BusinessResourceException;
+
 	int count(int page, int size) throws BusinessResourceException;
 
 	MessageVO addMessage(MessageDTO messageDTO) throws BusinessResourceException,RecordNotFoundException;
@@ -25,7 +27,7 @@ public interface AnnounceDAO {
 
 	AnnounceVO delete(AnnounceVO announce) throws BusinessResourceException,RecordNotFoundException;
 
-	AnnounceVO delete(Integer id) throws BusinessResourceException;
+	boolean delete(Long id) throws BusinessResourceException;
 
 	AnnounceVO addComment(MessageVO message) throws BusinessResourceException;
 

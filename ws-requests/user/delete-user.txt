@@ -1,5 +1,4 @@
-http://localhost:8080/pmanager/ws/user/delete?userId=2
-http://localhost:8080/pmanager/ws/user/confirm?token=xxxxxxxxxxxx
+http://localhost:8080/pmanager/ws/user/delete?id=2
 
 
 

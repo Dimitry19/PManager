@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.ws.controller.rest.announce;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.announce.service.AnnounceServiceImpl;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
@@ -61,7 +62,6 @@ public class AnnounceController extends CommonController {
 					res.setRetCode(WebServiceResponseCode.OK_CODE);
 					res.setRetDescription(WebServiceResponseCode.ANNOUNCE_CREATE_LABEL);
 				}else{
-					announce=new AnnounceVO();
 					res.setRetCode(WebServiceResponseCode.NOK_CODE);
 					res.setRetDescription(WebServiceResponseCode.ERROR_ANNOUNCE_CREATE_LABEL);
 				}
@@ -83,7 +83,7 @@ public class AnnounceController extends CommonController {
 				return null;
 			return announceService.update(uar);
 		}catch (Exception e){
-			//response.setStatus();
+
 			response.getWriter().write(e.getMessage());
 
 		}
@@ -108,23 +108,29 @@ public class AnnounceController extends CommonController {
 	}
 
 
-	@GetMapping(ANNOUNCE_WS_DELETE)
-	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long announceId) throws Exception{
+
+	@RequestMapping(value =ANNOUNCE_WS_DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
 		logger.info("delete request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
 
-		try
-		{
-
+		try{
 			logger.info("delete request out");
-
+			if (id!=null){
+				if(announceService.delete(id)){
+					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+					pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_ANNOUNCE_LABEL);
+				}else{
+					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_ANNOUNCE_CODE_LABEL);
+				}
+			}
 		}
-		catch (Exception e)
-		{
-			logger.error("Errore eseguendo login: ", e);
-			response.setStatus(400);
+		catch (Exception e){
 			response.getWriter().write(e.getMessage());
+			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+			pmResponse.setRetDescription(e.getMessage());
 		}
 
 		return pmResponse;
@@ -134,7 +140,7 @@ public class AnnounceController extends CommonController {
 
 
 	@GetMapping(ANNOUNCES_WS)
-	public ResponseEntity<PaginateResponse> findAll(
+	public ResponseEntity<PaginateResponse> announces(
 			@Valid @Positive(message = "Page number should be a positive number") @RequestParam int page,
 			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "12") int size) {
 

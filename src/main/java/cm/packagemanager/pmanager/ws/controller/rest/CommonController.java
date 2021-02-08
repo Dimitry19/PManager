@@ -6,13 +6,10 @@ import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.MappedSuperclass;
 import javax.servlet.ServletContext;
 import javax.validation.ConstraintViolationException;
 import java.util.Collections;
@@ -50,7 +47,7 @@ public class CommonController {
 	public static final String ANNOUNCE_WS_CREATE="/create";
 	public static final String ANNOUNCE_WS_ADD_MESSAGE="/add";
 	public static final String ANNOUNCE_WS_USER_ID_PAGE_NO="/announces/{pageno}";
-	public static final String ANNOUNCE_WS_DELETE= "/delete/announce/{announceId}";
+	public static final String ANNOUNCE_WS_DELETE= "/delete";
 	public static final String ANNOUNCE_WS_UPDATE="/update";
 
 
@@ -59,7 +56,7 @@ public class CommonController {
 	public static final String MESSAGE_WS="/ws/message/*";
 	public static final String MESSAGES_WS="/messages";
 	public static final String MESSAGE_WS_USER_ID_PAGE_NO="/messages/{pageno}";
-	public static final String MESSAGE_WS_DELETE= "/delete/message/{messageId}";
+	public static final String MESSAGE_WS_DELETE= "/delete";
 	public static final String MESSAGE_WS_UPDATE="/update";
 
 

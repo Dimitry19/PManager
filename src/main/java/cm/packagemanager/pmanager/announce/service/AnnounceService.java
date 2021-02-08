@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.announce.service;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
@@ -17,6 +18,8 @@ public interface AnnounceService extends InitializingBean {
 	public AnnounceVO update(UpdateAnnounceDTO announce) throws Exception;
 
 	public AnnounceVO update(Integer id) throws Exception;
+
+	public boolean delete(Long id) throws Exception;
 
 	public MessageVO addMessage(MessageDTO mdto) throws Exception;
 

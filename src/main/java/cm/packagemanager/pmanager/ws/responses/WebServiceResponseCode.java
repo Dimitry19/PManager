@@ -17,6 +17,7 @@ public class WebServiceResponseCode
 
 
 	public static final String ANNOUNCE_CREATE_LABEL="Annonce créee correctement";
+	public static final String CANCELLED_ANNOUNCE_LABEL = "L'annonce a été eliminé correctement";
 
 	// NOK LABEL
 	public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre eliminé car inexistant";
@@ -32,4 +33,5 @@ public class WebServiceResponseCode
 	public static final String ERROR_UPD_EMAIL_LABEL = "Email non valide ou deja utilisé";
 
 	public static final String ERROR_ANNOUNCE_CREATE_LABEL = "Annonce n'a pas pu etre cree";
+	public static final String ERROR_DELETE_ANNOUNCE_CODE_LABEL = "L' annonce ne peut pas etre eliminée car inexistant";
 }

@@ -9,6 +9,7 @@ package cm.packagemanager.pmanager.announce.ent.dao;
 import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
@@ -65,7 +66,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		//session.enableFilter(FilterConstants.ACTIVE_MBR);
 		Query query = session.createQuery("from AnnounceVO");
 		query.setFirstResult(page);
 		query.setMaxResults(size);
@@ -81,7 +82,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	@Override
 	public List<AnnounceVO> announces(int page, int size) throws BusinessResourceException {
 
-		int paginatedCount = 0;
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query = session.createQuery("from AnnounceVO ");
@@ -96,8 +96,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	@Override
 	public MessageVO addMessage(MessageDTO mdto) throws BusinessResourceException {
 
-
-		try {
 
 			Session session=null;
 			UserVO user = userDAO.findByOnlyUsername(mdto.getUsername(),false);
@@ -120,10 +118,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				session.save(message);
 				return message;
 			}
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
-		}
+
 
 
 
@@ -152,7 +147,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 			UserVO user = userDAO.findById(adto.getUserId());
 
 			if(user==null){
-				throw new Exception("Aucun utilisateur trouvé avec cet id " +adto.getUserId());
+				throw new Exception("Aucun utilisateur trouvÃ© avec cet id " +adto.getUserId());
 			}
 
 			AnnounceVO announce= new AnnounceVO();
@@ -178,8 +173,10 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	}
 
 	@Override
-	public AnnounceVO delete(Integer id) throws BusinessResourceException {
-		return null;
+	public boolean delete(Long id) throws BusinessResourceException {
+		AnnounceVO announce=updateDelete(id);
+
+		return  (announce!=null) ? announce.isCancelled() : false;
 	}
 
 	@Override
@@ -261,6 +258,27 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	    setAnnounceType(adto.getAnnounceType(),announce);
 	    setTransport(adto.getTransport(), announce);
     }
+
+
+
+	private AnnounceVO updateDelete(Long id) throws BusinessResourceException{
+
+		try{
+
+			Session session=sessionFactory.getCurrentSession();
+
+			AnnounceVO announce=findById(id);
+			if(announce!=null){
+				announce.setCancelled(true);
+				session.merge(announce);
+				return session.get(AnnounceVO.class,id);
+			}else{
+				return null;
+			}
+		}catch (Exception e){
+			throw new BusinessResourceException(e.getMessage());
+		}
+	}
 	private void setTransport(String transport, AnnounceVO announce){
 		switch (transport){
 			case AP:
