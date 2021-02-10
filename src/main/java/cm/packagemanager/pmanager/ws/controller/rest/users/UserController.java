@@ -20,8 +20,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.jvm.hotspot.debugger.AddressException;
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -252,12 +252,14 @@ public class UserController extends CommonController {
 	}
 
 	@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
-	public UserVO getUser(@PathVariable("id") Long id) {
+	public UserVO getUser(HttpServletResponse response, HttpServletRequest request,@PathVariable("id") Long id) throws IOException {
 		try{
 
 			return userService.getUser(id);
 		}catch (Exception e){
-
+			logger.error("Erreur durant l'execution de recuperation des infos de l'utilisateur: ", e);
+			response.setStatus(400);
+			response.getWriter().write(e.getMessage());
 		}
 		return null;
 	}

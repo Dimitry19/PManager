@@ -24,13 +24,11 @@ public interface UserService{
 
 	public boolean delete(UserVO user) throws UserException ;
 
-	public List<UserVO> getAllUsers(int page, int size) ;
+	public List<UserVO> getAllUsers(int page, int size) throws Exception ;
 
+	public List<UserVO> getAllUsers() throws Exception;
 
-
-	public List<UserVO> getAllUsers() throws BusinessResourceException;
-
-	public UserVO getUser(Long id) throws UserException;
+	public UserVO getUser(Long id) throws Exception;
 
 	public UserVO register(RegisterDTO register) throws UserException;
 

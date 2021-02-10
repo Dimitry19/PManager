@@ -99,18 +99,18 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 	@Transactional(readOnly = true)
-	public List<UserVO> getAllUsers(int page, int size) {
+	public List<UserVO> getAllUsers(int page, int size)throws Exception {
 		return userDAO.getAllUsers(page, size);
 	}
 
 
 	@Transactional(readOnly = true)
-	public List<UserVO> getAllUsers() {
+	public List<UserVO> getAllUsers()throws Exception {
 		return userDAO.getAllUsers();
 	}
 
 	@Transactional(readOnly = true)
-	public UserVO getUser(Long id) {
+	public UserVO getUser(Long id) throws Exception{
 		return userDAO.getUser(id);
 	}
 

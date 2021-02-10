@@ -7,5 +7,13 @@
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:tcp://localhost/../../../db/manager</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="PManager/Hibernate" uuid="ea73a65d-27a1-4af8-9701-9c0cc45b7076">
+      <driver-ref>azure.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate</remarks>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:h2:tcp://localhost/../../../db/manager</jdbc-url>
+    </data-source>
   </component>
 </project>

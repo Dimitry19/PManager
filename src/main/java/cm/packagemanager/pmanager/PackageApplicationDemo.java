@@ -7,9 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
 
-//@SpringBootApplication
+//@SpringBootApplication(scanBasePackages = "cm.packagemanager.pmanager")
 public class PackageApplicationDemo {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -24,11 +26,9 @@ public class PackageApplicationDemo {
 	@Component
 	class Dummy implements CommandLineRunner {
 
-		@Autowired
+
 		UserBO userBO;
 
-		@Autowired
-		RoleBO roleBO;
 
 		@Override
 		public void run(String... string) throws Exception {
