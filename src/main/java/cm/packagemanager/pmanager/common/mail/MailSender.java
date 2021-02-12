@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+
+//https://www.journaldev.com/2532/javamail-example-send-mail-in-java-smtp
 @Component
 public class MailSender {
 

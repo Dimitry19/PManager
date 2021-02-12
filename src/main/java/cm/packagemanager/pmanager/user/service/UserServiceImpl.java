@@ -34,15 +34,14 @@ Le fait d’avoir des singletons a un impact en environnement multi-threadé
 ○ Les beans doivent donc être thread-safe (d'où le transactional)
 *
 * */
-@Service("userService")
+@Service
 public class UserServiceImpl  implements  UserService{
 
 	public static final String USER_WS="/ws/user";
+
 	@Autowired
 	UserDAO userDAO;
 
-	@Autowired
-	HibernateConfiguration hibernateConfiguration;
 
 	@PostConstruct
 	public void init() {
@@ -78,12 +77,9 @@ public class UserServiceImpl  implements  UserService{
 				if(lr.getProvider().equals(FACEBOOK_PROVIDER)){
 					user=userDAO.findByFacebookId(lr.getSocialId());
 				}
-
 			}
 		}
-
 		return user;
-
 	}
 
 
@@ -164,10 +160,7 @@ public class UserServiceImpl  implements  UserService{
 					mr.getSubject(),MailSender.replace(user,labels,mr.getBody(),null),mr.getTo(),mr.getCc(),mr.getBcc(), mr.getFrom(),user.getUsername());
 
 		}
-
-
 		return  false;
-
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)

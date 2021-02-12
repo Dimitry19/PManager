@@ -30,10 +30,6 @@ public  class RoleDAOImpl implements RoleDAO {
 	//HibernateTransactionManager tx;
 
 
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
-	}
-
 	public RoleDAOImpl(){
 
 	}

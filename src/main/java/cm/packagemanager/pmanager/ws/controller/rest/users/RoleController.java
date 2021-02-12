@@ -22,8 +22,7 @@ public class RoleController {
 
 
 	@PostMapping(value = "/add")
-	@Transactional
-	public ResponseEntity<RoleVO> add(@RequestBody RoleDTO role) {
+	public ResponseEntity<RoleVO> add(@RequestBody RoleDTO role) throws Exception {
 
 		RoleVO roleCreated = roleService.add(role);
  		return new ResponseEntity<RoleVO>(roleCreated, HttpStatus.CREATED);

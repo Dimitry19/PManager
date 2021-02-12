@@ -8,6 +8,7 @@ import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RoleToUserDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
+import org.springframework.stereotype.Service;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,6 @@ public interface UserService{
 
 
 	public UserVO login(LoginDTO lr ) throws UserException;
-
 
 	public UserVO update(UserVO user) throws UserException ;
 

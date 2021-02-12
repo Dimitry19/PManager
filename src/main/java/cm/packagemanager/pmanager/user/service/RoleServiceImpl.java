@@ -9,7 +9,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 
-public interface RoleService {
+@Service("roleService")
+public class RoleServiceImpl implements RoleService{
 
-	public RoleVO add(RoleDTO role) throws Exception;
+	@Autowired
+	RoleDAO roleDAO;
+
+	@PostConstruct
+	public void init() {
+		System.out.println("Role service starts...." );
+	}
+
+	@Transactional
+	public RoleVO add(RoleDTO role) throws Exception{
+
+		return roleDAO.addRole(new RoleVO(role.getRole()));
+	}
 }

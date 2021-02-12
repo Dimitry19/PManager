@@ -22,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -41,7 +40,7 @@ public class UserController extends CommonController {
 	protected final Log logger = LogFactory.getLog(UserController.class);
 
 	@Autowired
-	protected UserServiceImpl userService;
+	protected UserService userService;
 
 	@PostMapping(value = USER_WS_REGISTRATION)
 	public  Response register(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid RegisterDTO register) throws Exception{
@@ -189,7 +188,7 @@ public class UserController extends CommonController {
 
 	@RequestMapping(value = USER_WS_PASSWORD, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	Response  password(HttpServletResponse response, HttpServletRequest request, @RequestBody PasswordDTO password){
+	Response  password(HttpServletResponse response, HttpServletRequest request, @RequestBody PasswordDTO password) throws UserException {
 
 
 		logger.info("password request in");
@@ -212,7 +211,7 @@ public class UserController extends CommonController {
 
 
 	@PostMapping(value = USER_WS_ROLE)
-	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) {
+	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) throws UserException {
 
 		  if (userService.setRoleToUser(roleToUser)){
 		  	  userService.findByEmail(roleToUser.getEmail());
@@ -300,7 +299,7 @@ public class UserController extends CommonController {
 	@GetMapping(USER_WS_USERS)
 	public ResponseEntity<List<UserVO>> findAll(
 			@Valid @Positive(message = "Page number should be a positive number") @RequestParam(required = false, defaultValue = "0") int page,
-			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "20") int size) {
+			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "20") int size) throws Exception {
 
 		HttpHeaders headers = new HttpHeaders();
 		List<UserVO> users = userService.getAllUsers(page,size);
@@ -310,7 +309,7 @@ public class UserController extends CommonController {
 
 	@RequestMapping(USER_WS_USERS_PAGE_NO)
 	@ResponseBody
-	public List<UserVO> users(@PathVariable int pageno,@PageableDefault(value=10, page=0) SpringDataWebProperties.Pageable pageable) throws ServletException {
+	public List<UserVO> users(@PathVariable int pageno,@PageableDefault(value=10, page=0) SpringDataWebProperties.Pageable pageable) throws Exception {
 
 		return userService.getAllUsers(pageno,size);
 

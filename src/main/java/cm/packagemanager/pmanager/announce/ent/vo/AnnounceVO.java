@@ -239,7 +239,7 @@ public class AnnounceVO extends CommonVO {
 		this.cancelled = cancelled;
 	}
 
-	@NaturalId
+	//@NaturalId
 	public AnnounceIdVO getAnnounceId() {
 		return announceId;
 	}

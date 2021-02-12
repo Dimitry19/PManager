@@ -10,6 +10,8 @@ import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,6 +70,11 @@ public class AnnounceServiceImpl implements AnnounceService {
 	@Transactional(readOnly = true)
 	public List<AnnounceVO> announces(int page, int size ) {
 		return announceDAO.announces(page, size);
+	}
+
+	@Override
+	public Page announces(Pageable pageable) throws Exception {
+		return (Page) announceDAO.announces(pageable.getPageNumber(),pageable.getPageSize());
 	}
 
 	@Transactional(readOnly = true)

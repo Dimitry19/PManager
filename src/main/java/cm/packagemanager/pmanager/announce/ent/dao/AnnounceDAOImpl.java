@@ -52,7 +52,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(AnnounceDAOImpl.class);
 
-	@Autowired
+	//@Autowired
 	private SessionFactory sessionFactory;
 
 	@Autowired

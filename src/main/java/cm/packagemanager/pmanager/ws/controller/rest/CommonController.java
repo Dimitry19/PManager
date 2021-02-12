@@ -49,6 +49,7 @@ public class CommonController {
 	public static final String ANNOUNCE_WS_USER_ID_PAGE_NO="/announces/{pageno}";
 	public static final String ANNOUNCE_WS_DELETE= "/delete";
 	public static final String ANNOUNCE_WS_UPDATE="/update";
+	public static final String ANNOUNCE_WS_ALL="/all";
 
 
 

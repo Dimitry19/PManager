@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.configuration.cfg;
 
 import cm.packagemanager.pmanager.PackageApplication;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.user.service.UserService;
 import cm.packagemanager.pmanager.user.service.UserServiceImpl;
 import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import org.aspectj.lang.JoinPoint;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Component;
 public class CommonAspect {
 
 	@Autowired
-	UserServiceImpl userService;
+	UserService userService;
 
 	private static Logger logger = LoggerFactory.getLogger(CommonAspect.class);
 
