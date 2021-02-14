@@ -176,7 +176,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	public boolean delete(Long id) throws BusinessResourceException {
 		AnnounceVO announce=updateDelete(id);
 
-		return  (announce!=null) ? announce.isCancelled() : false;
+		return  (announce!=null) && announce.isCancelled();
 	}
 
 	@Override
