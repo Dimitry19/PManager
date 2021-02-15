@@ -64,6 +64,8 @@ public class AnnounceVO extends CommonVO {
 
 
 	private String username;
+	
+	private String description;
 
 	private Set<MessageVO> messages=new HashSet<>();
 
@@ -237,6 +239,17 @@ public class AnnounceVO extends CommonVO {
 
 	public void setCancelled(boolean cancelled) {
 		this.cancelled = cancelled;
+	}
+	
+	
+	@Basic(optional = false)
+	@Column(name = "DESCRIPTION", nullable = true)
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@NaturalId
