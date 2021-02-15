@@ -9,7 +9,6 @@ package cm.packagemanager.pmanager.announce.ent.dao;
 import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
@@ -17,7 +16,6 @@ import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
-import cm.packagemanager.pmanager.common.exception.ResponseException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.BigDecimalUtils;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
@@ -52,7 +50,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(AnnounceDAOImpl.class);
 
-	//@Autowired
+	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Autowired
@@ -152,7 +150,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 			AnnounceVO announce= new AnnounceVO();
 			setAnnounce(announce,user,adto);
-
 
 			announce.setStatus(StatusEnum.VALID);
 			announce.setAnnounceId(new AnnounceIdVO(DEFAULT_TOKEN));
@@ -255,7 +252,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	    announce.setEndDate(endDate);
 	    announce.setArrival(adto.getArrival());
 	    announce.setDeparture(adto.getDeparture());
-		announce.setDescription(adto.setDescription());
+		announce.setDescription(adto.getDescription());
 	    setAnnounceType(adto.getAnnounceType(),announce);
 	    setTransport(adto.getTransport(), announce);
     }

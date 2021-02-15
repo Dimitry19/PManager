@@ -1,10 +1,10 @@
 package cm.packagemanager.pmanager.common.enums;
 
+import cm.packagemanager.pmanager.common.utils.StringUtils;
+
 public enum TransportEnum {
-	PLANE("Avion"),
-	AUTO("Voiture"),
-	NAVE("Bateau")
-	
+	PLANE("Avion"), AUTO("Voiture"), NAVE("Bateau");
+
 	private String value;
 
 	private TransportEnum(String value) {

@@ -136,6 +136,7 @@ public class AnnounceVO extends CommonVO {
 	}
 
 	public void setTransport(TransportEnum transport) {
+		setDescriptionTransport(transport.toValue());
 		this.transport = transport;
 	}
 
@@ -283,7 +284,7 @@ public class AnnounceVO extends CommonVO {
 	}
 
 	public void setDescriptionTransport(String descriptionTransport){
-		this.descriptionTransport=transport.toValue();
+		this.descriptionTransport=descriptionTransport;
 	}	
 	
 	public void addMessages(MessageVO message){

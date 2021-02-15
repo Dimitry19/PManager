@@ -1,8 +1,10 @@
 package cm.packagemanager.pmanager.common.mail;
 
 
+import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.common.utils.Utility;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import com.sendgrid.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +26,7 @@ import java.util.Properties;
 
 
 /*https://github.com/sendgrid/sendgrid-java/*/
-@Component
+//@Component
 public class MailSender {
 
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(MailSender.class);
@@ -67,7 +70,7 @@ public class MailSender {
 	Properties properties;
 
 
-	@Autowired
+	//@Autowired
 	ResourceLoader resourceLoader;
 
 	String EmailSendAddresses  ;
@@ -285,7 +288,7 @@ public class MailSender {
 	    System.out.println(response.getHeaders());
 	  }
 	
-	public static Mail buildMailToSend(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC,String from,String username, boolean repyToEnabled) {
+	public  Mail buildMailToSend(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC,String from,String username, boolean repyToEnabled) throws IOException {
 	    Mail mail = new Mail();
 		
 		EmailSendAddresses=formatEmails(emailSendTo);
@@ -319,7 +322,7 @@ public class MailSender {
 	    	Email to = new Email();
 			to.setName("Example User");
 	        to.setEmail(EmailSendAddressesArray[i]);
-			personalization.addTo(to)
+			personalization.addTo(to);
 			
 		}
 		
@@ -397,7 +400,7 @@ public class MailSender {
 	  }
 	
 	
-	private hanbleAttachments(Mail mail, String type, String disposition, String filename , Object content){
+	private void hanbleAttachments(Mail mail, String type, String disposition, String filename , String content){
 		
 		if(mail==null) return;
 		if(content==null) return;
@@ -414,7 +417,7 @@ public class MailSender {
 		
 	}
 	
-	private void testSend(){
+	private void testSend() throws IOException {
 		
 		    Email from = new Email("packagemanager2020@gmail.com");
 		    String subject = "Sending with Twilio SendGrid is Fun";

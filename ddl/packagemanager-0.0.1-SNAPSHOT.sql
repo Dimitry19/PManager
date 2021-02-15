@@ -14,6 +14,7 @@
         datecreated timestamp,
         lastupdated timestamp,
         token varchar(255) not null,
+        description varchar(255),
         announce_type varchar(10),
         arrival varchar(255) not null,
         cancelled boolean not null,
