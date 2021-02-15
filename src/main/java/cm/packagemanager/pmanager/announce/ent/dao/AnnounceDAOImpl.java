@@ -255,6 +255,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	    announce.setEndDate(endDate);
 	    announce.setArrival(adto.getArrival());
 	    announce.setDeparture(adto.getDeparture());
+		announce.setDescription(adto.setDescription());
 	    setAnnounceType(adto.getAnnounceType(),announce);
 	    setTransport(adto.getTransport(), announce);
     }
