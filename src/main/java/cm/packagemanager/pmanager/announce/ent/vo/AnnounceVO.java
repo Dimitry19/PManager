@@ -64,6 +64,10 @@ public class AnnounceVO extends CommonVO {
 
 
 	private String username;
+	
+	private String description;
+	
+	private String descriptionTransport;
 
 	private Set<MessageVO> messages=new HashSet<>();
 
@@ -238,6 +242,17 @@ public class AnnounceVO extends CommonVO {
 	public void setCancelled(boolean cancelled) {
 		this.cancelled = cancelled;
 	}
+	
+	
+	@Basic(optional = false)
+	@Column(name = "DESCRIPTION", nullable = true)
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	//@NaturalId
 	public AnnounceIdVO getAnnounceId() {
@@ -259,6 +274,18 @@ public class AnnounceVO extends CommonVO {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	@Transient
+	@JsonProperty
+	public String getDescriptionTransport() {
+	
+		return descriptionTransport;
+	}
+
+	public void setDescriptionTransport(String descriptionTransport){
+		this.descriptionTransport=transport.toValue();
+	}	
+	
 	public void addMessages(MessageVO message){
 		messages.add(message);
 	}

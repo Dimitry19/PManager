@@ -16,6 +16,10 @@ public class AnnounceDTO {
 	@NotNull(message = "La date d'arrivée de l'annonce doit etre valorisé")
 	private String endDate;
 
+	@NotNull(message = "La description doit etre valorisé")
+	private String description;
+	
+	
 	@NotNull(message = "Le prix au Kg doit etre valorisé")
 	private String price;
 
@@ -68,7 +72,14 @@ public class AnnounceDTO {
 		this.endDate = endDate;
 	}
 
+	public String getDescription() {
+		return description;
+	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	public String getPrice() {
 		return price;
 	}

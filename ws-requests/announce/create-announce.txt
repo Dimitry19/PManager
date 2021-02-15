@@ -3,6 +3,7 @@ http://localhost:8080/pmanager/ws/announce/create
 {
 
       "announceType": "B",
+      "description": "Promotion"
       "arrival": "YAOUNDE",
       "compagnie": "",
       "departure": "BOLOGNE",
