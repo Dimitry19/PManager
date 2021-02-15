@@ -283,7 +283,7 @@ public class AnnounceVO extends CommonVO {
 	}
 
 	public void setDescriptionTransport(String descriptionTransport){
-		this.descriptionTransport=descriptionTransport;
+		this.descriptionTransport=transport.toValue();
 	}	
 	
 	public void addMessages(MessageVO message){
