@@ -39,6 +39,16 @@ public class AnnounceDTO {
 	@NotNull(message = "L'id  de l'utilisateur de l'annonce doit etre valorisé")
 	private Long userId;
 
+	private String category;
+
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 	public String getDeparture() {
 		return departure;

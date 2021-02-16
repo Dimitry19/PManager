@@ -69,6 +69,8 @@ public class AnnounceVO extends CommonVO {
 	
 	private String descriptionTransport;
 
+	private String category;
+
 	private Set<MessageVO> messages=new HashSet<>();
 
 	private AnnounceIdVO announceId;
@@ -253,6 +255,16 @@ public class AnnounceVO extends CommonVO {
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}@Basic(optional = false)
+
+
+	@Column(name = "CATEGORIE", nullable = true)
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	//@NaturalId

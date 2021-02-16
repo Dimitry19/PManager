@@ -253,6 +253,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	    announce.setArrival(adto.getArrival());
 	    announce.setDeparture(adto.getDeparture());
 		announce.setDescription(adto.getDescription());
+		announce.setCategory(adto.getCategory());
 	    setAnnounceType(adto.getAnnounceType(),announce);
 	    setTransport(adto.getTransport(), announce);
     }
