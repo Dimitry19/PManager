@@ -1,11 +1,11 @@
 package cm.packagemanager.pmanager.ws.controller.rest.users;
 
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.user.service.UserService;
-import cm.packagemanager.pmanager.user.service.UserServiceImpl;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
@@ -42,6 +42,10 @@ public class UserController extends CommonController {
 	@Autowired
 	protected UserService userService;
 
+	@Autowired
+	MailSender mailSender;
+
+
 	@PostMapping(value = USER_WS_REGISTRATION)
 	public  Response register(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid RegisterDTO register) throws Exception{
 
@@ -73,19 +77,25 @@ public class UserController extends CommonController {
 					return pmResponse;
 				}
 
-				boolean sent=userService.buildAndSendMail(request,usr);
+				com.sendgrid.Response sent = userService.buildAndSendMail(request,usr);
 
-				if(sent){
+				if(mailSender.manageResponse(sent)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
 					response.setStatus(200);
-
 					return pmResponse;
+				}else{
+					pmResponse.setRetCode(sent.getStatusCode());
+					pmResponse.setRetDescription(sent.getBody());
+					response.setStatus(sent.getStatusCode());
+					userService.remove(usr);
 				}
 
 			}
 		}catch (Exception e){
 			logger.error("Errore eseguendo register: ", e);
+			pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+			pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
 			response.setStatus(400);
 		}
 		return null;
@@ -196,7 +206,7 @@ public class UserController extends CommonController {
 		Response pmResponse = new Response();
 		if(password!=null){
 
-			if(userService.managePassword(password.getEmail())){
+			if(mailSender.manageResponse(userService.managePassword(password.getEmail()))){
 				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 				pmResponse.setRetDescription(WebServiceResponseCode.RETRIVEVE_PASSWORD_LABEL+password.getEmail() +">>");
 			}else{
@@ -273,7 +283,7 @@ public class UserController extends CommonController {
 		try
 		{
 			if (mail!=null){
-				if(userService.sendMail(mail,true)){
+				if(mailSender.manageResponse(userService.sendMail(mail,true))){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
 				}else{
@@ -312,6 +322,5 @@ public class UserController extends CommonController {
 	public List<UserVO> users(@PathVariable int pageno,@PageableDefault(value=10, page=0) SpringDataWebProperties.Pageable pageable) throws Exception {
 
 		return userService.getAllUsers(pageno,size);
-
 	}
 }

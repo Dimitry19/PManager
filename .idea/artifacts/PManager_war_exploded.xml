@@ -28,9 +28,6 @@
           <element id="library" level="project" name="Maven: org.springframework.hateoas:spring-hateoas:1.1.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.atteo:evo-inflector:1.2.2" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.0" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.0" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.0" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.30" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-integration:2.3.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.integration:spring-integration-core:5.3.0.RELEASE" />
@@ -138,6 +135,14 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:5.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-aop:2.3.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.9.5" />
+          <element id="library" level="project" name="Maven: com.sendgrid:sendgrid-java:4.0.1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.0" />
+          <element id="library" level="project" name="Maven: com.sendgrid:java-http-client:4.3.6" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.4.13" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.12" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.14" />
         </element>
       </element>
       <element id="directory" name="META-INF">

@@ -1,12 +1,14 @@
 package cm.packagemanager.pmanager.common.exception;
 
+import org.springframework.http.HttpStatus;
+
 import java.util.List;
 
 public class ErrorResponse {
 
 	private String message;
 	private List<String> details;
-	private  int code;
+	private HttpStatus code;
 
 
 	public ErrorResponse() {
@@ -19,11 +21,11 @@ public class ErrorResponse {
 		this.details = details;
 	}
 
-	public int getCode() {
+	public HttpStatus getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(HttpStatus code) {
 		this.code = code;
 	}
 

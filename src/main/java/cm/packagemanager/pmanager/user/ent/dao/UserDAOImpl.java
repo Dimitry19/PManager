@@ -118,6 +118,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			user.setPhone(register.getPhone());
 			user.setActive(0);
 			user.setConfirmationToken(UUID.randomUUID().toString());
+
 			Session session = this.sessionFactory.getCurrentSession();
 			session.save(user);
 			session.flush();
@@ -197,6 +198,13 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		return null;
 	}
 
+	@Override
+	public void remove(UserVO user) throws BusinessResourceException {
+		Session session = this.sessionFactory.getCurrentSession();
+		if(user!=null){
+			session.remove(user);
+		}
+	}
 
 
 	@Override

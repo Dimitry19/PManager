@@ -25,9 +25,9 @@ public class PasswordEncoder {
 		System.out.println("Decrypt : "+toDecrypt);*/
 
 		String e =PasswordGenerator.encrypt("password2");
-		System.out.println("encrypt : "+e);
+		//System.out.println("encrypt : "+e);
 		String d =PasswordGenerator.decrypt("cGFzc3dvcmQyQHRyQHZlbA==");
-		System.out.println("decrypt : "+d);
+		//System.out.println("decrypt : "+d);
 
 	}
 

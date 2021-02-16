@@ -16,6 +16,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -49,15 +51,15 @@ public class AuthenticationFilter  implements Filter {
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 
 		logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
-
-		String apiKey=request.getHeader("token");
+/*
+		String apiKey=request.getHeader("AUTH_API_KEY");
 		String calledUrl=request.getRequestURI();
-		/*if(StringUtils.isEmpty(apiKey)){
-			return ;
-		}
+
 		if(!calledUrl.contains("confirm")&&calledUrl.contains(service) && (StringUtils.isEmpty(apiKey)|| !apiKey.equals(token))){
 			ErrorResponse errorResponse = new ErrorResponse();
-			errorResponse.setCode(401);
+			List<String> details= new ArrayList<>();
+			errorResponse.setCode(HttpStatus.UNAUTHORIZED);
+			errorResponse.setDetails(details);
 			errorResponse.setMessage("Unauthorized Access");
 
 			byte[] responseToSend = restResponseBytes(errorResponse);
@@ -65,8 +67,8 @@ public class AuthenticationFilter  implements Filter {
 			((HttpServletResponse) response).setStatus(401);
 			response.getOutputStream().write(responseToSend);
 			return;
-		}*/
-
+		}
+*/
 			//call next filter in the filter chain
 			filterChain.doFilter(request, response);
 

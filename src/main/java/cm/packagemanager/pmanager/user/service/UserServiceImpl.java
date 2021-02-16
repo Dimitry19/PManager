@@ -5,7 +5,6 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.MailType;
 import cm.packagemanager.pmanager.common.utils.HTMLEntities;
-import cm.packagemanager.pmanager.configuration.cfg.HibernateConfiguration;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -14,6 +13,7 @@ import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RoleToUserDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
+import com.sendgrid.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -41,6 +41,9 @@ public class UserServiceImpl  implements  UserService{
 
 	@Autowired
 	UserDAO userDAO;
+
+	@Autowired
+	MailSender mailSender;
 
 
 	@PostConstruct
@@ -94,6 +97,11 @@ public class UserServiceImpl  implements  UserService{
 		return userDAO.deleteUser(user);
 	}
 
+	@Transactional
+	public void remove(UserVO user) throws UserException {
+		 userDAO.remove(user);
+	}
+
 	@Transactional(readOnly = true)
 	public List<UserVO> getAllUsers(int page, int size)throws Exception {
 		return userDAO.getAllUsers(page, size);
@@ -123,7 +131,7 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 	@Transactional(readOnly = true)
-	public boolean managePassword(String email) {
+	public Response managePassword(String email) {
 		UserVO user=findByEmail(email);
 
 		if(user!=null){
@@ -138,29 +146,10 @@ public class UserServiceImpl  implements  UserService{
 
 			emails.add(email);
 
-			MailSender mailSender = new MailSender();
 			return mailSender.sendMailMessage(MailType.PASSWORD_TEMPLATE,MailType.PASSWORD_TEMPLATE_TITLE,	MailSender.replace(user,labels,null,decrypt),
-					emails,null,null, null,user.getUsername());
+					emails,null,null, null,user.getUsername(),null,false);
 		}
-		return false;
-	}
-
-
-	public boolean sendMail(MailDTO mr, boolean active) {
-
-		UserVO user=findByEmail(mr.getFrom());
-
-		if(user!=null){
-			MailSender mailSender = new MailSender();
-			List<String> labels=new ArrayList<String>();
-
-			labels.add(MailType.BODY_KEY);
-
-			return mailSender.sendMailMessage(MailType.SEND_MAIL_TEMPLATE,
-					mr.getSubject(),MailSender.replace(user,labels,mr.getBody(),null),mr.getTo(),mr.getCc(),mr.getBcc(), mr.getFrom(),user.getUsername());
-
-		}
-		return  false;
+		return null;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
@@ -191,9 +180,26 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 
-	public boolean buildAndSendMail(HttpServletRequest request , UserVO user){
 
-		//String appUrl = request.getScheme() + "://" + request.getServerName()+":"+request.getServerPort() +request.getContextPath()+"/ws/user";
+
+	public Response sendMail(MailDTO mr, boolean active) {
+
+		UserVO user=findByEmail(mr.getFrom());
+
+		if(user!=null){
+
+			List<String> labels=new ArrayList<String>();
+
+			labels.add(MailType.BODY_KEY);
+
+			return mailSender.sendMailMessage(MailType.SEND_MAIL_TEMPLATE,mr.getSubject(),MailSender.replace(user,labels,mr.getBody(),null),mr.getTo(),mr.getCc(),mr.getBcc(), mr.getFrom(),user.getUsername(),null,true);
+		}
+		return  null;
+	}
+
+	@Transactional(rollbackFor = UserException.class)
+	public Response buildAndSendMail(HttpServletRequest request , UserVO user) throws UserException{
+
 		String appUrl=HTMLEntities.buildUrl(request,USER_WS);
 		StringBuilder sblink= new StringBuilder("<a href=");
 		sblink.append(appUrl);
@@ -209,9 +215,10 @@ public class UserServiceImpl  implements  UserService{
 
 		emails.add(user.getEmail());
 
-		MailSender mailSender = new MailSender();
-		return mailSender.sendMailMessage(MailType.CONFIRM_TEMPLATE,MailType.CONFIRM_TEMPLATE_TITLE,	MailSender.replace(user,labels,body,null),
-				emails,null,null, null,user.getUsername());
+		Response sent= mailSender.sendMailMessage(MailType.CONFIRM_TEMPLATE,MailType.CONFIRM_TEMPLATE_TITLE,	MailSender.replace(user,labels,body,null),
+				emails,null,null, null,user.getUsername(),null,false);
+
+		return sent;
 	}
 
 

@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.common.mail;
 
 
+import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.common.utils.Utility;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -8,10 +9,14 @@ import com.sendgrid.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.sendgrid.SendGridAutoConfiguration;
+import org.springframework.boot.autoconfigure.sendgrid.SendGridProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -19,14 +24,15 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 
 /*https://github.com/sendgrid/sendgrid-java/*/
-//@Component
+
+@Service
 public class MailSender {
 
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(MailSender.class);
@@ -81,31 +87,19 @@ public class MailSender {
 
 	private final static String SEPARATOR =";";
 
-	public  MailSender()
-	{
+	public  MailSender(){
 
 	}
 
-	public boolean sendMailMessage(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC,String from,String username)
-	{
-
+	/*
+	public boolean sendMailMessage(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC,String from,String username) {
 
 		loadProperties();
-
-		/*Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(adminEmail, adminPassword);
-			}
-		});*/
-
 		Authenticator authenticator = new SMTPAuthenticator("packagemanager2020@gmail.com", "pmanager2020");
 
 		Session mailSession;
-		try
-		{
+		try	{
 			mailSession = Session.getDefaultInstance(properties, authenticator);
-
-
 			logger.debug(String.format("Sending a message To:%s CC:%s BCC:%s", emailSendTo, emailcc,emailbcc));
 
 			MimeMessage message = new MimeMessage(mailSession);
@@ -115,33 +109,15 @@ public class MailSender {
 			}
 
 			message.setFrom(new InternetAddress(from, username));
-
-
 			Resource resource = new ClassPathResource("/templates/"+templateName);
-
 			InputStream emailTemplateStream = resource.getInputStream();
-
 			String emailTemplateString =Utility.convertStreamToString(emailTemplateStream);
-
-
-			/*MimeBodyPart messageBodyPart = new MimeBodyPart();
-			Multipart multipart = new MimeMultipart();
-			multipart.addBodyPart(messageBodyPart);
-			MimeBodyPart attachPart = new MimeBodyPart();
-
-			attachPart.attachFile("/var/tmp/image19.png");
-			multipart.addBodyPart(attachPart);
-			message.setContent(multipart);*/
-
 			message.setSubject(messageSubject);
 			String subj=messageSubject.toString();
 
-			try
-			{
+			try{
 				variableLabel.put("SUBJECT",subj );
-
-				for (Map.Entry<String, String> entry : variableLabel.entrySet())
-				{
+				for (Map.Entry<String, String> entry : variableLabel.entrySet()){
 					String value = entry.getValue().replaceAll("\\$", "\\\\\\$");
 					// Sostituzione case-insensitive mediante espressione
 					// regolare , ignora la differenza tra maiuscole e minuscoli
@@ -152,12 +128,9 @@ public class MailSender {
 			}
 
 			message.setContent(emailTemplateString, "text/html");
-
 			EmailSendAddresses=formatEmails(emailSendTo);
 			EmailSendAddressesCC=formatEmails(emailSendCC);
 			EmailSendAddressesBCC=formatEmails(emailSendBCC);
-
-
 			String[] EmailSendAddressesArray = EmailSendAddresses.split(SEPARATOR);
 			String[] EmailSendAddressesCCArray=null;
 			String[] EmailSendAddressesBCCArray=null;
@@ -188,7 +161,6 @@ public class MailSender {
 				}
 			}
 
-
 			Transport.send(message);
 
 			logger.info(String.format("Email send completed with templateName[%s].", templateName));
@@ -200,7 +172,7 @@ public class MailSender {
 			e.printStackTrace();
 		}
 		return false;
-	}
+	}*/
 
 	private  void  loadProperties(){
 
@@ -225,9 +197,7 @@ public class MailSender {
 			sb.append(email);
 			sb.append(SEPARATOR);
 		}
-
 		return sb.toString();
-
 
 	}
 
@@ -266,158 +236,164 @@ public class MailSender {
 			this.username = username;
 			this.password = password;
 		}
-
 		public PasswordAuthentication getPasswordAuthentication(){
+
 			return new PasswordAuthentication(username, password);
 		}
 	}
 	
-	
-	 private  void send(final Mail mail) throws IOException {
-	    final SendGrid sg = new SendGrid(SENDGRID_API_KEY);
-	    sg.addRequestHeader("X-Mock", "true");
 
-	    final Request request = new Request();
-	    request.setMethod(Method.POST);
-	    request.setEndpoint("mail/send");
-	    request.setBody(mail.build());
+	public Response sendMailMessage(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC,String from,String username,String message, boolean repyToEnabled){
+		try {
+			final Mail mail =buildMailToSend(templateName, messageSubject, variableLabel,  emailSendTo, emailSendCC,emailSendBCC, from, username, message, repyToEnabled);
+				final Response response= send(mail);
+				return response;
+		}catch (Exception e){}
 
-	    final Response response = sg.api(request);
-	    System.out.println(response.getStatusCode());
-	    System.out.println(response.getBody());
-	    System.out.println(response.getHeaders());
-	  }
-	
-	public  Mail buildMailToSend(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC,String from,String username, boolean repyToEnabled) throws IOException {
-	    Mail mail = new Mail();
-		
-		EmailSendAddresses=formatEmails(emailSendTo);
-		EmailSendAddressesCC=formatEmails(emailSendCC);
-		EmailSendAddressesBCC=formatEmails(emailSendBCC);
+		return null;
+	}
 
+	private  Response send(final Mail mail) throws IOException {
+		final SendGrid sg = new SendGrid(SENDGRID_API_KEY);
+		//sg.addRequestHeader("X-Mock", "true");
 
-		String[] EmailSendAddressesArray = EmailSendAddresses.split(SEPARATOR);
-		String[] EmailSendAddressesCCArray = StringUtils.isNotEmpty(EmailSendAddressesCC)?EmailSendAddressesCC.split(SEPARATOR):null;
-		String[] EmailSendAddressesBCCArray = StringUtils.isNotEmpty(EmailSendAddressesBCC)?EmailSendAddressesBCC.split(SEPARATOR):null;
-	
-		Resource resource = new ClassPathResource("/templates/"+templateName);
+		final Request request = new Request();
+		request.setMethod(Method.POST);
+		request.setEndpoint("mail/send");
+		request.setBody(mail.build());
 
-		InputStream emailTemplateStream = resource.getInputStream();
+		final Response response = sg.api(request);
+		return response;
 
-		String emailTemplateString =Utility.convertStreamToString(emailTemplateStream);
-		
-		if(from==null){
-			from="noreply@travel.com";
-			username ="No reply";
-		}
-
-	    Email fromEmail = new Email();
-	    fromEmail.setName(username);
-	    fromEmail.setEmail(from);
-	    mail.setFrom(fromEmail);
-	    mail.setSubject(messageSubject);
-
-		Personalization personalization = new Personalization();
-		for (int i = 0; i < EmailSendAddressesArray.length; i++){
-	    	Email to = new Email();
-			to.setName("Example User");
-	        to.setEmail(EmailSendAddressesArray[i]);
-			personalization.addTo(to);
-			
-		}
-		
-		for (int i = 0; i < EmailSendAddressesCCArray.length; i++){
-			Email cc = new Email();
-			cc.setName("Example User");
-	        cc.setEmail(EmailSendAddressesCCArray[i]);
-			personalization.addCc(cc);
-			
-		}
-		
-		for (int i = 0; i < EmailSendAddressesBCCArray.length; i++){
-			Email bcc = new Email();
-			bcc.setName("Example User");
-	        bcc.setEmail(EmailSendAddressesBCCArray[i]);
-			personalization.addBcc(bcc);
-			
-		}
-
-	    /*
-		personalization.setSubject("Hello World from the Personalized Twilio SendGrid Java Library");
-	    personalization.addHeader("X-Test", "test");
-	    personalization.addHeader("X-Mock", "true");
-	    personalization.addSubstitution("%name%", "Example User");
-	    personalization.addSubstitution("%city%", "Riverside");
-	    personalization.addCustomArg("user_id", "343");
-	    personalization.addCustomArg("type", "marketing");
-	    personalization.setSendAt(1443636843);
-		*/
-	    mail.addPersonalization(personalization);
-	
-		String subj=messageSubject.toString();
-
+	}
+	public  Mail buildMailToSend(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC,String from,String username, String message,boolean repyToEnabled) throws IOException {
+		Mail mail = new Mail();
 		try{
-			variableLabel.put("SUBJECT",subj );
+			EmailSendAddresses = formatEmails(emailSendTo);
+			EmailSendAddressesCC = formatEmails(emailSendCC);
+			EmailSendAddressesBCC = formatEmails(emailSendBCC);
 
-			for (Map.Entry<String, String> entry : variableLabel.entrySet()){
-				String value = entry.getValue().replaceAll("\\$", "\\\\\\$");
-				emailTemplateString = emailTemplateString.replaceAll("(?i)" + "%" + entry.getKey() + "%", value);
+
+			String[] EmailSendAddressesArray = EmailSendAddresses.split(SEPARATOR);
+			String[] EmailSendAddressesCCArray = StringUtils.isNotEmpty(EmailSendAddressesCC) ? EmailSendAddressesCC.split(SEPARATOR) : null;
+			String[] EmailSendAddressesBCCArray = StringUtils.isNotEmpty(EmailSendAddressesBCC) ? EmailSendAddressesBCC.split(SEPARATOR) : null;
+
+			Resource resource = new ClassPathResource("/templates/" + templateName);
+
+			InputStream emailTemplateStream = resource.getInputStream();
+
+			String emailTemplateString = Utility.convertStreamToString(emailTemplateStream);
+
+			if (from == null) {
+				from = adminEmail;
 			}
-		}
-		catch (Exception e){
+
+			Email fromEmail = new Email();
+			fromEmail.setName(fromName);
+			fromEmail.setEmail(from);
+			mail.setFrom(fromEmail);
+			mail.setSubject(messageSubject);
+
+			Personalization personalization = new Personalization();
+			for (int i = 0; i < EmailSendAddressesArray.length; i++) {
+				Email to = new Email();
+				to.setName(username);
+				to.setEmail(EmailSendAddressesArray[i]);
+				personalization.addTo(to);
+			}
+
+			if (StringUtils.isNotEmpty(EmailSendAddressesBCC)) {
+				for (int i = 0; i < EmailSendAddressesCCArray.length; i++) {
+					Email cc = new Email();
+					cc.setName(EmailSendAddressesCCArray[i]);
+					cc.setEmail(EmailSendAddressesCCArray[i]);
+					personalization.addCc(cc);
+				}
+			}
+			if (StringUtils.isNotEmpty(EmailSendAddressesBCC)) {
+				for (int i = 0; i < EmailSendAddressesBCCArray.length; i++) {
+					Email bcc = new Email();
+					bcc.setName(EmailSendAddressesBCCArray[i]);
+					bcc.setEmail(EmailSendAddressesBCCArray[i]);
+					personalization.addBcc(bcc);
+				}
+			}
+
+			mail.addPersonalization(personalization);
+			Content content = new Content();
+
+
+			if(variableLabel!=null && StringUtils.isEmpty(message)){
+				variableLabel.put(Constants.SUBJECT, messageSubject.toString());
+
+				for (Map.Entry<String, String> entry : variableLabel.entrySet()) {
+					String value = entry.getValue().replaceAll("\\$", "\\\\\\$");
+					emailTemplateString = emailTemplateString.replaceAll("(?i)" + "%" + entry.getKey() + "%", value);
+				}
+				content.setType("text/html");
+				content.setValue(emailTemplateString);
+			}else {
+				content.setType("text/plain");
+				content.setValue(message);
+			}
+			mail.addContent(content);
+
+			repyToEnabled = true;
+			if (repyToEnabled) {
+				Email replyTo = new Email();
+				replyTo.setName(fromName);
+				replyTo.setEmail(adminEmail);
+				mail.setReplyTo(replyTo);
+			}
+
+		}catch (Exception e){
+			logger.info(e.getMessage());
+			e.printStackTrace();
 		}
 
-			
-	    Content content = new Content();
-	    content.setType("text/html");
-	    content.setValue(emailTemplateString);
-	    mail.addContent(content);
-
-	  
-
-	    /*Attachments attachments2 = new Attachments();
-	    attachments2.setContent("BwdW");
-	    attachments2.setType("image/png");
-	    attachments2.setFilename("banner.png");
-	    attachments2.setDisposition("inline");
-	    attachments2.setContentId("Banner");
-	    mail.addAttachments(attachments2);
-		Attachments attachments = new Attachments();
-	    attachments.setContent(content);
-	    attachments.setType("application/pdf");
-	    attachments.setFilename("balance_001.pdf");
-	    attachments.setDisposition("attachment");
-	    attachments.setContentId("Balance Sheet");
-	    mail.addAttachments(attachments);*/
-		
-		if(repyToEnabled){
-		 	Email replyTo = new Email();
-	    	replyTo.setName("Example User");
-	    	replyTo.setEmail("packagemanager2020@gmail.com");
-	    	mail.setReplyTo(replyTo);
-		}
-	    return mail;
+		return mail;
 	  }
 	
 	
-	private void hanbleAttachments(Mail mail, String type, String disposition, String filename , String content){
+	private void hanbleAttachments(Mail mail, String type, String disposition,  String filePath,String content) throws IOException {
 		
 		if(mail==null) return;
 		if(content==null) return;
 		if(StringUtils.isEmpty(type)) return;
 		if(StringUtils.isEmpty(disposition)) return;
-		
+
+		Path file = Paths.get(filePath);
 		Attachments attachments = new Attachments();
+		attachments.setFilename(file.getFileName().toString());
+
+		byte[] attachmentContentBytes = Files.readAllBytes(file);
+		String attachmentContent = Base64.getMimeEncoder().encodeToString(attachmentContentBytes);
+		attachments.setContent(attachmentContent);
+		mail.addAttachments(attachments);
 	    attachments.setContent(content);
 	    attachments.setType(type);
-	    attachments.setFilename(filename);
 	    attachments.setDisposition(disposition);
-	    attachments.setContentId(filename);
 	    mail.addAttachments(attachments);
 		
 	}
-	
-	private void testSend() throws IOException {
+
+
+	public boolean manageResponse(final Response response){
+
+		if(response==null){
+			return false;
+		}
+		switch (response.getStatusCode()){
+			case 200:
+			case 201:
+			case 202:
+			case 203:
+				return true;
+			default:return false;
+		}
+	}
+
+	private Response testSend() throws IOException {
 		
 		    Email from = new Email("packagemanager2020@gmail.com");
 		    String subject = "Sending with Twilio SendGrid is Fun";
@@ -425,27 +401,27 @@ public class MailSender {
 		    Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
 		    Mail mail = new Mail(from, subject, to, content);
 
-		    SendGrid sg = new SendGrid("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");
+		    SendGrid sg = new SendGrid(SENDGRID_API_KEY);
 		    Request request = new Request();
 		    try {
 		      request.setMethod(Method.POST);
 		      request.setEndpoint("mail/send");
 		      request.setBody(mail.build());
-		      Response response = sg.api(request);
-		      System.out.println(response.getStatusCode());
-		      System.out.println(response.getBody());
-		      System.out.println(response.getHeaders());
-		      System.out.println(response.getBody().isEmpty());
+		    return sg.api(request);
+
 		    } catch (IOException ex) {
 		      throw ex;
 		    }
-		  
+
+
+		       /*
+		    personalization.addHeader("X-Test", "test");
+		    personalization.addHeader("X-Mock", "true");
+		    personalization.addSubstitution("%name%", "Example User");
+		    personalization.addSubstitution("%city%", "Riverside");
+		    personalization.addCustomArg("user_id", "343");
+		    personalization.addCustomArg("type", "marketing");
+		    personalization.setSendAt(1443636843);
+			*/
 	}
-	
-	
-	
-	
-	
-
-
 }
