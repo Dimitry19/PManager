@@ -69,7 +69,7 @@ public class AnnounceVO extends CommonVO {
 	
 	private String descriptionTransport;
 
-	private String category;
+	private ProductCategoryVO category;
 
 	private Set<MessageVO> messages=new HashSet<>();
 
@@ -232,7 +232,6 @@ public class AnnounceVO extends CommonVO {
 	public void setUser(UserVO user) {
 		this.user = user;
 		setUsername(user.getUsername());
-
 	}
 
 
@@ -258,12 +257,16 @@ public class AnnounceVO extends CommonVO {
 	}@Basic(optional = false)
 
 
-	@Column(name = "CATEGORIE", nullable = true)
-	public String getCategory() {
+/*	@OneToOne
+	@JoinColumns({
+			@JoinColumn(name="R_CATEGORY", referencedColumnName="CODE",nullable = false),
+			@JoinColumn(name="TOKEN", referencedColumnName="TOKEN",nullable = false,updatable = false,insertable = false)
+	})*/
+	public ProductCategoryVO getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(ProductCategoryVO category) {
 		this.category = category;
 	}
 

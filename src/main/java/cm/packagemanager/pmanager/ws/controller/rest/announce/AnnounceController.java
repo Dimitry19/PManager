@@ -82,7 +82,7 @@ public class AnnounceController extends CommonController {
 		}
 		catch (Exception e)	{
 			logger.error("Errore eseguendo add announce: ", e);
-			response.setStatus(400);
+			response.setStatus(500);
 			response.getWriter().write(e.getMessage());
 		}
 

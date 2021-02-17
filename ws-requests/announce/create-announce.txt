@@ -3,17 +3,18 @@ http://localhost:8080/pmanager/ws/announce/create
 {
 
       "announceType": "B",
-      "description": "Promotion"
-      "arrival": "YAOUNDE",
-      "compagnie": "",
-      "departure": "BOLOGNE",
-      "endDate": "28/11/2020, 17:29:30",
-      "price": 90,
-      "preniumPrice":150,
-       "goldPrice":235,
-       "startDate": "14/11/2020, 17:29:30",
-      "transport": "A",
-      "userId": 2,
-      "weigth": 20
+        "arrival": "DOUALA",
+        "description":"Promotion",
+        "compagnie": "",
+        "departure": "NEW YORK",
+        "endDate": "28/10/2021, 17:29:30",
+        "price": 70,
+        "preniumPrice":50,
+         "goldPrice":235,
+        "startDate": "13/11/2021, 17:29:30",
+        "transport": "A",
+        "userId": 2,
+        "category":"DOCUMENTS",
+        "weigth": 20
 
 }

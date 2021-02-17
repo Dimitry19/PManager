@@ -9,6 +9,9 @@ package cm.packagemanager.pmanager.announce.ent.dao;
 import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.announce.ent.vo.ProductCategoryIdVO;
+import cm.packagemanager.pmanager.announce.ent.vo.ProductCategoryVO;
+import cm.packagemanager.pmanager.announce.service.ProductCategoryService;
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
@@ -39,6 +42,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 import static cm.packagemanager.pmanager.common.Constants.*;
@@ -58,6 +62,9 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 	@Autowired
 	private UserDAO userDAO;
+
+	@Autowired
+	ProductCategoryService productCategoryService;
 
 	@Override
 	public int count(int page, int size) throws BusinessResourceException {
@@ -116,10 +123,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				session.save(message);
 				return message;
 			}
-
-
-
-
 		return null;
 	}
 
@@ -140,7 +143,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	public AnnounceVO create(AnnounceDTO adto) throws BusinessResourceException, Exception {
 
 		if(adto!=null){
-
 
 			UserVO user = userDAO.findById(adto.getUserId());
 
@@ -242,7 +244,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	    Date startDate =DateUtils.StringToDate(adto.getStartDate());
 	    Date endDate =DateUtils.StringToDate(adto.getEndDate());
 
-
 	    announce.setPrice(price);
 	    announce.setPreniumPrice(preniumPrice);
 	    announce.setGoldPrice(goldenPrice);
@@ -253,11 +254,10 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	    announce.setArrival(adto.getArrival());
 	    announce.setDeparture(adto.getDeparture());
 		announce.setDescription(adto.getDescription());
-		announce.setCategory(adto.getCategory());
 	    setAnnounceType(adto.getAnnounceType(),announce);
+	    //setProductCategory(announce,adto.getCategory());
 	    setTransport(adto.getTransport(), announce);
     }
-
 
 
 	private AnnounceVO updateDelete(Long id) throws BusinessResourceException{
@@ -301,5 +301,15 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				announce.setAnnounceType(AnnounceType.SELLER);
 				break;
 		}
+	}
+
+	private void setProductCategory(AnnounceVO announce,String category){
+
+		ProductCategoryIdVO id= new ProductCategoryIdVO(category, DEFAULT_TOKEN);
+		Optional<ProductCategoryVO> optional =null;//productCategoryService.findById(id);
+		ProductCategoryVO productCategory= new ProductCategoryVO();//optional!=null? optional.get():null;
+		productCategory.setId(id);
+		productCategory.setDescription(id.getCode());
+		announce.setCategory(productCategory);
 	}
 }

@@ -20,6 +20,8 @@ public class ProductCategoryVO extends CommonVO {
 
 	private boolean cancelled;
 
+	public ProductCategoryVO(){}
+
 	public ProductCategoryIdVO getId() {
 		return id;
 
