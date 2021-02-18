@@ -225,6 +225,7 @@ public class AnnounceVO extends CommonVO {
 	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
 	@JoinColumn(name="R_USER_ID", updatable = false)
 	@JsonBackReference
+	@JsonProperty
 	public UserVO getUser() {
 		return user;
 	}
@@ -254,14 +255,12 @@ public class AnnounceVO extends CommonVO {
 	
 	public void setDescription(String description) {
 		this.description = description;
-	}@Basic(optional = false)
+	}
 
-
-/*	@OneToOne
-	@JoinColumns({
-			@JoinColumn(name="R_CATEGORY", referencedColumnName="CODE",nullable = false),
-			@JoinColumn(name="TOKEN", referencedColumnName="TOKEN",nullable = false,updatable = false,insertable = false)
-	})*/
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(optional = false,fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
+	@JoinColumn(name="R_CATEGORY",referencedColumnName = "CODE")
+	@JsonProperty
 	public ProductCategoryVO getCategory() {
 		return category;
 	}

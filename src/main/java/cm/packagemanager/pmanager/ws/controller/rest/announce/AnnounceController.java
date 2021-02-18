@@ -115,12 +115,12 @@ public class AnnounceController extends CommonController {
 
 			if(message!=null){
 				return new ResponseEntity<MessageVO>(message, headers, HttpStatus.OK);
+			}else{
+				response.getWriter().write("Message non ajouté!");
 			}
 		}
 		return null;
 	}
-
-
 
 	@RequestMapping(value =ANNOUNCE_WS_DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{

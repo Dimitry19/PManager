@@ -12,14 +12,14 @@ import java.util.Optional;
 @Service
 public class ProductCategoryService {
 
-	//@Autowired
-	//ProductCategoryDAO productCategoryDAO;
+	@Autowired
+	ProductCategoryDAO productCategoryDAO;
 
 	public ProductCategoryService(){
 	}
 
-	/*public Optional<ProductCategoryVO> findById(ProductCategoryIdVO id){
-		return productCategoryDAO.findById(id);
-	}*/
+	public ProductCategoryVO findByCode(String code){
+		return productCategoryDAO.findByCode(code);
+	}
 
 }

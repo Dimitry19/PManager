@@ -255,7 +255,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	    announce.setDeparture(adto.getDeparture());
 		announce.setDescription(adto.getDescription());
 	    setAnnounceType(adto.getAnnounceType(),announce);
-	    //setProductCategory(announce,adto.getCategory());
+	    setProductCategory(announce,adto.getCategory());
 	    setTransport(adto.getTransport(), announce);
     }
 
@@ -305,11 +305,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 	private void setProductCategory(AnnounceVO announce,String category){
 
-		ProductCategoryIdVO id= new ProductCategoryIdVO(category, DEFAULT_TOKEN);
-		Optional<ProductCategoryVO> optional =null;//productCategoryService.findById(id);
-		ProductCategoryVO productCategory= new ProductCategoryVO();//optional!=null? optional.get():null;
-		productCategory.setId(id);
-		productCategory.setDescription(id.getCode());
+		ProductCategoryVO productCategory= productCategoryService.findByCode(category);
 		announce.setCategory(productCategory);
 	}
 }

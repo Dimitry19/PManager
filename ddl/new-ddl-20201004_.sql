@@ -15,12 +15,8 @@ create table AIRLINE
 create table PROD_CATEGORY
 (
 	CODE VARCHAR(15) not null,
-	TOKEN VARCHAR(255) not null,
-	DATECREATED TIMESTAMP(26,6),
-	LASTUPDATED TIMESTAMP(26,6),
-	CANCELLED BOOLEAN not null,
 	DESCRIPTION VARCHAR(255),
-	primary key (CODE, TOKEN)
+	primary key (CODE)
 )
 ;
 
