@@ -69,7 +69,7 @@ public class AnnounceVO extends CommonVO {
 	
 	private String descriptionTransport;
 
-	private String category;
+	private ProductCategoryVO category;
 
 	private Set<MessageVO> messages=new HashSet<>();
 
@@ -225,6 +225,7 @@ public class AnnounceVO extends CommonVO {
 	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
 	@JoinColumn(name="R_USER_ID", updatable = false)
 	@JsonBackReference
+	@JsonProperty
 	public UserVO getUser() {
 		return user;
 	}
@@ -232,7 +233,6 @@ public class AnnounceVO extends CommonVO {
 	public void setUser(UserVO user) {
 		this.user = user;
 		setUsername(user.getUsername());
-
 	}
 
 
@@ -255,15 +255,17 @@ public class AnnounceVO extends CommonVO {
 	
 	public void setDescription(String description) {
 		this.description = description;
-	}@Basic(optional = false)
+	}
 
-
-	@Column(name = "CATEGORIE", nullable = true)
-	public String getCategory() {
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(optional = false,fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
+	@JoinColumn(name="R_CATEGORY",referencedColumnName = "CODE")
+	@JsonProperty
+	public ProductCategoryVO getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(ProductCategoryVO category) {
 		this.category = category;
 	}
 

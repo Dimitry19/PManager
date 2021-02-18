@@ -16,13 +16,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /*
  * https://o7planning.org/11665/spring-boot-hibernate-and-spring-transaction
+ * https://www.springboottutorial.com/hibernate-jpa-tutorial-with-spring-boot-starter-jpa
  */
 
 @SpringBootApplication
 @EnableAspectJAutoProxy(proxyTargetClass=true)
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, 	DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
 @EnableJpaRepositories(basePackages = "cm.packagemanager.pmanager")
-//@SpringBootApplication(scanBasePackages = "cm.packagemanager.pmanager")
+//@SpringBootApplication(scanBasePackages = "cm.packagemanager.pmanager.*")
 public class PackageApplication extends SpringBootServletInitializer {
 
 	private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);

@@ -1,8 +1,10 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
-import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
+
+import cm.packagemanager.pmanager.constant.FieldConstants;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  *
@@ -10,18 +12,26 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="PROD_CATEGORY", schema = "PUBLIC")
-public class ProductCategoryVO extends CommonVO {
+@NamedQueries({
+		@NamedQuery(name =ProductCategoryVO.FIND_BY_CODE ,query = "select pc from ProductCategoryVO pc where pc.code =:code"),
+})
+public class ProductCategoryVO implements Serializable {
 
 
-	@EmbeddedId
-	private ProductCategoryIdVO id;
+	public static final String FIND_BY_CODE="cm.packagemanager.pmanager.announce.ent.vo.ProductCategoryVO.findByCode";
+	@Id
+	private String code;
 
 	private String description;
 
-	private boolean cancelled;
+	//private boolean cancelled;
 
-	public ProductCategoryIdVO getId() {
-		return id;
+	public ProductCategoryVO(){}
+
+	@Basic(optional = false)
+	@Column(name = "CODE", nullable = false,length = FieldConstants.AUTH_USER_LEN)
+	public String getCode() {
+		return code;
 
 	}
 
@@ -35,12 +45,12 @@ public class ProductCategoryVO extends CommonVO {
 		this.description = description;
 	}
 
-	public void setId(ProductCategoryIdVO id) {
-		this.id = id;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 
-	@Basic(optional = false)
+	/*@Basic(optional = false)
 	@Column(name="CANCELLED")
 	public boolean isCancelled() {
 		return cancelled;
@@ -48,6 +58,26 @@ public class ProductCategoryVO extends CommonVO {
 
 	public void setCancelled(boolean cancelled) {
 		this.cancelled = cancelled;
+	}*/
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		ProductCategoryVO that = (ProductCategoryVO) o;
+
+		if (!code.equals(that.code)) return false;
+		return code.equals(that.code);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = code.hashCode();
+		result = 31 * result + description.hashCode();
+		return result;
 	}
 
 
