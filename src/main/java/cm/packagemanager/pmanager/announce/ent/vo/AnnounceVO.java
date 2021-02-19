@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.announce.ent.vo;
 
 
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
@@ -27,14 +28,15 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 @Entity
 @Table(name = "ANNOUNCE", schema = "PUBLIC")
 @NamedQueries({
-		@NamedQuery(name = AnnounceVO.FINDBYID,  query="select a from AnnounceVO a where id =:id"),
+		@NamedQuery(name = AnnounceVO.FINDBYUSER,  query="select a from AnnounceVO a where a.user.id =:userId order by a.startDate desc"),
 })
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
 })
-public class AnnounceVO extends CommonVO {
+public class AnnounceVO extends WSCommonResponseVO {
 
-	public static final String FINDBYID="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findById";
+	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
+	public static final String SQL_FIND_BY_USER=" FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
 
 	private Long id;
 

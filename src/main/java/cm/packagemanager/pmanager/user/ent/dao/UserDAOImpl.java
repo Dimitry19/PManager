@@ -274,11 +274,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		}
 	}
 
-	@Override
-	public Object manualFilter(Object o) {
 
-		return super.manualFilter(o);
-	}
 
 	@Override
 	public UserVO login(String username) throws UserException {
@@ -428,6 +424,23 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			logger.error("Une erreur technique est survenue", ex);
 			throw new BusinessResourceException("TechnicalError", "Une erreur technique est survenue", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+
+	@Override
+	public <T> String composeQuery(T o, String alias) {
+		return null;
+	}
+
+	@Override
+	public <T> void composeQueryParameters(T o,Query query) {
+
+	}
+
+	@Override
+	public Object manualFilter(Object o) {
+
+		return super.manualFilter(o);
 	}
 
 }

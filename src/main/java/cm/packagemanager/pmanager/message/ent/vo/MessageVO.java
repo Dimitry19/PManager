@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.message.ent.vo;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserIdVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -25,7 +26,7 @@ import javax.persistence.*;
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
 })
-public class MessageVO extends CommonVO {
+public class MessageVO extends WSCommonResponseVO {
 
 	public  final static String GET_ID_SQL="SELECT MAX(ID) FROM MESSAGE WHERE CANCELLED IS FALSE ";
 
@@ -61,8 +62,6 @@ public class MessageVO extends CommonVO {
 	private String getContent(){
 		return content;
 	}
-
-
 
 	@Access(AccessType.PROPERTY)
 	@ManyToOne

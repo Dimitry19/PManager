@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import org.springframework.beans.factory.InitializingBean;
@@ -45,6 +46,11 @@ public class AnnounceServiceImpl implements AnnounceService {
 		return announceDAO.create(announceDTO);
 	}
 
+	@Transactional
+	public List<AnnounceVO> find(AnnounceSearchDTO asdto, int page, int size) throws Exception {
+		return announceDAO.find(asdto, page, size);
+	}
+
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public AnnounceVO update(UpdateAnnounceDTO announce) throws Exception {
@@ -54,6 +60,12 @@ public class AnnounceServiceImpl implements AnnounceService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public AnnounceVO update(Integer id) throws Exception {
 		return announceDAO.update(id);
+	}
+
+	@Transactional
+	public List<AnnounceVO> findByUser(Long userId,int page, int size) throws Exception {
+
+		return announceDAO.findByUser(userId, page, size);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -72,7 +84,7 @@ public class AnnounceServiceImpl implements AnnounceService {
 		return announceDAO.announces(page, size);
 	}
 
-	@Override
+
 	public Page announces(Pageable pageable) throws Exception {
 		return (Page) announceDAO.announces(pageable.getPageNumber(),pageable.getPageSize());
 	}

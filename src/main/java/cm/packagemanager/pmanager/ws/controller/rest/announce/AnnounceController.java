@@ -2,16 +2,14 @@ package cm.packagemanager.pmanager.ws.controller.rest.announce;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.announce.service.AnnounceService;
-import cm.packagemanager.pmanager.announce.service.AnnounceServiceImpl;
 import cm.packagemanager.pmanager.announce.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
-import cm.packagemanager.pmanager.common.ent.vo.Movie;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
@@ -21,7 +19,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +27,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -48,18 +44,23 @@ public class AnnounceController extends CommonController {
 
 	protected final Log logger = LogFactory.getLog(AnnounceController.class);
 
-
 	@Autowired
 	protected AnnounceService announceService;
-
 
 	@Autowired
 	ServiceAnnounce announceTester;
 
-
+	/**
+	 * Cette methode cree unae annonce
+	 * @param response
+	 * @param request
+	 * @param ar
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = ANNOUNCE_WS_CREATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	Response  create(HttpServletResponse response, HttpServletRequest request, @RequestBody AnnounceDTO ar) throws Exception {
+	AnnounceVO  create(HttpServletResponse response, HttpServletRequest request, @RequestBody AnnounceDTO ar) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		AnnounceVO announce = null;
@@ -67,16 +68,17 @@ public class AnnounceController extends CommonController {
 
 		try
 		{
-			logger.info("create request out");
+			logger.info("create announce request in");
 			if (ar!=null){
 				announce= announceService.create(ar);
 
 				if(announce!=null){
-					res.setRetCode(WebServiceResponseCode.OK_CODE);
-					res.setRetDescription(WebServiceResponseCode.ANNOUNCE_CREATE_LABEL);
+					announce.setRetDescription(WebServiceResponseCode.ANNOUNCE_CREATE_LABEL);
+					announce.setRetCode(WebServiceResponseCode.OK_CODE);
 				}else{
-					res.setRetCode(WebServiceResponseCode.NOK_CODE);
-					res.setRetDescription(WebServiceResponseCode.ERROR_ANNOUNCE_CREATE_LABEL);
+					announce=new AnnounceVO();
+					announce.setRetCode(WebServiceResponseCode.NOK_CODE);
+					announce.setRetDescription(WebServiceResponseCode.ERROR_ANNOUNCE_CREATE_LABEL);
 				}
 			}
 		}
@@ -86,19 +88,28 @@ public class AnnounceController extends CommonController {
 			response.getWriter().write(e.getMessage());
 		}
 
-		return  res;
+		return  announce;
 	}
 
 	@PostMapping(value = ANNOUNCE_WS_UPDATE)
 	AnnounceVO  update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		try {
-			if (uar==null)
-				return null;
-			return announceService.update(uar);
+			if (uar==null)	return null;
+
+			AnnounceVO announce=announceService.update(uar);
+			if (announce!=null){
+				announce.setRetCode(WebServiceResponseCode.OK_CODE);
+				announce.setRetDescription(WebServiceResponseCode.UPDATED_ANNOUNCE_LABEL);
+			}else{
+				announce=new AnnounceVO();
+				announce.setRetCode(WebServiceResponseCode.NOK_CODE);
+				announce.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_ANNOUNCE_CODE_LABEL);
+			}
+			return announce;
 		}catch (Exception e){
-
 			response.getWriter().write(e.getMessage());
-
 		}
 
 		return null;
@@ -109,7 +120,8 @@ public class AnnounceController extends CommonController {
 	public  ResponseEntity<MessageVO> addMessage(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid MessageDTO mdto) throws Exception{
 		HttpHeaders headers = new HttpHeaders();
 
-
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		logger.info("add message to announce request in");
 		if (mdto!=null){
 			MessageVO message = announceService.addMessage(mdto);
 
@@ -122,14 +134,81 @@ public class AnnounceController extends CommonController {
 		return null;
 	}
 
+	/**
+	 * Cette methode recherche une annonce en fonction des paramretres de recherce
+	 * @param response
+	 * @param request
+	 * @param asdto
+	 * @param page
+	 * @param size
+	 * @return
+	 * @throws Exception
+	 */
+
+	@RequestMapping(value =ANNOUNCE_WS_FIND,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	public @ResponseBody  List<AnnounceVO> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchDTO asdto, @RequestParam(required = false, defaultValue = "0")  @Valid int page, @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+
+		logger.info("find  announces request in");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		Response pmResponse = new Response();
+		List<AnnounceVO> announces=null;
+
+		try{
+			if (asdto!=null){
+				announces=announceService.find(asdto,page,size);
+			}
+		}
+		catch (Exception e){
+			response.getWriter().write(e.getMessage());
+		}
+		return announces;
+	}
+
+	/**
+	 *  Cette methode recherche toutes les annonces d'un utilisateur
+	 * @param response
+	 * @param request
+	 * @param userId
+	 * @param page
+	 * @param size
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value =ANNOUNCE_WS_BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	public List<AnnounceVO> announcesByUser(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long userId,@RequestParam @Valid int page, @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		Response pmResponse = new Response();
+		List<AnnounceVO> announces=null;
+
+		try{
+			logger.info("find announce by user request in");
+			if (userId!=null){
+				 announces=announceService.findByUser(userId,page,size);
+			}
+		}
+		catch (Exception e){
+			response.getWriter().write(e.getMessage());
+		}
+		return announces;
+	}
+
+	/**
+	 * Cette methode elimine une announce dont on a son Id
+	 * @param response
+	 * @param request
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value =ANNOUNCE_WS_DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
-		logger.info("delete request in");
+
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
 
 		try{
-			logger.info("delete request out");
+			logger.info("delete request in");
 			if (id!=null){
 				if(announceService.delete(id)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -145,28 +224,28 @@ public class AnnounceController extends CommonController {
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(e.getMessage());
 		}
-
 		return pmResponse;
 	}
 
-
-
-
+	/**
+	 * Cette methode permet de recuperer toutes les annonces avec pagination
+	 * @param page
+	 * @param size
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping(ANNOUNCES_WS)
-	public ResponseEntity<PaginateResponse> announces(
-			@Valid @Positive(message = "Page number should be a positive number") @RequestParam int page,
-			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "12") int size) throws Exception {
+	public ResponseEntity<PaginateResponse> announces(@Valid @Positive(message = "Page number should be a positive number") @RequestParam int page,
+														@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
 
 		HttpHeaders headers = new HttpHeaders();
 		PaginateResponse paginateResponse=new PaginateResponse();
-
+		logger.info("retrieve  announces request in");
 		int count = announceService.count(page,size);
 		if(count==0){
 			paginateResponse.setCount(count);
 			paginateResponse.setResults(new ArrayList());
 			headers.add("X-Users-Total", Long.toString(count));
-
-
 		}else{
 			List<AnnounceVO> announces = announceService.announces(page,size);
 			paginateResponse.setCount(count);
@@ -181,6 +260,7 @@ public class AnnounceController extends CommonController {
 	@ResponseBody
 	public List<AnnounceVO> getAllPosts(@PathVariable int pageno,@PageableDefault(value=10, page=0) Pageable pageable) throws Exception {
 
+		logger.info("retrieve  announces request in");
 		Page page = announceService.announces(pageable);
 		return page.getContent();
 		//return announceService.announces(pageno,size);

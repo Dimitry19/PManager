@@ -16,14 +16,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/*L'annotation @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600) permet de favoriser une communication distante entre le client et le serveur,
-		c'est-à-dire lorsque le client et le serveur sont déployés dans deux serveurs distincts, ce qui permet d'éviter des problèmes réseaux.*/
+/**
+ *
+ * L'annotation @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600) permet de favoriser une communication distante entre le client et le serveur,
+		c'est-à-dire lorsque le client et le serveur sont déployés dans deux serveurs distincts, ce qui permet d'éviter des problèmes réseaux.
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CommonController {
 
 
+
 	protected final Log logger = LogFactory.getLog(CommonController.class);
 	public static final String INTERNAL_SERVER_ERROR="internal server error";
+	public static final String DEFAULT_SIZE = "12";
 
 	/************ USER REQUEST*************/
 	public static final String USER_WS="/ws/user/*";
@@ -45,9 +50,11 @@ public class CommonController {
 	public static final String ANNOUNCE_WS="/ws/announce/*";
 	public static final String ANNOUNCES_WS="/announces";
 	public static final String ANNOUNCE_WS_CREATE="/create";
+	public static final String ANNOUNCE_WS_FIND="/find";
 	public static final String ANNOUNCE_WS_ADD_MESSAGE="/add";
 	public static final String ANNOUNCE_WS_USER_ID_PAGE_NO="/announces/{pageno}";
 	public static final String ANNOUNCE_WS_DELETE= "/delete";
+	public static final String ANNOUNCE_WS_BY_USER= "/user";
 	public static final String ANNOUNCE_WS_UPDATE="/update";
 	public static final String ANNOUNCE_WS_ALL="/all";
 

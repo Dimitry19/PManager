@@ -5,7 +5,7 @@ import org.hibernate.SessionFactory;
 
 import java.math.BigInteger;
 
-public class SQLUtils {
+public class QueryUtils {
 
 	public static Long  calcolateId(SessionFactory sessionFactory,String sqlnative){
 		Session sess = sessionFactory.openSession();

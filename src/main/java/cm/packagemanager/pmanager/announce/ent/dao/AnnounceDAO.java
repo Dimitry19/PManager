@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.common.exception.*;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import org.springframework.data.repository.CrudRepository;
@@ -22,6 +23,8 @@ public interface AnnounceDAO {
 
 	AnnounceVO findByUser(UserVO user) throws BusinessResourceException,UserNotFoundException,RecordNotFoundException;
 
+	List<AnnounceVO> findByUser(Long userId, int page, int size) throws BusinessResourceException, UserNotFoundException, RecordNotFoundException, UserException;
+
 	AnnounceVO findById(Long id) throws BusinessResourceException,RecordNotFoundException;
 
 	AnnounceVO create(AnnounceDTO announce) throws BusinessResourceException, Exception;
@@ -37,6 +40,8 @@ public interface AnnounceDAO {
 	AnnounceVO update(AnnounceVO announce) throws BusinessResourceException;
 
 	AnnounceVO update(Integer id) throws BusinessResourceException;
+
+	List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, int page, int size) throws Exception;
 
 
 }

@@ -2,8 +2,13 @@ package cm.packagemanager.pmanager.common.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import org.hibernate.query.Query;
 
-public  class CommonFilter {
+public  abstract class CommonFilter {
+
+
+	public abstract <T> String composeQuery( T o, String alias);
+	public abstract <T> void composeQueryParameters( T o, Query query);
 
 	public   Object manualFilter(Object o) {
 
