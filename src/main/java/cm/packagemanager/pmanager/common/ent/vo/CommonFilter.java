@@ -7,8 +7,8 @@ import org.hibernate.query.Query;
 public  abstract class CommonFilter {
 
 
-	public abstract <T> String composeQuery( T o, String alias);
-	public abstract <T> void composeQueryParameters( T o, Query query);
+	public abstract  String composeQuery( Object o, String alias);
+	public abstract void composeQueryParameters( Object o, Query query);
 
 	public   Object manualFilter(Object o) {
 

@@ -211,7 +211,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 
 	@Access(AccessType.PROPERTY)
-	@OneToMany(cascade = {CascadeType.ALL},targetEntity=MessageVO.class, mappedBy="announce", orphanRemoval = true,fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy="announce",fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	public Set<MessageVO> getMessages() {

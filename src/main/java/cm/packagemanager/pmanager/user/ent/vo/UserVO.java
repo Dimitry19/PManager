@@ -1,7 +1,6 @@
 package cm.packagemanager.pmanager.user.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
@@ -211,22 +210,23 @@ public class UserVO extends WSCommonResponseVO {
 	}
 
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE},fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	public Set<RoleVO> getRoles() {
 		return roles;
 	}
 
 
-	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
-	//@OrderBy(clause = "id.id DESC")
+	@OrderBy(clause = "id.id DESC")
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL,targetEntity=AnnounceVO.class, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
+
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	@OrderBy(clause = "startDate DESC")

@@ -68,6 +68,15 @@ public class CommonController {
 	public static final String MESSAGE_WS_UPDATE="/update";
 
 
+	/************ ROLE REQUEST*************/
+	public static final String ROLE_WS="/ws/role/*";
+	public static final String ROLE_WS_ADD="/add";
+	public static final String ROLES_WS="/roles";
+	public static final String ROLE_WS_USER_ID_PAGE_NO="/messages/{pageno}";
+	public static final String ROLE_WS_DELETE= "/delete";
+	public static final String ROLE_WS_UPDATE="/update";
+
+
 
 	@Autowired
 	public ServletContext servletContext;
@@ -79,7 +88,7 @@ public class CommonController {
 	@Value("${ws.redirect.user}")
 	public String redirect;
 
-	@ExceptionHandler({ ResponseException.class, Exception.class })
+	//@ExceptionHandler({ ResponseException.class, Exception.class })
 
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)

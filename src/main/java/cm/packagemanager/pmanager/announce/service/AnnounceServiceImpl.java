@@ -4,6 +4,7 @@ package cm.packagemanager.pmanager.announce.service;
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
+import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
@@ -47,8 +48,8 @@ public class AnnounceServiceImpl implements AnnounceService {
 	}
 
 	@Transactional
-	public List<AnnounceVO> find(AnnounceSearchDTO asdto, int page, int size) throws Exception {
-		return announceDAO.find(asdto, page, size);
+	public List<AnnounceVO> find(AnnounceSearchDTO asdto, PageBy pageBy) throws Exception {
+		return announceDAO.find(asdto, pageBy);
 	}
 
 
@@ -63,9 +64,9 @@ public class AnnounceServiceImpl implements AnnounceService {
 	}
 
 	@Transactional
-	public List<AnnounceVO> findByUser(Long userId,int page, int size) throws Exception {
+	public List<AnnounceVO> findByUser(Long userId,PageBy pageBy) throws Exception {
 
-		return announceDAO.findByUser(userId, page, size);
+		return announceDAO.findByUser(userId, pageBy);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -80,8 +81,8 @@ public class AnnounceServiceImpl implements AnnounceService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<AnnounceVO> announces(int page, int size ) {
-		return announceDAO.announces(page, size);
+	public List<AnnounceVO> announces(PageBy pageBy ) {
+		return announceDAO.announces(pageBy);
 	}
 
 
@@ -90,8 +91,8 @@ public class AnnounceServiceImpl implements AnnounceService {
 	}
 
 	@Transactional(readOnly = true)
-	public int  count(int page, int size) {
-		return announceDAO.count( page,  size);
+	public int  count(PageBy pageBy) {
+		return announceDAO.count( pageBy);
 	}
 
 	public void afterPropertiesSet() throws Exception {

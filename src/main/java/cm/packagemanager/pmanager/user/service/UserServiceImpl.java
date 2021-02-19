@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.user.service;
 
+import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
@@ -102,9 +103,10 @@ public class UserServiceImpl  implements  UserService{
 		 userDAO.remove(user);
 	}
 
+
 	@Transactional(readOnly = true)
-	public List<UserVO> getAllUsers(int page, int size)throws Exception {
-		return userDAO.getAllUsers(page, size);
+	public List<UserVO> getAllUsers(PageBy pageBy)throws Exception {
+		return userDAO.getAllUsers(pageBy);
 	}
 
 

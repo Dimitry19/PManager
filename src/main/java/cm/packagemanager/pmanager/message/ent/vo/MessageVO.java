@@ -64,7 +64,7 @@ public class MessageVO extends WSCommonResponseVO {
 	}
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="R_ANNOUNCE", referencedColumnName = "ID",updatable = false)
 	@JsonBackReference
 	public AnnounceVO getAnnounce() {
@@ -73,7 +73,7 @@ public class MessageVO extends WSCommonResponseVO {
 
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="R_USER_ID", updatable = false)
 	@JsonBackReference
 	public UserVO getUser(){

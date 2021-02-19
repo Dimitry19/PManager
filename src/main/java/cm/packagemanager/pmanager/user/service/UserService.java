@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.user.service;
 
+import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -25,7 +26,7 @@ public interface UserService{
 
 	public void remove(UserVO user) throws UserException ;
 
-	public List<UserVO> getAllUsers(int page, int size) throws Exception ;
+	public List<UserVO> getAllUsers(PageBy pageBy) throws Exception ;
 
 	public List<UserVO> getAllUsers() throws Exception;
 

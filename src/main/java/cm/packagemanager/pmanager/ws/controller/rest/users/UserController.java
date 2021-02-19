@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.ws.controller.rest.users;
 
+import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.UserException;
 
 import cm.packagemanager.pmanager.common.mail.MailSender;
@@ -178,7 +179,8 @@ public class UserController extends CommonController {
 	public @ResponseBody
 	UserVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateUserDTO userDTO){
 
-
+		logger.info("update user request in");
+		response.setHeader("Access-Control-Allow-Origin", "*");
 			try {
 				if(userDTO!=null){
 					UserVO user=userService.updateUser(userDTO);
@@ -224,6 +226,8 @@ public class UserController extends CommonController {
 	@PostMapping(value = USER_WS_ROLE)
 	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) throws UserException {
 
+		logger.info("set role request in");
+
 		  if (userService.setRoleToUser(roleToUser)){
 		  	  userService.findByEmail(roleToUser.getEmail());
 			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.FOUND);
@@ -234,6 +238,7 @@ public class UserController extends CommonController {
 	}
 
 
+
 	@RequestMapping(value =USER_WS_DELETE_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") Long id) throws Exception{
 		logger.info("delete request in");
@@ -241,7 +246,6 @@ public class UserController extends CommonController {
 		Response pmResponse = new Response();
 
 		try{
-			logger.info("delete request out");
 			if (id!=null){
 				if(userService.deleteUser(id)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -253,7 +257,7 @@ public class UserController extends CommonController {
 			}
 		}
 		catch (Exception e){
-			response.getWriter().write(e.getMessage());
+			//response.getWriter().write(e.getMessage());
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(e.getMessage());
 		}
@@ -264,8 +268,10 @@ public class UserController extends CommonController {
 	@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
 	public UserVO getUser(HttpServletResponse response, HttpServletRequest request,@PathVariable("id") Long id) throws IOException {
 		try{
-
-			return userService.getUser(id);
+			logger.info("retrieve user request in");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			UserVO user =userService.getUser(id);
+			return user;
 		}catch (Exception e){
 			logger.error("Erreur durant l'execution de recuperation des infos de l'utilisateur: ", e);
 			response.setStatus(400);
@@ -276,8 +282,7 @@ public class UserController extends CommonController {
 	@RequestMapping(value = USER_WS_MAIL)
 	public Response sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailDTO mail) throws AddressException, MessagingException, IOException {
 
-
-		logger.info("mail request in");
+		logger.info("send mail request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
 
@@ -291,7 +296,6 @@ public class UserController extends CommonController {
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_MAIL_SENT_LABEL);
 				}
-
 			}
 		}
 		catch (Exception e)
@@ -313,7 +317,8 @@ public class UserController extends CommonController {
 			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "20") int size) throws Exception {
 
 		HttpHeaders headers = new HttpHeaders();
-		List<UserVO> users = userService.getAllUsers(page,size);
+		PageBy pageBy = new PageBy(page,size);
+		List<UserVO> users = userService.getAllUsers(pageBy);
 		headers.add("X-Users-Total", Long.toString(users.size()));
 		return new ResponseEntity<List<UserVO>>(users, headers, HttpStatus.OK);
 	}
@@ -322,6 +327,7 @@ public class UserController extends CommonController {
 	@ResponseBody
 	public List<UserVO> users(@PathVariable int pageno,@PageableDefault(value=10, page=0) SpringDataWebProperties.Pageable pageable) throws Exception {
 
-		return userService.getAllUsers(pageno,size);
+		PageBy pageBy = new PageBy(pageno,size);
+		return userService.getAllUsers(pageBy);
 	}
 }

@@ -1,9 +1,13 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
+import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
+import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
+import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
@@ -13,6 +17,7 @@ import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -62,15 +67,15 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
-	public List<UserVO>  getAllUsers(int firstResult, int maxResults) {
+	public List<UserVO>  getAllUsers(PageBy pageBy) {
 
 
 		Session session = this.sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from UserVO");
 		session.enableFilter(FilterConstants.CANCELLED);
 		session.enableFilter(FilterConstants.ACTIVE_MBR);
-		query.setFirstResult(firstResult);
-		query.setMaxResults(maxResults);
+		query.setFirstResult(pageBy.getPage());
+		query.setMaxResults(pageBy.getSize());
 
 		List<UserVO> users = (List) query.list();
 
@@ -97,7 +102,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 			UserVO user = findByEmail(register.getEmail());
 			if(user!=null){
-
 				user.setError(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
 				return user;
 			}
@@ -125,8 +129,8 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			session.refresh(user);
 
 			user=session.get(UserVO.class,user.getId());
-			manageRole(user,register.getRole().name());
-			return session.get(UserVO.class,user.getId());//findByEmail(user.getEmail());
+			setRole(user, register.getRole());
+			return session.get(UserVO.class,user.getId());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,7 +154,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		if (user!=null){
 			user.setEmail(userDTO.getEmail());
 			user.setPhone(userDTO.getPhone());
-			manageRole(user, userDTO.getRole().name());
+			setRole(user, userDTO.getRole());
 			session.update(user);
 			return user;
 
@@ -169,9 +173,10 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	@Override
 	public boolean deleteUser(Long id) throws UserException{
 
-		UserVO user=updateDelete(id);
+		//UserVO user=updateDelete(id);
+		deleteObject(id);
 
-		return  (user!=null) ? user.isCancelled() : false;
+		return  true;//(user!=null) ? user.isCancelled() : false;
 
 	}
 
@@ -291,12 +296,8 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		Query query=session.getNamedQuery(UserVO.EMAIL);
 		query.setParameter("email", email);
 
-		List<UserVO> users=query.list();
-		if(users!=null && users.size()>0) {
-			return users.get(0);
-
-		}
-		return null;
+		UserVO user= (UserVO) query.uniqueResult();
+		return user;
 	}
 
 	@Override
@@ -307,13 +308,8 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		Query query=session.getNamedQuery(UserVO.FACEBOOK);
 		query.setParameter("facebookId", facebookId);
 
-
-		List<UserVO> users=query.list();
-		if(users!=null && users.size()>0) {
-			return users.get(0);
-
-		}
-		return null;
+		UserVO user= (UserVO) query.uniqueResult();
+		return user;
 	}
 
 	@Override
@@ -324,13 +320,8 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		Query query=session.getNamedQuery(UserVO.GOOGLE);
 		query.setParameter("googleId", googleId);
 
-
-		List<UserVO> users=query.list();
-		if(users!=null && users.size()>0) {
-			return users.get(0);
-
-		}
-		return null;
+		UserVO user= (UserVO) query.uniqueResult();
+		return user ;
 	}
 
 	@Override
@@ -369,6 +360,24 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		return  (UserVO)manualFilter(user)!=null;
 	}
 
+	@Override
+	public void deleteObject(Object object) throws RecordNotFoundException {
+		Long id = (Long)object;
+		try{
+			Session session=sessionFactory.getCurrentSession();
+
+			UserVO user=findById(id);
+			if(user!=null){
+				session.remove(user);
+				//session.flush(); // Etant donné que la suppression de l'entité UserVO entraine la suppression des autres en
+				// entités pas besoin de faire le flush car le flush fait la synchronisation entre l'entité et la session hibernate
+				// du coup cree une transaction et enverra en erreur la remove
+			}
+		}catch (Exception e){
+			throw new BusinessResourceException(e.getMessage());
+		}
+	}
+
 
 	private UserVO updateDelete(Long id) throws BusinessResourceException ,UserException{
 
@@ -390,13 +399,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 
-	private void manageRole(UserVO user,String role){
-		if(StringUtils.equals(role, RoleEnum.ADMIN.name())){
-			setRole(user, RoleEnum.ADMIN);
-		}else{
-			setRole(user, RoleEnum.USER);
-		}
-	}
 
 
 
@@ -428,12 +430,12 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
-	public <T> String composeQuery(T o, String alias) {
+	public  String composeQuery(Object o, String alias) {
 		return null;
 	}
 
 	@Override
-	public <T> void composeQueryParameters(T o,Query query) {
+	public  void composeQueryParameters(Object o,Query query) {
 
 	}
 

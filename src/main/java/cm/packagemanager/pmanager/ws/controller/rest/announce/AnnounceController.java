@@ -5,6 +5,7 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
+import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
@@ -155,7 +156,8 @@ public class AnnounceController extends CommonController {
 
 		try{
 			if (asdto!=null){
-				announces=announceService.find(asdto,page,size);
+				PageBy pageBy= new PageBy(page,size);
+				announces=announceService.find(asdto,pageBy);
 			}
 		}
 		catch (Exception e){
@@ -184,7 +186,8 @@ public class AnnounceController extends CommonController {
 		try{
 			logger.info("find announce by user request in");
 			if (userId!=null){
-				 announces=announceService.findByUser(userId,page,size);
+				PageBy pageBy = new PageBy(page,size);
+				 announces=announceService.findByUser(userId,pageBy);
 			}
 		}
 		catch (Exception e){
@@ -220,7 +223,7 @@ public class AnnounceController extends CommonController {
 			}
 		}
 		catch (Exception e){
-			response.getWriter().write(e.getMessage());
+			//response.getWriter().write(e.getMessage());
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(e.getMessage());
 		}
@@ -241,13 +244,15 @@ public class AnnounceController extends CommonController {
 		HttpHeaders headers = new HttpHeaders();
 		PaginateResponse paginateResponse=new PaginateResponse();
 		logger.info("retrieve  announces request in");
-		int count = announceService.count(page,size);
+		PageBy pageBy= new PageBy(page,size);
+
+		int count = announceService.count(pageBy);
 		if(count==0){
 			paginateResponse.setCount(count);
 			paginateResponse.setResults(new ArrayList());
 			headers.add("X-Users-Total", Long.toString(count));
 		}else{
-			List<AnnounceVO> announces = announceService.announces(page,size);
+			List<AnnounceVO> announces = announceService.announces(pageBy);
 			paginateResponse.setCount(count);
 			paginateResponse.setResults(announces);
 			headers.add("X-Users-Total", Long.toString(announces.size()));

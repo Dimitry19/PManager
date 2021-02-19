@@ -3,27 +3,28 @@ package cm.packagemanager.pmanager.ws.controller.rest.users;
 
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.service.RoleService;
+import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.users.RoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
+import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.ROLE_WS;
 
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+
 @RestController
-@RequestMapping("/ws/role/*")
-public class RoleController {
+@RequestMapping(ROLE_WS)
+public class RoleController extends CommonController {
 
 	@Autowired
 	RoleService roleService;
 
 
 
-	@PostMapping(value = "/add")
+	@PostMapping(value = ROLE_WS_ADD)
 	public ResponseEntity<RoleVO> add(@RequestBody RoleDTO role) throws Exception {
-
+		logger.info("add  role  request in");
 		RoleVO roleCreated = roleService.add(role);
  		return new ResponseEntity<RoleVO>(roleCreated, HttpStatus.CREATED);
  	}
