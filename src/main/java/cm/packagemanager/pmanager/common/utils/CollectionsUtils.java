@@ -1,15 +1,14 @@
 package cm.packagemanager.pmanager.common.utils;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+
 
 public class CollectionsUtils {
 
 	public static Object getFirstOrNull(Collection<?> elements){
 
 		if(isNotEmpty(elements)){
-			return elements.iterator().hasNext();
+			return elements.iterator().next();
 		}
 		return null;
 	}

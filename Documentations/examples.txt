@@ -1,0 +1,2 @@
+UserVO customer3 = session.byId(UserVO.class).getReference(3L);
+UserVO customer2 = session.byNaturalId(UserVO.class).using("email",email).getReference();

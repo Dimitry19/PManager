@@ -24,7 +24,7 @@ public class WebServiceResponseCode
 	public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre elimine car inexistant";
 	public static final String ERROR_MAIL_SENT_LABEL = "Le mail n'a pas pu etre envoye";
 	public static final String ERROR_RETRIVEVE_PASSWORD_LABEL = "Le mot de posse n'a pas ete envoye ";
-	public static final String ERROR_EMAIL_REGISTER_LABEL = "C'est email a deja ete utilise";
+	public static final String ERROR_EMAIL_REGISTER_LABEL = "Cette adresse email a deja ete utilise";
 	public static final String ERROR_USERNAME_REGISTER_LABEL = "Nom utilisateur non disponible";
 	public static final String ERROR_USER_REGISTER_LABEL = "Enregistrement non complet?";
 	public static final String ERROR_INVALID_TOKEN_REGISTER_LABEL = "Token invalide , peut etre le lien a deja expire";

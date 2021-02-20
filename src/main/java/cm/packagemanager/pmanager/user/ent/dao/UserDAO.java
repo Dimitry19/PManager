@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface UserDAO extends CommonDAO {
 
 
-	Optional<UserVO> findByUsername(String username) throws BusinessResourceException, UserException;
+	UserVO findByUsername(String username) throws BusinessResourceException, UserException;
 
 	UserVO findByOnlyUsername(String username, boolean isRegistration) throws BusinessResourceException;
 

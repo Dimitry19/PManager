@@ -74,7 +74,6 @@ public class UserController extends CommonController {
 
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
-					response.setStatus(400);
 
 					return pmResponse;
 				}
@@ -98,7 +97,7 @@ public class UserController extends CommonController {
 			logger.error("Errore eseguendo register: ", e);
 			pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 			pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
-			response.setStatus(400);
+			response.getWriter().write(e.getMessage());
 		}
 		return null;
 	}

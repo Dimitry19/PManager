@@ -167,6 +167,7 @@ public class UserVO extends WSCommonResponseVO {
 		return phone;
 	}
 
+	@NaturalId
 	@Basic(optional = false)
 	@Column(name="EMAIL", nullable=false,unique = true)
 	public String getEmail() {

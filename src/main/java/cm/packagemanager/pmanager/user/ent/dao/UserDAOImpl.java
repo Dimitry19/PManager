@@ -1,6 +1,5 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
-import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
@@ -8,7 +7,6 @@ import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
-import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
@@ -17,7 +15,6 @@ import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
-import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -52,9 +49,10 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public UserVO login(String username, String password) {
-		Optional optional=internalLogin(username,password);
+		/*Optional optional=internalLogin(username,password);
 		if (optional==null) return null;
-		return  (UserVO) optional.get();
+		return  (UserVO) optional.get();*/
+		return internalLogin(username,password);
 	}
 
 
@@ -99,8 +97,13 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	public UserVO register(RegisterDTO register) throws UserException {
 
 		try {
+			UserVO user=findByNaturalIds(register.getUsername(), register.getEmail(),true);
+			if(user!=null){
+				user.setError(WebServiceResponseCode.ERROR_USERNAME_REGISTER_LABEL + " et "+WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
+				return user;
+			}
 
-			UserVO user = findByEmail(register.getEmail());
+			user = findByEmail(register.getEmail());
 			if(user!=null){
 				user.setError(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
 				return user;
@@ -111,8 +114,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 				user.setError(WebServiceResponseCode.ERROR_USERNAME_REGISTER_LABEL);
 				return user;
 			}
-
-
 			user=new UserVO();
 			user.setEmail(register.getEmail());
 			user.setUsername(register.getUsername());
@@ -134,7 +135,8 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new UserException("Erreur durant la register");
+			logger.error(e.getMessage());
+			throw new UserException("Erreur durant l'inscriptions de l'utilisateur");
 		}
 	}
 
@@ -172,7 +174,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public boolean deleteUser(Long id) throws UserException{
-
 		//UserVO user=updateDelete(id);
 		deleteObject(id);
 
@@ -213,20 +214,22 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
-	public Optional<UserVO> findByUsername(String username) throws BusinessResourceException, UserException {
+	public UserVO findByUsername(String username) throws BusinessResourceException, UserException {
 
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		session.enableFilter(FilterConstants.ACTIVE_MBR);
-		Query query=session.getNamedQuery(UserVO.USERNAME);
-		query.setParameter("username", username);
+		UserVO user = session.byNaturalId(UserVO.class).using("username",username).getReference();
 
+		/*Query query=session.getNamedQuery(UserVO.USERNAME);
+		query.setParameter("username", username);
 		List<UserVO> users=query.list();
 		if(users!=null && users.size()>0) {
 			return Optional.of(users.get(0));
 		}
-		return null;
+		*/
+		return user;
 	}
 
 
@@ -240,12 +243,25 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		}
 		Query query=session.getNamedQuery(UserVO.USERNAME);
 		query.setParameter("username", username);
+		UserVO user= (UserVO) CollectionsUtils.getFirstOrNull(query.list());
+		return user;
+	}
+	public UserVO findByNaturalIds(String username,String email, boolean disableFilter) throws BusinessResourceException {
 
-		List<UserVO> users=query.list();
-		if(users!=null && users.size()>0) {
-			return users.get(0);
+		Session session = this.sessionFactory.getCurrentSession();
+		if(!disableFilter){
+			session.enableFilter(FilterConstants.CANCELLED);
+			session.enableFilter(FilterConstants.ACTIVE_MBR);
 		}
-		return null;
+		UserVO user = session.byNaturalId(UserVO.class)
+				.using("username",username)
+				.using("email",email)
+				.getReference();
+
+		/*Query query=session.getNamedQuery(UserVO.USERNAME);
+		query.setParameter("username", username);
+		UserVO user= (UserVO) CollectionsUtils.getFirstOrNull(query.list());*/
+		return user;
 	}
 
 
@@ -293,6 +309,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	public UserVO findByEmail(String email) throws BusinessResourceException{
 
 		Session session = this.sessionFactory.getCurrentSession();
+
 		Query query=session.getNamedQuery(UserVO.EMAIL);
 		query.setParameter("email", email);
 
@@ -399,10 +416,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 
-
-
-
-	private Optional<UserVO> internalLogin(String username, String password) throws BusinessResourceException{
+	private UserVO internalLogin(String username, String password) throws BusinessResourceException{
 		try {
 
 			String encryptedPassword= PasswordGenerator.encrypt(password);
@@ -410,11 +424,12 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			if(encryptedPassword==null)
 				throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
 
-			Optional<UserVO> userFound = findByUsername(username);
+			//Optional<UserVO> userFound = findByUsername(username);
+			UserVO userFound = findByUsername(username);
 			if (userFound==null){
 				return null;
 			}
-			if(encryptedPassword.equals(userFound.get().getPassword())) {
+			if(encryptedPassword.equals(userFound.getPassword())) {
 				return userFound;
 			} else {
 				throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
