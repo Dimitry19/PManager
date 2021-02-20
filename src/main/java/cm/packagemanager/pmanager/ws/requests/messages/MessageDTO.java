@@ -1,9 +1,15 @@
 package cm.packagemanager.pmanager.ws.requests.messages;
 
+import javax.validation.constraints.NotNull;
+
 public class MessageDTO {
 
+	@NotNull(message = "L'id de l'annonce doit etre valorisé")
 	private Long announceId;
+
+	@NotNull(message = "Le username / email de l'utilisateur doit etre valorisé")
 	private String username;
+
 	private String content;
 
 	public Long getAnnounceId() {

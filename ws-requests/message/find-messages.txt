@@ -1,0 +1,15 @@
+http://localhost:8080/pmanager/ws/message/find
+
+{
+
+        "announceType": "B",
+        "arrival": "DOUALA",
+        "description":"Promotion",
+        "departure": "NEW YORK",
+        "endDate": "28/10/2021, 17:29:30",
+        "price": 70,
+        "startDate": "13/11/2021, 17:29:30",
+        "transport": "A",
+        "category":"DOCUMENTS"
+
+}

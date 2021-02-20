@@ -1,0 +1,19 @@
+http://localhost:8080/pmanager/ws/message/update
+
+{
+   "id":2,
+   "announceType": "S",
+   "arrival": "DOUALA",
+   "compagnie": "",
+   "departure": "BOLOGNE",
+   "endDate": "28/10/2020, 17:29:30",
+   "price": 90,
+   "preniumPrice":150,
+   "goldPrice":235,
+   "goldPrice":150,
+   "startDate": "13/11/2020, 17:29:30",
+   "transport": "A",
+   "userId": 2,
+   "weigth": 20
+
+}

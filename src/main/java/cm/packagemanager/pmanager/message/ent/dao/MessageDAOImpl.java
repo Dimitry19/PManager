@@ -8,16 +8,13 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.common.utils.BigDecimalUtils;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
-import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.common.utils.QueryUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.messages.MessageDTO;
 import cm.packagemanager.pmanager.ws.requests.messages.UpdateMessageDTO;
 import org.hibernate.Session;
@@ -27,9 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -68,20 +62,18 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 		UserVO user = userDAO.findByUsername(mdto.getUsername());
 
 		if(user==null){
+			 user = userDAO.findByEmail(mdto.getUsername());
+		}
+
+		if(user==null){
 			throw new RecordNotFoundException("Aucun utilisateur trouvé");
 		}
 
-		AnnounceVO announce = announceDAO.findById(mdto.getAnnounceId());
-		if(announce==null){
-			throw new RecordNotFoundException("Aucune annonce  trouvée");
-		}
-
-		MessageVO message =findById(new MessageIdVO(mdto.getId(), announce.getAnnounceId().getToken()));
+		MessageVO message =findById(new MessageIdVO(mdto.getId(), Constants.DEFAULT_TOKEN));
 		if(message==null){
 			throw new RecordNotFoundException("Aucune message  trouvé");
 		}
-
-		setMessage(announce,user,message,mdto);
+		message.setContent(mdto.getContent());
 		Session session = sessionFactory.getCurrentSession();
 		session.update(message);
 		return message;
@@ -91,6 +83,9 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 	public MessageVO addMessage(MessageDTO mdto) throws BusinessResourceException {
 
 		UserVO user = userDAO.findByOnlyUsername(mdto.getUsername(),false);
+	       if(user==null){
+	            user = userDAO.findByEmail(mdto.getUsername());
+	       }
 		AnnounceVO announce=announceDAO.findById(mdto.getAnnounceId());
 
 		if(user!=null && announce!=null){
@@ -163,12 +158,13 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 	}
 
 	@Override
-	public void deleteObject(Object object) throws RecordNotFoundException {
-		MessageIdVO id = (MessageIdVO)object;
+	public void deleteObject(Object o) throws RecordNotFoundException {
+		Long id = (Long)o;
 		try{
 			Session session=sessionFactory.getCurrentSession();
 
-			MessageVO message=findById(id);
+			MessageIdVO messageId= new MessageIdVO(id, Constants.DEFAULT_TOKEN);
+			MessageVO message=findById(messageId);
 			if(message!=null){
 				session.remove(message);
 				session.flush();

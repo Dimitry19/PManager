@@ -64,10 +64,10 @@ public class CommonController {
 	public static final String MESSAGES_WS="/messages";
 	public static final String WS_ADD_MESSAGE="/add";
 	public static final String MESSAGE_WS_BY_USER= "/user";
-
-	public static final String MESSAGE_WS_USER_ID_PAGE_NO="/messages/{pageno}";
-	public static final String MESSAGE_WS_DELETE= "/delete";
 	public static final String MESSAGE_WS_UPDATE="/update";
+	public static final String MESSAGE_WS_DELETE= "/delete";
+	public static final String MESSAGE_WS_FIND="/find";
+	public static final String MESSAGE_WS_USER_ID_PAGE_NO="/messages/{pageno}";
 	public static final String MESSAGE_WS_ALL="/all";
 
 

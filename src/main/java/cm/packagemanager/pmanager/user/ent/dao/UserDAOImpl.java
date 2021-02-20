@@ -220,15 +220,10 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		session.enableFilter(FilterConstants.ACTIVE_MBR);
-		UserVO user = session.byNaturalId(UserVO.class).using("username",username).getReference();
 
-		/*Query query=session.getNamedQuery(UserVO.USERNAME);
+		Query query=session.getNamedQuery(UserVO.USERNAME);
 		query.setParameter("username", username);
-		List<UserVO> users=query.list();
-		if(users!=null && users.size()>0) {
-			return Optional.of(users.get(0));
-		}
-		*/
+		UserVO user= (UserVO) query.uniqueResult();
 		return user;
 	}
 

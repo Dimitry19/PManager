@@ -66,8 +66,8 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
-	public MessageVO update(UpdateMessageDTO updateMessageDTO) throws BusinessResourceException {
-		return null;
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class,UserException.class})
+	public MessageVO update(UpdateMessageDTO updateMessageDTO) throws BusinessResourceException, UserException {
+		return messageDAO.update(updateMessageDTO);
 	}
 }

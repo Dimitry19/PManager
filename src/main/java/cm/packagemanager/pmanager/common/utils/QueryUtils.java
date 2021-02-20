@@ -22,7 +22,7 @@ public class QueryUtils {
 		sess.enableFilter(FilterConstants.CANCELLED);
 		Query query= sess.createNamedQuery(namedQuery);
 
-		BigInteger id = (BigInteger) query.uniqueResult();;//(BigInteger)sess.createSQLQuery(sqlnative).getResultList().get(0);
+		Long id = (Long) query.uniqueResult();
 
 		if(id!=null){
 			return new Long(String.valueOf(id))+ new Long(1);

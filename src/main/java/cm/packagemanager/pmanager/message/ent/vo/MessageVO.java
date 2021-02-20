@@ -70,7 +70,7 @@ public class MessageVO extends WSCommonResponseVO {
 	}
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinColumn(name="R_ANNOUNCE", referencedColumnName = "ID",updatable = false)
 	@JsonBackReference
 	public AnnounceVO getAnnounce() {

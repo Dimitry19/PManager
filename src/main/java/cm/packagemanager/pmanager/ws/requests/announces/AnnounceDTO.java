@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.ws.requests.announces;
 
 import javax.validation.constraints.NotNull;
 
+
 public class AnnounceDTO {
 
 	@NotNull(message = "Le lieu de depart de l'annonce doit etre valorisé")

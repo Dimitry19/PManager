@@ -1,7 +1,6 @@
 package cm.packagemanager.pmanager.ws.controller.rest.message;
 
-import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
+
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.message.ent.service.MessageService;
@@ -12,14 +11,9 @@ import cm.packagemanager.pmanager.ws.requests.messages.UpdateMessageDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +44,7 @@ public class MessageController extends CommonController  {
 		logger.info("Update message requestin");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		try {
+
 			if (umr==null)	return null;
 
 			MessageVO message=messageService.update(umr);
@@ -59,7 +54,7 @@ public class MessageController extends CommonController  {
 			}else{
 				message=new MessageVO();
 				message.setRetCode(WebServiceResponseCode.NOK_CODE);
-				message.setRetDescription(WebServiceResponseCode.UPDATED_MESSAGE_LABEL);
+				message.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_MESSAGE_CODE_LABEL);
 			}
 			return message;
 		}catch (Exception e){
@@ -76,6 +71,7 @@ public class MessageController extends CommonController  {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		logger.info("add message to announce request in");
+
 		if (mdto!=null){
 			MessageVO message = messageService.addMessage(mdto);
 
@@ -89,7 +85,7 @@ public class MessageController extends CommonController  {
 	}
 
 		/**
-		 * Cette methode recherche une annonce en fonction des paramretres de recherce
+		 * Cette methode recherche un message en fonction des paramretres de recherche
 		 * @param response
 		 * @param request
 		 * @param asdto
@@ -99,18 +95,18 @@ public class MessageController extends CommonController  {
 		 * @throws Exception
 		 */
 
-		/*@RequestMapping(value =ANNOUNCE_WS_FIND,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
-		public @ResponseBody List<AnnounceVO> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchDTO asdto, @RequestParam(required = false, defaultValue = "0")  @Valid int page, @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+		/*@RequestMapping(value =MESSAGE_WS_FIND,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+		public @ResponseBody List<MessageVO> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid MessageSearchDTO asdto, @RequestParam(required = false, defaultValue = "0")  @Valid int page, @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
 
 		logger.info("find  announces request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
-		List<AnnounceVO> announces=null;
+		List<MessageVO> messages=null;
 
 		try{
 			if (asdto!=null){
 				PageBy pageBy= new PageBy(page,size);
-				//announces=announceService.find(asdto,pageBy);
+				//messages=messageService.find(asdto,pageBy);
 			}
 		}
 		catch (Exception e){
@@ -157,7 +153,7 @@ public class MessageController extends CommonController  {
 		 * @return
 		 * @throws Exception
 		 */
-		@RequestMapping(value =ANNOUNCE_WS_DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+		@RequestMapping(value =MESSAGE_WS_DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 		public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");

@@ -18,7 +18,7 @@ public interface MessageService {
 	public int count(PageBy pageBy) throws Exception;
 	public List<MessageVO> messages(PageBy pageBy) throws BusinessResourceException;
 	public MessageVO findById(MessageIdVO id) throws BusinessResourceException;
-	public MessageVO update(UpdateMessageDTO updateMessageDTO) throws BusinessResourceException;
+	public MessageVO update(UpdateMessageDTO updateMessageDTO) throws BusinessResourceException, UserException;
 	MessageVO addMessage(MessageDTO messageDTO) throws BusinessResourceException, RecordNotFoundException;
 	public boolean delete(Long id) throws Exception;
 

@@ -1,4 +1,4 @@
-POST  http://localhost:8080/pmanager/ws/announce/add
+POST  http://localhost:8080/pmanager/ws/message/add
 
 {
    "announceId":1,
