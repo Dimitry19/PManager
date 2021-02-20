@@ -23,12 +23,18 @@ import javax.persistence.*;
 
 @Entity(name ="MessageVO")
 @Table(name="MESSAGE", schema = "PUBLIC")
+@NamedQueries({
+		@NamedQuery(name =MessageVO.FINDALL,query = "select m from MessageVO m "),
+		@NamedQuery(name = MessageVO.GET_ID_SQL, query = "select max(m.id.id) from MessageVO m ")
+})
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
 })
 public class MessageVO extends WSCommonResponseVO {
 
-	public  final static String GET_ID_SQL="SELECT MAX(ID) FROM MESSAGE WHERE CANCELLED IS FALSE ";
+	public static final String FINDALL="cm.packagemanager.pmanager.message.ent.vo.MessageVO.findAll";
+
+	public  final static String GET_ID_SQL="cm.packagemanager.pmanager.message.ent.vo.MessageVO.getId";
 
 	private static final long serialVersionUID = 1L;
 

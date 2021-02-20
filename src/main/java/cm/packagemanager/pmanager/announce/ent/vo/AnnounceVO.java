@@ -1,7 +1,6 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 
-import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
@@ -15,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
-import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;

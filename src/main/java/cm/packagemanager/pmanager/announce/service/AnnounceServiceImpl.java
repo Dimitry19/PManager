@@ -3,14 +3,10 @@ package cm.packagemanager.pmanager.announce.service;
 
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
-import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
-import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.util.List;
 
 
@@ -72,12 +66,6 @@ public class AnnounceServiceImpl implements AnnounceService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public boolean delete(Long id) throws Exception {
 		return announceDAO.delete(id);
-	}
-
-
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public MessageVO addMessage(MessageDTO mdto) throws Exception{
-		return announceDAO.addMessage(mdto);
 	}
 
 	@Transactional(readOnly = true)

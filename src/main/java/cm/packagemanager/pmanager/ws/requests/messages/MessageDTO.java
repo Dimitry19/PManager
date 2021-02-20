@@ -1,4 +1,4 @@
-package cm.packagemanager.pmanager.ws.requests.announces;
+package cm.packagemanager.pmanager.ws.requests.messages;
 
 public class MessageDTO {
 

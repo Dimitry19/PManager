@@ -454,10 +454,4 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	}
 
-	@Override
-	public Object manualFilter(Object o) {
-
-		return super.manualFilter(o);
-	}
-
 }

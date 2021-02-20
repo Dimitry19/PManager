@@ -51,7 +51,6 @@ public class CommonController {
 	public static final String ANNOUNCES_WS="/announces";
 	public static final String ANNOUNCE_WS_CREATE="/create";
 	public static final String ANNOUNCE_WS_FIND="/find";
-	public static final String ANNOUNCE_WS_ADD_MESSAGE="/add";
 	public static final String ANNOUNCE_WS_USER_ID_PAGE_NO="/announces/{pageno}";
 	public static final String ANNOUNCE_WS_DELETE= "/delete";
 	public static final String ANNOUNCE_WS_BY_USER= "/user";
@@ -63,9 +62,13 @@ public class CommonController {
 	/************ MESSAGE REQUEST*************/
 	public static final String MESSAGE_WS="/ws/message/*";
 	public static final String MESSAGES_WS="/messages";
+	public static final String WS_ADD_MESSAGE="/add";
+	public static final String MESSAGE_WS_BY_USER= "/user";
+
 	public static final String MESSAGE_WS_USER_ID_PAGE_NO="/messages/{pageno}";
 	public static final String MESSAGE_WS_DELETE= "/delete";
 	public static final String MESSAGE_WS_UPDATE="/update";
+	public static final String MESSAGE_WS_ALL="/all";
 
 
 	/************ ROLE REQUEST*************/

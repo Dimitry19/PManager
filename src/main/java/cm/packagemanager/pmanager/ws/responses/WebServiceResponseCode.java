@@ -20,6 +20,11 @@ public class WebServiceResponseCode
 	public static final String CANCELLED_ANNOUNCE_LABEL = "L'annonce a ete elimine correctement";
 	public static final String UPDATED_ANNOUNCE_LABEL = "L'annonce a ete ajourne correctement";
 
+
+	public static final String MESSAGE_CREATE_LABEL="commentaire creee correctement";
+	public static final String CANCELLED_MESSAGE_LABEL = "Le commentaire a ete elimine correctement";
+	public static final String UPDATED_MESSAGE_LABEL = "Le commentaire  a ete ajourne correctement";
+
 	// NOK LABEL
 	public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre elimine car inexistant";
 	public static final String ERROR_MAIL_SENT_LABEL = "Le mail n'a pas pu etre envoye";
@@ -36,4 +41,11 @@ public class WebServiceResponseCode
 	public static final String ERROR_ANNOUNCE_CREATE_LABEL = "Annonce n'a pas pu etre cree";
 	public static final String ERROR_DELETE_ANNOUNCE_CODE_LABEL = "L' annonce ne peut pas etre eliminee car inexistant";
 	public static final String ERROR_UPDATE_ANNOUNCE_CODE_LABEL = "L' annonce ne peut pas etre ajournee car inexistant";
+
+
+	public static final String ERROR_MESSAGE_CREATE_LABEL = "Commentaire n'a pas pu etre cree";
+	public static final String ERROR_DELETE_MESSAGE_CODE_LABEL = "Le Commentaire ne peut pas etre elimine car inexistant";
+	public static final String ERROR_UPDATE_MESSAGE_CODE_LABEL = "Le Commentaire ne peut pas etre ajourne car inexistant";
+
+
 }

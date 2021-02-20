@@ -7,11 +7,9 @@ import cm.packagemanager.pmanager.announce.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.constant.WSConstants;
-import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
-import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
@@ -113,25 +111,6 @@ public class AnnounceController extends CommonController {
 			response.getWriter().write(e.getMessage());
 		}
 
-		return null;
-	}
-
-
-	@PostMapping(value = ANNOUNCE_WS_ADD_MESSAGE)
-	public  ResponseEntity<MessageVO> addMessage(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid MessageDTO mdto) throws Exception{
-		HttpHeaders headers = new HttpHeaders();
-
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		logger.info("add message to announce request in");
-		if (mdto!=null){
-			MessageVO message = announceService.addMessage(mdto);
-
-			if(message!=null){
-				return new ResponseEntity<MessageVO>(message, headers, HttpStatus.OK);
-			}else{
-				response.getWriter().write("Message non ajouté!");
-			}
-		}
 		return null;
 	}
 

@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.common.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.hibernate.query.Query;
 
@@ -24,6 +25,13 @@ public  abstract class CommonFilter {
 			AnnounceVO announce =(AnnounceVO)o;
 			if(!announce.isCancelled()){
 				return announce;
+			}else return null;
+		}
+
+		if (o instanceof MessageVO){
+			MessageVO message =(MessageVO)o;
+			if(!message.isCancelled()){
+				return message;
 			}else return null;
 		}
 
