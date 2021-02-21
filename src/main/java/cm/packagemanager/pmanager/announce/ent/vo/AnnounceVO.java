@@ -62,8 +62,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	private boolean cancelled;
 
-
-	private String username;
 	
 	private String description;
 	
@@ -74,6 +72,9 @@ public class AnnounceVO extends WSCommonResponseVO {
 	private Set<MessageVO> messages=new HashSet<>();
 
 	private AnnounceIdVO announceId;
+
+	private String username;
+	private String email;
 	public AnnounceVO(){ super();}
 
 
@@ -233,6 +234,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	public void setUser(UserVO user) {
 		this.user = user;
 		setUsername(user.getUsername());
+		setEmail(user.getEmail());
 	}
 
 
@@ -288,6 +290,16 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	@Transient
+	@JsonProperty
+	public String getEmail() {
+		return email;//.getUsername();
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	@Transient

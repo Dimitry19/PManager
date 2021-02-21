@@ -7,6 +7,7 @@ import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
@@ -14,6 +15,7 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
+import cm.packagemanager.pmanager.ws.requests.users.UserSeachDTO;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,7 +27,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 
@@ -52,13 +53,14 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		/*Optional optional=internalLogin(username,password);
 		if (optional==null) return null;
 		return  (UserVO) optional.get();*/
+		logger.info("User: login");
 		return internalLogin(username,password);
 	}
 
 
 	@Override
 	public List<UserVO> getAllUsers() {
-
+		logger.info("User: all users");
 		Session session = this.sessionFactory.getCurrentSession();
 		List<UserVO>  users = session.createQuery("from UserVO").list();
 		return users;
@@ -67,7 +69,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	@Override
 	public List<UserVO>  getAllUsers(PageBy pageBy) {
 
-
+		logger.info("User: all users page by");
 		Session session = this.sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from UserVO");
 		session.enableFilter(FilterConstants.CANCELLED);
@@ -83,11 +85,12 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public UserVO getUser(Long id) {
-
+		logger.info("User: get user");
 		try {
 			return  findById(id);
 
 		} catch (UserException e) {
+			logger.error("User:" +e.getMessage());
 			e.printStackTrace();
 		}
 		return null;
@@ -95,16 +98,18 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public UserVO register(RegisterDTO register) throws UserException {
-
+		logger.info("User: register");
 		try {
 			UserVO user=findByNaturalIds(register.getUsername(), register.getEmail(),true);
 			if(user!=null){
+				logger.error("User: username deja exisitant");
 				user.setError(WebServiceResponseCode.ERROR_USERNAME_REGISTER_LABEL + " et "+WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
 				return user;
 			}
 
 			user = findByEmail(register.getEmail());
 			if(user!=null){
+				logger.error("User: email existe deja");
 				user.setError(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
 				return user;
 			}
@@ -142,7 +147,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException {
-
+		logger.info("User: update");
 		Session session = this.sessionFactory.getCurrentSession();
 
 		UserVO user=findByEmail(userDTO.getEmail());
@@ -175,6 +180,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	@Override
 	public boolean deleteUser(Long id) throws UserException{
 		//UserVO user=updateDelete(id);
+		logger.info("User: delete");
 		deleteObject(id);
 
 		return  true;//(user!=null) ? user.isCancelled() : false;
@@ -185,6 +191,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public UserVO save(UserVO user) throws BusinessResourceException {
+		logger.info("User: save");
 		Session session = this.sessionFactory.getCurrentSession();
 		if(user!=null){
 			session.update(user);
@@ -196,6 +203,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public UserVO update(UserVO user) throws BusinessResourceException {
+		logger.info("User: update 2");
 		Session session = this.sessionFactory.getCurrentSession();
 		if(user!=null){
 			session.update(user);
@@ -216,7 +224,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	@Override
 	public UserVO findByUsername(String username) throws BusinessResourceException, UserException {
 
-
+		logger.info("User: find by username");
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		session.enableFilter(FilterConstants.ACTIVE_MBR);
@@ -230,7 +238,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public UserVO findByOnlyUsername(String username,boolean disableFilter) throws BusinessResourceException {
-
+		logger.info("User: find by only username");
 		Session session = this.sessionFactory.getCurrentSession();
 		if(!disableFilter){
 			session.enableFilter(FilterConstants.CANCELLED);
@@ -241,8 +249,28 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		UserVO user= (UserVO) CollectionsUtils.getFirstOrNull(query.list());
 		return user;
 	}
+
+	@Override
+	public List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException {
+
+
+		Session session = sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		session.enableFilter(FilterConstants.ACTIVE_MBR);
+
+		String where=composeQuery(userSeachDTO, "u");
+		Query query=session.createQuery("from UserVO  as a "+ where);
+		composeQueryParameters(userSeachDTO,query);
+		query.setFirstResult(pageBy.getPage());
+		query.setMaxResults(pageBy.getSize());
+		List announces = query.list();
+
+		return null;
+	}
+
 	public UserVO findByNaturalIds(String username,String email, boolean disableFilter) throws BusinessResourceException {
 
+		logger.info("User: find by NaturalIds");
 		Session session = this.sessionFactory.getCurrentSession();
 		if(!disableFilter){
 			session.enableFilter(FilterConstants.CANCELLED);
@@ -263,6 +291,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	@Override
 	public UserVO findByToken(String token) throws BusinessResourceException {
 
+		logger.info("User: find by toker");
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		//session.enableFilter(FilterConstants.ACTIVE_MBR);
@@ -280,7 +309,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	public UserVO findById(Long id) throws UserException {
 
 		try{
-
+			logger.info("User: find by id");
 			Session session = sessionFactory.getCurrentSession();
 			session.enableFilter(FilterConstants.ACTIVE_MBR);
 			session.enableFilter(FilterConstants.CANCELLED);
@@ -302,7 +331,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public UserVO findByEmail(String email) throws BusinessResourceException{
-
+		logger.info("User: find by email");
 		Session session = this.sessionFactory.getCurrentSession();
 
 		Query query=session.getNamedQuery(UserVO.EMAIL);
@@ -314,6 +343,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public UserVO findByFacebookId(String facebookId) throws BusinessResourceException {
+		logger.info("User: find by facebook");
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		session.enableFilter(FilterConstants.ACTIVE_MBR);
@@ -326,6 +356,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public UserVO findByGoogleId(String googleId) throws BusinessResourceException {
+		logger.info("User: find by google");
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		session.enableFilter(FilterConstants.ACTIVE_MBR);
@@ -338,6 +369,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public boolean setRole(UserVO user, RoleEnum roleId) throws BusinessResourceException {
+		logger.info("User:  set role");
 
 		RoleVO role = roleDAO.findByDescription(roleId.name());
 
@@ -360,7 +392,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	@Override
 	public boolean deleteUser(UserVO user) throws BusinessResourceException, UserException {
 		if(user!=null){
-
+			logger.info("User: update delete");
 			return updateDelete(user.getId())!=null;
 		}
 		return false;
@@ -368,6 +400,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public boolean checkLogin(LoginDTO lr) throws BusinessResourceException, UserException {
+		logger.info("User: check login");
 		UserVO user=findByOnlyUsername(lr.getUsername(), true);
 		return  (UserVO)manualFilter(user)!=null;
 	}
@@ -413,7 +446,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	private UserVO internalLogin(String username, String password) throws BusinessResourceException{
 		try {
-
+			logger.info("User: internal login");
 			String encryptedPassword= PasswordGenerator.encrypt(password);
 
 			if(encryptedPassword==null)
@@ -438,10 +471,34 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		}
 	}
 
-
 	@Override
 	public  String composeQuery(Object o, String alias) {
-		return null;
+
+
+		UserSeachDTO userSeach=(UserSeachDTO)o;
+
+		StringBuilder hql = new StringBuilder(" where ");
+		try {
+			boolean and = false;
+
+			if (StringUtils.isNotEmpty(userSeach.getUsername())) {
+				hql.append(alias+".username=:username ");
+			}
+			and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			if (StringUtils.isNotEmpty(userSeach.getUsername())) {
+				if (and) {
+					hql.append(" and ");
+				}
+				hql.append(alias+".announceType=:announceType ");
+			}
+
+
+		}catch (Exception e){
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+		return hql.toString();
+
 	}
 
 	@Override

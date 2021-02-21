@@ -13,10 +13,11 @@ public class DateUtils {
 
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(DateUtils.class);
 
-	private static final String FORMAT_STD_PATTERN="yyyy/MM/dd HH:mm:ss.SSS";
-	private static final String TIMESTAMP_PATTERN="yy/MM/dd, hh:mm:ss";
-	private static final String STD_PATTERN="dd/MM/yyyy";
-	private static final String STD_PATTERN_HMS="dd/MM/yyyy HH:mm:ss";
+	public static final String FORMAT_STD_PATTERN="yyyy/MM/dd HH:mm:ss.SSS";
+	public static final String FORMAT_STD_PATTERN_2="yyyy/MM/dd, hh:mm:ss";
+	public static final String TIMESTAMP_PATTERN="yy/MM/dd, hh:mm:ss";
+	public static final String STD_PATTERN="dd/MM/yyyy";
+	public static final String STD_PATTERN_HMS="dd/MM/yyyy, HH:mm:ss";
 
 	public static String getDateStandardFormatted(Date date){
 		try	{
@@ -53,13 +54,13 @@ public class DateUtils {
 			if (dateStr != null && dateStr.length() > 0)
 			{
 				DateFormat formatter;
-				formatter = new SimpleDateFormat(STD_PATTERN);
+				formatter = new SimpleDateFormat(STD_PATTERN_HMS);
 				date = (Date) formatter.parse(dateStr);
 			}
 		}
 		catch (Exception e)
 		{
-			logger.trace("Impossibile interpretare la data " + dateStr + ". Exception :" + e);
+			logger.trace("Impossible interpreter la date " + dateStr + ". Exception :" + e);
 		}
 		return date;
 	}
@@ -116,5 +117,18 @@ public class DateUtils {
 			sqlDate = new java.sql.Date(inputDate.getTime());
 		}
 		return sqlDate;
+	}
+
+
+	public static boolean isAfter(Date compareDateOne, Date compareDateTwo){
+		if(compareDateOne!=null && compareDateTwo!=null){
+			return compareDateOne.after(compareDateTwo);
+		}return false;
+	}
+
+	public static boolean isBefore(Date compareDateOne, Date compareDateTwo){
+		if(compareDateOne!=null && compareDateTwo!=null){
+			return compareDateOne.before(compareDateTwo);
+		}return false;
 	}
 }

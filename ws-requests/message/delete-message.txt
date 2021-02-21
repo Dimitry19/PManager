@@ -1,4 +1,4 @@
-http://localhost:8080/pmanager/ws/message/delete?id=2
-
+GET
+http://localhost:8080/pmanager/ws/message/delete?id=1
 
 

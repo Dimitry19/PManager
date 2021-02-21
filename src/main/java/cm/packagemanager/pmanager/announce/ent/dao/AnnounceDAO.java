@@ -7,7 +7,7 @@ import cm.packagemanager.pmanager.common.exception.*;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
-import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 
 
@@ -35,13 +35,13 @@ public interface AnnounceDAO extends CommonDAO {
 
 	AnnounceVO addComment(MessageVO message) throws BusinessResourceException;
 
-	AnnounceVO update(UpdateAnnounceDTO announceDTO) throws BusinessResourceException, UserException,RecordNotFoundException;
+	AnnounceVO update(UpdateAnnounceDTO announceDTO) throws Exception;
 
 	AnnounceVO update(AnnounceVO announce) throws BusinessResourceException;
 
 	AnnounceVO update(Integer id) throws BusinessResourceException;
 
-	List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws Exception;
+	List<AnnounceVO> find(AnnounceSearchSearchDTO announceSearchDTO, PageBy pageBy) throws Exception;
 
 
 }

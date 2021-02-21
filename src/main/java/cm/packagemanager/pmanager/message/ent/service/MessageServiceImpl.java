@@ -39,11 +39,13 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<MessageVO> messagesByUser(UserVO user,PageBy pageBy) throws BusinessResourceException, UserException {
 		return messageDAO.messagesByUser(user, pageBy);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<MessageVO> messagesByUser(Long id,PageBy pageBy) throws BusinessResourceException, UserException {
 		return messageDAO.messagesByUser(id, pageBy);
 	}

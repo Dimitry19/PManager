@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.ws.responses;
 
-public class Response {
+public class Response  {
 
 	private long retCode;
 	private String retDescription;

@@ -1,15 +1,16 @@
 http://localhost:8080/pmanager/ws/announce/find
 
 {
-
-        "announceType": "B",
+        "announceType": "",
         "arrival": "DOUALA",
-        "description":"Promotion",
-        "departure": "NEW YORK",
-        "endDate": "28/10/2021, 17:29:30",
-        "price": 70,
-        "startDate": "13/11/2021, 17:29:30",
-        "transport": "A",
-        "category":"DOCUMENTS"
-
+        "description":"",
+        "departure": "",
+        "endDate": "",
+        "price": 0,
+        "startDate": "",
+        "transport": "",
+        "category":"VETEMENT",
+        "user":"unkutnation@yahoo.fr",
+        "userId":1,
+        "and":false
 }

@@ -1,34 +1,42 @@
 package cm.packagemanager.pmanager.ws.requests.announces;
 
-import javax.validation.constraints.NotNull;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.*;
+import java.util.Date;
 
 public class AnnounceDTO {
 
 	@NotNull(message = "Le lieu de depart de l'annonce doit etre valorisé")
+	@NotBlank(message = "Le lieu de depart de l'annonce doit etre valorisé")
 	private String departure;
 
 	@NotNull(message = "Le lieu d'arrivée de l'annonce doit etre valorisé")
 	private String arrival;
 
 	@NotNull(message = "La date de depart de l'annonce doit etre valorisé")
+	@NotBlank(message = "La date de depart de l'annonce doit etre valorisé")
+	//@DateTimeFormat(pattern = DateUtils.FORMAT_STD_PATTERN)
 	private String startDate;
 
 	@NotNull(message = "La date d'arrivée de l'annonce doit etre valorisé")
+	//@DateTimeFormat(pattern = DateUtils.FORMAT_STD_PATTERN)
 	private String endDate;
 
 	@NotNull(message = "La description doit etre valorisé")
 	private String description;
-	
-	
+
 	@NotNull(message = "Le prix au Kg doit etre valorisé")
+	@PositiveOrZero(message = "Le prix au Kg doit etre valorisé")
 	private String price;
 
 	private String preniumPrice;
 
 	private String goldPrice;
 
-	@NotNull(message = "Le nombre de Kg disponibles doit etre valorisé")
+	@NotNull(message = "Le nombre de Kg disponibles doit etre positif")
+	@Positive(message = "Le nombre de Kg disponibles doit etre positif")
 	private String weigth;
 
 	@NotNull(message = "Le type d'annonce doit etre valorisé")

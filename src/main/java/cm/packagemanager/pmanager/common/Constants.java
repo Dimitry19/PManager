@@ -17,6 +17,9 @@ public class Constants {
 	public  static final String SUBJECT ="SUBJECT";
 	public  static final String DEFAULT_TOKEN ="PM";
 
+	public  static final String AND =" and ";
+	public  static final String OR =" or ";
+
 	@Value("${constant.prod_cat_code}")
 	public  String DEFAULT_PROD_CAT_CODE;
 

@@ -10,6 +10,7 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
+import cm.packagemanager.pmanager.ws.requests.users.UserSeachDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ public interface UserDAO extends CommonDAO {
 
 	UserVO findByOnlyUsername(String username, boolean isRegistration) throws BusinessResourceException;
 
+	List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException;
 
 	UserVO findByToken(String token) throws BusinessResourceException;
 

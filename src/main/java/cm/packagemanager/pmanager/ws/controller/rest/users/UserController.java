@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.ws.controller.rest.users;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.UserException;
 
+import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
@@ -27,6 +28,7 @@ import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
@@ -47,9 +49,8 @@ public class UserController extends CommonController {
 	@Autowired
 	MailSender mailSender;
 
-
 	@PostMapping(value = USER_WS_REGISTRATION)
-	public  Response register(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid RegisterDTO register) throws Exception{
+	public  Response register(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid RegisterDTO register) throws ValidationException, IOException {
 
 		logger.info("register request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -104,7 +105,7 @@ public class UserController extends CommonController {
 
 
 	@RequestMapping(value=USER_WS_CONFIRMATION, method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
-	public Response showConfirmationPage(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception{
+	public Response showConfirmationPage(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception, UserNotFoundException, ValidationException {
 
 
 		logger.info("confirm request in");

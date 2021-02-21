@@ -46,7 +46,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 
 	@Override
 	public int count(PageBy pageBy) throws BusinessResourceException {
-
+		logger.info("Message: count");
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query = session.createQuery("from MessageVO ");
@@ -59,6 +59,8 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 
 	@Override
 	public MessageVO update(UpdateMessageDTO mdto) throws BusinessResourceException, UserException {
+		logger.info("Message: update");
+
 		UserVO user = userDAO.findByUsername(mdto.getUsername());
 
 		if(user==null){
@@ -81,6 +83,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 
 	@Override
 	public MessageVO addMessage(MessageDTO mdto) throws BusinessResourceException {
+		logger.info("Message: add message");
 
 		UserVO user = userDAO.findByOnlyUsername(mdto.getUsername(),false);
 	       if(user==null){
@@ -116,13 +119,13 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 
 	@Override
 	public List<MessageVO> messagesByUser(Long id,PageBy pageBy) throws BusinessResourceException, UserException {
+		logger.info("Message: user message");
 
 		if (id==null) return null;
-		UserVO user=userDAO.findById(id);
 		Session session=sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query=session.createQuery("from MessageVO  m where user.id=:userId");
-		query.setParameter("userId",user.getId());
+		query.setParameter("userId",id);
 		query.setFirstResult(pageBy.getPage());
 		query.setMaxResults(pageBy.getSize());
 		List<MessageVO>messages=query.getResultList();
@@ -131,6 +134,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 
 	@Override
 	public List<MessageVO> messages(PageBy pageBy) throws BusinessResourceException {
+		logger.info("Message: all message");
 
 		Session session=sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
@@ -144,6 +148,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 
 	@Override
 	public MessageVO findById(MessageIdVO id) throws BusinessResourceException {
+		logger.info("Message: findBy");
 
 		Session session = this.sessionFactory.getCurrentSession();
 		MessageVO message=(MessageVO) manualFilter(session.find(MessageVO.class,id));
@@ -153,6 +158,8 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 
 	@Override
 	public boolean delete(Long id) throws BusinessResourceException {
+		logger.info("Message: delete");
+
 		deleteObject(id);
 		return  true;
 	}

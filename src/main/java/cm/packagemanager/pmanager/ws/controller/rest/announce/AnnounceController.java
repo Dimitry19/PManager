@@ -9,7 +9,7 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
-import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class AnnounceController extends CommonController {
 	 */
 	@RequestMapping(value = ANNOUNCE_WS_CREATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	AnnounceVO  create(HttpServletResponse response, HttpServletRequest request, @RequestBody AnnounceDTO ar) throws Exception {
+	AnnounceVO  create(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceDTO ar) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		AnnounceVO announce = null;
@@ -126,7 +127,7 @@ public class AnnounceController extends CommonController {
 	 */
 
 	@RequestMapping(value =ANNOUNCE_WS_FIND,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
-	public @ResponseBody  List<AnnounceVO> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchDTO asdto, @RequestParam(required = false, defaultValue = "0")  @Valid int page, @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+	public @ResponseBody  List<AnnounceVO> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchSearchDTO asdto, @RequestParam(required = false, defaultValue = "0")  @Valid int page, @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
 
 		logger.info("find  announces request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");

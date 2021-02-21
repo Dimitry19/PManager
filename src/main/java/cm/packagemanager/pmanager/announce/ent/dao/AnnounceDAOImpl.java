@@ -26,7 +26,7 @@ import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
-import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -170,8 +170,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 
 	@Override
-	public AnnounceVO update(UpdateAnnounceDTO adto) throws BusinessResourceException, UserException,RecordNotFoundException
-	{
+	public AnnounceVO update(UpdateAnnounceDTO adto) throws Exception {
 
 		UserVO user = userDAO.findById(adto.getUserId());
 
@@ -193,7 +192,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 
 	@Override
-	public List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws Exception {
+	public List<AnnounceVO> find(AnnounceSearchSearchDTO announceSearchDTO, PageBy pageBy) throws Exception {
 		Session session = sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 
@@ -272,7 +271,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	}
 
 
-	private void setAnnounce(AnnounceVO announce,UserVO user,AnnounceDTO adto){
+	private void setAnnounce(AnnounceVO announce,UserVO user,AnnounceDTO adto) throws Exception {
 
 		BigDecimal price =BigDecimalUtils.convertStringToBigDecimal(adto.getPrice());
 		BigDecimal preniumPrice =BigDecimalUtils.convertStringToBigDecimal(adto.getPreniumPrice());
@@ -280,6 +279,16 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		BigDecimal weigth =BigDecimalUtils.convertStringToBigDecimal(adto.getWeigth());
 		Date startDate =DateUtils.StringToDate(adto.getStartDate());
 		Date endDate =DateUtils.StringToDate(adto.getEndDate());
+		/*Date startDate =adto.getStartDate();
+		Date endDate =adto.getEndDate();*/
+
+		if(startDate== null || endDate == null){
+			throw new Exception("Une des dates est invalide");
+		}
+
+		if(DateUtils.isAfter(startDate,endDate)){
+			throw new Exception("La date de depart ne peut pas etre superierure à celle de retour");
+		}
 
 		announce.setPrice(price);
 		announce.setPreniumPrice(preniumPrice);
@@ -384,80 +393,67 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	@Override
 	public  String composeQuery(Object   obj, String alias) {
 
-		AnnounceSearchDTO announceSearch=(AnnounceSearchDTO)obj;
+		AnnounceSearchSearchDTO announceSearch=(AnnounceSearchSearchDTO)obj;
 
 		StringBuilder hql = new StringBuilder(" where ");
 		try {
-			boolean and = false;
+			boolean andOrOr = announceSearch.isAnd();
+			boolean addCondition = false;
 
 			if (StringUtils.isNotEmpty(announceSearch.getTransport())) {
 				hql.append(alias+".transport=:transport ");
 			}
-			and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (StringUtils.isNotEmpty(announceSearch.getAnnounceType())) {
-				if (and) {
-					hql.append(" and ");
-				}
+				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".announceType=:announceType ");
 			}
 
-			and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (StringUtils.isNotEmpty(announceSearch.getPrice())) {
 				BigDecimal price = BigDecimalUtils.convertStringToBigDecimal(announceSearch.getPrice());
-				AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
-				if (price.compareTo(BigDecimal.ZERO)>0 && announceType == AnnounceType.SELLER){
-					if (and) {
-						hql.append(" and ");
-					}
-					hql.append(" ( "+alias+".goldPrice=:goldPrice or "+alias+".price=:price or " +alias+".preniumPrice=:preniumPrice) ");
-					and = StringUtils.isNotEmpty(hql.toString()) && StringUtils.equals(hql.toString(), " where ");
+				//AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
+				if (price.compareTo(BigDecimal.ZERO)>=0){
+					buildAndOr(hql, addCondition, andOrOr);
+					hql.append(" ( "+alias+".goldPrice<=:goldPrice or "+alias+".price<=:price or " +alias+".preniumPrice<=:preniumPrice) ");
 				}
-
 			}
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && StringUtils.equals(hql.toString(), " where ");
 			if (StringUtils.isNotEmpty(announceSearch.getStartDate())) {
-				if (and) {
-					hql.append(" and ");
-				}
+				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".startDate=:startDate ");
-
 			}
 
-			and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (StringUtils.isNotEmpty(announceSearch.getEndDate())) {
-				if (and) {
-					hql.append(" and ");
-				}
+				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".endDate=:endDate ");
 			}
 
-			and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (StringUtils.isNotEmpty(announceSearch.getDeparture())) {
-				if (and) {
-					hql.append(" and ");
-				}
+				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".departure like:departure ");
 			}
-			and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (StringUtils.isNotEmpty(announceSearch.getArrival())) {
-				if (and) {
-					hql.append(" and ");
-				}
+				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".arrival like:arrival ");
-
 			}
-			and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (StringUtils.isNotEmpty(announceSearch.getCategory())) {
-				if (and) {
-					hql.append(" and ");
-				}
+				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".category.code=:category ");
 			}
-			and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (announceSearch.getUserId()!=null) {
-				if (and) {
-					hql.append(" and ");
-				}
-				hql.append(alias+".user.id=:user ");
+				buildAndOr(hql, addCondition, andOrOr);
+				hql.append(alias+".user.id=:userId ");
+			}
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			if (announceSearch.getUserId()!=null) {
+				buildAndOr(hql, addCondition, andOrOr);
+				hql.append(" ( "+alias+".user.username like:user or "+alias+".user.email like:email) ");
 			}
 			hql.append(" order by " +alias+".startDate desc");
 		}catch (Exception e){
@@ -470,7 +466,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	@Override
 	public  void composeQueryParameters(Object obj, Query query) {
 
-		AnnounceSearchDTO announceSearch=(AnnounceSearchDTO)obj;
+		AnnounceSearchSearchDTO announceSearch=(AnnounceSearchSearchDTO)obj;
 
 		try {
 
@@ -486,8 +482,8 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 			if (StringUtils.isNotEmpty(announceSearch.getPrice())) {
 				BigDecimal price = BigDecimalUtils.convertStringToBigDecimal(announceSearch.getPrice());
-				AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
-				if (price.compareTo(BigDecimal.ZERO)>0 && announceType == AnnounceType.SELLER){
+				//AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
+				if (price.compareTo(BigDecimal.ZERO)>=0){
 					query.setParameter("goldPrice", price);
 					query.setParameter("price", price);
 					query.setParameter("preniumPrice", price);
@@ -515,13 +511,17 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				query.setParameter("category", announceSearch.getCategory());
 			}
 			if (announceSearch.getUserId()!=null) {
-				query.setParameter("user", announceSearch.getUserId());
+				query.setParameter("userId", announceSearch.getUserId());
+			}
+			if (StringUtils.isNotEmpty(announceSearch.getUser())) {
+				query.setParameter("user", "%"+announceSearch.getUser()+"%");
+				query.setParameter("email", "%"+announceSearch.getUser()+"%");
 			}
 
 		}catch (Exception e){
 			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
-
 	}
+
 }

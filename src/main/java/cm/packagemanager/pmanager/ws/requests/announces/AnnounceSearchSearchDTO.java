@@ -1,8 +1,9 @@
 package cm.packagemanager.pmanager.ws.requests.announces;
 
-import javax.validation.constraints.NotNull;
+import cm.packagemanager.pmanager.ws.requests.CommonSearchDTO;
 
-public class AnnounceSearchDTO {
+
+public class AnnounceSearchSearchDTO extends CommonSearchDTO {
 
 	private String departure;
 
@@ -21,6 +22,8 @@ public class AnnounceSearchDTO {
 	private String category;
 
 	private String price;
+
+	private String user;
 
 	private Long userId;
 
@@ -105,4 +108,12 @@ public class AnnounceSearchDTO {
 		this.transport = transport;
 	}
 
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
 }

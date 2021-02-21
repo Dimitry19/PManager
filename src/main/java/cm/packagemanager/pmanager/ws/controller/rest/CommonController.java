@@ -4,6 +4,7 @@ import cm.packagemanager.pmanager.api.ApiError;
 import cm.packagemanager.pmanager.common.exception.ResponseException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.constant.WSConstants;
+import cm.packagemanager.pmanager.ws.responses.Response;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletContext;
 import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,7 +93,7 @@ public class CommonController {
 	@Value("${ws.redirect.user}")
 	public String redirect;
 
-	//@ExceptionHandler({ ResponseException.class, Exception.class })
+	@ExceptionHandler({ ResponseException.class})
 
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
@@ -116,6 +118,7 @@ public class CommonController {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(ConstraintViolationException.class)
 	public List<ApiError> handleValidationExceptions(ConstraintViolationException ex) {
+		System.out.println(ex);
 		return ex.getConstraintViolations()
 				.stream()
 				.map(err -> new ApiError(err.getPropertyPath().toString(), err.getMessage()))
@@ -129,11 +132,8 @@ public class CommonController {
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler({Exception.class,ValidationException.class})
 	public List<ApiError> handleOtherException(Exception ex) {
-		return Collections.singletonList(new ApiError(ex.getClass().getCanonicalName(), ex.getMessage()));
+		return Collections.singletonList(new ApiError(ex));
 	}
-
-
-
 }

@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.common.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.hibernate.query.Query;
@@ -36,5 +37,15 @@ public  abstract class CommonFilter {
 		}
 
 		return o;
+	}
+
+	public void buildAndOr(StringBuilder hql,boolean addCondition,boolean andOrOr){
+		if (addCondition){
+			if (!andOrOr) {
+				hql.append(Constants.OR);
+			}else{
+				hql.append(Constants.AND);
+			}
+		}
 	}
 }

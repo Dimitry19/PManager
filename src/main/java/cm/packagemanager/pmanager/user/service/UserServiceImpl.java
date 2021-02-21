@@ -10,10 +10,7 @@ import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
-import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
-import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
-import cm.packagemanager.pmanager.ws.requests.users.RoleToUserDTO;
-import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
+import cm.packagemanager.pmanager.ws.requests.users.*;
 import com.sendgrid.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -126,6 +123,11 @@ public class UserServiceImpl  implements  UserService{
 		return userDAO.register(register);
 	}
 
+
+	@Transactional(readOnly = true)
+	public List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws Exception {
+		return userDAO.find(userSeachDTO, pageBy);
+	}
 
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException{
