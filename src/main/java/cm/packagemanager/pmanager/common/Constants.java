@@ -9,8 +9,8 @@ public class Constants {
 
 
 
-	public  static final String BUYER="B";
-	public  static final String SELLER="S";
+	public  static final String BUYER="BUYER";
+	public  static final String SELLER="SELLER";
 	public  static final String AP="A";
 	public  static final String AUT="V";
 	public  static final String NV ="N";

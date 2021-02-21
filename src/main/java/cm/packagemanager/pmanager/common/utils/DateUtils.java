@@ -15,6 +15,8 @@ public class DateUtils {
 
 	public static final String FORMAT_STD_PATTERN="yyyy/MM/dd HH:mm:ss.SSS";
 	public static final String FORMAT_STD_PATTERN_2="yyyy/MM/dd, hh:mm:ss";
+	public static final String FORMAT_STD_PATTERN_3="dd-MM-yyyy HH:mm:ss";
+	public static final String FORMAT_STD_PATTERN_4="dd/MM/yyyy, HH:mm:ss";
 	public static final String TIMESTAMP_PATTERN="yy/MM/dd, hh:mm:ss";
 	public static final String STD_PATTERN="dd/MM/yyyy";
 	public static final String STD_PATTERN_HMS="dd/MM/yyyy, HH:mm:ss";

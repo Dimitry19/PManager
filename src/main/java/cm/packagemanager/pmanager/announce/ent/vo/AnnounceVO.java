@@ -91,7 +91,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	@Basic(optional = false)
 	@Column(name = "START_DATE", nullable = false)
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -102,7 +102,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	@Basic(optional = false)
 	@Column(name = "END_DATE", nullable = false)
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getEndDate() {
 		return endDate;
 	}

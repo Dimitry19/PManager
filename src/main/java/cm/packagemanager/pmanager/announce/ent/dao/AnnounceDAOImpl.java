@@ -277,10 +277,9 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		BigDecimal preniumPrice =BigDecimalUtils.convertStringToBigDecimal(adto.getPreniumPrice());
 		BigDecimal goldenPrice=BigDecimalUtils.convertStringToBigDecimal(adto.getGoldPrice());
 		BigDecimal weigth =BigDecimalUtils.convertStringToBigDecimal(adto.getWeigth());
-		Date startDate =DateUtils.StringToDate(adto.getStartDate());
-		Date endDate =DateUtils.StringToDate(adto.getEndDate());
-		/*Date startDate =adto.getStartDate();
-		Date endDate =adto.getEndDate();*/
+		Date startDate =adto.getStartDate();
+		Date endDate =adto.getEndDate();
+
 
 		if(startDate== null || endDate == null){
 			throw new Exception("Une des dates est invalide");
@@ -301,9 +300,9 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		announce.setDeparture(adto.getDeparture());
 		announce.setDescription(adto.getDescription());
 		fillProductCategory(adto);
-		setAnnounceType(adto.getAnnounceType(),announce);
+		announce.setAnnounceType(adto.getAnnounceType());
 		setProductCategory(announce,adto.getCategory());
-		setTransport(adto.getTransport(), announce);
+		announce.setTransport(adto.getTransport());
 	}
 
 	private AnnounceVO updateDelete(Long id) throws BusinessResourceException{
@@ -325,19 +324,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		}
 	}
 
-	private void setTransport(String transport, AnnounceVO announce){
-		switch (transport){
-			case AP:
-				announce.setTransport(TransportEnum.PLANE);
-				break;
-			case Constants.AUT:
-				announce.setTransport(TransportEnum.AUTO);
-				break;
-			case Constants.NV:
-				announce.setTransport(TransportEnum.NAVE);
-				break;
-		}
-	}
 
 	private TransportEnum getTransport(String transport){
 		switch (transport){
@@ -351,16 +337,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		return null;
 	}
 
-	private void setAnnounceType(String announceType, AnnounceVO announce){
-		switch (announceType){
-			case Constants.BUYER:
-				announce.setAnnounceType(AnnounceType.BUYER);
-				break;
-			case Constants.SELLER:
-				announce.setAnnounceType(AnnounceType.SELLER);
-				break;
-		}
-	}
 
 	private AnnounceType getAnnounceType(String announceType){
 		switch (announceType){
@@ -373,7 +349,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	}
 
 	private void fillProductCategory(AnnounceDTO adto){
-		switch (adto.getAnnounceType()){
+		switch (adto.getAnnounceType().name()){
 			case Constants.BUYER:
 				break;
 			case Constants.SELLER:
@@ -419,13 +395,13 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				}
 			}
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && StringUtils.equals(hql.toString(), " where ");
-			if (StringUtils.isNotEmpty(announceSearch.getStartDate())) {
+			if (announceSearch.getStartDate()!=null) {
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".startDate=:startDate ");
 			}
 
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
-			if (StringUtils.isNotEmpty(announceSearch.getEndDate())) {
+			if (announceSearch.getEndDate()!=null) {
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".endDate=:endDate ");
 			}
@@ -451,9 +427,13 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				hql.append(alias+".user.id=:userId ");
 			}
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
-			if (announceSearch.getUserId()!=null) {
+			if (StringUtils.isNotEmpty(announceSearch.getUser())) {
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(" ( "+alias+".user.username like:user or "+alias+".user.email like:email) ");
+			}
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			if (!addCondition){
+				hql = new StringBuilder();
 			}
 			hql.append(" order by " +alias+".startDate desc");
 		}catch (Exception e){
@@ -489,13 +469,13 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 					query.setParameter("preniumPrice", price);
 				}
 			}
-			if (StringUtils.isNotEmpty(announceSearch.getStartDate())) {
-				Date startDate = DateUtils.StringToDate(announceSearch.getStartDate());
+			if (announceSearch.getStartDate()!=null) {
+				Date startDate =announceSearch.getStartDate();// DateUtils.StringToDate(announceSearch.getStartDate());
 				query.setParameter("startDate", startDate);
 
 			}
-			if (StringUtils.isNotEmpty(announceSearch.getEndDate())) {
-				Date endDate = DateUtils.StringToDate(announceSearch.getEndDate());
+			if (announceSearch.getEndDate()!=null) {
+				Date endDate = announceSearch.getStartDate();//DateUtils.StringToDate(announceSearch.getEndDate());
 				query.setParameter("endDate", endDate);
 			}
 

@@ -1,8 +1,12 @@
 package cm.packagemanager.pmanager.ws.requests.announces;
 
+import cm.packagemanager.pmanager.common.enums.AnnounceType;
+import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
-
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.*;
 import java.util.Date;
 
@@ -14,15 +18,6 @@ public class AnnounceDTO {
 
 	@NotNull(message = "Le lieu d'arrivée de l'annonce doit etre valorisé")
 	private String arrival;
-
-	@NotNull(message = "La date de depart de l'annonce doit etre valorisé")
-	@NotBlank(message = "La date de depart de l'annonce doit etre valorisé")
-	//@DateTimeFormat(pattern = DateUtils.FORMAT_STD_PATTERN)
-	private String startDate;
-
-	@NotNull(message = "La date d'arrivée de l'annonce doit etre valorisé")
-	//@DateTimeFormat(pattern = DateUtils.FORMAT_STD_PATTERN)
-	private String endDate;
 
 	@NotNull(message = "La description doit etre valorisé")
 	private String description;
@@ -40,16 +35,46 @@ public class AnnounceDTO {
 	private String weigth;
 
 	@NotNull(message = "Le type d'annonce doit etre valorisé")
-	private String announceType;
+	@Enumerated(EnumType.STRING)
+	private AnnounceType announceType;
 
 	@NotNull(message = "La modalité de transport doit etre valorisé")
-	private String transport;
+	@Enumerated(EnumType.STRING)
+	private TransportEnum transport;
 
 	@NotNull(message = "L'id  de l'utilisateur de l'annonce doit etre valorisé")
 	private Long userId;
 
 	private String category;
 
+	@NotNull(message = "La date de depart de l'annonce doit etre valorisé")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = DateUtils.FORMAT_STD_PATTERN_4)
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
+	@FutureOrPresent(message = "la date de depart doit être une date dans le présent ou le futur")
+	private Date startDate;
+
+
+	@NotNull(message = "La date de retour de l'annonce doit etre valorisé")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = DateUtils.FORMAT_STD_PATTERN_4)
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
+	@FutureOrPresent(message = "la date retour doit être une date dans le présent ou le futur")
+	private Date endDate;
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
 	public String getCategory() {
 		return category;
@@ -73,22 +98,6 @@ public class AnnounceDTO {
 
 	public void setArrival(String arrival) {
 		this.arrival = arrival;
-	}
-
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
 	}
 
 	public String getDescription() {
@@ -123,11 +132,11 @@ public class AnnounceDTO {
 		this.weigth = weigth;
 	}
 
-	public String getAnnounceType() {
+	public AnnounceType getAnnounceType() {
 		return announceType;
 	}
 
-	public void setAnnounceType(String announceType) {
+	public void setAnnounceType(AnnounceType announceType) {
 		this.announceType = announceType;
 	}
 
@@ -139,11 +148,11 @@ public class AnnounceDTO {
 		this.userId = userId;
 	}
 
-	public String getTransport() {
+	public TransportEnum getTransport() {
 		return transport;
 	}
 
-	public void setTransport(String transport) {
+	public void setTransport(TransportEnum transport) {
 		this.transport = transport;
 	}
 

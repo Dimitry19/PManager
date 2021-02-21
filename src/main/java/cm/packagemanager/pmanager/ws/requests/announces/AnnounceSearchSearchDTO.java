@@ -1,6 +1,15 @@
 package cm.packagemanager.pmanager.ws.requests.announces;
 
+import cm.packagemanager.pmanager.common.enums.TransportEnum;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.ws.requests.CommonSearchDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.validation.constraints.FutureOrPresent;
+import java.util.Date;
 
 
 public class AnnounceSearchSearchDTO extends CommonSearchDTO {
@@ -9,9 +18,15 @@ public class AnnounceSearchSearchDTO extends CommonSearchDTO {
 
 	private String arrival;
 
-	private String startDate;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = DateUtils.FORMAT_STD_PATTERN_4)
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
+	@FutureOrPresent(message = "la date de depart oit être une date dans le présent ou le futur")
+	private Date startDate;
 
-	private String endDate;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = DateUtils.FORMAT_STD_PATTERN_4)
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
+	@FutureOrPresent(message = "la date retour doit être une date dans le présent ou le futur")
+	private Date endDate;
 
 	private String weigth;
 
@@ -67,19 +82,19 @@ public class AnnounceSearchSearchDTO extends CommonSearchDTO {
 		this.arrival = arrival;
 	}
 
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
