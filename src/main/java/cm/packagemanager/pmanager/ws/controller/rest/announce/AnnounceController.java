@@ -230,14 +230,15 @@ public class AnnounceController extends CommonController {
 		if(count==0){
 			paginateResponse.setCount(count);
 			paginateResponse.setResults(new ArrayList());
-			headers.add("X-Users-Total", Long.toString(count));
+			//headers.add("X-Users-Total", Long.toString(count));
 		}else{
 			List<AnnounceVO> announces = announceService.announces(pageBy);
 			paginateResponse.setCount(count);
 			paginateResponse.setResults(announces);
-			headers.add("X-Users-Total", Long.toString(announces.size()));
+			//headers.add("X-Users-Total", Long.toString(announces.size()));
 		}
 
+		headers.add("X-Users-Total", Long.toString(count));
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
 
