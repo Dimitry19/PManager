@@ -72,8 +72,8 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query = session.createQuery("from AnnounceVO");
-		query.setFirstResult(pageBy.getPage());
-		query.setMaxResults(pageBy.getSize());
+		//query.setFirstResult(pageBy.getPage());
+		//query.setMaxResults(pageBy.getSize());
 
 
 		int count = CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
