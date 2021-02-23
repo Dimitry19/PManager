@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.ws.controller.rest;
 
 import cm.packagemanager.pmanager.api.ApiError;
 import cm.packagemanager.pmanager.common.exception.ResponseException;
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.responses.Response;
@@ -31,6 +32,8 @@ public class CommonController {
 	protected final Log logger = LogFactory.getLog(CommonController.class);
 	public static final String INTERNAL_SERVER_ERROR="internal server error";
 	public static final String DEFAULT_SIZE = "12";
+	public static final String DEFAULT_PAGE = "0";
+	public static final String HEADER_TOTAL = "x-total-count";
 
 	/************ USER REQUEST*************/
 	public static final String USER_WS="/ws/user/*";
@@ -118,7 +121,6 @@ public class CommonController {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(ConstraintViolationException.class)
 	public List<ApiError> handleValidationExceptions(ConstraintViolationException ex) {
-		System.out.println(ex);
 		return ex.getConstraintViolations()
 				.stream()
 				.map(err -> new ApiError(err.getPropertyPath().toString(), err.getMessage()))
@@ -126,9 +128,15 @@ public class CommonController {
 	}
 
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ExceptionHandler(UserNotFoundException.class)
+	@ExceptionHandler({UserNotFoundException.class})
 	public List<ApiError> handleNotFoundExceptions(UserNotFoundException ex) {
 		return Collections.singletonList(new ApiError("user.notfound", ex.getMessage()));
+	}
+
+	@ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+	@ExceptionHandler({UserException.class})
+	public List<ApiError> handleUserErrorExceptions(UserException ex) {
+		return Collections.singletonList(new ApiError("user.error", ex.getMessage()));
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

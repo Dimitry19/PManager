@@ -55,6 +55,12 @@ public class UserServiceImpl  implements  UserService{
 		return userDAO.checkLogin(lr);
 	}
 
+	@Override
+	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
+	public int count(PageBy pageBy) throws Exception {
+		return userDAO.count(pageBy);
+	}
+
 	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public UserVO login(LoginDTO lr ) throws UserException {
 

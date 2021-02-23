@@ -32,6 +32,8 @@ public interface UserDAO extends CommonDAO {
 	UserVO login(String username) throws UserException;
 
 
+	int count(PageBy pageBy) throws BusinessResourceException;
+
 	UserVO login(String username, String password) throws UserException;
 
 

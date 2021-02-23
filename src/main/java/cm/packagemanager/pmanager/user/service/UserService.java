@@ -54,4 +54,7 @@ public interface UserService{
 
 	public boolean checkLogin(LoginDTO lr ) throws BusinessResourceException, UserException;
 
+	public int  count(PageBy pageBy)  throws Exception;
+
+
 }

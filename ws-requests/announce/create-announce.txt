@@ -4,19 +4,19 @@ http://localhost:8080/pmanager/ws/announce/create
 "announceType": [BUYER, SELLER]
 
 {
-    "announceType": "SELLER",
-    "departure": "BUEA",
-    "arrival": "DOUALA",
-    "description":"Promotion",
-    "compagnie": "",
-    "startDate": "23/03/2021, 17:29:30",
-    "endDate": "26/04/2021, 17:29:30",
-    "price": 19,
-    "preniumPrice":50,
-     "goldPrice":235,
-    "transport": "PLANE",
-    "userId": 3,
-    "category":"",
-    "weigth": 20
+       "announceType": "SELLER",
+       "departure": "BUEA",
+       "arrival": "DOUALA",
+       "description":"Promotion",
+       "compagnie": "",
+       "startDate": 1614039583262,
+       "endDate": 1614039128404,
+       "price": 19,
+       "preniumPrice":50,
+        "goldPrice":235,
+       "transport": "PLANE",
+       "userId": 1,
+       "category":"",
+       "weigth": 20
 
 }

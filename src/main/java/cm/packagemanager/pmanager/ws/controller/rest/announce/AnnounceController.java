@@ -6,10 +6,11 @@ import cm.packagemanager.pmanager.announce.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
-import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchSearchDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
@@ -29,10 +30,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -127,23 +126,39 @@ public class AnnounceController extends CommonController {
 	 */
 
 	@RequestMapping(value =ANNOUNCE_WS_FIND,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
-	public @ResponseBody  List<AnnounceVO> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchSearchDTO asdto, @RequestParam(required = false, defaultValue = "0")  @Valid int page, @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+	public @ResponseBody ResponseEntity<PaginateResponse> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchDTO asdto,
+	                                                           @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
+	                                                           @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		HttpHeaders headers = new HttpHeaders();
+		PaginateResponse paginateResponse=new PaginateResponse();
 
 		logger.info("find  announces request in");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		Response pmResponse = new Response();
+		PageBy pageBy= new PageBy(page,size);
+
 		List<AnnounceVO> announces=null;
 
 		try{
 			if (asdto!=null){
-				PageBy pageBy= new PageBy(page,size);
-				announces=announceService.find(asdto,pageBy);
+				int count = announceService.count(asdto, pageBy);
+				if(count==0){
+					headers.add(HEADER_TOTAL, Long.toString(count));
+				}else{
+					announces=announceService.find(asdto,pageBy);
+					paginateResponse.setCount(count);
+					paginateResponse.setResults(announces);
+					headers.add(HEADER_TOTAL, Long.toString(announces.size()));
+				}
 			}
 		}
 		catch (Exception e){
 			response.getWriter().write(e.getMessage());
+			logger.info(" AnnounceController -find:Exception occurred while fetching the response from the database.", e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return announces;
+		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
 
 	/**
@@ -157,23 +172,41 @@ public class AnnounceController extends CommonController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value =ANNOUNCE_WS_BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
-	public List<AnnounceVO> announcesByUser(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long userId,@RequestParam @Valid int page, @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+	public ResponseEntity<PaginateResponse> announcesByUser(HttpServletResponse response, HttpServletRequest request,
+	                                                        @RequestParam @Valid Long userId,
+	                                                        @RequestParam (required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
+	                                                        @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
-		Response pmResponse = new Response();
+		HttpHeaders headers = new HttpHeaders();
+		PaginateResponse paginateResponse=new PaginateResponse();
+		logger.info("find announce by user request in");
+		PageBy pageBy= new PageBy(page,size);
+
 		List<AnnounceVO> announces=null;
 
+
 		try{
-			logger.info("find announce by user request in");
 			if (userId!=null){
-				PageBy pageBy = new PageBy(page,size);
-				 announces=announceService.findByUser(userId,pageBy);
+				int count = announceService.count(null,pageBy);
+				if(count==0){
+					headers.add(HEADER_TOTAL, Long.toString(count));
+				}else{
+					announces=announceService.findByUser(userId,pageBy);
+					if(CollectionsUtils.isNotEmpty(announces)){
+						paginateResponse.setCount(count);
+					}
+					paginateResponse.setResults(announces);
+					headers.add(HEADER_TOTAL, Long.toString(announces.size()));
+				}
 			}
 		}
 		catch (Exception e){
 			response.getWriter().write(e.getMessage());
+			logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return announces;
+		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
 
 	/**
@@ -218,27 +251,31 @@ public class AnnounceController extends CommonController {
 	 * @throws Exception
 	 */
 	@GetMapping(ANNOUNCES_WS)
-	public ResponseEntity<PaginateResponse> announces(@Valid @Positive(message = "Page number should be a positive number") @RequestParam int page,
-														@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
+	public ResponseEntity<PaginateResponse> announces(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif")  int page,
+	                                                  @RequestParam (required = false, defaultValue = DEFAULT_SIZE) @Valid @Positive(message = "Page size should be a positive number")  int size) throws Exception {
 
 		HttpHeaders headers = new HttpHeaders();
 		PaginateResponse paginateResponse=new PaginateResponse();
 		logger.info("retrieve  announces request in");
 		PageBy pageBy= new PageBy(page,size);
 
-		int count = announceService.count(pageBy);
-		if(count==0){
-			paginateResponse.setCount(count);
-			paginateResponse.setResults(new ArrayList());
-			headers.add("X-Users-Total", Long.toString(count));
-		}else{
-			List<AnnounceVO> announces = announceService.announces(pageBy);
-			paginateResponse.setCount(count);
-			paginateResponse.setResults(announces);
-			headers.add("X-Users-Total", Long.toString(announces.size()));
+		try {
+			int count = announceService.count(null,pageBy);
+			if(count==0){
+				headers.add(HEADER_TOTAL, Long.toString(count));
+			}else{
+				List<AnnounceVO> announces = announceService.announces(pageBy);
+				paginateResponse.setCount(count);
+				paginateResponse.setResults(announces);
+				headers.add(HEADER_TOTAL, Long.toString(announces.size()));
+			}
+
+			return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+		}catch (Exception e){
+			logger.info(" AnnounceController -announces:Exception occurred while fetching the response from the database.", e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
 
 	@RequestMapping(ANNOUNCE_WS_USER_ID_PAGE_NO)

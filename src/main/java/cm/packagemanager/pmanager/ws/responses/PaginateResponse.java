@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.ws.responses;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public  class PaginateResponse {
@@ -7,6 +8,16 @@ public  class PaginateResponse {
 	List  results;
 	int count;
 
+
+	public PaginateResponse(int count, List results){
+		this.count=count;
+		this.results=results;
+	}
+
+	public PaginateResponse(){
+		this.count=0;
+		this.results=new ArrayList();
+	}
 
 	public List getResults() {
 		return results;

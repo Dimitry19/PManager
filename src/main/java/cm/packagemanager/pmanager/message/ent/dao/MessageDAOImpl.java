@@ -50,8 +50,8 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query = session.createQuery("from MessageVO ");
-		query.setFirstResult(pageBy.getPage());
-		query.setMaxResults(pageBy.getSize());
+		//query.setFirstResult(pageBy.getPage());
+		//query.setMaxResults(pageBy.getSize());
 
 		int count = CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
 		return count;
@@ -159,9 +159,8 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 	@Override
 	public boolean delete(Long id) throws BusinessResourceException {
 		logger.info("Message: delete");
-
-		deleteObject(id);
-		return  true;
+		//deleteObject(id);
+		return  updateDelete(id);
 	}
 
 	@Override
@@ -187,6 +186,28 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 		message.setCancelled(false);
 		message.setUser(user);
 	}
+
+	@Override
+	public boolean updateDelete(Long id) throws BusinessResourceException{
+		boolean result=false;
+
+		try{
+
+			Session session=sessionFactory.getCurrentSession();
+			MessageIdVO messageId =new MessageIdVO(id,Constants.DEFAULT_TOKEN);
+			MessageVO message=findById(messageId);
+			if(message!=null) {
+				message.setCancelled(true);
+				session.merge(message);
+				message = (MessageVO) session.get(MessageVO.class, id);
+				result= (message!=null) && (message.isCancelled());
+			}
+		}catch (Exception e){
+			throw new BusinessResourceException(e.getMessage());
+		}
+		return result;
+	}
+
 	@Override
 	public String composeQuery(Object o, String alias) {
 		return null;

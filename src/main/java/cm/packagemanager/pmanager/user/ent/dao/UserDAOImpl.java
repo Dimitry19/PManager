@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.user.ent.dao;
 
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
@@ -48,6 +49,19 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	}
 
+	@Override
+	public int count(PageBy pageBy) throws BusinessResourceException {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		Query query = session.createQuery("from UserVO ");
+		//query.setFirstResult(pageBy.getPage());
+		//query.setMaxResults(pageBy.getSize());
+
+
+		int count = CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
+		return count;
+	}
 	@Override
 	public UserVO login(String username, String password) {
 		/*Optional optional=internalLogin(username,password);
@@ -152,15 +166,15 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 		UserVO user=findByEmail(userDTO.getEmail());
 
-		if(user!=null && !user.getId().equals(userDTO.getId()) ){
-			return null;
+		if(user==null ){
+			user=findById(userDTO.getId());
 		}
 
-		 user=findById(userDTO.getId());
 
 		if (user!=null){
-			user.setEmail(userDTO.getEmail());
+			//user.setEmail(userDTO.getEmail()); // on ne peut pas ajourner le NaturalId
 			user.setPhone(userDTO.getPhone());
+			user.setGender(userDTO.getGender());
 			setRole(user, userDTO.getRole());
 			session.update(user);
 			return user;
@@ -179,12 +193,9 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public boolean deleteUser(Long id) throws UserException{
-		//UserVO user=updateDelete(id);
 		logger.info("User: delete");
-		deleteObject(id);
-
-		return  true;//(user!=null) ? user.isCancelled() : false;
-
+		//deleteObject(id);
+		return updateDelete(id);
 	}
 
 
@@ -393,7 +404,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	public boolean deleteUser(UserVO user) throws BusinessResourceException, UserException {
 		if(user!=null){
 			logger.info("User: update delete");
-			return updateDelete(user.getId())!=null;
+			return updateDelete(user.getId());
 		}
 		return false;
 	}
@@ -423,8 +434,9 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		}
 	}
 
-
-	private UserVO updateDelete(Long id) throws BusinessResourceException ,UserException{
+	@Override
+	public boolean updateDelete(Long id) throws BusinessResourceException ,UserException{
+		boolean result=false;
 
 		try{
 
@@ -434,13 +446,13 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			if(user!=null){
 				user.setCancelled(true);
 				session.merge(user);
-				return session.get(UserVO.class,id);
-			}else{
-				return null;
+				user = session.get(UserVO.class, id);
+				result= (user!=null) && (user.isCancelled());
 			}
 		}catch (Exception e){
 			throw new UserException(e.getMessage());
 		}
+		return result;
 	}
 
 
@@ -473,7 +485,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public  String composeQuery(Object o, String alias) {
-
 
 		UserSeachDTO userSeach=(UserSeachDTO)o;
 

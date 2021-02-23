@@ -1,18 +1,14 @@
 package cm.packagemanager.pmanager.ws.requests.announces;
 
-import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.ws.requests.CommonSearchDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.FutureOrPresent;
 import java.util.Date;
 
 
-public class AnnounceSearchSearchDTO extends CommonSearchDTO {
+public class AnnounceSearchDTO extends CommonSearchDTO {
 
 	private String departure;
 

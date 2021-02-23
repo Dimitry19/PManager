@@ -5,7 +5,7 @@ import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
-import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchSearchDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,7 +42,7 @@ public class AnnounceServiceImpl implements AnnounceService {
 	}
 
 	@Transactional
-	public List<AnnounceVO> find(AnnounceSearchSearchDTO asdto, PageBy pageBy) throws Exception {
+	public List<AnnounceVO> find(AnnounceSearchDTO asdto, PageBy pageBy) throws Exception {
 		return announceDAO.find(asdto, pageBy);
 	}
 
@@ -79,8 +79,8 @@ public class AnnounceServiceImpl implements AnnounceService {
 	}
 
 	@Transactional(readOnly = true)
-	public int  count(PageBy pageBy) {
-		return announceDAO.count( pageBy);
+	public int  count(AnnounceSearchDTO announceSearch,PageBy pageBy) throws Exception {
+		return announceDAO.count( announceSearch,pageBy);
 	}
 
 	public void afterPropertiesSet() throws Exception {

@@ -126,23 +126,32 @@ public class MessageController extends CommonController  {
 		 * @throws Exception
 		 */
 		@RequestMapping(value =MESSAGE_WS_BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
-		public List<MessageVO> messagesByUser(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long userId,@RequestParam @Valid int page, @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+		public ResponseEntity<PaginateResponse> messagesByUser(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long userId,
+		                                      @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre un nombre positif") int page,
+		                                      @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
-		Response pmResponse = new Response();
-		List<MessageVO> messages=null;
+			logger.info("get all users request in");
+			HttpHeaders headers = new HttpHeaders();
+			PageBy pageBy = new PageBy(page,size);
+			PaginateResponse paginateResponse = new PaginateResponse();
 
 		try{
 			logger.info("find message by user request in");
 			if (userId!=null){
-				PageBy pageBy = new PageBy(page,size);
-				messages=messageService.messagesByUser(userId,pageBy);
+				int count =messageService.count(pageBy);
+				if(count ==0){
+					headers.add(HEADER_TOTAL, Long.toString(count));
+				}else{
+					List<MessageVO>  messages=messageService.messagesByUser(userId,pageBy);
+					headers.add(HEADER_TOTAL, Long.toString(messages.size()));
+				}
 			}
 		}
 		catch (Exception e){
 			response.getWriter().write(e.getMessage());
 		}
-		return messages;
+		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
 
 		/**
@@ -197,14 +206,12 @@ public class MessageController extends CommonController  {
 
 		int count = messageService.count(pageBy);
 		if(count==0){
-			paginateResponse.setCount(count);
-			paginateResponse.setResults(new ArrayList());
-			headers.add("X-Users-Total", Long.toString(count));
+			headers.add(HEADER_TOTAL, Long.toString(count));
 		}else{
 			List<MessageVO> messages = messageService.messages(pageBy);
 			paginateResponse.setCount(count);
 			paginateResponse.setResults(messages);
-			headers.add("X-Users-Total", Long.toString(messages.size()));
+			headers.add(HEADER_TOTAL, Long.toString(messages.size()));
 		}
 
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);

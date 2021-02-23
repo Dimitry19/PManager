@@ -12,6 +12,7 @@ import cm.packagemanager.pmanager.user.service.UserService;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
+import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.apache.commons.logging.Log;
@@ -177,7 +178,7 @@ public class UserController extends CommonController {
 
 	@RequestMapping(value = USER_WS_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	UserVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateUserDTO userDTO){
+	UserVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateUserDTO userDTO) throws UserException {
 
 		logger.info("update user request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -192,7 +193,9 @@ public class UserController extends CommonController {
 					return  user;
 				}
 			} catch (UserException e) {
+				logger.error("Erreur durant l'ajournement de l'utilisateur  " + userDTO.toString() +"{}",e);
 				e.printStackTrace();
+				throw  e;
 			}
 
 		return null;
@@ -207,19 +210,25 @@ public class UserController extends CommonController {
 		logger.info("password request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
-		if(password!=null){
 
-			if(mailSender.manageResponse(userService.managePassword(password.getEmail()))){
-				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-				pmResponse.setRetDescription(WebServiceResponseCode.RETRIVEVE_PASSWORD_LABEL+password.getEmail() +">>");
-			}else{
-				pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-				pmResponse.setRetDescription(WebServiceResponseCode.ERROR_RETRIVEVE_PASSWORD_LABEL);
+		try{
+
+			if(password!=null){
+
+				if(mailSender.manageResponse(userService.managePassword(password.getEmail()))){
+					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+					pmResponse.setRetDescription(WebServiceResponseCode.RETRIVEVE_PASSWORD_LABEL+" "+password.getEmail());
+				}else{
+					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_RETRIVEVE_PASSWORD_LABEL);
+				}
 			}
+			return pmResponse;
+		}catch (UserException e){
+			logger.error("Erreur durant la recuperation du mot de passe de l'utilisateur  " + password.toString() +"{}",e);
+			e.printStackTrace();
+			throw  e;
 		}
-
-
-		return pmResponse;
 	}
 
 
@@ -228,19 +237,24 @@ public class UserController extends CommonController {
 
 		logger.info("set role request in");
 
-		  if (userService.setRoleToUser(roleToUser)){
-		  	  userService.findByEmail(roleToUser.getEmail());
-			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.FOUND);
-		  }else{
-			  return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.NOT_FOUND);
-		  }
-
+		try {
+			if (userService.setRoleToUser(roleToUser)){
+				userService.findByEmail(roleToUser.getEmail());
+				return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.FOUND);
+			}else{
+				return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.NOT_FOUND);
+			}
+		}catch (UserException e){
+			logger.error("Erreur durant l'ajournement  du role de l'utilisateur  " + roleToUser.toString() +"{}",e);
+			e.printStackTrace();
+			throw  e;
+		}
 	}
 
 
 
 	@RequestMapping(value =USER_WS_DELETE_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
-	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") Long id) throws Exception{
+	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") Long id) throws UserException{
 		logger.info("delete request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
@@ -260,13 +274,16 @@ public class UserController extends CommonController {
 			//response.getWriter().write(e.getMessage());
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(e.getMessage());
+			logger.error("Erreur durant la delete de l'utilisateur ayant id:" + id +"{}",e);
+			e.printStackTrace();
+			//throw  e;
 		}
 
 		return pmResponse;
 	}
 
 	@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
-	public UserVO getUser(HttpServletResponse response, HttpServletRequest request,@PathVariable("id") Long id) throws IOException {
+	public UserVO getUser(HttpServletResponse response, HttpServletRequest request,@PathVariable("id") Long id) throws UserException,IOException {
 		try{
 			logger.info("retrieve user request in");
 			response.setHeader("Access-Control-Allow-Origin", "*");
@@ -274,7 +291,6 @@ public class UserController extends CommonController {
 			return user;
 		}catch (Exception e){
 			logger.error("Erreur durant l'execution de recuperation des infos de l'utilisateur: ", e);
-			response.setStatus(400);
 			response.getWriter().write(e.getMessage());
 		}
 		return null;
@@ -301,7 +317,6 @@ public class UserController extends CommonController {
 		catch (Exception e)
 		{
 			logger.error("Errore eseguendo send mail: ", e);
-			response.setStatus(400);
 			response.getWriter().write(e.getMessage());
 		}
 
@@ -312,15 +327,32 @@ public class UserController extends CommonController {
 
 	// Retrieve All Users
 	@GetMapping(USER_WS_USERS)
-	public ResponseEntity<List<UserVO>> findAll(
-			@Valid @Positive(message = "Page number should be a positive number") @RequestParam(required = false, defaultValue = "0") int page,
-			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = "20") int size) throws Exception {
+	public ResponseEntity<PaginateResponse> users(HttpServletResponse response, HttpServletRequest request,
+			@Valid @Positive(message = "la page doit etre nombre positif") @RequestParam(required = false, defaultValue = DEFAULT_PAGE) int page,
+			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
 
+
+		logger.info("get all users request in");
 		HttpHeaders headers = new HttpHeaders();
 		PageBy pageBy = new PageBy(page,size);
-		List<UserVO> users = userService.getAllUsers(pageBy);
-		headers.add("X-Users-Total", Long.toString(users.size()));
-		return new ResponseEntity<List<UserVO>>(users, headers, HttpStatus.OK);
+		PaginateResponse paginateResponse = new PaginateResponse();
+
+		try{
+			int count = userService.count(pageBy);
+			if(count == 0){
+				headers.add(HEADER_TOTAL, Long.toString(count));
+			}else{
+				List<UserVO> users = userService.getAllUsers(pageBy);
+				paginateResponse.setCount(count);
+				paginateResponse.setResults(users);
+				headers.add(HEADER_TOTAL, Long.toString(users.size()));
+			}
+		}catch (Exception e){
+			response.getWriter().write(e.getMessage());
+			logger.info(" UserController -users:Exception occurred while fetching the response from the database.", e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
 
 	@RequestMapping(USER_WS_USERS_PAGE_NO)

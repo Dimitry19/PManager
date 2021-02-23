@@ -2,15 +2,19 @@ package cm.packagemanager.pmanager.common.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.Constants;
+import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 public  abstract class CommonFilter {
 
 
-	public abstract  String composeQuery( Object o, String alias);
-	public abstract void composeQueryParameters( Object o, Query query);
+	public abstract boolean updateDelete(Long id) throws BusinessResourceException, UserException;
+	public abstract  String composeQuery( Object o, String alias) throws Exception;
+	public abstract void composeQueryParameters( Object o, Query query) throws Exception;
 
 	public   Object manualFilter(Object o) {
 
