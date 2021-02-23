@@ -133,6 +133,14 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:5.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:5.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:5.3.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-batch:2.3.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.batch:spring-batch-core:4.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: io.micrometer:micrometer-core:1.5.1" />
+          <element id="library" level="project" name="Maven: org.hdrhistogram:HdrHistogram:2.1.12" />
+          <element id="library" level="project" name="Maven: org.latencyutils:LatencyUtils:2.0.3" />
+          <element id="library" level="project" name="Maven: javax.batch:javax.batch-api:1.0" />
+          <element id="library" level="project" name="Maven: org.codehaus.jettison:jettison:1.2" />
+          <element id="library" level="project" name="Maven: org.springframework.batch:spring-batch-infrastructure:4.2.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-aop:2.3.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.9.5" />
           <element id="library" level="project" name="Maven: com.sendgrid:sendgrid-java:4.0.1" />
