@@ -2,6 +2,8 @@ package cm.packagemanager.pmanager.common.ent.vo;
 
 import cm.packagemanager.pmanager.common.ent.bo.Auditable;
 import cm.packagemanager.pmanager.common.listener.audit.TableListener;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 import javax.persistence.EntityListeners;
@@ -29,6 +31,7 @@ public class CommonVO implements Auditable, Serializable {
 
 
 	@Override
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	public Timestamp getDateCreated() {
 		return  dateCreated;
 	}
@@ -39,6 +42,7 @@ public class CommonVO implements Auditable, Serializable {
 	}
 
 	@Override
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	public Timestamp getLastUpdated() {
 		return lastUpdated;
 	}

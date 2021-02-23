@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class AnnounceDTO {
@@ -24,15 +25,15 @@ public class AnnounceDTO {
 
 	@NotNull(message = "Le prix au Kg doit etre valorisé")
 	@PositiveOrZero(message = "Le prix au Kg doit etre valorisé")
-	private String price;
+	private BigDecimal price;
 
-	private String preniumPrice;
+	private BigDecimal preniumPrice;
 
-	private String goldPrice;
+	private BigDecimal goldPrice;
 
 	@NotNull(message = "Le nombre de Kg disponibles doit etre positif")
 	@Positive(message = "Le nombre de Kg disponibles doit etre positif")
-	private String weigth;
+	private BigDecimal weigth;
 
 	@NotNull(message = "Le type d'annonce doit etre valorisé")
 	@Enumerated(EnumType.STRING)
@@ -50,29 +51,29 @@ public class AnnounceDTO {
 	@NotNull(message = "La date de depart de l'annonce doit etre valorisé")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
-	//@FutureOrPresent(message = "la date de depart doit être une date dans le présent ou le futur")
-	private long startDate;
+	@FutureOrPresent(message = "la date de depart doit être une date dans le présent ou le futur")
+	private Date startDate;
 
 
 	@NotNull(message = "La date de retour de l'annonce doit etre valorisé")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
-	//@FutureOrPresent(message = "la date retour doit être une date dans le présent ou le futur")
-	private long endDate;
+	@FutureOrPresent(message = "la date retour doit être une date dans le présent ou le futur")
+	private Date endDate;
 
-	public long getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(long startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public long getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(long endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
@@ -108,27 +109,27 @@ public class AnnounceDTO {
 		this.description = description;
 	}
 	
-	public String getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
-	public String getPreniumPrice() {
+	public BigDecimal getPreniumPrice() {
 		return preniumPrice;
 	}
 
-	public void setPreniumPrice(String preniumPrice) {
+	public void setPreniumPrice(BigDecimal preniumPrice) {
 		this.preniumPrice = preniumPrice;
 	}
 
-	public String getWeigth() {
+	public BigDecimal getWeigth() {
 		return weigth;
 	}
 
-	public void setWeigth(String weigth) {
+	public void setWeigth(BigDecimal weigth) {
 		this.weigth = weigth;
 	}
 
@@ -156,11 +157,11 @@ public class AnnounceDTO {
 		this.transport = transport;
 	}
 
-	public String getGoldPrice() {
+	public BigDecimal getGoldPrice() {
 		return goldPrice;
 	}
 
-	public void setGoldPrice(String goldPrice) {
+	public void setGoldPrice(BigDecimal goldPrice) {
 		this.goldPrice = goldPrice;
 	}
 }

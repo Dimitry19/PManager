@@ -5,6 +5,7 @@ import cm.packagemanager.pmanager.ws.requests.CommonSearchDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.FutureOrPresent;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -32,7 +33,7 @@ public class AnnounceSearchDTO extends CommonSearchDTO {
 
 	private String category;
 
-	private String price;
+	private BigDecimal price;
 
 	private String user;
 
@@ -46,11 +47,11 @@ public class AnnounceSearchDTO extends CommonSearchDTO {
 		this.userId = userId;
 	}
 
-	public String getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

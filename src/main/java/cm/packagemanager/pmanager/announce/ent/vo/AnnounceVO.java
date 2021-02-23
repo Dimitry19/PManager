@@ -5,10 +5,12 @@ import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Fetch;
@@ -61,7 +63,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 	private StatusEnum status;
 
 	private boolean cancelled;
-
 	
 	private String description;
 	
@@ -92,6 +93,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@Basic(optional = false)
 	@Column(name = "START_DATE", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -103,6 +105,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@Basic(optional = false)
 	@Column(name = "END_DATE", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	public Date getEndDate() {
 		return endDate;
 	}

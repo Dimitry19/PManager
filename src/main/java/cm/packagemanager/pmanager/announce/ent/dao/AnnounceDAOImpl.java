@@ -234,6 +234,53 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		}
 	}
 
+
+	public UserVO addAnnounceToUser(AnnounceVO announce) throws BusinessResourceException {
+
+		UserVO user= announce.getUser();
+
+		if (user!=null){
+			user.addAnnounce(announce);
+			return userDAO.save(user);
+		}else{
+			return null;
+		}
+	}
+
+
+	private void setAnnounce(AnnounceVO announce,UserVO user,AnnounceDTO adto) throws Exception {
+
+		BigDecimal price =adto.getPrice();
+		BigDecimal preniumPrice =adto.getPreniumPrice();
+		BigDecimal goldenPrice=adto.getGoldPrice();
+		BigDecimal weigth =adto.getWeigth();
+		Date startDate =adto.getStartDate();
+		Date endDate =adto.getEndDate();
+
+		if(startDate== null || endDate == null){
+			throw new Exception("Une des dates est invalide");
+		}
+
+		if(DateUtils.isAfter(startDate,endDate)){
+			throw new Exception("La date de depart ne peut pas etre superierure à celle de retour");
+		}
+
+		announce.setPrice(price);
+		announce.setPreniumPrice(preniumPrice);
+		announce.setGoldPrice(goldenPrice);
+		announce.setWeigth(weigth);
+		announce.setUser(user);
+		announce.setStartDate(startDate);
+		announce.setEndDate(endDate);
+		announce.setArrival(adto.getArrival());
+		announce.setDeparture(adto.getDeparture());
+		announce.setDescription(adto.getDescription());
+		fillProductCategory(adto);
+		announce.setAnnounceType(adto.getAnnounceType());
+		setProductCategory(announce,adto.getCategory());
+		announce.setTransport(adto.getTransport());
+	}
+
 	@Override
 	public AnnounceVO delete(AnnounceVO announce) throws BusinessResourceException {
 		return null;
@@ -259,55 +306,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		return null;
 	}
 
-
-	public UserVO addAnnounceToUser(AnnounceVO announce) throws BusinessResourceException {
-
-		UserVO user= announce.getUser();
-
-		if (user!=null){
-			user.addAnnounce(announce);
-			return userDAO.save(user);
-		}else{
-			return null;
-		}
-	}
-
-
-	private void setAnnounce(AnnounceVO announce,UserVO user,AnnounceDTO adto) throws Exception {
-
-		BigDecimal price =BigDecimalUtils.convertStringToBigDecimal(adto.getPrice());
-		BigDecimal preniumPrice =BigDecimalUtils.convertStringToBigDecimal(adto.getPreniumPrice());
-		BigDecimal goldenPrice=BigDecimalUtils.convertStringToBigDecimal(adto.getGoldPrice());
-		BigDecimal weigth =BigDecimalUtils.convertStringToBigDecimal(adto.getWeigth());
-		Date startDate =DateUtils.milliSecondToDate(adto.getStartDate());
-		//System.out.println(startDate);
-		//System.out.println(DateUtils.milliSecondToDateCalendar(adto.getStartDate()));
-		Date endDate =DateUtils.milliSecondToDate(adto.getEndDate());
-
-
-		if(startDate== null || endDate == null){
-			throw new Exception("Une des dates est invalide");
-		}
-
-		if(DateUtils.isAfter(startDate,endDate)){
-			throw new Exception("La date de depart ne peut pas etre superierure à celle de retour");
-		}
-
-		announce.setPrice(price);
-		announce.setPreniumPrice(preniumPrice);
-		announce.setGoldPrice(goldenPrice);
-		announce.setWeigth(weigth);
-		announce.setUser(user);
-		announce.setStartDate(startDate);
-		announce.setEndDate(endDate);
-		announce.setArrival(adto.getArrival());
-		announce.setDeparture(adto.getDeparture());
-		announce.setDescription(adto.getDescription());
-		fillProductCategory(adto);
-		announce.setAnnounceType(adto.getAnnounceType());
-		setProductCategory(announce,adto.getCategory());
-		announce.setTransport(adto.getTransport());
-	}
 	@Override
 	public boolean updateDelete(Long id) throws BusinessResourceException{
 		boolean result=false;
@@ -390,8 +388,8 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 			}
 
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
-			if (StringUtils.isNotEmpty(announceSearch.getPrice())) {
-				BigDecimal price = BigDecimalUtils.convertStringToBigDecimal(announceSearch.getPrice());
+				if (ObjectUtils.isCallable(announceSearch,"price")){
+					BigDecimal price = announceSearch.getPrice();
 				//AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
 				if (price.compareTo(BigDecimal.ZERO)>=0){
 					buildAndOr(hql, addCondition, andOrOr);
@@ -399,13 +397,13 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				}
 			}
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && StringUtils.equals(hql.toString(), " where ");
-			if (announceSearch.getStartDate()!=null) {
+			if (ObjectUtils.isCallable(announceSearch,"startDate")){
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".startDate=:startDate ");
 			}
 
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
-			if (announceSearch.getEndDate()!=null) {
+			if (ObjectUtils.isCallable(announceSearch,"endDate")){
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".endDate=:endDate ");
 			}
@@ -426,7 +424,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				hql.append(alias+".category.code=:category ");
 			}
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
-			if (announceSearch.getUserId()!=null) {
+			if (ObjectUtils.isCallable(announceSearch,"userId")){
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".user.id=:userId ");
 			}
@@ -466,8 +464,9 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				query.setParameter("announceType", announceType);
 			}
 
-			if (StringUtils.isNotEmpty(announceSearch.getPrice())) {
-				BigDecimal price = BigDecimalUtils.convertStringToBigDecimal(announceSearch.getPrice());
+				if (ObjectUtils.isCallable(announceSearch,"price")){
+
+					BigDecimal price = announceSearch.getPrice();
 				//AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
 				if (price.compareTo(BigDecimal.ZERO)>=0){
 					query.setParameter("goldPrice", price);
@@ -475,12 +474,12 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 					query.setParameter("preniumPrice", price);
 				}
 			}
-			if (announceSearch.getStartDate()!=null) {
+			if (ObjectUtils.isCallable(announceSearch,"startDate")){
 				Date startDate =announceSearch.getStartDate();// DateUtils.StringToDate(announceSearch.getStartDate());
 				query.setParameter("startDate", startDate);
 
 			}
-			if (announceSearch.getEndDate()!=null) {
+			if (ObjectUtils.isCallable(announceSearch,"endDate")){
 				Date endDate = announceSearch.getStartDate();//DateUtils.StringToDate(announceSearch.getEndDate());
 				query.setParameter("endDate", endDate);
 			}
@@ -496,7 +495,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 			if (StringUtils.isNotEmpty(announceSearch.getCategory())) {
 				query.setParameter("category", announceSearch.getCategory());
 			}
-			if (announceSearch.getUserId()!=null) {
+			if (ObjectUtils.isCallable(announceSearch,"userId")){
 				query.setParameter("userId", announceSearch.getUserId());
 			}
 			if (StringUtils.isNotEmpty(announceSearch.getUser())) {
