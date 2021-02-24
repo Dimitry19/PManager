@@ -39,6 +39,8 @@ public interface UserDAO extends CommonDAO {
 
 	public List<UserVO> getAllUsers()  throws BusinessResourceException;
 
+	public List<UserVO> getAllUsersToConfirm()  throws BusinessResourceException;
+
 	public List<UserVO> getAllUsers(PageBy pageBy)  throws BusinessResourceException;
 
 	//public UserVO getUser(int id)  throws BusinessResourceException;

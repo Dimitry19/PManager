@@ -30,6 +30,8 @@ public interface UserService{
 
 	public List<UserVO> getAllUsers() throws Exception;
 
+	public List<UserVO> getAllUsersToConfirm() throws Exception;
+
 	public UserVO getUser(Long id) throws Exception;
 
 	public UserVO register(RegisterDTO register) throws UserException;

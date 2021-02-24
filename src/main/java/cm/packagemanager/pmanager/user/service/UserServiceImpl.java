@@ -33,6 +33,7 @@ Le fait d’avoir des singletons a un impact en environnement multi-threadé
 *
 * */
 @Service
+@Transactional
 public class UserServiceImpl  implements  UserService{
 
 	public static final String USER_WS="/ws/user";
@@ -50,21 +51,16 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 
-	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public boolean checkLogin(LoginDTO lr) throws BusinessResourceException, UserException {
 		return userDAO.checkLogin(lr);
 	}
 
 	@Override
-	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public int count(PageBy pageBy) throws Exception {
 		return userDAO.count(pageBy);
 	}
 
-	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public UserVO login(LoginDTO lr ) throws UserException {
-
-
 		UserVO user=null;
 		if(lr.getUsername()!=null){
 			user= userDAO.login(lr.getUsername(), lr.getPassword());
@@ -90,57 +86,52 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 
-	@Transactional
 	public UserVO update(UserVO user) throws UserException {
 		return userDAO.update(user);
 	}
 
-
-	@Transactional
 	public boolean delete(UserVO user) throws UserException {
 		return userDAO.deleteUser(user);
 	}
 
-	@Transactional
+
 	public void remove(UserVO user) throws UserException {
 		 userDAO.remove(user);
 	}
 
 
-	@Transactional(readOnly = true)
 	public List<UserVO> getAllUsers(PageBy pageBy)throws Exception {
 		return userDAO.getAllUsers(pageBy);
 	}
 
 
-	@Transactional(readOnly = true)
 	public List<UserVO> getAllUsers()throws Exception {
 		return userDAO.getAllUsers();
 	}
 
 	@Transactional(readOnly = true)
+	public List<UserVO> getAllUsersToConfirm()throws Exception {
+		return userDAO.getAllUsersToConfirm();
+	}
+
+
 	public UserVO getUser(Long id) throws Exception{
 		return userDAO.getUser(id);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public UserVO register(RegisterDTO register) throws UserException{
 
 		return userDAO.register(register);
 	}
 
-
-	@Transactional(readOnly = true)
 	public List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws Exception {
 		return userDAO.find(userSeachDTO, pageBy);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException{
 		return userDAO.updateUser(userDTO);
 	}
 
-	@Transactional(readOnly = true)
 	public Response managePassword(String email) {
 		UserVO user=findByEmail(email);
 
@@ -162,18 +153,15 @@ public class UserServiceImpl  implements  UserService{
 		return null;
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public boolean deleteUser(Long id) throws UserException{
 		return userDAO.deleteUser(id);
 	}
 
-	@Transactional(readOnly = true,propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public UserVO findByEmail(String email) {
 		return userDAO.findByEmail(email);
 	}
 
 
-	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public boolean setRoleToUser(RoleToUserDTO roleToUser) {
 
 		return userDAO.setRole(roleToUser.getEmail(),roleToUser.getRole());

@@ -115,7 +115,7 @@ public class AnnounceController extends CommonController {
 	}
 
 	/**
-	 * Cette methode recherche une annonce en fonction des paramretres de recherce
+	 * Cette methode recherche une annonce en fonction des paramretres de recherche
 	 * @param response
 	 * @param request
 	 * @param asdto

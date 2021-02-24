@@ -1,0 +1,1 @@
+https://howtodoinjava.com/spring-batch/batch-quartz-java-config-example/#batch-jobs

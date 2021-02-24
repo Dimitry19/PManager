@@ -26,6 +26,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -50,6 +52,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public int count(PageBy pageBy) throws BusinessResourceException {
 
 		Session session = this.sessionFactory.getCurrentSession();
@@ -63,6 +66,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		return count;
 	}
 	@Override
+	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public UserVO login(String username, String password) {
 		/*Optional optional=internalLogin(username,password);
 		if (optional==null) return null;
@@ -73,6 +77,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
+	@Transactional(propagation =Propagation.REQUIRED)
 	public List<UserVO> getAllUsers() {
 		logger.info("User: all users");
 		Session session = this.sessionFactory.getCurrentSession();
@@ -81,6 +86,19 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
+	public List<UserVO> getAllUsersToConfirm() {
+		logger.info("User: all users");
+		Session session = this.sessionFactory.getCurrentSession();
+		List  users =
+				 session.createQuery("from UserVO where confirmationToken is not  null  and active =:act")
+				.setParameter("act",0).setMaxResults(20)
+				.list();
+		return users;
+	}
+
+	@Override
+	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public List<UserVO>  getAllUsers(PageBy pageBy) {
 
 		logger.info("User: all users page by");
@@ -98,6 +116,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public UserVO getUser(Long id) {
 		logger.info("User: get user");
 		try {
@@ -111,6 +130,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public UserVO register(RegisterDTO register) throws UserException {
 		logger.info("User: register");
 		try {
@@ -141,6 +161,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			user.setLastName(register.getLastName());
 			user.setPhone(register.getPhone());
 			user.setActive(0);
+			user.setGender(register.getGender());
 			user.setConfirmationToken(UUID.randomUUID().toString());
 
 			Session session = this.sessionFactory.getCurrentSession();
@@ -160,6 +181,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException {
 		logger.info("User: update");
 		Session session = this.sessionFactory.getCurrentSession();
@@ -185,6 +207,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
+	@Transactional(propagation = Propagation. REQUIRED)
 	public void updateUser(UserVO user) {
 
 		Session session = this.sessionFactory.getCurrentSession();
@@ -192,6 +215,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public boolean deleteUser(Long id) throws UserException{
 		logger.info("User: delete");
 		//deleteObject(id);
@@ -201,6 +225,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
+	@Transactional(propagation = Propagation. REQUIRED)
 	public UserVO save(UserVO user) throws BusinessResourceException {
 		logger.info("User: save");
 		Session session = this.sessionFactory.getCurrentSession();
@@ -213,6 +238,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
+	@Transactional(propagation = Propagation. REQUIRED)
 	public UserVO update(UserVO user) throws BusinessResourceException {
 		logger.info("User: update 2");
 		Session session = this.sessionFactory.getCurrentSession();
@@ -224,6 +250,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation. REQUIRED,rollbackFor = BusinessResourceException.class)
 	public void remove(UserVO user) throws BusinessResourceException {
 		Session session = this.sessionFactory.getCurrentSession();
 		if(user!=null){
@@ -233,6 +260,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
+	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public UserVO findByUsername(String username) throws BusinessResourceException, UserException {
 
 		logger.info("User: find by username");
@@ -262,6 +290,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(readOnly = true,propagation = Propagation.REQUIRED)
 	public List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException {
 
 
@@ -341,6 +370,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(readOnly = true,propagation = Propagation.REQUIRED)
 	public UserVO findByEmail(String email) throws BusinessResourceException{
 		logger.info("User: find by email");
 		Session session = this.sessionFactory.getCurrentSession();
@@ -393,6 +423,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public boolean setRole(String email , RoleEnum roleId) throws BusinessResourceException {
 
 		UserVO user= findByEmail(email);
@@ -401,6 +432,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation. REQUIRED, rollbackFor = {BusinessResourceException.class,UserException.class})
 	public boolean deleteUser(UserVO user) throws BusinessResourceException, UserException {
 		if(user!=null){
 			logger.info("User: update delete");
@@ -410,6 +442,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
+	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public boolean checkLogin(LoginDTO lr) throws BusinessResourceException, UserException {
 		logger.info("User: check login");
 		UserVO user=findByOnlyUsername(lr.getUsername(), true);
