@@ -1,16 +1,17 @@
 POST http://localhost:8080/pmanager/ws/user/update
 
 {
-   "id":2,
-   "username":"dimitria",
+    "id":50,
+   "username":"dimitra",
    "password":"password2",
-   "email":"dimipasc@yahoo.fr",
+   "email":"unkutnation@gmaijl.com",
    "provider":"ijiigbbiiii",
-   "socialId":"qwqwwsaedd",
-   "firstName":"ftname",
+   "socialId":"qwqaedd",
+   "firstName":"ftnameooo",
    "lastName":"lastname",
-   "phone":"443440345",
-   "role":"USER"
+   "phone":"443445533",
+   "role":"ADMIN",
+   "gender":"FEMALE"
 }
 
 

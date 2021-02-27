@@ -1,13 +1,14 @@
 package cm.packagemanager.pmanager.user.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.OrderBy;
 
 
 import javax.persistence.*;
@@ -47,7 +48,7 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 		@Filter(name= FilterConstants.ACTIVE_MBR)
 })
 //@JsonIgnoreProperties({"roles"})
-public class UserVO extends CommonVO  {
+public class UserVO extends WSCommonResponseVO {
 
 
 	public static final String FINDBYID="cm.packagemanager.pmanager.user.ent.vo.UserVO.findById";
@@ -95,9 +96,6 @@ public class UserVO extends CommonVO  {
 
 	private String error;
 
-	private long retCode;
-
-	private String retDescription;
 
 	public UserVO() {
 		super();
@@ -169,6 +167,7 @@ public class UserVO extends CommonVO  {
 		return phone;
 	}
 
+	@NaturalId
 	@Basic(optional = false)
 	@Column(name="EMAIL", nullable=false,unique = true)
 	public String getEmail() {
@@ -212,23 +211,26 @@ public class UserVO extends CommonVO  {
 	}
 
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE},fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	public Set<RoleVO> getRoles() {
 		return roles;
 	}
 
 
-	@OneToMany(cascade = CascadeType.ALL,targetEntity=MessageVO.class, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
+	@OrderBy(clause = "id.id DESC")
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL,targetEntity=AnnounceVO.class, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
+
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
+	@OrderBy(clause = "startDate DESC")
 	public Set<AnnounceVO> getAnnounces() {
 		return announces;
 	}
@@ -307,24 +309,6 @@ public class UserVO extends CommonVO  {
 	}
 
 
-	@Transient
-	public long getRetCode() {
-		return retCode;
-	}
-
-	public void setRetCode(long retCode) {
-		this.retCode = retCode;
-	}
-
-	@Transient
-	public String getRetDescription() {
-		return retDescription;
-	}
-
-	public void setRetDescription(String retDescription) {
-		this.retDescription = retDescription;
-	}
-
 	public void addAnnounce(AnnounceVO announce){
 		announces.add(announce);
 
@@ -332,9 +316,7 @@ public class UserVO extends CommonVO  {
 	public void removeAnnounce(AnnounceVO announce){
 		if(!announces.isEmpty())
 			announces.remove(announce);
-
 	}
-
 
 	public void addMessage(MessageVO message){
 		messages.add(message);

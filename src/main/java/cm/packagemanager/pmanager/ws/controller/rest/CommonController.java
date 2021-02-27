@@ -2,8 +2,10 @@ package cm.packagemanager.pmanager.ws.controller.rest;
 
 import cm.packagemanager.pmanager.api.ApiError;
 import cm.packagemanager.pmanager.common.exception.ResponseException;
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.constant.WSConstants;
+import cm.packagemanager.pmanager.ws.responses.Response;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +14,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletContext;
 import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/*L'annotation @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600) permet de favoriser une communication distante entre le client et le serveur,
-		c'est-à-dire lorsque le client et le serveur sont déployés dans deux serveurs distincts, ce qui permet d'éviter des problèmes réseaux.*/
+/**
+ *
+ * L'annotation @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600) permet de favoriser une communication distante entre le client et le serveur,
+		c'est-à-dire lorsque le client et le serveur sont déployés dans deux serveurs distincts, ce qui permet d'éviter des problèmes réseaux.
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CommonController {
 
 
+
 	protected final Log logger = LogFactory.getLog(CommonController.class);
 	public static final String INTERNAL_SERVER_ERROR="internal server error";
+	public static final String DEFAULT_SIZE = "12";
+	public static final String DEFAULT_PAGE = "0";
+	public static final String HEADER_TOTAL = "x-total-count";
 
 	/************ USER REQUEST*************/
 	public static final String USER_WS="/ws/user/*";
@@ -45,9 +55,10 @@ public class CommonController {
 	public static final String ANNOUNCE_WS="/ws/announce/*";
 	public static final String ANNOUNCES_WS="/announces";
 	public static final String ANNOUNCE_WS_CREATE="/create";
-	public static final String ANNOUNCE_WS_ADD_MESSAGE="/add";
+	public static final String ANNOUNCE_WS_FIND="/find";
 	public static final String ANNOUNCE_WS_USER_ID_PAGE_NO="/announces/{pageno}";
 	public static final String ANNOUNCE_WS_DELETE= "/delete";
+	public static final String ANNOUNCE_WS_BY_USER= "/user";
 	public static final String ANNOUNCE_WS_UPDATE="/update";
 	public static final String ANNOUNCE_WS_ALL="/all";
 
@@ -56,9 +67,22 @@ public class CommonController {
 	/************ MESSAGE REQUEST*************/
 	public static final String MESSAGE_WS="/ws/message/*";
 	public static final String MESSAGES_WS="/messages";
-	public static final String MESSAGE_WS_USER_ID_PAGE_NO="/messages/{pageno}";
-	public static final String MESSAGE_WS_DELETE= "/delete";
+	public static final String WS_ADD_MESSAGE="/add";
+	public static final String MESSAGE_WS_BY_USER= "/user";
 	public static final String MESSAGE_WS_UPDATE="/update";
+	public static final String MESSAGE_WS_DELETE= "/delete";
+	public static final String MESSAGE_WS_FIND="/find";
+	public static final String MESSAGE_WS_USER_ID_PAGE_NO="/messages/{pageno}";
+	public static final String MESSAGE_WS_ALL="/all";
+
+
+	/************ ROLE REQUEST*************/
+	public static final String ROLE_WS="/ws/role/*";
+	public static final String ROLE_WS_ADD="/add";
+	public static final String ROLES_WS="/roles";
+	public static final String ROLE_WS_USER_ID_PAGE_NO="/messages/{pageno}";
+	public static final String ROLE_WS_DELETE= "/delete";
+	public static final String ROLE_WS_UPDATE="/update";
 
 
 
@@ -72,7 +96,7 @@ public class CommonController {
 	@Value("${ws.redirect.user}")
 	public String redirect;
 
-	@ExceptionHandler({ ResponseException.class, Exception.class })
+	@ExceptionHandler({ ResponseException.class})
 
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
@@ -104,17 +128,20 @@ public class CommonController {
 	}
 
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ExceptionHandler(UserNotFoundException.class)
+	@ExceptionHandler({UserNotFoundException.class})
 	public List<ApiError> handleNotFoundExceptions(UserNotFoundException ex) {
 		return Collections.singletonList(new ApiError("user.notfound", ex.getMessage()));
 	}
 
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(Exception.class)
-	public List<ApiError> handleOtherException(Exception ex) {
-		return Collections.singletonList(new ApiError(ex.getClass().getCanonicalName(), ex.getMessage()));
+	@ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+	@ExceptionHandler({UserException.class})
+	public List<ApiError> handleUserErrorExceptions(UserException ex) {
+		return Collections.singletonList(new ApiError("user.error", ex.getMessage()));
 	}
 
-
-
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler({Exception.class,ValidationException.class})
+	public List<ApiError> handleOtherException(Exception ex) {
+		return Collections.singletonList(new ApiError(ex));
+	}
 }

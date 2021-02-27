@@ -1,20 +1,22 @@
 http://localhost:8080/pmanager/ws/announce/create
 
-{
+"transport": [PLANE, NAVE, AUTO]
+"announceType": [BUYER, SELLER]
 
-      "announceType": "B",
-        "arrival": "DOUALA",
-        "description":"Promotion",
-        "compagnie": "",
-        "departure": "NEW YORK",
-        "endDate": "28/10/2021, 17:29:30",
-        "price": 70,
-        "preniumPrice":50,
-         "goldPrice":235,
-        "startDate": "13/11/2021, 17:29:30",
-        "transport": "A",
-        "userId": 2,
-        "category":"DOCUMENTS",
-        "weigth": 20
+{
+       "announceType": "SELLER",
+       "departure": "BUEA",
+       "arrival": "DOUALA",
+       "description":"Promotion",
+       "compagnie": "",
+       "startDate": "23/03/2021, 17:29:30",
+       "endDate": "26/04/2021, 17:29:30",
+       "price": 19,
+       "preniumPrice":50,
+        "goldPrice":235,
+       "transport": "PLANE",
+       "userId": 1,
+       "category":"",
+       "weigth": 20
 
 }

@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.ws.requests.users;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -10,11 +11,11 @@ public class LoginDTO {
 	private String password;
 	private String socialId;
 
-	@NotNull(message = "username should not be empty")
-	@Size(min = 1, max = 10, message = "username  should be between 1 and 10 characters")
+	@NotNull(message = "username ne peut pas etre vide")
+	@Size(min = 5, max = 10, message = "username  doit avoir  entre 5 and 10 caracteres")
 	private String username;
 
-
+	@Email(message = "Email : format non valide")
 	public String getEmail() {
 		return email;
 	}

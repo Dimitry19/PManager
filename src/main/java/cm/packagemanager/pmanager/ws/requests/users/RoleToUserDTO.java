@@ -4,16 +4,18 @@ import cm.packagemanager.pmanager.common.enums.RoleEnum;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 public class RoleToUserDTO {
 
-	@NotNull(message = "username should not be empty")
+	@NotNull(message = "Entrez un email valide")
+	@Email(message = "Email : format non valide")
 	private String email;
 
 	private String username;
 
-	@NotNull(message = "role should not be empty")
+	@NotNull(message = "role doit etre valoriser")
 	@Enumerated(EnumType.STRING)
 	private RoleEnum role;
 

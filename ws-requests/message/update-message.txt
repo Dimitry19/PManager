@@ -1,0 +1,8 @@
+POST
+http://localhost:8080/pmanager/ws/message/update
+{
+   "id":3,
+   "username":"dimo",
+   "content":"Excellente livraison"
+
+}

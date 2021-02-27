@@ -1,6 +1,8 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
 
+import cm.packagemanager.pmanager.common.ent.dao.CommonDAO;
+import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
@@ -8,17 +10,19 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
+import cm.packagemanager.pmanager.ws.requests.users.UserSeachDTO;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDAO {
+public interface UserDAO extends CommonDAO {
 
 
-	Optional<UserVO> findByUsername(String username) throws BusinessResourceException, UserException;
+	UserVO findByUsername(String username) throws BusinessResourceException, UserException;
 
 	UserVO findByOnlyUsername(String username, boolean isRegistration) throws BusinessResourceException;
 
+	List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException;
 
 	UserVO findByToken(String token) throws BusinessResourceException;
 
@@ -28,12 +32,16 @@ public interface UserDAO {
 	UserVO login(String username) throws UserException;
 
 
+	int count(PageBy pageBy) throws BusinessResourceException;
+
 	UserVO login(String username, String password) throws UserException;
 
 
 	public List<UserVO> getAllUsers()  throws BusinessResourceException;
 
-	public List<UserVO> getAllUsers(int page, int size)  throws BusinessResourceException;
+	public List<UserVO> getAllUsersToConfirm()  throws BusinessResourceException;
+
+	public List<UserVO> getAllUsers(PageBy pageBy)  throws BusinessResourceException;
 
 	//public UserVO getUser(int id)  throws BusinessResourceException;
 

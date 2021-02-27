@@ -1,0 +1,23 @@
+The Bean Validation API provides a number of such annotations. Most of these are self-explanatory:
+DecimalMax
+DecimalMin
+Digits
+Email
+Future
+FutureOrPresent
+Max
+Min
+Negative
+NegativeOrZero
+NotBlank
+NotEmpty
+NotNull
+Null
+Past
+PastOrPresent
+Pattern
+Positive
+PositiveOrZero
+
+Enabling Validation on the Resource
+Simple. Add @Valid in addition to @RequestBody.

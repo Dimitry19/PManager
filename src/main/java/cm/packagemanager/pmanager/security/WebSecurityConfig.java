@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		String password = "password2";
 
 		String encrytedPassword = "$2a$10$PTJsddL7mIzmov0UE4lBNuSpWUQocANJbSnkRfOfrgKDF2SVrUB8W";//this.passwordEncoder().encode(password);
-		System.out.println("Encoded password of password2=" + encrytedPassword);
+		//System.out.println("Encoded password of password2=" + encrytedPassword);
 
 
 		InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder> //

@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.user.ent.dao;
 
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
+import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.apache.commons.collections4.IteratorUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,10 +27,6 @@ public  class RoleDAOImpl implements RoleDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	//@Autowired
-	//HibernateTransactionManager tx;
-
-
 	public RoleDAOImpl(){
 
 	}
@@ -40,7 +37,6 @@ public  class RoleDAOImpl implements RoleDAO {
 		if(role!=null){
 			session.save(role);
 		}
-
 		return role;
 	}
 	@Override
@@ -64,17 +60,22 @@ public  class RoleDAOImpl implements RoleDAO {
 		Session session = sessionFactory.getCurrentSession();
 
 		Query query=session.getNamedQuery(RoleVO.FINDBYDESC);
-		if(description.equals(RoleEnum.USER.name())){
-			query.setParameter("description", RoleEnum.USER);
-		}else {
-			query.setParameter("description", RoleEnum.ADMIN);
-		}
-
+		query.setParameter("description", RoleEnum.fromValue(description));
 
 		List<RoleVO> roles=query.list();
 		if(roles!=null && roles.size()>0) {
 			return roles.get(0);
 		}
+		return null;
+	}
+
+	@Override
+	public RoleVO find(String description) {
+		return null;
+	}
+
+	@Override
+	public Collection<UserVO> usersWithRole(String description) {
 		return null;
 	}
 }

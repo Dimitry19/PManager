@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.message.ent.vo;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserIdVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -22,12 +23,18 @@ import javax.persistence.*;
 
 @Entity(name ="MessageVO")
 @Table(name="MESSAGE", schema = "PUBLIC")
+@NamedQueries({
+		@NamedQuery(name =MessageVO.FINDALL,query = "select m from MessageVO m "),
+		@NamedQuery(name = MessageVO.GET_ID_SQL, query = "select max(m.id.id) from MessageVO m ")
+})
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
 })
-public class MessageVO extends CommonVO {
+public class MessageVO extends WSCommonResponseVO {
 
-	public  final static String GET_ID_SQL="SELECT MAX(ID) FROM MESSAGE WHERE CANCELLED IS FALSE ";
+	public static final String FINDALL="cm.packagemanager.pmanager.message.ent.vo.MessageVO.findAll";
+
+	public  final static String GET_ID_SQL="cm.packagemanager.pmanager.message.ent.vo.MessageVO.getId";
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,10 +69,8 @@ public class MessageVO extends CommonVO {
 		return content;
 	}
 
-
-
 	@Access(AccessType.PROPERTY)
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinColumn(name="R_ANNOUNCE", referencedColumnName = "ID",updatable = false)
 	@JsonBackReference
 	public AnnounceVO getAnnounce() {
@@ -74,7 +79,7 @@ public class MessageVO extends CommonVO {
 
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="R_USER_ID", updatable = false)
 	@JsonBackReference
 	public UserVO getUser(){

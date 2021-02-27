@@ -25,7 +25,6 @@ public enum TransportEnum {
 				return e;
 			}
 		}
-
-		throw new RuntimeException("Valore " + value + " non valido");
+		throw new RuntimeException("Valeur " + value + " invalide");
 	}
 }

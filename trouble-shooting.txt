@@ -1,2 +1,5 @@
 @JsonBackReference and @JsonManagedReference utilisés pour resourdre le probleme de recursivité json entre User et Annonce.
     Error message : Could not write JSON: Infinite recursion (StackOverflowError); nested exception is com.fasterxml.jackson.databind.JsonMappingException: Infinite recursion
+    
+ session.remove(user);
+//session.flush(); // Etant donné que la suppression de l'entité UserVO entraine la suppression des autres en entités pas besoin de faire le flush car le flush fait la synchronisation entre l'entité et la session hibernate du coup cree une transaction et enverra en erreur la remove

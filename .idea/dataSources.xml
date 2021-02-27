@@ -7,5 +7,11 @@
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:tcp://localhost/../../../db/manager</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="Hibernate" uuid="f5601717-7195-450b-ad74-d596ce5860c7">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:tcp://localhost/../../../db/manager</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -1,20 +1,21 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 
-import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
-import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -27,14 +28,15 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 @Entity
 @Table(name = "ANNOUNCE", schema = "PUBLIC")
 @NamedQueries({
-		@NamedQuery(name = AnnounceVO.FINDBYID,  query="select a from AnnounceVO a where id =:id"),
+		@NamedQuery(name = AnnounceVO.FINDBYUSER,  query="select a from AnnounceVO a where a.user.id =:userId order by a.startDate desc"),
 })
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
 })
-public class AnnounceVO extends CommonVO {
+public class AnnounceVO extends WSCommonResponseVO {
 
-	public static final String FINDBYID="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findById";
+	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
+	public static final String SQL_FIND_BY_USER=" FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
 
 	private Long id;
 
@@ -61,9 +63,6 @@ public class AnnounceVO extends CommonVO {
 	private StatusEnum status;
 
 	private boolean cancelled;
-
-
-	private String username;
 	
 	private String description;
 	
@@ -74,6 +73,9 @@ public class AnnounceVO extends CommonVO {
 	private Set<MessageVO> messages=new HashSet<>();
 
 	private AnnounceIdVO announceId;
+
+	private String username;
+	private String email;
 	public AnnounceVO(){ super();}
 
 
@@ -90,7 +92,8 @@ public class AnnounceVO extends CommonVO {
 
 	@Basic(optional = false)
 	@Column(name = "START_DATE", nullable = false)
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -101,7 +104,8 @@ public class AnnounceVO extends CommonVO {
 
 	@Basic(optional = false)
 	@Column(name = "END_DATE", nullable = false)
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -209,7 +213,7 @@ public class AnnounceVO extends CommonVO {
 
 
 	@Access(AccessType.PROPERTY)
-	@OneToMany(cascade = {CascadeType.ALL},targetEntity=MessageVO.class, mappedBy="announce", orphanRemoval = true,fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy="announce",fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	public Set<MessageVO> getMessages() {
@@ -233,6 +237,7 @@ public class AnnounceVO extends CommonVO {
 	public void setUser(UserVO user) {
 		this.user = user;
 		setUsername(user.getUsername());
+		setEmail(user.getEmail());
 	}
 
 
@@ -288,6 +293,16 @@ public class AnnounceVO extends CommonVO {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	@Transient
+	@JsonProperty
+	public String getEmail() {
+		return email;//.getUsername();
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	@Transient

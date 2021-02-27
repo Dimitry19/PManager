@@ -3,12 +3,10 @@ package cm.packagemanager.pmanager.announce.service;
 
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.announce.ent.vo.AnnouncesVO;
-import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
-import cm.packagemanager.pmanager.ws.requests.announces.MessageDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.util.List;
 
 
@@ -45,6 +41,11 @@ public class AnnounceServiceImpl implements AnnounceService {
 		return announceDAO.create(announceDTO);
 	}
 
+	@Transactional
+	public List<AnnounceVO> find(AnnounceSearchDTO asdto, PageBy pageBy) throws Exception {
+		return announceDAO.find(asdto, pageBy);
+	}
+
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public AnnounceVO update(UpdateAnnounceDTO announce) throws Exception {
@@ -56,30 +57,30 @@ public class AnnounceServiceImpl implements AnnounceService {
 		return announceDAO.update(id);
 	}
 
+	@Transactional
+	public List<AnnounceVO> findByUser(Long userId,PageBy pageBy) throws Exception {
+
+		return announceDAO.findByUser(userId, pageBy);
+	}
+
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public boolean delete(Long id) throws Exception {
 		return announceDAO.delete(id);
 	}
 
-
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public MessageVO addMessage(MessageDTO mdto) throws Exception{
-		return announceDAO.addMessage(mdto);
-	}
-
 	@Transactional(readOnly = true)
-	public List<AnnounceVO> announces(int page, int size ) {
-		return announceDAO.announces(page, size);
+	public List<AnnounceVO> announces(PageBy pageBy ) {
+		return announceDAO.announces(pageBy);
 	}
 
-	@Override
+
 	public Page announces(Pageable pageable) throws Exception {
 		return (Page) announceDAO.announces(pageable.getPageNumber(),pageable.getPageSize());
 	}
 
 	@Transactional(readOnly = true)
-	public int  count(int page, int size) {
-		return announceDAO.count( page,  size);
+	public int  count(AnnounceSearchDTO announceSearch,PageBy pageBy) throws Exception {
+		return announceDAO.count( announceSearch,pageBy);
 	}
 
 	public void afterPropertiesSet() throws Exception {

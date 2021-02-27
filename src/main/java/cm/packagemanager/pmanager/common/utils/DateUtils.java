@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
@@ -13,10 +14,13 @@ public class DateUtils {
 
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(DateUtils.class);
 
-	private static final String FORMAT_STD_PATTERN="yyyy/MM/dd HH:mm:ss.SSS";
-	private static final String TIMESTAMP_PATTERN="yy/MM/dd, hh:mm:ss";
-	private static final String STD_PATTERN="dd/MM/yyyy";
-	private static final String STD_PATTERN_HMS="dd/MM/yyyy HH:mm:ss";
+	public static final String FORMAT_STD_PATTERN="yyyy/MM/dd HH:mm:ss.SSS";
+	public static final String FORMAT_STD_PATTERN_2="yyyy/MM/dd, hh:mm:ss";
+	public static final String FORMAT_STD_PATTERN_3="dd-MM-yyyy HH:mm:ss";
+	public static final String FORMAT_STD_PATTERN_4="dd/MM/yyyy, HH:mm:ss";
+	public static final String TIMESTAMP_PATTERN="yy/MM/dd, hh:mm:ss";
+	public static final String STD_PATTERN="dd/MM/yyyy";
+	public static final String STD_PATTERN_HMS="dd/MM/yyyy, HH:mm:ss";
 
 	public static String getDateStandardFormatted(Date date){
 		try	{
@@ -26,6 +30,49 @@ public class DateUtils {
 		}
 	}
 
+	public static Date milliSecondToDateCalendar(long currentDateTime){
+
+
+		try {
+			DateFormat df = new SimpleDateFormat(FORMAT_STD_PATTERN_4);
+			//Converting milliseconds to Date using Calendar
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(currentDateTime);
+			System.out.println("Milliseconds to Date using Calendar:"+ df.format(cal.getTime()));
+
+			//copying one Date's value into another Date in Java
+		/*Date now = new Date();
+		Date copiedDate = new Date(now.getTime());
+
+		System.out.println("original Date: " + df.format(now));
+		System.out.println("copied Date: " + df.format(copiedDate));*/
+			return cal.getTime();
+
+		}catch (Exception e){
+
+		}
+		return null;
+	}
+	public static Date milliSecondToDate(long currentDateTime){
+
+		//Converting milliseconds to Date using java.util.Date
+		//current time in milliseconds
+		//long currentDateTime = System.currentTimeMillis();
+
+		//creating Date from millisecond
+		Date currentDate = new Date(currentDateTime);
+
+	/*	//printing value of Date
+		System.out.println("current Date: " + currentDate);
+
+		//DateFormat df = new SimpleDateFormat("ddMM:yy:HH:mm:ss");
+		DateFormat df = new SimpleDateFormat(FORMAT_STD_PATTERN_4);
+
+		//formatted value of current Date
+		System.out.println("Milliseconds to Date: " + df.format(currentDate));*/
+		return currentDate;
+
+	}
 	public static String getDateFormatted(Format formatter, Date date){
 		return formatter.format(date);
 	}
@@ -42,7 +89,7 @@ public class DateUtils {
 				timestamp = new Timestamp(date.getTime());
 			}
 		}catch (Exception e)	{
-			logger.trace("Impossibile interpretare la data " + dateStr + ". Exception :" + e);
+			logger.trace("Impossibile representer la date " + dateStr + ". Exception :" + e);
 		}
 		return timestamp;
 	}
@@ -53,13 +100,13 @@ public class DateUtils {
 			if (dateStr != null && dateStr.length() > 0)
 			{
 				DateFormat formatter;
-				formatter = new SimpleDateFormat(STD_PATTERN);
+				formatter = new SimpleDateFormat(STD_PATTERN_HMS);
 				date = (Date) formatter.parse(dateStr);
 			}
 		}
 		catch (Exception e)
 		{
-			logger.trace("Impossibile interpretare la data " + dateStr + ". Exception :" + e);
+			logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
 		}
 		return date;
 	}
@@ -77,7 +124,7 @@ public class DateUtils {
 		}
 		catch (Exception e)
 		{
-			logger.trace("Impossibile interpretare la data " + dateStr + ". Exception :" + e);
+			logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
 		}
 		return date;
 	}
@@ -90,7 +137,7 @@ public class DateUtils {
 				dateStr = formatter.format(date);
 			}
 		}catch (Exception e){
-			logger.trace("Impossibile rappresentare la data " + date + ". Exception :" + e);
+			logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
 		}
 		return dateStr;
 	}
@@ -105,7 +152,7 @@ public class DateUtils {
 		}
 		catch (Exception e)
 		{
-			logger.trace("Impossibile rappresentare la data " + date + ". Exception :" + e);
+			logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
 		}
 		return dateStr;
 	}
@@ -116,5 +163,18 @@ public class DateUtils {
 			sqlDate = new java.sql.Date(inputDate.getTime());
 		}
 		return sqlDate;
+	}
+
+
+	public static boolean isAfter(Date compareDateOne, Date compareDateTwo){
+		if(compareDateOne!=null && compareDateTwo!=null){
+			return compareDateOne.after(compareDateTwo);
+		}return false;
+	}
+
+	public static boolean isBefore(Date compareDateOne, Date compareDateTwo){
+		if(compareDateOne!=null && compareDateTwo!=null){
+			return compareDateOne.before(compareDateTwo);
+		}return false;
 	}
 }

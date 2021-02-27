@@ -2,6 +2,8 @@ package cm.packagemanager.pmanager.common.ent.vo;
 
 import cm.packagemanager.pmanager.common.ent.bo.Auditable;
 import cm.packagemanager.pmanager.common.listener.audit.TableListener;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 import javax.persistence.EntityListeners;
@@ -23,8 +25,13 @@ public class CommonVO implements Auditable, Serializable {
 
 	private Timestamp lastUpdated;
 
+/*	private long retCode;
+
+	private String retDescription;*/
+
 
 	@Override
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	public Timestamp getDateCreated() {
 		return  dateCreated;
 	}
@@ -35,6 +42,7 @@ public class CommonVO implements Auditable, Serializable {
 	}
 
 	@Override
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	public Timestamp getLastUpdated() {
 		return lastUpdated;
 	}
@@ -43,6 +51,25 @@ public class CommonVO implements Auditable, Serializable {
 	public void setLastUpdated(Timestamp lastUpdated) {
 		this.lastUpdated=lastUpdated;
 	}
+
+
+	/*@Transient
+	public long getRetCode() {
+		return retCode;
+	}
+
+	public void setRetCode(long retCode) {
+		this.retCode = retCode;
+	}
+
+	@Transient
+	public String getRetDescription() {
+		return retDescription;
+	}
+
+	public void setRetDescription(String retDescription) {
+		this.retDescription = retDescription;
+	}*/
 
 
 

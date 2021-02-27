@@ -1,9 +1,20 @@
 package cm.packagemanager.pmanager.common.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.common.Constants;
+import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
+import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
-public  class CommonFilter {
+public  abstract class CommonFilter {
+
+
+	public abstract boolean updateDelete(Long id) throws BusinessResourceException, UserException;
+	public abstract  String composeQuery( Object o, String alias) throws Exception;
+	public abstract void composeQueryParameters( Object o, Query query) throws Exception;
 
 	public   Object manualFilter(Object o) {
 
@@ -22,6 +33,23 @@ public  class CommonFilter {
 			}else return null;
 		}
 
+		if (o instanceof MessageVO){
+			MessageVO message =(MessageVO)o;
+			if(!message.isCancelled()){
+				return message;
+			}else return null;
+		}
+
 		return o;
+	}
+
+	public void buildAndOr(StringBuilder hql,boolean addCondition,boolean andOrOr){
+		if (addCondition){
+			if (!andOrOr) {
+				hql.append(Constants.OR);
+			}else{
+				hql.append(Constants.AND);
+			}
+		}
 	}
 }
