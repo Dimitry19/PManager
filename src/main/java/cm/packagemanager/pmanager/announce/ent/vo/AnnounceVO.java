@@ -258,7 +258,7 @@ public class AnnounceVO extends CommonVO {
 	}
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(optional = false,fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
+	@ManyToOne(optional = true,fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
 	@JoinColumn(name="R_CATEGORY",referencedColumnName = "CODE")
 	@JsonProperty
 	public ProductCategoryVO getCategory() {

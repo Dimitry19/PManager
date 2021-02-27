@@ -23,7 +23,7 @@ import java.util.Set;
 
 import static org.hibernate.annotations.FetchMode.SELECT;
 
-@Entity(name ="AnnouncesVO")
+//@Entity(name ="AnnouncesVO")
 
 @Table(name = "V_ANNOUNCES", schema = "VIEWS")
 @Filters({
