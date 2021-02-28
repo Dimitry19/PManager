@@ -252,5 +252,6 @@
     <orderEntry type="library" name="Maven: io.opentracing:opentracing-util:0.22.0" level="project" />
     <orderEntry type="library" name="Maven: io.opentracing.contrib:opentracing-spanmanager:0.0.5" level="project" />
     <orderEntry type="library" name="Maven: io.opentracing:opentracing-noop:0.22.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:r05" level="project" />
   </component>
 </module>

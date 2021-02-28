@@ -15,6 +15,10 @@ import cm.packagemanager.pmanager.ws.requests.users.*;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +44,7 @@ import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.USE
 
 @RestController
 @RequestMapping(USER_WS)
+@Api(value="user-service", description="User Operations")
 public class UserController extends CommonController {
 
 	protected final Log logger = LogFactory.getLog(UserController.class);
@@ -50,6 +55,15 @@ public class UserController extends CommonController {
 	@Autowired
 	MailSender mailSender;
 
+	@ApiOperation(value = "Register an user ",response = Response.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful registration",
+					response = Response.class, responseContainer = "Object") })
 	@PostMapping(value = USER_WS_REGISTRATION)
 	public  Response register(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid RegisterDTO register) throws ValidationException, IOException {
 
@@ -105,6 +119,15 @@ public class UserController extends CommonController {
 	}
 
 
+	@ApiOperation(value = "Confirmation user registration ",response = Response.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful registration",
+					response = Response.class, responseContainer = "Object") })
 	@RequestMapping(value=USER_WS_CONFIRMATION, method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
 	public Response showConfirmationPage(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception, UserNotFoundException, ValidationException {
 
@@ -144,7 +167,16 @@ public class UserController extends CommonController {
 		return pmResponse;
 	}
 
-	@RequestMapping(value = USER_WS_LOGIN, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
+	@ApiOperation(value = " Login user ",response = UserVO.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful registration",
+					response = UserVO.class, responseContainer = "Object") })
+	@RequestMapping(value = USER_WS_LOGIN, method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 	public @ResponseBody
 	UserVO login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)	throws Exception{
 		logger.info("login request in");
@@ -175,7 +207,15 @@ public class UserController extends CommonController {
 	}
 
 
-
+	@ApiOperation(value = " Update user ",response = UserVO.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful update",
+					response = UserVO.class, responseContainer = "Object") })
 	@RequestMapping(value = USER_WS_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	UserVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateUserDTO userDTO) throws UserException {
@@ -201,7 +241,15 @@ public class UserController extends CommonController {
 		return null;
 	}
 
-
+	@ApiOperation(value = " Retrieve password",response = Response.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Password sent successfully",
+					response = Response.class, responseContainer = "Object") })
 	@RequestMapping(value = USER_WS_PASSWORD, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	Response  password(HttpServletResponse response, HttpServletRequest request, @RequestBody PasswordDTO password) throws UserException {
@@ -231,7 +279,15 @@ public class UserController extends CommonController {
 		}
 	}
 
-
+	@ApiOperation(value = " Update user role ",response = ResponseEntity.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Update role successfully",
+					response = ResponseEntity.class, responseContainer = "Object") })
 	@PostMapping(value = USER_WS_ROLE)
 	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) throws UserException {
 
@@ -252,7 +308,15 @@ public class UserController extends CommonController {
 	}
 
 
-
+	@ApiOperation(value = "Delete user ",response = Response.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful deleted",
+					response = Response.class, responseContainer = "Object") })
 	@RequestMapping(value =USER_WS_DELETE_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") Long id) throws UserException{
 		logger.info("delete request in");
@@ -282,6 +346,15 @@ public class UserController extends CommonController {
 		return pmResponse;
 	}
 
+	@ApiOperation(value = " Retrieve user with an ID ",response = UserVO.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful user retrieving",
+					response = UserVO.class, responseContainer = "Object") })
 	@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
 	public UserVO getUser(HttpServletResponse response, HttpServletRequest request,@PathVariable("id") Long id) throws UserException,IOException {
 		try{
@@ -295,6 +368,16 @@ public class UserController extends CommonController {
 		}
 		return null;
 	}
+
+	@ApiOperation(value = " Send mail ",response = Response.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Mail sent",
+					response = Response.class, responseContainer = "Object") })
 	@RequestMapping(value = USER_WS_MAIL)
 	public Response sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailDTO mail) throws AddressException, MessagingException, IOException {
 
@@ -325,8 +408,15 @@ public class UserController extends CommonController {
 
 
 
-	// Retrieve All Users
-	@GetMapping(USER_WS_USERS)
+	@ApiOperation(value = " Retrieve users ",response = ResponseEntity.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieving",
+					response = ResponseEntity.class, responseContainer = "Object") })	@GetMapping(USER_WS_USERS)
 	public ResponseEntity<PaginateResponse> users(HttpServletResponse response, HttpServletRequest request,
 			@Valid @Positive(message = "la page doit etre nombre positif") @RequestParam(required = false, defaultValue = DEFAULT_PAGE) int page,
 			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
@@ -355,9 +445,8 @@ public class UserController extends CommonController {
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
 
-	@RequestMapping(USER_WS_USERS_PAGE_NO)
-	@ResponseBody
-	public List<UserVO> users(@PathVariable int pageno,@PageableDefault(value=10, page=0) SpringDataWebProperties.Pageable pageable) throws Exception {
+	//@RequestMapping(USER_WS_USERS_PAGE_NO)
+	@ResponseBody	public List<UserVO> users(@PathVariable int pageno,@PageableDefault(value=10, page=0) SpringDataWebProperties.Pageable pageable) throws Exception {
 
 		PageBy pageBy = new PageBy(pageno,size);
 		return userService.getAllUsers(pageBy);

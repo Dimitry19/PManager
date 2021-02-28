@@ -229,23 +229,19 @@
 			<artifactId>jaeger-core</artifactId>
 			<version>0.19.0</version>
 		</dependency>
-
-
-		<!--<dependency>
-			<groupId>io.opentracing.contrib</groupId>
-			<artifactId>opentracing-spring-jaeger-web-starter</artifactId>
-			<version>1.0.3</version>
-		</dependency>-->
-
 		<dependency>
 			<groupId>io.opentracing.contrib</groupId>
 			<artifactId>opentracing-spring-web-autoconfigure</artifactId>
 			<version>0.0.4</version>
 		</dependency>
 
-
 		<!-- OPENTRACING END-->
-
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>r05</version>
+		</dependency>
 
 	</dependencies>
 
