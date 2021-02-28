@@ -93,7 +93,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@Basic(optional = false)
 	@Column(name = "START_DATE", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
+	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -105,7 +105,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@Basic(optional = false)
 	@Column(name = "END_DATE", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
+	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	public Date getEndDate() {
 		return endDate;
 	}

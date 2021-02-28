@@ -21,7 +21,7 @@ public class QuartzSubmitJobs {
 	@Bean(name = "memberStatsTrigger")
 	public SimpleTriggerFactoryBean triggerMemberStats(@Qualifier("userStats") JobDetail jobDetail) {
 		return QuartzConfiguration.createTrigger(jobDetail, 60000, "Member Statistics Trigger");
-	}*/
+	}
 
 	@Bean(name = "memberClassStats")
 	public JobDetailFactoryBean jobMemberClassStats() {
@@ -31,5 +31,5 @@ public class QuartzSubmitJobs {
 	@Bean(name = "memberClassStatsTrigger")
 	public CronTriggerFactoryBean triggerMemberClassStats(@Qualifier("memberClassStats") JobDetail jobDetail) {
 		return QuartzCronConfiguration.createCronTrigger(jobDetail, CRON_EVERY_TWO_MINUTES, "Class Statistics Trigger");
-	}
+	}*/
 }

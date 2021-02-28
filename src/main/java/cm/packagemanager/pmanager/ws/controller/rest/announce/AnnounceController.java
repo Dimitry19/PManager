@@ -254,6 +254,9 @@ public class AnnounceController extends CommonController {
 	public ResponseEntity<PaginateResponse> announces(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif")  int page,
 	                                                  @RequestParam (required = false, defaultValue = DEFAULT_SIZE) @Valid @Positive(message = "Page size should be a positive number")  int size) throws Exception {
 
+
+		long start= System.currentTimeMillis();
+
 		HttpHeaders headers = new HttpHeaders();
 		PaginateResponse paginateResponse=new PaginateResponse();
 		logger.info("retrieve  announces request in");
@@ -269,6 +272,12 @@ public class AnnounceController extends CommonController {
 				paginateResponse.setResults(announces);
 				headers.add(HEADER_TOTAL, Long.toString(announces.size()));
 			}
+
+			long end =System.currentTimeMillis();
+
+			System.out.println(" AnnounceController -announces: execution time:" +(end-start));
+			logger.info(" AnnounceController -announces: execution time:" +(end-start));
+
 
 			return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 		}catch (Exception e){

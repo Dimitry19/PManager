@@ -69,6 +69,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	@Override
 	public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws Exception {
 
+		long start= System.currentTimeMillis();
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query =null;
@@ -81,20 +82,31 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		}
 
 		int count = CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
+
+		long end =System.currentTimeMillis();
+
+		System.out.println(" AnnounceDAOImpl - count: execution time:" +(end-start));
+		logger.info("AnnounceDAOImpl - count: execution time:" +(end-start));
 		return count;
 	}
 
 	@Override
 	public List<AnnounceVO> announces(PageBy pageBy) throws BusinessResourceException {
 
+
+		long start= System.currentTimeMillis();
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query = session.createQuery("from AnnounceVO order by startDate desc");
 		query.setFirstResult(pageBy.getPage());
 		query.setMaxResults(pageBy.getSize());
 
-		List<AnnounceVO> announces =query.list();
 
+		List<AnnounceVO> announces =query.list();
+		long end =System.currentTimeMillis();
+
+		System.out.println(" AnnounceDAOImpl - announce: execution time:" +(end-start));
+		logger.info("AnnounceDAOImpl - announce: execution time:" +(end-start));
 		return announces;
 	}
 
