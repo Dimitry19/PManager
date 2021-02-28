@@ -45,7 +45,7 @@ public interface UserDAO extends CommonDAO {
 
 	//public UserVO getUser(int id)  throws BusinessResourceException;
 
-	public UserVO getUser(Long id) throws BusinessResourceException;
+	public UserVO getUser(Long id) throws UserException;
 
 	public UserVO register(RegisterDTO register) throws BusinessResourceException, UserException;
 

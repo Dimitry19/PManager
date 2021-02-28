@@ -18,6 +18,7 @@ import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UserSeachDTO;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import io.opentracing.Span;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -46,6 +47,9 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	@Autowired
 	RoleDAO roleDAO;
 
+
+	@Autowired
+	Span span;
 
 	public UserDAOImpl() {
 
@@ -117,16 +121,16 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
-	public UserVO getUser(Long id) {
+	public UserVO getUser(Long id)  throws UserException{
 		logger.info("User: get user");
 		try {
 			return  findById(id);
 
 		} catch (UserException e) {
 			logger.error("User:" +e.getMessage());
-			e.printStackTrace();
+			throw e;
 		}
-		return null;
+
 	}
 
 	@Override

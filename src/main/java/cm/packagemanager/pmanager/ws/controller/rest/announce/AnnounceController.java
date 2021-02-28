@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.announce.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
@@ -35,6 +36,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -84,8 +87,9 @@ public class AnnounceController extends CommonController {
 		AnnounceVO announce = null;
 		Response res=new Response();
 
-		try
-		{
+		try{
+			createOpentracingSpan("AnnounceController -create");
+
 			logger.info("create announce request in");
 			if (ar!=null){
 				announce= announceService.create(ar);
@@ -104,6 +108,8 @@ public class AnnounceController extends CommonController {
 			logger.error("Errore eseguendo add announce: ", e);
 			response.setStatus(500);
 			response.getWriter().write(e.getMessage());
+		}finally {
+			finishOpentracingSpan();
 		}
 
 		return  announce;
@@ -123,6 +129,8 @@ public class AnnounceController extends CommonController {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		try {
+			createOpentracingSpan("AnnounceController -update");
+
 			if (uar==null)	return null;
 
 			AnnounceVO announce=announceService.update(uar);
@@ -137,6 +145,8 @@ public class AnnounceController extends CommonController {
 			return announce;
 		}catch (Exception e){
 			response.getWriter().write(e.getMessage());
+		}finally {
+			finishOpentracingSpan();
 		}
 
 		return null;
@@ -178,6 +188,8 @@ public class AnnounceController extends CommonController {
 		List<AnnounceVO> announces=null;
 
 		try{
+			createOpentracingSpan("AnnounceController -find");
+
 			if (asdto!=null){
 				int count = announceService.count(asdto, pageBy);
 				if(count==0){
@@ -194,6 +206,8 @@ public class AnnounceController extends CommonController {
 			response.getWriter().write(e.getMessage());
 			logger.info(" AnnounceController -find:Exception occurred while fetching the response from the database.", e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}finally {
+			finishOpentracingSpan();
 		}
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
@@ -233,6 +247,8 @@ public class AnnounceController extends CommonController {
 
 
 		try{
+			createOpentracingSpan("AnnounceController -announcesByUser");
+
 			if (userId!=null){
 				int count = announceService.count(null,pageBy);
 				if(count==0){
@@ -251,6 +267,8 @@ public class AnnounceController extends CommonController {
 			response.getWriter().write(e.getMessage());
 			logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}finally {
+			finishOpentracingSpan();
 		}
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
@@ -272,6 +290,8 @@ public class AnnounceController extends CommonController {
 
 		try{
 			logger.info("delete request in");
+			createOpentracingSpan("AnnounceController -delete");
+
 			if (id!=null){
 				if(announceService.delete(id)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -287,7 +307,36 @@ public class AnnounceController extends CommonController {
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(e.getMessage());
 		}
+		finally {
+			finishOpentracingSpan();
+		}
 		return pmResponse;
+	}
+
+	@ApiOperation(value = "Retrieve an announce with an ID",response = AnnounceVO.class)
+	@RequestMapping(value =ANNOUNCE_WS_BY_ID,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	public AnnounceVO getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws UserException {
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		AnnounceVO announce=null;
+
+		try{
+			logger.info("retrieve announce request in");
+			createOpentracingSpan("AnnounceController -get announce");
+
+			if (id!=null){
+				announce=announceService.findById(id);
+			}
+		}
+		catch (UserException e){
+			//response.getWriter().write(e.getMessage());
+			logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
+            throw e;
+		}
+		finally {
+			finishOpentracingSpan();
+		}
+		return announce;
 	}
 
 	/**
@@ -316,11 +365,9 @@ public class AnnounceController extends CommonController {
 		logger.info("retrieve  announces request in");
 		PageBy pageBy= new PageBy(page,size);
 
-		Span gSpan=null;
 		try {
 
-			GlobalTracer.register(gTracer);
-			gSpan = GlobalTracer.get().buildSpan("AnnounceController -announces").start();
+			createOpentracingSpan("AnnounceController -announces");
 
 			int count = announceService.count(null,pageBy);
 			if(count==0){
@@ -336,9 +383,8 @@ public class AnnounceController extends CommonController {
 			logger.info(" AnnounceController -announces:Exception occurred while fetching the response from the database.", e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}finally {
-			gSpan.finish();
+			finishOpentracingSpan();
 		}
-
 	}
 
 	//@RequestMapping(ANNOUNCE_WS_USER_ID_PAGE_NO)

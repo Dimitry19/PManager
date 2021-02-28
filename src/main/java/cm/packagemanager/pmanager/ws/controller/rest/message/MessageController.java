@@ -44,7 +44,7 @@ public class MessageController extends CommonController  {
 		logger.info("Update message requestin");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		try {
-
+			createOpentracingSpan("MessageController -update");
 			if (umr==null)	return null;
 
 			MessageVO message=messageService.update(umr);
@@ -59,6 +59,8 @@ public class MessageController extends CommonController  {
 			return message;
 		}catch (Exception e){
 			response.getWriter().write(e.getMessage());
+		}finally {
+			finishOpentracingSpan();
 		}
 
 		return null;
@@ -69,18 +71,26 @@ public class MessageController extends CommonController  {
 		public ResponseEntity<MessageVO> addMessage(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid MessageDTO mdto) throws Exception{
 		HttpHeaders headers = new HttpHeaders();
 
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		logger.info("add message to announce request in");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			logger.info("add message to announce request in");
 
-		if (mdto!=null){
-			MessageVO message = messageService.addMessage(mdto);
+			try {
+				createOpentracingSpan("MessageController -addMessage");
+				if (mdto!=null){
+					MessageVO message = messageService.addMessage(mdto);
 
-			if(message!=null){
-				return new ResponseEntity<MessageVO>(message, headers, HttpStatus.OK);
-			}else{
-				response.getWriter().write("Message non ajouté!");
+					if(message!=null){
+						return new ResponseEntity<MessageVO>(message, headers, HttpStatus.OK);
+					}else{
+						response.getWriter().write("Message non ajouté!");
+					}
+				}
+			}catch (Exception e){
+				throw  e;
 			}
-		}
+			finally {
+				finishOpentracingSpan();
+			}
 		return null;
 	}
 
@@ -138,6 +148,7 @@ public class MessageController extends CommonController  {
 
 		try{
 			logger.info("find message by user request in");
+			createOpentracingSpan("MessageController -messagesByUser");
 			if (userId!=null){
 				int count =messageService.count(pageBy);
 				if(count ==0){
@@ -150,6 +161,9 @@ public class MessageController extends CommonController  {
 		}
 		catch (Exception e){
 			response.getWriter().write(e.getMessage());
+		}
+		finally {
+			finishOpentracingSpan();
 		}
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
@@ -169,6 +183,7 @@ public class MessageController extends CommonController  {
 		Response pmResponse = new Response();
 
 		try{
+			createOpentracingSpan("MessageController -delete");
 			logger.info("delete message request in");
 			if (id!=null){
 				if(messageService.delete(id)){
@@ -184,6 +199,8 @@ public class MessageController extends CommonController  {
 			//response.getWriter().write(e.getMessage());
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(e.getMessage());
+		}finally {
+			finishOpentracingSpan();
 		}
 		return pmResponse;
 	}
@@ -204,14 +221,21 @@ public class MessageController extends CommonController  {
 		logger.info("retrieve  messages request in");
 		PageBy pageBy= new PageBy(page,size);
 
-		int count = messageService.count(pageBy);
-		if(count==0){
-			headers.add(HEADER_TOTAL, Long.toString(count));
-		}else{
-			List<MessageVO> messages = messageService.messages(pageBy);
-			paginateResponse.setCount(count);
-			paginateResponse.setResults(messages);
-			headers.add(HEADER_TOTAL, Long.toString(messages.size()));
+		try {
+			createOpentracingSpan("MessageController -messages");
+			int count = messageService.count(pageBy);
+			if(count==0){
+				headers.add(HEADER_TOTAL, Long.toString(count));
+			}else{
+				List<MessageVO> messages = messageService.messages(pageBy);
+				paginateResponse.setCount(count);
+				paginateResponse.setResults(messages);
+				headers.add(HEADER_TOTAL, Long.toString(messages.size()));
+			}
+		}catch (Exception e){
+			throw e;
+		}finally {
+			finishOpentracingSpan();
 		}
 
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);

@@ -183,8 +183,9 @@ public class UserController extends CommonController {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		UserVO user = null;
 
-		try
-		{
+		try{
+			createOpentracingSpan("UserController -login");
+
 			if (login!=null){
 				 user=userService.login(login);
 
@@ -202,6 +203,8 @@ public class UserController extends CommonController {
 			logger.error("Errore eseguendo login: ", e);
 			//response.setStatus(400);
 			response.getWriter().write(e.getMessage());
+		}finally {
+			finishOpentracingSpan();
 		}
 		return  user;
 	}
@@ -223,6 +226,8 @@ public class UserController extends CommonController {
 		logger.info("update user request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 			try {
+				createOpentracingSpan("UserController -update");
+
 				if(userDTO!=null){
 					UserVO user=userService.updateUser(userDTO);
 					if (user==null){
@@ -236,6 +241,8 @@ public class UserController extends CommonController {
 				logger.error("Erreur durant l'ajournement de l'utilisateur  " + userDTO.toString() +"{}",e);
 				e.printStackTrace();
 				throw  e;
+			}finally {
+				finishOpentracingSpan();
 			}
 
 		return null;
@@ -260,7 +267,7 @@ public class UserController extends CommonController {
 		Response pmResponse = new Response();
 
 		try{
-
+			createOpentracingSpan("UserController -password");
 			if(password!=null){
 
 				if(mailSender.manageResponse(userService.managePassword(password.getEmail()))){
@@ -276,6 +283,8 @@ public class UserController extends CommonController {
 			logger.error("Erreur durant la recuperation du mot de passe de l'utilisateur  " + password.toString() +"{}",e);
 			e.printStackTrace();
 			throw  e;
+		}finally {
+			finishOpentracingSpan();
 		}
 	}
 
@@ -294,6 +303,7 @@ public class UserController extends CommonController {
 		logger.info("set role request in");
 
 		try {
+			createOpentracingSpan("UserController -setRole");
 			if (userService.setRoleToUser(roleToUser)){
 				userService.findByEmail(roleToUser.getEmail());
 				return new ResponseEntity<UserVO>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.FOUND);
@@ -304,6 +314,8 @@ public class UserController extends CommonController {
 			logger.error("Erreur durant l'ajournement  du role de l'utilisateur  " + roleToUser.toString() +"{}",e);
 			e.printStackTrace();
 			throw  e;
+		}finally {
+			finishOpentracingSpan();
 		}
 	}
 
@@ -324,6 +336,7 @@ public class UserController extends CommonController {
 		Response pmResponse = new Response();
 
 		try{
+			createOpentracingSpan("UserController -delete");
 			if (id!=null){
 				if(userService.deleteUser(id)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -340,7 +353,9 @@ public class UserController extends CommonController {
 			pmResponse.setRetDescription(e.getMessage());
 			logger.error("Erreur durant la delete de l'utilisateur ayant id:" + id +"{}",e);
 			e.printStackTrace();
-			//throw  e;
+			throw  e;
+		}finally {
+			finishOpentracingSpan();
 		}
 
 		return pmResponse;
@@ -358,13 +373,18 @@ public class UserController extends CommonController {
 	@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
 	public UserVO getUser(HttpServletResponse response, HttpServletRequest request,@PathVariable("id") Long id) throws UserException,IOException {
 		try{
+			createOpentracingSpan("UserController -getUser");
 			logger.info("retrieve user request in");
 			response.setHeader("Access-Control-Allow-Origin", "*");
 			UserVO user =userService.getUser(id);
-			return user;
-		}catch (Exception e){
+			if (user!=null){
+				return user;
+			}
+		}catch (UserException e){
 			logger.error("Erreur durant l'execution de recuperation des infos de l'utilisateur: ", e);
 			response.getWriter().write(e.getMessage());
+		}finally {
+			finishOpentracingSpan();
 		}
 		return null;
 	}
@@ -387,6 +407,7 @@ public class UserController extends CommonController {
 
 		try
 		{
+			createOpentracingSpan("UserController -sendMail");
 			if (mail!=null){
 				if(mailSender.manageResponse(userService.sendMail(mail,true))){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -397,10 +418,11 @@ public class UserController extends CommonController {
 				}
 			}
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			logger.error("Errore eseguendo send mail: ", e);
 			response.getWriter().write(e.getMessage());
+		}finally {
+			finishOpentracingSpan();
 		}
 
 		return pmResponse;
@@ -428,6 +450,7 @@ public class UserController extends CommonController {
 		PaginateResponse paginateResponse = new PaginateResponse();
 
 		try{
+			createOpentracingSpan("UserController -users");
 			int count = userService.count(pageBy);
 			if(count == 0){
 				headers.add(HEADER_TOTAL, Long.toString(count));
@@ -441,6 +464,8 @@ public class UserController extends CommonController {
 			response.getWriter().write(e.getMessage());
 			logger.info(" UserController -users:Exception occurred while fetching the response from the database.", e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}finally {
+			finishOpentracingSpan();
 		}
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}

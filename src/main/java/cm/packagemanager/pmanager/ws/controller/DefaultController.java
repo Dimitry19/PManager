@@ -13,7 +13,7 @@ public class DefaultController {
 	private static final Logger logger = LoggerFactory.getLogger(DefaultController.class);
 
 	@GetMapping(value = "/")
-	public ResponseEntity<String> pong() {
+	public ResponseEntity<String> ping() {
 		logger.info("Démarrage des services OK .....");
 		return new ResponseEntity<String>("Réponse du serveur: "+HttpStatus.OK.name(), HttpStatus.OK);
 	}

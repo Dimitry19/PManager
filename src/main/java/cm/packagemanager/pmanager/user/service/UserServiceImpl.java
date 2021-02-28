@@ -100,22 +100,22 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 
-	public List<UserVO> getAllUsers(PageBy pageBy)throws Exception {
+	public List<UserVO> getAllUsers(PageBy pageBy)throws UserException {
 		return userDAO.getAllUsers(pageBy);
 	}
 
 
-	public List<UserVO> getAllUsers()throws Exception {
+	public List<UserVO> getAllUsers()throws UserException {
 		return userDAO.getAllUsers();
 	}
 
 	@Transactional(readOnly = true)
-	public List<UserVO> getAllUsersToConfirm()throws Exception {
+	public List<UserVO> getAllUsersToConfirm()throws UserException {
 		return userDAO.getAllUsersToConfirm();
 	}
 
 
-	public UserVO getUser(Long id) throws Exception{
+	public UserVO getUser(Long id) throws UserException{
 		return userDAO.getUser(id);
 	}
 

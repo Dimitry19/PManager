@@ -26,13 +26,13 @@ public interface UserService{
 
 	public void remove(UserVO user) throws UserException ;
 
-	public List<UserVO> getAllUsers(PageBy pageBy) throws Exception ;
+	public List<UserVO> getAllUsers(PageBy pageBy) throws UserException ;
 
-	public List<UserVO> getAllUsers() throws Exception;
+	public List<UserVO> getAllUsers() throws UserException;
 
-	public List<UserVO> getAllUsersToConfirm() throws Exception;
+	public List<UserVO> getAllUsersToConfirm() throws UserException;
 
-	public UserVO getUser(Long id) throws Exception;
+	public UserVO getUser(Long id) throws UserException;
 
 	public UserVO register(RegisterDTO register) throws UserException;
 
@@ -40,7 +40,7 @@ public interface UserService{
 
 	public Response managePassword(String email) throws UserException;
 
-	public Response sendMail(MailDTO mr, boolean active) throws Exception;
+	public Response sendMail(MailDTO mr, boolean active) throws UserException;
 
 	public boolean deleteUser(Long id)throws UserException;
 
