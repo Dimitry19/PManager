@@ -15,10 +15,14 @@ import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
+import io.opentracing.util.GlobalTracer;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +46,7 @@ import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.ANN
 public class AnnounceController extends CommonController {
 
 	protected final Log logger = LogFactory.getLog(AnnounceController.class);
+
 
 	@Autowired
 	protected AnnounceService announceService;
@@ -262,7 +267,12 @@ public class AnnounceController extends CommonController {
 		logger.info("retrieve  announces request in");
 		PageBy pageBy= new PageBy(page,size);
 
+		Span gSpan=null;
 		try {
+
+			GlobalTracer.register(gTracer);
+			gSpan = GlobalTracer.get().buildSpan("AnnounceController -announces").start();
+
 			int count = announceService.count(null,pageBy);
 			if(count==0){
 				headers.add(HEADER_TOTAL, Long.toString(count));
@@ -272,13 +282,12 @@ public class AnnounceController extends CommonController {
 				paginateResponse.setResults(announces);
 				headers.add(HEADER_TOTAL, Long.toString(announces.size()));
 			}
-
-			long end =System.currentTimeMillis();
-			logger.info(" AnnounceController -announces: execution time:" +(end-start));
 			return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 		}catch (Exception e){
 			logger.info(" AnnounceController -announces:Exception occurred while fetching the response from the database.", e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}finally {
+			gSpan.finish();
 		}
 
 	}

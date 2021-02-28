@@ -1,14 +1,16 @@
 package cm.packagemanager.pmanager.ws.controller.rest;
 
-import cm.packagemanager.pmanager.api.ApiError;
+import cm.packagemanager.pmanager.administrator.api.ApiError;
 import cm.packagemanager.pmanager.common.exception.ResponseException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.constant.WSConstants;
-import cm.packagemanager.pmanager.ws.responses.Response;
+import io.opentracing.Tracer;
+import io.opentracing.util.GlobalTracer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -89,6 +91,9 @@ public class CommonController {
 	@Autowired
 	public ServletContext servletContext;
 
+	@Qualifier("jaegerTracer")
+	@Autowired
+	protected Tracer gTracer;
 
 	@Value("${pagination.size}")
 	public Integer size;
@@ -109,7 +114,6 @@ public class CommonController {
 		}
 		return INTERNAL_SERVER_ERROR;
 	}
-
 
 
 

@@ -1,4 +1,4 @@
-package cm.packagemanager.pmanager.api;
+package cm.packagemanager.pmanager.administrator.api;
 
 
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
