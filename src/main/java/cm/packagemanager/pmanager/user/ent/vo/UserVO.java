@@ -222,6 +222,7 @@ public class UserVO extends WSCommonResponseVO {
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	@OrderBy(clause = "id.id DESC")
+	@Where(clause = "cancelled = false")
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
@@ -231,6 +232,7 @@ public class UserVO extends WSCommonResponseVO {
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	@OrderBy(clause = "startDate DESC")
+	@Where(clause = "cancelled = false")
 	public Set<AnnounceVO> getAnnounces() {
 		return announces;
 	}
