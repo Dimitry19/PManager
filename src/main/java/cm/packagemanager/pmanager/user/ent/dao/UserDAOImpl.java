@@ -64,8 +64,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		Query query = session.createQuery("from UserVO ");
 		//query.setFirstResult(pageBy.getPage());
 		//query.setMaxResults(pageBy.getSize());
-
-
 		int count = CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
 		return count;
 	}

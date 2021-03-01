@@ -85,26 +85,28 @@ public class UserServiceImpl  implements  UserService{
 		return user;
 	}
 
-
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
 	public UserVO update(UserVO user) throws UserException {
 		return userDAO.update(user);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
 	public boolean delete(UserVO user) throws UserException {
 		return userDAO.deleteUser(user);
 	}
 
-
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
 	public void remove(UserVO user) throws UserException {
 		 userDAO.remove(user);
 	}
 
 
+	@Transactional(readOnly = true)
 	public List<UserVO> getAllUsers(PageBy pageBy)throws UserException {
 		return userDAO.getAllUsers(pageBy);
 	}
 
-
+	@Transactional(readOnly = true)
 	public List<UserVO> getAllUsers()throws UserException {
 		return userDAO.getAllUsers();
 	}
@@ -114,7 +116,7 @@ public class UserServiceImpl  implements  UserService{
 		return userDAO.getAllUsersToConfirm();
 	}
 
-
+	@Transactional(readOnly = true)
 	public UserVO getUser(Long id) throws UserException{
 		return userDAO.getUser(id);
 	}
