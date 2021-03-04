@@ -16,9 +16,6 @@ import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
-import io.opentracing.Span;
-import io.opentracing.Tracer;
-import io.opentracing.util.GlobalTracer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -27,7 +24,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,8 +32,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -431,6 +425,4 @@ public class AnnounceController extends CommonController {
 		}
 		return responseEntity;
 	}
-
-
 }

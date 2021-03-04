@@ -18,12 +18,12 @@ public class AnnounceSearchDTO extends CommonSearchDTO {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = DateUtils.STD_PATTERN)
 	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	//@FutureOrPresent(message = "la date de depart oit être une date dans le présent ou le futur")
-	private Date startDate;
+	private long startDate;
 
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = DateUtils.STD_PATTERN)
 	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	//@FutureOrPresent(message = "la date retour doit être une date dans le présent ou le futur")
-	private Date endDate;
+	private long endDate;
 
 	private String weigth;
 
@@ -79,19 +79,19 @@ public class AnnounceSearchDTO extends CommonSearchDTO {
 		this.arrival = arrival;
 	}
 
-	public Date getStartDate() {
+	public long getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(long startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public long getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(long endDate) {
 		this.endDate = endDate;
 	}
 

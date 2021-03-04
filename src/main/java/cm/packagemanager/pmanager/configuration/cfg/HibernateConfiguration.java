@@ -30,7 +30,7 @@ public class HibernateConfiguration {
 	@Value("${db.username}")
 	private String USERNAME;
 
-	@Value("${hibernate.dialect}")
+	@Value("${spring.jpa.database-platform}")
 	private String DIALECT;
 
 	@Value("${hibernate.show_sql}")

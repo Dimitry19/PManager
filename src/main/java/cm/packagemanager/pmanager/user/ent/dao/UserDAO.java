@@ -6,14 +6,15 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UserSeachDTO;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserDAO extends CommonDAO {
 
@@ -30,7 +31,6 @@ public interface UserDAO extends CommonDAO {
 
 
 	UserVO login(String username) throws UserException;
-
 
 	int count(PageBy pageBy) throws BusinessResourceException;
 
@@ -78,7 +78,9 @@ public interface UserDAO extends CommonDAO {
 
 	public boolean checkLogin(LoginDTO lr ) throws BusinessResourceException, UserException;
 
-
+	@Query("select new cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO(r.rating, count(r)) "
+			+ "from cm.packagemanager.pmanager.review.ent.vo.ReviewVO r where r.user = ?1 group by r.rating order by r.rating DESC")
+	List<RatingCountVO> findRatingCounts(UserVO user);
 
 
 }

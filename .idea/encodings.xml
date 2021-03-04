@@ -18,6 +18,8 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/log4j2.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/Lost Password.html" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/confirm-registration.html" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/error/404.html" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/error/404.html" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/retrieve-password.html" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/send-mail.html" charset="windows-1252" />
   </component>

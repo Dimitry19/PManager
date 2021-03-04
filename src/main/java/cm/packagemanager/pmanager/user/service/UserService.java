@@ -3,6 +3,9 @@ package cm.packagemanager.pmanager.user.service;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.review.ent.bo.ReviewsSummaryBO;
+import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
+import cm.packagemanager.pmanager.review.ent.vo.ReviewDetailsVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
@@ -10,6 +13,8 @@ import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RoleToUserDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import com.sendgrid.Response;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,4 +64,12 @@ public interface UserService{
 	public int  count(PageBy pageBy)  throws Exception;
 
 
+	/***** RATING USER ***/
+	Page<ReviewVO> getReviews(UserVO user, Pageable pageable);
+
+	ReviewVO getReview(UserVO user, int index);
+
+	ReviewVO addReview(UserVO user, ReviewDetailsVO details);
+
+	ReviewsSummaryBO getReviewSummary(UserVO user);
 }

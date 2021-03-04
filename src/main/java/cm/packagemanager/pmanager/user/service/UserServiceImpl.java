@@ -6,6 +6,12 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.MailType;
 import cm.packagemanager.pmanager.common.utils.HTMLEntities;
+import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
+import cm.packagemanager.pmanager.rating.enums.Rating;
+import cm.packagemanager.pmanager.review.ent.bo.ReviewsSummaryBO;
+import cm.packagemanager.pmanager.review.ent.dao.ReviewDAO;
+import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
+import cm.packagemanager.pmanager.review.ent.vo.ReviewDetailsVO;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -13,14 +19,19 @@ import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
 import com.sendgrid.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static cm.packagemanager.pmanager.constant.FieldConstants.FACEBOOK_PROVIDER;
 import static cm.packagemanager.pmanager.constant.FieldConstants.GOOGLE_PROVIDER;
@@ -40,6 +51,9 @@ public class UserServiceImpl  implements  UserService{
 
 	@Autowired
 	UserDAO userDAO;
+
+	@Autowired
+	ReviewDAO reviewDAO;
 
 	@Autowired
 	MailSender mailSender;
@@ -222,5 +236,46 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 
+	@Override
+	public Page<ReviewVO> getReviews(UserVO user, Pageable pageable) {
+		Assert.notNull(user, "User must not be null");
+		return this.reviewDAO.findByUser(user, pageable);
+	}
+
+	@Override
+	public ReviewVO getReview(UserVO user, int reviewNumber) {
+		Assert.notNull(user, "User must not be null");
+		return reviewDAO.findByUserAndIndex(user, reviewNumber);
+	}
+
+	@Override
+	public ReviewVO addReview(UserVO user, ReviewDetailsVO details) {
+		ReviewVO review = new ReviewVO(user, 1, details);
+		return reviewDAO.save(review);
+	}
+
+	@Override
+	public ReviewsSummaryBO getReviewSummary(UserVO hotel) {
+		List<RatingCountVO> ratingCounts = userDAO.findRatingCounts(hotel);
+		return new ReviewsSummaryImpl(ratingCounts);
+	}
+
+	private static class ReviewsSummaryImpl implements ReviewsSummaryBO {
+
+		private final Map<Rating, Long> ratingCount;
+
+		public ReviewsSummaryImpl(List<RatingCountVO> ratingCounts) {
+			this.ratingCount = new HashMap<Rating, Long>();
+			for (RatingCountVO ratingCount : ratingCounts) {
+				this.ratingCount.put(ratingCount.getRating(), ratingCount.getCount());
+			}
+		}
+
+		@Override
+		public long getNumberOfReviewsWithRating(Rating rating) {
+			Long count = this.ratingCount.get(rating);
+			return count == null ? 0 : count;
+		}
+	}
 }
 
