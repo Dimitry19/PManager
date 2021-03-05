@@ -66,6 +66,6 @@ public class ApiError {
 
 	void setDefaultCodes(){
 		this.codes= new String[1];
-		this.codes[0]="-1";
+		this.codes[0]="Generic error";
 	}
 }

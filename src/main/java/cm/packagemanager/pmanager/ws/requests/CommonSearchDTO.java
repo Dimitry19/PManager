@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.ws.requests;
 
 public class CommonSearchDTO {
+
 	private boolean  and;
 
 	public boolean isAnd() {

@@ -255,16 +255,16 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 	@Override
-	public ReviewsSummaryBO getReviewSummary(UserVO hotel) {
-		List<RatingCountVO> ratingCounts = userDAO.findRatingCounts(hotel);
-		return new ReviewsSummaryImpl(ratingCounts);
+	public ReviewsSummaryBO getReviewSummary(UserVO user) {
+		List<RatingCountVO> ratingCounts = userDAO.findRatingCounts(user);
+		return new ReviewsSummaryBOImpl(ratingCounts);
 	}
 
-	private static class ReviewsSummaryImpl implements ReviewsSummaryBO {
+	private static class ReviewsSummaryBOImpl implements ReviewsSummaryBO {
 
 		private final Map<Rating, Long> ratingCount;
 
-		public ReviewsSummaryImpl(List<RatingCountVO> ratingCounts) {
+		public ReviewsSummaryBOImpl(List<RatingCountVO> ratingCounts) {
 			this.ratingCount = new HashMap<Rating, Long>();
 			for (RatingCountVO ratingCount : ratingCounts) {
 				this.ratingCount.put(ratingCount.getRating(), ratingCount.getCount());

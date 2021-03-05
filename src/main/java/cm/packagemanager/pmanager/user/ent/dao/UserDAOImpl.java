@@ -10,6 +10,8 @@ import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
+import cm.packagemanager.pmanager.rating.enums.Rating;
+import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -29,6 +31,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +44,8 @@ import java.util.UUID;
 public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
+
+	private static final MathContext MATH_CONTEXT = new MathContext(2,RoundingMode.HALF_UP);
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -83,6 +91,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		logger.info("User: all users");
 		Session session = this.sessionFactory.getCurrentSession();
 		List<UserVO>  users = session.createQuery("from UserVO").list();
+
 		return users;
 	}
 
@@ -111,7 +120,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		query.setMaxResults(pageBy.getSize());
 
 		List<UserVO> users = (List) query.list();
-
 		return users;
 
 	}
@@ -121,8 +129,10 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	public UserVO getUser(Long id)  throws UserException{
 		logger.info("User: get user");
 		try {
-			return  findById(id);
 
+			UserVO user=  findById(id);
+			calcolateAverage(user);
+			return user;
 		} catch (UserException e) {
 			logger.error("User:" +e.getMessage());
 			throw e;
@@ -304,7 +314,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		composeQueryParameters(userSeachDTO,query);
 		query.setFirstResult(pageBy.getPage());
 		query.setMaxResults(pageBy.getSize());
-		List announces = query.list();
+		List users = query.list();
 
 		return null;
 	}
@@ -452,7 +462,11 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	public List<RatingCountVO> findRatingCounts(UserVO user) {
-		return null;
+		Session session= sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		Query query=session.createNamedQuery(ReviewVO.RATING,RatingCountVO.class);
+		query.setParameter("userid", user);
+		return query.getResultList();
 	}
 
 	@Override
@@ -522,6 +536,22 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		}
 	}
 
+	private double calcolateAverage(UserVO user){
+		int totalRating=0;
+		int counterRating=0;
+		List<RatingCountVO> ratingCounts =findRatingCounts(user);
+		if(CollectionsUtils.isEmpty(ratingCounts)){
+			return 0.0;
+		}
+		for(int i=0;i<ratingCounts.size();i++){
+			RatingCountVO ratingCount=ratingCounts.get(i);
+			counterRating+=ratingCount.getCount();
+			totalRating+=ratingCount.getRating().toValue()*ratingCount.getCount();
+		}
+		double averageRating = new BigDecimal(((double) totalRating/(double) counterRating),MATH_CONTEXT).doubleValue();
+		user.setRating(averageRating);
+		return averageRating;
+	}
 	@Override
 	public  String composeQuery(Object o, String alias) {
 

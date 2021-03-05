@@ -240,7 +240,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 		setEmail(user.getEmail());
 	}
 
-
 	@Basic(optional = false)
 	@Column(name="CANCELLED")
 	public boolean isCancelled() {

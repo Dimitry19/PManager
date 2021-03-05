@@ -11,8 +11,6 @@ public class ReviewDetailsVO implements Serializable {
 
 	private Rating rating;
 
-	private Date checkInDate;
-
 	private String title;
 
 	private String details;
@@ -27,15 +25,6 @@ public class ReviewDetailsVO implements Serializable {
 	public void setRating(Rating rating) {
 		this.rating = rating;
 	}
-
-	public Date getCheckInDate() {
-		return this.checkInDate;
-	}
-
-	public void setCheckInDate(Date checkInDate) {
-		this.checkInDate = checkInDate;
-	}
-
 
 	public String getTitle() {
 		return this.title;

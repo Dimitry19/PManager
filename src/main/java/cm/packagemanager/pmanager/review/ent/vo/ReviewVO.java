@@ -1,43 +1,130 @@
 package cm.packagemanager.pmanager.review.ent.vo;
 
-import java.io.Serializable;
 import javax.persistence.*;
 
-import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
+
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
+import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.rating.enums.Rating;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.Filters;
 import org.springframework.util.Assert;
 
 /*
 https://github.com/cloudControl/spring-boot-example-app/tree/master/src/main
 */
 
-@Entity(name = "ReviewVO")
+@Entity
 @Table(name="REVIEW", schema = "PUBLIC")
-public class ReviewVO extends CommonVO {
+@NamedQueries({
+		@NamedQuery(name = ReviewVO.RATING,  query="select new cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO(r.rating, count(r)) from ReviewVO r where r.user =:userid group by r.rating order by r.rating DESC"),
+})
+@Filters({
+		@Filter(name = FilterConstants.CANCELLED)
+})
+public class ReviewVO extends WSCommonResponseVO {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
+
+	public static final String RATING="cm.packagemanager.pmanager.review.ent.vo.ReviewVO.rating";
+
+
 	private Long id;
 
-	@ManyToOne(optional = false)
 	private UserVO user;
 
-	@Column(nullable = false, name = "idx")
 	private int index;
 
-	@Column(nullable = false)
-	@Enumerated(EnumType.ORDINAL)
 	private Rating rating;
 
-
-	@Column(nullable = false)
 	private String title;
 
-	@Column(nullable = false, length = 5000)
 	private String details;
+
+	private boolean cancelled;
+
+	private ReviewIdVO reviewId;
+
+	public ReviewIdVO getReviewId() {
+		return  reviewId;
+	}
+
+	public void setReviewId(ReviewIdVO reviewId) {
+		this.reviewId = reviewId;
+	}
+
+	@Id
+	@GeneratedValue
+	@Column(name="ID")
+	public Long getId() {
+		return id;
+	}
+
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH,optional = false)
+	@JoinColumn(name="R_USER_ID", updatable = false)
+	@JsonBackReference
+	@JsonProperty
+	public UserVO getUser() {
+		return this.user;
+	}
+
+	@Column(name = "INDEXES",nullable = false)
+	public int getIndex() {
+		return this.index;
+	}
+
+	@Column(name = "RATING",nullable = false)
+	@Enumerated(EnumType.ORDINAL)
+	public Rating getRating() {
+		return this.rating;
+	}
+
+	@Column(name ="TITLE", nullable = false)
+	public String getTitle() {
+		return this.title;
+	}
+
+	@Column(name="DETAILS",nullable = false, length = 5000)
+	public String getDetails() {
+		return this.details;
+	}
+
+	@Basic(optional = false)
+	@Column(name="CANCELLED")
+	public boolean isCancelled() {
+		return cancelled;
+	}
+
+	public void setCancelled(boolean cancelled) {
+		this.cancelled = cancelled;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public void setRating(Rating rating) {
+		this.rating = rating;
+	}
+
+	public void setId(Long id) {this.id = id;}
+
+	public void setUser(UserVO user) {
+		this.user = user;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
 
 	public ReviewVO() {
 		super();
@@ -53,44 +140,30 @@ public class ReviewVO extends CommonVO {
 		this.title = details.getTitle();
 		this.details = details.getDetails();
 	}
-
-	public Long getId() {
-		return id;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id.intValue();
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public UserVO getUser() {
-		return this.user;
-	}
-
-	public int getIndex() {
-		return this.index;
-	}
-
-	public Rating getRating() {
-		return this.rating;
-	}
-
-	public void setRating(Rating rating) {
-		this.rating = rating;
-	}
-
-	public String getTitle() {
-		return this.title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDetails() {
-		return this.details;
-	}
-
-	public void setDetails(String details) {
-		this.details = details;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ReviewVO other = (ReviewVO) obj;
+		if (id != other.id)
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
 	}
 }
