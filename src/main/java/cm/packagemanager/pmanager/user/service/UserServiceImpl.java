@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.user.service;
 
+import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
@@ -10,12 +11,14 @@ import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.rating.enums.Rating;
 import cm.packagemanager.pmanager.review.ent.bo.ReviewsSummaryBO;
 import cm.packagemanager.pmanager.review.ent.dao.ReviewDAO;
+import cm.packagemanager.pmanager.review.ent.vo.ReviewIdVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewDetailsVO;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
+import cm.packagemanager.pmanager.ws.requests.review.ReviewDTO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
 import com.sendgrid.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -237,20 +240,36 @@ public class UserServiceImpl  implements  UserService{
 
 
 	@Override
-	public Page<ReviewVO> getReviews(UserVO user, Pageable pageable) {
+	public Page<ReviewVO> getReviews(UserVO user, Pageable pageable) throws Exception {
 		Assert.notNull(user, "User must not be null");
 		return this.reviewDAO.findByUser(user, pageable);
 	}
 
 	@Override
-	public ReviewVO getReview(UserVO user, int reviewNumber) {
+	public ReviewVO getReview(UserVO user, int reviewNumber) throws Exception {
 		Assert.notNull(user, "User must not be null");
 		return reviewDAO.findByUserAndIndex(user, reviewNumber);
 	}
 
 	@Override
-	public ReviewVO addReview(UserVO user, ReviewDetailsVO details) {
+	public ReviewVO addReview(UserVO user, ReviewDetailsVO details) throws Exception {
 		ReviewVO review = new ReviewVO(user, 1, details);
+		return reviewDAO.save(review);
+	}
+
+	@Override
+	public ReviewVO addReview(ReviewDTO reviewDTO) throws Exception{
+		UserVO user =getUser(reviewDTO.getUserId());
+		UserVO ratingUser =getUser(reviewDTO.getRatingUserId());
+
+		if (ratingUser.equals(user)){
+			throw new UserException("Un utilisateur ne peut pas s'evaluer");
+		}
+		ReviewDetailsVO details= new ReviewDetailsVO(reviewDTO.getRating(), reviewDTO.getTitle(),reviewDTO.getDetails());
+		ReviewVO review = new ReviewVO(user,ratingUser, 1, details);
+		ReviewIdVO id= new ReviewIdVO();
+		id.setToken(Constants.DEFAULT_TOKEN);
+		review.setReviewId(id);
 		return reviewDAO.save(review);
 	}
 

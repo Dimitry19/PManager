@@ -27,9 +27,8 @@ public  class ReviewDAOImpl implements ReviewDAO{
 	}
 
 	@Override
-	public ReviewVO save(ReviewVO review) {
+	public ReviewVO save(ReviewVO review) throws Exception{
 		Session session = sessionFactory.getCurrentSession();
-
 		session.save(review);
 		return session.get(ReviewVO.class,review.getId());
 	}

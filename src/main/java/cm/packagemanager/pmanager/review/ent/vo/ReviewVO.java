@@ -1,8 +1,6 @@
 package cm.packagemanager.pmanager.review.ent.vo;
 
 import javax.persistence.*;
-
-
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.rating.enums.Rating;
@@ -29,13 +27,14 @@ public class ReviewVO extends WSCommonResponseVO {
 
 	private static final long serialVersionUID = 1L;
 
-
 	public static final String RATING="cm.packagemanager.pmanager.review.ent.vo.ReviewVO.rating";
 
 
 	private Long id;
 
 	private UserVO user;
+
+	private UserVO ratingUser;
 
 	private int index;
 
@@ -71,6 +70,15 @@ public class ReviewVO extends WSCommonResponseVO {
 	@JsonProperty
 	public UserVO getUser() {
 		return this.user;
+	}
+
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH,optional = false)
+	@JoinColumn(name="RATING_USER_ID", updatable = false)
+	@JsonBackReference
+	@JsonProperty
+	public UserVO getRatingUser() {
+		return ratingUser;
 	}
 
 	@Column(name = "INDEXES",nullable = false)
@@ -122,6 +130,11 @@ public class ReviewVO extends WSCommonResponseVO {
 		this.user = user;
 	}
 
+
+	public void setRatingUser(UserVO ratingUser) {
+		this.ratingUser = ratingUser;
+	}
+
 	public void setIndex(int index) {
 		this.index = index;
 	}
@@ -131,6 +144,10 @@ public class ReviewVO extends WSCommonResponseVO {
 	}
 
 
+	public  ReviewVO(UserVO  user,UserVO ratingUser, int index, ReviewDetailsVO details) {
+		new ReviewVO(user,  index,  details);
+		this.ratingUser=ratingUser;
+	}
 	public  ReviewVO(UserVO  user, int index, ReviewDetailsVO details) {
 		Assert.notNull(user, "User must not be null");
 		Assert.notNull(details, "Details must not be null");

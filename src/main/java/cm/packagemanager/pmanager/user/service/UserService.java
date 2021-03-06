@@ -7,6 +7,7 @@ import cm.packagemanager.pmanager.review.ent.bo.ReviewsSummaryBO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewDetailsVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import cm.packagemanager.pmanager.ws.requests.review.ReviewDTO;
 import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
@@ -65,11 +66,13 @@ public interface UserService{
 
 
 	/***** RATING USER ***/
-	Page<ReviewVO> getReviews(UserVO user, Pageable pageable);
+	Page<ReviewVO> getReviews(UserVO user, Pageable pageable) throws Exception;
 
-	ReviewVO getReview(UserVO user, int index);
+	ReviewVO getReview(UserVO user, int index) throws Exception;
 
-	ReviewVO addReview(UserVO user, ReviewDetailsVO details);
+	ReviewVO addReview(UserVO user, ReviewDetailsVO details) throws Exception;
+
+	ReviewVO addReview(ReviewDTO review) throws Exception;
 
 	ReviewsSummaryBO getReviewSummary(UserVO user);
 }

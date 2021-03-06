@@ -9,9 +9,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface ReviewDAO extends CommonDAO {
 
-	Page<ReviewVO> findByUser(UserVO user, Pageable pageable);
+	Page<ReviewVO> findByUser(UserVO user, Pageable pageable) throws Exception;
 
-	ReviewVO findByUserAndIndex(UserVO user, int index);
+	ReviewVO findByUserAndIndex(UserVO user, int index)throws Exception;
 
-	ReviewVO save(ReviewVO review);
+	ReviewVO save(ReviewVO review) throws Exception;
 }

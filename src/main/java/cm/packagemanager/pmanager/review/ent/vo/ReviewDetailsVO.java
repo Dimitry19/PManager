@@ -18,6 +18,12 @@ public class ReviewDetailsVO implements Serializable {
 	public ReviewDetailsVO() {
 	}
 
+	public ReviewDetailsVO(Rating rating, String title, String details) {
+		this.details=details;
+		this.title=title;
+		this.rating=rating;
+	}
+
 	public Rating getRating() {
 		return this.rating;
 	}

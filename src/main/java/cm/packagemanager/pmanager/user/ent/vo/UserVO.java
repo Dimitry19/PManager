@@ -413,6 +413,11 @@ public class UserVO extends WSCommonResponseVO {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
 		if (roles == null) {
 			if (other.roles != null)
 				return false;

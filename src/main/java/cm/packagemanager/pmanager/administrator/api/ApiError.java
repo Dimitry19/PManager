@@ -61,6 +61,7 @@ public class ApiError {
 			UnexpectedTypeException ob=(UnexpectedTypeException)ex;
 			stringBuilder.append(ob.getMessage());
 		}
+		stringBuilder.append(ex.getMessage());
 		this.message=stringBuilder.toString();
 	}
 

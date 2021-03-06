@@ -94,6 +94,15 @@ public class CommonController {
 
 
 
+	/************ REVIEW REQUEST*************/
+	public static final String REVIEW_WS="/ws/review/*";
+	public static final String REVIEW_WS_ADD="/add";
+	public static final String REVIEWS_WS="/reviews";
+	public static final String REVIEW_WS_DELETE= "/delete";
+	public static final String REVIEW_WS_UPDATE="/update";
+
+
+
 	@Autowired
 	public ServletContext servletContext;
 
