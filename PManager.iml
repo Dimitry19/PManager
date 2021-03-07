@@ -31,6 +31,7 @@
           <factory-entry name="Entities" />
           <factory-entry name="PManager" value="f5601717-7195-450b-ad74-d596ce5860c7" />
         </datasource-mapping>
+        <naming-strategy-map />
       </configuration>
     </facet>
   </component>

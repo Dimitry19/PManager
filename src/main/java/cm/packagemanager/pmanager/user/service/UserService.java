@@ -8,6 +8,7 @@ import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewDetailsVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.review.ReviewDTO;
+import cm.packagemanager.pmanager.ws.requests.review.UpdateReviewDTO;
 import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
@@ -73,6 +74,12 @@ public interface UserService{
 	ReviewVO addReview(UserVO user, ReviewDetailsVO details) throws Exception;
 
 	ReviewVO addReview(ReviewDTO review) throws Exception;
+
+	ReviewVO updateReview(UpdateReviewDTO review) throws Exception;
+
+
+	boolean deleteReview(Long reviewId) throws Exception;
+
 
 	ReviewsSummaryBO getReviewSummary(UserVO user);
 }

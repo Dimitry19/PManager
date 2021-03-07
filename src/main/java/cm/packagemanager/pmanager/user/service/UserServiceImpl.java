@@ -19,6 +19,7 @@ import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.review.ReviewDTO;
+import cm.packagemanager.pmanager.ws.requests.review.UpdateReviewDTO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
 import com.sendgrid.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -271,6 +272,27 @@ public class UserServiceImpl  implements  UserService{
 		id.setToken(Constants.DEFAULT_TOKEN);
 		review.setReviewId(id);
 		return reviewDAO.save(review);
+	}
+
+	@Override
+	public ReviewVO updateReview(UpdateReviewDTO reviewDTO) throws Exception{
+		UserVO user = getUser(reviewDTO.getUserId());
+		UserVO ratingUser =getUser(reviewDTO.getRatingUserId());
+
+		if (ratingUser.equals(user)){
+			throw new UserException("Un utilisateur ne peut donner un avis sur lui même");
+		}
+
+		ReviewVO review = reviewDAO.findById(reviewDTO.getId());
+		if (review ==null){
+			throw new Exception("Avis non existant");
+		}
+		return reviewDAO.update(review);
+	}
+
+	@Override
+	public boolean deleteReview(Long id) throws Exception {
+		 return reviewDAO.delete(id);
 	}
 
 	@Override
