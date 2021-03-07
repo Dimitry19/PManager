@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.announce.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
@@ -15,6 +16,10 @@ import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,9 +44,11 @@ import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.ANN
 
 @RestController
 @RequestMapping(ANNOUNCE_WS)
+@Api(value="announces-service", description="Announces Operations")
 public class AnnounceController extends CommonController {
 
 	protected final Log logger = LogFactory.getLog(AnnounceController.class);
+
 
 	@Autowired
 	protected AnnounceService announceService;
@@ -57,6 +64,15 @@ public class AnnounceController extends CommonController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ApiOperation(value = "Create/add an announce ",response = AnnounceVO.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval",
+					response = AnnounceVO.class, responseContainer = "Object") })
 	@RequestMapping(value = ANNOUNCE_WS_CREATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	AnnounceVO  create(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceDTO ar) throws Exception {
@@ -65,8 +81,9 @@ public class AnnounceController extends CommonController {
 		AnnounceVO announce = null;
 		Response res=new Response();
 
-		try
-		{
+		try{
+			createOpentracingSpan("AnnounceController -create");
+
 			logger.info("create announce request in");
 			if (ar!=null){
 				announce= announceService.create(ar);
@@ -85,16 +102,29 @@ public class AnnounceController extends CommonController {
 			logger.error("Errore eseguendo add announce: ", e);
 			response.setStatus(500);
 			response.getWriter().write(e.getMessage());
+		}finally {
+			finishOpentracingSpan();
 		}
 
 		return  announce;
 	}
 
+	@ApiOperation(value = "Update an announce ",response = AnnounceVO.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval",
+					response = AnnounceVO.class, responseContainer = "Object") })
 	@PostMapping(value = ANNOUNCE_WS_UPDATE)
 	AnnounceVO  update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		try {
+			createOpentracingSpan("AnnounceController -update");
+
 			if (uar==null)	return null;
 
 			AnnounceVO announce=announceService.update(uar);
@@ -109,6 +139,8 @@ public class AnnounceController extends CommonController {
 			return announce;
 		}catch (Exception e){
 			response.getWriter().write(e.getMessage());
+		}finally {
+			finishOpentracingSpan();
 		}
 
 		return null;
@@ -125,6 +157,15 @@ public class AnnounceController extends CommonController {
 	 * @throws Exception
 	 */
 
+	@ApiOperation(value = "Search announce function ",response = ResponseEntity.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval",
+					response = ResponseEntity.class, responseContainer = "List") })
 	@RequestMapping(value =ANNOUNCE_WS_FIND,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody ResponseEntity<PaginateResponse> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchDTO asdto,
 	                                                           @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
@@ -141,6 +182,8 @@ public class AnnounceController extends CommonController {
 		List<AnnounceVO> announces=null;
 
 		try{
+			createOpentracingSpan("AnnounceController -find");
+
 			if (asdto!=null){
 				int count = announceService.count(asdto, pageBy);
 				if(count==0){
@@ -157,6 +200,8 @@ public class AnnounceController extends CommonController {
 			response.getWriter().write(e.getMessage());
 			logger.info(" AnnounceController -find:Exception occurred while fetching the response from the database.", e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}finally {
+			finishOpentracingSpan();
 		}
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
@@ -171,6 +216,15 @@ public class AnnounceController extends CommonController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ApiOperation(value = "Retrieve announces by user with an ID",response = ResponseEntity.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval",
+					response = ResponseEntity.class, responseContainer = "List") })
 	@RequestMapping(value =ANNOUNCE_WS_BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 	public ResponseEntity<PaginateResponse> announcesByUser(HttpServletResponse response, HttpServletRequest request,
 	                                                        @RequestParam @Valid Long userId,
@@ -187,6 +241,8 @@ public class AnnounceController extends CommonController {
 
 
 		try{
+			createOpentracingSpan("AnnounceController -announcesByUser");
+
 			if (userId!=null){
 				int count = announceService.count(null,pageBy);
 				if(count==0){
@@ -205,6 +261,8 @@ public class AnnounceController extends CommonController {
 			response.getWriter().write(e.getMessage());
 			logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}finally {
+			finishOpentracingSpan();
 		}
 		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
@@ -217,6 +275,7 @@ public class AnnounceController extends CommonController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ApiOperation(value = "Delete an announce with an ID",response = Response.class)
 	@RequestMapping(value =ANNOUNCE_WS_DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
 
@@ -225,6 +284,8 @@ public class AnnounceController extends CommonController {
 
 		try{
 			logger.info("delete request in");
+			createOpentracingSpan("AnnounceController -delete");
+
 			if (id!=null){
 				if(announceService.delete(id)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -240,7 +301,36 @@ public class AnnounceController extends CommonController {
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(e.getMessage());
 		}
+		finally {
+			finishOpentracingSpan();
+		}
 		return pmResponse;
+	}
+
+	@ApiOperation(value = "Retrieve an announce with an ID",response = AnnounceVO.class)
+	@RequestMapping(value =ANNOUNCE_WS_BY_ID,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	public AnnounceVO getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws UserException {
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		AnnounceVO announce=null;
+
+		try{
+			logger.info("retrieve announce request in");
+			createOpentracingSpan("AnnounceController -get announce");
+
+			if (id!=null){
+				announce=announceService.findById(id);
+			}
+		}
+		catch (UserException e){
+			//response.getWriter().write(e.getMessage());
+			logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
+            throw e;
+		}
+		finally {
+			finishOpentracingSpan();
+		}
+		return announce;
 	}
 
 	/**
@@ -250,12 +340,19 @@ public class AnnounceController extends CommonController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ApiOperation(value = "Retrieve all announces ", response = ResponseEntity.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval",
+					response = ResponseEntity.class, responseContainer = "List") })
 	@GetMapping(ANNOUNCES_WS)
 	public ResponseEntity<PaginateResponse> announces(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif")  int page,
-	                                                  @RequestParam (required = false, defaultValue = DEFAULT_SIZE) @Valid @Positive(message = "Page size should be a positive number")  int size) throws Exception {
-
-
-		long start= System.currentTimeMillis();
+	                                                  @RequestParam (required = false, defaultValue = DEFAULT_SIZE)
+	                                                  @Valid @Positive(message = "Page size should be a positive number")  int size) throws Exception {
 
 		HttpHeaders headers = new HttpHeaders();
 		PaginateResponse paginateResponse=new PaginateResponse();
@@ -263,6 +360,9 @@ public class AnnounceController extends CommonController {
 		PageBy pageBy= new PageBy(page,size);
 
 		try {
+
+			createOpentracingSpan("AnnounceController -announces");
+
 			int count = announceService.count(null,pageBy);
 			if(count==0){
 				headers.add(HEADER_TOTAL, Long.toString(count));
@@ -272,24 +372,17 @@ public class AnnounceController extends CommonController {
 				paginateResponse.setResults(announces);
 				headers.add(HEADER_TOTAL, Long.toString(announces.size()));
 			}
-
-			long end =System.currentTimeMillis();
-
-			System.out.println(" AnnounceController -announces: execution time:" +(end-start));
-			logger.info(" AnnounceController -announces: execution time:" +(end-start));
-
-
 			return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 		}catch (Exception e){
 			logger.info(" AnnounceController -announces:Exception occurred while fetching the response from the database.", e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}finally {
+			finishOpentracingSpan();
 		}
-
 	}
 
-	@RequestMapping(ANNOUNCE_WS_USER_ID_PAGE_NO)
-	@ResponseBody
-	public List<AnnounceVO> getAllPosts(@PathVariable int pageno,@PageableDefault(value=10, page=0) Pageable pageable) throws Exception {
+	//@RequestMapping(ANNOUNCE_WS_USER_ID_PAGE_NO)
+	@ResponseBody public List<AnnounceVO> getAllPosts(@PathVariable int pageno,@PageableDefault(value=10, page=0) Pageable pageable) throws Exception {
 
 		logger.info("retrieve  announces request in");
 		Page page = announceService.announces(pageable);
@@ -299,7 +392,7 @@ public class AnnounceController extends CommonController {
 	}
 
 //https://examples.javacodegeeks.com/spring-boot-pagination-tutorial/
-	@GetMapping(value = ANNOUNCE_WS_ALL, produces = MediaType.APPLICATION_JSON)
+	//@GetMapping(value = ANNOUNCE_WS_ALL, produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<ResponseDTO> getAllMovies(
 			@RequestParam(name = "pageNumber", defaultValue = "0") final int pageNumber,    // In spring the default page number starts with '0'.
 			@RequestParam(name = "pageSize", defaultValue = "2") final int pageSize) {
@@ -332,6 +425,4 @@ public class AnnounceController extends CommonController {
 		}
 		return responseEntity;
 	}
-
-
 }

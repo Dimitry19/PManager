@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.OrderBy;
@@ -91,6 +92,7 @@ public class UserVO extends WSCommonResponseVO {
 
 	private Set<RoleVO> roles= new HashSet<>();
 
+	//private Set<ReviewVO> reviews= new HashSet<>();
 
 	private String confirmationToken;
 
@@ -222,6 +224,7 @@ public class UserVO extends WSCommonResponseVO {
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	@OrderBy(clause = "id.id DESC")
+	@Where(clause = "cancelled = false")
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
@@ -231,9 +234,18 @@ public class UserVO extends WSCommonResponseVO {
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	@OrderBy(clause = "startDate DESC")
+	@Where(clause = "cancelled = false")
 	public Set<AnnounceVO> getAnnounces() {
 		return announces;
 	}
+
+
+	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "user",orphanRemoval = true)
+	@JsonManagedReference
+	@Fetch(value = SELECT)
+	public Set<ReviewVO> getReviews() {
+		return reviews;
+	}*/
 
 	@Basic(optional = true)
 	@Column(name="CONFIRM_TOKEN")
@@ -287,6 +299,11 @@ public class UserVO extends WSCommonResponseVO {
 		this.phone = phone;
 	}
 
+/*
+	public void setReviews(Set<ReviewVO> reviews) {
+		this.reviews = reviews;
+	}
+*/
 
 	public void setGender(Gender gender) {
 		this.gender = gender;

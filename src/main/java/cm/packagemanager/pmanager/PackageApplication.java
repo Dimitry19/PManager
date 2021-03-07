@@ -39,5 +39,4 @@ public class PackageApplication extends SpringBootServletInitializer {
 		application.run(args);
 	}
 
-
 }

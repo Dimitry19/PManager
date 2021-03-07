@@ -1,18 +1,23 @@
 package cm.packagemanager.pmanager.ws.requests.users;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class LoginDTO {
 
+	@ApiModelProperty(notes = "An email for login",required = true)
 	private String email;
 	private String provider;
+	@ApiModelProperty(notes = "A password for login",required = true)
 	private String password;
 	private String socialId;
 
 	@NotNull(message = "username ne peut pas etre vide")
 	@Size(min = 5, max = 10, message = "username  doit avoir  entre 5 and 10 caracteres")
+	@ApiModelProperty(notes = "The username for login",required = true)
 	private String username;
 
 	@Email(message = "Email : format non valide")

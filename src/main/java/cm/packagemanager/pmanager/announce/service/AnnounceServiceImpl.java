@@ -4,6 +4,7 @@ package cm.packagemanager.pmanager.announce.service;
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
@@ -55,6 +56,11 @@ public class AnnounceServiceImpl implements AnnounceService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public AnnounceVO update(Integer id) throws Exception {
 		return announceDAO.update(id);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public AnnounceVO findById(Long id) throws UserException {
+		return announceDAO.findById(id);
 	}
 
 	@Transactional

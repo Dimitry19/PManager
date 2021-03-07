@@ -69,7 +69,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	@Override
 	public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws Exception {
 
-		long start= System.currentTimeMillis();
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query =null;
@@ -83,10 +82,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 		int count = CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
 
-		long end =System.currentTimeMillis();
-
-		System.out.println(" AnnounceDAOImpl - count: execution time:" +(end-start));
-		logger.info("AnnounceDAOImpl - count: execution time:" +(end-start));
 		return count;
 	}
 
@@ -266,8 +261,8 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		BigDecimal preniumPrice =adto.getPreniumPrice();
 		BigDecimal goldenPrice=adto.getGoldPrice();
 		BigDecimal weigth =adto.getWeigth();
-		Date startDate =adto.getStartDate();
-		Date endDate =adto.getEndDate();
+		Date startDate =DateUtils.milliSecondToDate(adto.getStartDate());
+		Date endDate =DateUtils.milliSecondToDate(adto.getEndDate());
 
 		if(startDate== null || endDate == null){
 			throw new Exception("Une des dates est invalide");
@@ -409,13 +404,13 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				}
 			}
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && StringUtils.equals(hql.toString(), " where ");
-			if (ObjectUtils.isCallable(announceSearch,"startDate")){
+			if (ObjectUtils.isCallable(announceSearch,"startDate") && announceSearch.getStartDate()>0){
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".startDate=:startDate ");
 			}
 
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
-			if (ObjectUtils.isCallable(announceSearch,"endDate")){
+			if (ObjectUtils.isCallable(announceSearch,"endDate") && announceSearch.getEndDate()>0){
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".endDate=:endDate ");
 			}
@@ -486,13 +481,13 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 					query.setParameter("preniumPrice", price);
 				}
 			}
-			if (ObjectUtils.isCallable(announceSearch,"startDate")){
-				Date startDate =announceSearch.getStartDate();// DateUtils.StringToDate(announceSearch.getStartDate());
+			if (ObjectUtils.isCallable(announceSearch,"startDate") && announceSearch.getStartDate()>0){
+				Date startDate = DateUtils.milliSecondToDate(announceSearch.getStartDate());
 				query.setParameter("startDate", startDate);
 
 			}
-			if (ObjectUtils.isCallable(announceSearch,"endDate")){
-				Date endDate = announceSearch.getStartDate();//DateUtils.StringToDate(announceSearch.getEndDate());
+			if (ObjectUtils.isCallable(announceSearch,"endDate") && announceSearch.getEndDate()>0){
+				Date endDate = DateUtils.milliSecondToDate(announceSearch.getEndDate());
 				query.setParameter("endDate", endDate);
 			}
 

@@ -1,17 +1,23 @@
 package cm.packagemanager.pmanager.ws.controller.rest;
 
-import cm.packagemanager.pmanager.api.ApiError;
+import cm.packagemanager.pmanager.administrator.api.ApiError;
 import cm.packagemanager.pmanager.common.exception.ResponseException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.constant.WSConstants;
-import cm.packagemanager.pmanager.ws.responses.Response;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
+import io.opentracing.util.GlobalTracer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
@@ -25,6 +31,7 @@ import java.util.stream.Collectors;
 		c'est-à-dire lorsque le client et le serveur sont déployés dans deux serveurs distincts, ce qui permet d'éviter des problèmes réseaux.
  */
 @CrossOrigin(origins = "*", maxAge = 3600)
+@Component
 public class CommonController {
 
 
@@ -58,6 +65,7 @@ public class CommonController {
 	public static final String ANNOUNCE_WS_FIND="/find";
 	public static final String ANNOUNCE_WS_USER_ID_PAGE_NO="/announces/{pageno}";
 	public static final String ANNOUNCE_WS_DELETE= "/delete";
+	public static final String ANNOUNCE_WS_BY_ID= "/announce";
 	public static final String ANNOUNCE_WS_BY_USER= "/user";
 	public static final String ANNOUNCE_WS_UPDATE="/update";
 	public static final String ANNOUNCE_WS_ALL="/all";
@@ -89,12 +97,25 @@ public class CommonController {
 	@Autowired
 	public ServletContext servletContext;
 
+	@Qualifier("jaegerTracer")
+	@Autowired
+	protected Tracer gTracer;
 
 	@Value("${pagination.size}")
 	public Integer size;
 
 	@Value("${ws.redirect.user}")
 	public String redirect;
+
+	protected Span packageManagerSpan;
+
+
+	@PostConstruct
+	public void init() {
+		System.out.println("CommonController  starts...." );
+		GlobalTracer.register(gTracer);
+	}
+
 
 	@ExceptionHandler({ ResponseException.class})
 
@@ -109,7 +130,6 @@ public class CommonController {
 		}
 		return INTERNAL_SERVER_ERROR;
 	}
-
 
 
 
@@ -143,5 +163,16 @@ public class CommonController {
 	@ExceptionHandler({Exception.class,ValidationException.class})
 	public List<ApiError> handleOtherException(Exception ex) {
 		return Collections.singletonList(new ApiError(ex));
+	}
+
+	protected void createOpentracingSpan(String spanName){
+		packageManagerSpan = GlobalTracer.get().buildSpan(spanName).start();
+	}
+
+
+	protected void finishOpentracingSpan(){
+		if (packageManagerSpan!=null){
+			packageManagerSpan.finish();
+		}
 	}
 }

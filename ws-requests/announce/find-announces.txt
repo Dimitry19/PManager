@@ -1,16 +1,15 @@
 http://localhost:8080/pmanager/ws/announce/find
 
 {
-        "announceType": "",
+	    "announceType": "",
         "arrival": "DOUALA",
         "description":"",
         "departure": "",
-        "endDate": "",
+        "endDate": null,
         "price": 0,
-        "startDate": "",
-        "transport": "",
-        "category":"VETEMENT",
-        "user":"unkutnation@yahoo.fr",
-        "userId":1,
+        "startDate": null,
+        "transport": "PLANE",
+        "category":"",
+        "user":"",
         "and":false
 }

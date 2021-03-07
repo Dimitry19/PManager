@@ -51,29 +51,29 @@ public class AnnounceDTO {
 	@NotNull(message = "La date de depart de l'annonce doit etre valorisé")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
-	@FutureOrPresent(message = "la date de depart doit être une date dans le présent ou le futur")
-	private Date startDate;
+	//@FutureOrPresent(message = "la date de depart doit être une date dans le présent ou le futur")
+	private long startDate;
 
 
 	@NotNull(message = "La date de retour de l'annonce doit etre valorisé")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
-	@FutureOrPresent(message = "la date retour doit être une date dans le présent ou le futur")
-	private Date endDate;
+	//@FutureOrPresent(message = "la date retour doit être une date dans le présent ou le futur")
+	private long endDate;
 
-	public Date getStartDate() {
+	public long getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(long startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public long getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(long endDate) {
 		this.endDate = endDate;
 	}
 

@@ -2,7 +2,6 @@ package cm.packagemanager.pmanager.user.ent.dao;
 
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
-import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
@@ -10,6 +9,7 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
+import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -18,6 +18,7 @@ import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import cm.packagemanager.pmanager.ws.requests.users.UserSeachDTO;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import io.opentracing.Span;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -28,7 +29,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -47,6 +47,9 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	RoleDAO roleDAO;
 
 
+	@Autowired
+	Span span;
+
 	public UserDAOImpl() {
 
 	}
@@ -60,8 +63,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		Query query = session.createQuery("from UserVO ");
 		//query.setFirstResult(pageBy.getPage());
 		//query.setMaxResults(pageBy.getSize());
-
-
 		int count = CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
 		return count;
 	}
@@ -117,16 +118,16 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
-	public UserVO getUser(Long id) {
+	public UserVO getUser(Long id)  throws UserException{
 		logger.info("User: get user");
 		try {
 			return  findById(id);
 
 		} catch (UserException e) {
 			logger.error("User:" +e.getMessage());
-			e.printStackTrace();
+			throw e;
 		}
-		return null;
+
 	}
 
 	@Override
@@ -447,6 +448,11 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		logger.info("User: check login");
 		UserVO user=findByOnlyUsername(lr.getUsername(), true);
 		return  (UserVO)manualFilter(user)!=null;
+	}
+
+	@Override
+	public List<RatingCountVO> findRatingCounts(UserVO user) {
+		return null;
 	}
 
 	@Override

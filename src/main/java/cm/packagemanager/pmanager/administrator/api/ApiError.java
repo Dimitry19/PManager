@@ -1,4 +1,4 @@
-package cm.packagemanager.pmanager.api;
+package cm.packagemanager.pmanager.administrator.api;
 
 
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
@@ -8,6 +8,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import javax.validation.UnexpectedTypeException;
 import java.util.List;
 
 @Data
@@ -50,9 +51,21 @@ public class ApiError {
 		}
 
 		if( ex instanceof HttpMessageNotReadableException ){
+			setDefaultCodes();
 			HttpMessageNotReadableException ob=(HttpMessageNotReadableException)ex;
 			stringBuilder.append(ob.getCause().getMessage());
 		}
+
+		if( ex instanceof UnexpectedTypeException){
+			setDefaultCodes();
+			UnexpectedTypeException ob=(UnexpectedTypeException)ex;
+			stringBuilder.append(ob.getMessage());
+		}
 		this.message=stringBuilder.toString();
+	}
+
+	void setDefaultCodes(){
+		this.codes= new String[1];
+		this.codes[0]="-1";
 	}
 }
