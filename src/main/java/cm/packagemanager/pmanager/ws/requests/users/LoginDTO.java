@@ -16,7 +16,7 @@ public class LoginDTO {
 	private String socialId;
 
 	@NotNull(message = "username ne peut pas etre vide")
-	@Size(min = 5, max = 10, message = "username  doit avoir  entre 5 and 10 caracteres")
+	@Size(min = 3, max = 10, message = "username  doit avoir  entre 5 and 10 caracteres")
 	@ApiModelProperty(notes = "The username for login",required = true)
 	private String username;
 

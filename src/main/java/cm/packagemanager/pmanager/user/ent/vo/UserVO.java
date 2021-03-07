@@ -49,7 +49,10 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 		@Filter(name= FilterConstants.ACTIVE_MBR)
 })
 //@JsonIgnoreProperties({"roles"})
-public class UserVO extends WSCommonResponseVO {
+public class
+
+
+UserVO extends WSCommonResponseVO {
 
 
 	public static final String FINDBYID="cm.packagemanager.pmanager.user.ent.vo.UserVO.findById";

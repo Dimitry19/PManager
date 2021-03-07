@@ -93,7 +93,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@Basic(optional = false)
 	@Column(name = "START_DATE", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = DateUtils.STD_PATTERN_HMS)
+	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -105,7 +105,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@Basic(optional = false)
 	@Column(name = "END_DATE", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = DateUtils.STD_PATTERN_HMS)
+	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -216,6 +216,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy="announce",fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
+	@org.hibernate.annotations.OrderBy(clause = "id.id ASC")
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
