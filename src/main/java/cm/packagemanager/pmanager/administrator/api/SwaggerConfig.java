@@ -40,6 +40,9 @@ public class SwaggerConfig {
 	@Value("${swagger.api.groupname.announce}")
 	private String apiGroupNameAnnounce;
 
+	@Value("${swagger.api.groupname.review}")
+	private String apiGroupNameReview;
+
 	@Value("${swagger.api.groupname.user}")
 	private String apiGroupNameUser;
 
@@ -69,7 +72,11 @@ public class SwaggerConfig {
 	@Bean
 	public Docket announcesApi() {
 		return	createDocket(apiGroupNameAnnounce,"/pmanager/ws/announce.*");
+	}
 
+	@Bean
+	public Docket reviewApi() {
+		return	createDocket(apiGroupNameReview,"/pmanager/ws/review.*");
 	}
 
 	@Bean

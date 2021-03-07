@@ -8,6 +8,7 @@ import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.OrderBy;
 
@@ -18,6 +19,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -95,11 +97,13 @@ UserVO extends WSCommonResponseVO {
 
 	private Set<RoleVO> roles= new HashSet<>();
 
-	//private Set<ReviewVO> reviews= new HashSet<>();
+	private Set<ReviewVO> reviews= new HashSet<>();
 
 	private String confirmationToken;
 
 	private String error;
+
+	private double rating=0;
 
 
 	public UserVO() {
@@ -243,18 +247,29 @@ UserVO extends WSCommonResponseVO {
 	}
 
 
-	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "user",orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user",orphanRemoval = true)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	public Set<ReviewVO> getReviews() {
 		return reviews;
-	}*/
+	}
 
 	@Basic(optional = true)
 	@Column(name="CONFIRM_TOKEN")
 	public String getConfirmationToken() {
 		return confirmationToken;
 	}
+
+	@Transient
+	@JsonProperty
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
 
 	@Transient
 	public String getError() {
@@ -302,11 +317,11 @@ UserVO extends WSCommonResponseVO {
 		this.phone = phone;
 	}
 
-/*
+
 	public void setReviews(Set<ReviewVO> reviews) {
 		this.reviews = reviews;
 	}
-*/
+
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
@@ -400,6 +415,11 @@ UserVO extends WSCommonResponseVO {
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
 			return false;
 		if (roles == null) {
 			if (other.roles != null)

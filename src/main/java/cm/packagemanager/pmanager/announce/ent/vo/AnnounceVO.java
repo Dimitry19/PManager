@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
+import org.hibernate.annotations.OrderBy;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -216,7 +217,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy="announce",fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
-	@org.hibernate.annotations.OrderBy(clause = "id.id ASC")
+	@OrderBy(clause = "id.id ASC")
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
@@ -240,7 +241,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 		setUsername(user.getUsername());
 		setEmail(user.getEmail());
 	}
-
 
 	@Basic(optional = false)
 	@Column(name="CANCELLED")

@@ -25,11 +25,6 @@ public class CommonVO implements Auditable, Serializable {
 
 	private Timestamp lastUpdated;
 
-/*	private long retCode;
-
-	private String retDescription;*/
-
-
 	@Override
 	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
 	public Timestamp getDateCreated() {
@@ -51,27 +46,5 @@ public class CommonVO implements Auditable, Serializable {
 	public void setLastUpdated(Timestamp lastUpdated) {
 		this.lastUpdated=lastUpdated;
 	}
-
-
-	/*@Transient
-	public long getRetCode() {
-		return retCode;
-	}
-
-	public void setRetCode(long retCode) {
-		this.retCode = retCode;
-	}
-
-	@Transient
-	public String getRetDescription() {
-		return retDescription;
-	}
-
-	public void setRetDescription(String retDescription) {
-		this.retDescription = retDescription;
-	}*/
-
-
-
 
 }

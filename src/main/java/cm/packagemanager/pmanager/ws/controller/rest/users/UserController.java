@@ -371,7 +371,7 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 200, message = "Successful user retrieving",
 					response = UserVO.class, responseContainer = "Object") })
 	@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
-	public UserVO getUser(HttpServletResponse response, HttpServletRequest request,@PathVariable("id") Long id) throws UserException,IOException {
+	public UserVO infosUser(HttpServletResponse response, HttpServletRequest request,@PathVariable("id") Long id) throws UserException,IOException {
 		try{
 			createOpentracingSpan("UserController -getUser");
 			logger.info("retrieve user request in");

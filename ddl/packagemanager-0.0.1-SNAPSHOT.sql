@@ -10,9 +10,12 @@
         cancelled boolean not null,
         indexes integer not null,
         r_user_id bigint not null,
+        rating_user_id bigint not null,
         primary key (id),
         constraint FK5PVU4WR9TFJ9B915TDEPMJAQ1
-            foreign key (r_user_id) references USER (id)
+            foreign key (r_user_id) references USER (id),
+        constraint FKOGVI3LF5JH16WQIAXRRPJSXMA
+            foreign key (rating_user_id) references USER (id)
     );
 
     create table public.airline (

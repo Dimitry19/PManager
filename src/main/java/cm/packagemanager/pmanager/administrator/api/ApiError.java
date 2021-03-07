@@ -61,11 +61,12 @@ public class ApiError {
 			UnexpectedTypeException ob=(UnexpectedTypeException)ex;
 			stringBuilder.append(ob.getMessage());
 		}
+		stringBuilder.append(ex.getMessage());
 		this.message=stringBuilder.toString();
 	}
 
 	void setDefaultCodes(){
 		this.codes= new String[1];
-		this.codes[0]="-1";
+		this.codes[0]="Generic error";
 	}
 }

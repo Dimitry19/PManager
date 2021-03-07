@@ -108,8 +108,11 @@ create table REVIEW
     CANCELLED   BOOLEAN       not null,
     INDEXES     INTEGER       not null,
     R_USER_ID   BIGINT        not null,
+    RATING_USER_ID   BIGINT   not null,
     constraint FK5PVU4WR9TFJ9B915TDEPMJAQ1
-        foreign key (R_USER_ID) references USER (ID)
+        foreign key (R_USER_ID) references USER (ID),
+         constraint FKOGVI3LF5JH16WQIAXRRPJSXMA
+    foreign key (RATING_USER_ID) references USER (ID)
 );
 
 create table USER_ROLE

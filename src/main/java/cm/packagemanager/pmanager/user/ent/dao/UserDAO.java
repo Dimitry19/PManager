@@ -78,8 +78,6 @@ public interface UserDAO extends CommonDAO {
 
 	public boolean checkLogin(LoginDTO lr ) throws BusinessResourceException, UserException;
 
-	@Query("select new cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO(r.rating, count(r)) "
-			+ "from cm.packagemanager.pmanager.review.ent.vo.ReviewVO r where r.user = ?1 group by r.rating order by r.rating DESC")
 	List<RatingCountVO> findRatingCounts(UserVO user);
 
 
