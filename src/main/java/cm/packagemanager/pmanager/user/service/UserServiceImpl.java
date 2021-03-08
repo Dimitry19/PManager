@@ -48,7 +48,6 @@ Le fait d’avoir des singletons a un impact en environnement multi-threadé
 *
 * */
 @Service
-@Transactional
 public class UserServiceImpl  implements  UserService{
 
 	public static final String USER_WS="/ws/user";
@@ -103,51 +102,47 @@ public class UserServiceImpl  implements  UserService{
 		return user;
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
 	public UserVO update(UserVO user) throws UserException {
 		return userDAO.update(user);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
 	public boolean delete(UserVO user) throws UserException {
 		return userDAO.deleteUser(user);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
 	public void remove(UserVO user) throws UserException {
 		 userDAO.remove(user);
 	}
 
 
-	@Transactional(readOnly = true)
 	public List<UserVO> getAllUsers(PageBy pageBy)throws UserException {
 		return userDAO.getAllUsers(pageBy);
 	}
 
-	@Transactional(readOnly = true)
 	public List<UserVO> getAllUsers()throws UserException {
 		return userDAO.getAllUsers();
 	}
 
-	@Transactional(readOnly = true)
 	public List<UserVO> getAllUsersToConfirm()throws UserException {
 		return userDAO.getAllUsersToConfirm();
 	}
 
-	@Transactional(readOnly = true)
 	public UserVO getUser(Long id) throws UserException{
 		return userDAO.getUser(id);
 	}
+
 
 	public UserVO register(RegisterDTO register) throws UserException{
 
 		return userDAO.register(register);
 	}
 
+	@Transactional(readOnly = true)
 	public List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws Exception {
 		return userDAO.find(userSeachDTO, pageBy);
 	}
 
+	@Transactional(rollbackFor = UserException.class)
 	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException{
 		return userDAO.updateUser(userDTO);
 	}
@@ -155,7 +150,9 @@ public class UserServiceImpl  implements  UserService{
 	public Response managePassword(String email) {
 		UserVO user=findByEmail(email);
 
-		if(user!=null){
+
+		if(user==null)
+			throw new UserException( "Aucun utilisateur trouvé avec cette adresse email :" +email);
 
 			String decrypt=PasswordGenerator.decrypt(user.getPassword());
 
@@ -169,10 +166,9 @@ public class UserServiceImpl  implements  UserService{
 
 			return mailSender.sendMailMessage(MailType.PASSWORD_TEMPLATE,MailType.PASSWORD_TEMPLATE_TITLE,	MailSender.replace(user,labels,null,decrypt),
 					emails,null,null, null,user.getUsername(),null,false);
-		}
-		return null;
 	}
 
+	@Transactional(rollbackFor = UserException.class)
 	public boolean deleteUser(Long id) throws UserException{
 		return userDAO.deleteUser(id);
 	}
@@ -196,8 +192,6 @@ public class UserServiceImpl  implements  UserService{
 	public UserVO findByToken(String token) {
 		return userDAO.findByToken(token);
 	}
-
-
 
 
 	public Response sendMail(MailDTO mr, boolean active) {

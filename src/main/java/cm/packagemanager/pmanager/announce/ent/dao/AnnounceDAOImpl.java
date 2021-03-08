@@ -35,6 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -67,6 +69,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	QueryUtils queryUtils;
 
 	@Override
+	@Transactional(readOnly = true)
 	public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws Exception {
 
 		Session session = this.sessionFactory.getCurrentSession();
@@ -80,16 +83,13 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 			query = session.createQuery("from AnnounceVO");
 		}
 
-		int count = CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
-
-		return count;
+		return CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<AnnounceVO> announces(PageBy pageBy) throws BusinessResourceException {
 
-
-		long start= System.currentTimeMillis();
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query = session.createQuery("from AnnounceVO order by startDate desc");
@@ -98,14 +98,11 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 
 		List<AnnounceVO> announces =query.list();
-		long end =System.currentTimeMillis();
-
-		System.out.println(" AnnounceDAOImpl - announce: execution time:" +(end-start));
-		logger.info("AnnounceDAOImpl - announce: execution time:" +(end-start));
 		return announces;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<AnnounceVO> announces(int page, int size) throws BusinessResourceException {
 
 		Session session = this.sessionFactory.getCurrentSession();
@@ -120,9 +117,8 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	}
 
 
-
-
 	@Override
+	@Transactional(readOnly = true)
 	public List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws BusinessResourceException, UserException {
 
 		UserVO user = userDAO.findById(userId);
@@ -142,6 +138,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class,BusinessResourceException.class})
 	public AnnounceVO findById(Long id) throws BusinessResourceException {
 
 		Session session = this.sessionFactory.getCurrentSession();
@@ -150,6 +147,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public AnnounceVO create(AnnounceDTO adto) throws BusinessResourceException, Exception {
 
 		if(adto!=null){
@@ -181,6 +179,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public AnnounceVO update(UpdateAnnounceDTO adto) throws Exception {
 
 		UserVO user = userDAO.findById(adto.getUserId());
@@ -203,6 +202,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws Exception {
 		Session session = sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
@@ -219,6 +219,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public boolean delete(Long id) throws BusinessResourceException {
 		logger.info("Announce: delete");
 		//deleteObject(id);
@@ -294,10 +295,6 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	}
 
 	@Override
-	public AnnounceVO addComment(MessageVO message) throws BusinessResourceException {
-		return null;
-	}
-	@Override
 	public AnnounceVO update(AnnounceVO announce) throws BusinessResourceException {
 		return null;
 	}
@@ -309,6 +306,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public AnnounceVO update(Integer id) throws BusinessResourceException {
 		return null;
 	}

@@ -199,7 +199,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 			if(message!=null) {
 				message.setCancelled(true);
 				session.merge(message);
-				message = (MessageVO) session.get(MessageVO.class, id);
+				message = (MessageVO) session.get(MessageVO.class, messageId);
 				result= (message!=null) && (message.isCancelled());
 			}
 		}catch (Exception e){

@@ -36,45 +36,36 @@ public class AnnounceServiceImpl implements AnnounceService {
 	}
 	*/
 
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public AnnounceVO create(AnnounceDTO announceDTO ) throws Exception {
 
 		return announceDAO.create(announceDTO);
 	}
 
-	@Transactional
 	public List<AnnounceVO> find(AnnounceSearchDTO asdto, PageBy pageBy) throws Exception {
 		return announceDAO.find(asdto, pageBy);
 	}
 
-
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public AnnounceVO update(UpdateAnnounceDTO announce) throws Exception {
 		return announceDAO.update(announce);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public AnnounceVO update(Integer id) throws Exception {
 		return announceDAO.update(id);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public AnnounceVO findById(Long id) throws UserException {
 		return announceDAO.findById(id);
 	}
 
-	@Transactional
 	public List<AnnounceVO> findByUser(Long userId,PageBy pageBy) throws Exception {
 
 		return announceDAO.findByUser(userId, pageBy);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public boolean delete(Long id) throws Exception {
 		return announceDAO.delete(id);
 	}
 
-	@Transactional(readOnly = true)
 	public List<AnnounceVO> announces(PageBy pageBy ) {
 		return announceDAO.announces(pageBy);
 	}
@@ -84,7 +75,6 @@ public class AnnounceServiceImpl implements AnnounceService {
 		return (Page) announceDAO.announces(pageable.getPageNumber(),pageable.getPageSize());
 	}
 
-	@Transactional(readOnly = true)
 	public int  count(AnnounceSearchDTO announceSearch,PageBy pageBy) throws Exception {
 		return announceDAO.count( announceSearch,pageBy);
 	}

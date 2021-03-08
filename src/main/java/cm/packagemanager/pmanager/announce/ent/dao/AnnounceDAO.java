@@ -33,8 +33,6 @@ public interface AnnounceDAO extends CommonDAO {
 
 	boolean delete(Long id) throws BusinessResourceException;
 
-	AnnounceVO addComment(MessageVO message) throws BusinessResourceException;
-
 	AnnounceVO update(UpdateAnnounceDTO announceDTO) throws Exception;
 
 	AnnounceVO update(AnnounceVO announce) throws BusinessResourceException;

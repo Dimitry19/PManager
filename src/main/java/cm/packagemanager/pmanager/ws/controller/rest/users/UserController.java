@@ -221,7 +221,7 @@ public class UserController extends CommonController {
 					response = UserVO.class, responseContainer = "Object") })
 	@RequestMapping(value = USER_WS_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	UserVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateUserDTO userDTO) throws UserException {
+	UserVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateUserDTO userDTO) throws UserException, IOException {
 
 		logger.info("update user request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -238,6 +238,7 @@ public class UserController extends CommonController {
 					return  user;
 				}
 			} catch (UserException e) {
+				response.getWriter().write(e.getMessage());
 				logger.error("Erreur durant l'ajournement de l'utilisateur  " + userDTO.toString() +"{}",e);
 				e.printStackTrace();
 				throw  e;
@@ -259,7 +260,7 @@ public class UserController extends CommonController {
 					response = Response.class, responseContainer = "Object") })
 	@RequestMapping(value = USER_WS_PASSWORD, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	Response  password(HttpServletResponse response, HttpServletRequest request, @RequestBody PasswordDTO password) throws UserException {
+	Response  password(HttpServletResponse response, HttpServletRequest request, @RequestBody PasswordDTO password) throws UserException, IOException {
 
 
 		logger.info("password request in");
@@ -280,6 +281,8 @@ public class UserController extends CommonController {
 			}
 			return pmResponse;
 		}catch (UserException e){
+			//response.getWriter().write(e.getMessage());
+
 			logger.error("Erreur durant la recuperation du mot de passe de l'utilisateur  " + password.toString() +"{}",e);
 			e.printStackTrace();
 			throw  e;

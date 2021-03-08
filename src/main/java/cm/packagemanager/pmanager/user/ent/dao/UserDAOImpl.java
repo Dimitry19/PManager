@@ -217,7 +217,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
-	@Transactional(propagation = Propagation. REQUIRED)
+	@Transactional(propagation = Propagation. REQUIRED,rollbackFor = Exception.class)
 	public void updateUser(UserVO user) {
 
 		Session session = this.sessionFactory.getCurrentSession();
@@ -248,7 +248,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
-	@Transactional(propagation = Propagation. REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor ={BusinessResourceException.class, UserException.class})
 	public UserVO update(UserVO user) throws BusinessResourceException {
 		logger.info("User: update 2");
 		Session session = this.sessionFactory.getCurrentSession();
@@ -363,7 +363,10 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			Session session = sessionFactory.getCurrentSession();
 			session.enableFilter(FilterConstants.ACTIVE_MBR);
 			session.enableFilter(FilterConstants.CANCELLED);
-			return  (UserVO) manualFilter(session.find(UserVO.class,id));
+
+			UserVO user = (UserVO) manualFilter(session.find(UserVO.class,id));
+			//Hibernate.initialize(user.getMessages());
+			return user;
 		}catch (Exception e){
 			throw  new UserException(e.getMessage());
 		}
