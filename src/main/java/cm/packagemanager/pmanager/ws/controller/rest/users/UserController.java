@@ -379,7 +379,10 @@ public class UserController extends CommonController {
 			UserVO user =userService.getUser(id);
 			if (user!=null){
 				return user;
+			}else {
+				response.getWriter().write("Utilisateur non existant ");
 			}
+
 		}catch (UserException e){
 			logger.error("Erreur durant l'execution de recuperation des infos de l'utilisateur: ", e);
 			response.getWriter().write(e.getMessage());

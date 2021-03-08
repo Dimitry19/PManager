@@ -102,6 +102,10 @@ public class CommonController {
 	public static final String REVIEW_WS_UPDATE="/update";
 
 
+	/************ NOTIFICATION REQUEST*************/
+	public static final String NOTIFICATION_WS="/ws/notification/*";
+
+
 
 	@Autowired
 	public ServletContext servletContext;
@@ -121,7 +125,6 @@ public class CommonController {
 
 	@PostConstruct
 	public void init() {
-		System.out.println("CommonController  starts...." );
 		GlobalTracer.register(gTracer);
 	}
 

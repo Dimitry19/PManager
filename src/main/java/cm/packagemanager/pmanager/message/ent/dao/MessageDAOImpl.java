@@ -124,7 +124,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 		if (id==null) return null;
 		Session session=sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
-		Query query=session.createQuery("from MessageVO  m where user.id=:userId");
+		Query query=session.createQuery("from MessageVO  m where m.user.id=:userId");
 		query.setParameter("userId",id);
 		query.setFirstResult(pageBy.getPage());
 		query.setMaxResults(pageBy.getSize());

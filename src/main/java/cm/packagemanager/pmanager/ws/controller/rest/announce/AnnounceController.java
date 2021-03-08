@@ -255,12 +255,13 @@ public class AnnounceController extends CommonController {
 					paginateResponse.setResults(announces);
 					headers.add(HEADER_TOTAL, Long.toString(announces.size()));
 				}
-			}
+			}else response.getWriter().write("Utilisateur non existant");
 		}
 		catch (Exception e){
-			response.getWriter().write(e.getMessage());
+			//response.getWriter().write(e.getMessage());
+			response.getWriter().write("Utilisateur non existant");
 			logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}finally {
 			finishOpentracingSpan();
 		}

@@ -158,11 +158,14 @@ public class MessageController extends CommonController  {
 				}else{
 					List<MessageVO>  messages=messageService.messagesByUser(userId,pageBy);
 					headers.add(HEADER_TOTAL, Long.toString(messages.size()));
+					paginateResponse.setResults(messages);
 				}
+				paginateResponse.setCount(count);
 			}
 		}
 		catch (Exception e){
-			response.getWriter().write(e.getMessage());
+			logger.error("MessageController- error {}",e);
+			//response.getWriter().write(e.getMessage());
 		}
 		finally {
 			finishOpentracingSpan();
