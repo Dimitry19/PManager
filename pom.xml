@@ -264,6 +264,24 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			<!-- Ceci permet de gerer le probleme ( lazy initialization exception )de chargement des données chargées en Fetch LAZY par Jackson (utilisé pour renvoyer les données du WS)-->
+			<plugin> 
+  				<groupId>org.hibernate.orm.tooling</groupId> 
+  				<artifactId>hibernate-enhance-maven-plugin</artifactId> 
+  				<version>${hibernate.version}</version> 
+  				<executions> 
+    				<execution> 
+      					<configuration>                                                       
+        					<failOnError>true</failOnError> 
+        					<enableLazyInitialization>true</enableLazyInitialization> 
+      					</configuration> 
+      					<goals> 
+        					<goal>enhance</goal> 
+     					</goals> 
+    				</execution> 
+  				</executions> 
+			</plugin>
 		</plugins>
 	</build>
 
