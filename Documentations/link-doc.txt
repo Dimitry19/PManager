@@ -1,2 +1,4 @@
 https://examples.javacodegeeks.com/enterprise-java/hibernate/hibernate-session-byid-example/
 https://docs.jboss.org/hibernate/orm/5.1/userguide/html_single/chapters/domain/natural_id.html
+
+https://dzone.com/articles/50-best-performance-practices-for-hibernate-5-amp
