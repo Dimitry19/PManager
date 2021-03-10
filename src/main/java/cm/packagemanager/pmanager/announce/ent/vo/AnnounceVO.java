@@ -85,6 +85,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	private String username;
 	private String email;
+
 	public AnnounceVO(){ super();}
 
 

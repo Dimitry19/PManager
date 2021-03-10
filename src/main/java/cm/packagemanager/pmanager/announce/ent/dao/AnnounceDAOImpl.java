@@ -22,7 +22,6 @@ import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.*;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
-import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
@@ -223,23 +222,8 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	public boolean delete(Long id) throws BusinessResourceException {
 		logger.info("Announce: delete");
 		//deleteObject(id);
-		return updateDelete(id);
-	}
-
-	@Override
-	public void deleteObject(Object object) throws RecordNotFoundException {
-		Long id = (Long)object;
-		try{
-			Session session=sessionFactory.getCurrentSession();
-
-			AnnounceVO announce=findById(id);
-			if(announce!=null){
-				session.remove(announce);
-				session.flush();
-			}
-		}catch (Exception e){
-			throw new BusinessResourceException(e.getMessage());
-		}
+		delete(AnnounceVO.class,id,true);
+		return true;//updateDelete(id);
 	}
 
 

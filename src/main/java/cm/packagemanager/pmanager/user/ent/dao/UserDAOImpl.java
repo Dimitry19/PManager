@@ -90,7 +90,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		logger.info("User: all users");
 		Session session = this.sessionFactory.getCurrentSession();
 		List<UserVO>  users = session.createQuery("from UserVO").list();
-
 		return users;
 	}
 
@@ -128,8 +127,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	public UserVO getUser(Long id)  throws UserException{
 		logger.info("User: get user");
 		try {
-
-			UserVO user=  findById(id);
+			UserVO user= findById(id);
 			calcolateAverage(user);
 			return user;
 		} catch (UserException e) {
@@ -228,8 +226,8 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public boolean deleteUser(Long id) throws UserException{
 		logger.info("User: delete");
-		//deleteObject(id);
-		return updateDelete(id);
+		//delete(UserVO.class,id,false);
+		return  updateDelete(id);
 	}
 
 
@@ -365,7 +363,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			session.enableFilter(FilterConstants.CANCELLED);
 
 			UserVO user = (UserVO) manualFilter(session.find(UserVO.class,id));
-			//Hibernate.initialize(user.getMessages());
+			//Hibernate.initialize(user.getMessages()); // on l'utilise quand la fetch avec message est lazy
 			return user;
 		}catch (Exception e){
 			throw  new UserException(e.getMessage());
@@ -472,24 +470,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
-	public void deleteObject(Object object) throws RecordNotFoundException {
-		Long id = (Long)object;
-		try{
-			Session session=sessionFactory.getCurrentSession();
-
-			UserVO user=findById(id);
-			if(user!=null){
-				session.remove(user);
-				//session.flush(); // Etant donné que la suppression de l'entité UserVO entraine la suppression des autres en
-				// entités pas besoin de faire le flush car le flush fait la synchronisation entre l'entité et la session hibernate
-				// du coup cree une transaction et enverra en erreur la remove
-			}
-		}catch (Exception e){
-			throw new BusinessResourceException(e.getMessage());
-		}
-	}
-
-	@Override
 	public boolean updateDelete(Long id) throws BusinessResourceException ,UserException{
 		boolean result=false;
 
@@ -539,6 +519,8 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	private double calcolateAverage(UserVO user){
+		if(user==null)
+			return 0.0;
 		int totalRating=0;
 		int counterRating=0;
 		List<RatingCountVO> ratingCounts =findRatingCounts(user);
@@ -587,5 +569,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	public  void composeQueryParameters(Object o,Query query) {
 
 	}
+
 
 }

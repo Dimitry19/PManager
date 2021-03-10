@@ -261,7 +261,7 @@ public class UserServiceImpl  implements  UserService{
 			throw new UserException("Un utilisateur ne peut pas s'evaluer");
 		}
 		ReviewDetailsVO details= new ReviewDetailsVO(reviewDTO.getRating(), reviewDTO.getTitle(),reviewDTO.getDetails());
-		ReviewVO review = new ReviewVO(user,ratingUser, 1, details);
+		ReviewVO review = new ReviewVO(user, 1, details);
 		ReviewIdVO id= new ReviewIdVO();
 		id.setToken(Constants.DEFAULT_TOKEN);
 		review.setReviewId(id);

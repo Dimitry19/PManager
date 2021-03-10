@@ -19,7 +19,7 @@ public class QueryUtils {
 	@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public  Long  calcolateId(String namedQuery){
 		Session sess = sessionFactory.getCurrentSession();
-		sess.enableFilter(FilterConstants.CANCELLED);
+		//sess.enableFilter(FilterConstants.CANCELLED);
 		Query query= sess.createNamedQuery(namedQuery);
 
 		Long id = (Long) query.uniqueResult();

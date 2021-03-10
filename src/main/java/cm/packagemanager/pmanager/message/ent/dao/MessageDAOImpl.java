@@ -43,7 +43,6 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 	@Autowired
 	AnnounceDAO announceDAO;
 
-
 	@Override
 	public int count(PageBy pageBy) throws BusinessResourceException {
 		logger.info("Message: count");
@@ -159,27 +158,11 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 	@Override
 	public boolean delete(Long id) throws BusinessResourceException {
 		logger.info("Message: delete");
-		//deleteObject(id);
-		return  updateDelete(id);
+		//MessageIdVO messageId= new MessageIdVO(id, Constants.DEFAULT_TOKEN);
+		//delete(MessageVO.class,messageId,true);
+		return updateDelete(id);
 	}
 
-	@Override
-	public void deleteObject(Object o) throws RecordNotFoundException {
-		Long id = (Long)o;
-		try{
-			Session session=sessionFactory.getCurrentSession();
-
-			MessageIdVO messageId= new MessageIdVO(id, Constants.DEFAULT_TOKEN);
-			MessageVO message=findById(messageId);
-			if(message!=null){
-				session.remove(message);
-				session.flush();
-			}
-		}catch (Exception e){
-			throw new BusinessResourceException(e.getMessage());
-		}
-
-	}
 	private void setMessage(AnnounceVO announce, UserVO user,MessageVO message, MessageDTO mdto){
 		message.setAnnounce(announce);
 		message.setContent(mdto.getContent());

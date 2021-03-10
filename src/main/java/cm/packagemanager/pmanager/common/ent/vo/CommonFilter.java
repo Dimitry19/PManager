@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.common.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.Constants;
+import cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
@@ -9,7 +10,10 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-public  abstract class CommonFilter {
+import java.io.Serializable;
+import java.util.Optional;
+
+public  abstract class CommonFilter<T, ID extends Serializable> extends GenericDAOImpl {
 
 
 	public abstract boolean updateDelete(Long id) throws BusinessResourceException, UserException;

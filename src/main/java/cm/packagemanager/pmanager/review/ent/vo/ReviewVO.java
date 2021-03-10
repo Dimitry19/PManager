@@ -64,7 +64,7 @@ public class ReviewVO extends WSCommonResponseVO {
 	}
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH,optional = false)
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
 	@JoinColumn(name="R_USER_ID", updatable = false)
 	@JsonBackReference
 	@JsonProperty
@@ -72,14 +72,14 @@ public class ReviewVO extends WSCommonResponseVO {
 		return this.user;
 	}
 
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH,optional = false)
+	/*@Access(AccessType.PROPERTY)
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
 	@JoinColumn(name="RATING_USER_ID", updatable = false)
 	@JsonBackReference
 	@JsonProperty
 	public UserVO getRatingUser() {
 		return ratingUser;
-	}
+	}*/
 
 	@Column(name = "INDEXES",nullable = false)
 	public int getIndex() {
@@ -131,9 +131,11 @@ public class ReviewVO extends WSCommonResponseVO {
 	}
 
 
+/*
 	public void setRatingUser(UserVO ratingUser) {
 		this.ratingUser = ratingUser;
 	}
+*/
 
 	public void setIndex(int index) {
 		this.index = index;

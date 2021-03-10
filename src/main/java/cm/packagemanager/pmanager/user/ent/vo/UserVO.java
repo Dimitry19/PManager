@@ -21,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -245,7 +246,7 @@ public class UserVO extends WSCommonResponseVO {
 	}
 
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user",orphanRemoval = true)
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	public Set<ReviewVO> getReviews() {
@@ -343,25 +344,25 @@ public class UserVO extends WSCommonResponseVO {
 
 
 	public void addAnnounce(AnnounceVO announce){
-		announces.add(announce);
+		this.announces.add(announce);
+		announce.setUser(this);
 
 	}
 	public void removeAnnounce(AnnounceVO announce){
-		if(!announces.isEmpty())
-			announces.remove(announce);
+		announce.setUser(null);
+		this.announces.remove(announce);
 	}
 
-	public void addMessage(MessageVO message){
-		messages.add(message);
+	public void removeAnnounces() {
+		Iterator<AnnounceVO> iterator = this.announces.iterator();
 
+		while (iterator.hasNext()) {
+			AnnounceVO announce = iterator.next();
+
+			announce.setUser(null);
+			iterator.remove();
+		}
 	}
-
-	public void removeMessage(MessageVO message){
-		if(!messages.isEmpty())
-		messages.remove(message);
-
-	}
-
 	public void addRole(RoleVO role){
 		roles.add(role);
 
@@ -371,6 +372,46 @@ public class UserVO extends WSCommonResponseVO {
 		if(!roles.isEmpty())
 			roles.remove(role);
 
+	}
+
+	public void addMessage(MessageVO message) {
+		this.messages.add(message);
+		message.setUser(this);
+	}
+	public void removeMessage(MessageVO message){
+		message.setUser(null);
+		this.messages.remove(message);
+	}
+
+	public void removeMessages() {
+		Iterator<MessageVO> iterator = this.messages.iterator();
+
+		while (iterator.hasNext()) {
+			MessageVO message = iterator.next();
+
+			message.setUser(null);
+			iterator.remove();
+		}
+	}
+
+	public void addReview(ReviewVO review) {
+		this.reviews.add(review);
+		review.setUser(this);
+	}
+	public void removeReview(ReviewVO review){
+		review.setUser(null);
+		this.reviews.remove(review);
+	}
+
+	public void removeReviews() {
+		Iterator<ReviewVO> iterator = this.reviews.iterator();
+
+		while (iterator.hasNext()) {
+			ReviewVO review = iterator.next();
+
+			review.setUser(null);
+			iterator.remove();
+		}
 	}
 
 	@Override
