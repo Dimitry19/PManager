@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import static com.google.common.base.Predicates.or;
-import static com.sun.tools.doclint.Entity.or;
 import static java.util.Collections.singletonList;
 import static springfox.documentation.builders.PathSelectors.regex;
 import static springfox.documentation.schema.AlternateTypeRules.newRule;

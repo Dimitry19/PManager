@@ -555,8 +555,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 				}
 				hql.append(alias+".announceType=:announceType ");
 			}
-
-
 		}catch (Exception e){
 			logger.error(e.getMessage());
 			e.printStackTrace();

@@ -9,6 +9,7 @@ import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.OrderBy;
 
@@ -32,7 +33,6 @@ import java.util.Set;
 
 import static org.hibernate.annotations.FetchMode.SELECT;
 
-
 @Entity(name = "UserVO")
 @Table(name="USER", schema = "PUBLIC")
 @NamedQueries({
@@ -55,6 +55,8 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 @Where(clause= FilterConstants.FILTER_WHERE_USER_CANCELLED)
 public class UserVO extends WSCommonResponseVO {
 
+
+	private static final long serialVersionUID = 6181438160768077660L;
 
 	public static final String FINDBYID="cm.packagemanager.pmanager.user.ent.vo.UserVO.findById";
 	public static final String Q_AC_ITEM = "cm.packagemanager.pmanager.user.ent.vo.UserVO.QAutocompleteItem";
@@ -90,6 +92,8 @@ public class UserVO extends WSCommonResponseVO {
 
 	private boolean cancelled;
 
+	//private UserVO parent;
+
 	private Set<MessageVO> messages=new HashSet<>();
 
 	private Set<AnnounceVO> announces=new HashSet<>();
@@ -97,6 +101,8 @@ public class UserVO extends WSCommonResponseVO {
 	private Set<RoleVO> roles= new HashSet<>();
 
 	private Set<ReviewVO> reviews= new HashSet<>();
+
+	private Set<UserVO> subscribers= new HashSet<>();
 
 	private String confirmationToken;
 
@@ -226,9 +232,9 @@ public class UserVO extends WSCommonResponseVO {
 	}
 
 
-	@OneToMany(mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
-	@JsonManagedReference
-	@Fetch(value = SELECT)
+	@OneToMany(mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
+	//@JsonManagedReference
+	//@Fetch(value = SELECT)
 	@OrderBy(clause = "id.id DESC")
 	@Where(clause = "cancelled = false")
 	public Set<MessageVO> getMessages() {
@@ -236,7 +242,7 @@ public class UserVO extends WSCommonResponseVO {
 	}
 
 
-	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	@OrderBy(clause = "startDate DESC")
@@ -246,9 +252,9 @@ public class UserVO extends WSCommonResponseVO {
 	}
 
 
-	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
-	@JsonManagedReference
-	@Fetch(value = SELECT)
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
+	//@JsonManagedReference
+	//@Fetch(value = SELECT)
 	public Set<ReviewVO> getReviews() {
 		return reviews;
 	}
@@ -257,6 +263,17 @@ public class UserVO extends WSCommonResponseVO {
 	@Column(name="CONFIRM_TOKEN")
 	public String getConfirmationToken() {
 		return confirmationToken;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinTable(name = "SUBSCRIBERS", joinColumns = @JoinColumn(name = "R_USER_ID"), inverseJoinColumns = @JoinColumn(name = "SUBSCRIBER_ID"))
+	public Set<UserVO> getSubscribers() {
+		return subscribers;
+	}
+
+
+	public void setSubscribers(Set<UserVO> subscribers) {
+		this.subscribers = subscribers;
 	}
 
 	@Transient
