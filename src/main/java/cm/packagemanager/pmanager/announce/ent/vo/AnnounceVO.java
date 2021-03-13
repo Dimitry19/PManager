@@ -214,7 +214,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 
 	@Access(AccessType.PROPERTY)
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy="announce",fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="announce",fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	@OrderBy(clause = "id.id ASC")

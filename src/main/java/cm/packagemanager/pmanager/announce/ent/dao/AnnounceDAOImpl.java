@@ -431,7 +431,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				hql.append(alias+".category.code=:category ");
 			}
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
-			if (ObjectUtils.isCallable(announceSearch,"userId")){
+			/*if (ObjectUtils.isCallable(announceSearch,"userId")){
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".user.id=:userId ");
 			}
@@ -440,7 +440,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(" ( "+alias+".user.username like:user or "+alias+".user.email like:email) ");
 			}
-			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");*/
 			if (!addCondition){
 				hql = new StringBuilder();
 			}
@@ -462,12 +462,12 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		try {
 
 			if (StringUtils.isNotEmpty(announceSearch.getTransport())) {
-				TransportEnum transport = getTransport(announceSearch.getTransport());
+				TransportEnum transport = TransportEnum.valueOf(announceSearch.getTransport());
 				query.setParameter("transport", transport);
 			}
 
 			if (StringUtils.isNotEmpty(announceSearch.getAnnounceType())) {
-				AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
+				AnnounceType announceType = AnnounceType.valueOf(announceSearch.getAnnounceType());
 				query.setParameter("announceType", announceType);
 			}
 
@@ -502,13 +502,13 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 			if (StringUtils.isNotEmpty(announceSearch.getCategory())) {
 				query.setParameter("category", announceSearch.getCategory());
 			}
-			if (ObjectUtils.isCallable(announceSearch,"userId")){
+			/*if (ObjectUtils.isCallable(announceSearch,"userId")){
 				query.setParameter("userId", announceSearch.getUserId());
 			}
 			if (StringUtils.isNotEmpty(announceSearch.getUser())) {
 				query.setParameter("user", "%"+announceSearch.getUser()+"%");
 				query.setParameter("email", "%"+announceSearch.getUser()+"%");
-			}
+			}*/
 
 		}catch (Exception e){
 			logger.error(e.getMessage());
