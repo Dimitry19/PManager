@@ -10,10 +10,7 @@ import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import org.apache.logging.log4j.message.MessageFormatMessage;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.OrderBy;
@@ -211,7 +208,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.announceType = announceType;
 	}
 
-
+	@JsonIgnore
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS",length = 10)
 	public StatusEnum getStatus(){
@@ -253,6 +250,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 		setEmail(user.getEmail());
 	}
 
+	@JsonIgnore
 	@Basic(optional = false)
 	@Column(name="CANCELLED")
 	public boolean isCancelled() {

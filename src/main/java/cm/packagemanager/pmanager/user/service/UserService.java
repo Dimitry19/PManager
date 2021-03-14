@@ -65,7 +65,12 @@ public interface UserService{
 
 	public  void  subscribe(SubscribeDTO subscribe) throws UserException;
 
-	public  void  subscription(SubscribeDTO subscribe) throws UserException;
+	public  void  unsubscribe(SubscribeDTO subscribe) throws UserException;
+
+	public  List<UserVO> subscriptions(Long  userId) throws UserException;
+
+	public  List<UserVO> subscribers(Long  userId) throws UserException;
+
 
 
 	/***** RATING USER ***/

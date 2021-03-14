@@ -56,11 +56,17 @@ public class CommonController {
 	public static final String USER_WS_UPDATE="/update";
 	public static final String USER_WS_PASSWORD="/password";
 	public static final String USER_WS_USER_ID="/info/{id}";
-	public static final String USER_SUBCRIPTION_WS_USERS="/subscriptions";
-	public static final String USER_SUBSCRIBER_WS_USERS="/subscribers";
+	public static final String SUBSCRIPTIONS_WS="/subscriptions";
+	public static final String SUBSCRIBERS_WS="/subscribers";
+	public static final String UNSUBSCRIBE_WS="/unsubscribe";
 
-	public static final String USER_ADD_SUBCRIPTION_WS_USERS="/subscriptions/add";
-	public static final String USER_ADD_SUBSCRIBER_WS_USERS="/subscribers/add";
+	public static final String USER_ADD_SUBSCRIPTION_WS="/subscriptions/add";
+	public static final String USER_ADD_SUBSCRIBER_WS="/subscribers/add";
+
+	public static final String USER_SUBSCRIPTION_WS="/subscriptions/{userId}";
+	public static final String USER_SUBSCRIBER_WS="/subscribers/{userId}";
+
+
 
 
 

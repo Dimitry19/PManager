@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
@@ -31,7 +32,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -95,11 +98,44 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			session.update(subscription);
 			session.flush();
 		}else throw new UserException("Une erreur survenue pendant l'abonnement, veuillez reessayer");
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = UserException.class)
+	public void unsubscribe(SubscribeDTO subscribe) throws UserException {
+		UserVO subscriber=findById(subscribe.getSubscriberId());
+		UserVO subscription=findById(subscribe.getSubscriptionId());
+
+		if (subscriber!=null && subscription!=null){
+			subscriber.removeSubscription(subscription);
+			subscription.removeSubscriber(subscriber);
+
+			Session session=sessionFactory.getCurrentSession();
+			session.update(subscriber);
+			session.update(subscription);
+			session.flush();
+		}else throw new UserException("Une erreur survenue pendant la desinscription, veuillez reessayer");
+	}
+
+	@Override
+	@Transactional(readOnly = true,propagation = Propagation.REQUIRED,rollbackFor = UserException.class)
+	public List<UserVO> subscriptions(Long  userId) throws UserException {
+		UserVO user=findById(userId);
+		if (user ==null)
+			throw new UserNotFoundException("Utilisateur non trouvé");
+
+		return (List<UserVO>) new ArrayList<UserVO>(user.getSubscriptions());
 
 	}
 
 	@Override
-	public void subscription(SubscribeDTO subscribe) throws UserException {
+	@Transactional(readOnly = true,propagation = Propagation.REQUIRED,rollbackFor = UserException.class)
+	public List<UserVO> subscribers(Long  userId) throws UserException {
+		UserVO user=findById(userId);
+		if (user ==null)
+			throw new UserNotFoundException("Utilisateur non trouvé");
+
+		return (List<UserVO>) new ArrayList<UserVO>(user.getSubscribers());
 
 	}
 

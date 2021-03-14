@@ -79,12 +79,23 @@ public class UserServiceImpl  implements  UserService{
 	@Override
 	public void subscribe(SubscribeDTO subscribe) throws UserException {
 		userDAO.subscribe(subscribe);
+	}
 
+
+	@Override
+	public void unsubscribe(SubscribeDTO subscribe) throws UserException {
+		userDAO.unsubscribe(subscribe);
 	}
 
 	@Override
-	public void subscription(SubscribeDTO subscribe) throws UserException {
+	public List<UserVO> subscriptions(Long userId) throws UserException {
 
+		return userDAO.subscriptions(userId);
+	}
+
+	@Override
+	public List<UserVO> subscribers(Long userId) throws UserException {
+		return userDAO.subscribers(userId);
 	}
 
 	public UserVO login(LoginDTO lr ) throws UserException {

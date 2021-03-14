@@ -200,6 +200,7 @@ public class UserVO extends WSCommonResponseVO {
 
 	@Basic(optional = false)
 	@Column(name="CANCELLED")
+	@JsonIgnore
 	public boolean isCancelled() {
 		return cancelled;
 	}
@@ -207,12 +208,14 @@ public class UserVO extends WSCommonResponseVO {
 
 	@Basic(optional = true)
 	@Column(name="FACEBOOK_ID")
+	@JsonIgnore
 	public String getFacebookId() {
 		return facebookId;
 	}
 
 	@Basic(optional = true)
 	@Column(name="GOOGLE_ID")
+	@JsonIgnore
 	public String getGoogleId() {
 		return googleId;
 	}
@@ -221,6 +224,7 @@ public class UserVO extends WSCommonResponseVO {
 		this.googleId = googleId;
 	}
 
+	@JsonIgnore
 	@Column(name = "ACTIVE", insertable=true, updatable = true, nullable=false)
 	public Integer getActive() {
 		return active;
@@ -261,6 +265,7 @@ public class UserVO extends WSCommonResponseVO {
 		return reviews;
 	}
 
+	@JsonIgnore
 	@Basic(optional = true)
 	@Column(name="CONFIRM_TOKEN")
 	public String getConfirmationToken() {

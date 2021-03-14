@@ -5,6 +5,7 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -503,7 +504,7 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful subscription",
 					response = Response.class, responseContainer = "Object") })
-	@PostMapping(value = USER_ADD_SUBSCRIBER_WS_USERS)
+	@PostMapping(value = USER_ADD_SUBSCRIBER_WS)
 	public  Response subscribe(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, IOException {
 
 		logger.info("subscribe request in");
@@ -530,7 +531,7 @@ public class UserController extends CommonController {
 				return pmResponse;
 			}
 		}catch (Exception e){
-			logger.error("Errore eseguendo register: ", e);
+			logger.error("Errore eseguendo subscribe: ", e);
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(WebServiceResponseCode.ERROR_SUBSCRIBE_LABEL);
 			response.getWriter().write(e.getMessage());
@@ -540,7 +541,51 @@ public class UserController extends CommonController {
 		return null;
 	}
 
+	@ApiOperation(value = "Unsubscription to an user ",response = Response.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully subscription"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful unsubscription",
+					response = Response.class, responseContainer = "Object") })
+	@PostMapping(value = UNSUBSCRIBE_WS)
+	public  Response unsubscribe(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, IOException {
 
+		logger.info("unsubscribe request in");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+
+		Response pmResponse = new Response();
+
+		try{
+			createOpentracingSpan("UserController - unsubscribe");
+
+			if(subscribe!=null){
+
+				if(subscribe.getSubscriberId().equals(subscribe.getSubscriptionId())){
+					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+					pmResponse.setRetDescription(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
+					response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+					return pmResponse;
+				}
+				userService.unsubscribe(subscribe);
+
+				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+				pmResponse.setRetDescription(WebServiceResponseCode.UNSUBSCRIBE_LABEL);
+				response.setStatus(200);
+				return pmResponse;
+			}
+		}catch (Exception e){
+			logger.error("Errore eseguendo unsubscribe: ", e);
+			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+			pmResponse.setRetDescription(WebServiceResponseCode.ERROR_UNSUBSCRIBE_LABEL);
+			response.getWriter().write(e.getMessage());
+		}finally {
+			finishOpentracingSpan();
+		}
+		return null;
+	}
 
 
 	@ApiOperation(value = "User subscriptions ",response = Response.class)
@@ -551,27 +596,70 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful Subscription list ",
-					response = Response.class, responseContainer = "Object") })
-	@PostMapping(value = USER_SUBCRIPTION_WS_USERS)
-	public  Response subscription(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid SubscribeDTO subscribeDTO) throws ValidationException, IOException {
+					response = ResponseEntity.class, responseContainer = "Object") })
+	@RequestMapping(value = USER_SUBSCRIPTION_WS, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
+	public  ResponseEntity<PaginateResponse> subscriptions(HttpServletRequest request ,HttpServletResponse response,@PathVariable("userId") @Valid Long userId) throws ValidationException, IOException {
 
-		logger.info("register request in");
+		logger.info("subscriptions request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 
-		Response pmResponse = new Response();
+		HttpHeaders headers = new HttpHeaders();
+		PaginateResponse paginateResponse = new PaginateResponse();
 
 		try{
-
-			createOpentracingSpan("UserController - subscription");
+			createOpentracingSpan("UserController - subscriptions");
+			List<UserVO> users =userService.subscriptions(userId);
+			return getPaginateResponseResponseEntity(headers, paginateResponse, users);
 
 		}catch (Exception e){
-			logger.error("Errore eseguendo register: ", e);
-			pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-			pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
+			logger.error("Errore eseguendo subscriptions: ", e);
 			response.getWriter().write(e.getMessage());
 		}finally {
 			finishOpentracingSpan();
 		}
 		return null;
+	}
+
+	@ApiOperation(value = "User subscribers ",response = Response.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully subscription list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful Subscribers list ",
+					response = ResponseEntity.class, responseContainer = "Object") })
+	@RequestMapping(value = USER_SUBSCRIBER_WS, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
+	public  ResponseEntity<PaginateResponse> subscribers(HttpServletRequest request ,HttpServletResponse response,@PathVariable("userId") @Valid Long userId) throws ValidationException, IOException {
+
+		logger.info("subscribers request in");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+
+		HttpHeaders headers = new HttpHeaders();
+		PaginateResponse paginateResponse = new PaginateResponse();
+
+		try{
+			createOpentracingSpan("UserController - subscribers");
+			List<UserVO> users =userService.subscribers(userId);
+			return getPaginateResponseResponseEntity(headers, paginateResponse, users);
+
+		}catch (Exception e){
+			logger.error("Errore eseguendo subscribers: ", e);
+			response.getWriter().write(e.getMessage());
+		}finally {
+			finishOpentracingSpan();
+		}
+		return null;
+	}
+
+	private ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, List<UserVO> users) {
+		if(CollectionsUtils.isEmpty(users)){
+			headers.add(HEADER_TOTAL, Long.toString(0));
+		}else{
+			paginateResponse.setCount(users.size());
+			paginateResponse.setResults(users);
+			headers.add(HEADER_TOTAL, Long.toString(users.size()));
+		}
+		return new ResponseEntity<PaginateResponse>(paginateResponse, HttpStatus.OK);
 	}
 }
