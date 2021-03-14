@@ -304,6 +304,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 			Session session=sessionFactory.getCurrentSession();
 			AnnounceVO announce=findById(id);
 			if(announce!=null) {
+				announce.updateDeleteChildrens();
 				announce.setCancelled(true);
 				session.merge(announce);
 				announce = (AnnounceVO) session.get(AnnounceVO.class, id);

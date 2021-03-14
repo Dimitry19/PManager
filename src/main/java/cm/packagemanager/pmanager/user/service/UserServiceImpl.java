@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -75,6 +74,17 @@ public class UserServiceImpl  implements  UserService{
 	@Override
 	public int count(PageBy pageBy) throws Exception {
 		return userDAO.count(pageBy);
+	}
+
+	@Override
+	public void subscribe(SubscribeDTO subscribe) throws UserException {
+		userDAO.subscribe(subscribe);
+
+	}
+
+	@Override
+	public void subscription(SubscribeDTO subscribe) throws UserException {
+
 	}
 
 	public UserVO login(LoginDTO lr ) throws UserException {

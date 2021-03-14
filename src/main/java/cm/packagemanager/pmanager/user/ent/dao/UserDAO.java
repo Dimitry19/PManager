@@ -8,10 +8,7 @@ import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
-import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
-import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
-import cm.packagemanager.pmanager.ws.requests.users.UserSeachDTO;
+import cm.packagemanager.pmanager.ws.requests.users.*;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -35,6 +32,10 @@ public interface UserDAO extends CommonDAO {
 	int count(PageBy pageBy) throws BusinessResourceException;
 
 	UserVO login(String username, String password) throws UserException;
+
+	public  void  subscribe(SubscribeDTO subscribe) throws UserException;
+
+	public  void  subscription(SubscribeDTO subscribe) throws UserException;
 
 
 	public List<UserVO> getAllUsers()  throws BusinessResourceException;

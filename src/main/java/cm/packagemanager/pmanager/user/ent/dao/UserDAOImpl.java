@@ -14,10 +14,7 @@ import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
-import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
-import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
-import cm.packagemanager.pmanager.ws.requests.users.UserSeachDTO;
+import cm.packagemanager.pmanager.ws.requests.users.*;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import io.opentracing.Span;
 import org.hibernate.Session;
@@ -81,6 +78,29 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		return  (UserVO) optional.get();*/
 		logger.info("User: login");
 		return internalLogin(username,password);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = UserException.class)
+	public void subscribe(SubscribeDTO subscribe) throws UserException {
+		UserVO subscriber=findById(subscribe.getSubscriberId());
+		UserVO subscription=findById(subscribe.getSubscriptionId());
+
+		if (subscriber!=null && subscription!=null){
+			subscriber.addSubscription(subscription);
+			subscription.addSubscriber(subscriber);
+
+			Session session=sessionFactory.getCurrentSession();
+			session.update(subscriber);
+			session.update(subscription);
+			session.flush();
+		}else throw new UserException("Une erreur survenue pendant l'abonnement, veuillez reessayer");
+
+	}
+
+	@Override
+	public void subscription(SubscribeDTO subscribe) throws UserException {
+
 	}
 
 
@@ -479,9 +499,11 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 			UserVO user=findById(id);
 			if(user!=null){
+				user.updateDeleteChildrens();
 				user.setCancelled(true);
 				session.merge(user);
 				user = session.get(UserVO.class, id);
+
 				result= (user!=null) && (user.isCancelled());
 			}
 		}catch (Exception e){

@@ -7,6 +7,8 @@ import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.NoArgsConstructor;
@@ -92,8 +94,6 @@ public class UserVO extends WSCommonResponseVO {
 
 	private boolean cancelled;
 
-	//private UserVO parent;
-
 	private Set<MessageVO> messages=new HashSet<>();
 
 	private Set<AnnounceVO> announces=new HashSet<>();
@@ -103,6 +103,8 @@ public class UserVO extends WSCommonResponseVO {
 	private Set<ReviewVO> reviews= new HashSet<>();
 
 	private Set<UserVO> subscribers= new HashSet<>();
+
+	private Set<UserVO> subscriptions= new HashSet<>();
 
 	private String confirmationToken;
 
@@ -265,16 +267,28 @@ public class UserVO extends WSCommonResponseVO {
 		return confirmationToken;
 	}
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinTable(name = "SUBSCRIBERS", joinColumns = @JoinColumn(name = "R_USER_ID"), inverseJoinColumns = @JoinColumn(name = "SUBSCRIBER_ID"))
 	public Set<UserVO> getSubscribers() {
 		return subscribers;
 	}
 
-
 	public void setSubscribers(Set<UserVO> subscribers) {
 		this.subscribers = subscribers;
 	}
+
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinTable(name = "SUBSCRIPTIONS", joinColumns = @JoinColumn(name = "SUBSCRIPTION_ID"), inverseJoinColumns = @JoinColumn(name = "R_USER_ID"))
+	public Set<UserVO> getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(Set<UserVO> subscriptions) {
+		this.subscriptions = subscriptions;
+	}
+
 
 	@Transient
 	@JsonProperty
@@ -333,11 +347,9 @@ public class UserVO extends WSCommonResponseVO {
 		this.phone = phone;
 	}
 
-
 	public void setReviews(Set<ReviewVO> reviews) {
 		this.reviews = reviews;
 	}
-
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
@@ -375,26 +387,24 @@ public class UserVO extends WSCommonResponseVO {
 
 		while (iterator.hasNext()) {
 			AnnounceVO announce = iterator.next();
-
 			announce.setUser(null);
 			iterator.remove();
 		}
 	}
 	public void addRole(RoleVO role){
 		roles.add(role);
-
 	}
 
 	public void removeRole(RoleVO role){
 		if(!roles.isEmpty())
 			roles.remove(role);
-
 	}
 
 	public void addMessage(MessageVO message) {
 		this.messages.add(message);
 		message.setUser(this);
 	}
+
 	public void removeMessage(MessageVO message){
 		message.setUser(null);
 		this.messages.remove(message);
@@ -407,6 +417,38 @@ public class UserVO extends WSCommonResponseVO {
 			MessageVO message = iterator.next();
 
 			message.setUser(null);
+			iterator.remove();
+		}
+	}
+
+	public void addSubscriber(UserVO subscriber) {
+		this.subscribers.add(subscriber);
+	}
+
+	public void removeSubscriber(UserVO subscriber){
+		this.subscribers.remove(subscriber);
+	}
+
+	public void removeSubscribers() {
+		Iterator<UserVO> iterator = this.subscribers.iterator();
+
+		while (iterator.hasNext()) {
+			iterator.remove();
+		}
+	}
+
+	public void addSubscription(UserVO subscription) {
+		this.subscriptions.add(subscription);
+	}
+
+	public void removeSubscription(UserVO subscription){
+		this.subscriptions.remove(subscription);
+	}
+
+	public void removeSubscriptions() {
+		Iterator<UserVO> iterator = this.subscriptions.iterator();
+
+		while (iterator.hasNext()) {
 			iterator.remove();
 		}
 	}
@@ -428,6 +470,28 @@ public class UserVO extends WSCommonResponseVO {
 
 			review.setUser(null);
 			iterator.remove();
+		}
+	}
+
+	public void updateDeleteChildrens() {
+		Iterator<ReviewVO> itereview = this.reviews.iterator();
+
+		while (itereview.hasNext()) {
+			ReviewVO review = itereview.next();
+			review.setCancelled(true);
+		}
+
+		Iterator<AnnounceVO> iterannounce = this.announces.iterator();
+
+		while (iterannounce.hasNext()) {
+			AnnounceVO announce = iterannounce.next();
+			announce.setCancelled(true);
+		}
+
+		Iterator<MessageVO> itermessage = this.messages.iterator();
+		while (itermessage.hasNext()) {
+			MessageVO message = itermessage.next();
+			message.setCancelled(true);
 		}
 	}
 
@@ -487,6 +551,6 @@ public class UserVO extends WSCommonResponseVO {
 
 	@Override
 	public String toString() {
-		return "UserVO{" + "id=" + id + ", firstName='" + firstName + '\'' + ", username='" + username + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\'' + ", gender=" + gender + ", facebookId='" + facebookId + '\'' + ", googleId='" + googleId + '\'' + ", password='" + password + '\'' + ", active=" + active + ", cancelled=" + cancelled +  ", confirmationToken='" + confirmationToken + '\'' + '}';
+		return "UserVO{" + "id=" + id + ", firstName='" + firstName + '\'' + ", username='" + username + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\'' + ", gender=" + gender  + ", rating=" + rating + '}';
 	}
 }

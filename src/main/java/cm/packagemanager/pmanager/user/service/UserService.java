@@ -9,11 +9,8 @@ import cm.packagemanager.pmanager.review.ent.vo.ReviewDetailsVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.review.ReviewDTO;
 import cm.packagemanager.pmanager.ws.requests.review.UpdateReviewDTO;
-import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
+import cm.packagemanager.pmanager.ws.requests.users.*;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
-import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
-import cm.packagemanager.pmanager.ws.requests.users.RoleToUserDTO;
-import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
 import com.sendgrid.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,6 +63,11 @@ public interface UserService{
 	public int  count(PageBy pageBy)  throws Exception;
 
 
+	public  void  subscribe(SubscribeDTO subscribe) throws UserException;
+
+	public  void  subscription(SubscribeDTO subscribe) throws UserException;
+
+
 	/***** RATING USER ***/
 	Page<ReviewVO> getReviews(UserVO user, Pageable pageable) throws Exception;
 
@@ -77,9 +79,7 @@ public interface UserService{
 
 	ReviewVO updateReview(UpdateReviewDTO review) throws Exception;
 
-
 	boolean deleteReview(Long reviewId) throws Exception;
-
 
 	ReviewsSummaryBO getReviewSummary(UserVO user);
 }

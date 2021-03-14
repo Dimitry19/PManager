@@ -28,6 +28,7 @@ public class WebServiceResponseCode
 	public static final String REVIEW_CREATE_LABEL=" Avis cree correctement";
 	public static final String CANCELLED_REVIEW_LABEL = "L'avis a ete elimine correctement";
 	public static final String UPDATED_REVIEW_LABEL = "L'avis  a ete ajourne correctement";
+	public static final String SUBSCRIBE_LABEL = "Abonnement reussi";
 
 	// NOK LABEL
 	public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre elimine car inexistant";
@@ -57,5 +58,6 @@ public class WebServiceResponseCode
 	public static final String ERROR_UPDATE_REVIEW_CODE_LABEL = "L'avis ne peut pas etre ajourne car inexistant";
 
 
-
+	public static final String ERROR_SUBSCRIBE_LABEL = "Abonnement non reussi";
+	public static final String CONFLICT_SUBSCRIBE_LABEL = "Impossible s'abonner a son propre compte";
 }

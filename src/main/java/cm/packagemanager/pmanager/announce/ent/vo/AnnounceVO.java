@@ -8,6 +8,7 @@ import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -28,6 +29,7 @@ import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import static org.hibernate.annotations.FetchMode.SELECT;
@@ -223,9 +225,9 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 
 	@Access(AccessType.PROPERTY)
-	@OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE}, mappedBy="announce",fetch=FetchType.EAGER)
+	@OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE}, mappedBy="announce",fetch=FetchType.LAZY)
 	@JsonManagedReference
-	@Fetch(value = SELECT)
+	//@Fetch(value = SELECT)
 	@OrderBy(clause = "id.id ASC")
 	public Set<MessageVO> getMessages() {
 		return messages;
@@ -273,7 +275,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	}
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(optional = true,fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
+	@ManyToOne(optional = false,fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
 	@JoinColumn(name="R_CATEGORY",referencedColumnName = "CODE")
 	@JsonProperty
 	public ProductCategoryVO getCategory() {
@@ -336,6 +338,16 @@ public class AnnounceVO extends WSCommonResponseVO {
 			messages.remove(message);
 		}
 	}
+
+
+	public void updateDeleteChildrens() {
+
+		Iterator<MessageVO> itermessage = this.messages.iterator();
+		while (itermessage.hasNext()) {
+			MessageVO message = itermessage.next();
+			message.setCancelled(true);
+		}
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -361,5 +373,10 @@ public class AnnounceVO extends WSCommonResponseVO {
 		} else if (!user.equals(other.user))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "AnnounceVO{" + "id=" + id + ", departure='" + departure + '\'' + ", arrival='" + arrival + '\'' + ", startDate=" + startDate + ", endDate=" + endDate + ", transport=" + transport + ", price=" + price + ", goldPrice=" + goldPrice + ", preniumPrice=" + preniumPrice + ", weigth=" + weigth + ", announceType=" + announceType + ", user=" + user + ", status=" + status + ", cancelled=" + cancelled + ", description='" + description + '\'' + ", descriptionTransport='" + descriptionTransport + '\'' + ", category=" + category + ", messages=" + messages + ", announceId=" + announceId + ", username='" + username + '\'' + ", email='" + email + '\'' + '}';
 	}
 }

@@ -81,4 +81,8 @@ public class ProductCategoryVO implements Serializable {
 	}
 
 
+	@Override
+	public String toString() {
+		return "ProductCategoryVO{" + "code='" + code + '\'' + ", description='" + description + '\'' + '}';
+	}
 }
