@@ -119,6 +119,13 @@ public class CommonController {
 
 
 
+
+	/********** MAIL REQUEST***************/
+	public static final String MAIL_WS="/ws/mail/*";
+	public static final String CONTACT_US_MAIL_WS="/contactus";
+
+
+
 	@Autowired
 	public ServletContext servletContext;
 

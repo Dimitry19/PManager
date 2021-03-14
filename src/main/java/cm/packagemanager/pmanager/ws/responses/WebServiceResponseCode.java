@@ -31,6 +31,8 @@ public class WebServiceResponseCode
 	public static final String SUBSCRIBE_LABEL = "Abonnement reussi";
 	public static final String UNSUBSCRIBE_LABEL = "Desabonnement reussi";
 
+	public static final String CONTACT_US_LABEL = "Merci pour votre correspondance, vous serez recontacté";
+
 	// NOK LABEL
 	public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre elimine car inexistant";
 	public static final String ERROR_MAIL_SENT_LABEL = "Le mail n'a pas pu etre envoye";
@@ -62,4 +64,8 @@ public class WebServiceResponseCode
 	public static final String ERROR_SUBSCRIBE_LABEL = "Abonnement non reussi";
 	public static final String ERROR_UNSUBSCRIBE_LABEL = "Desabonnement non reussi";
 	public static final String CONFLICT_SUBSCRIBE_LABEL = "Impossible s'abonner a son propre compte";
+
+
+	public static final String ERROR_CONTACT_US_LABEL = "Impossible d'envoyer le message pour le moment";
+
 }

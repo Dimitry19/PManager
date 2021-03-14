@@ -51,6 +51,9 @@ public class SwaggerConfig {
 	@Value("${swagger.api.groupname.role}")
 	private String apiGroupNameRole;
 
+	@Value("${swagger.api.groupname.mail}")
+	private String apiGroupNameMail;
+
 /*	@Bean
 	public Docket pmanagerRestApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -71,6 +74,11 @@ public class SwaggerConfig {
 	@Bean
 	public Docket announcesApi() {
 		return	createDocket(apiGroupNameAnnounce,"/pmanager/ws/announce.*");
+	}
+
+	@Bean
+	public Docket mailApi() {
+		return	createDocket(apiGroupNameMail,"/pmanager/ws/mail.*");
 	}
 
 	@Bean

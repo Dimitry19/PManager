@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.common.mail;
 
 
 import cm.packagemanager.pmanager.common.Constants;
+import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.common.utils.Utility;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,7 @@ public class MailSender {
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(MailSender.class);
 
 
+	private static  final  String  TEXT_PLAIN="text/plain";
 	@Value("${mail.smtp.port}")
 	private String PORT;
 
@@ -253,7 +256,17 @@ public class MailSender {
 		return null;
 	}
 
-	private  Response send(final Mail mail) throws IOException {
+	public Response sendMailMessage(String messageSubject,List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC,String from,String username,String message, boolean repyToEnabled){
+		try {
+			final Mail mail =buildMailToSend(messageSubject,  emailSendTo, emailSendCC,emailSendBCC, from, username, message, repyToEnabled);
+			final Response response= send(mail);
+			return response;
+		}catch (Exception e){}
+
+		return null;
+	}
+
+	public  Response send(final Mail mail) throws IOException {
 		final SendGrid sg = new SendGrid(SENDGRID_API_KEY);
 		//sg.addRequestHeader("X-Mock", "true");
 
@@ -269,14 +282,6 @@ public class MailSender {
 	public  Mail buildMailToSend(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC,String from,String username, String message,boolean repyToEnabled) throws IOException {
 		Mail mail = new Mail();
 		try{
-			EmailSendAddresses = formatEmails(emailSendTo);
-			EmailSendAddressesCC = formatEmails(emailSendCC);
-			EmailSendAddressesBCC = formatEmails(emailSendBCC);
-
-
-			String[] EmailSendAddressesArray = EmailSendAddresses.split(SEPARATOR);
-			String[] EmailSendAddressesCCArray = StringUtils.isNotEmpty(EmailSendAddressesCC) ? EmailSendAddressesCC.split(SEPARATOR) : null;
-			String[] EmailSendAddressesBCCArray = StringUtils.isNotEmpty(EmailSendAddressesBCC) ? EmailSendAddressesBCC.split(SEPARATOR) : null;
 
 			Resource resource = new ClassPathResource("/templates/" + templateName);
 
@@ -288,40 +293,8 @@ public class MailSender {
 				from = adminEmail;
 			}
 
-			Email fromEmail = new Email();
-			fromEmail.setName(fromName);
-			fromEmail.setEmail(from);
-			mail.setFrom(fromEmail);
-			mail.setSubject(messageSubject);
-
-			Personalization personalization = new Personalization();
-			for (int i = 0; i < EmailSendAddressesArray.length; i++) {
-				Email to = new Email();
-				to.setName(username);
-				to.setEmail(EmailSendAddressesArray[i]);
-				personalization.addTo(to);
-			}
-
-			if (StringUtils.isNotEmpty(EmailSendAddressesBCC)) {
-				for (int i = 0; i < EmailSendAddressesCCArray.length; i++) {
-					Email cc = new Email();
-					cc.setName(EmailSendAddressesCCArray[i]);
-					cc.setEmail(EmailSendAddressesCCArray[i]);
-					personalization.addCc(cc);
-				}
-			}
-			if (StringUtils.isNotEmpty(EmailSendAddressesBCC)) {
-				for (int i = 0; i < EmailSendAddressesBCCArray.length; i++) {
-					Email bcc = new Email();
-					bcc.setName(EmailSendAddressesBCCArray[i]);
-					bcc.setEmail(EmailSendAddressesBCCArray[i]);
-					personalization.addBcc(bcc);
-				}
-			}
-
-			mail.addPersonalization(personalization);
+			genericPersonalizzation(messageSubject, from, username, mail, emailSendTo, emailSendCC, emailSendBCC);
 			Content content = new Content();
-
 
 			if(variableLabel!=null && StringUtils.isEmpty(message)){
 				variableLabel.put(Constants.SUBJECT, messageSubject.toString());
@@ -333,7 +306,7 @@ public class MailSender {
 				content.setType("text/html");
 				content.setValue(emailTemplateString);
 			}else {
-				content.setType("text/plain");
+				content.setType(TEXT_PLAIN);
 				content.setValue(message);
 			}
 			mail.addContent(content);
@@ -353,8 +326,109 @@ public class MailSender {
 
 		return mail;
 	  }
-	
-	
+
+	public  Mail buildMailToSend(String messageSubject, List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC,String from,String username, String message,boolean repyToEnabled) throws IOException {
+		Mail mail = new Mail();
+		try{
+
+			genericPersonalizzation(messageSubject, from, username, mail, emailSendTo, emailSendCC, emailSendBCC);
+			Content content = new Content();
+			content.setType(TEXT_PLAIN);
+			content.setValue(message);
+			mail.addContent(content);
+
+			/*if (repyToEnabled) {
+				Email replyTo = new Email();
+				replyTo.setName(fromName);
+				replyTo.setEmail(adminEmail);
+				mail.setReplyTo(replyTo);
+			}*/
+
+		}catch (Exception e){
+			logger.info(e.getMessage());
+			e.printStackTrace();
+		}
+
+		return mail;
+	}
+
+
+	public  Mail buildMail(ContactUSVO contactUS, boolean repyToEnabled) throws MailException {
+		Mail mail = new Mail();
+		try{
+
+			List<String> emailSendTo= new ArrayList<>();
+			emailSendTo.add(contactUS.getReceiver());
+
+			List<String> emailSendCC= new ArrayList<>();
+			emailSendCC.add(contactUS.getSender());
+			genericPersonalizzation(contactUS.getSubject(), contactUS.getSender(), contactUS.getPseudo(), mail, emailSendTo, emailSendCC, null);
+			Content content = new Content();
+			content.setType(TEXT_PLAIN);
+			content.setValue(contactUS.getContent());
+			mail.addContent(content);
+
+			if (repyToEnabled) {
+				Email replyTo = new Email();
+				replyTo.setName(contactUS.getPseudo());
+				replyTo.setEmail(contactUS.getSender());
+				mail.setReplyTo(replyTo);
+			}
+
+		}catch (Exception e){
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		return mail;
+	}
+
+	private void genericPersonalizzation(String messageSubject, String from, String username, Mail mail, List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC) {
+
+		EmailSendAddresses = formatEmails(emailSendTo);
+		EmailSendAddressesCC = formatEmails(emailSendCC);
+		EmailSendAddressesBCC = formatEmails(emailSendBCC);
+
+
+		String[] emailSendAddressesArray = EmailSendAddresses.split(SEPARATOR);
+		String[] emailSendAddressesCCArray = StringUtils.isNotEmpty(EmailSendAddressesCC) ? EmailSendAddressesCC.split(SEPARATOR) : null;
+		String[] emailSendAddressesBCCArray = StringUtils.isNotEmpty(EmailSendAddressesBCC) ? EmailSendAddressesBCC.split(SEPARATOR) : null;
+
+		Email fromEmail = new Email();
+		fromEmail.setName(username);
+		fromEmail.setEmail(adminEmail);
+		mail.setFrom(fromEmail);
+		mail.setSubject(messageSubject);
+
+		Personalization personalization = new Personalization();
+		for (int i = 0; i < emailSendAddressesArray.length; i++) {
+			Email to = new Email();
+			to.setName(adminUsername);
+			to.setEmail(emailSendAddressesArray[i]);
+			personalization.addTo(to);
+		}
+
+		if (StringUtils.isNotEmpty(EmailSendAddressesBCC)) {
+			for (int i = 0; i < emailSendAddressesCCArray.length; i++) {
+				Email cc = new Email();
+				cc.setName(emailSendAddressesCCArray[i]);
+				cc.setEmail(emailSendAddressesCCArray[i]);
+				personalization.addCc(cc);
+			}
+		}
+		if (StringUtils.isNotEmpty(EmailSendAddressesBCC)) {
+			for (int i = 0; i < emailSendAddressesBCCArray.length; i++) {
+				Email bcc = new Email();
+				bcc.setName(emailSendAddressesBCCArray[i]);
+				bcc.setEmail(emailSendAddressesBCCArray[i]);
+				personalization.addBcc(bcc);
+			}
+		}
+
+		mail.addPersonalization(personalization);
+	}
+
+
 	private void hanbleAttachments(Mail mail, String type, String disposition,  String filePath,String content) throws IOException {
 		
 		if(mail==null) return;
