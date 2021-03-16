@@ -14,7 +14,7 @@ public class ContactUSDTO {
 	private String sender;
 
 	@ApiModelProperty(notes = "Email receiver",required = true)
-	@Email(message = "Email : format non valide")
+	//@Email(message = "Email : format non valide")
 	//@NotNull(message = "Valoriser le destinataire")
 	@Value("${mail.admin.email}")
 	private String receiver;
