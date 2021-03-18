@@ -9,6 +9,7 @@ import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
+import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.*;
 import org.apache.logging.log4j.message.MessageFormatMessage;
@@ -59,7 +60,9 @@ public class AnnounceVO extends WSCommonResponseVO {
 	private TransportEnum transport;
 
 	private BigDecimal price;
+
 	private BigDecimal goldPrice;
+
 	private BigDecimal preniumPrice;
 
 	private BigDecimal weigth;
@@ -82,8 +85,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	private AnnounceIdVO announceId;
 
-	private String username;
-	private String email;
+	private UserInfo userInfo;
 
 	public AnnounceVO(){ super();}
 
@@ -246,8 +248,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	public void setUser(UserVO user) {
 		this.user = user;
-		setUsername(user.getUsername());
-		setEmail(user.getEmail());
+		userInfo= new UserInfo(user);
 	}
 
 	@JsonIgnore
@@ -293,27 +294,16 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.announceId = announceId;
 	}
 
-
-
 	@Transient
-	@JsonProperty
-	public String getUsername() {
-		return username;//.getUsername();
+	public UserInfo getUserInfo() {
+		return userInfo;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
 	}
 
-	@Transient
-	@JsonProperty
-	public String getEmail() {
-		return email;//.getUsername();
-	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	
 	@Transient
 	@JsonProperty
@@ -375,6 +365,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	@Override
 	public String toString() {
-		return "AnnounceVO{" + "id=" + id + ", departure='" + departure + '\'' + ", arrival='" + arrival + '\'' + ", startDate=" + startDate + ", endDate=" + endDate + ", transport=" + transport + ", price=" + price + ", goldPrice=" + goldPrice + ", preniumPrice=" + preniumPrice + ", weigth=" + weigth + ", announceType=" + announceType + ", user=" + user + ", status=" + status + ", cancelled=" + cancelled + ", description='" + description + '\'' + ", descriptionTransport='" + descriptionTransport + '\'' + ", category=" + category + ", messages=" + messages + ", announceId=" + announceId + ", username='" + username + '\'' + ", email='" + email + '\'' + '}';
+		return "AnnounceVO{" + "id=" + id + ", departure='" + departure + '\'' + ", arrival='" + arrival + '\'' + ", startDate=" + startDate + ", endDate=" + endDate + ", transport=" + transport + ", price=" + price + ", goldPrice=" + goldPrice + ", preniumPrice=" + preniumPrice + ", weigth=" + weigth + ", announceType=" + announceType + ", user=" + user + ", status=" + status + ", cancelled=" + cancelled + ", description='" + description + '\'' + ", descriptionTransport='" + descriptionTransport + '\'' + ", category=" + category + ", messages=" + messages + ", announceId=" + announceId  + '\'' + '}';
 	}
 }
