@@ -81,6 +81,8 @@ public class CommonController {
 	public static final String ANNOUNCE_WS_BY_USER= "/user";
 	public static final String ANNOUNCE_WS_UPDATE="/update";
 	public static final String ANNOUNCE_WS_ALL="/all";
+	public static final String ANNOUNCE_WS_RESERVATION="/reserve";
+	public static final String ANNOUNCE_WS_DELETE_RESERVATION_BY_ID= "/reserve";
 
 
 

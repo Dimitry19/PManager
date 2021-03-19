@@ -2,7 +2,9 @@ package cm.packagemanager.pmanager.ws.controller.rest.announce;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.announce.service.AnnounceService;
+import cm.packagemanager.pmanager.announce.service.ReservationService;
 import cm.packagemanager.pmanager.announce.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
@@ -12,6 +14,7 @@ import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
+import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
@@ -52,6 +55,9 @@ public class AnnounceController extends CommonController {
 
 	@Autowired
 	protected AnnounceService announceService;
+
+	@Autowired
+	protected ReservationService reservationService;
 
 	@Autowired
 	ServiceAnnounce announceTester;
@@ -392,7 +398,78 @@ public class AnnounceController extends CommonController {
 
 	}
 
-//https://examples.javacodegeeks.com/spring-boot-pagination-tutorial/
+
+	@RequestMapping(value =ANNOUNCE_WS_RESERVATION,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	public @ResponseBody
+	ReservationVO reservation(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ReservationDTO reservation) throws Exception{
+
+		try{
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			logger.info("add reservation request in");
+
+			createOpentracingSpan("AnnounceController - reservation");
+			ReservationVO reservationVO =reservationService.addReservation(reservation);
+			if(reservationVO==null){
+				response.setStatus(org.apache.http.HttpStatus.SC_EXPECTATION_FAILED);
+			}else{
+				response.setStatus(org.apache.http.HttpStatus.SC_CREATED);
+
+			}
+			return reservationVO;
+
+		}catch (Exception e){
+				logger.error(e.getMessage());
+				throw e;
+		}finally {
+			finishOpentracingSpan();
+		}
+	}
+
+
+	@ApiOperation(value = "Delete reservation",response = Response.class)
+	@RequestMapping(value =ANNOUNCE_WS_DELETE_RESERVATION_BY_ID,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	public Response deleteReservation(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		Response pmResponse = null;
+
+		try{
+			logger.info("delete reservation request in");
+			createOpentracingSpan("AnnounceController -get deleteReservation");
+
+			if (reservationService.deleteReservation(id)){
+				pmResponse=new Response();
+				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+				pmResponse.setRetDescription(WebServiceResponseCode.RESERV_OK_LABEL);
+			}
+		}
+		catch (UserException e){
+			//response.getWriter().write(e.getMessage());
+			logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
+			throw e;
+		}
+		finally {
+			finishOpentracingSpan();
+		}
+		return pmResponse;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//https://examples.javacodegeeks.com/spring-boot-pagination-tutorial/
 	//@GetMapping(value = ANNOUNCE_WS_ALL, produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<ResponseDTO> getAllMovies(
 			@RequestParam(name = "pageNumber", defaultValue = "0") final int pageNumber,    // In spring the default page number starts with '0'.
@@ -426,4 +503,5 @@ public class AnnounceController extends CommonController {
 		}
 		return responseEntity;
 	}
+
 }

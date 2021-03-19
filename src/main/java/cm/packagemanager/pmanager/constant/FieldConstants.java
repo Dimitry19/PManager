@@ -10,5 +10,6 @@ public final class FieldConstants {
 	public static final int AIR_ID_LEN = 5;
 	public static final String GOOGLE_PROVIDER ="Google";
 	public static final String FACEBOOK_PROVIDER ="Facebook";
+	public static final String DEFAULT_CATEGORY ="-";
 
 }

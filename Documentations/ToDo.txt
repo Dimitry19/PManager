@@ -1,0 +1,2 @@
+1-Gerer la cancellazione Announces-Reservation
+2-Gerer la validazione Announces-Reservation

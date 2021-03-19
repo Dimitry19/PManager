@@ -10,4 +10,12 @@ public class BigDecimalUtils {
 
 		return new BigDecimal(value);
 	}
+
+	public static boolean greatherThan( BigDecimal compare1, BigDecimal compare2){
+		return compare1.compareTo(compare2)>0;
+	}
+
+	public static boolean lessThan( BigDecimal compare1, BigDecimal compare2){
+		return compare1.compareTo(compare2)<0;
+	}
 }

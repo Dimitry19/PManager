@@ -29,7 +29,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="Entities" />
-          <factory-entry name="PManager" value="f5601717-7195-450b-ad74-d596ce5860c7" />
+          <factory-entry name="PManager" value="5bd01531-bd90-4f79-9ad4-e345b761356f" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
