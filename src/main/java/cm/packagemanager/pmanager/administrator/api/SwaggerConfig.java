@@ -54,6 +54,9 @@ public class SwaggerConfig {
 	@Value("${swagger.api.groupname.mail}")
 	private String apiGroupNameMail;
 
+	@Value("${swagger.api.groupname.reservation}")
+	private String apiGroupNameReservation;
+
 /*	@Bean
 	public Docket pmanagerRestApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -103,13 +106,18 @@ public class SwaggerConfig {
 		return	createDocket(apiGroupNameRole,"/pmanager/ws/role.*");
 	}
 
+	@Bean
+	public Docket reservationApi() {
+		return	createDocket(apiGroupNameReservation,"/pmanager/ws/reservation.*");
+	}
+
 	private ApiInfo metaData() {
 		Contact contact = new Contact("Dimitri S.", "", "packagemanager@gmail.com");
 
-		return new ApiInfoBuilder().title("Package Manager REST API")
-				.description("Package Manager REST API reference for developers")
+		return new ApiInfoBuilder().title("Tr@vel Post REST API")
+				.description("Tr@vel Post REST API reference for developers")
 				.termsOfServiceUrl("")
-				.contact(contact).license("Package Manager License")
+				.contact(contact).license("Tr@vel Post License")
 				.licenseUrl("").version("1.0").build();
 	}
 

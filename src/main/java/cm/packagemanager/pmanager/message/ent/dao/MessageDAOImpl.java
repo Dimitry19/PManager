@@ -8,9 +8,7 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.QueryUtils;
-import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
@@ -46,18 +44,11 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 	@Override
 	public int count(PageBy pageBy) throws BusinessResourceException {
 		logger.info("Message: count");
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		Query query = session.createQuery("from MessageVO ");
-		//query.setFirstResult(pageBy.getPage());
-		//query.setMaxResults(pageBy.getSize());
-
-		int count = CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
-		return count;
+		return  count(MessageVO.class,pageBy);
 	}
 
 	@Override
-	public MessageVO update(UpdateMessageDTO mdto) throws BusinessResourceException, UserException {
+	public MessageVO update(UpdateMessageDTO mdto) throws Exception {
 		logger.info("Message: update");
 
 		UserVO user = userDAO.findByUsername(mdto.getUsername());
@@ -81,13 +72,15 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 	}
 
 	@Override
-	public MessageVO addMessage(MessageDTO mdto) throws BusinessResourceException {
+	public MessageVO addMessage(MessageDTO mdto) throws Exception {
+
 		logger.info("Message: add message");
 
 		UserVO user = userDAO.findByOnlyUsername(mdto.getUsername(),false);
-	       if(user==null){
-	            user = userDAO.findByEmail(mdto.getUsername());
-	       }
+
+		if(user==null){
+            user = userDAO.findByEmail(mdto.getUsername());
+        }
 		AnnounceVO announce=announceDAO.findById(mdto.getAnnounceId());
 
 		if(user!=null && announce!=null){
@@ -109,46 +102,30 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 	}
 
 	@Override
-	public List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws BusinessResourceException, UserException {
+	public List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws Exception {
 
 		if (user==null) return null;
-		List<MessageVO>messages=messagesByUser(user.getId(),pageBy);
-		return  messages;
+		return messagesByUser(user.getId(),pageBy);
 	}
 
 	@Override
-	public List<MessageVO> messagesByUser(Long id,PageBy pageBy) throws BusinessResourceException, UserException {
+	public List<MessageVO> messagesByUser(Long id,PageBy pageBy) throws Exception {
 		logger.info("Message: user message");
 
 		if (id==null) return null;
-		Session session=sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		Query query=session.createQuery("from MessageVO  m where m.user.id=:userId");
-		query.setParameter("userId",id);
-		query.setFirstResult(pageBy.getPage());
-		query.setMaxResults(pageBy.getSize());
-		List<MessageVO>messages=query.getResultList();
-		return  messages;
+		return findByUser(MessageVO.class,id,pageBy);
 	}
 
 	@Override
-	public List<MessageVO> messages(PageBy pageBy) throws BusinessResourceException {
+	public List<MessageVO> messages(PageBy pageBy) throws Exception {
 		logger.info("Message: all message");
 
-		Session session=sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		Query query=session.createNamedQuery(MessageVO.FINDALL);
-		query.setFirstResult(pageBy.getPage());
-		query.setMaxResults(pageBy.getSize());
-
-		List<MessageVO>messages=query.getResultList();
-		return  messages;
+		return findBy(MessageVO.FINDALL,MessageVO.class, null, null, pageBy);
 	}
 
 	@Override
 	public MessageVO findById(MessageIdVO id) throws BusinessResourceException {
 		logger.info("Message: findBy");
-
 		Session session = this.sessionFactory.getCurrentSession();
 		MessageVO message=(MessageVO) manualFilter(session.find(MessageVO.class,id));
 		return message;
@@ -182,7 +159,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 			if(message!=null) {
 				message.setCancelled(true);
 				session.merge(message);
-				message = (MessageVO) session.get(MessageVO.class, messageId);
+				message = session.get(MessageVO.class, messageId);
 				result= (message!=null) && (message.isCancelled());
 			}
 		}catch (Exception e){

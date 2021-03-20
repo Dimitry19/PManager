@@ -94,6 +94,7 @@ public class HibernateConfiguration {
 	public HibernateTransactionManager transactionManager() {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(sessionFactory().getObject());
+
 		return transactionManager;
 	}
 }

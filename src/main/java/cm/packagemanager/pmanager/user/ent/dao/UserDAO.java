@@ -16,13 +16,13 @@ import java.util.List;
 public interface UserDAO extends CommonDAO {
 
 
-	UserVO findByUsername(String username) throws BusinessResourceException, UserException;
+	UserVO findByUsername(String username) throws Exception;
 
-	UserVO findByOnlyUsername(String username, boolean isRegistration) throws BusinessResourceException;
+	UserVO findByOnlyUsername(String username, boolean isRegistration) throws Exception;
 
 	List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException;
 
-	UserVO findByToken(String token) throws BusinessResourceException;
+	UserVO findByToken(String token) throws Exception;
 
 	UserVO findById(Long userId) throws UserException;
 
@@ -42,11 +42,11 @@ public interface UserDAO extends CommonDAO {
 	public  List<UserVO>  subscribers(Long  userId) throws UserException;
 
 
-	public List<UserVO> getAllUsers()  throws BusinessResourceException;
+	public List<UserVO> getAllUsers() throws Exception;
 
 	public List<UserVO> getAllUsersToConfirm()  throws BusinessResourceException;
 
-	public List<UserVO> getAllUsers(PageBy pageBy)  throws BusinessResourceException;
+	public List<UserVO> getAllUsers(PageBy pageBy) throws Exception;
 
 	//public UserVO getUser(int id)  throws BusinessResourceException;
 
@@ -81,7 +81,7 @@ public interface UserDAO extends CommonDAO {
 
 	public boolean deleteUser(UserVO user) throws BusinessResourceException, UserException;
 
-	public boolean checkLogin(LoginDTO lr ) throws BusinessResourceException, UserException;
+	public boolean checkLogin(LoginDTO lr ) throws Exception;
 
 	List<RatingCountVO> findRatingCounts(UserVO user);
 

@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.ws.controller.rest;
 
 import cm.packagemanager.pmanager.administrator.api.ApiError;
+import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.ResponseException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
@@ -42,6 +43,18 @@ public class CommonController {
 	public static final String DEFAULT_PAGE = "0";
 	public static final String HEADER_TOTAL = "x-total-count";
 
+
+	public static final String CREATE="/create";
+	public static final String ADD="/add";
+	public static final String UPDATE="/update";
+	public static final String DELETE="/delete";
+	public static final String BY_USER="/user";
+	public static final String FIND="/find";
+	public static final String VALIDATE="/validate";
+
+
+
+
 	/************ USER REQUEST*************/
 	public static final String USER_WS="/ws/user/*";
 	public static final String USER_WS_REGISTRATION="/register";
@@ -50,10 +63,8 @@ public class CommonController {
 	public static final String USER_WS_USERS="/users";
 	public static final String USER_WS_USERS_PAGE_NO="/users/{pageno}";
 	public static final String USER_WS_MAIL="/mail";
-	public static final String USER_WS_DELETE_USER= "/delete";
 	public static final String USER_WS_ROLE="/role";
 	public static final String USER_WS_UPDATE_ID="/update/{id}";
-	public static final String USER_WS_UPDATE="/update";
 	public static final String USER_WS_PASSWORD="/password";
 	public static final String USER_WS_USER_ID="/info/{id}";
 	public static final String SUBSCRIPTIONS_WS="/subscriptions";
@@ -73,27 +84,19 @@ public class CommonController {
 	/************ ANNOUNCE REQUEST*************/
 	public static final String ANNOUNCE_WS="/ws/announce/*";
 	public static final String ANNOUNCES_WS="/announces";
-	public static final String ANNOUNCE_WS_CREATE="/create";
-	public static final String ANNOUNCE_WS_FIND="/find";
 	public static final String ANNOUNCE_WS_USER_ID_PAGE_NO="/announces/{pageno}";
-	public static final String ANNOUNCE_WS_DELETE= "/delete";
 	public static final String ANNOUNCE_WS_BY_ID= "/announce";
-	public static final String ANNOUNCE_WS_BY_USER= "/user";
 	public static final String ANNOUNCE_WS_BY_TYPE= "/type";
-	public static final String ANNOUNCE_WS_UPDATE="/update";
 	public static final String ANNOUNCE_WS_ALL="/all";
-	public static final String ANNOUNCE_WS_RESERVATION="/reserve";
-	public static final String ANNOUNCE_WS_DELETE_RESERVATION_BY_ID= "/reserve";
+
 
 
 
 	/************ MESSAGE REQUEST*************/
 	public static final String MESSAGE_WS="/ws/message/*";
 	public static final String MESSAGES_WS="/messages";
-	public static final String WS_ADD_MESSAGE="/add";
+
 	public static final String MESSAGE_WS_BY_USER= "/user";
-	public static final String MESSAGE_WS_UPDATE="/update";
-	public static final String MESSAGE_WS_DELETE= "/delete";
 	public static final String MESSAGE_WS_FIND="/find";
 	public static final String MESSAGE_WS_USER_ID_PAGE_NO="/messages/{pageno}";
 	public static final String MESSAGE_WS_ALL="/all";
@@ -127,6 +130,10 @@ public class CommonController {
 	public static final String MAIL_WS="/ws/mail/*";
 	public static final String CONTACT_US_MAIL_WS="/contactus";
 
+
+	/******** RESERVATION REQUEST ********/
+	public static final String RESERVATION_WS="/ws/reservation/*";
+	public static final String RESERVATION_WS_BY_ANNOUNCE="/announce";
 
 
 	@Autowired
@@ -194,7 +201,7 @@ public class CommonController {
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler({Exception.class,ValidationException.class})
+	@ExceptionHandler({Exception.class,ValidationException.class, BusinessResourceException.class})
 	public List<ApiError> handleOtherException(Exception ex) {
 		return Collections.singletonList(new ApiError(ex));
 	}

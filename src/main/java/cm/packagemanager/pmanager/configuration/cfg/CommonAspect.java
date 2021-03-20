@@ -27,7 +27,7 @@ public class CommonAspect {
 	private static Logger logger = LoggerFactory.getLogger(CommonAspect.class);
 
 		@Before(value = "execution(* cm.packagemanager.pmanager.user.service.UserService.login(..)) && args(lr)")
-		public void beforeAdvice(JoinPoint joinPoint, LoginDTO lr) throws UserException {
+		public void beforeAdvice(JoinPoint joinPoint, LoginDTO lr) throws Exception {
 
 			if(!userService.checkLogin(lr)){
 				throw new UserException("Le compte n'est pas actif");

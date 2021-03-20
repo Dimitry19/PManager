@@ -67,7 +67,7 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 
-	public boolean checkLogin(LoginDTO lr) throws BusinessResourceException, UserException {
+	public boolean checkLogin(LoginDTO lr) throws Exception {
 		return userDAO.checkLogin(lr);
 	}
 
@@ -136,11 +136,11 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 
-	public List<UserVO> getAllUsers(PageBy pageBy)throws UserException {
+	public List<UserVO> getAllUsers(PageBy pageBy) throws Exception {
 		return userDAO.getAllUsers(pageBy);
 	}
 
-	public List<UserVO> getAllUsers()throws UserException {
+	public List<UserVO> getAllUsers()throws Exception {
 		return userDAO.getAllUsers();
 	}
 
@@ -205,12 +205,12 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 	@Transactional(readOnly = true)
-	public UserVO findByUsername(String username, boolean isReg) {
+	public UserVO findByUsername(String username, boolean isReg) throws Exception {
 		return userDAO.findByOnlyUsername(username,isReg);
 	}
 
 	@Transactional(readOnly = true)
-	public UserVO findByToken(String token) {
+	public UserVO findByToken(String token) throws Exception {
 		return userDAO.findByToken(token);
 	}
 

@@ -2,9 +2,7 @@ package cm.packagemanager.pmanager.ws.controller.rest.announce;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.announce.service.AnnounceService;
-import cm.packagemanager.pmanager.announce.service.ReservationService;
 import cm.packagemanager.pmanager.announce.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
@@ -15,7 +13,6 @@ import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
-import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
@@ -57,8 +54,6 @@ public class AnnounceController extends CommonController {
 	@Autowired
 	protected AnnounceService announceService;
 
-	@Autowired
-	protected ReservationService reservationService;
 
 	@Autowired
 	ServiceAnnounce announceTester;
@@ -80,13 +75,12 @@ public class AnnounceController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful retrieval",
 					response = AnnounceVO.class, responseContainer = "Object") })
-	@RequestMapping(value = ANNOUNCE_WS_CREATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	@RequestMapping(value =CREATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	AnnounceVO  create(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceDTO ar) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		AnnounceVO announce = null;
-		Response res=new Response();
 
 		try{
 			createOpentracingSpan("AnnounceController -create");
@@ -125,7 +119,7 @@ public class AnnounceController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful retrieval",
 					response = AnnounceVO.class, responseContainer = "Object") })
-	@PostMapping(value = ANNOUNCE_WS_UPDATE)
+	@PostMapping(value = UPDATE)
 	AnnounceVO  update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -173,7 +167,7 @@ public class AnnounceController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful retrieval",
 					response = ResponseEntity.class, responseContainer = "List") })
-	@RequestMapping(value =ANNOUNCE_WS_FIND,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	@RequestMapping(value =FIND,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody ResponseEntity<PaginateResponse> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchDTO asdto,
 	                                                           @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
 	                                                           @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
@@ -232,7 +226,7 @@ public class AnnounceController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful retrieval",
 					response = ResponseEntity.class, responseContainer = "List") })
-	@RequestMapping(value =ANNOUNCE_WS_BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	@RequestMapping(value =BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 	public ResponseEntity<PaginateResponse> announcesByUser(HttpServletResponse response, HttpServletRequest request,
 	                                                        @RequestParam @Valid Long userId,
 	                                                        @RequestParam (required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
@@ -252,15 +246,18 @@ public class AnnounceController extends CommonController {
 
 			if (userId!=null){
 				int count = announceService.count(null,pageBy);
-				if(count==0){
-					headers.add(HEADER_TOTAL, Long.toString(count));
-				}else{
-					announces=announceService.findByUser(userId,pageBy);
-					if(CollectionsUtils.isNotEmpty(announces)){
-						paginateResponse.setCount(count);
-					}
-					paginateResponse.setResults(announces);
-					headers.add(HEADER_TOTAL, Long.toString(announces.size()));
+				switch (count) {
+					case 0:
+						headers.add(HEADER_TOTAL, Long.toString(count));
+						break;
+					default:
+						announces = announceService.findByUser(userId, pageBy);
+						if (CollectionsUtils.isNotEmpty(announces)) {
+							paginateResponse.setCount(count);
+						}
+						paginateResponse.setResults(announces);
+						headers.add(HEADER_TOTAL, Long.toString(announces.size()));
+						break;
 				}
 			}else response.getWriter().write("Utilisateur non existant");
 		}
@@ -347,7 +344,7 @@ public class AnnounceController extends CommonController {
 	 * @throws Exception
 	 */
 	@ApiOperation(value = "Delete an announce with an ID",response = Response.class)
-	@RequestMapping(value =ANNOUNCE_WS_DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	@RequestMapping(value =DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -461,73 +458,6 @@ public class AnnounceController extends CommonController {
 		//return announceService.announces(pageno,size);
 
 	}
-
-
-	@RequestMapping(value =ANNOUNCE_WS_RESERVATION,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
-	public @ResponseBody
-	ReservationVO reservation(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ReservationDTO reservation) throws Exception{
-
-		try{
-			response.setHeader("Access-Control-Allow-Origin", "*");
-			logger.info("add reservation request in");
-
-			createOpentracingSpan("AnnounceController - reservation");
-			ReservationVO reservationVO =reservationService.addReservation(reservation);
-			if(reservationVO==null){
-				response.setStatus(org.apache.http.HttpStatus.SC_EXPECTATION_FAILED);
-			}else{
-				response.setStatus(org.apache.http.HttpStatus.SC_CREATED);
-
-			}
-			return reservationVO;
-
-		}catch (Exception e){
-				logger.error(e.getMessage());
-				throw e;
-		}finally {
-			finishOpentracingSpan();
-		}
-	}
-
-
-	@ApiOperation(value = "Delete reservation",response = Response.class)
-	@RequestMapping(value =ANNOUNCE_WS_DELETE_RESERVATION_BY_ID,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
-	public Response deleteReservation(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
-
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		Response pmResponse = null;
-
-		try{
-			logger.info("delete reservation request in");
-			createOpentracingSpan("AnnounceController -get deleteReservation");
-
-			if (reservationService.deleteReservation(id)){
-				pmResponse=new Response();
-				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-				pmResponse.setRetDescription(WebServiceResponseCode.RESERV_OK_LABEL);
-			}
-		}
-		catch (UserException e){
-			//response.getWriter().write(e.getMessage());
-			logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
-			throw e;
-		}
-		finally {
-			finishOpentracingSpan();
-		}
-		return pmResponse;
-	}
-
-
-
-
-
-
-
-
-
-
-
 
 
 

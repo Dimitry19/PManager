@@ -9,8 +9,9 @@ package cm.packagemanager.pmanager.announce.ent.dao;
 import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.announce.ent.vo.ProductCategoryVO;
-import cm.packagemanager.pmanager.announce.service.ProductCategoryService;
+import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
+import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
+import cm.packagemanager.pmanager.announce.service.CategoryService;
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
@@ -20,7 +21,6 @@ import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.*;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
@@ -46,7 +46,7 @@ import static cm.packagemanager.pmanager.common.Constants.*;
 
 
 @Repository
-public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
+public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(AnnounceDAOImpl.class);
 
@@ -60,7 +60,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	private UserDAO userDAO;
 
 	@Autowired
-	ProductCategoryService productCategoryService;
+	CategoryService categoryService;
 
 	@Autowired
 	Constants constants;
@@ -68,89 +68,58 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	@Autowired
 	QueryUtils queryUtils;
 
+
 	@Override
 	@Transactional(readOnly = true)
 	public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws Exception {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		Query query =null;
+		logger.info(" Announce - count");
 		if(announceSearch!=null){
+			Session session = this.sessionFactory.getCurrentSession();
+			session.enableFilter(FilterConstants.CANCELLED);
 			String where=composeQuery(announceSearch, "a");
-			 query=session.createQuery("from AnnounceVO  as a "+ where);
+			Query query=session.createQuery("from AnnounceVO  as a "+ where);
 			composeQueryParameters(announceSearch,query);
+			return CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
 		}else{
-			query = session.createQuery("from AnnounceVO");
+			return count(AnnounceVO.class,pageBy);
 		}
 
-		return CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<AnnounceVO> announces(PageBy pageBy) throws BusinessResourceException {
+	public List<AnnounceVO> announces(PageBy pageBy) throws Exception {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		Query query = session.createQuery("from AnnounceVO order by startDate desc");
-		query.setFirstResult(pageBy.getPage());
-		query.setMaxResults(pageBy.getSize());
-
-
-		List<AnnounceVO> announces =query.list();
-		return announces;
+		return allAndOrderBy(AnnounceVO.class, "startDate",true, pageBy);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<AnnounceVO> announces(int page, int size) throws BusinessResourceException {
+	public List<AnnounceVO> announces(int page, int size) throws Exception {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		Query query = session.createQuery("from AnnounceVO order by startDate desc");
-		query.setFirstResult(page);
-		query.setMaxResults(size);
-
-		List<AnnounceVO> announces = query.list();
-
-		return announces;
+		PageBy pageBy = new PageBy(page,size);
+		return allAndOrderBy(AnnounceVO.class, "startDate",true, pageBy);
 	}
 
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws BusinessResourceException, UserException {
+	public List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws Exception {
 
 		UserVO user = userDAO.findById(userId);
 		if(user==null){
 			throw new UserException("Aucun utilisateur trouvé avec cet id " +userId);
 		}
+        return  findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER,AnnounceVO.class,userId, pageBy);
 
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		Query query=session.createQuery(AnnounceVO.SQL_FIND_BY_USER,AnnounceVO.class);
-		query.setParameter("userId", userId);
-		query.setFirstResult(pageBy.getPage());
-		query.setMaxResults(pageBy.getSize());
-
-		List announces=query.getResultList();
-		return announces;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws BusinessResourceException, UserNotFoundException, RecordNotFoundException, UserException {
+	public List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws Exception {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		Query query=session.createNamedQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class);
-		query.setParameter("type", type);
-		query.setFirstResult(pageBy.getPage());
-		query.setMaxResults(pageBy.getSize());
-
-		List announces=query.getResultList();
-		return announces;
-
+		return  findBy(AnnounceVO.FINDBYTYPE,AnnounceVO.class, type, "type", pageBy);
 	}
 
 	@Override
@@ -164,7 +133,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public AnnounceVO create(AnnounceDTO adto) throws BusinessResourceException, Exception {
+	public AnnounceVO create(AnnounceDTO adto) throws  Exception {
 
 		if(adto!=null){
 
@@ -228,8 +197,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		composeQueryParameters(announceSearchDTO,query);
 		query.setFirstResult(pageBy.getPage());
 		query.setMaxResults(pageBy.getSize());
-		List announces = query.list();
-		return announces;
+		return  query.list();
 	}
 
 
@@ -238,9 +206,9 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public boolean delete(Long id) throws BusinessResourceException {
 		logger.info("Announce: delete");
-		//deleteObject(id);
-		delete(AnnounceVO.class,id,true);
-		return true;//updateDelete(id);
+
+		//delete(AnnounceVO.class,id,true);
+		return updateDelete(id);
 	}
 
 
@@ -277,7 +245,8 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		announce.setPrice(price);
 		announce.setPreniumPrice(preniumPrice);
 		announce.setGoldPrice(goldenPrice);
-		announce.setWeigth(weigth);
+		announce.setWeight(weigth);
+		announce.setRemainWeight(weigth);
 		announce.setUser(user);
 		announce.setStartDate(startDate);
 		announce.setEndDate(endDate);
@@ -288,6 +257,34 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 		announce.setAnnounceType(adto.getAnnounceType());
 		setProductCategory(announce,adto.getCategory());
 		announce.setTransport(adto.getTransport());
+	}
+
+	public List<ReservationVO> findReservations(Long id) throws Exception {
+
+		try {
+			return findBy(ReservationVO.FINDBYANNOUNCE,ReservationVO.class,id, "announceId", null);
+		}catch (Exception e) {
+			logger.error("Erreur durant la recuperation des reservations liées à l'annonce id={}",id);
+			throw e;
+		}
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public boolean deleteReservations(Long id) throws Exception {
+
+		try {
+			Session session=sessionFactory.getCurrentSession();
+			 List<ReservationVO> reservations=findReservations(id);
+			for (ReservationVO reservation: reservations) {
+				reservation.setCancelled(true);
+				session.merge(reservation);
+			}
+			session.flush();
+		}catch (Exception e) {
+			logger.error("Erreur durant la recuperation des reservations liées à l'annonce id={}",id);
+			throw e;
+		}
+		return true;
 	}
 
 	@Override
@@ -324,8 +321,9 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 				announce.updateDeleteChildrens();
 				announce.setCancelled(true);
 				session.merge(announce);
-				announce = (AnnounceVO) session.get(AnnounceVO.class, id);
-				result= (announce!=null) && (announce.isCancelled());
+				announce =session.get(AnnounceVO.class, id);
+				result= (announce!=null) && (announce.isCancelled()) && deleteReservations(id);
+
 			}
 		}catch (Exception e){
 			throw new BusinessResourceException(e.getMessage());
@@ -370,8 +368,7 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 	}
 
 	private void setProductCategory(AnnounceVO announce,String category){
-
-		ProductCategoryVO productCategory= productCategoryService.findByCode(category);
+		CategoryVO productCategory= categoryService.findByCode(category);
 		announce.setCategory(productCategory);
 	}
 

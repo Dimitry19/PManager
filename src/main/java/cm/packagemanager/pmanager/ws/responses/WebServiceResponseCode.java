@@ -32,7 +32,11 @@ public class WebServiceResponseCode
 	public static final String UNSUBSCRIBE_LABEL = "Desabonnement reussi";
 
 	public static final String CONTACT_US_LABEL = "Merci pour votre correspondance, vous serez recontacté";
-	public static final String RESERV_OK_LABEL = "Votre reservation a été correctement effacé";
+
+
+	public static final String RESERV_CREATE_LABEL="Reservation creee correctement";
+	public static final String UPDATED_RESERV_LABEL = "La reservation ete modifiée correctement";
+	public static final String CANCELLED_RESERV_OK_LABEL = "Votre reservation a été correctement effacé";
 
 	// NOK LABEL
 	public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre elimine car inexistant";
@@ -68,6 +72,10 @@ public class WebServiceResponseCode
 
 
 	public static final String ERROR_CONTACT_US_LABEL = "Impossible d'envoyer le message pour le moment";
-	public static final String RESERV_NOK_LABEL = "Votre reservation n'a été effacé";
+
+
+	public static final String ERROR_RESERV_CREATE_LABEL = "La reservation n'a pas pu etre cree";
+	public static final String ERROR_DELETE_RESERV_CODE_LABEL = "La reservation ne peut pas etre eliminee car inexistant";
+	public static final String ERROR_UPDATE_RESERV_CODE_LABEL = "La reservation ne peut pas etre ajournee car inexistant";
 
 }

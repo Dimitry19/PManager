@@ -60,7 +60,7 @@ public class AnnounceServiceImpl implements AnnounceService {
 
 	public List<AnnounceVO> findByUser(Long userId,PageBy pageBy) throws Exception {
 
-		return announceDAO.findByUser(userId, pageBy);
+		return announceDAO.findByUser(userId,pageBy);
 	}
 
 	public List<AnnounceVO> findByType(AnnounceType type,PageBy pageBy) throws Exception {
@@ -72,7 +72,7 @@ public class AnnounceServiceImpl implements AnnounceService {
 		return announceDAO.delete(id);
 	}
 
-	public List<AnnounceVO> announces(PageBy pageBy ) {
+	public List<AnnounceVO> announces(PageBy pageBy ) throws Exception {
 		return announceDAO.announces(pageBy);
 	}
 

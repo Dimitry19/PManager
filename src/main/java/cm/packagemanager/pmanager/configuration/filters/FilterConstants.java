@@ -8,4 +8,5 @@ public class FilterConstants {
 	public static final String  FILTER_WHERE_ANNOUNCE_CANCELLED ="exists (select id from announce where cancelled = false)";
 	public static final String  FILTER_WHERE_MESSAGE_CANCELLED ="exists (select id,token from message where cancelled = false)";
 	public static final String  FILTER_WHERE_USER_CANCELLED ="exists (select id from user where cancelled = false)";
+	public static final String  FILTER_WHERE_RESERVATION_CANCELLED ="exists (select id from reservation where cancelled = false)";
 }

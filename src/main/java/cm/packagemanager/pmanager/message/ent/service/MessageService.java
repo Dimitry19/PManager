@@ -13,13 +13,13 @@ import cm.packagemanager.pmanager.ws.requests.messages.UpdateMessageDTO;
 import java.util.List;
 
 public interface MessageService {
-	public List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws BusinessResourceException, UserException;
-	public List<MessageVO> messagesByUser(Long id, PageBy pageBy) throws BusinessResourceException, UserException;
+	public List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws Exception;
+	public List<MessageVO> messagesByUser(Long id, PageBy pageBy) throws Exception;
 	public int count(PageBy pageBy) throws Exception;
-	public List<MessageVO> messages(PageBy pageBy) throws BusinessResourceException;
+	public List<MessageVO> messages(PageBy pageBy) throws Exception;
 	public MessageVO findById(MessageIdVO id) throws BusinessResourceException;
-	public MessageVO update(UpdateMessageDTO updateMessageDTO) throws BusinessResourceException, UserException;
-	MessageVO addMessage(MessageDTO messageDTO) throws BusinessResourceException, RecordNotFoundException;
+	public MessageVO update(UpdateMessageDTO updateMessageDTO) throws Exception;
+	MessageVO addMessage(MessageDTO messageDTO) throws Exception;
 	public boolean delete(Long id) throws Exception;
 
 

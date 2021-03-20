@@ -229,7 +229,7 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful update",
 					response = UserVO.class, responseContainer = "Object") })
-	@RequestMapping(value = USER_WS_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	@RequestMapping(value =UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	UserVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateUserDTO userDTO) throws UserException, IOException {
 
@@ -342,7 +342,7 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful deleted",
 					response = Response.class, responseContainer = "Object") })
-	@RequestMapping(value =USER_WS_DELETE_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	@RequestMapping(value =DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") Long id) throws UserException{
 		logger.info("delete request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");

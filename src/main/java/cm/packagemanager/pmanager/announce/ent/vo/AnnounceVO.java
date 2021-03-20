@@ -8,11 +8,9 @@ import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
-import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.*;
-import org.apache.logging.log4j.message.MessageFormatMessage;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.OrderBy;
 
@@ -24,13 +22,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import static org.hibernate.annotations.FetchMode.SELECT;
 
 
 @Entity
@@ -67,7 +62,9 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	private BigDecimal preniumPrice;
 
-	private BigDecimal weigth;
+	private BigDecimal weight;
+
+	private BigDecimal remainWeight;
 
 	private AnnounceType announceType;
 
@@ -81,7 +78,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	
 	private String descriptionTransport;
 
-	private ProductCategoryVO category;
+	private CategoryVO category;
 
 	private Set<MessageVO> messages=new HashSet<>();
 
@@ -161,12 +158,22 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	@Basic(optional = false)
 	@Column(name = "WEIGHT", nullable = false)
-	public BigDecimal getWeigth() {
-		return weigth;
+	public BigDecimal getWeight() {
+		return weight;
 	}
 
-	public void setWeigth(BigDecimal weigth) {
-		this.weigth = weigth;
+	public void setWeight(BigDecimal weight) {
+		this.weight = weight;
+	}
+
+	@Basic(optional = false)
+	@Column(name = "REMAIN_WEIGHT", updatable = true)
+	public BigDecimal getRemainWeight() {
+		return remainWeight;
+	}
+
+	public void setRemainWeight(BigDecimal remainWeight) {
+		this.remainWeight = remainWeight;
 	}
 
 	@Basic(optional = false)
@@ -279,11 +286,11 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@ManyToOne(optional = false,fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
 	@JoinColumn(name="R_CATEGORY",referencedColumnName = "CODE")
 	@JsonProperty
-	public ProductCategoryVO getCategory() {
+	public CategoryVO getCategory() {
 		return category;
 	}
 
-	public void setCategory(ProductCategoryVO category) {
+	public void setCategory(CategoryVO category) {
 		this.category = category;
 	}
 
@@ -367,6 +374,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	@Override
 	public String toString() {
-		return "AnnounceVO{" + "id=" + id + ", departure='" + departure + '\'' + ", arrival='" + arrival + '\'' + ", startDate=" + startDate + ", endDate=" + endDate + ", transport=" + transport + ", price=" + price + ", goldPrice=" + goldPrice + ", preniumPrice=" + preniumPrice + ", weigth=" + weigth + ", announceType=" + announceType + ", user=" + user + ", status=" + status + ", cancelled=" + cancelled + ", description='" + description + '\'' + ", descriptionTransport='" + descriptionTransport + '\'' + ", category=" + category + ", messages=" + messages + ", announceId=" + announceId  + '\'' + '}';
+		return "AnnounceVO{" + "id=" + id + ", departure='" + departure + '\'' + ", arrival='" + arrival + '\'' + ", startDate=" + startDate + ", endDate=" + endDate + ", transport=" + transport + ", price=" + price + ", goldPrice=" + goldPrice + ", preniumPrice=" + preniumPrice + ", weight=" + weight + ", remainWeight=" + remainWeight + ", announceType=" + announceType + ", user=" + user + ", status=" + status + ", cancelled=" + cancelled + ", description='" + description + '\'' + ", descriptionTransport='" + descriptionTransport + '\'' + ", category=" + category + ", messages=" + messages + ", announceId=" + announceId  + '\'' + '}';
 	}
 }

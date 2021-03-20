@@ -17,17 +17,17 @@ import java.util.List;
 
 public interface AnnounceDAO extends CommonDAO {
 
-	List<AnnounceVO> announces(int page, int  size) throws BusinessResourceException;
+	List<AnnounceVO> announces(int page, int  size) throws Exception;
 
-	List<AnnounceVO> announces(PageBy pageBy) throws BusinessResourceException;
+	List<AnnounceVO> announces(PageBy pageBy) throws Exception;
 
 	int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws BusinessResourceException, Exception;
 
 	AnnounceVO findByUser(UserVO user) throws BusinessResourceException,UserNotFoundException,RecordNotFoundException;
 
-	List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws BusinessResourceException, UserNotFoundException, RecordNotFoundException, UserException;
+	List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws Exception;
 
-	List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws BusinessResourceException, UserNotFoundException, RecordNotFoundException, UserException;
+	List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws Exception;
 
 	AnnounceVO findById(Long id) throws BusinessResourceException,RecordNotFoundException;
 

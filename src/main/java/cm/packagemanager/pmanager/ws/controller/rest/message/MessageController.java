@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.util.ArrayList;
 import java.util.List;
 
 import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.MESSAGE_WS;
@@ -40,7 +39,7 @@ public class MessageController extends CommonController  {
 		protected MessageService messageService;
 
 
-		@PostMapping(value = MESSAGE_WS_UPDATE)
+		@PostMapping(value =UPDATE)
 		MessageVO  update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateMessageDTO umr) throws Exception {
 
 		logger.info("Update message requestin");
@@ -67,7 +66,7 @@ public class MessageController extends CommonController  {
 	}
 
 
-		@PostMapping(value = WS_ADD_MESSAGE)
+		@PostMapping(value = ADD)
 		public ResponseEntity<MessageVO> addMessage(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid MessageDTO mdto) throws Exception{
 		HttpHeaders headers = new HttpHeaders();
 
@@ -96,39 +95,9 @@ public class MessageController extends CommonController  {
 		return null;
 	}
 
-		/**
-		 * Cette methode recherche un message en fonction des paramètres de recherche
-		 * @param response
-		 * @param request
-		 * @param asdto
-		 * @param page
-		 * @param size
-		 * @return
-		 * @throws Exception
-		 */
-
-		/*@RequestMapping(value =MESSAGE_WS_FIND,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
-		public @ResponseBody List<MessageVO> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid MessageSearchDTO asdto, @RequestParam(required = false, defaultValue = "0")  @Valid int page, @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
-
-		logger.info("find  announces request in");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		Response pmResponse = new Response();
-		List<MessageVO> messages=null;
-
-		try{
-			if (asdto!=null){
-				PageBy pageBy= new PageBy(page,size);
-				//messages=messageService.find(asdto,pageBy);
-			}
-		}
-		catch (Exception e){
-			response.getWriter().write(e.getMessage());
-		}
-		return announces;
-	}*/
 
 		/**
-		 *  Cette methode recherche toutes les annonces d'un utilisateur
+		 *  Cette methode recherche toutes les messages d'un utilisateur
 		 * @param response
 		 * @param request
 		 * @param userId
@@ -137,7 +106,7 @@ public class MessageController extends CommonController  {
 		 * @return
 		 * @throws Exception
 		 */
-		@RequestMapping(value =MESSAGE_WS_BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+		@RequestMapping(value =BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 		public ResponseEntity<PaginateResponse> messagesByUser(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long userId,
 		                                      @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre un nombre positif") int page,
 		                                      @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
@@ -181,7 +150,7 @@ public class MessageController extends CommonController  {
 		 * @return
 		 * @throws Exception
 		 */
-		@RequestMapping(value =MESSAGE_WS_DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+		@RequestMapping(value =DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 		public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");

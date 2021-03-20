@@ -30,9 +30,9 @@ public interface UserService{
 
 	public void remove(UserVO user) throws UserException ;
 
-	public List<UserVO> getAllUsers(PageBy pageBy) throws UserException ;
+	public List<UserVO> getAllUsers(PageBy pageBy) throws Exception;
 
-	public List<UserVO> getAllUsers() throws UserException;
+	public List<UserVO> getAllUsers() throws UserException, Exception;
 
 	public List<UserVO> getAllUsersToConfirm() throws UserException;
 
@@ -52,13 +52,13 @@ public interface UserService{
 
 	public boolean setRoleToUser(RoleToUserDTO roleToUser)  throws UserException;
 
-	public UserVO findByUsername(String username, boolean isReg) throws UserException;
+	public UserVO findByUsername(String username, boolean isReg) throws Exception;
 
-	public UserVO findByToken(String token) throws UserException;
+	public UserVO findByToken(String token) throws Exception;
 
 	public Response buildAndSendMail(HttpServletRequest request , UserVO user) throws UserException;
 
-	public boolean checkLogin(LoginDTO lr ) throws BusinessResourceException, UserException;
+	public boolean checkLogin(LoginDTO lr ) throws Exception;
 
 	public int  count(PageBy pageBy)  throws Exception;
 
