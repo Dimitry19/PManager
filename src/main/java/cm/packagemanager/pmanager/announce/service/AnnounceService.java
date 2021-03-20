@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.announce.service;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
@@ -24,6 +25,7 @@ public interface AnnounceService extends InitializingBean {
 	public AnnounceVO update(Integer id) throws Exception;
 
 	public List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws Exception;
+	public List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws Exception;
 
 	public AnnounceVO findById(Long id) throws UserException;
 

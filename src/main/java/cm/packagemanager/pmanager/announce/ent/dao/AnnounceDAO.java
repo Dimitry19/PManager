@@ -3,12 +3,14 @@ package cm.packagemanager.pmanager.announce.ent.dao;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.dao.CommonDAO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.exception.*;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -24,6 +26,8 @@ public interface AnnounceDAO extends CommonDAO {
 	AnnounceVO findByUser(UserVO user) throws BusinessResourceException,UserNotFoundException,RecordNotFoundException;
 
 	List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws BusinessResourceException, UserNotFoundException, RecordNotFoundException, UserException;
+
+	List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws BusinessResourceException, UserNotFoundException, RecordNotFoundException, UserException;
 
 	AnnounceVO findById(Long id) throws BusinessResourceException,RecordNotFoundException;
 

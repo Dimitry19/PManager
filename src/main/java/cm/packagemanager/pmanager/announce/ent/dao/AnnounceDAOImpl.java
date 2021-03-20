@@ -20,6 +20,7 @@ import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.*;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
@@ -134,6 +135,22 @@ public class AnnounceDAOImpl extends CommonFilter implements AnnounceDAO {
 
 		List announces=query.getResultList();
 		return announces;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws BusinessResourceException, UserNotFoundException, RecordNotFoundException, UserException {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		Query query=session.createNamedQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class);
+		query.setParameter("type", type);
+		query.setFirstResult(pageBy.getPage());
+		query.setMaxResults(pageBy.getSize());
+
+		List announces=query.getResultList();
+		return announces;
+
 	}
 
 	@Override

@@ -5,6 +5,7 @@ public final class FieldConstants {
 	public static final int AUTH_USER_LEN = 15;
 
 	public static final int USER_ID=15;
+	public static final int DESC=255;
 
 	public static final int PHONE_LEN = 35;
 	public static final int AIR_ID_LEN = 5;

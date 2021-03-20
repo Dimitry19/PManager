@@ -26,7 +26,7 @@ public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T
 	}
 
 	@Override
-	public Optional<T> findViaSession(Class<T> clazz, ID id) {
+	public Optional<T> findByIdViaSession(Class<T> clazz, ID id) {
 
 		if (id == null) {
 			throw new IllegalArgumentException("ID cannot be null");
@@ -43,7 +43,7 @@ public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T
 		try{
 			Session session=sessionFactory.getCurrentSession();
 
-			T ent= (T)findViaSession(clazz,id).get();
+			T ent= (T) findByIdViaSession(clazz,id).get();
 			if(ent!=null){
 				session.remove(ent);
 				if(enableFlushSession){

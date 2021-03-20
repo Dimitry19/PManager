@@ -21,8 +21,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-
 
 @Repository
 public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
@@ -81,7 +79,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 	@Transactional
 	public boolean deleteReservation(Long id) {
 
-		ReservationVO reservation= (ReservationVO) findViaSession(ReservationVO.class,id).get();
+		ReservationVO reservation= (ReservationVO) findByIdViaSession(ReservationVO.class,id).get();
 		if(reservation!=null){
 			AnnounceVO announce=reservation.getAnnounce();
 			announce.setWeigth(announce.getWeigth().add(reservation.getWeight()));

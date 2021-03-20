@@ -18,6 +18,8 @@ public class ReservationDTO {
 	@NotNull(message = "L'annonce doit etre valorisée")
 	private Long announceId;
 
+	private String description;
+
 	public Long getUserId() {
 		return userId;
 	}
@@ -48,5 +50,13 @@ public class ReservationDTO {
 
 	public void setAnnounceId(Long announceId) {
 		this.announceId = announceId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

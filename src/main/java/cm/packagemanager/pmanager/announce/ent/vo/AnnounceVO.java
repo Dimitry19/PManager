@@ -37,6 +37,7 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 @Table(name = "ANNOUNCE", schema = "PUBLIC")
 @NamedQueries({
 		@NamedQuery(name = AnnounceVO.FINDBYUSER,  query="select a from AnnounceVO a where a.user.id =:userId order by a.startDate desc"),
+		@NamedQuery(name = AnnounceVO.FINDBYTYPE,  query="select a from AnnounceVO a where a.announceType =:type order by a.startDate desc"),
 })
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
@@ -45,6 +46,7 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 public class AnnounceVO extends WSCommonResponseVO {
 
 	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
+	public static final String FINDBYTYPE="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByType";
 	public static final String SQL_FIND_BY_USER=" FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
 
 	private Long id;

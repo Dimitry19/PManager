@@ -68,6 +68,6 @@ public class WebServiceResponseCode
 
 
 	public static final String ERROR_CONTACT_US_LABEL = "Impossible d'envoyer le message pour le moment";
-	public static final String RESERV_NOK_LABEL = "Votre reservation n'a été  effacé";
+	public static final String RESERV_NOK_LABEL = "Votre reservation n'a été effacé";
 
 }

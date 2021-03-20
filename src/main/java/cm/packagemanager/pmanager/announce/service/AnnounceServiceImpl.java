@@ -4,6 +4,7 @@ package cm.packagemanager.pmanager.announce.service;
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
@@ -60,6 +61,11 @@ public class AnnounceServiceImpl implements AnnounceService {
 	public List<AnnounceVO> findByUser(Long userId,PageBy pageBy) throws Exception {
 
 		return announceDAO.findByUser(userId, pageBy);
+	}
+
+	public List<AnnounceVO> findByType(AnnounceType type,PageBy pageBy) throws Exception {
+
+		return announceDAO.findByType(type, pageBy);
 	}
 
 	public boolean delete(Long id) throws Exception {

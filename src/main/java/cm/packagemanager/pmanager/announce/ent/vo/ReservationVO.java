@@ -1,10 +1,10 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
+import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -18,6 +18,7 @@ public class ReservationVO  extends CommonVO {
 	private ProductCategoryVO category;
 	private AnnounceVO announce;
 	private boolean validate;
+	private String description;
 
 	public ReservationVO(){
 		super();
@@ -88,5 +89,15 @@ public class ReservationVO  extends CommonVO {
 
 	public void setValidate(boolean validate) {
 		this.validate = validate;
+	}
+
+	@Basic(optional = false)
+	@Column(name="DESCRIPTION" , length = FieldConstants.DESC)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

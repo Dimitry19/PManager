@@ -1,15 +1,10 @@
 package cm.packagemanager.pmanager.review.ent.dao;
 
-import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
-import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
-import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
-import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
-import cm.packagemanager.pmanager.user.ent.dao.UserDAOImpl;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -94,7 +89,7 @@ public  class ReviewDAOImpl extends CommonFilter implements ReviewDAO{
 		try{
 
 			Session session=sessionFactory.getCurrentSession();
-			ReviewVO review= (ReviewVO) findViaSession(ReviewVO.class,id).get();
+			ReviewVO review= (ReviewVO) findByIdViaSession(ReviewVO.class,id).get();
 			if(review!=null) {
 				review.setCancelled(true);
 				session.merge(review);

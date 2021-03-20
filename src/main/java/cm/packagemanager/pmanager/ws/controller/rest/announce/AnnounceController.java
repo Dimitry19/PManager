@@ -8,6 +8,7 @@ import cm.packagemanager.pmanager.announce.service.ReservationService;
 import cm.packagemanager.pmanager.announce.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
@@ -255,6 +256,69 @@ public class AnnounceController extends CommonController {
 					headers.add(HEADER_TOTAL, Long.toString(count));
 				}else{
 					announces=announceService.findByUser(userId,pageBy);
+					if(CollectionsUtils.isNotEmpty(announces)){
+						paginateResponse.setCount(count);
+					}
+					paginateResponse.setResults(announces);
+					headers.add(HEADER_TOTAL, Long.toString(announces.size()));
+				}
+			}else response.getWriter().write("Utilisateur non existant");
+		}
+		catch (Exception e){
+			//response.getWriter().write(e.getMessage());
+			response.getWriter().write("Utilisateur non existant");
+			logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}finally {
+			finishOpentracingSpan();
+		}
+		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+	}
+
+
+	/**
+	 *  Cette methode recherche toutes les annonces d'un utilisateur
+	 * @param response
+	 * @param request
+	 * @param type
+	 * @param page
+	 * @param size
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "Retrieve announces by Type",response = ResponseEntity.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval",
+					response = ResponseEntity.class, responseContainer = "List") })
+	@RequestMapping(value =ANNOUNCE_WS_BY_TYPE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	public ResponseEntity<PaginateResponse> announcesByType(HttpServletResponse response, HttpServletRequest request,
+	                                                        @RequestParam @Valid AnnounceType type,
+	                                                        @RequestParam (required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
+	                                                        @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		HttpHeaders headers = new HttpHeaders();
+		PaginateResponse paginateResponse=new PaginateResponse();
+		logger.info("find announce by type request in");
+		PageBy pageBy= new PageBy(page,size);
+
+		List<AnnounceVO> announces=null;
+
+
+		try{
+			createOpentracingSpan("AnnounceController - announcesByType");
+
+			if (type!=null){
+				int count = announceService.count(null,pageBy);
+				if(count==0){
+					headers.add(HEADER_TOTAL, Long.toString(count));
+				}else{
+					announces=announceService.findByType(type,pageBy);
 					if(CollectionsUtils.isNotEmpty(announces)){
 						paginateResponse.setCount(count);
 					}
