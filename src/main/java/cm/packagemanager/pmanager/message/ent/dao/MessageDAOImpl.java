@@ -7,7 +7,6 @@ import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
-import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.QueryUtils;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
@@ -16,7 +15,6 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.messages.MessageDTO;
 import cm.packagemanager.pmanager.ws.requests.messages.UpdateMessageDTO;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +26,6 @@ import java.util.List;
 public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(MessageDAOImpl.class);
-
-	@Autowired
-	SessionFactory sessionFactory;
 
 	@Autowired
 	QueryUtils queryUtils;

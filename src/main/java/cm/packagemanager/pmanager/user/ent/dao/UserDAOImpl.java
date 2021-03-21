@@ -18,7 +18,6 @@ import cm.packagemanager.pmanager.ws.requests.users.*;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import io.opentracing.Span;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -43,9 +44,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 
 	private static final MathContext MATH_CONTEXT = new MathContext(2,RoundingMode.HALF_UP);
-
-	@Autowired
-	private SessionFactory sessionFactory;
 
 
 	@Autowired
@@ -287,18 +285,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor ={BusinessResourceException.class, UserException.class})
-	public UserVO update(UserVO user) throws BusinessResourceException {
-		logger.info("User: update 2");
-		Session session = this.sessionFactory.getCurrentSession();
-		if(user!=null){
-			session.update(user);
-			return user;
-		}
-		return null;
-	}
-
-	@Override
 	@Transactional(propagation = Propagation. REQUIRED,rollbackFor = BusinessResourceException.class)
 	public void remove(UserVO user) throws BusinessResourceException {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -519,6 +505,25 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			throw new UserException(e.getMessage());
 		}
 		return result;
+	}
+
+	@Override
+	public UserVO updateImage(Long userId, MultipartFile multipartFile) throws IOException {
+
+		String fileName = org.springframework.util.StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		UserVO user = findById(userId);
+		//user.setPicture(fileName);
+		Session session=sessionFactory.getCurrentSession();
+		user.setCancelled(true);
+		session.merge(user);
+
+
+
+
+		String uploadDir = imagesFolder + user.getId();
+
+		fileUtils.saveFile(uploadDir, fileName, multipartFile);
+		return null;
 	}
 
 

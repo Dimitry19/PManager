@@ -14,9 +14,12 @@ import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import com.sendgrid.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -41,6 +44,9 @@ public interface UserService{
 	public UserVO register(RegisterDTO register) throws UserException;
 
 	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException;
+
+	@Transactional(rollbackFor = IOException.class)
+	UserVO updateImage(Long userId, MultipartFile multipartFile) throws UserException, IOException;
 
 	public Response managePassword(String email) throws UserException;
 

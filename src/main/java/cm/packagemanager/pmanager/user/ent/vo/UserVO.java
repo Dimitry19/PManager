@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.user.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
@@ -83,6 +84,10 @@ public class UserVO extends WSCommonResponseVO {
 	private String phone;
 
 	private Gender gender;
+
+	private ImageVO image;
+
+	/*private String picture;*/
 
 	private String facebookId;
 
@@ -197,7 +202,6 @@ public class UserVO extends WSCommonResponseVO {
 		return gender;
 	}
 
-
 	@Basic(optional = false)
 	@Column(name="CANCELLED")
 	@JsonIgnore
@@ -295,6 +299,26 @@ public class UserVO extends WSCommonResponseVO {
 	}
 
 
+	@OneToOne
+	public ImageVO getImage() {
+		return image;
+	}
+
+	public void setImage(ImageVO image) {
+		this.image = image;
+	}
+
+
+	/*
+	* 	@Basic(optional = true)
+	@Column(name="PICTURE", nullable=true,length = 64)
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}*/
 	@Transient
 	@JsonProperty
 	public double getRating() {
@@ -310,6 +334,13 @@ public class UserVO extends WSCommonResponseVO {
 	public String getError() {
 		return error;
 	}
+
+/*	@Transient
+	public String getPhotosImagePath() {
+		if (picture == null || id == null) return null;
+
+		return "/user-photos/" + id + "/" + picture;
+	}*/
 
 	public void setError(String error) {
 		this.error = error;

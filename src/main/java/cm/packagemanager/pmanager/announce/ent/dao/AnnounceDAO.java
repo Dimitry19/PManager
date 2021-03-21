@@ -39,7 +39,6 @@ public interface AnnounceDAO extends CommonDAO {
 
 	AnnounceVO update(UpdateAnnounceDTO announceDTO) throws Exception;
 
-	AnnounceVO update(AnnounceVO announce) throws BusinessResourceException;
 
 	AnnounceVO update(Integer id) throws BusinessResourceException;
 

@@ -28,4 +28,9 @@ public class Constants {
 	public static final int EMAIL_LENGTH=50;
 
 
+	public static final String USER_TYPE_IMG_UPLOAD="USER";
+	public static final String ANNOUNCE_TYPE_IMG_UPLOAD="ANNOUNCE";
+
+
+
 }

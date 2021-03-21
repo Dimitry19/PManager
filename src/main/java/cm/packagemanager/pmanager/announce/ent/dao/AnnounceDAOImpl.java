@@ -29,7 +29,6 @@ import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,9 +48,6 @@ import static cm.packagemanager.pmanager.common.Constants.*;
 public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(AnnounceDAOImpl.class);
-
-	@Autowired
-	private SessionFactory sessionFactory;
 
 	@Autowired
 	private AirlineDAO airlineDAO;
@@ -289,11 +285,6 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 	@Override
 	public AnnounceVO delete(AnnounceVO announce) throws BusinessResourceException {
-		return null;
-	}
-
-	@Override
-	public AnnounceVO update(AnnounceVO announce) throws BusinessResourceException {
 		return null;
 	}
 

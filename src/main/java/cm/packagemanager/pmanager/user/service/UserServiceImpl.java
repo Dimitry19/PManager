@@ -2,7 +2,6 @@ package cm.packagemanager.pmanager.user.service;
 
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
-import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.MailType;
@@ -28,9 +27,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -124,7 +125,7 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 	public UserVO update(UserVO user) throws UserException {
-		return userDAO.update(user);
+		return (UserVO) userDAO.update(user);
 	}
 
 	public boolean delete(UserVO user) throws UserException {
@@ -166,6 +167,12 @@ public class UserServiceImpl  implements  UserService{
 	@Transactional(rollbackFor = UserException.class)
 	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException{
 		return userDAO.updateUser(userDTO);
+	}
+
+	@Override
+	@Transactional(rollbackFor = IOException.class)
+	public UserVO updateImage(Long userId, MultipartFile multipartFile) throws UserException, IOException {
+		return userDAO.updateImage(userId,multipartFile);
 	}
 
 	public Response managePassword(String email) {

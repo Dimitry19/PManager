@@ -10,7 +10,9 @@ import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface UserDAO extends CommonDAO {
@@ -62,8 +64,6 @@ public interface UserDAO extends CommonDAO {
 
 	public UserVO save(UserVO user)  throws BusinessResourceException;
 
-	public UserVO update(UserVO user)  throws BusinessResourceException;
-
 	public void remove(UserVO user)  throws BusinessResourceException;
 
 
@@ -86,4 +86,5 @@ public interface UserDAO extends CommonDAO {
 	List<RatingCountVO> findRatingCounts(UserVO user);
 
 
+	UserVO updateImage(Long userId, MultipartFile multipartFile) throws IOException;
 }

@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 
+import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
@@ -53,6 +54,8 @@ public class AnnounceVO extends WSCommonResponseVO {
 	private Date startDate;
 
 	private Date endDate;
+
+	private ImageVO image;
 
 	private TransportEnum transport;
 
@@ -292,6 +295,15 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	public void setCategory(CategoryVO category) {
 		this.category = category;
+	}
+
+	@OneToOne
+	public ImageVO getImage() {
+		return image;
+	}
+
+	public void setImage(ImageVO image) {
+		this.image = image;
 	}
 
 	//@NaturalId

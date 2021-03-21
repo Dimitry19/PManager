@@ -3,25 +3,40 @@ package cm.packagemanager.pmanager.common.ent.dao;
 
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
+import cm.packagemanager.pmanager.user.ent.dao.UserDAOImpl;
+import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 
 public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T, ID> {
 
+
+	private static Logger logger = LoggerFactory.getLogger(GenericDAOImpl.class);
+
 	@Autowired
-	private SessionFactory sessionFactory;
+	protected SessionFactory sessionFactory;
+
+	@Autowired
+	protected FileUtils fileUtils;
+
+	@Value("${profile.user.img.folder}")
+	protected String imagesFolder;
 
 
 	@Override
@@ -162,8 +177,16 @@ public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T
 	}
 
 	@Override
-	public T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception {
-		return null;
+	@Transactional
+	public T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName) throws Exception {
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query=session.createNamedQuery(queryName,clazz);
+
+		if(StringUtils.isNotEmpty(paramName) && id!=null){
+			query.setParameter(paramName, id);
+		}
+
+		return (T) query.uniqueResult();
 	}
 
 	@Override
@@ -268,4 +291,25 @@ public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T
 		}
 		return result;
 	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void save(T t) {
+		Session session= sessionFactory.getCurrentSession();
+		session.save(t);
+		session.flush();
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor ={BusinessResourceException.class, Exception.class})
+	public T update(T t) throws BusinessResourceException {
+		logger.info("Generic update");
+		Session session = this.sessionFactory.getCurrentSession();
+		if(t!=null){
+			session.update(t);
+			return t;
+		}
+		return null;
+	}
+
 }

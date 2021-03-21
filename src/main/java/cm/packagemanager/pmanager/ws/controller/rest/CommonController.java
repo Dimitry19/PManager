@@ -51,6 +51,8 @@ public class CommonController {
 	public static final String BY_USER="/user";
 	public static final String FIND="/find";
 	public static final String VALIDATE="/validate";
+	public static final String IMAGE="/img/{imageName}";
+	public static final String UPLOAD="/upload";
 
 
 
@@ -134,6 +136,13 @@ public class CommonController {
 	/******** RESERVATION REQUEST ********/
 	public static final String RESERVATION_WS="/ws/reservation/*";
 	public static final String RESERVATION_WS_BY_ANNOUNCE="/announce";
+
+
+	/******** IMG REQUEST ********/
+	public static final String IMG_WS="/ws/image/*";
+	public static final String UPLOAD_IMG_WS="/img";
+
+
 
 
 	@Autowired

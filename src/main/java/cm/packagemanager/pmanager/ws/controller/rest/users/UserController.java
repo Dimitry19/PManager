@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -29,6 +30,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +59,7 @@ public class UserController extends CommonController {
 
 	@Autowired
 	MailSender mailSender;
+
 
 	@ApiOperation(value = "Register an user ",response = Response.class)
 	@ApiResponses(value = {
@@ -121,6 +126,28 @@ public class UserController extends CommonController {
 
 		}
 		return null;
+	}
+/*https://www.codejava.net/frameworks/spring-boot/upload-multiple-files-example*/
+	@PostMapping(IMAGE)
+	public RedirectView picture(HttpServletRequest request ,HttpServletResponse response,
+	                            @RequestParam("userId") @Valid Long userId,
+	                            @RequestParam("image") @Valid MultipartFile multipartFile) throws IOException {
+
+		try {
+
+			logger.info("picture request in");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			createOpentracingSpan("UserController - picture");
+
+			userService.updateImage(userId,multipartFile);
+			return new RedirectView("/users", true);
+		}catch (Exception e){
+			logger.error("Erreur durant la sauvegarde de l'image");
+			throw e;
+		}finally {
+			finishOpentracingSpan();
+		}
+
 	}
 
 

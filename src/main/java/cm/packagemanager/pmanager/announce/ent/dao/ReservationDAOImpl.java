@@ -34,9 +34,6 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 	private static Logger logger = LoggerFactory.getLogger(ReservationDAOImpl.class);
 
 	@Autowired
-	private SessionFactory sessionFactory;
-
-	@Autowired
 	private AnnounceDAO announceDAO;
 
 	@Autowired

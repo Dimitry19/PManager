@@ -1,8 +1,10 @@
 package cm.packagemanager.pmanager.common.ent.dao;
 
+import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
@@ -25,15 +27,13 @@ public interface GenericDAO <T, ID extends Serializable> {
 
 	List<T> all(Class<T> clazz, PageBy pageBy) throws Exception;
 
-	@Transactional(readOnly = true)
 	List<T> all(Class<T> clazz, PageBy pageBy, String... filters) throws Exception;
 
 	List<T> allAndOrderBy(Class<T> clazz, String field, boolean desc, PageBy pageBy) throws Exception;
 
 	@Transactional
-	T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception;
+	T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName) throws Exception;
 
-	@Transactional
 	T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception;
 
 	List<T> findBy(String queryname, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception;
@@ -43,4 +43,10 @@ public interface GenericDAO <T, ID extends Serializable> {
 	int countByNameQuery(String queryName,Class<T> clazz,ID id,String paramName, PageBy pageBy) throws Exception;
 
 	boolean updateDelete(Class<T> clazz, ID id, boolean enableFlushSession) throws BusinessResourceException;
+
+	void save(T t) throws Exception;
+
+
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor ={BusinessResourceException.class, Exception.class})
+	T update(T t) throws BusinessResourceException;
 }

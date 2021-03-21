@@ -24,10 +24,6 @@ public  class ReviewDAOImpl extends CommonFilter implements ReviewDAO{
 
 	private static Logger logger = LoggerFactory.getLogger(ReviewDAOImpl.class);
 
-
-	@Autowired
-	SessionFactory sessionFactory;
-
 	@Override
 	public Page<ReviewVO> findByUser(UserVO user, Pageable pageable) {
 		return null;//session.find();

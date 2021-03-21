@@ -57,6 +57,9 @@ public class SwaggerConfig {
 	@Value("${swagger.api.groupname.reservation}")
 	private String apiGroupNameReservation;
 
+	@Value("${swagger.api.groupname.image}")
+	private String apiGroupNameImage;
+
 /*	@Bean
 	public Docket pmanagerRestApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -109,6 +112,11 @@ public class SwaggerConfig {
 	@Bean
 	public Docket reservationApi() {
 		return	createDocket(apiGroupNameReservation,"/pmanager/ws/reservation.*");
+	}
+
+	@Bean
+	public Docket imageApi() {
+		return	createDocket(apiGroupNameImage,"/pmanager/ws/image.*");
 	}
 
 	private ApiInfo metaData() {
