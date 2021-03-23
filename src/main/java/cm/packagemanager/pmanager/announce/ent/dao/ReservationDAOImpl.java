@@ -69,7 +69,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			reservation.setCategory(category);
 			reservation.setWeight(reservationDTO.getWeight());
 			session.save(reservation);
-			session.flush();
+			session.flush(); //TODO Penser à changer la gestion de la save + flush
 			return session.get(ReservationVO.class,reservation.getId());
 		}
 		return null;
@@ -85,7 +85,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			announce.setWeigth(announce.getWeigth().add(reservation.getWeight()));
 			Session session=sessionFactory.getCurrentSession();
 			session.update(announce);
-			session.flush();
+			session.flush();//TODO Penser à changer la gestion de la delete + flush
 			delete(ReservationVO.class,id,true);
 			return true;
 		}
