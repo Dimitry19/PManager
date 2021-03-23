@@ -6,10 +6,10 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -58,7 +58,7 @@ public interface UserDAO extends CommonDAO {
 
 	public void updateUser(UserVO user)  throws BusinessResourceException;
 
-	public UserVO updateUser(UpdateUserDTO user) throws BusinessResourceException, UserException;
+	public UserVO updateUser(UpdateUserDTO user) throws Exception;
 
 	public boolean deleteUser(Long id)  throws UserException;
 
@@ -76,8 +76,8 @@ public interface UserDAO extends CommonDAO {
 	public UserVO findByGoogleId(String googleId)  throws BusinessResourceException;
 
 
-	public boolean setRole(UserVO user, RoleEnum roleId)  throws BusinessResourceException;
-	public boolean setRole(String email, RoleEnum roleId)  throws BusinessResourceException;
+	public boolean setRole(UserVO user, RoleEnum roleId) throws Exception;
+	public boolean setRole(String email, RoleEnum roleId) throws Exception;
 
 	public boolean deleteUser(UserVO user) throws BusinessResourceException, UserException;
 
@@ -87,4 +87,11 @@ public interface UserDAO extends CommonDAO {
 
 
 	UserVO updateImage(Long userId, MultipartFile multipartFile) throws IOException;
+
+	boolean manageNotification(Long userId, boolean enableNotification) throws UserException;
+
+	boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException;
+	List<CommunicationVO> communications(Long userId) throws Exception;
+	List notifications(Long userId) throws Exception;
+	List messages(Long userId) throws Exception;
 }

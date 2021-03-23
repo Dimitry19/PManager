@@ -100,6 +100,7 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 	public UserVO login(LoginDTO lr ) throws UserException {
+		checkLoginAdmin(lr);
 		UserVO user=null;
 		if(lr.getUsername()!=null){
 			user= userDAO.login(lr.getUsername(), lr.getPassword());
@@ -130,6 +131,22 @@ public class UserServiceImpl  implements  UserService{
 
 	public boolean delete(UserVO user) throws UserException {
 		return userDAO.deleteUser(user);
+	}
+
+
+	public void checkLoginAdmin(LoginDTO loginD){
+		//TODO implementer le login de l'administrateur
+	}
+	@Override
+	public boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException {
+
+		return userDAO.editPassword(userId,oldPassword,newPassword);
+
+	}
+
+	@Override
+	public boolean manageNotification(Long userId, boolean enableNotification) throws UserException {
+		return userDAO.manageNotification(userId,enableNotification);
 	}
 
 	public void remove(UserVO user) throws UserException {
@@ -165,7 +182,7 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 	@Transactional(rollbackFor = UserException.class)
-	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException{
+	public UserVO updateUser(UpdateUserDTO userDTO) throws Exception {
 		return userDAO.updateUser(userDTO);
 	}
 
@@ -206,7 +223,7 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 
-	public boolean setRoleToUser(RoleToUserDTO roleToUser) {
+	public boolean setRoleToUser(RoleToUserDTO roleToUser) throws Exception {
 
 		return userDAO.setRole(roleToUser.getEmail(),roleToUser.getRole());
 	}

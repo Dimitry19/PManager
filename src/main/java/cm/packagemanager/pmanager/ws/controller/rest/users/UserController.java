@@ -6,7 +6,6 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
-import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -196,11 +195,7 @@ public class UserController extends CommonController {
 		logger.error("Errore eseguendo confirm: ", e);
 		response.setStatus(400);
 		response.getWriter().write(e.getMessage());
-	}finally {
-		finishOpentracingSpan();
-
-	}
-
+	}finally {finishOpentracingSpan(); }
 		return pmResponse;
 	}
 
@@ -247,6 +242,36 @@ public class UserController extends CommonController {
 	}
 
 
+	@ApiOperation(value = "En/disable notification ",response = ResponseEntity.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully change status"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Status changed",
+					response = ResponseEntity.class, responseContainer = "Object") })
+	@GetMapping(ENABLE_NOTIFICATION_WS)
+	public ResponseEntity.BodyBuilder manageNotification(HttpServletRequest request, HttpServletResponse response,
+	                                              @RequestParam("id") @Valid Long id,
+	                                              @RequestParam("enotif") @Valid boolean enableNotification
+	) throws Exception {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		logger.info(" Manage notification request in");
+		try{
+			createOpentracingSpan("UserController - Manage notification");
+			userService.manageNotification(id,enableNotification);
+			return ResponseEntity.status(HttpStatus.OK);
+
+		}catch (Exception e){
+			logger.error("Erreur durant l'upload de l'image",e);
+			throw e;
+		}finally {
+			finishOpentracingSpan();
+		}
+	}
+
+
 	@ApiOperation(value = " Update user ",response = UserVO.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
@@ -279,7 +304,9 @@ public class UserController extends CommonController {
 				logger.error("Erreur durant l'ajournement de l'utilisateur  " + userDTO.toString() +"{}",e);
 				e.printStackTrace();
 				throw  e;
-			}finally {
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
 				finishOpentracingSpan();
 			}
 
@@ -338,7 +365,7 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 200, message = "Update role successfully",
 					response = ResponseEntity.class, responseContainer = "Object") })
 	@PostMapping(value = USER_WS_ROLE)
-	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) throws UserException {
+	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) throws Exception {
 
 		logger.info("set role request in");
 
@@ -354,7 +381,11 @@ public class UserController extends CommonController {
 			logger.error("Erreur durant l'ajournement  du role de l'utilisateur  " + roleToUser.toString() +"{}",e);
 			e.printStackTrace();
 			throw  e;
-		}finally {
+		} catch (Exception e) {
+			logger.error("Erreur durant l'ajournement  du role de l'utilisateur  " + roleToUser.toString() +"{}",e);
+			e.printStackTrace();
+			throw e;
+		} finally {
 			finishOpentracingSpan();
 		}
 	}

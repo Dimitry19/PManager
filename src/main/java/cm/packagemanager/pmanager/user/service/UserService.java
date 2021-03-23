@@ -31,6 +31,10 @@ public interface UserService{
 
 	public boolean delete(UserVO user) throws UserException ;
 
+	boolean editPassword(Long userId, String oldPassword,String newPassword) throws UserException;
+
+	boolean manageNotification(Long userId, boolean enableNotification) throws UserException;
+
 	public void remove(UserVO user) throws UserException ;
 
 	public List<UserVO> getAllUsers(PageBy pageBy) throws Exception;
@@ -43,9 +47,8 @@ public interface UserService{
 
 	public UserVO register(RegisterDTO register) throws UserException;
 
-	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException;
+	public UserVO updateUser(UpdateUserDTO userDTO) throws Exception;
 
-	@Transactional(rollbackFor = IOException.class)
 	UserVO updateImage(Long userId, MultipartFile multipartFile) throws UserException, IOException;
 
 	public Response managePassword(String email) throws UserException;
@@ -56,7 +59,7 @@ public interface UserService{
 
 	public UserVO findByEmail(String email)throws UserException;
 
-	public boolean setRoleToUser(RoleToUserDTO roleToUser)  throws UserException;
+	public boolean setRoleToUser(RoleToUserDTO roleToUser) throws Exception;
 
 	public UserVO findByUsername(String username, boolean isReg) throws Exception;
 

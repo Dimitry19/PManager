@@ -4,15 +4,14 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
+import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.OrderBy;
 
@@ -23,7 +22,6 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -99,6 +97,8 @@ public class UserVO extends WSCommonResponseVO {
 
 	private boolean cancelled;
 
+	private boolean enableNotification=true;
+
 	private Set<MessageVO> messages=new HashSet<>();
 
 	private Set<AnnounceVO> announces=new HashSet<>();
@@ -110,6 +110,9 @@ public class UserVO extends WSCommonResponseVO {
 	private Set<UserVO> subscribers= new HashSet<>();
 
 	private Set<UserVO> subscriptions= new HashSet<>();
+
+	private Set<CommunicationVO> communications=new HashSet<>();
+
 
 	private String confirmationToken;
 
@@ -147,7 +150,7 @@ public class UserVO extends WSCommonResponseVO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID")
+	@Column(name="ID",unique = true,nullable = true)
 	public Long getId() {
 		return id;
 
@@ -296,6 +299,29 @@ public class UserVO extends WSCommonResponseVO {
 
 	public void setSubscriptions(Set<UserVO> subscriptions) {
 		this.subscriptions = subscriptions;
+	}
+
+	@Basic(optional = true)
+	@Column(name = "ENABLE_NOTIF")
+	public boolean isEnableNotification() {
+		return enableNotification;
+	}
+
+	public void setEnableNotification(boolean enableNotification) {
+		this.enableNotification = enableNotification;
+	}
+
+
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
+	/*@JoinTable(name="USER_COMM",
+			joinColumns={@JoinColumn(name="R_COMM_ID")},
+			inverseJoinColumns={@JoinColumn(name="R_USER_ID")})*/
+	public Set<CommunicationVO> getCommunications() {
+		return communications;
+	}
+
+	public void setCommunications(Set<CommunicationVO> communications) {
+		this.communications = communications;
 	}
 
 

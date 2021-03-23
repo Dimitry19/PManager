@@ -3,13 +3,10 @@ package cm.packagemanager.pmanager.common.ent.dao;
 
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
-import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
-import cm.packagemanager.pmanager.user.ent.dao.UserDAOImpl;
-import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -24,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T, ID> {
+public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable> implements GenericDAO<T, ID,NID> {
 
 
 	private static Logger logger = LoggerFactory.getLogger(GenericDAOImpl.class);
@@ -40,6 +37,7 @@ public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T
 
 
 	@Override
+	@Transactional
 	public Optional<T> find(Class<T> clazz, ID id) {
 
 		if (id == null) {
@@ -50,6 +48,7 @@ public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T
 	}
 
 	@Override
+	@Transactional
 	public Optional<T> findByIdViaSession(Class<T> clazz, ID id) {
 
 		if (id == null) {
@@ -62,6 +61,7 @@ public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T
 	}
 
 	@Override
+	@Transactional
 	public  T findById(Class<T> clazz, ID id) {
 
 		if (id == null) {
@@ -176,6 +176,15 @@ public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T
 		return query.getResultList();
 	}
 
+	/**
+	 * Prend une NamedQuery et retourne un resultat unique
+	 * @param queryName
+	 * @param clazz
+	 * @param id
+	 * @param paramName
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	@Transactional
 	public T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName) throws Exception {
@@ -189,6 +198,17 @@ public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T
 		return (T) query.uniqueResult();
 	}
 
+	/**
+	 * Prend une NamedQuery et retourne un resultat unique
+	 * @param queryName
+	 * @param clazz
+	 * @param id
+	 * @param paramName
+	 * @param pageBy
+	 * @param filters
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	@Transactional
 	public T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception {
@@ -242,8 +262,11 @@ public class GenericDAOImpl <T, ID extends Serializable> implements GenericDAO<T
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query=session.createQuery(queryName,clazz);
 		query.setParameter("userId", userId);
-		query.setFirstResult(pageBy.getPage());
-		query.setMaxResults(pageBy.getSize());
+		if(pageBy!=null){
+			query.setFirstResult(pageBy.getPage());
+			query.setMaxResults(pageBy.getSize());
+		}
+
 		return query.getResultList();
 	}
 

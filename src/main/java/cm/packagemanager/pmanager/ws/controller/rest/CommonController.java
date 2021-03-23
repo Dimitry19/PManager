@@ -72,6 +72,10 @@ public class CommonController {
 	public static final String SUBSCRIPTIONS_WS="/subscriptions";
 	public static final String SUBSCRIBERS_WS="/subscribers";
 	public static final String UNSUBSCRIBE_WS="/unsubscribe";
+	public static final String COMMUNICATIONS_WS="/communications/{userId}";
+	public static final String U_MESSAGES_WS="/messages/{userId}";
+	public static final String U_NOTIFICATIONS_WS="/notifications/{userId}";
+	public static final String ENABLE_NOTIFICATION_WS="/enable";
 
 	public static final String USER_ADD_SUBSCRIPTION_WS="/subscriptions/add";
 	public static final String USER_ADD_SUBSCRIBER_WS="/subscribers/add";
@@ -79,7 +83,8 @@ public class CommonController {
 	public static final String USER_SUBSCRIPTION_WS="/subscriptions/{userId}";
 	public static final String USER_SUBSCRIBER_WS="/subscribers/{userId}";
 
-
+	/************ ADMIN REQUEST*************/
+	public static final String COMMUNICATION_WS="/ws/dashboard/communication/*";
 
 
 

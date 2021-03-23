@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
 
+import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -13,19 +14,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Collection;
 import java.util.List;
 
 
 @Repository
-public  class RoleDAOImpl implements RoleDAO {
+public  class RoleDAOImpl extends CommonFilter implements RoleDAO {
 
 
 	private static Logger logger = LoggerFactory.getLogger(RoleDAOImpl.class);
-
-
-	@Autowired
-	private SessionFactory sessionFactory;
 
 	public RoleDAOImpl(){
 
@@ -33,6 +32,7 @@ public  class RoleDAOImpl implements RoleDAO {
 
 	@Override
 	public RoleVO addRole(RoleVO role){
+		logger.info("Add role");
 		Session session=this.sessionFactory.getCurrentSession();
 		if(role!=null){
 			session.save(role);
@@ -55,26 +55,22 @@ public  class RoleDAOImpl implements RoleDAO {
 	}*/
 
 	@Override
-	public RoleVO findByDescription(String description) {
+	@Transactional
+	public RoleVO findByDescription(String description) throws Exception {
 
-		Session session = sessionFactory.getCurrentSession();
-
-		Query query=session.getNamedQuery(RoleVO.FINDBYDESC);
-		query.setParameter("description", RoleEnum.fromValue(description));
-
-		List<RoleVO> roles=query.list();
-		if(roles!=null && roles.size()>0) {
-			return roles.get(0);
-		}
-		return null;
+		return (RoleVO) findByUniqueResult(RoleVO.FINDBYDESC, RoleVO.class,RoleEnum.fromValue(description),"description");
 	}
 
 	@Override
-	public RoleVO find(String description) {
-		return null;
+	@Transactional
+	public RoleVO find(Long id) {
+
+		return (RoleVO) findById(RoleVO.class,id);
+
 	}
 
 	@Override
+	@Transactional
 	public Collection<UserVO> usersWithRole(String description) {
 		return null;
 	}

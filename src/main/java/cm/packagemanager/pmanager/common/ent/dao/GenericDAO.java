@@ -1,6 +1,5 @@
 package cm.packagemanager.pmanager.common.ent.dao;
 
-import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
@@ -11,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericDAO <T, ID extends Serializable> {
+public interface GenericDAO <T, ID extends Serializable,NID extends Serializable> {
 
 	Optional<T> find(Class<T> clazz, ID id);
 

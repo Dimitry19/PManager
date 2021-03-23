@@ -8,6 +8,7 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
+import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
@@ -33,9 +34,11 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -209,6 +212,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			user.setLastName(register.getLastName());
 			user.setPhone(register.getPhone());
 			user.setActive(0);
+			user.setEnableNotification(true);
 			user.setGender(register.getGender());
 			user.setConfirmationToken(UUID.randomUUID().toString());
 
@@ -230,7 +234,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
-	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException {
+	public UserVO updateUser(UpdateUserDTO userDTO) throws Exception {
 		logger.info("User: update");
 		Session session = this.sessionFactory.getCurrentSession();
 
@@ -435,7 +439,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	}
 
 	@Override
-	public boolean setRole(UserVO user, RoleEnum roleId) throws BusinessResourceException {
+	public boolean setRole(UserVO user, RoleEnum roleId) throws Exception {
 		logger.info("User:  set role");
 
 		RoleVO role = roleDAO.findByDescription(roleId.name());
@@ -450,7 +454,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
-	public boolean setRole(String email , RoleEnum roleId) throws BusinessResourceException {
+	public boolean setRole(String email , RoleEnum roleId) throws Exception {
 
 		UserVO user= findByEmail(email);
 		return  setRole( user, roleId);
@@ -517,12 +521,79 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		user.setCancelled(true);
 		session.merge(user);
 
-
-
-
 		String uploadDir = imagesFolder + user.getId();
 
 		fileUtils.saveFile(uploadDir, fileName, multipartFile);
+		return null;
+	}
+
+	@Override
+	@Transactional(rollbackFor = {UserException.class,Exception.class})
+	public boolean manageNotification(Long userId, boolean enableNotification) {
+		try {
+			Session session=sessionFactory.getCurrentSession();
+			UserVO user=findById(userId);
+			boolean precedent=user.isEnableNotification();
+			if(user!=null){
+				user.setEnableNotification(enableNotification);
+				session.merge(user);
+				user = session.get(UserVO.class, userId);
+
+				return (user!=null) && (user.isEnableNotification()!=precedent);
+			}
+		}catch (UserException e){
+			logger.error("Erreur durant la modification de la gestion des notifications");
+			throw e;
+		}
+
+		return false;
+	}
+
+	@Override
+	@Transactional
+	public boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException {
+		logger.info("Modification du mot de passe");
+		UserVO user=findById(userId);
+		if(user==null){
+			logger.error("Erreur : aucun utilisateur correspondant a l'id:"+userId);
+			throw new UserException( "Aucun utilisateur trouvé avec cet identifiant"+userId);
+		}
+		String decryptedPassword=PasswordGenerator.decrypt(user.getPassword());
+		if(!StringUtils.equals(decryptedPassword,oldPassword)){
+			logger.error("Erreur : mots de passe inexacts {}-{}:",decryptedPassword,oldPassword);
+			throw new UserException( "Le mot de passe ne correspond pas: veuillez contrôler l'ancien mot de passe");
+		}
+		Session session=sessionFactory.getCurrentSession();
+		user.setPassword(PasswordGenerator.encrypt(newPassword));
+		session.merge(user);
+		return true;
+	}
+
+	@Override
+	@Transactional
+	public List<CommunicationVO> communications(Long userId) throws Exception {
+		UserVO user=findById(userId);
+		if(user==null){
+			logger.error("Erreur : aucun utilisateur correspondant a l'id:"+userId);
+			throw new UserException( "Aucun utilisateur trouvé avec cet identifiant"+userId);
+		}
+
+		/*List<UserVO> communications=comms.stream()
+										.map(com ->com.getUsers())
+										.flatMap(c ->c.stream())
+										.filter(usr ->usr.getId()==userId)
+										.collect(Collectors.toList());*/
+
+		return user.getCommunications().stream().collect(Collectors.toList());
+	}
+
+	@Override
+	public List notifications(Long userId) throws Exception {
+		return null;
+	}
+
+	@Override
+	public List messages(Long userId) throws Exception {
 		return null;
 	}
 
