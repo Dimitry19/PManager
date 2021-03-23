@@ -91,7 +91,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			Session session=sessionFactory.getCurrentSession();
 			session.update(subscriber);
 			session.update(subscription);
-			session.flush();
+			//session.flush();
 		}else throw new UserException("Une erreur survenue pendant l'abonnement, veuillez reessayer");
 	}
 
@@ -109,7 +109,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			Session session=sessionFactory.getCurrentSession();
 			session.update(subscriber);
 			session.update(subscription);
-			session.flush();
+			//session.flush();
 		}else throw new UserException("Une erreur survenue pendant la desinscription, veuillez reessayer");
 	}
 
@@ -140,6 +140,9 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	public List<UserVO> getAllUsers() throws Exception {
 		logger.info("User: all users");
 		return all(UserVO.class, null);
+		Session session = this.sessionFactory.getCurrentSession();
+		return session.createQuery("from UserVO").list();
+
 	}
 
 	@Override
@@ -218,12 +221,12 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 			Session session = this.sessionFactory.getCurrentSession();
 			session.save(user);
-			session.flush();
-			session.refresh(user);
+			//session.flush();
+			//session.refresh(user);
 
-			user=session.get(UserVO.class,user.getId());
+			//user=session.get(UserVO.class,user.getId());
 			setRole(user, register.getRole());
-			return session.get(UserVO.class,user.getId());
+			return user; //session.get(UserVO.class,user.getId());
 
 		} catch (Exception e) {
 			e.printStackTrace();

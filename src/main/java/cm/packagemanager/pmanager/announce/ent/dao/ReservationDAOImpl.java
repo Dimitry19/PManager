@@ -76,7 +76,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			reservation.setWeight(reservationDTO.getWeight());
 			reservation.setDescription(reservationDTO.getDescription());
 			session.save(reservation);
-			session.flush();
+			session.flush(); //TODO Penser à changer la gestion de la save + flush
 			return session.get(ReservationVO.class,reservation.getId());
 		}
 		logger.error("add reservation {},{} non trouvé ou {} non trouvée","La reservation n'a pas été ajoutée","Utilisateur avec id="+reservationDTO.getUserId()," Annonce avec id="+reservationDTO.getAnnounceId());
@@ -129,6 +129,9 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			session.flush();
 			//delete(ReservationVO.class,id,true);
 			return updateDelete(id);
+			//session.flush();//TODO Penser à changer la gestion de la delete + flush
+			//delete(ReservationVO.class,id,true);
+			//return true;
 		}
 		return false;
 	}

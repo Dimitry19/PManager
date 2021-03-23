@@ -149,8 +149,8 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 			Session session = this.sessionFactory.getCurrentSession();
 			session.save(announce);
-			session.flush();
-			announce=session.get(AnnounceVO.class,announce.getId());
+			//session.flush();
+			//announce=session.get(AnnounceVO.class,announce.getId());
 			addAnnounceToUser(announce);
 			return announce;
 		}
