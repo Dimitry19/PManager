@@ -20,6 +20,7 @@ import java.util.List;
 
 
 @Service("announceService")
+@Transactional
 public class AnnounceServiceImpl implements AnnounceService {
 
 	@Autowired
