@@ -318,14 +318,16 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.descriptionTransport=descriptionTransport;
 	}	
 	
-	public void addMessages(MessageVO message){
+	public void addMessage(MessageVO message){
 		messages.add(message);
+		message.setAnnounce(this);
 	}
 
-	public void removeMessages(MessageVO message){
+	public void removeMessage(MessageVO message){
 
 		if(messages.contains(message)){
 			messages.remove(message);
+			message.setAnnounce(null);
 		}
 	}
 
