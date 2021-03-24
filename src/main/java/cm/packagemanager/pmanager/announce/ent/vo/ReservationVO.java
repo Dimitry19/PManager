@@ -25,23 +25,51 @@ public class ReservationVO  extends WSCommonResponseVO {
 
 
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID", nullable = false)
 	private Long id;
+
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="R_USER_ID", updatable = false)
+	@JsonBackReference
 	private UserVO user;
+
+
+	@Basic(optional = false)
+	@Column(name = "WEIGTH", nullable = false)
 	private BigDecimal weight;
+
+	@OneToOne
+	@JoinColumn(name="CATEGORY_ID")
 	private CategoryVO category;
+
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="R_ANNOUNCE_ID", updatable = true)
+	@JsonBackReference
 	private AnnounceVO announce;
+
+	@Basic(optional = false)
+	@Column(name="VALIDATE")
+	@JsonIgnore
 	private boolean validate;
 
+	@Basic(optional = false)
+	@Column(name="CANCELLED")
+	@JsonIgnore
 	private boolean cancelled;
+
+	@Basic(optional = false)
+	@Column(name="DESCRIPTION" , length = FieldConstants.DESC)
 	private String description;
 
 	public ReservationVO(){
 		super();
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", nullable = false)
+
 	public Long getId() {
 		return id;
 	}
@@ -50,11 +78,6 @@ public class ReservationVO  extends WSCommonResponseVO {
 		this.id = id;
 	}
 
-
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="R_USER_ID", updatable = false)
-	@JsonBackReference
 	public UserVO getUser() {
 		return user;
 	}
@@ -63,10 +86,6 @@ public class ReservationVO  extends WSCommonResponseVO {
 		this.user = user;
 	}
 
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="R_ANNOUNCE_ID", updatable = true)
-	@JsonBackReference
 	public AnnounceVO getAnnounce() {
 		return announce;
 	}
@@ -75,8 +94,6 @@ public class ReservationVO  extends WSCommonResponseVO {
 		this.announce = announce;
 	}
 
-	@Basic(optional = false)
-	@Column(name = "WEIGTH", nullable = false)
 	public BigDecimal getWeight() {
 		return weight;
 	}
@@ -85,8 +102,6 @@ public class ReservationVO  extends WSCommonResponseVO {
 		this.weight = weight;
 	}
 
-	@OneToOne
-	@JoinColumn(name="CATEGORY_ID")
 	public CategoryVO getCategory() {
 		return category;
 	}
@@ -95,9 +110,6 @@ public class ReservationVO  extends WSCommonResponseVO {
 		this.category = category;
 	}
 
-	@Basic(optional = false)
-	@Column(name="VALIDATE")
-	@JsonIgnore
 	public boolean isValidate() {
 		return validate;
 	}
@@ -106,8 +118,6 @@ public class ReservationVO  extends WSCommonResponseVO {
 		this.validate = validate;
 	}
 
-	@Basic(optional = false)
-	@Column(name="DESCRIPTION" , length = FieldConstants.DESC)
 	public String getDescription() {
 		return description;
 	}
@@ -116,9 +126,6 @@ public class ReservationVO  extends WSCommonResponseVO {
 		this.description = description;
 	}
 
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
-	@JsonIgnore
 	public boolean isCancelled() {
 		return cancelled;
 	}

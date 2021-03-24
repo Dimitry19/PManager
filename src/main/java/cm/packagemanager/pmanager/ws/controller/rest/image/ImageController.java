@@ -20,9 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
+import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
-
-import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.IMG_WS;
 /*1-https://dzone.com/articles/upload-and-retrieve-filesimages-using-spring-boot*/
 @RestController
 @RequestMapping(IMG_WS)

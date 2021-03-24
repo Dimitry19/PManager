@@ -44,7 +44,7 @@ public class WebServiceResponseCode
 	public static final String ERROR_RETRIVEVE_PASSWORD_LABEL = "Le mot de posse n'a pas ete envoye ";
 	public static final String ERROR_EMAIL_REGISTER_LABEL = "Cette adresse email a deja ete utilise";
 	public static final String ERROR_USERNAME_REGISTER_LABEL = "Nom utilisateur non disponible";
-	public static final String ERROR_USER_REGISTER_LABEL = "Enregistrement non complet?";
+	public static final String ERROR_USER_REGISTER_LABEL = "Enregistrement non complete";
 	public static final String ERROR_INVALID_TOKEN_REGISTER_LABEL = "Token invalide , peut etre le lien a deja expire";
 	public static final String ERROR_USED_TOKEN_REGISTER_LABEL = "Le compte a deje ete active";
 	public static final String ERROR_LOGIN_LABEL = "Verifier les donn?es d'accès";

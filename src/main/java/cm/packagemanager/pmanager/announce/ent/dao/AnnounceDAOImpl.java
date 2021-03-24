@@ -11,7 +11,7 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
-import cm.packagemanager.pmanager.announce.service.CategoryService;
+import cm.packagemanager.pmanager.announce.ent.service.CategoryService;
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;

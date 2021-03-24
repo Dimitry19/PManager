@@ -2,8 +2,8 @@ package cm.packagemanager.pmanager.ws.controller.rest.announce;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.announce.service.AnnounceService;
-import cm.packagemanager.pmanager.announce.service.ServiceAnnounce;
+import cm.packagemanager.pmanager.announce.ent.service.AnnounceService;
+import cm.packagemanager.pmanager.announce.ent.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
@@ -41,7 +41,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.Collections;
 import java.util.List;
 
-import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.ANNOUNCE_WS;
+import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 @RestController
 @RequestMapping(ANNOUNCE_WS)

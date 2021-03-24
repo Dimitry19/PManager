@@ -26,7 +26,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
-import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.MESSAGE_WS;
+import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 @RestController
 @RequestMapping(MESSAGE_WS)

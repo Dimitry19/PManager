@@ -5,7 +5,7 @@ import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.COMMUNICATION_WS;
+import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 @RestController
 @RequestMapping(COMMUNICATION_WS)

@@ -133,7 +133,7 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 	@Transactional(readOnly = true)
 	public List<T> all(Class<T> clazz, PageBy pageBy, String... filters) throws Exception {
 
-		StringBuilder queryBuilder= new StringBuilder("FROM");
+		StringBuilder queryBuilder= new StringBuilder(" FROM ");
 		queryBuilder.append(clazz.getName());
 
 		Session session = this.sessionFactory.getCurrentSession();

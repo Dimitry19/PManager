@@ -34,10 +34,8 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
@@ -48,14 +46,10 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	private static final MathContext MATH_CONTEXT = new MathContext(2,RoundingMode.HALF_UP);
 
-
 	@Autowired
 	RoleDAO roleDAO;
-
-
 	@Autowired
 	Span span;
-
 	public UserDAOImpl() {
 
 	}
@@ -91,7 +85,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			Session session=sessionFactory.getCurrentSession();
 			session.update(subscriber);
 			session.update(subscription);
-			//session.flush();
 		}else throw new UserException("Une erreur survenue pendant l'abonnement, veuillez reessayer");
 	}
 
@@ -109,7 +102,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			Session session=sessionFactory.getCurrentSession();
 			session.update(subscriber);
 			session.update(subscription);
-			//session.flush();
 		}else throw new UserException("Une erreur survenue pendant la desinscription, veuillez reessayer");
 	}
 
@@ -121,7 +113,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			throw new UserNotFoundException("Utilisateur non trouvé");
 
 		return  new ArrayList<UserVO>(user.getSubscriptions());
-
 	}
 
 	@Override
@@ -140,9 +131,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	public List<UserVO> getAllUsers() throws Exception {
 		logger.info("User: all users");
 		return all(UserVO.class, null);
-		Session session = this.sessionFactory.getCurrentSession();
-		return session.createQuery("from UserVO").list();
-
 	}
 
 	@Override
@@ -221,12 +209,8 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 			Session session = this.sessionFactory.getCurrentSession();
 			session.save(user);
-			//session.flush();
-			//session.refresh(user);
-
-			//user=session.get(UserVO.class,user.getId());
 			setRole(user, register.getRole());
-			return user; //session.get(UserVO.class,user.getId());
+			return user;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -241,17 +225,20 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		logger.info("User: update");
 		Session session = this.sessionFactory.getCurrentSession();
 
-		UserVO user=findByEmail(userDTO.getEmail());
+		UserVO user=findById(userDTO.getId());
 
 		if(user==null ){
-			user=findById(userDTO.getId());
+			user=findByEmail(userDTO.getEmail());
 		}
 
 		if (user!=null){
 			//user.setEmail(userDTO.getEmail()); // on ne peut pas ajourner le NaturalId
 			user.setPhone(userDTO.getPhone());
 			user.setGender(userDTO.getGender());
-			setRole(user, userDTO.getRole());
+			user.setFirstName(userDTO.getFirstName());
+			user.setLastName(userDTO.getLastName());
+			//setRole(user, userDTO.getRole());
+			calcolateAverage(user);
 			session.update(user);
 			return user;
 
@@ -405,40 +392,28 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(readOnly = true,propagation = Propagation.REQUIRED)
-	public UserVO findByEmail(String email) throws BusinessResourceException{
+	public UserVO findByEmail(String email) throws Exception {
 		logger.info("User: find by email");
-		Session session = this.sessionFactory.getCurrentSession();
-
-		Query query=session.getNamedQuery(UserVO.EMAIL);
-		query.setParameter("email", email);
-
-		return  (UserVO) query.uniqueResult();
+        return (UserVO) findByUniqueResult(UserVO.EMAIL,UserVO.class,email,"email");
 	}
 
 	@Override
-	public UserVO findByFacebookId(String facebookId) throws BusinessResourceException {
+	public UserVO findByFacebookId(String facebookId) throws Exception {
 		logger.info("User: find by facebook");
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
-		Query query=session.getNamedQuery(UserVO.FACEBOOK);
-		query.setParameter("facebookId", facebookId);
-
-		UserVO user= (UserVO) query.uniqueResult();
-		return user;
+		String[] filters= new String[2];
+		filters[0]=FilterConstants.CANCELLED;
+		filters[1]=FilterConstants.ACTIVE_MBR;
+		return (UserVO) findByUniqueResult(UserVO.FACEBOOK,UserVO.class,facebookId,"facebookId",null,filters);
 	}
 
 	@Override
-	public UserVO findByGoogleId(String googleId) throws BusinessResourceException {
+	public UserVO findByGoogleId(String googleId) throws Exception {
 		logger.info("User: find by google");
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
-		Query query=session.getNamedQuery(UserVO.GOOGLE);
-		query.setParameter("googleId", googleId);
+		String[] filters= new String[2];
+		filters[0]=FilterConstants.CANCELLED;
+		filters[1]=FilterConstants.ACTIVE_MBR;
+		return (UserVO) findByUniqueResult(UserVO.FACEBOOK,UserVO.class,googleId,"googleId",null,filters);
 
-		UserVO user= (UserVO) query.uniqueResult();
-		return user ;
 	}
 
 	@Override
@@ -670,7 +645,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			e.printStackTrace();
 		}
 		return hql.toString();
-
 	}
 
 	@Override

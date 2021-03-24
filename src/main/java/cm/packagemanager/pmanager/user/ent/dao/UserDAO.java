@@ -67,13 +67,13 @@ public interface UserDAO extends CommonDAO {
 	public void remove(UserVO user)  throws BusinessResourceException;
 
 
-	public UserVO findByEmail(String email)  throws BusinessResourceException;
+	public UserVO findByEmail(String email) throws Exception;
 
 
-	public UserVO findByFacebookId(String facebookId)  throws BusinessResourceException;
+	public UserVO findByFacebookId(String facebookId) throws Exception;
 
 
-	public UserVO findByGoogleId(String googleId)  throws BusinessResourceException;
+	public UserVO findByGoogleId(String googleId) throws Exception;
 
 
 	public boolean setRole(UserVO user, RoleEnum roleId) throws Exception;

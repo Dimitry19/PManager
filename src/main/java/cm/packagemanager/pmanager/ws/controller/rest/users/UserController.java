@@ -9,7 +9,7 @@ import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.user.service.UserService;
+import cm.packagemanager.pmanager.user.ent.service.UserService;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
@@ -42,8 +42,7 @@ import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.List;
-
-import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.USER_WS;
+import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 
 @RestController
@@ -69,8 +68,9 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful registration",
 					response = Response.class, responseContainer = "Object") })
-	@PostMapping(value = USER_WS_REGISTRATION)
-	public  Response register(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid RegisterDTO register) throws ValidationException, IOException {
+	@PostMapping(path =USER_WS_REGISTRATION, consumes = {MediaType.APPLICATION_JSON}, produces = {MediaType.APPLICATION_JSON},headers =WSConstants.HEADER_ACCEPT)
+	public  @ResponseBody
+	ResponseEntity<Response> register(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid RegisterDTO register) throws ValidationException, IOException {
 
 		logger.info("register request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -89,15 +89,14 @@ public class UserController extends CommonController {
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(usr.getError());
 
-					return pmResponse;
+					return new ResponseEntity<Response>(pmResponse,HttpStatus.CONFLICT);
 				}
 
 				if(usr==null){
 
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
-
-					return pmResponse;
+					return new ResponseEntity<Response>(pmResponse,HttpStatus.CONFLICT);
 				}
 
 				com.sendgrid.Response sent = userService.buildAndSendMail(request,usr);
@@ -106,12 +105,15 @@ public class UserController extends CommonController {
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
 					response.setStatus(200);
-					return pmResponse;
+					return new ResponseEntity<Response>(pmResponse,HttpStatus.OK);
+
 				}else{
 					pmResponse.setRetCode(sent.getStatusCode());
 					pmResponse.setRetDescription(sent.getBody());
 					response.setStatus(sent.getStatusCode());
 					userService.remove(usr);
+					return new ResponseEntity<Response>(pmResponse,HttpStatus.INTERNAL_SERVER_ERROR);
+
 				}
 
 			}
@@ -122,12 +124,11 @@ public class UserController extends CommonController {
 			response.getWriter().write(e.getMessage());
 		}finally {
 			finishOpentracingSpan();
-
 		}
 		return null;
 	}
-/*https://www.codejava.net/frameworks/spring-boot/upload-multiple-files-example*/
-	@PostMapping(IMAGE)
+	/*https://www.codejava.net/frameworks/spring-boot/upload-multiple-files-example*/
+	@PostMapping(path = IMAGE,consumes = {MediaType.APPLICATION_JSON})
 	public RedirectView picture(HttpServletRequest request ,HttpServletResponse response,
 	                            @RequestParam("userId") @Valid Long userId,
 	                            @RequestParam("image") @Valid MultipartFile multipartFile) throws IOException {
@@ -159,44 +160,45 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful registration",
 					response = Response.class, responseContainer = "Object") })
-	@RequestMapping(value=USER_WS_CONFIRMATION, method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
-	public Response confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception, UserNotFoundException, ValidationException {
+	//@RequestMapping(value=USER_WS_CONFIRMATION, method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
+	@GetMapping(path=USER_WS_CONFIRMATION, headers =WSConstants.HEADER_ACCEPT)
+	public @ResponseBody
+	ResponseEntity<Response> confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token")String token) throws Exception, UserNotFoundException, ValidationException {
 
-
-		logger.info("confirm request in");
-		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
 
-	try{
-		createOpentracingSpan("UserController -confirmation");
 
-		UserVO user = userService.findByToken(token);
+		try{
+			logger.info("confirm request in");
+			response.setHeader("Access-Control-Allow-Origin", "*");
 
-		if (user == null) {
-			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-			pmResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
-		} else {
+			createOpentracingSpan("UserController -confirmation");
 
-			if(user.getActive()==1){
+			UserVO user = userService.findByToken(token);
+
+			if (user == null) {
 				pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-				pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
-				return pmResponse;
+				pmResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
+			} else {
+
+				if(user.getActive()==1){
+					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
+				}
+
+				user.setActive(1);
+				if(userService.update(user)!=null){
+					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+					pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
+				}
 			}
 
-			user.setActive(1);
-			if(userService.update(user)!=null){
-				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-				pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
-			}
-
-		}
-
-	}catch (Exception e){
-		logger.error("Errore eseguendo confirm: ", e);
-		response.setStatus(400);
-		response.getWriter().write(e.getMessage());
-	}finally {finishOpentracingSpan(); }
-		return pmResponse;
+		}catch (Exception e){
+			logger.error("Errore eseguendo confirm: ", e);
+			response.setStatus(400);
+			response.getWriter().write(e.getMessage());
+		}finally {finishOpentracingSpan(); }
+		return new ResponseEntity<Response>(pmResponse,HttpStatus.OK);
 	}
 
 	@ApiOperation(value = " Login user ",response = UserVO.class)
@@ -208,7 +210,8 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful registration",
 					response = UserVO.class, responseContainer = "Object") })
-	@RequestMapping(value = USER_WS_LOGIN, method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
+	//@RequestMapping(value = USER_WS_LOGIN, method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
+	@PostMapping(path = USER_WS_LOGIN,consumes = {MediaType.APPLICATION_JSON},produces =MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	UserVO login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)	throws Exception{
 		logger.info("login request in");
@@ -219,43 +222,48 @@ public class UserController extends CommonController {
 			createOpentracingSpan("UserController -login");
 
 			if (login!=null){
-				 user=userService.login(login);
+				user=userService.login(login);
 
 				if(user!=null){
 					user.setRetCode(WebServiceResponseCode.OK_CODE);
 					user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+					return  user;
+
 				}else{
 					user=new UserVO();
 					user.setRetCode(WebServiceResponseCode.NOK_CODE);
 					user.setRetDescription(WebServiceResponseCode.ERROR_LOGIN_LABEL);
+					return  user;
 				}
 			}
 		}
 		catch (Exception e){
 			logger.error("Errore eseguendo login: ", e);
-			//response.setStatus(400);
-			response.getWriter().write(e.getMessage());
+			//response.getWriter().write(e.getMessage());
+			throw e;
 		}finally {
 			finishOpentracingSpan();
 		}
-		return  user;
+		return  null;
+
 	}
 
 
 	@ApiOperation(value = "En/disable notification ",response = ResponseEntity.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully change status"),
+			@ApiResponse(code = 200, message = "Successfully change status of notification"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Status changed",
 					response = ResponseEntity.class, responseContainer = "Object") })
-	@GetMapping(ENABLE_NOTIFICATION_WS)
-	public ResponseEntity.BodyBuilder manageNotification(HttpServletRequest request, HttpServletResponse response,
+	@GetMapping(value = ENABLE_NOTIFICATION_WS,headers = WSConstants.HEADER_ACCEPT)
+	public @ResponseBody
+	ResponseEntity.BodyBuilder manageNotification(HttpServletRequest request,
+	                                              HttpServletResponse response,
 	                                              @RequestParam("id") @Valid Long id,
-	                                              @RequestParam("enotif") @Valid boolean enableNotification
-	) throws Exception {
+	                                              @RequestParam("enotif") @Valid boolean enableNotification) throws Exception{
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		logger.info(" Manage notification request in");
 		try{
@@ -281,36 +289,39 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful update",
 					response = UserVO.class, responseContainer = "Object") })
-	@RequestMapping(value =UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	//@RequestMapping(value =UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	@PutMapping(value =USER_WS_UPDATE_ID, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	UserVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateUserDTO userDTO) throws UserException, IOException {
+	ResponseEntity<UserVO> update(HttpServletResponse response, HttpServletRequest request, @PathVariable long userId,  @RequestBody @Valid UpdateUserDTO userDTO) throws UserException,ValidationException, IOException {
 
 		logger.info("update user request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
-			try {
-				createOpentracingSpan("UserController -update");
+		try {
+			createOpentracingSpan("UserController -update");
 
-				if(userDTO!=null){
-					UserVO user=userService.updateUser(userDTO);
-					if (user==null){
-						user= new UserVO();
-						user.setRetCode(-1);
-						user.setRetDescription(WebServiceResponseCode.ERROR_UPD_EMAIL_LABEL);
-					}
-					return  user;
+			if(userDTO!=null){
+				userDTO.setId(userId);
+				UserVO user=userService.updateUser(userDTO);
+				if (user==null){
+					user= new UserVO();
+					user.setRetCode(-1);
+					user.setRetDescription(WebServiceResponseCode.ERROR_UPD_EMAIL_LABEL);
+					throw new UserNotFoundException("Utilisateur non trouv&egrave;");
+
 				}
-			} catch (UserException e) {
-				response.getWriter().write(e.getMessage());
-				logger.error("Erreur durant l'ajournement de l'utilisateur  " + userDTO.toString() +"{}",e);
-				e.printStackTrace();
-				throw  e;
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				finishOpentracingSpan();
+				return  new ResponseEntity<UserVO>(user,HttpStatus.OK);
 			}
+		} catch (UserException e) {
+			logger.error("Erreur durant l'ajournement de l'utilisateur  " + userDTO.toString() +"{}",e);
+			throw  e;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			finishOpentracingSpan();
+		}
 
-		return null;
+		return  null;
+
 	}
 
 	@ApiOperation(value = " Retrieve password",response = Response.class)
@@ -324,7 +335,7 @@ public class UserController extends CommonController {
 					response = Response.class, responseContainer = "Object") })
 	@RequestMapping(value = USER_WS_PASSWORD, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	Response  password(HttpServletResponse response, HttpServletRequest request, @RequestBody PasswordDTO password) throws UserException, IOException {
+	Response  password(HttpServletResponse response, HttpServletRequest request, @RequestBody PasswordDTO password) throws Exception {
 
 
 		logger.info("password request in");
@@ -345,12 +356,14 @@ public class UserController extends CommonController {
 			}
 			return pmResponse;
 		}catch (UserException e){
-			//response.getWriter().write(e.getMessage());
-
 			logger.error("Erreur durant la recuperation du mot de passe de l'utilisateur  " + password.toString() +"{}",e);
 			e.printStackTrace();
 			throw  e;
-		}finally {
+		} catch (Exception e) {
+			logger.error("Erreur durant la recuperation du mot de passe de l'utilisateur  " + password.toString() +"{}",e);
+			e.printStackTrace();
+			throw e;
+		} finally {
 			finishOpentracingSpan();
 		}
 	}
@@ -358,13 +371,13 @@ public class UserController extends CommonController {
 	@ApiOperation(value = " Update user role ",response = ResponseEntity.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 200, message = "Successfully updated user role"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Update role successfully",
 					response = ResponseEntity.class, responseContainer = "Object") })
-	@PostMapping(value = USER_WS_ROLE)
+	@PostMapping(value = USER_WS_ROLE, consumes = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML},produces = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) throws Exception {
 
 		logger.info("set role request in");
@@ -394,13 +407,12 @@ public class UserController extends CommonController {
 	@ApiOperation(value = "Delete user ",response = Response.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully retrieved list"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful deleted",
 					response = Response.class, responseContainer = "Object") })
-	@RequestMapping(value =DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	@DeleteMapping(value =DELETE, headers = WSConstants.HEADER_ACCEPT)
 	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") Long id) throws UserException{
 		logger.info("delete request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -435,32 +447,31 @@ public class UserController extends CommonController {
 	@ApiOperation(value = " Retrieve user with an ID ",response = UserVO.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully retrieved list"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful user retrieving",
 					response = UserVO.class, responseContainer = "Object") })
-	@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
-	public UserVO infosUser(HttpServletResponse response, HttpServletRequest request,@PathVariable("id") Long id) throws UserException,IOException {
+	//@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
+	@GetMapping(value = USER_WS_USER_ID, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
+	public ResponseEntity<UserVO> infosUser(HttpServletResponse response, HttpServletRequest request,@PathVariable(value = "id",required = true)Long id) throws UserNotFoundException,IOException {
 		try{
 			createOpentracingSpan("UserController -getUser");
 			logger.info("retrieve user request in");
 			response.setHeader("Access-Control-Allow-Origin", "*");
 			UserVO user =userService.getUser(id);
 			if (user!=null){
-				return user;
+				return new ResponseEntity<UserVO>(user,HttpStatus.OK);
 			}else {
-				response.getWriter().write("Utilisateur non existant ");
+					throw new UserNotFoundException("Utilisateur non trouvé");
 			}
 
-		}catch (UserException e){
+		}catch (UserNotFoundException e){
 			logger.error("Erreur durant l'execution de recuperation des infos de l'utilisateur: ", e);
-			response.getWriter().write(e.getMessage());
+			throw e;
 		}finally {
 			finishOpentracingSpan();
 		}
-		return null;
 	}
 
 	@ApiOperation(value = " Send mail ",response = Response.class)
@@ -472,7 +483,7 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Mail sent",
 					response = Response.class, responseContainer = "Object") })
-	@RequestMapping(value = USER_WS_MAIL)
+	@RequestMapping(value = USER_WS_MAIL,method =RequestMethod.POST, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
 	public Response sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailDTO mail) throws AddressException, MessagingException, IOException {
 
 		logger.info("send mail request in");
@@ -512,10 +523,11 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful retrieving",
-					response = ResponseEntity.class, responseContainer = "Object") })	@GetMapping(USER_WS_USERS)
+					response = ResponseEntity.class, responseContainer = "Object") })
+	@GetMapping(value = USER_WS_USERS, produces = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML},headers = HEADER_ACCEPT)
 	public ResponseEntity<PaginateResponse> users(HttpServletResponse response, HttpServletRequest request,
-			@Valid @Positive(message = "la page doit etre nombre positif") @RequestParam(required = false, defaultValue = DEFAULT_PAGE) int page,
-			@Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
+	                                              @Valid @Positive(message = "la page doit etre nombre positif") @RequestParam(required = false, defaultValue = DEFAULT_PAGE) int page,
+	                                              @Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
 
 
 		logger.info("get all users request in");
@@ -562,8 +574,8 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful subscription",
 					response = Response.class, responseContainer = "Object") })
-	@PostMapping(value = USER_ADD_SUBSCRIBER_WS)
-	public  Response subscribe(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, IOException {
+	@PostMapping(value = USER_ADD_SUBSCRIBER_WS, produces = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML},consumes = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+	public  ResponseEntity<Response> subscribe(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, UserException {
 
 		logger.info("subscribe request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -579,20 +591,22 @@ public class UserController extends CommonController {
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
 					response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-					return pmResponse;
+					return new ResponseEntity<>(pmResponse,HttpStatus.NOT_ACCEPTABLE);
 				}
 				userService.subscribe(subscribe);
 
 				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 				pmResponse.setRetDescription(WebServiceResponseCode.SUBSCRIBE_LABEL);
 				response.setStatus(200);
-				return pmResponse;
+				return new ResponseEntity<>(pmResponse,HttpStatus.OK);
+
 			}
-		}catch (Exception e){
+		}catch (UserException e){
 			logger.error("Errore eseguendo subscribe: ", e);
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(WebServiceResponseCode.ERROR_SUBSCRIBE_LABEL);
-			response.getWriter().write(e.getMessage());
+			throw e;
+
 		}finally {
 			finishOpentracingSpan();
 		}

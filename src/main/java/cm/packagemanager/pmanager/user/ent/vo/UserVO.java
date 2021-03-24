@@ -69,55 +69,116 @@ public class UserVO extends WSCommonResponseVO {
 	public static final String GOOGLE="cm.packagemanager.pmanager.user.ent.vo.UserVO.findByGoogleId";
 
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="ID",unique = true,nullable = false)
 	private Long id;
 
+
+	@Basic(optional = false)
+	@Column(name="FIRST_NAME", nullable=false)
 	private String firstName;
 
+	@NaturalId
+	@Basic(optional = false)
+	@Column(name = "USERNAME", unique=true, insertable=true, updatable=true, nullable=false,length = FieldConstants.AUTH_USER_LEN)
 	private String username;
 
+	@Basic(optional = false)
+	@Column(name="LAST_NAME",nullable = false)
 	private String lastName;
 
+	@NaturalId
+	@Basic(optional = false)
+	@Column(name="EMAIL", nullable=false,unique = true)
 	private String email;
 
+	@Basic(optional = true)
+	@Column(name="PHONE",nullable = true,length = FieldConstants.PHONE_LEN)
 	private String phone;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "GENDER",length = 10)
 	private Gender gender;
 
+	@OneToOne
 	private ImageVO image;
 
 	/*private String picture;*/
 
+	@Basic(optional = true)
+	@Column(name="FACEBOOK_ID")
+	@JsonIgnore
 	private String facebookId;
 
+	@Basic(optional = true)
+	@Column(name="GOOGLE_ID")
+	@JsonIgnore
 	private String googleId;
 
+
+	@JsonIgnore
+	@Basic(optional = false)
+	@Column(name="PASSWORD", nullable=false)
 	private String password;
 
+	@JsonIgnore
+	@Column(name = "ACTIVE", insertable=true, updatable = true, nullable=false)
 	private Integer active;
 
+	@Basic(optional = false)
+	@Column(name="CANCELLED")
+	@JsonIgnore
 	private boolean cancelled;
 
-	private boolean enableNotification=true;
+	@Basic(optional = true)
+	@Column(name = "ENABLE_NOTIF")
+	private Boolean enableNotification=true;
 
+	@OneToMany(mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
+	@OrderBy(clause = "id.id DESC")
+	@Where(clause = "cancelled = false")
 	private Set<MessageVO> messages=new HashSet<>();
 
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
+	@JsonManagedReference
+	@Fetch(value = SELECT)
+	@OrderBy(clause = "startDate DESC")
+	@Where(clause = "cancelled = false")
 	private Set<AnnounceVO> announces=new HashSet<>();
 
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
+	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private Set<RoleVO> roles= new HashSet<>();
 
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
 	private Set<ReviewVO> reviews= new HashSet<>();
 
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinTable(name = "SUBSCRIBERS", joinColumns = @JoinColumn(name = "R_USER_ID"), inverseJoinColumns = @JoinColumn(name = "SUBSCRIBER_ID"))
 	private Set<UserVO> subscribers= new HashSet<>();
 
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinTable(name = "SUBSCRIPTIONS", joinColumns = @JoinColumn(name = "SUBSCRIPTION_ID"), inverseJoinColumns = @JoinColumn(name = "R_USER_ID"))
 	private Set<UserVO> subscriptions= new HashSet<>();
 
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
 	private Set<CommunicationVO> communications=new HashSet<>();
 
-
+	@JsonIgnore
+	@Basic(optional = true)
+	@Column(name="CONFIRM_TOKEN")
 	private String confirmationToken;
 
+	@Transient
+	@JsonIgnore
 	private String error;
 
+
+	@Transient
+	@JsonProperty
 	private double rating=0;
 
 
@@ -148,81 +209,51 @@ public class UserVO extends WSCommonResponseVO {
 	}
 
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID",unique = true,nullable = true)
+
 	public Long getId() {
 		return id;
 
 	}
 
-	@NaturalId
-	@Basic(optional = false)
-	@Column(name = "USERNAME", unique=true, insertable=true, updatable=true, nullable=false,length = FieldConstants.AUTH_USER_LEN)
 	public String getUsername() {
 		return username;
 	}
 
-
-	@Basic(optional = false)
-	@Column(name="PASSWORD", nullable=false)
 	public String getPassword() {
 		return password;
 	}
 
-
-	@Basic(optional = false)
-	@Column(name="FIRST_NAME")
 	public String getFirstName() {
 
 		return firstName;
 	}
 
 
-	@Basic(optional = false)
-	@Column(name="LAST_NAME")
 	public String getLastName() {
 		return lastName;
 	}
 
-	@Basic(optional = true)
-	@Column(name="PHONE",nullable = false,length = FieldConstants.PHONE_LEN)
 	public String getPhone() {
 		return phone;
 	}
 
-	@NaturalId
-	@Basic(optional = false)
-	@Column(name="EMAIL", nullable=false,unique = true)
 	public String getEmail() {
 		return email;
 	}
 
-
-	@Enumerated(EnumType.STRING)
-	@Column(length = 10)
 	public Gender getGender(){
 		return gender;
 	}
 
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
-	@JsonIgnore
+
 	public boolean isCancelled() {
 		return cancelled;
 	}
 
-
-	@Basic(optional = true)
-	@Column(name="FACEBOOK_ID")
-	@JsonIgnore
 	public String getFacebookId() {
 		return facebookId;
 	}
 
-	@Basic(optional = true)
-	@Column(name="GOOGLE_ID")
-	@JsonIgnore
 	public String getGoogleId() {
 		return googleId;
 	}
@@ -231,57 +262,32 @@ public class UserVO extends WSCommonResponseVO {
 		this.googleId = googleId;
 	}
 
-	@JsonIgnore
-	@Column(name = "ACTIVE", insertable=true, updatable = true, nullable=false)
 	public Integer getActive() {
 		return active;
 	}
 
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
-	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	public Set<RoleVO> getRoles() {
 		return roles;
 	}
 
-
-	@OneToMany(mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
-	//@JsonManagedReference
-	//@Fetch(value = SELECT)
-	@OrderBy(clause = "id.id DESC")
-	@Where(clause = "cancelled = false")
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
 
-
-	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
-	@JsonManagedReference
-	@Fetch(value = SELECT)
-	@OrderBy(clause = "startDate DESC")
-	@Where(clause = "cancelled = false")
 	public Set<AnnounceVO> getAnnounces() {
 		return announces;
 	}
 
-
-	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
-	//@JsonManagedReference
-	//@Fetch(value = SELECT)
 	public Set<ReviewVO> getReviews() {
 		return reviews;
 	}
 
-	@JsonIgnore
-	@Basic(optional = true)
-	@Column(name="CONFIRM_TOKEN")
+
 	public String getConfirmationToken() {
 		return confirmationToken;
 	}
 
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinTable(name = "SUBSCRIBERS", joinColumns = @JoinColumn(name = "R_USER_ID"), inverseJoinColumns = @JoinColumn(name = "SUBSCRIBER_ID"))
 	public Set<UserVO> getSubscribers() {
 		return subscribers;
 	}
@@ -290,9 +296,6 @@ public class UserVO extends WSCommonResponseVO {
 		this.subscribers = subscribers;
 	}
 
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinTable(name = "SUBSCRIPTIONS", joinColumns = @JoinColumn(name = "SUBSCRIPTION_ID"), inverseJoinColumns = @JoinColumn(name = "R_USER_ID"))
 	public Set<UserVO> getSubscriptions() {
 		return subscriptions;
 	}
@@ -301,21 +304,14 @@ public class UserVO extends WSCommonResponseVO {
 		this.subscriptions = subscriptions;
 	}
 
-	@Basic(optional = true)
-	@Column(name = "ENABLE_NOTIF")
-	public boolean isEnableNotification() {
+	public Boolean isEnableNotification() {
 		return enableNotification;
 	}
 
-	public void setEnableNotification(boolean enableNotification) {
+	public void setEnableNotification(Boolean enableNotification) {
 		this.enableNotification = enableNotification;
 	}
 
-
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
-	/*@JoinTable(name="USER_COMM",
-			joinColumns={@JoinColumn(name="R_COMM_ID")},
-			inverseJoinColumns={@JoinColumn(name="R_USER_ID")})*/
 	public Set<CommunicationVO> getCommunications() {
 		return communications;
 	}
@@ -324,8 +320,6 @@ public class UserVO extends WSCommonResponseVO {
 		this.communications = communications;
 	}
 
-
-	@OneToOne
 	public ImageVO getImage() {
 		return image;
 	}
@@ -345,8 +339,6 @@ public class UserVO extends WSCommonResponseVO {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}*/
-	@Transient
-	@JsonProperty
 	public double getRating() {
 		return rating;
 	}
@@ -355,8 +347,6 @@ public class UserVO extends WSCommonResponseVO {
 		this.rating = rating;
 	}
 
-
-	@Transient
 	public String getError() {
 		return error;
 	}

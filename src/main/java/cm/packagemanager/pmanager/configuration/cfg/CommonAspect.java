@@ -1,10 +1,8 @@
 package cm.packagemanager.pmanager.configuration.cfg;
 
 
-import cm.packagemanager.pmanager.PackageApplication;
 import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.user.service.UserService;
-import cm.packagemanager.pmanager.user.service.UserServiceImpl;
+import cm.packagemanager.pmanager.user.ent.service.UserService;
 import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -26,7 +24,7 @@ public class CommonAspect {
 
 	private static Logger logger = LoggerFactory.getLogger(CommonAspect.class);
 
-		@Before(value = "execution(* cm.packagemanager.pmanager.user.service.UserService.login(..)) && args(lr)")
+		@Before(value = "execution(* cm.packagemanager.pmanager.user.ent.service.UserService.login(..)) && args(lr)")
 		public void beforeAdvice(JoinPoint joinPoint, LoginDTO lr) throws Exception {
 
 			if(!userService.checkLogin(lr)){
@@ -36,7 +34,7 @@ public class CommonAspect {
 
 		}
 
-		@After(value = "execution(* cm.packagemanager.pmanager.user.service.UserService.*(..)) && args(userId)")
+		@After(value = "execution(* cm.packagemanager.pmanager.user.ent.service.UserService.*(..)) && args(userId)")
 		public void afterAdvice(JoinPoint joinPoint, Long  userId) {
 			logger.info("After method:" + joinPoint.getSignature());
 

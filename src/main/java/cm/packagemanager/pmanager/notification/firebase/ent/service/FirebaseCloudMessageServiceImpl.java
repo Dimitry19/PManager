@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.notification.firebase.ent.service;
 
-import cm.packagemanager.pmanager.notification.firebase.ent.enums.NotificationParameter;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationParameter;
 import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationRequest;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;

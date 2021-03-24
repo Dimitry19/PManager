@@ -34,15 +34,29 @@ public class MessageVO extends WSCommonResponseVO {
 
 	private static final long serialVersionUID = 1L;
 
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="R_USER_ID", updatable = false)
+	@JsonBackReference
 	private UserVO user;
 
+
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@JoinColumn(name="R_ANNOUNCE", referencedColumnName = "ID",updatable = false)
+	@JsonBackReference
 	private AnnounceVO announce;
 
+	@Basic(optional = false)
+	@Column(name = "CONTENT",nullable = false)
+	@JsonProperty
 	private String content;
 
 	@Transient
 	private String username;
 
+	@Basic(optional = false)
+	@Column(name="CANCELLED")
 	private boolean cancelled;
 
 
@@ -58,33 +72,18 @@ public class MessageVO extends WSCommonResponseVO {
 		this.id = id;
 	}
 
-	@Basic(optional = false)
-	@Column(name = "CONTENT")
-	@JsonProperty
 	private String getContent(){
 		return content;
 	}
 
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	@JoinColumn(name="R_ANNOUNCE", referencedColumnName = "ID",updatable = false)
-	@JsonBackReference
 	public AnnounceVO getAnnounce() {
 		return announce;
 	}
 
-
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="R_USER_ID", updatable = false)
-	@JsonBackReference
 	public UserVO getUser(){
 		return user;
 	}
 
-
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
 	public boolean isCancelled() {
 		return cancelled;
 	}

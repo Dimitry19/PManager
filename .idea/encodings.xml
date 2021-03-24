@@ -11,7 +11,7 @@
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/cfg/HibernateConfiguration.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/FilterConstants.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/package-info.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/service/UserService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/service/UserService.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/EmployeeController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/responses/WebServiceResponseCode.java" charset="UTF-8" />

@@ -2,14 +2,12 @@ package cm.packagemanager.pmanager.ws.controller.rest.reservation;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
-import cm.packagemanager.pmanager.announce.service.ReservationService;
+import cm.packagemanager.pmanager.announce.ent.service.ReservationService;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
-import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
-import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
@@ -34,8 +32,7 @@ import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-
-import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.RESERVATION_WS;
+import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 @RestController
 @RequestMapping(RESERVATION_WS)

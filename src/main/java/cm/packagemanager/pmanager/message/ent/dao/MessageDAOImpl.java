@@ -87,7 +87,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 			MessageVO message =new MessageVO();
 			setMessage(announce,user,message,mdto);
 			message.setId(messageId);
-			announce.addMessages(message);
+			announce.addMessage(message);
 
 			Session session=sessionFactory.getCurrentSession();
 			session.save(message);
