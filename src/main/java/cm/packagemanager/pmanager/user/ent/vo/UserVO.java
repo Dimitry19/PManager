@@ -478,7 +478,10 @@ public class UserVO extends WSCommonResponseVO {
 	}
 
 	public void removeSubscriber(UserVO subscriber){
-		this.subscribers.remove(subscriber);
+
+		if(this.subscribers.contains(subscriber)){
+			this.subscribers.remove(subscriber);
+		}
 	}
 
 	public void removeSubscribers() {
@@ -494,7 +497,9 @@ public class UserVO extends WSCommonResponseVO {
 	}
 
 	public void removeSubscription(UserVO subscription){
-		this.subscriptions.remove(subscription);
+		if(this.subscriptions.contains(subscription)){
+			this.subscriptions.remove(subscription);
+		}
 	}
 
 	public void removeSubscriptions() {

@@ -10,6 +10,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,8 +75,9 @@ public class CommonController {
 
 
 	@RequestMapping(value = "/", method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
-	public String goToHomePage() {
-		return redirect;
+	public ResponseEntity goToHomePage() {
+
+		return new ResponseEntity(redirect, HttpStatus.OK);
 	}
 
 	/*@ResponseStatus(HttpStatus.BAD_REQUEST)

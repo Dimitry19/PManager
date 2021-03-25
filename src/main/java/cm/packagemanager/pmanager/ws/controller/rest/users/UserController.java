@@ -20,6 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javafx.scene.media.Media;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
@@ -113,9 +113,7 @@ public class UserController extends CommonController {
 					response.setStatus(sent.getStatusCode());
 					userService.remove(usr);
 					return new ResponseEntity<Response>(pmResponse,HttpStatus.INTERNAL_SERVER_ERROR);
-
 				}
-
 			}
 		}catch (Exception e){
 			logger.error("Errore eseguendo register: ", e);
@@ -154,7 +152,6 @@ public class UserController extends CommonController {
 	@ApiOperation(value = "Confirmation user registration ",response = Response.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully retrieved list"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
@@ -195,8 +192,7 @@ public class UserController extends CommonController {
 
 		}catch (Exception e){
 			logger.error("Errore eseguendo confirm: ", e);
-			response.setStatus(400);
-			response.getWriter().write(e.getMessage());
+			throw e;
 		}finally {finishOpentracingSpan(); }
 		return new ResponseEntity<Response>(pmResponse,HttpStatus.OK);
 	}
@@ -204,7 +200,6 @@ public class UserController extends CommonController {
 	@ApiOperation(value = " Login user ",response = UserVO.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully retrieved list"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
@@ -213,7 +208,7 @@ public class UserController extends CommonController {
 	//@RequestMapping(value = USER_WS_LOGIN, method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 	@PostMapping(path = USER_WS_LOGIN,consumes = {MediaType.APPLICATION_JSON},produces =MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	UserVO login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)	throws Exception{
+	ResponseEntity<UserVO> login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)	throws Exception{
 		logger.info("login request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		UserVO user = null;
@@ -227,19 +222,17 @@ public class UserController extends CommonController {
 				if(user!=null){
 					user.setRetCode(WebServiceResponseCode.OK_CODE);
 					user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
-					return  user;
-
+					return  new ResponseEntity<UserVO>(user,HttpStatus.OK);
 				}else{
 					user=new UserVO();
 					user.setRetCode(WebServiceResponseCode.NOK_CODE);
 					user.setRetDescription(WebServiceResponseCode.ERROR_LOGIN_LABEL);
-					return  user;
+					return  new ResponseEntity<UserVO>(user,HttpStatus.NOT_FOUND);
 				}
 			}
 		}
 		catch (Exception e){
 			logger.error("Errore eseguendo login: ", e);
-			//response.getWriter().write(e.getMessage());
 			throw e;
 		}finally {
 			finishOpentracingSpan();
@@ -252,24 +245,23 @@ public class UserController extends CommonController {
 	@ApiOperation(value = "En/disable notification ",response = ResponseEntity.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully change status of notification"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-			@ApiResponse(code = 200, message = "Status changed",
+			@ApiResponse(code = 200, message = "Successfully change status of notification",
 					response = ResponseEntity.class, responseContainer = "Object") })
-	@GetMapping(value = ENABLE_NOTIFICATION_WS,headers = WSConstants.HEADER_ACCEPT)
+	@GetMapping(value = ENABLE_NOTIFICATION_WS,produces = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	ResponseEntity.BodyBuilder manageNotification(HttpServletRequest request,
+	ResponseEntity<UserVO> manageNotification(HttpServletRequest request,
 	                                              HttpServletResponse response,
-	                                              @RequestParam("id") @Valid Long id,
-	                                              @RequestParam("enotif") @Valid boolean enableNotification) throws Exception{
+	                                              @RequestParam("userId") @Valid Long userId,
+	                                              @RequestParam("enable") @Valid boolean enable) throws Exception{
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		logger.info(" Manage notification request in");
 		try{
 			createOpentracingSpan("UserController - Manage notification");
-			userService.manageNotification(id,enableNotification);
-			return ResponseEntity.status(HttpStatus.OK);
+			UserVO user=userService.manageNotification(userId,enable);
+			return new ResponseEntity<UserVO>(user,HttpStatus.OK);
 
 		}catch (Exception e){
 			logger.error("Erreur durant l'upload de l'image",e);
@@ -283,7 +275,6 @@ public class UserController extends CommonController {
 	@ApiOperation(value = " Update user ",response = UserVO.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully retrieved list"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
@@ -292,7 +283,8 @@ public class UserController extends CommonController {
 	//@RequestMapping(value =UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	@PutMapping(value =USER_WS_UPDATE_ID, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	ResponseEntity<UserVO> update(HttpServletResponse response, HttpServletRequest request, @PathVariable long userId,  @RequestBody @Valid UpdateUserDTO userDTO) throws UserException,ValidationException, IOException {
+	ResponseEntity<UserVO> update(HttpServletResponse response, HttpServletRequest request, @PathVariable long userId,
+	                              @RequestBody @Valid UpdateUserDTO userDTO) throws UserException,ValidationException, IOException {
 
 		logger.info("update user request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -327,7 +319,6 @@ public class UserController extends CommonController {
 	@ApiOperation(value = " Retrieve password",response = Response.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully retrieved list"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
@@ -371,11 +362,10 @@ public class UserController extends CommonController {
 	@ApiOperation(value = " Update user role ",response = ResponseEntity.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully updated user role"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-			@ApiResponse(code = 200, message = "Update role successfully",
+			@ApiResponse(code = 200, message = "Successfully updated user role",
 					response = ResponseEntity.class, responseContainer = "Object") })
 	@PostMapping(value = USER_WS_ROLE, consumes = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML},produces = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 	public ResponseEntity<UserVO> setRole(@RequestBody @Valid RoleToUserDTO roleToUser) throws Exception {
@@ -413,7 +403,7 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 200, message = "Successful deleted",
 					response = Response.class, responseContainer = "Object") })
 	@DeleteMapping(value =DELETE, headers = WSConstants.HEADER_ACCEPT)
-	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") Long id) throws UserException{
+	public Response delete(HttpServletResponse response, HttpServletRequest request,@Valid  @RequestParam("id")  Long id) throws UserException{
 		logger.info("delete request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
@@ -451,7 +441,7 @@ public class UserController extends CommonController {
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful user retrieving",
-					response = UserVO.class, responseContainer = "Object") })
+					response = ResponseEntity.class, responseContainer = "Object") })
 	//@RequestMapping(value = USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
 	@GetMapping(value = USER_WS_USER_ID, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<UserVO> infosUser(HttpServletResponse response, HttpServletRequest request,@PathVariable(value = "id",required = true)Long id) throws UserNotFoundException,IOException {
@@ -477,7 +467,6 @@ public class UserController extends CommonController {
 	@ApiOperation(value = " Send mail ",response = Response.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully retrieved list"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
@@ -568,7 +557,6 @@ public class UserController extends CommonController {
 	@ApiOperation(value = "Subscription to an user ",response = Response.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully subscription"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
@@ -616,14 +604,14 @@ public class UserController extends CommonController {
 	@ApiOperation(value = "Unsubscription to an user ",response = Response.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 200, message = "Successfully subscription"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful unsubscription",
 					response = Response.class, responseContainer = "Object") })
-	@PostMapping(value = UNSUBSCRIBE_WS)
-	public  Response unsubscribe(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, IOException {
+	@PostMapping(value = UNSUBSCRIBE_WS, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
+	public  ResponseEntity<Response> unsubscribe(HttpServletRequest request ,HttpServletResponse response,
+	                                             @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, IOException {
 
 		logger.info("unsubscribe request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -639,20 +627,21 @@ public class UserController extends CommonController {
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
 					response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-					return pmResponse;
+					return new ResponseEntity<Response>(pmResponse,HttpStatus.NOT_ACCEPTABLE);
 				}
+				userService.unsubscribe(subscribe);
 				userService.unsubscribe(subscribe);
 
 				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 				pmResponse.setRetDescription(WebServiceResponseCode.UNSUBSCRIBE_LABEL);
 				response.setStatus(200);
-				return pmResponse;
+				return new ResponseEntity<Response>(pmResponse,HttpStatus.OK);
 			}
 		}catch (Exception e){
 			logger.error("Errore eseguendo unsubscribe: ", e);
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(WebServiceResponseCode.ERROR_UNSUBSCRIBE_LABEL);
-			response.getWriter().write(e.getMessage());
+			throw e;
 		}finally {
 			finishOpentracingSpan();
 		}

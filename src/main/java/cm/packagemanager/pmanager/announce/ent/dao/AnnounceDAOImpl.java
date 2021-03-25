@@ -122,8 +122,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class,BusinessResourceException.class})
 	public AnnounceVO findById(Long id) throws BusinessResourceException {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		AnnounceVO announce=(AnnounceVO) manualFilter(session.find(AnnounceVO.class,id));
+		AnnounceVO announce=(AnnounceVO) manualFilter(findById(AnnounceVO.class,id));
 		return announce;
 	}
 
@@ -146,11 +145,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 			announce.setAnnounceId(new AnnounceIdVO(constants.DEFAULT_TOKEN));
 			announce.setMessages(null);
 			announce.setCancelled(false);
-
-			Session session = this.sessionFactory.getCurrentSession();
-			session.save(announce);
-			//session.flush();
-			//announce=session.get(AnnounceVO.class,announce.getId());
+			save(announce);
 			addAnnounceToUser(announce);
 			return announce;
 		}
@@ -173,10 +168,8 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		if(announce==null){
 			throw new RecordNotFoundException("Aucune annonce  trouvée");
 		}
-
 		setAnnounce(announce,user,adto);
-		Session session = sessionFactory.getCurrentSession();
-		session.update(announce);
+		update(announce);
 		return announce;
 
 	}
@@ -191,8 +184,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		String where=composeQuery(announceSearchDTO, "a");
 		Query query=session.createQuery("from AnnounceVO  as a "+ where);
 		composeQueryParameters(announceSearchDTO,query);
-		query.setFirstResult(pageBy.getPage());
-		query.setMaxResults(pageBy.getSize());
+		pageBy(query,pageBy);
 		return  query.list();
 	}
 
@@ -269,13 +261,12 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	public boolean deleteReservations(Long id) throws Exception {
 
 		try {
-			Session session=sessionFactory.getCurrentSession();
+
 			 List<ReservationVO> reservations=findReservations(id);
 			for (ReservationVO reservation: reservations) {
 				reservation.setCancelled(true);
-				session.merge(reservation);
+				update(reservation);
 			}
-			session.flush();
 		}catch (Exception e) {
 			logger.error("Erreur durant la recuperation des reservations liées à l'annonce id={}",id);
 			throw e;
@@ -311,7 +302,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 			if(announce!=null) {
 				announce.updateDeleteChildrens();
 				announce.setCancelled(true);
-				session.merge(announce);
+				merge(announce);
 				announce =session.get(AnnounceVO.class, id);
 				result= (announce!=null) && (announce.isCancelled()) && deleteReservations(id);
 

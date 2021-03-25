@@ -14,11 +14,13 @@ public interface ReservationDAO extends CommonDAO {
 
 	int count(String queryName,Long id, String paramName,PageBy pageBy)throws Exception   ;
 
-	ReservationVO addReservation(ReservationDTO reservation) throws BusinessResourceException;
+	ReservationVO addReservation(ReservationDTO reservation) throws BusinessResourceException, Exception;
 
-	ReservationVO updateReservation(UpdateReservationDTO reservation) throws BusinessResourceException;
+	ReservationVO updateReservation(UpdateReservationDTO reservation) throws Exception;
 
-	boolean deleteReservation(Long id) throws BusinessResourceException;
+	boolean deleteReservation(Long id) throws Exception;
 
-	boolean validate(ValidateReservationDTO reservationDTO) throws BusinessResourceException;
+	boolean validate(ValidateReservationDTO reservationDTO) throws Exception;
+
+	ReservationVO getReservation(long id) throws Exception;
 }

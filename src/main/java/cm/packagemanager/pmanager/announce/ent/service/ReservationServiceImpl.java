@@ -31,12 +31,17 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
+	public ReservationVO getReservation(long id) throws Exception {
+		return reservationDAO.getReservation(id);
+	}
+
+	@Override
 	public boolean validate(ValidateReservationDTO reservationDTO) throws Exception {
 		return reservationDAO.validate(reservationDTO);
 	}
 
 	@Override
-	public boolean deleteReservation(Long id)  throws BusinessResourceException {
+	public boolean deleteReservation(Long id) throws Exception {
 		return reservationDAO.deleteReservation(id);
 	}
 

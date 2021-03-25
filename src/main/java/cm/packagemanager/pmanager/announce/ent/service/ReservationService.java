@@ -14,6 +14,8 @@ public interface ReservationService {
 
 	ReservationVO updateReservation(UpdateReservationDTO reservationDTO) throws Exception;
 
+	ReservationVO getReservation(long id) throws Exception;
+
 	boolean validate(ValidateReservationDTO reservationDTO) throws Exception;
 
 	boolean deleteReservation(Long id)  throws Exception;

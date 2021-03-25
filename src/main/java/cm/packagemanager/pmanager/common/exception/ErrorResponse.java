@@ -57,10 +57,6 @@ public class ErrorResponse {
 			UnexpectedTypeException ob=(UnexpectedTypeException)ex;
 			stringBuilder.append(ob.getMessage());
 		}
-		stringBuilder.append(ex.getMessage());
-		this.message=stringBuilder.toString();
-
-
 
 		if( ex instanceof NullPointerException){
 			setDefaultCodes("null.pointer.exception");

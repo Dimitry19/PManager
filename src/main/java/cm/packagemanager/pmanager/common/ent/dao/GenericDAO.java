@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.Query;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -48,4 +49,9 @@ public interface GenericDAO <T, ID extends Serializable,NID extends Serializable
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor ={BusinessResourceException.class, Exception.class})
 	T update(T t) throws BusinessResourceException;
+
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor ={BusinessResourceException.class, Exception.class})
+	T merge(T t) throws BusinessResourceException;
+
+	void pageBy(org.hibernate.query.Query query, PageBy pageBy);
 }

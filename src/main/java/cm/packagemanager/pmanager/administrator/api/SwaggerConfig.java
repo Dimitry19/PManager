@@ -129,52 +129,6 @@ public class SwaggerConfig {
 				.licenseUrl("").version("1.0").build();
 	}
 
-	/*@Bean
-	public Docket petApi() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.any())
-				.build()
-				.pathMapping("/ws/announce/")
-				.directModelSubstitute(LocalDate.class, String.class)
-				.genericModelSubstitutes(ResponseEntity.class)
-				.alternateTypeRules(
-						newRule(typeResolver.resolve(DeferredResult.class,
-								typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
-								typeResolver.resolve(WildcardType.class)))
-				.useDefaultResponseMessages(false)
-				.globalResponses(HttpMethod.GET,
-						singletonList(new ResponseBuilder()
-								.code("500")
-								.description("500 message")
-								.representation(MediaType.TEXT_XML)
-								.apply(r ->
-										r.model(m ->
-												m.referenceModel(ref ->
-														ref.key(k ->
-																k.qualifiedModelName(q ->
-																		q.namespace("some:namespace")
-																				.name("ERROR"))))))
-								.build()))
-				.securitySchemes(singletonList(apiKey()))
-				.securityContexts(singletonList(securityContext()))
-				.enableUrlTemplating(true)
-				.globalRequestParameters(
-						singletonList(new springfox.documentation.builders.RequestParameterBuilder()
-								.name("someGlobalParameter")
-								.description("Description of someGlobalParameter")
-								.in(ParameterType.QUERY)
-								.required(true)
-								.query(q -> q.model(m -> m.scalarModel(ScalarType.STRING)))
-								.build()))
-				.tags(new Tag("Announce Service", "All apis relating to announce"));
-				//.additionalModels(typeResolver.resolve(AnnounceDTO.class));
-	}
-
-	@Autowired
-	private TypeResolver typeResolver;
-*/
 	private ApiKey apiKey() {
 		return new ApiKey("API", "PM2020", "header");
 	}

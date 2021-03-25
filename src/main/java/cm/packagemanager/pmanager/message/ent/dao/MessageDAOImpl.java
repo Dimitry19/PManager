@@ -7,6 +7,7 @@ import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
+import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.QueryUtils;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
@@ -61,8 +62,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 			throw new RecordNotFoundException("Aucune message  trouvé");
 		}
 		message.setContent(mdto.getContent());
-		Session session = sessionFactory.getCurrentSession();
-		session.update(message);
+		update(message);
 		return message;
 	}
 
@@ -76,24 +76,26 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 		if(user==null){
             user = userDAO.findByEmail(mdto.getUsername());
         }
+
+		if(user==null){
+			throw new UserNotFoundException("Utisateur non trouvé");
+		}
 		AnnounceVO announce=announceDAO.findById(mdto.getAnnounceId());
 
-		if(user!=null && announce!=null){
-
-			Long id= queryUtils.calcolateId(MessageVO.GET_ID_SQL);
-
-			MessageIdVO messageId=new MessageIdVO(id,announce.getAnnounceId().getToken());
-
-			MessageVO message =new MessageVO();
-			setMessage(announce,user,message,mdto);
-			message.setId(messageId);
-			announce.addMessage(message);
-
-			Session session=sessionFactory.getCurrentSession();
-			session.save(message);
-			return message;
+		if(announce==null){
+			throw new Exception("Announce non trouvé");
 		}
-		return null;
+
+		Long id= queryUtils.calcolateId(MessageVO.GET_ID_SQL);
+
+		MessageIdVO messageId=new MessageIdVO(id,announce.getAnnounceId().getToken());
+		MessageVO message =new MessageVO();
+		setMessage(announce,user,message,mdto);
+		message.setId(messageId);
+		announce.addMessage(message);
+		save(message);
+		return message;
+
 	}
 
 	@Override
@@ -121,8 +123,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 	@Override
 	public MessageVO findById(MessageIdVO id) throws BusinessResourceException {
 		logger.info("Message: findBy");
-		Session session = this.sessionFactory.getCurrentSession();
-		MessageVO message=(MessageVO) manualFilter(session.find(MessageVO.class,id));
+		MessageVO message=(MessageVO) manualFilter(findById(MessageVO.class,id));
 		return message;
 	}
 
@@ -148,13 +149,12 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 
 		try{
 
-			Session session=sessionFactory.getCurrentSession();
+
 			MessageIdVO messageId =new MessageIdVO(id,Constants.DEFAULT_TOKEN);
 			MessageVO message=findById(messageId);
 			if(message!=null) {
 				message.setCancelled(true);
-				session.merge(message);
-				message = session.get(MessageVO.class, messageId);
+				message= (MessageVO) merge(message);
 				result= (message!=null) && (message.isCancelled());
 			}
 		}catch (Exception e){

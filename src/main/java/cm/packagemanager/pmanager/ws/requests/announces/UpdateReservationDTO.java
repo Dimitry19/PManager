@@ -9,9 +9,8 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateReservationDTO extends ReservationDTO{
+public class UpdateReservationDTO extends CommonReservationDTO{
 
-	@NotNull(message = "L'id de la reservation doit etre valorisé")
 	private Long id;
 	private boolean validate;
 

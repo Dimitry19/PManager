@@ -20,13 +20,15 @@ public class CategoryVO implements Serializable {
 
 	public static final String FIND_BY_CODE="cm.packagemanager.pmanager.announce.ent.vo.ProductCategoryVO.findByCode";
 	private static final long serialVersionUID = -6108078165603686675L;
+
+
 	@Id
 	@Basic(optional = false)
 	@Column(name = "CODE", nullable = false,length = FieldConstants.AUTH_USER_LEN)
 	private String code;
 
-	@Basic(optional = false)
-	@Column(name="DESCRITPTION", nullable = false)
+	@Basic(optional = true)
+	@Column(name="DESCRITPTION")
 	private String description;
 
 	//private boolean cancelled;

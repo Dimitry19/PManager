@@ -26,6 +26,12 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 
 	private static Logger logger = LoggerFactory.getLogger(GenericDAOImpl.class);
 
+	private static final String FROM =" FROM ";
+	private static final String DESC =" desc ";
+	private static final String ASC =" asc ";
+	private static final String USER_PARAM ="userId";
+	private static final String ALIAS_ORDER =" as t order by t. ";
+
 	@Autowired
 	protected SessionFactory sessionFactory;
 
@@ -101,12 +107,9 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
-		Query query=session.createQuery("FROM "+clazz.getName()+" as elt where elt.user.id =:userId",clazz);
-		query.setParameter("userId", userId);
-		if(pageBy!=null){
-			query.setFirstResult(pageBy.getPage());
-			query.setMaxResults(pageBy.getSize());
-		}
+		Query query=session.createQuery(FROM +clazz.getName()+" as elt where elt.user.id =:userId",clazz);
+		query.setParameter(USER_PARAM, userId);
+		pageBy(query, pageBy);
 
 		return query.getResultList();
 	}
@@ -118,14 +121,12 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
-		StringBuilder queryBuilder= new StringBuilder("FROM");
+		StringBuilder queryBuilder= new StringBuilder(FROM);
 		queryBuilder.append(clazz.getName());
 
 		Query query=session.createQuery(queryBuilder.toString(),clazz);
-		if(pageBy!=null){
-			query.setFirstResult(pageBy.getPage());
-			query.setMaxResults(pageBy.getSize());
-		}
+		pageBy(query, pageBy);
+
 		return query.getResultList();
 	}
 
@@ -133,7 +134,7 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 	@Transactional(readOnly = true)
 	public List<T> all(Class<T> clazz, PageBy pageBy, String... filters) throws Exception {
 
-		StringBuilder queryBuilder= new StringBuilder(" FROM ");
+		StringBuilder queryBuilder= new StringBuilder(FROM);
 		queryBuilder.append(clazz.getName());
 
 		Session session = this.sessionFactory.getCurrentSession();
@@ -142,10 +143,8 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 		}
 
 		Query query=session.createQuery(queryBuilder.toString(),clazz);
-		if(pageBy!=null){
-			query.setFirstResult(pageBy.getPage());
-			query.setMaxResults(pageBy.getSize());
-		}
+
+		pageBy(query, pageBy);
 		return query.getResultList();
 	}
 
@@ -155,24 +154,20 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 	public List<T> allAndOrderBy(Class<T> clazz, String field, boolean desc, PageBy pageBy) throws Exception {
 
 		Session session = this.sessionFactory.getCurrentSession();
-		StringBuilder queryBuilder= new StringBuilder(" FROM ");
+		StringBuilder queryBuilder= new StringBuilder(FROM);
 		queryBuilder.append(clazz.getName());
-		queryBuilder.append(" as t order by t.");
+		queryBuilder.append(ALIAS_ORDER);
 		queryBuilder.append(field);
 
 		if(desc){
-			queryBuilder.append(" desc ");
+			queryBuilder.append(DESC);
 		}else {
-			queryBuilder.append(" asc ");
+			queryBuilder.append(ASC);
 		}
 
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query=session.createQuery(queryBuilder.toString() ,clazz);
-		if(pageBy!=null){
-			query.setFirstResult(pageBy.getPage());
-			query.setMaxResults(pageBy.getSize());
-		}
-
+		pageBy(query, pageBy);
 		return query.getResultList();
 	}
 
@@ -226,10 +221,7 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 			query.setParameter(paramName, id);
 		}
 
-		if(pageBy!=null){
-			query.setFirstResult(pageBy.getPage());
-			query.setMaxResults(pageBy.getSize());
-		}
+		pageBy(query, pageBy);
 
 		return (T) query.uniqueResult();
 	}
@@ -246,10 +238,7 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 			query.setParameter(paramName, id);
 		}
 
-		if(pageBy!=null){
-			query.setFirstResult(pageBy.getPage());
-			query.setMaxResults(pageBy.getSize());
-		}
+		pageBy(query, pageBy);
 
 		return query.getResultList();
 	}
@@ -261,11 +250,8 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query=session.createQuery(queryName,clazz);
-		query.setParameter("userId", userId);
-		if(pageBy!=null){
-			query.setFirstResult(pageBy.getPage());
-			query.setMaxResults(pageBy.getSize());
-		}
+		query.setParameter(USER_PARAM, userId);
+		pageBy(query, pageBy);
 
 		return query.getResultList();
 	}
@@ -276,6 +262,8 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query = session.createNamedQuery(queryName,clazz);
 		query.setParameter(paramName, id);
+		pageBy(query, pageBy);
+
 		return CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
 	}
 
@@ -285,7 +273,9 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
-		Query query = session.createQuery("FROM "+clazz.getName());
+		Query query = session.createQuery(FROM +clazz.getName());
+		pageBy(query, pageBy);
+
 
 		return CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
 	}
@@ -320,7 +310,7 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 	public void save(T t) {
 		Session session= sessionFactory.getCurrentSession();
 		session.save(t);
-		session.flush();
+		//session.flush();
 	}
 
 	@Override
@@ -333,6 +323,26 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 			return t;
 		}
 		return null;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor ={BusinessResourceException.class, Exception.class})
+	public T merge(T t) throws BusinessResourceException {
+		logger.info("Generic merge");
+		Session session = this.sessionFactory.getCurrentSession();
+		if(t!=null){
+			session.merge(t);
+			return t;
+		}
+		return null;
+	}
+
+	@Override
+	public void pageBy(Query query, PageBy pageBy){
+		if(pageBy!=null){
+			query.setFirstResult(pageBy.getPage());
+			query.setMaxResults(pageBy.getSize());
+		}
 	}
 
 }

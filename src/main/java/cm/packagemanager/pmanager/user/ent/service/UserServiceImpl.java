@@ -146,7 +146,7 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 	@Override
-	public boolean manageNotification(Long userId, boolean enableNotification) throws UserException {
+	public UserVO manageNotification(Long userId, boolean enableNotification) throws UserException {
 		return userDAO.manageNotification(userId,enableNotification);
 	}
 

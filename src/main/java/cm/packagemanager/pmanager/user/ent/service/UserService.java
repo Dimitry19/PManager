@@ -31,7 +31,7 @@ public interface UserService{
 
 	boolean editPassword(Long userId, String oldPassword,String newPassword) throws UserException;
 
-	boolean manageNotification(Long userId, boolean enableNotification) throws UserException;
+	UserVO manageNotification(Long userId, boolean enableNotification) throws UserException;
 
 	public void remove(UserVO user) throws UserException ;
 

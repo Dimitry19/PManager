@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 import static cm.packagemanager.pmanager.constant.WSConstants.*;
@@ -39,13 +40,15 @@ public class MessageController extends CommonController  {
 		protected MessageService messageService;
 
 
-		@PostMapping(value =UPDATE)
-		MessageVO  update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateMessageDTO umr) throws Exception {
+		@PutMapping(value =MESSAGE_WS_UPDATE, produces = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+		MessageVO  update(HttpServletResponse response, HttpServletRequest request, @PathVariable long id,
+		                  @RequestBody @Valid UpdateMessageDTO umr) throws Exception {
 
 		logger.info("Update message requestin");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		try {
 			createOpentracingSpan("MessageController -update");
+			umr.setId(id);
 			MessageVO message=messageService.update(umr);
 			if (message!=null){
 				message.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -57,16 +60,15 @@ public class MessageController extends CommonController  {
 			}
 			return message;
 		}catch (Exception e){
-			response.getWriter().write(e.getMessage());
+				logger.error(" Error {}",e);
+				throw e;
 		}finally {
 			finishOpentracingSpan();
 		}
-
-		return null;
-	}
+		}
 
 
-		@PostMapping(value = ADD)
+		@PostMapping(value = ADD,produces = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 		public ResponseEntity<MessageVO> addMessage(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid MessageDTO mdto) throws Exception{
 		HttpHeaders headers = new HttpHeaders();
 
@@ -83,7 +85,7 @@ public class MessageController extends CommonController  {
 						message.setRetDescription(WebServiceResponseCode.MESSAGE_CREATE_LABEL);
 						return new ResponseEntity<MessageVO>(message, headers, HttpStatus.OK);
 					}else{
-						response.getWriter().write("Message non ajouté!");
+						return new ResponseEntity<MessageVO>(message, headers, HttpStatus.NOT_FOUND);
 					}
 				}
 			}catch (Exception e){
@@ -134,7 +136,7 @@ public class MessageController extends CommonController  {
 		}
 		catch (Exception e){
 			logger.error("MessageController- error {}",e);
-			//response.getWriter().write(e.getMessage());
+			throw e;
 		}
 		finally {
 			finishOpentracingSpan();
@@ -150,7 +152,7 @@ public class MessageController extends CommonController  {
 		 * @return
 		 * @throws Exception
 		 */
-		@RequestMapping(value =DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+		@DeleteMapping(value =DELETE,headers = WSConstants.HEADER_ACCEPT)
 		public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");

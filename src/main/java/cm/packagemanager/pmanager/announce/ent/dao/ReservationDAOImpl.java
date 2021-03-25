@@ -8,6 +8,7 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.BigDecimalUtils;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
@@ -51,17 +52,23 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-	public ReservationVO addReservation(ReservationDTO reservationDTO) throws BusinessResourceException {
+	@Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor ={Exception.class,UserNotFoundException.class})
+	public ReservationVO addReservation(ReservationDTO reservationDTO) throws Exception {
 		logger.info("add reservation ");
-		Session session = sessionFactory.getCurrentSession();
 
 		UserVO user = userDAO.findById(reservationDTO.getUserId());
-		AnnounceVO announce=announceDAO.findById(reservationDTO.getAnnounceId());
-		CategoryVO category=categoryDAO.findByCode(reservationDTO.getCategory());
+		if (user==null)
+			throw  new UserNotFoundException("Utilisateur non trouve");
 
-		if(user!=null && announce!=null){
-			checkRemainWeight(announce,reservationDTO);
+		AnnounceVO announce=announceDAO.findById(reservationDTO.getAnnounceId());
+		if (announce==null){
+			logger.error("add reservation {},{} non trouvé ou {} non trouvée","La reservation n'a pas été ajoutée","Utilisateur avec id="+reservationDTO.getUserId()," Annonce avec id="+reservationDTO.getAnnounceId());
+			throw  new Exception("Announce non trouve");
+		}
+
+			CategoryVO category=categoryDAO.findByCode(reservationDTO.getCategory());
+
+			checkRemainWeight(announce,reservationDTO.getWeight());
 			announce.setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));
 
 			ReservationVO reservation=new ReservationVO();
@@ -75,29 +82,29 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			reservation.setCategory(category);
 			reservation.setWeight(reservationDTO.getWeight());
 			reservation.setDescription(reservationDTO.getDescription());
-			session.save(reservation);
-			session.flush(); //TODO Penser à changer la gestion de la save + flush
-			return session.get(ReservationVO.class,reservation.getId());
-		}
-		logger.error("add reservation {},{} non trouvé ou {} non trouvée","La reservation n'a pas été ajoutée","Utilisateur avec id="+reservationDTO.getUserId()," Annonce avec id="+reservationDTO.getAnnounceId());
-		return null;
+			save(reservation);
+			return reservation;
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-	public ReservationVO updateReservation(UpdateReservationDTO reservationDTO) throws BusinessResourceException {
-		UserVO user = userDAO.findById(reservationDTO.getUserId());
-		if(user==null){
-			throw new RecordNotFoundException("Aucun utilisateur trouvé");
-		}
+	@Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)
+	public ReservationVO updateReservation(UpdateReservationDTO reservationDTO) throws Exception {
 
-		AnnounceVO announce=announceDAO.findById(reservationDTO.getAnnounceId());
-		CategoryVO category=categoryDAO.findByCode(reservationDTO.getCategory());
-		ReservationVO reservation=(ReservationVO) findById(ReservationVO.class,reservationDTO.getId());
+			UserVO user = userDAO.findById(reservationDTO.getUserId());
+			if(user==null){
+				throw new RecordNotFoundException("Aucun utilisateur trouvé");
+			}
 
-		if(announce!=null && user!=null && category!=null && reservation!=null){
-
-			checkRemainWeight(announce, reservationDTO);
+			CategoryVO category=categoryDAO.findByCode(reservationDTO.getCategory());
+			if (category==null){
+				throw  new Exception("Categorie non trouve");
+			}
+			ReservationVO reservation=(ReservationVO) findById(ReservationVO.class,reservationDTO.getId());
+			if (reservation==null){
+				throw  new Exception("Reservation non trouve");
+			}
+			AnnounceVO announce=reservation.getAnnounce();
+			//checkRemainWeight(announce, reservationDTO.getWeight());
 
 			if(BigDecimalUtils.lessThan(reservation.getWeight(), reservationDTO.getWeight())) {
 				announce.setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight().subtract(reservation.getWeight())));
@@ -107,53 +114,49 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 
 			reservation.setWeight(reservationDTO.getWeight());
 			reservation.setDescription(reservationDTO.getDescription());
-			Session session = sessionFactory.getCurrentSession();
-			session.merge(reservation);
-			session.flush();
-			return  session.get(ReservationVO.class, reservation.getId());
-		}
-
-		return null;
+			update(reservation);
+			return reservation;
 	}
 
 	@Override
 	@Transactional
-	public boolean deleteReservation(Long id) throws BusinessResourceException{
+	public boolean deleteReservation(Long id) throws Exception {
 
 		ReservationVO reservation= (ReservationVO)findById(ReservationVO.class,id);
-		if(reservation!=null){
+		if (reservation==null){
+			throw  new Exception("Reservation non trouve");
+		}
+
 			AnnounceVO announce=reservation.getAnnounce();
 			announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
-			Session session=sessionFactory.getCurrentSession();
-			session.update(announce);
-			session.flush();
+			update(announce);
 			//delete(ReservationVO.class,id,true);
 			return updateDelete(id);
-			//session.flush();//TODO Penser à changer la gestion de la delete + flush
-			//delete(ReservationVO.class,id,true);
-			//return true;
-		}
-		return false;
+
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-	public boolean validate(ValidateReservationDTO reservationDTO) throws BusinessResourceException {
+	public boolean validate(ValidateReservationDTO reservationDTO) throws Exception {
 		ReservationVO reservation=(ReservationVO) findById(ReservationVO.class,reservationDTO.getId());
-
-		if(reservation!=null){
-			if(!reservationDTO.isValidate()){
-				reservation.setWeight(BigDecimal.ZERO);
-				reservation.setCancelled(true);
-				reservation.getAnnounce().setRemainWeight(reservation.getAnnounce().getRemainWeight().add(reservation.getWeight()));
-			}
-			reservation.setValidate(reservationDTO.isValidate());
-			Session session = sessionFactory.getCurrentSession();
-			session.merge(reservation);
-			session.flush();
-			return  session.get(ReservationVO.class, reservation.getId())!=null;
+		if (reservation==null){
+			throw  new Exception("Reservation non trouve");
 		}
-		return false;
+		if(!reservationDTO.isValidate()){
+			reservation.setWeight(BigDecimal.ZERO);
+			reservation.setCancelled(true);
+			reservation.getAnnounce().setRemainWeight(reservation.getAnnounce().getRemainWeight().add(reservation.getWeight()));
+		}
+		reservation.setValidate(reservationDTO.isValidate());
+		update(reservation);
+
+		return  reservation.getId()!=null;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+	public ReservationVO getReservation(long id) throws Exception {
+		return (ReservationVO) findById(ReservationVO.class,id);
 	}
 
 	public boolean updateDelete(ReservationVO reservation) throws BusinessResourceException, UserException {
@@ -191,9 +194,11 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 	}
 
 
-	void checkRemainWeight(AnnounceVO announce,ReservationDTO reservationDTO){
-		if(BigDecimalUtils.lessThan(announce.getRemainWeight(),reservationDTO.getWeight()) || BigDecimalUtils.lessThan(announce.getWeight(), reservationDTO.getWeight())) {
-			throw new BusinessResourceException("Impossible de reserver une quantité superieure à la quantité disponible");
+	void checkRemainWeight(AnnounceVO announce, BigDecimal weight){
+
+		if(BigDecimalUtils.lessThan(announce.getRemainWeight(),weight) || BigDecimalUtils.lessThan(announce.getWeight(), weight)) {
+			throw new BusinessResourceException("Impossible de reserver une quantité superieure ["+weight+" kg] à la quantité disponible ["+announce.getRemainWeight()+" kg]");
 		}
+
 	}
 }

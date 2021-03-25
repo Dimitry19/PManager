@@ -507,24 +507,22 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(rollbackFor = {UserException.class,Exception.class})
-	public boolean manageNotification(Long userId, boolean enableNotification) {
+	public UserVO manageNotification(Long userId, boolean enableNotification) throws UserException{
+
+				UserVO user=findById(userId);
 		try {
 			Session session=sessionFactory.getCurrentSession();
-			UserVO user=findById(userId);
 			boolean precedent=user.isEnableNotification();
-			if(user!=null){
+			if(user!=null && precedent!=enableNotification){
 				user.setEnableNotification(enableNotification);
-				session.merge(user);
-				user = session.get(UserVO.class, userId);
-
-				return (user!=null) && (user.isEnableNotification()!=precedent);
+				session.update(user);
+				return  session.get(UserVO.class, userId);
 			}
 		}catch (UserException e){
 			logger.error("Erreur durant la modification de la gestion des notifications");
 			throw e;
 		}
-
-		return false;
+		return user;
 	}
 
 	@Override

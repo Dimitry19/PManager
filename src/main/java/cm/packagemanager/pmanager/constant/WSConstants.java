@@ -29,7 +29,7 @@ public class WSConstants {
 	public static final String USER_WS_ROLE="/role";
 	public static final String USER_WS_UPDATE_ID="/update/{userId}";
 	public static final String USER_WS_PASSWORD="/password";
-	public static final String USER_WS_USER_ID="/info/{id}";
+	public static final String USER_WS_USER_ID="/info/{userId}";
 	public static final String SUBSCRIPTIONS_WS="/subscriptions";
 	public static final String SUBSCRIBERS_WS="/subscribers";
 	public static final String UNSUBSCRIBE_WS="/unsubscribe";
@@ -66,7 +66,7 @@ public class WSConstants {
 
 	public static final String MESSAGE_WS_BY_USER= "/user";
 	public static final String MESSAGE_WS_FIND="/find";
-	public static final String MESSAGE_WS_USER_ID_PAGE_NO="/messages/{pageno}";
+	public static final String MESSAGE_WS_UPDATE=UPDATE+"/{id}";
 	public static final String MESSAGE_WS_ALL="/all";
 
 
@@ -102,6 +102,9 @@ public class WSConstants {
 	/******** RESERVATION REQUEST ********/
 	public static final String RESERVATION_WS="/ws/reservation/*";
 	public static final String RESERVATION_WS_BY_ANNOUNCE="/announce";
+	public static final String RESERVATION_WS_UPDATE_ID="/update/{id}";
+	public static final String RESERVATION_WS_BY_ID="/reservation";
+
 
 
 	/******** IMG REQUEST ********/
