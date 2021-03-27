@@ -11,6 +11,7 @@ import cm.packagemanager.pmanager.ws.requests.messages.UpdateMessageDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import io.swagger.annotations.Api;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.MES
 
 @RestController
 @RequestMapping(MESSAGE_WS)
+@Api(value="messages-service", description="Messages Operations")
 public class MessageController extends CommonController  {
 
 		protected final Log logger = LogFactory.getLog(MessageController.class);
@@ -45,8 +47,6 @@ public class MessageController extends CommonController  {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		try {
 			createOpentracingSpan("MessageController -update");
-			if (umr==null)	return null;
-
 			MessageVO message=messageService.update(umr);
 			if (message!=null){
 				message.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -80,6 +80,8 @@ public class MessageController extends CommonController  {
 					MessageVO message = messageService.addMessage(mdto);
 
 					if(message!=null){
+						message.setRetCode(WebServiceResponseCode.OK_CODE);
+						message.setRetDescription(WebServiceResponseCode.MESSAGE_CREATE_LABEL);
 						return new ResponseEntity<MessageVO>(message, headers, HttpStatus.OK);
 					}else{
 						response.getWriter().write("Message non ajouté!");
@@ -95,7 +97,7 @@ public class MessageController extends CommonController  {
 	}
 
 		/**
-		 * Cette methode recherche un message en fonction des paramretres de recherche
+		 * Cette methode recherche un message en fonction des paramètres de recherche
 		 * @param response
 		 * @param request
 		 * @param asdto
@@ -140,7 +142,7 @@ public class MessageController extends CommonController  {
 		                                      @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre un nombre positif") int page,
 		                                      @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
 
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		    response.setHeader("Access-Control-Allow-Origin", "*");
 			logger.info("get all users request in");
 			HttpHeaders headers = new HttpHeaders();
 			PageBy pageBy = new PageBy(page,size);
@@ -156,11 +158,14 @@ public class MessageController extends CommonController  {
 				}else{
 					List<MessageVO>  messages=messageService.messagesByUser(userId,pageBy);
 					headers.add(HEADER_TOTAL, Long.toString(messages.size()));
+					paginateResponse.setResults(messages);
 				}
+				paginateResponse.setCount(count);
 			}
 		}
 		catch (Exception e){
-			response.getWriter().write(e.getMessage());
+			logger.error("MessageController- error {}",e);
+			//response.getWriter().write(e.getMessage());
 		}
 		finally {
 			finishOpentracingSpan();

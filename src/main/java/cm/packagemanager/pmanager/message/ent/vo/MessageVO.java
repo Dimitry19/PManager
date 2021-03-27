@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.Where;
 import org.omg.IOP.TAG_ALTERNATE_IIOP_ADDRESS;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ import javax.persistence.*;
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
 })
+@Where(clause= FilterConstants.FILTER_WHERE_MESSAGE_CANCELLED)
 public class MessageVO extends WSCommonResponseVO {
 
 	public static final String FINDALL="cm.packagemanager.pmanager.message.ent.vo.MessageVO.findAll";

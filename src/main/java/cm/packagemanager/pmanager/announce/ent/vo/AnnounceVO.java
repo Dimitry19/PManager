@@ -13,12 +13,19 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.Filters;
+import org.apache.logging.log4j.message.MessageFormatMessage;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.OrderBy;
+
 import javax.persistence.*;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +41,7 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
 })
+@Where(clause= FilterConstants.FILTER_WHERE_ANNOUNCE_CANCELLED)
 public class AnnounceVO extends WSCommonResponseVO {
 
 	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
@@ -214,7 +222,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 
 	@Access(AccessType.PROPERTY)
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="announce",fetch=FetchType.EAGER)
+	@OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE}, mappedBy="announce",fetch=FetchType.EAGER)
 	@JsonManagedReference
 	@Fetch(value = SELECT)
 	@OrderBy(clause = "id.id ASC")
