@@ -8,6 +8,7 @@ import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
+import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificationService;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.user.ent.service.UserService;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
@@ -54,6 +55,9 @@ public class UserController extends CommonController {
 
 	@Autowired
 	protected UserService userService;
+
+	@Autowired
+	protected NotificationService notificationService;
 
 	@Autowired
 	MailSender mailSender;
@@ -119,7 +123,7 @@ public class UserController extends CommonController {
 			logger.error("Errore eseguendo register: ", e);
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
-			response.getWriter().write(e.getMessage());
+			return new ResponseEntity<Response>(pmResponse,HttpStatus.INTERNAL_SERVER_ERROR);
 		}finally {
 			finishOpentracingSpan();
 		}
@@ -222,6 +226,7 @@ public class UserController extends CommonController {
 				if(user!=null){
 					user.setRetCode(WebServiceResponseCode.OK_CODE);
 					user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+					notificationService.add("");
 					return  new ResponseEntity<UserVO>(user,HttpStatus.OK);
 				}else{
 					user=new UserVO();

@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.administrator.exception;
 
-import cm.packagemanager.pmanager.administrator.api.ApiError;
+
 import cm.packagemanager.pmanager.common.exception.ErrorResponse;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
@@ -44,7 +44,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		String[] code= new String[1];
 		code[0]= String.valueOf(HttpStatus.NOT_FOUND.value());
 
-		return new ResponseEntity<>(new ErrorResponse("user.error", details,code),new HttpHeaders(), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(new ErrorResponse("user.error", details,code,-1),new HttpHeaders(), HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler({UserNotFoundException.class})
@@ -54,7 +54,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		details.add(ex.getMessage());
 		String[] code= new String[1];
 		code[0]= String.valueOf(HttpStatus.NOT_FOUND.value());
-		return new ResponseEntity<>(new ErrorResponse("user.notfound", details,code),new HttpHeaders(), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(new ErrorResponse("user.notfound", details,code,-1),new HttpHeaders(), HttpStatus.NOT_FOUND);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -64,7 +64,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 				.stream().collect(Collectors.toList());
 		String[] code= new String[1];
 		code[0]= String.valueOf(HttpStatus.BAD_REQUEST.value());
-		return new ResponseEntity<>(new ErrorResponse("user.notfound", details,code),new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(new ErrorResponse("user.notfound", details,code,-1),new HttpHeaders(), HttpStatus.BAD_REQUEST);
 
 	}
 
@@ -76,7 +76,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		}
 		String[] code= new String[1];
 		code[0]= String.valueOf(HttpStatus.METHOD_NOT_ALLOWED.value());
-		ErrorResponse error = new ErrorResponse("Not supported Methods", details,code);
+		ErrorResponse error = new ErrorResponse("Not supported Methods", details,code,-1);
 		return new ResponseEntity(error, HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
@@ -88,7 +88,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		}
 		String[] code= new String[1];
 		code[0]= String.valueOf(HttpStatus.BAD_REQUEST.value());
-		ErrorResponse error = new ErrorResponse("Validation Failed", details,code);
+		ErrorResponse error = new ErrorResponse("Validation Failed", details,code,-1);
 		return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
 	}
 }

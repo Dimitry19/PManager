@@ -122,12 +122,10 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@Column(name = "DESCRIPTION", nullable = true)
 	private String description;
 
-	@Transient
-	@JsonProperty
 	private String descriptionTransport;
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(optional = false,fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+	@ManyToOne(optional = false,fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
 	@JoinColumn(name="R_CATEGORY",referencedColumnName = "CODE")
 	@JsonProperty
 	private CategoryVO category;
@@ -188,11 +186,13 @@ public class AnnounceVO extends WSCommonResponseVO {
 	}
 
 	public TransportEnum  getTransport() {
+		//setDescriptionTransport(this.transport.toValue());
+		setDescriptionTransport("");
+
 		return transport;
 	}
 
 	public void setTransport(TransportEnum transport) {
-		setDescriptionTransport(transport.toValue());
 		this.transport = transport;
 	}
 
@@ -323,14 +323,15 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.userInfo = userInfo;
 	}
 
-
+	@Transient
 	public String getDescriptionTransport() {
 	
 		return descriptionTransport;
 	}
 
 	public void setDescriptionTransport(String descriptionTransport){
-		this.descriptionTransport=descriptionTransport;
+
+		this.descriptionTransport=this.transport.toValue();
 	}	
 	
 	public void addMessage(MessageVO message){

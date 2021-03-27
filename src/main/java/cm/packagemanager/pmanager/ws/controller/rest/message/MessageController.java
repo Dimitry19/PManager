@@ -152,8 +152,8 @@ public class MessageController extends CommonController  {
 		 * @return
 		 * @throws Exception
 		 */
-		@DeleteMapping(value =DELETE,headers = WSConstants.HEADER_ACCEPT)
-		public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
+		@DeleteMapping(value =DELETE,headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
+		public ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
@@ -165,20 +165,20 @@ public class MessageController extends CommonController  {
 				if(messageService.delete(id)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_MESSAGE_LABEL);
+					return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 				}else{
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_MESSAGE_CODE_LABEL);
 				}
 			}
+			return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
 		}
 		catch (Exception e){
-			//response.getWriter().write(e.getMessage());
-			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-			pmResponse.setRetDescription(e.getMessage());
+			logger.error("Erreur durant la suppression du commentaire");
+			throw e;
 		}finally {
 			finishOpentracingSpan();
 		}
-		return pmResponse;
 	}
 
 		/**
@@ -208,12 +208,12 @@ public class MessageController extends CommonController  {
 				paginateResponse.setResults(messages);
 				headers.add(HEADER_TOTAL, Long.toString(messages.size()));
 			}
+			return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 		}catch (Exception e){
 			throw e;
 		}finally {
 			finishOpentracingSpan();
 		}
 
-		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
 }

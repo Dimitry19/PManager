@@ -10,4 +10,5 @@ public interface PushNotificationService {
 	void sendPushNotificationToToken(NotificationRequest request);
 
 	void sendPushNotificationWithoutData(NotificationRequest request);
+
 }

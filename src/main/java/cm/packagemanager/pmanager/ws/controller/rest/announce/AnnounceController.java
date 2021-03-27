@@ -119,8 +119,8 @@ public class AnnounceController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful Update Announce",
 					response = AnnounceVO.class, responseContainer = "Object") })
-	@PutMapping(value = UPDATE,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
-	ResponseEntity<AnnounceVO>  update(HttpServletResponse response, HttpServletRequest request, @PathVariable @Valid long id,
+	@PutMapping(value = UPDATE_ID,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
+	ResponseEntity<AnnounceVO>  update(HttpServletResponse response, HttpServletRequest request, @PathVariable("id") @Valid long id,
 	                                   @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception, ValidationException {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -411,7 +411,7 @@ public class AnnounceController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful retrieval",
 					response = ResponseEntity.class, responseContainer = "List") })
-	@GetMapping(ANNOUNCES_WS)
+	@GetMapping(value = ANNOUNCES_WS, produces = MediaType.APPLICATION_JSON,headers = HEADER_ACCEPT)
 	public ResponseEntity<PaginateResponse> announces(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif")  int page,
 	                                                  @RequestParam (required = false, defaultValue = DEFAULT_SIZE)
 	                                                  @Valid @Positive(message = "Page size should be a positive number")  int size) throws Exception {

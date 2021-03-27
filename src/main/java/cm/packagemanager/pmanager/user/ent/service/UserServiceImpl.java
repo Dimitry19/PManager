@@ -337,8 +337,12 @@ public class UserServiceImpl  implements  UserService{
 
 	@Override
 	public ReviewsSummaryBO getReviewSummary(UserVO user) {
-		List<RatingCountVO> ratingCounts = userDAO.findRatingCounts(user);
+		List<RatingCountVO> ratingCounts = findRatingCounts(user);
 		return new ReviewsSummaryBOImpl(ratingCounts);
+	}
+
+	private List<RatingCountVO> findRatingCounts(UserVO user) {
+		return userDAO.findRatingCounts(user);
 	}
 
 	private static class ReviewsSummaryBOImpl implements ReviewsSummaryBO {

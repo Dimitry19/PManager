@@ -30,7 +30,6 @@ public class CommonController {
 
 
 	protected final Log logger = LogFactory.getLog(CommonController.class);
-	public static final String INTERNAL_SERVER_ERROR="internal server error";
 	public static final String DEFAULT_SIZE = "12";
 	public static final String DEFAULT_PAGE = "0";
 	public static final String HEADER_TOTAL = "x-total-count";
@@ -46,8 +45,6 @@ public class CommonController {
 	@Value("${pagination.size}")
 	public Integer size;
 
-	@Value("${ws.redirect.user}")
-	public String redirect;
 
 	protected Span packageManagerSpan;
 
@@ -57,54 +54,6 @@ public class CommonController {
 		GlobalTracer.register(gTracer);
 	}
 
-
-	@ExceptionHandler({ ResponseException.class})
-
-	/*@ResponseBody
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	public String handleException(Exception e)
-	{
-		if (e instanceof ResponseException)	{
-			return e.getMessage();
-		}else{
-			logger.error("Error", e);
-		}
-		return INTERNAL_SERVER_ERROR;
-	}*/
-
-
-
-	@RequestMapping(value = "/", method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
-	public ResponseEntity goToHomePage() {
-
-		return new ResponseEntity(redirect, HttpStatus.OK);
-	}
-
-	/*@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(ConstraintViolationException.class)
-	public List<ApiError> handleValidationExceptions(ConstraintViolationException ex) {
-		return ex.getConstraintViolations()
-				.stream()
-				.map(err -> new ApiError(err.getPropertyPath().toString(), err.getMessage()))
-				.collect(Collectors.toList());
-	}
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ExceptionHandler({UserNotFoundException.class})
-	public List<ApiError> handleNotFoundExceptions(UserNotFoundException ex) {
-		return Collections.singletonList(new ApiError("user.notfound", ex.getMessage()));
-	}
-	@ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-	@ExceptionHandler({UserException.class})
-	public List<ApiError> handleUserErrorExceptions(UserException ex) {
-		return Collections.singletonList(new ApiError("user.error", ex.getMessage()));
-	}
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler({Exception.class,ValidationException.class})
-	public List<ApiError> handleOtherException(Exception ex) {
-		return Collections.singletonList(new ApiError(ex));
-	}
-
-	*/
 	protected void createOpentracingSpan(String spanName){
 		packageManagerSpan = GlobalTracer.get().buildSpan(spanName).start();
 	}

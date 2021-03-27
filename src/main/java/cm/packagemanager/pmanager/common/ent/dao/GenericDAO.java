@@ -3,6 +3,8 @@ package cm.packagemanager.pmanager.common.ent.dao;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
+import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
+import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,4 +56,9 @@ public interface GenericDAO <T, ID extends Serializable,NID extends Serializable
 	T merge(T t) throws BusinessResourceException;
 
 	void pageBy(org.hibernate.query.Query query, PageBy pageBy);
+
+	double calcolateAverage(T t) throws Exception;
+
+	@Transactional
+	List<RatingCountVO> findRatingCounts(UserVO user);
 }

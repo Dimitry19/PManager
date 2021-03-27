@@ -1,6 +1,11 @@
 package cm.packagemanager.pmanager.user.ent.vo;
 
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.sql.Timestamp;
 
 public class UserInfo {
 
@@ -16,14 +21,22 @@ public class UserInfo {
 
 	private String phone;
 
+	private int count;
 
-	public UserInfo(Long id, String firstName, String username, String lastName, String email, String phone) {
+	private double rating=0;
+
+	private Timestamp dateCreated;
+
+
+	public UserInfo(Long id, String firstName, String username, String lastName, String email, String phone, int count) {
 		this.id = id;
 		this.firstName = firstName;
 		this.username = username;
 		this.lastName = lastName;
 		this.email = email;
 		this.phone = phone;
+		this.count  = count;
+
 	}
 
 	public UserInfo(UserVO user) {
@@ -33,6 +46,10 @@ public class UserInfo {
 		this.lastName = user.getLastName();
 		this.email = user.getEmail();
 		this.phone = user.getPhone();
+		this.dateCreated=user.getDateCreated();
+		this.rating=user.getRating();
+		this.count  = CollectionsUtils.isNotEmpty(user.getAnnounces())? user.getAnnounces().size():0;
+
 	}
 
 	@JsonProperty
@@ -88,5 +105,33 @@ public class UserInfo {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	@JsonProperty
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	@JsonProperty
+	@JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
+	public Timestamp getDateCreated() {
+		return  dateCreated;
+	}
+
+	public void setDateCreated(Timestamp dateCreated) {
+		this.dateCreated=dateCreated;
+	}
+
+	@JsonProperty
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 }

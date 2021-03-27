@@ -7,6 +7,9 @@ import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
+import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
+import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
+import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -17,6 +20,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +31,9 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 
 
 	private static Logger logger = LoggerFactory.getLogger(GenericDAOImpl.class);
+
+	private static final MathContext MATH_CONTEXT = new MathContext(2, RoundingMode.HALF_UP);
+
 
 	private static final String FROM =" FROM ";
 	private static final String DESC =" desc ";
@@ -275,8 +284,6 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query = session.createQuery(FROM +clazz.getName());
 		pageBy(query, pageBy);
-
-
 		return CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
 	}
 
@@ -291,7 +298,7 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 
 		try{
 
-			Session session=sessionFactory.getCurrentSession();
+			//Session session=sessionFactory.getCurrentSession();
 			T ent= (T)findById(clazz,id);
 			if(ent!=null) {
 				/*ent.setCancelled(true);
@@ -343,6 +350,40 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 			query.setFirstResult(pageBy.getPage());
 			query.setMaxResults(pageBy.getSize());
 		}
+	}
+
+
+
+
+	@Override
+	public double calcolateAverage(T t){
+		if(t==null)
+			return 0.0;
+		UserVO user=(UserVO)t;
+		int totalRating=0;
+		int counterRating=0;
+		List<RatingCountVO> ratingCounts = findRatingCounts(user);
+		if(CollectionsUtils.isEmpty(ratingCounts)){
+			return 0.0;
+		}
+		for(int i=0;i<ratingCounts.size();i++){
+			RatingCountVO ratingCount=ratingCounts.get(i);
+			counterRating+=ratingCount.getCount();
+			totalRating+=ratingCount.getRating().toValue()*ratingCount.getCount();
+		}
+		double averageRating = new BigDecimal(((double) totalRating/(double) counterRating),MATH_CONTEXT).doubleValue();
+		user.setRating(averageRating);
+		return averageRating;
+	}
+
+	@Override
+	@Transactional
+	public List<RatingCountVO> findRatingCounts(UserVO user) {
+		Session session= sessionFactory.getCurrentSession();
+		session.enableFilter(FilterConstants.CANCELLED);
+		Query query=session.createNamedQuery(ReviewVO.RATING,RatingCountVO.class);
+		query.setParameter("userId", user);
+		return query.getResultList();
 	}
 
 }

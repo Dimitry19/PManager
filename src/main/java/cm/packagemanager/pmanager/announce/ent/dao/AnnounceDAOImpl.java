@@ -122,7 +122,9 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class,BusinessResourceException.class})
 	public AnnounceVO findById(Long id) throws BusinessResourceException {
 
-		AnnounceVO announce=(AnnounceVO) manualFilter(findById(AnnounceVO.class,id));
+		AnnounceVO announce=(AnnounceVO) findById(AnnounceVO.class,id);
+		double rating=calcolateAverage(announce.getUser());
+		announce.getUserInfo().setRating(rating);
 		return announce;
 	}
 
@@ -168,6 +170,9 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		if(announce==null){
 			throw new RecordNotFoundException("Aucune annonce  trouvée");
 		}
+
+		double rating=calcolateAverage(announce.getUser());
+		announce.getUserInfo().setRating(rating);
 		setAnnounce(announce,user,adto);
 		update(announce);
 		return announce;
@@ -218,7 +223,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		BigDecimal price =adto.getPrice();
 		BigDecimal preniumPrice =adto.getPreniumPrice();
 		BigDecimal goldenPrice=adto.getGoldPrice();
-		BigDecimal weigth =adto.getWeigth();
+		BigDecimal weigth =adto.getWeight();
 		Date startDate =DateUtils.milliSecondToDate(adto.getStartDate());
 		Date endDate =DateUtils.milliSecondToDate(adto.getEndDate());
 
@@ -340,17 +345,17 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	private void fillProductCategory(AnnounceDTO adto){
 		switch (adto.getAnnounceType().name()){
 			case Constants.BUYER:
+				adto.setCategory(constants.DEFAULT_PROD_CAT_CODE);
 				break;
 			case Constants.SELLER:
-				if (StringUtils.isEmpty(adto.getCategory())){
-					adto.setCategory(constants.DEFAULT_PROD_CAT_CODE);
-				}
 				break;
 		}
 	}
 
-	private void setProductCategory(AnnounceVO announce,String category){
+	private void setProductCategory(AnnounceVO announce,String category) throws Exception{
 		CategoryVO productCategory= categoryService.findByCode(category);
+		if(productCategory==null)
+			throw new Exception("Valoriser la categorie");
 		announce.setCategory(productCategory);
 	}
 

@@ -83,7 +83,7 @@ public interface UserDAO extends CommonDAO {
 
 	public boolean checkLogin(LoginDTO lr ) throws Exception;
 
-	List<RatingCountVO> findRatingCounts(UserVO user);
+	//List<RatingCountVO> findRatingCounts(UserVO user);
 
 
 	UserVO updateImage(Long userId, MultipartFile multipartFile) throws IOException;

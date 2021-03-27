@@ -44,7 +44,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 
-	private static final MathContext MATH_CONTEXT = new MathContext(2,RoundingMode.HALF_UP);
 
 	@Autowired
 	RoleDAO roleDAO;
@@ -457,14 +456,14 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		return  manualFilter(user)!=null;
 	}
 
-	@Override
+/*	@Override
 	public List<RatingCountVO> findRatingCounts(UserVO user) {
 		Session session= sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query=session.createNamedQuery(ReviewVO.RATING,RatingCountVO.class);
-		query.setParameter("userid", user);
+		query.setParameter("userId", user);
 		return query.getResultList();
-	}
+	}*/
 
 	@Override
 	public boolean updateDelete(Long id) throws BusinessResourceException ,UserException{
@@ -601,24 +600,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		}
 	}
 
-	private double calcolateAverage(UserVO user){
-		if(user==null)
-			return 0.0;
-		int totalRating=0;
-		int counterRating=0;
-		List<RatingCountVO> ratingCounts =findRatingCounts(user);
-		if(CollectionsUtils.isEmpty(ratingCounts)){
-			return 0.0;
-		}
-		for(int i=0;i<ratingCounts.size();i++){
-			RatingCountVO ratingCount=ratingCounts.get(i);
-			counterRating+=ratingCount.getCount();
-			totalRating+=ratingCount.getRating().toValue()*ratingCount.getCount();
-		}
-		double averageRating = new BigDecimal(((double) totalRating/(double) counterRating),MATH_CONTEXT).doubleValue();
-		user.setRating(averageRating);
-		return averageRating;
-	}
 	@Override
 	public  String composeQuery(Object o, String alias) {
 

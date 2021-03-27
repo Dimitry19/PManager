@@ -18,7 +18,7 @@ https://github.com/cloudControl/spring-boot-example-app/tree/master/src/main
 @Entity
 @Table(name="REVIEW", schema = "PUBLIC")
 @NamedQueries({
-		@NamedQuery(name = ReviewVO.RATING,  query="select new cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO(r.rating, count(r)) from ReviewVO r where r.user =:userid group by r.rating order by r.rating DESC"),
+		@NamedQuery(name = ReviewVO.RATING,  query="select new cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO(r.rating, count(r)) from ReviewVO r where r.user =:userId group by r.rating order by r.rating DESC"),
 })
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)

@@ -6,13 +6,15 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.UnexpectedTypeException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ErrorResponse {
 
 	private String message;
-	private List details;
+	private List details=new ArrayList();
 	private String [] code;
+	private int retCode;
 
 
 	public ErrorResponse() {
@@ -24,11 +26,12 @@ public class ErrorResponse {
 		this.message = message;
 		this.details = details;
 	}
-	public ErrorResponse(String message, List details,String[] code) {
+	public ErrorResponse(String message, List details,String[] code, int retCode) {
 		super();
 		this.message = message;
 		this.details = details;
 		this.code=code;
+		this.retCode=retCode;
 	}
 	public ErrorResponse(Exception ex) {
 		//logger.error(ApiError.class +" {}" ,ex);
@@ -65,6 +68,9 @@ public class ErrorResponse {
 		}
 		stringBuilder.append(ex.getMessage());
 		this.message=stringBuilder.toString();
+		this.retCode=-1;
+		this.details.add(stringBuilder.toString());
+
 	}
 	void setDefaultCodes(){
 		this.code= new String[1];
@@ -99,5 +105,13 @@ public class ErrorResponse {
 
 	public void setDetails(List details) {
 		this.details = details;
+	}
+
+	public int getRetCode() {
+		return retCode;
+	}
+
+	public void setRetCode(int retCode) {
+		this.retCode = retCode;
 	}
 }
