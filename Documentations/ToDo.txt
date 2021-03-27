@@ -1,0 +1,3 @@
+Websocket:https://blog.impulsebyingeniance.io/utilisation-des-websockets-sous-angular-avec-java-spring-boot/
+
+1-Gerer upload imange (https://dzone.com/articles/upload-and-retrieve-filesimages-using-spring-boot)

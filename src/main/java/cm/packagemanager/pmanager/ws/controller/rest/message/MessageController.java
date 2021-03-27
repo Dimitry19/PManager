@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.util.ArrayList;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.MESSAGE_WS;
+import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 @RestController
 @RequestMapping(MESSAGE_WS)
@@ -40,13 +40,15 @@ public class MessageController extends CommonController  {
 		protected MessageService messageService;
 
 
-		@PostMapping(value = MESSAGE_WS_UPDATE)
-		MessageVO  update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateMessageDTO umr) throws Exception {
+		@PutMapping(value =MESSAGE_WS_UPDATE, produces = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+		MessageVO  update(HttpServletResponse response, HttpServletRequest request, @PathVariable long id,
+		                  @RequestBody @Valid UpdateMessageDTO umr) throws Exception {
 
 		logger.info("Update message requestin");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		try {
 			createOpentracingSpan("MessageController -update");
+			umr.setId(id);
 			MessageVO message=messageService.update(umr);
 			if (message!=null){
 				message.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -58,16 +60,15 @@ public class MessageController extends CommonController  {
 			}
 			return message;
 		}catch (Exception e){
-			response.getWriter().write(e.getMessage());
+				logger.error(" Error {}",e);
+				throw e;
 		}finally {
 			finishOpentracingSpan();
 		}
-
-		return null;
-	}
+		}
 
 
-		@PostMapping(value = WS_ADD_MESSAGE)
+		@PostMapping(value = ADD,produces = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 		public ResponseEntity<MessageVO> addMessage(HttpServletRequest request ,HttpServletResponse response,@RequestBody @Valid MessageDTO mdto) throws Exception{
 		HttpHeaders headers = new HttpHeaders();
 
@@ -84,7 +85,7 @@ public class MessageController extends CommonController  {
 						message.setRetDescription(WebServiceResponseCode.MESSAGE_CREATE_LABEL);
 						return new ResponseEntity<MessageVO>(message, headers, HttpStatus.OK);
 					}else{
-						response.getWriter().write("Message non ajouté!");
+						return new ResponseEntity<MessageVO>(message, headers, HttpStatus.NOT_FOUND);
 					}
 				}
 			}catch (Exception e){
@@ -96,39 +97,9 @@ public class MessageController extends CommonController  {
 		return null;
 	}
 
-		/**
-		 * Cette methode recherche un message en fonction des paramètres de recherche
-		 * @param response
-		 * @param request
-		 * @param asdto
-		 * @param page
-		 * @param size
-		 * @return
-		 * @throws Exception
-		 */
-
-		/*@RequestMapping(value =MESSAGE_WS_FIND,method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
-		public @ResponseBody List<MessageVO> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid MessageSearchDTO asdto, @RequestParam(required = false, defaultValue = "0")  @Valid int page, @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
-
-		logger.info("find  announces request in");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		Response pmResponse = new Response();
-		List<MessageVO> messages=null;
-
-		try{
-			if (asdto!=null){
-				PageBy pageBy= new PageBy(page,size);
-				//messages=messageService.find(asdto,pageBy);
-			}
-		}
-		catch (Exception e){
-			response.getWriter().write(e.getMessage());
-		}
-		return announces;
-	}*/
 
 		/**
-		 *  Cette methode recherche toutes les annonces d'un utilisateur
+		 *  Cette methode recherche toutes les messages d'un utilisateur
 		 * @param response
 		 * @param request
 		 * @param userId
@@ -137,7 +108,7 @@ public class MessageController extends CommonController  {
 		 * @return
 		 * @throws Exception
 		 */
-		@RequestMapping(value =MESSAGE_WS_BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+		@RequestMapping(value =BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 		public ResponseEntity<PaginateResponse> messagesByUser(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long userId,
 		                                      @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre un nombre positif") int page,
 		                                      @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
@@ -165,7 +136,7 @@ public class MessageController extends CommonController  {
 		}
 		catch (Exception e){
 			logger.error("MessageController- error {}",e);
-			//response.getWriter().write(e.getMessage());
+			throw e;
 		}
 		finally {
 			finishOpentracingSpan();
@@ -181,8 +152,8 @@ public class MessageController extends CommonController  {
 		 * @return
 		 * @throws Exception
 		 */
-		@RequestMapping(value =MESSAGE_WS_DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
-		public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
+		@DeleteMapping(value =DELETE,headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
+		public ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
@@ -194,20 +165,20 @@ public class MessageController extends CommonController  {
 				if(messageService.delete(id)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_MESSAGE_LABEL);
+					return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 				}else{
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_MESSAGE_CODE_LABEL);
 				}
 			}
+			return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
 		}
 		catch (Exception e){
-			//response.getWriter().write(e.getMessage());
-			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-			pmResponse.setRetDescription(e.getMessage());
+			logger.error("Erreur durant la suppression du commentaire");
+			throw e;
 		}finally {
 			finishOpentracingSpan();
 		}
-		return pmResponse;
 	}
 
 		/**
@@ -237,12 +208,12 @@ public class MessageController extends CommonController  {
 				paginateResponse.setResults(messages);
 				headers.add(HEADER_TOTAL, Long.toString(messages.size()));
 			}
+			return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 		}catch (Exception e){
 			throw e;
 		}finally {
 			finishOpentracingSpan();
 		}
 
-		return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
 	}
 }

@@ -4,24 +4,21 @@ import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
-import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
+import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.users.LoginDTO;
-import cm.packagemanager.pmanager.ws.requests.users.RegisterDTO;
-import cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO;
-import cm.packagemanager.pmanager.ws.requests.users.UserSeachDTO;
+import cm.packagemanager.pmanager.ws.requests.users.*;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import io.opentracing.Span;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,13 +27,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -44,19 +44,11 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 
-	private static final MathContext MATH_CONTEXT = new MathContext(2,RoundingMode.HALF_UP);
-
-	@Autowired
-	private SessionFactory sessionFactory;
-
 
 	@Autowired
 	RoleDAO roleDAO;
-
-
 	@Autowired
 	Span span;
-
 	public UserDAOImpl() {
 
 	}
@@ -64,15 +56,11 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	@Override
 	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public int count(PageBy pageBy) throws BusinessResourceException {
+		logger.info("User - count ");
 
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		Query query = session.createQuery("from UserVO ");
-		//query.setFirstResult(pageBy.getPage());
-		//query.setMaxResults(pageBy.getSize());
-		int count = CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
-		return count;
+		return  count(UserVO.class,pageBy);
 	}
+
 	@Override
 	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
 	public UserVO login(String username, String password) {
@@ -83,15 +71,65 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		return internalLogin(username,password);
 	}
 
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = UserException.class)
+	public void subscribe(SubscribeDTO subscribe) throws UserException {
+		UserVO subscriber=findById(subscribe.getSubscriberId());
+		UserVO subscription=findById(subscribe.getSubscriptionId());
+
+		if (subscriber!=null && subscription!=null){
+			subscriber.addSubscription(subscription);
+			subscription.addSubscriber(subscriber);
+
+			Session session=sessionFactory.getCurrentSession();
+			session.update(subscriber);
+			session.update(subscription);
+		}else throw new UserException("Une erreur survenue pendant l'abonnement, veuillez reessayer");
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = UserException.class)
+	public void unsubscribe(SubscribeDTO subscribe) throws UserException {
+
+		UserVO subscriber=findById(subscribe.getSubscriberId());
+		UserVO subscription=findById(subscribe.getSubscriptionId());
+
+		if (subscriber!=null && subscription!=null){
+			subscriber.removeSubscription(subscription);
+			subscription.removeSubscriber(subscriber);
+
+			Session session=sessionFactory.getCurrentSession();
+			session.update(subscriber);
+			session.update(subscription);
+		}else throw new UserException("Une erreur survenue pendant la desinscription, veuillez reessayer");
+	}
+
+	@Override
+	@Transactional(readOnly = true,propagation = Propagation.REQUIRED,rollbackFor = UserException.class)
+	public List<UserVO> subscriptions(Long  userId) throws UserException {
+		UserVO user=findById(userId);
+		if (user ==null)
+			throw new UserNotFoundException("Utilisateur non trouvé");
+
+		return  new ArrayList<UserVO>(user.getSubscriptions());
+	}
+
+	@Override
+	@Transactional(readOnly = true,propagation = Propagation.REQUIRED,rollbackFor = UserException.class)
+	public List<UserVO> subscribers(Long  userId) throws UserException {
+		UserVO user=findById(userId);
+		if (user ==null)
+			throw new UserNotFoundException("Utilisateur non trouvé");
+
+		return new ArrayList<UserVO>(user.getSubscribers());
+	}
+
 
 	@Override
 	@Transactional(propagation =Propagation.REQUIRED)
-	public List<UserVO> getAllUsers() {
+	public List<UserVO> getAllUsers() throws Exception {
 		logger.info("User: all users");
-		Session session = this.sessionFactory.getCurrentSession();
-		List<UserVO>  users = session.createQuery("from UserVO").list();
-
-		return users;
+		return all(UserVO.class, null);
 	}
 
 	@Override
@@ -108,19 +146,14 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
-	public List<UserVO>  getAllUsers(PageBy pageBy) {
+	public List<UserVO>  getAllUsers(PageBy pageBy) throws Exception {
+
+		String[] filters = new String[2];
+		filters[0]=FilterConstants.CANCELLED;
+		filters[1]=FilterConstants.ACTIVE_MBR;
 
 		logger.info("User: all users page by");
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from UserVO");
-		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
-		query.setFirstResult(pageBy.getPage());
-		query.setMaxResults(pageBy.getSize());
-
-		List<UserVO> users = (List) query.list();
-		return users;
-
+		return all(UserVO.class, null,filters);
 	}
 
 	@Override
@@ -128,15 +161,13 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	public UserVO getUser(Long id)  throws UserException{
 		logger.info("User: get user");
 		try {
-
-			UserVO user=  findById(id);
+			UserVO user= findById(id);
 			calcolateAverage(user);
 			return user;
 		} catch (UserException e) {
 			logger.error("User:" +e.getMessage());
 			throw e;
 		}
-
 	}
 
 	@Override
@@ -171,17 +202,14 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			user.setLastName(register.getLastName());
 			user.setPhone(register.getPhone());
 			user.setActive(0);
+			user.setEnableNotification(true);
 			user.setGender(register.getGender());
 			user.setConfirmationToken(UUID.randomUUID().toString());
 
 			Session session = this.sessionFactory.getCurrentSession();
 			session.save(user);
-			session.flush();
-			session.refresh(user);
-
-			user=session.get(UserVO.class,user.getId());
 			setRole(user, register.getRole());
-			return session.get(UserVO.class,user.getId());
+			return user;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,22 +220,24 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
-	public UserVO updateUser(UpdateUserDTO userDTO) throws UserException {
+	public UserVO updateUser(UpdateUserDTO userDTO) throws Exception {
 		logger.info("User: update");
 		Session session = this.sessionFactory.getCurrentSession();
 
-		UserVO user=findByEmail(userDTO.getEmail());
+		UserVO user=findById(userDTO.getId());
 
 		if(user==null ){
-			user=findById(userDTO.getId());
+			user=findByEmail(userDTO.getEmail());
 		}
-
 
 		if (user!=null){
 			//user.setEmail(userDTO.getEmail()); // on ne peut pas ajourner le NaturalId
 			user.setPhone(userDTO.getPhone());
 			user.setGender(userDTO.getGender());
-			setRole(user, userDTO.getRole());
+			user.setFirstName(userDTO.getFirstName());
+			user.setLastName(userDTO.getLastName());
+			//setRole(user, userDTO.getRole());
+			calcolateAverage(user);
 			session.update(user);
 			return user;
 
@@ -217,7 +247,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
-	@Transactional(propagation = Propagation. REQUIRED)
+	@Transactional(propagation = Propagation. REQUIRED,rollbackFor = Exception.class)
 	public void updateUser(UserVO user) {
 
 		Session session = this.sessionFactory.getCurrentSession();
@@ -228,8 +258,8 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
 	public boolean deleteUser(Long id) throws UserException{
 		logger.info("User: delete");
-		//deleteObject(id);
-		return updateDelete(id);
+		//delete(UserVO.class,id,false);
+		return  updateDelete(id);
 	}
 
 
@@ -248,18 +278,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
-	@Transactional(propagation = Propagation. REQUIRED)
-	public UserVO update(UserVO user) throws BusinessResourceException {
-		logger.info("User: update 2");
-		Session session = this.sessionFactory.getCurrentSession();
-		if(user!=null){
-			session.update(user);
-			return user;
-		}
-		return null;
-	}
-
-	@Override
 	@Transactional(propagation = Propagation. REQUIRED,rollbackFor = BusinessResourceException.class)
 	public void remove(UserVO user) throws BusinessResourceException {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -271,32 +289,30 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
-	public UserVO findByUsername(String username) throws BusinessResourceException, UserException {
+	public UserVO findByUsername(String username) throws Exception {
 
-		logger.info("User: find by username");
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
+		 logger.info("User: find by username");
+		 String[] filters = new String[2];
+		 filters[0]=FilterConstants.CANCELLED;
+		 filters[1]=FilterConstants.ACTIVE_MBR;
+		 return (UserVO) findByUniqueResult(UserVO.USERNAME,UserVO.class,username,"username",null,filters);
 
-		Query query=session.getNamedQuery(UserVO.USERNAME);
-		query.setParameter("username", username);
-		UserVO user= (UserVO) query.uniqueResult();
-		return user;
 	}
 
 
 	@Override
-	public UserVO findByOnlyUsername(String username,boolean disableFilter) throws BusinessResourceException {
+	public UserVO findByOnlyUsername(String username,boolean disableFilter) throws Exception {
 		logger.info("User: find by only username");
-		Session session = this.sessionFactory.getCurrentSession();
+		String[] filters = null;
+
 		if(!disableFilter){
-			session.enableFilter(FilterConstants.CANCELLED);
-			session.enableFilter(FilterConstants.ACTIVE_MBR);
+			filters = new String[2];
+			filters[0]=FilterConstants.CANCELLED;
+			filters[1]=FilterConstants.ACTIVE_MBR;
 		}
-		Query query=session.getNamedQuery(UserVO.USERNAME);
-		query.setParameter("username", username);
-		UserVO user= (UserVO) CollectionsUtils.getFirstOrNull(query.list());
-		return user;
+
+		return (UserVO) findByUniqueResult(UserVO.USERNAME,UserVO.class,username,"username",null,filters);
+
 	}
 
 	@Override
@@ -313,9 +329,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		composeQueryParameters(userSeachDTO,query);
 		query.setFirstResult(pageBy.getPage());
 		query.setMaxResults(pageBy.getSize());
-		List users = query.list();
-
-		return null;
+		return query.list();
 	}
 
 	public UserVO findByNaturalIds(String username,String email, boolean disableFilter) throws BusinessResourceException {
@@ -339,23 +353,16 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 
 	@Override
-	public UserVO findByToken(String token) throws BusinessResourceException {
+	public UserVO findByToken(String token) throws Exception {
+		logger.info("User: find by token");
+		String[] filters = new String[1];
+		filters[0]=FilterConstants.CANCELLED;
 
-		logger.info("User: find by toker");
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		//session.enableFilter(FilterConstants.ACTIVE_MBR);
-		Query query=session.getNamedQuery(UserVO.CONF_TOKEN);
-		query.setParameter("ctoken", token);
-
-		List<UserVO> users=query.list();
-		if(users!=null && users.size()>0) {
-			return users.get(0);
-		}
-		return null;
+		return (UserVO) findByUniqueResult(UserVO.CONF_TOKEN,UserVO.class,token,"ctoken",null,filters);
 	}
 
 	@Override
+	@Transactional
 	public UserVO findById(Long id) throws UserException {
 
 		try{
@@ -363,7 +370,10 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			Session session = sessionFactory.getCurrentSession();
 			session.enableFilter(FilterConstants.ACTIVE_MBR);
 			session.enableFilter(FilterConstants.CANCELLED);
-			return  (UserVO) manualFilter(session.find(UserVO.class,id));
+
+			UserVO user = (UserVO) manualFilter(session.find(UserVO.class,id));
+			//Hibernate.initialize(user.getMessages()); // on l'utilise quand la fetch avec message est lazy
+			return user;
 		}catch (Exception e){
 			throw  new UserException(e.getMessage());
 		}
@@ -381,45 +391,32 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(readOnly = true,propagation = Propagation.REQUIRED)
-	public UserVO findByEmail(String email) throws BusinessResourceException{
+	public UserVO findByEmail(String email) throws Exception {
 		logger.info("User: find by email");
-		Session session = this.sessionFactory.getCurrentSession();
-
-		Query query=session.getNamedQuery(UserVO.EMAIL);
-		query.setParameter("email", email);
-
-		UserVO user= (UserVO) query.uniqueResult();
-		return user;
+        return (UserVO) findByUniqueResult(UserVO.EMAIL,UserVO.class,email,"email");
 	}
 
 	@Override
-	public UserVO findByFacebookId(String facebookId) throws BusinessResourceException {
+	public UserVO findByFacebookId(String facebookId) throws Exception {
 		logger.info("User: find by facebook");
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
-		Query query=session.getNamedQuery(UserVO.FACEBOOK);
-		query.setParameter("facebookId", facebookId);
-
-		UserVO user= (UserVO) query.uniqueResult();
-		return user;
+		String[] filters= new String[2];
+		filters[0]=FilterConstants.CANCELLED;
+		filters[1]=FilterConstants.ACTIVE_MBR;
+		return (UserVO) findByUniqueResult(UserVO.FACEBOOK,UserVO.class,facebookId,"facebookId",null,filters);
 	}
 
 	@Override
-	public UserVO findByGoogleId(String googleId) throws BusinessResourceException {
+	public UserVO findByGoogleId(String googleId) throws Exception {
 		logger.info("User: find by google");
-		Session session = this.sessionFactory.getCurrentSession();
-		session.enableFilter(FilterConstants.CANCELLED);
-		session.enableFilter(FilterConstants.ACTIVE_MBR);
-		Query query=session.getNamedQuery(UserVO.GOOGLE);
-		query.setParameter("googleId", googleId);
+		String[] filters= new String[2];
+		filters[0]=FilterConstants.CANCELLED;
+		filters[1]=FilterConstants.ACTIVE_MBR;
+		return (UserVO) findByUniqueResult(UserVO.FACEBOOK,UserVO.class,googleId,"googleId",null,filters);
 
-		UserVO user= (UserVO) query.uniqueResult();
-		return user ;
 	}
 
 	@Override
-	public boolean setRole(UserVO user, RoleEnum roleId) throws BusinessResourceException {
+	public boolean setRole(UserVO user, RoleEnum roleId) throws Exception {
 		logger.info("User:  set role");
 
 		RoleVO role = roleDAO.findByDescription(roleId.name());
@@ -434,7 +431,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor =UserException.class)
-	public boolean setRole(String email , RoleEnum roleId) throws BusinessResourceException {
+	public boolean setRole(String email , RoleEnum roleId) throws Exception {
 
 		UserVO user= findByEmail(email);
 		return  setRole( user, roleId);
@@ -453,38 +450,20 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
-	public boolean checkLogin(LoginDTO lr) throws BusinessResourceException, UserException {
+	public boolean checkLogin(LoginDTO lr) throws Exception {
 		logger.info("User: check login");
 		UserVO user=findByOnlyUsername(lr.getUsername(), true);
-		return  (UserVO)manualFilter(user)!=null;
+		return  manualFilter(user)!=null;
 	}
 
-	@Override
+/*	@Override
 	public List<RatingCountVO> findRatingCounts(UserVO user) {
 		Session session= sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query=session.createNamedQuery(ReviewVO.RATING,RatingCountVO.class);
-		query.setParameter("userid", user);
+		query.setParameter("userId", user);
 		return query.getResultList();
-	}
-
-	@Override
-	public void deleteObject(Object object) throws RecordNotFoundException {
-		Long id = (Long)object;
-		try{
-			Session session=sessionFactory.getCurrentSession();
-
-			UserVO user=findById(id);
-			if(user!=null){
-				session.remove(user);
-				//session.flush(); // Etant donné que la suppression de l'entité UserVO entraine la suppression des autres en
-				// entités pas besoin de faire le flush car le flush fait la synchronisation entre l'entité et la session hibernate
-				// du coup cree une transaction et enverra en erreur la remove
-			}
-		}catch (Exception e){
-			throw new BusinessResourceException(e.getMessage());
-		}
-	}
+	}*/
 
 	@Override
 	public boolean updateDelete(Long id) throws BusinessResourceException ,UserException{
@@ -496,15 +475,101 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 			UserVO user=findById(id);
 			if(user!=null){
+				user.updateDeleteChildrens();
 				user.setCancelled(true);
 				session.merge(user);
 				user = session.get(UserVO.class, id);
+
 				result= (user!=null) && (user.isCancelled());
 			}
 		}catch (Exception e){
 			throw new UserException(e.getMessage());
 		}
 		return result;
+	}
+
+	@Override
+	public UserVO updateImage(Long userId, MultipartFile multipartFile) throws IOException {
+
+		String fileName = org.springframework.util.StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		UserVO user = findById(userId);
+		//user.setPicture(fileName);
+		Session session=sessionFactory.getCurrentSession();
+		user.setCancelled(true);
+		session.merge(user);
+
+		String uploadDir = imagesFolder + user.getId();
+
+		fileUtils.saveFile(uploadDir, fileName, multipartFile);
+		return null;
+	}
+
+	@Override
+	@Transactional(rollbackFor = {UserException.class,Exception.class})
+	public UserVO manageNotification(Long userId, boolean enableNotification) throws UserException{
+
+				UserVO user=findById(userId);
+		try {
+			Session session=sessionFactory.getCurrentSession();
+			boolean precedent=user.isEnableNotification();
+			if(user!=null && precedent!=enableNotification){
+				user.setEnableNotification(enableNotification);
+				session.update(user);
+				return  session.get(UserVO.class, userId);
+			}
+		}catch (UserException e){
+			logger.error("Erreur durant la modification de la gestion des notifications");
+			throw e;
+		}
+		return user;
+	}
+
+	@Override
+	@Transactional
+	public boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException {
+		logger.info("Modification du mot de passe");
+		UserVO user=findById(userId);
+		if(user==null){
+			logger.error("Erreur : aucun utilisateur correspondant a l'id:"+userId);
+			throw new UserException( "Aucun utilisateur trouvé avec cet identifiant"+userId);
+		}
+		String decryptedPassword=PasswordGenerator.decrypt(user.getPassword());
+		if(!StringUtils.equals(decryptedPassword,oldPassword)){
+			logger.error("Erreur : mots de passe inexacts {}-{}:",decryptedPassword,oldPassword);
+			throw new UserException( "Le mot de passe ne correspond pas: veuillez contrôler l'ancien mot de passe");
+		}
+		Session session=sessionFactory.getCurrentSession();
+		user.setPassword(PasswordGenerator.encrypt(newPassword));
+		session.merge(user);
+		return true;
+	}
+
+	@Override
+	@Transactional
+	public List<CommunicationVO> communications(Long userId) throws Exception {
+		UserVO user=findById(userId);
+		if(user==null){
+			logger.error("Erreur : aucun utilisateur correspondant a l'id:"+userId);
+			throw new UserException( "Aucun utilisateur trouvé avec cet identifiant"+userId);
+		}
+
+		/*List<UserVO> communications=comms.stream()
+										.map(com ->com.getUsers())
+										.flatMap(c ->c.stream())
+										.filter(usr ->usr.getId()==userId)
+										.collect(Collectors.toList());*/
+
+		return user.getCommunications().stream().collect(Collectors.toList());
+	}
+
+	@Override
+	public List notifications(Long userId) throws Exception {
+		return null;
+	}
+
+	@Override
+	public List messages(Long userId) throws Exception {
+		return null;
 	}
 
 
@@ -535,22 +600,6 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 		}
 	}
 
-	private double calcolateAverage(UserVO user){
-		int totalRating=0;
-		int counterRating=0;
-		List<RatingCountVO> ratingCounts =findRatingCounts(user);
-		if(CollectionsUtils.isEmpty(ratingCounts)){
-			return 0.0;
-		}
-		for(int i=0;i<ratingCounts.size();i++){
-			RatingCountVO ratingCount=ratingCounts.get(i);
-			counterRating+=ratingCount.getCount();
-			totalRating+=ratingCount.getRating().toValue()*ratingCount.getCount();
-		}
-		double averageRating = new BigDecimal(((double) totalRating/(double) counterRating),MATH_CONTEXT).doubleValue();
-		user.setRating(averageRating);
-		return averageRating;
-	}
 	@Override
 	public  String composeQuery(Object o, String alias) {
 
@@ -570,19 +619,15 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 				}
 				hql.append(alias+".announceType=:announceType ");
 			}
-
-
 		}catch (Exception e){
 			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 		return hql.toString();
-
 	}
 
 	@Override
 	public  void composeQueryParameters(Object o,Query query) {
 
 	}
-
 }

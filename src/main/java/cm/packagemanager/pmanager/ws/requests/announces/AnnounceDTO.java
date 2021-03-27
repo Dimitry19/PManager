@@ -24,7 +24,7 @@ public class AnnounceDTO {
 	private String description;
 
 	@NotNull(message = "Le prix au Kg doit etre valorisé")
-	@PositiveOrZero(message = "Le prix au Kg doit etre valorisé")
+	//@PositiveOrZero(message = "Le prix au Kg doit etre valorisé")
 	private BigDecimal price;
 
 	private BigDecimal preniumPrice;
@@ -33,7 +33,7 @@ public class AnnounceDTO {
 
 	@NotNull(message = "Le nombre de Kg disponibles doit etre positif")
 	@Positive(message = "Le nombre de Kg disponibles doit etre positif")
-	private BigDecimal weigth;
+	private BigDecimal weight;
 
 	@NotNull(message = "Le type d'annonce doit etre valorisé")
 	@Enumerated(EnumType.STRING)
@@ -125,12 +125,12 @@ public class AnnounceDTO {
 		this.preniumPrice = preniumPrice;
 	}
 
-	public BigDecimal getWeigth() {
-		return weigth;
+	public BigDecimal getWeight() {
+		return weight;
 	}
 
-	public void setWeigth(BigDecimal weigth) {
-		this.weigth = weigth;
+	public void setWeight(BigDecimal weight) {
+		this.weight = weight;
 	}
 
 	public AnnounceType getAnnounceType() {

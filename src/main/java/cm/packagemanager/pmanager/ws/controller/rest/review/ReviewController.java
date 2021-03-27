@@ -3,7 +3,7 @@ package cm.packagemanager.pmanager.ws.controller.rest.review;
 
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
-import cm.packagemanager.pmanager.user.service.UserService;
+import cm.packagemanager.pmanager.user.ent.service.UserService;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.review.ReviewDTO;
 import cm.packagemanager.pmanager.ws.requests.review.UpdateReviewDTO;
@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.REVIEW_WS;
+
+import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 
 @RestController

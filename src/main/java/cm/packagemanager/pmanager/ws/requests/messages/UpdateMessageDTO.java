@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 
 public class UpdateMessageDTO {
 
-	@NotNull(message = "L'id du message doit etre valorisé")
 	private Long id;
 
 	@NotNull(message = "Le username / email de l'utilisateur doit etre valorisé")

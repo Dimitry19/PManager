@@ -11,9 +11,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class UpdateAnnounceDTO extends AnnounceDTO {
 
-	@NotNull(message = "L'id de l'annonce doit etre valorisé")
 	private Long id;
-
 
 	public Long getId() {
 		return id;

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/google-firebase/demonotifications.json" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/CustomExceptionHandler.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/ErrorResponse.java" charset="UTF-8" />
@@ -10,7 +11,7 @@
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/cfg/HibernateConfiguration.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/FilterConstants.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/package-info.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/service/UserService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/service/UserService.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/EmployeeController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/responses/WebServiceResponseCode.java" charset="UTF-8" />
@@ -18,7 +19,6 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/log4j2.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/Lost Password.html" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/confirm-registration.html" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/templates/error/404.html" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/error/404.html" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/retrieve-password.html" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/send-mail.html" charset="windows-1252" />

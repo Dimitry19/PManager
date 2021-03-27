@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static cm.packagemanager.pmanager.ws.controller.rest.CommonController.NOTIFICATION_WS;
+import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 
 

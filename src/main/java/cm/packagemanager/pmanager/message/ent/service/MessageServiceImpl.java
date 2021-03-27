@@ -29,7 +29,7 @@ public class MessageServiceImpl implements MessageService{
 
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, RecordNotFoundException.class, BusinessResourceException.class})
-	public MessageVO addMessage(MessageDTO mdto) throws BusinessResourceException, RecordNotFoundException {
+	public MessageVO addMessage(MessageDTO mdto) throws Exception {
 		return messageDAO.addMessage(mdto);
 	}
 
@@ -40,18 +40,18 @@ public class MessageServiceImpl implements MessageService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<MessageVO> messagesByUser(UserVO user,PageBy pageBy) throws BusinessResourceException, UserException {
+	public List<MessageVO> messagesByUser(UserVO user,PageBy pageBy) throws Exception {
 		return messageDAO.messagesByUser(user, pageBy);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<MessageVO> messagesByUser(Long id,PageBy pageBy) throws BusinessResourceException, UserException {
+	public List<MessageVO> messagesByUser(Long id,PageBy pageBy) throws Exception {
 		return messageDAO.messagesByUser(id, pageBy);
 	}
 
 	@Override
-	public List<MessageVO> messages(PageBy pageBy) throws BusinessResourceException {
+	public List<MessageVO> messages(PageBy pageBy) throws Exception {
 		return messageDAO.messages(pageBy);
 	}
 
@@ -69,7 +69,7 @@ public class MessageServiceImpl implements MessageService{
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class,UserException.class})
-	public MessageVO update(UpdateMessageDTO updateMessageDTO) throws BusinessResourceException, UserException {
+	public MessageVO update(UpdateMessageDTO updateMessageDTO) throws Exception {
 		return messageDAO.update(updateMessageDTO);
 	}
 }

@@ -25,6 +25,6 @@ public enum AnnounceType {
 				return e;
 			}
 		}
-		throw new RuntimeException("Valore " + value + " non valido");
+		throw new RuntimeException("Valeur  " + value + " non valide");
 	}
 }

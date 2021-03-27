@@ -28,6 +28,16 @@ public class WebServiceResponseCode
 	public static final String REVIEW_CREATE_LABEL=" Avis cree correctement";
 	public static final String CANCELLED_REVIEW_LABEL = "L'avis a ete elimine correctement";
 	public static final String UPDATED_REVIEW_LABEL = "L'avis  a ete ajourne correctement";
+	public static final String SUBSCRIBE_LABEL = "Abonnement reussi";
+	public static final String UNSUBSCRIBE_LABEL = "Desabonnement reussi";
+
+	public static final String CONTACT_US_LABEL = "Merci pour votre correspondance, vous serez recontacté";
+
+
+	public static final String RESERV_CREATE_LABEL="Reservation creee correctement";
+	public static final String UPDATED_RESERV_LABEL = "La reservation ete modifiée correctement";
+	public static final String CANCELLED_RESERV_OK_LABEL = "Votre reservation a été correctement effacé";
+
 
 	// NOK LABEL
 	public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre elimine car inexistant";
@@ -35,7 +45,7 @@ public class WebServiceResponseCode
 	public static final String ERROR_RETRIVEVE_PASSWORD_LABEL = "Le mot de posse n'a pas ete envoye ";
 	public static final String ERROR_EMAIL_REGISTER_LABEL = "Cette adresse email a deja ete utilise";
 	public static final String ERROR_USERNAME_REGISTER_LABEL = "Nom utilisateur non disponible";
-	public static final String ERROR_USER_REGISTER_LABEL = "Enregistrement non complet?";
+	public static final String ERROR_USER_REGISTER_LABEL = "Enregistrement non complete";
 	public static final String ERROR_INVALID_TOKEN_REGISTER_LABEL = "Token invalide , peut etre le lien a deja expire";
 	public static final String ERROR_USED_TOKEN_REGISTER_LABEL = "Le compte a deje ete active";
 	public static final String ERROR_LOGIN_LABEL = "Verifier les donn?es d'accès";
@@ -57,5 +67,17 @@ public class WebServiceResponseCode
 	public static final String ERROR_UPDATE_REVIEW_CODE_LABEL = "L'avis ne peut pas etre ajourne car inexistant";
 
 
+	public static final String ERROR_SUBSCRIBE_LABEL = "Abonnement non reussi";
+	public static final String ERROR_UNSUBSCRIBE_LABEL = "Desabonnement non reussi";
+	public static final String CONFLICT_SUBSCRIBE_LABEL = "Impossible de/s'abonner a son propre compte";
+
+
+	public static final String ERROR_CONTACT_US_LABEL = "Impossible d'envoyer le message pour le moment";
+
+
+	public static final String ERROR_RESERV_CREATE_LABEL = "La reservation n'a pas pu etre cree";
+	public static final String ERROR_DELETE_RESERV_CODE_LABEL = "La reservation ne peut pas etre eliminee car inexistant";
+	public static final String ERROR_UPDATE_RESERV_CODE_LABEL = "La reservation ne peut pas etre ajournee car inexistant";
+	public static final String ERROR_GET_RESERV_CODE_LABEL = "La reservation inexistante";
 
 }

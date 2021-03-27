@@ -21,7 +21,7 @@ import java.util.List;
 
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
-//@WebFilter(urlPatterns = "/pmanager/services")
+//@WebFilter(urlPatterns = "/users")
 public class AuthenticationFilter  implements Filter {
 
 	private static Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);

@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 
+import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
@@ -8,12 +9,9 @@ import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.logging.log4j.message.MessageFormatMessage;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.OrderBy;
 
@@ -25,18 +23,17 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
-
-import static org.hibernate.annotations.FetchMode.SELECT;
 
 
 @Entity
 @Table(name = "ANNOUNCE", schema = "PUBLIC")
 @NamedQueries({
 		@NamedQuery(name = AnnounceVO.FINDBYUSER,  query="select a from AnnounceVO a where a.user.id =:userId order by a.startDate desc"),
+		@NamedQuery(name = AnnounceVO.FINDBYTYPE,  query="select a from AnnounceVO a where a.announceType =:type order by a.startDate desc"),
 })
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
@@ -45,52 +42,109 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 public class AnnounceVO extends WSCommonResponseVO {
 
 	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
+	public static final String FINDBYTYPE="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByType";
 	public static final String SQL_FIND_BY_USER=" FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="ID",nullable = false,unique = true)
 	private Long id;
 
+	@Basic(optional = false)
+	@Column(name = "DEPARTURE", nullable = false)
 	private String departure;
 
+	@Basic(optional = false)
+	@Column(name = "ARRIVAL", nullable = false)
 	private String arrival;
 
+	@Basic(optional = false)
+	@Column(name = "START_DATE", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	private Date startDate;
 
+	@Basic(optional = false)
+	@Column(name = "END_DATE", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	private Date endDate;
 
+	@OneToOne
+	private ImageVO image;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name="TRANSPORT", updatable = true, nullable = false)
 	private TransportEnum transport;
 
+	@Basic(optional = false)
+	@Column(name = "PRICE", nullable = false)
 	private BigDecimal price;
+
+	@Basic(optional = false)
+	@Column(name = "GOLD_PRICE", nullable = false)
 	private BigDecimal goldPrice;
+
+	@Basic(optional = false)
+	@Column(name = "PRENIUM_PRICE", nullable = false)
 	private BigDecimal preniumPrice;
 
-	private BigDecimal weigth;
+	@Basic(optional = false)
+	@Column(name = "WEIGHT", nullable = false)
+	private BigDecimal weight;
 
+	@Basic(optional = false)
+	@Column(name = "REMAIN_WEIGHT", updatable = true)
+	private BigDecimal remainWeight;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "ANNOUNCE_TYPE",length = 10)
 	private AnnounceType announceType;
 
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+	@JoinColumn(name="R_USER_ID", updatable = false)
+	@JsonBackReference
+	@JsonProperty
 	private UserVO user;
 
+	@JsonIgnore
+	@Enumerated(EnumType.STRING)
+	@Column(name = "STATUS",length = 10)
 	private StatusEnum status;
 
+	@JsonIgnore
+	@Basic(optional = false)
+	@Column(name="CANCELLED")
 	private boolean cancelled;
-	
+
+	@Basic(optional = false)
+	@Column(name = "DESCRIPTION", nullable = true)
 	private String description;
-	
+
 	private String descriptionTransport;
 
-	private ProductCategoryVO category;
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(optional = false,fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
+	@JoinColumn(name="R_CATEGORY",referencedColumnName = "CODE")
+	@JsonProperty
+	private CategoryVO category;
 
+	@Access(AccessType.PROPERTY)
+	@OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE}, mappedBy="announce",fetch=FetchType.LAZY)
+	@JsonManagedReference
+	//@Fetch(value = SELECT)
+	@OrderBy(clause = "id.id ASC")
 	private Set<MessageVO> messages=new HashSet<>();
 
 	private AnnounceIdVO announceId;
 
-	private String username;
-	private String email;
+	@Transient
+	private UserInfo userInfo;
+
 	public AnnounceVO(){ super();}
 
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID")
 	public Long getId() {
 		return id;
 	}
@@ -99,10 +153,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.id = id;
 	}
 
-	@Basic(optional = false)
-	@Column(name = "START_DATE", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -111,10 +161,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.startDate = startDate;
 	}
 
-	@Basic(optional = false)
-	@Column(name = "END_DATE", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -123,8 +169,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.endDate = endDate;
 	}
 
-	@Basic(optional = false)
-	@Column(name = "DEPARTURE", nullable = false)
 	public String getDeparture() {
 		return departure;
 	}
@@ -133,8 +177,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.departure = departure;
 	}
 
-	@Basic(optional = false)
-	@Column(name = "ARRIVAL", nullable = false)
 	public String getArrival() {
 		return arrival;
 	}
@@ -143,30 +185,34 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.arrival = arrival;
 	}
 
-
-	@Enumerated(EnumType.STRING)
-	@Column(name="TRANSPORT", updatable = true, nullable = false)
 	public TransportEnum  getTransport() {
+		//setDescriptionTransport(this.transport.toValue());
+		setDescriptionTransport("");
+
 		return transport;
 	}
 
 	public void setTransport(TransportEnum transport) {
-		setDescriptionTransport(transport.toValue());
 		this.transport = transport;
 	}
 
-	@Basic(optional = false)
-	@Column(name = "WEIGHT", nullable = false)
-	public BigDecimal getWeigth() {
-		return weigth;
+	public BigDecimal getWeight() {
+		return weight;
 	}
 
-	public void setWeigth(BigDecimal weigth) {
-		this.weigth = weigth;
+	public void setWeight(BigDecimal weight) {
+		this.weight = weight;
 	}
 
-	@Basic(optional = false)
-	@Column(name = "GOLD_PRICE", nullable = false)
+	public BigDecimal getRemainWeight() {
+		return remainWeight;
+	}
+
+	public void setRemainWeight(BigDecimal remainWeight) {
+		this.remainWeight = remainWeight;
+	}
+
+
 	public BigDecimal getGoldPrice() {
 		return goldPrice;
 	}
@@ -175,8 +221,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.goldPrice = goldPrice;
 	}
 
-	@Basic(optional = false)
-	@Column(name = "PRENIUM_PRICE", nullable = false)
 	public BigDecimal getPreniumPrice() {
 		return preniumPrice;
 	}
@@ -185,8 +229,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.preniumPrice = preniumPrice;
 	}
 
-	@Basic(optional = false)
-	@Column(name = "PRICE", nullable = false)
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -195,10 +237,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.price = price;
 	}
 
-
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "ANNOUNCE_TYPE",length = 10)
 	public AnnounceType getAnnounceType(){
 		return announceType;
 	}
@@ -208,24 +246,14 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.announceType = announceType;
 	}
 
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "STATUS",length = 10)
 	public StatusEnum getStatus(){
 		return status;
 	}
-
 
 	public void setStatus(StatusEnum status) {
 		this.status = status;
 	}
 
-
-	@Access(AccessType.PROPERTY)
-	@OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE}, mappedBy="announce",fetch=FetchType.EAGER)
-	@JsonManagedReference
-	@Fetch(value = SELECT)
-	@OrderBy(clause = "id.id ASC")
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
@@ -234,24 +262,15 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.messages = messages;
 	}
 
-
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
-	@JoinColumn(name="R_USER_ID", updatable = false)
-	@JsonBackReference
-	@JsonProperty
 	public UserVO getUser() {
 		return user;
 	}
 
 	public void setUser(UserVO user) {
 		this.user = user;
-		setUsername(user.getUsername());
-		setEmail(user.getEmail());
+		userInfo= new UserInfo(user);
 	}
 
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
 	public boolean isCancelled() {
 		return cancelled;
 	}
@@ -259,10 +278,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	public void setCancelled(boolean cancelled) {
 		this.cancelled = cancelled;
 	}
-	
-	
-	@Basic(optional = false)
-	@Column(name = "DESCRIPTION", nullable = true)
+
 	public String getDescription() {
 		return description;
 	}
@@ -271,16 +287,22 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.description = description;
 	}
 
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(optional = true,fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
-	@JoinColumn(name="R_CATEGORY",referencedColumnName = "CODE")
-	@JsonProperty
-	public ProductCategoryVO getCategory() {
+
+	public CategoryVO getCategory() {
 		return category;
 	}
 
-	public void setCategory(ProductCategoryVO category) {
+	public void setCategory(CategoryVO category) {
 		this.category = category;
+	}
+
+
+	public ImageVO getImage() {
+		return image;
+	}
+
+	public void setImage(ImageVO image) {
+		this.image = image;
 	}
 
 	//@NaturalId
@@ -293,46 +315,45 @@ public class AnnounceVO extends WSCommonResponseVO {
 	}
 
 
-
-	@Transient
-	@JsonProperty
-	public String getUsername() {
-		return username;//.getUsername();
+	public UserInfo getUserInfo() {
+		return userInfo;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
 	}
 
 	@Transient
-	@JsonProperty
-	public String getEmail() {
-		return email;//.getUsername();
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	@Transient
-	@JsonProperty
 	public String getDescriptionTransport() {
 	
 		return descriptionTransport;
 	}
 
 	public void setDescriptionTransport(String descriptionTransport){
-		this.descriptionTransport=descriptionTransport;
+
+		this.descriptionTransport=this.transport.toValue();
 	}	
 	
-	public void addMessages(MessageVO message){
+	public void addMessage(MessageVO message){
 		messages.add(message);
+		message.setAnnounce(this);
 	}
 
-	public void removeMessages(MessageVO message){
+	public void removeMessage(MessageVO message){
 
 		if(messages.contains(message)){
 			messages.remove(message);
+			message.setAnnounce(null);
+		}
+	}
+
+
+	public void updateDeleteChildrens() {
+
+		Iterator<MessageVO> itermessage = this.messages.iterator();
+		while (itermessage.hasNext()) {
+			MessageVO message = itermessage.next();
+			message.setCancelled(true);
 		}
 	}
 	@Override
@@ -360,5 +381,10 @@ public class AnnounceVO extends WSCommonResponseVO {
 		} else if (!user.equals(other.user))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "AnnounceVO{" + "id=" + id + ", departure='" + departure + '\'' + ", arrival='" + arrival + '\'' + ", startDate=" + startDate + ", endDate=" + endDate + ", transport=" + transport + ", price=" + price + ", goldPrice=" + goldPrice + ", preniumPrice=" + preniumPrice + ", weight=" + weight + ", remainWeight=" + remainWeight + ", announceType=" + announceType + ", user=" + user + ", status=" + status + ", cancelled=" + cancelled + ", description='" + description + '\'' + ", descriptionTransport='" + descriptionTransport + '\'' + ", category=" + category + ", messages=" + messages + ", announceId=" + announceId  + '\'' + '}';
 	}
 }

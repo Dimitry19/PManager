@@ -17,11 +17,11 @@ public interface MessageDAO extends CommonDAO {
 
 
 	public int  count(PageBy pageBy)  throws Exception;
-	public  MessageVO update(UpdateMessageDTO messageDTO) throws BusinessResourceException, UserException;
-	public List<MessageVO> messagesByUser(UserVO user,PageBy pageBy) throws BusinessResourceException, UserException;
-	public List<MessageVO> messagesByUser(Long id,PageBy pageBy) throws BusinessResourceException, UserException;
-	public List<MessageVO> messages(PageBy pageBy ) throws BusinessResourceException;
+	public  MessageVO update(UpdateMessageDTO messageDTO) throws Exception;
+	public List<MessageVO> messagesByUser(UserVO user,PageBy pageBy) throws Exception;
+	public List<MessageVO> messagesByUser(Long id,PageBy pageBy) throws Exception;
+	public List<MessageVO> messages(PageBy pageBy ) throws Exception;
 	public MessageVO findById(MessageIdVO id) throws BusinessResourceException;
 	public boolean delete(Long id) throws BusinessResourceException;
-	MessageVO addMessage(MessageDTO messageDTO) throws BusinessResourceException, RecordNotFoundException;
+	MessageVO addMessage(MessageDTO messageDTO) throws BusinessResourceException, RecordNotFoundException, Exception;
 }

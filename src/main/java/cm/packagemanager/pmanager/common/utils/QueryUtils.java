@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.common.utils;
 
+
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import java.math.BigInteger;
+
 
 @Component
 public class QueryUtils {
@@ -19,7 +20,7 @@ public class QueryUtils {
 	@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public  Long  calcolateId(String namedQuery){
 		Session sess = sessionFactory.getCurrentSession();
-		sess.enableFilter(FilterConstants.CANCELLED);
+		sess.disableFilter(FilterConstants.CANCELLED);
 		Query query= sess.createNamedQuery(namedQuery);
 
 		Long id = (Long) query.uniqueResult();

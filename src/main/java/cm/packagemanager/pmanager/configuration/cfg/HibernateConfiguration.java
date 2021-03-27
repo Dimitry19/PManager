@@ -52,7 +52,8 @@ public class HibernateConfiguration {
 	@Value("${current_session_context_class}")
 	private String CURRENT_SESSION_CONEXT_CLASS;
 
-	@Value("${spring.jpa.properties.hibernate.enable_lazy_load_no_trans}")
+	//@Value("${spring.jpa.properties.hibernate.enable_lazy_load_no_trans}")
+	@Value("${hibernate.enable_lazy_load_no_trans}")
 	private boolean ENABLE_LAZY_TRANS;
 
 
@@ -80,7 +81,7 @@ public class HibernateConfiguration {
 		hibernateProperties.put("hibernate.hbm2ddl.auto", HBM2DDL_AUTO);
 		// Ajouer par moi
 		hibernateProperties.put("hibernate.default_schema", SCHEMA);
-		hibernateProperties.put("spring.jpa.properties.hibernate.enable_lazy_load_no_trans", ENABLE_LAZY_TRANS);
+		hibernateProperties.put("hibernate.enable_lazy_load_no_trans", ENABLE_LAZY_TRANS);
 		hibernateProperties.put("connection.pool_size", POOL_SIZE);
 		hibernateProperties.put("transaction.factory_class", TRANSACTION_FACTORY_CLASS);
 		hibernateProperties.put("current_session_context_class", CURRENT_SESSION_CONEXT_CLASS);
@@ -93,6 +94,7 @@ public class HibernateConfiguration {
 	public HibernateTransactionManager transactionManager() {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(sessionFactory().getObject());
+
 		return transactionManager;
 	}
 }

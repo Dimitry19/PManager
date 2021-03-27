@@ -18,7 +18,7 @@ https://github.com/cloudControl/spring-boot-example-app/tree/master/src/main
 @Entity
 @Table(name="REVIEW", schema = "PUBLIC")
 @NamedQueries({
-		@NamedQuery(name = ReviewVO.RATING,  query="select new cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO(r.rating, count(r)) from ReviewVO r where r.user =:userid group by r.rating order by r.rating DESC"),
+		@NamedQuery(name = ReviewVO.RATING,  query="select new cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO(r.rating, count(r)) from ReviewVO r where r.user =:userId group by r.rating order by r.rating DESC"),
 })
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
@@ -64,7 +64,7 @@ public class ReviewVO extends WSCommonResponseVO {
 	}
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH,optional = false)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
 	@JoinColumn(name="R_USER_ID", updatable = false)
 	@JsonBackReference
 	@JsonProperty
@@ -72,14 +72,14 @@ public class ReviewVO extends WSCommonResponseVO {
 		return this.user;
 	}
 
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH,optional = false)
+	/*@Access(AccessType.PROPERTY)
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
 	@JoinColumn(name="RATING_USER_ID", updatable = false)
 	@JsonBackReference
 	@JsonProperty
 	public UserVO getRatingUser() {
 		return ratingUser;
-	}
+	}*/
 
 	@Column(name = "INDEXES",nullable = false)
 	public int getIndex() {
@@ -131,9 +131,11 @@ public class ReviewVO extends WSCommonResponseVO {
 	}
 
 
+/*
 	public void setRatingUser(UserVO ratingUser) {
 		this.ratingUser = ratingUser;
 	}
+*/
 
 	public void setIndex(int index) {
 		this.index = index;

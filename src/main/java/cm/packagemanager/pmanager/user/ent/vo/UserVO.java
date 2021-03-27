@@ -1,12 +1,15 @@
 package cm.packagemanager.pmanager.user.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
+import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.*;
@@ -19,8 +22,8 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -30,7 +33,6 @@ import java.util.Set;
  */
 
 import static org.hibernate.annotations.FetchMode.SELECT;
-
 
 @Entity(name = "UserVO")
 @Table(name="USER", schema = "PUBLIC")
@@ -55,6 +57,8 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 public class UserVO extends WSCommonResponseVO {
 
 
+	private static final long serialVersionUID = 6181438160768077660L;
+
 	public static final String FINDBYID="cm.packagemanager.pmanager.user.ent.vo.UserVO.findById";
 	public static final String Q_AC_ITEM = "cm.packagemanager.pmanager.user.ent.vo.UserVO.QAutocompleteItem";
 	public static final String ALL = "cm.packagemanager.pmanager.user.ent.vo.UserVO.All";
@@ -65,42 +69,116 @@ public class UserVO extends WSCommonResponseVO {
 	public static final String GOOGLE="cm.packagemanager.pmanager.user.ent.vo.UserVO.findByGoogleId";
 
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="ID",unique = true,nullable = false)
 	private Long id;
 
+
+	@Basic(optional = false)
+	@Column(name="FIRST_NAME", nullable=false)
 	private String firstName;
 
+	@NaturalId
+	@Basic(optional = false)
+	@Column(name = "USERNAME", unique=true, insertable=true, updatable=true, nullable=false,length = FieldConstants.AUTH_USER_LEN)
 	private String username;
 
+	@Basic(optional = false)
+	@Column(name="LAST_NAME",nullable = false)
 	private String lastName;
 
+	@NaturalId
+	@Basic(optional = false)
+	@Column(name="EMAIL", nullable=false,unique = true)
 	private String email;
 
+	@Basic(optional = true)
+	@Column(name="PHONE",nullable = true,length = FieldConstants.PHONE_LEN)
 	private String phone;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "GENDER",length = 10)
 	private Gender gender;
 
+	@OneToOne
+	private ImageVO image;
+
+	/*private String picture;*/
+
+	@Basic(optional = true)
+	@Column(name="FACEBOOK_ID")
+	@JsonIgnore
 	private String facebookId;
 
+	@Basic(optional = true)
+	@Column(name="GOOGLE_ID")
+	@JsonIgnore
 	private String googleId;
 
+
+	@JsonIgnore
+	@Basic(optional = false)
+	@Column(name="PASSWORD", nullable=false)
 	private String password;
 
+	@JsonIgnore
+	@Column(name = "ACTIVE", insertable=true, updatable = true, nullable=false)
 	private Integer active;
 
+	@Basic(optional = false)
+	@Column(name="CANCELLED")
+	@JsonIgnore
 	private boolean cancelled;
 
+	@Basic(optional = true)
+	@Column(name = "ENABLE_NOTIF")
+	private Boolean enableNotification=true;
+
+	@OneToMany(mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
+	@OrderBy(clause = "id.id DESC")
+	@Where(clause = "cancelled = false")
 	private Set<MessageVO> messages=new HashSet<>();
 
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
+	@JsonManagedReference
+	@Fetch(value = SELECT)
+	@OrderBy(clause = "startDate DESC")
+	@Where(clause = "cancelled = false")
 	private Set<AnnounceVO> announces=new HashSet<>();
 
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
+	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private Set<RoleVO> roles= new HashSet<>();
 
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.LAZY)
 	private Set<ReviewVO> reviews= new HashSet<>();
 
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinTable(name = "SUBSCRIBERS", joinColumns = @JoinColumn(name = "R_USER_ID"), inverseJoinColumns = @JoinColumn(name = "SUBSCRIBER_ID"))
+	private Set<UserVO> subscribers= new HashSet<>();
+
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinTable(name = "SUBSCRIPTIONS", joinColumns = @JoinColumn(name = "SUBSCRIPTION_ID"), inverseJoinColumns = @JoinColumn(name = "R_USER_ID"))
+	private Set<UserVO> subscriptions= new HashSet<>();
+
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
+	private Set<CommunicationVO> communications=new HashSet<>();
+
+	@JsonIgnore
+	@Basic(optional = true)
+	@Column(name="CONFIRM_TOKEN")
 	private String confirmationToken;
 
+	@Transient
+	@JsonIgnore
 	private String error;
 
+
+	@Transient
+	@JsonProperty
 	private double rating=0;
 
 
@@ -131,79 +209,51 @@ public class UserVO extends WSCommonResponseVO {
 	}
 
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID")
+
 	public Long getId() {
 		return id;
 
 	}
 
-	@NaturalId
-	@Basic(optional = false)
-	@Column(name = "USERNAME", unique=true, insertable=true, updatable=true, nullable=false,length = FieldConstants.AUTH_USER_LEN)
 	public String getUsername() {
 		return username;
 	}
 
-
-	@Basic(optional = false)
-	@Column(name="PASSWORD", nullable=false)
 	public String getPassword() {
 		return password;
 	}
 
-
-	@Basic(optional = false)
-	@Column(name="FIRST_NAME")
 	public String getFirstName() {
 
 		return firstName;
 	}
 
 
-	@Basic(optional = false)
-	@Column(name="LAST_NAME")
 	public String getLastName() {
 		return lastName;
 	}
 
-	@Basic(optional = true)
-	@Column(name="PHONE",nullable = false,length = FieldConstants.PHONE_LEN)
 	public String getPhone() {
 		return phone;
 	}
 
-	@NaturalId
-	@Basic(optional = false)
-	@Column(name="EMAIL", nullable=false,unique = true)
 	public String getEmail() {
 		return email;
 	}
 
-
-	@Enumerated(EnumType.STRING)
-	@Column(length = 10)
 	public Gender getGender(){
 		return gender;
 	}
 
 
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
 	public boolean isCancelled() {
 		return cancelled;
 	}
 
-
-	@Basic(optional = true)
-	@Column(name="FACEBOOK_ID")
 	public String getFacebookId() {
 		return facebookId;
 	}
 
-	@Basic(optional = true)
-	@Column(name="GOOGLE_ID")
 	public String getGoogleId() {
 		return googleId;
 	}
@@ -212,54 +262,83 @@ public class UserVO extends WSCommonResponseVO {
 		this.googleId = googleId;
 	}
 
-	@Column(name = "ACTIVE", insertable=true, updatable = true, nullable=false)
 	public Integer getActive() {
 		return active;
 	}
 
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
-	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	public Set<RoleVO> getRoles() {
 		return roles;
 	}
 
-
-	@OneToMany(mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
-	@JsonManagedReference
-	@Fetch(value = SELECT)
-	@OrderBy(clause = "id.id DESC")
-	@Where(clause = "cancelled = false")
 	public Set<MessageVO> getMessages() {
 		return messages;
 	}
 
-
-	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", orphanRemoval = true,fetch=FetchType.EAGER)
-	@JsonManagedReference
-	@Fetch(value = SELECT)
-	@OrderBy(clause = "startDate DESC")
-	@Where(clause = "cancelled = false")
 	public Set<AnnounceVO> getAnnounces() {
 		return announces;
 	}
 
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user",orphanRemoval = true)
-	@JsonManagedReference
-	@Fetch(value = SELECT)
 	public Set<ReviewVO> getReviews() {
 		return reviews;
 	}
 
-	@Basic(optional = true)
-	@Column(name="CONFIRM_TOKEN")
+
 	public String getConfirmationToken() {
 		return confirmationToken;
 	}
 
-	@Transient
-	@JsonProperty
+	public Set<UserVO> getSubscribers() {
+		return subscribers;
+	}
+
+	public void setSubscribers(Set<UserVO> subscribers) {
+		this.subscribers = subscribers;
+	}
+
+	public Set<UserVO> getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(Set<UserVO> subscriptions) {
+		this.subscriptions = subscriptions;
+	}
+
+	public Boolean isEnableNotification() {
+		return enableNotification;
+	}
+
+	public void setEnableNotification(Boolean enableNotification) {
+		this.enableNotification = enableNotification;
+	}
+
+	public Set<CommunicationVO> getCommunications() {
+		return communications;
+	}
+
+	public void setCommunications(Set<CommunicationVO> communications) {
+		this.communications = communications;
+	}
+
+	public ImageVO getImage() {
+		return image;
+	}
+
+	public void setImage(ImageVO image) {
+		this.image = image;
+	}
+
+
+	/*
+	* 	@Basic(optional = true)
+	@Column(name="PICTURE", nullable=true,length = 64)
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}*/
 	public double getRating() {
 		return rating;
 	}
@@ -268,11 +347,16 @@ public class UserVO extends WSCommonResponseVO {
 		this.rating = rating;
 	}
 
-
-	@Transient
 	public String getError() {
 		return error;
 	}
+
+/*	@Transient
+	public String getPhotosImagePath() {
+		if (picture == null || id == null) return null;
+
+		return "/user-photos/" + id + "/" + picture;
+	}*/
 
 	public void setError(String error) {
 		this.error = error;
@@ -315,11 +399,9 @@ public class UserVO extends WSCommonResponseVO {
 		this.phone = phone;
 	}
 
-
 	public void setReviews(Set<ReviewVO> reviews) {
 		this.reviews = reviews;
 	}
-
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
@@ -343,34 +425,131 @@ public class UserVO extends WSCommonResponseVO {
 
 
 	public void addAnnounce(AnnounceVO announce){
-		announces.add(announce);
+		this.announces.add(announce);
+		announce.setUser(this);
 
 	}
 	public void removeAnnounce(AnnounceVO announce){
-		if(!announces.isEmpty())
-			announces.remove(announce);
+		announce.setUser(null);
+		this.announces.remove(announce);
 	}
 
-	public void addMessage(MessageVO message){
-		messages.add(message);
+	public void removeAnnounces() {
+		Iterator<AnnounceVO> iterator = this.announces.iterator();
 
+		while (iterator.hasNext()) {
+			AnnounceVO announce = iterator.next();
+			announce.setUser(null);
+			iterator.remove();
+		}
 	}
-
-	public void removeMessage(MessageVO message){
-		if(!messages.isEmpty())
-		messages.remove(message);
-
-	}
-
 	public void addRole(RoleVO role){
 		roles.add(role);
-
 	}
 
 	public void removeRole(RoleVO role){
 		if(!roles.isEmpty())
 			roles.remove(role);
+	}
 
+	public void addMessage(MessageVO message) {
+		this.messages.add(message);
+		message.setUser(this);
+	}
+
+	public void removeMessage(MessageVO message){
+		message.setUser(null);
+		this.messages.remove(message);
+	}
+
+	public void removeMessages() {
+		Iterator<MessageVO> iterator = this.messages.iterator();
+
+		while (iterator.hasNext()) {
+			MessageVO message = iterator.next();
+
+			message.setUser(null);
+			iterator.remove();
+		}
+	}
+
+	public void addSubscriber(UserVO subscriber) {
+		this.subscribers.add(subscriber);
+	}
+
+	public void removeSubscriber(UserVO subscriber){
+
+		if(this.subscribers.contains(subscriber)){
+			this.subscribers.remove(subscriber);
+		}
+	}
+
+	public void removeSubscribers() {
+		Iterator<UserVO> iterator = this.subscribers.iterator();
+
+		while (iterator.hasNext()) {
+			iterator.remove();
+		}
+	}
+
+	public void addSubscription(UserVO subscription) {
+		this.subscriptions.add(subscription);
+	}
+
+	public void removeSubscription(UserVO subscription){
+		if(this.subscriptions.contains(subscription)){
+			this.subscriptions.remove(subscription);
+		}
+	}
+
+	public void removeSubscriptions() {
+		Iterator<UserVO> iterator = this.subscriptions.iterator();
+
+		while (iterator.hasNext()) {
+			iterator.remove();
+		}
+	}
+
+	public void addReview(ReviewVO review) {
+		this.reviews.add(review);
+		review.setUser(this);
+	}
+	public void removeReview(ReviewVO review){
+		review.setUser(null);
+		this.reviews.remove(review);
+	}
+
+	public void removeReviews() {
+		Iterator<ReviewVO> iterator = this.reviews.iterator();
+
+		while (iterator.hasNext()) {
+			ReviewVO review = iterator.next();
+
+			review.setUser(null);
+			iterator.remove();
+		}
+	}
+
+	public void updateDeleteChildrens() {
+		Iterator<ReviewVO> itereview = this.reviews.iterator();
+
+		while (itereview.hasNext()) {
+			ReviewVO review = itereview.next();
+			review.setCancelled(true);
+		}
+
+		Iterator<AnnounceVO> iterannounce = this.announces.iterator();
+
+		while (iterannounce.hasNext()) {
+			AnnounceVO announce = iterannounce.next();
+			announce.setCancelled(true);
+		}
+
+		Iterator<MessageVO> itermessage = this.messages.iterator();
+		while (itermessage.hasNext()) {
+			MessageVO message = itermessage.next();
+			message.setCancelled(true);
+		}
 	}
 
 	@Override
@@ -429,6 +608,6 @@ public class UserVO extends WSCommonResponseVO {
 
 	@Override
 	public String toString() {
-		return "UserVO{" + "id=" + id + ", firstName='" + firstName + '\'' + ", username='" + username + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\'' + ", gender=" + gender + ", facebookId='" + facebookId + '\'' + ", googleId='" + googleId + '\'' + ", password='" + password + '\'' + ", active=" + active + ", cancelled=" + cancelled +  ", confirmationToken='" + confirmationToken + '\'' + '}';
+		return "UserVO{" + "id=" + id + ", firstName='" + firstName + '\'' + ", username='" + username + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\'' + ", gender=" + gender  + ", rating=" + rating + '}';
 	}
 }

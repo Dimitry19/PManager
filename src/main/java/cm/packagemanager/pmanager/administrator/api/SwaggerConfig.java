@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import static com.google.common.base.Predicates.or;
-import static com.sun.tools.doclint.Entity.or;
 import static java.util.Collections.singletonList;
 import static springfox.documentation.builders.PathSelectors.regex;
 import static springfox.documentation.schema.AlternateTypeRules.newRule;
@@ -52,6 +51,15 @@ public class SwaggerConfig {
 	@Value("${swagger.api.groupname.role}")
 	private String apiGroupNameRole;
 
+	@Value("${swagger.api.groupname.mail}")
+	private String apiGroupNameMail;
+
+	@Value("${swagger.api.groupname.reservation}")
+	private String apiGroupNameReservation;
+
+	@Value("${swagger.api.groupname.image}")
+	private String apiGroupNameImage;
+
 /*	@Bean
 	public Docket pmanagerRestApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -72,6 +80,11 @@ public class SwaggerConfig {
 	@Bean
 	public Docket announcesApi() {
 		return	createDocket(apiGroupNameAnnounce,"/pmanager/ws/announce.*");
+	}
+
+	@Bean
+	public Docket mailApi() {
+		return	createDocket(apiGroupNameMail,"/pmanager/ws/mail.*");
 	}
 
 	@Bean
@@ -96,62 +109,26 @@ public class SwaggerConfig {
 		return	createDocket(apiGroupNameRole,"/pmanager/ws/role.*");
 	}
 
+	@Bean
+	public Docket reservationApi() {
+		return	createDocket(apiGroupNameReservation,"/pmanager/ws/reservation.*");
+	}
+
+	@Bean
+	public Docket imageApi() {
+		return	createDocket(apiGroupNameImage,"/pmanager/ws/image.*");
+	}
+
 	private ApiInfo metaData() {
 		Contact contact = new Contact("Dimitri S.", "", "packagemanager@gmail.com");
 
-		return new ApiInfoBuilder().title("Package Manager REST API")
-				.description("Package Manager REST API reference for developers")
+		return new ApiInfoBuilder().title("Tr@vel Post REST API")
+				.description("Tr@vel Post REST API reference for developers")
 				.termsOfServiceUrl("")
-				.contact(contact).license("Package Manager License")
+				.contact(contact).license("Tr@vel Post License")
 				.licenseUrl("").version("1.0").build();
 	}
 
-	/*@Bean
-	public Docket petApi() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.any())
-				.build()
-				.pathMapping("/ws/announce/")
-				.directModelSubstitute(LocalDate.class, String.class)
-				.genericModelSubstitutes(ResponseEntity.class)
-				.alternateTypeRules(
-						newRule(typeResolver.resolve(DeferredResult.class,
-								typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
-								typeResolver.resolve(WildcardType.class)))
-				.useDefaultResponseMessages(false)
-				.globalResponses(HttpMethod.GET,
-						singletonList(new ResponseBuilder()
-								.code("500")
-								.description("500 message")
-								.representation(MediaType.TEXT_XML)
-								.apply(r ->
-										r.model(m ->
-												m.referenceModel(ref ->
-														ref.key(k ->
-																k.qualifiedModelName(q ->
-																		q.namespace("some:namespace")
-																				.name("ERROR"))))))
-								.build()))
-				.securitySchemes(singletonList(apiKey()))
-				.securityContexts(singletonList(securityContext()))
-				.enableUrlTemplating(true)
-				.globalRequestParameters(
-						singletonList(new springfox.documentation.builders.RequestParameterBuilder()
-								.name("someGlobalParameter")
-								.description("Description of someGlobalParameter")
-								.in(ParameterType.QUERY)
-								.required(true)
-								.query(q -> q.model(m -> m.scalarModel(ScalarType.STRING)))
-								.build()))
-				.tags(new Tag("Announce Service", "All apis relating to announce"));
-				//.additionalModels(typeResolver.resolve(AnnounceDTO.class));
-	}
-
-	@Autowired
-	private TypeResolver typeResolver;
-*/
 	private ApiKey apiKey() {
 		return new ApiKey("API", "PM2020", "header");
 	}

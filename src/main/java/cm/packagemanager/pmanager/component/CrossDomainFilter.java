@@ -15,7 +15,7 @@ public class CrossDomainFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain)
 			throws ServletException, IOException {
 		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*"); //toutes les URI sont autorisées
-		httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST");
+		httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST,PUT,DELETE");
 		httpServletResponse.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, x-req,token");
 		filterChain.doFilter(httpServletRequest, httpServletResponse);
 	}
