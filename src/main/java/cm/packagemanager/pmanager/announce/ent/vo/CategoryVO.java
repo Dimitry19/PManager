@@ -28,7 +28,7 @@ public class CategoryVO implements Serializable {
 	private String code;
 
 	@Basic(optional = true)
-	@Column(name="DESCRITPTION")
+	@Column(name="DESCRIPTION")
 	private String description;
 
 	//private boolean cancelled;
