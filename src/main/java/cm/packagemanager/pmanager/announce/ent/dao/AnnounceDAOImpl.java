@@ -120,9 +120,11 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class,BusinessResourceException.class})
-	public AnnounceVO findById(Long id) throws BusinessResourceException {
+	public AnnounceVO findById(Long id) throws Exception {
 
 		AnnounceVO announce=(AnnounceVO) findById(AnnounceVO.class,id);
+		if(announce==null)
+			return null;
 		double rating=calcolateAverage(announce.getUser());
 		announce.getUserInfo().setRating(rating);
 		return announce;
@@ -345,9 +347,9 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	private void fillProductCategory(AnnounceDTO adto){
 		switch (adto.getAnnounceType().name()){
 			case Constants.BUYER:
-				adto.setCategory(constants.DEFAULT_PROD_CAT_CODE);
 				break;
 			case Constants.SELLER:
+				adto.setCategory(constants.DEFAULT_PROD_CAT_CODE);
 				break;
 		}
 	}
