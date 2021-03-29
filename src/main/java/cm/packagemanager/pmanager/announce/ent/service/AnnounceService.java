@@ -27,7 +27,7 @@ public interface AnnounceService extends InitializingBean {
 	public List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws Exception;
 	public List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws Exception;
 
-	public AnnounceVO findById(Long id) throws UserException;
+	public AnnounceVO findById(Long id) throws Exception;
 
 	public boolean delete(Long id) throws Exception;
 

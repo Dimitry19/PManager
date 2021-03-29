@@ -372,7 +372,7 @@ public class AnnounceController extends CommonController {
 
 	@ApiOperation(value = "Retrieve an announce with an ID",response = AnnounceVO.class)
 	@GetMapping(value =ANNOUNCE_WS_BY_ID, headers = WSConstants.HEADER_ACCEPT)
-	public ResponseEntity<AnnounceVO> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws UserException {
+	public ResponseEntity<AnnounceVO> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		AnnounceVO announce=null;
@@ -389,8 +389,11 @@ public class AnnounceController extends CommonController {
 		catch (UserException e){
 			logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
             throw e;
-		}
-		finally {
+		} catch (Exception e) {
+			logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
+			throw e;
+
+		} finally {
 			finishOpentracingSpan();
 		}
 		return new ResponseEntity<>(announce,HttpStatus.OK);

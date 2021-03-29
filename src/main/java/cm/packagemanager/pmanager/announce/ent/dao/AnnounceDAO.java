@@ -29,7 +29,7 @@ public interface AnnounceDAO extends CommonDAO {
 
 	List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws Exception;
 
-	AnnounceVO findById(Long id) throws BusinessResourceException,RecordNotFoundException;
+	AnnounceVO findById(Long id) throws BusinessResourceException,RecordNotFoundException, Exception;
 
 	AnnounceVO create(AnnounceDTO announce) throws BusinessResourceException, Exception;
 

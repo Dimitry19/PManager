@@ -54,7 +54,7 @@ public class AnnounceServiceImpl implements AnnounceService {
 		return announceDAO.update(id);
 	}
 
-	public AnnounceVO findById(Long id) throws UserException {
+	public AnnounceVO findById(Long id) throws Exception {
 		return announceDAO.findById(id);
 	}
 
