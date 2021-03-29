@@ -124,6 +124,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	private String descriptionTransport;
 
+
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(optional = false,fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
 	@JoinColumn(name="R_CATEGORY",referencedColumnName = "CODE")
