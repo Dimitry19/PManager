@@ -322,24 +322,20 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 
 	private TransportEnum getTransport(String transport){
-		switch (transport){
-			case AP:
-				return TransportEnum.PLANE;
-			case Constants.AUT:
-				return TransportEnum.AUTO;
-			case Constants.NV:
-				return TransportEnum.NAVE;
+		for (TransportEnum t: TransportEnum.values()){
+			if (StringUtils.equals(transport,t.toString())){
+				return t;
+			}
 		}
 		return null;
 	}
 
 
 	private AnnounceType getAnnounceType(String announceType){
-		switch (announceType){
-			case Constants.BUYER:
-				 return AnnounceType.BUYER;
-			case Constants.SELLER:
-				 return AnnounceType.SELLER;
+		for (AnnounceType a: AnnounceType.values()){
+			if (StringUtils.equals(announceType,a.toString())){
+				return a;
+			}
 		}
 		return null;
 	}
@@ -389,7 +385,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 					hql.append(" ( "+alias+".goldPrice<=:goldPrice or "+alias+".price<=:price or " +alias+".preniumPrice<=:preniumPrice) ");
 				}
 			}
-			addCondition = StringUtils.isNotEmpty(hql.toString()) && StringUtils.equals(hql.toString(), " where ");
+			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (ObjectUtils.isCallable(announceSearch,"startDate") && announceSearch.getStartDate()>0){
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".startDate=:startDate ");
@@ -416,7 +412,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".category.code=:category ");
 			}
-			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			/*addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (ObjectUtils.isCallable(announceSearch,"userId")){
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".user.id=:userId ");
@@ -425,7 +421,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 			if (StringUtils.isNotEmpty(announceSearch.getUser())) {
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(" ( "+alias+".user.username like:user or "+alias+".user.email like:email) ");
-			}
+			}*/
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (!addCondition){
 				hql = new StringBuilder();
@@ -488,13 +484,13 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 			if (StringUtils.isNotEmpty(announceSearch.getCategory())) {
 				query.setParameter("category", announceSearch.getCategory());
 			}
-			if (ObjectUtils.isCallable(announceSearch,"userId")){
+			/*if (ObjectUtils.isCallable(announceSearch,"userId")){
 				query.setParameter("userId", announceSearch.getUserId());
 			}
 			if (StringUtils.isNotEmpty(announceSearch.getUser())) {
 				query.setParameter("user", "%"+announceSearch.getUser()+"%");
 				query.setParameter("email", "%"+announceSearch.getUser()+"%");
-			}
+			}*/
 
 		}catch (Exception e){
 			logger.error(e.getMessage());
