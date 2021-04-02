@@ -136,6 +136,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@JsonManagedReference
 	//@Fetch(value = SELECT)
 	@OrderBy(clause = "id.id ASC")
+	@Where(clause = "cancelled=false")
 	private Set<MessageVO> messages=new HashSet<>();
 
 	private AnnounceIdVO announceId;

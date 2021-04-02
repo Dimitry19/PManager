@@ -25,7 +25,7 @@ import javax.persistence.*;
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
 })
-@Where(clause= FilterConstants.FILTER_WHERE_MESSAGE_CANCELLED)
+//@Where(clause= FilterConstants.FILTER_WHERE_MESSAGE_CANCELLED)
 public class MessageVO extends WSCommonResponseVO {
 
 	public static final String FINDALL="cm.packagemanager.pmanager.message.ent.vo.MessageVO.findAll";
