@@ -1,7 +1,9 @@
 package cm.packagemanager.pmanager.websocket.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.client.standard.WebSocketContainerFactoryBean;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -40,5 +42,17 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 		registry.addEndpoint("/notifications")
 				.setAllowedOrigins("*")
 				.withSockJS();
+	}
+	/***
+	 * Permet de faire fonctionner la WSocket avec tomcat(Cas de Spring)
+	 * http://host:port/{path-to-sockjs-endpoint}/{server-id}/{session-id}/{transport}
+	 */
+
+	@Bean
+	public WebSocketContainerFactoryBean createWebSocketContainer() {
+		WebSocketContainerFactoryBean container = new WebSocketContainerFactoryBean();
+		container.setMaxTextMessageBufferSize(8192);
+		container.setMaxBinaryMessageBufferSize(8192);
+		return container;
 	}
 }
