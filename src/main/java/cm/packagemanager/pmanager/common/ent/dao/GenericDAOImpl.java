@@ -123,6 +123,17 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 		return query.getResultList();
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<T> all(Class<T> clazz) throws Exception {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		StringBuilder queryBuilder= new StringBuilder(FROM);
+		queryBuilder.append(clazz.getName());
+
+		Query query=session.createQuery(queryBuilder.toString(),clazz);
+		return query.getResultList();
+	}
 
 	@Override
 	@Transactional(readOnly = true)

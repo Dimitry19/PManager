@@ -1,0 +1,1 @@
+//Hibernate.initialize(user.getMessages()); // on l'utilise quand la fetch avec message est lazy
