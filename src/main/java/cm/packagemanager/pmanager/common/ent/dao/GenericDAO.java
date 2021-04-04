@@ -29,6 +29,8 @@ public interface GenericDAO <T, ID extends Serializable,NID extends Serializable
 
 	List<T> all(Class<T> clazz, PageBy pageBy) throws Exception;
 
+	List<T> all(Class<T> clazz) throws Exception;
+
 	List<T> all(Class<T> clazz, PageBy pageBy, String... filters) throws Exception;
 
 	List<T> allAndOrderBy(Class<T> clazz, String field, boolean desc, PageBy pageBy) throws Exception;

@@ -306,7 +306,8 @@ public class ReservationController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful retrieval",
 					response = ResponseEntity.class, responseContainer = "List") })
-	@RequestMapping(value =RESERVATION_WS_BY_ANNOUNCE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	//@RequestMapping(value =RESERVATION_WS_BY_ANNOUNCE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	@GetMapping(value = RESERVATION_WS_BY_ANNOUNCE, produces = MediaType.APPLICATION_JSON,headers = HEADER_ACCEPT)
 	public ResponseEntity<PaginateResponse> reservationsByAnnounce(HttpServletResponse response, HttpServletRequest request,
 	                                                           @RequestParam @Valid long announceId,
 	                                                           @RequestParam (required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
@@ -326,9 +327,7 @@ public class ReservationController extends CommonController {
 					headers.add(HEADER_TOTAL, Long.toString(count));
 				}else{
 					List<ReservationVO> reservations=reservationService.findByAnnounce(announceId,pageBy);
-					if(CollectionsUtils.isNotEmpty(reservations)){
-						paginateResponse.setCount(count);
-					}
+					paginateResponse.setCount(count);
 					paginateResponse.setResults(reservations);
 					headers.add(HEADER_TOTAL, Long.toString(reservations.size()));
 				}

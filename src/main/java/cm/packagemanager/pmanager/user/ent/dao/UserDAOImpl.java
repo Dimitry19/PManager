@@ -371,7 +371,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 			session.enableFilter(FilterConstants.ACTIVE_MBR);
 			session.enableFilter(FilterConstants.CANCELLED);
 
-			UserVO user = (UserVO) manualFilter(session.find(UserVO.class,id));
+			UserVO user = (UserVO) session.find(UserVO.class,id);
 			//Hibernate.initialize(user.getMessages()); // on l'utilise quand la fetch avec message est lazy
 			return user;
 		}catch (Exception e){
@@ -453,7 +453,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 	public boolean checkLogin(LoginDTO lr) throws Exception {
 		logger.info("User: check login");
 		UserVO user=findByOnlyUsername(lr.getUsername(), true);
-		return  manualFilter(user)!=null;
+		return  user!=null;
 	}
 
 /*	@Override

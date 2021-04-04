@@ -123,7 +123,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 	@Override
 	public MessageVO findById(MessageIdVO id) throws BusinessResourceException {
 		logger.info("Message: findBy");
-		MessageVO message=(MessageVO) manualFilter(findById(MessageVO.class,id));
+		MessageVO message=(MessageVO) findById(MessageVO.class,id);
 		return message;
 	}
 

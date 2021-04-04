@@ -10,6 +10,7 @@ import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.BigDecimalUtils;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -27,6 +28,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Repository("reservationDAO")
@@ -66,7 +70,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			throw  new Exception("Announce non trouve");
 		}
 
-			CategoryVO category=categoryDAO.findByCode(reservationDTO.getCategory());
+		//List<CategoryVO> allCategories=categoryDAO.all(CategoryVO.class);
 
 			checkRemainWeight(announce,reservationDTO.getWeight());
 			announce.setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));
@@ -74,17 +78,14 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			ReservationVO reservation=new ReservationVO();
 			reservation.setUser(user);
 			reservation.setAnnounce(announce);
-			if (category==null){
-				category=new CategoryVO();
-				category.setCode(FieldConstants.DEFAULT_CATEGORY);
-				category.setDescription(FieldConstants.DEFAULT_CATEGORY);
-			}
-			reservation.setCategory(category);
+			handleCategories(reservation,reservationDTO.getCategories());
 			reservation.setWeight(reservationDTO.getWeight());
 			reservation.setDescription(reservationDTO.getDescription());
 			save(reservation);
 			return reservation;
 	}
+
+
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)
@@ -95,10 +96,6 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 				throw new RecordNotFoundException("Aucun utilisateur trouvé");
 			}
 
-			CategoryVO category=categoryDAO.findByCode(reservationDTO.getCategory());
-			if (category==null){
-				throw  new Exception("Categorie non trouve");
-			}
 			ReservationVO reservation=(ReservationVO) findById(ReservationVO.class,reservationDTO.getId());
 			if (reservation==null){
 				throw  new Exception("Reservation non trouve");
@@ -111,7 +108,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			}else {
 				announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight().subtract(reservationDTO.getWeight())));
 			}
-
+			handleCategories(reservation,reservationDTO.getCategories());
 			reservation.setWeight(reservationDTO.getWeight());
 			reservation.setDescription(reservationDTO.getDescription());
 			update(reservation);
@@ -131,7 +128,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
 			update(announce);
 			//delete(ReservationVO.class,id,true);
-			return updateDelete(id);
+			return updateDelete(reservation);
 
 	}
 
@@ -168,7 +165,6 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 				reservation.setCancelled(true);
 				session.merge(reservation);
 				reservation =session.get(ReservationVO.class, reservation.getId());
-
 				result= (reservation!=null) && (reservation.isCancelled());
 
 			}
@@ -199,6 +195,19 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 		if(BigDecimalUtils.lessThan(announce.getRemainWeight(),weight) || BigDecimalUtils.lessThan(announce.getWeight(), weight)) {
 			throw new BusinessResourceException("Impossible de reserver une quantité superieure ["+weight+" kg] à la quantité disponible ["+announce.getRemainWeight()+" kg]");
 		}
+	}
 
+	private void handleCategories(ReservationVO reservation, List<String> rcategories) {
+		Set<CategoryVO> categories= new HashSet<>();
+
+		if(CollectionsUtils.isNotEmpty(rcategories)){
+			rcategories.forEach(x->{
+				CategoryVO category=categoryDAO.findByCode(x);
+				if(category!=null){
+					categories.add(category);
+				}
+			});
+		}
+		reservation.setCategories(categories);
 	}
 }

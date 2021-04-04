@@ -3,13 +3,18 @@ package cm.packagemanager.pmanager.announce.ent.vo;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
+import org.hibernate.annotations.OrderBy;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 @Entity
 @Table(name = "RESERVATION",schema = "PUBLIC")
@@ -41,9 +46,11 @@ public class ReservationVO  extends WSCommonResponseVO {
 	@Column(name = "WEIGTH", nullable = false)
 	private BigDecimal weight;
 
-	@OneToOne
-	@JoinColumn(name="CATEGORY_ID")
-	private CategoryVO category;
+	@Access(AccessType.PROPERTY)
+	@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.DETACH)
+	@JsonManagedReference
+	private Set<CategoryVO> categories=new HashSet<>();
+
 
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -102,12 +109,12 @@ public class ReservationVO  extends WSCommonResponseVO {
 		this.weight = weight;
 	}
 
-	public CategoryVO getCategory() {
-		return category;
+	public Set<CategoryVO> getCategories() {
+		return categories;
 	}
 
-	public void setCategory(CategoryVO category) {
-		this.category = category;
+	public void setCategories(Set<CategoryVO> categories) {
+		this.categories = categories;
 	}
 
 	public boolean isValidate() {
@@ -132,5 +139,24 @@ public class ReservationVO  extends WSCommonResponseVO {
 
 	public void setCancelled(boolean cancelled) {
 		this.cancelled = cancelled;
+	}
+
+
+	public void addCategory(CategoryVO category){
+		categories.add(category);
+	}
+
+	public void removeMessage(CategoryVO category){
+
+		if(categories.contains(category)){
+			categories.remove(category);
+		}
+	}
+
+	public void removeMessages() {
+		Iterator<CategoryVO> iterator = this.categories.iterator();
+		while (iterator.hasNext()) {
+			iterator.remove();
+		}
 	}
 }
