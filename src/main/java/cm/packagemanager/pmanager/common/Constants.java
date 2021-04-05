@@ -6,9 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Constants {
 
-
-
-
 	public  static final String BUYER="BUYER";
 	public  static final String SELLER="SELLER";
 	public  static final String AP="A";
@@ -21,7 +18,7 @@ public class Constants {
 	public  static final String OR =" or ";
 
 	@Value("${constant.prod_cat_code}")
-	public  String DEFAULT_PROD_CAT_CODE;
+	public  String DEFAULT_CATEGORIE;
 
 
 	public static final int CONTENT_LENGTH=500;

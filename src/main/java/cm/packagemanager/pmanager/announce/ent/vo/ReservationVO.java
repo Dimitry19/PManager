@@ -146,7 +146,7 @@ public class ReservationVO  extends WSCommonResponseVO {
 		categories.add(category);
 	}
 
-	public void removeMessage(CategoryVO category){
+	public void removeCategory(CategoryVO category){
 
 		if(categories.contains(category)){
 			categories.remove(category);

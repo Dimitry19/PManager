@@ -11,14 +11,12 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.BigDecimalUtils;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
-import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +78,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			reservation.setAnnounce(announce);
 			handleCategories(reservation,reservationDTO.getCategories());
 			reservation.setWeight(reservationDTO.getWeight());
-			reservation.setDescription(reservationDTO.getDescription());
+			reservation.setDescription(reservationDTO.getNote());
 			save(reservation);
 			return reservation;
 	}
@@ -110,7 +108,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			}
 			handleCategories(reservation,reservationDTO.getCategories());
 			reservation.setWeight(reservationDTO.getWeight());
-			reservation.setDescription(reservationDTO.getDescription());
+			reservation.setDescription(reservationDTO.getNote());
 			update(reservation);
 			return reservation;
 	}

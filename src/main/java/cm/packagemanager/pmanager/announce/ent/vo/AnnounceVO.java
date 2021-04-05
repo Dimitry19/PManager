@@ -126,10 +126,9 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(optional = false,fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
-	@JoinColumn(name="R_CATEGORY",referencedColumnName = "CODE")
-	@JsonProperty
-	private CategoryVO category;
+	@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.DETACH)
+	@JsonManagedReference
+	private Set<CategoryVO> categories=new HashSet<>();
 
 	@Access(AccessType.PROPERTY)
 	@OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE}, mappedBy="announce",fetch=FetchType.LAZY)
@@ -290,14 +289,13 @@ public class AnnounceVO extends WSCommonResponseVO {
 	}
 
 
-	public CategoryVO getCategory() {
-		return category;
+	public Set<CategoryVO> getCategories() {
+		return categories;
 	}
 
-	public void setCategory(CategoryVO category) {
-		this.category = category;
+	public void setCategories(Set<CategoryVO> categories) {
+		this.categories = categories;
 	}
-
 
 	public ImageVO getImage() {
 		return image;
@@ -334,8 +332,19 @@ public class AnnounceVO extends WSCommonResponseVO {
 	public void setDescriptionTransport(String descriptionTransport){
 
 		this.descriptionTransport=this.transport.toValue();
-	}	
-	
+	}
+
+	public void addCategory(CategoryVO category){
+		categories.add(category);
+	}
+
+	public void removeCategory(CategoryVO category){
+
+		if(categories.contains(category)){
+			categories.remove(category);
+		}
+	}
+
 	public void addMessage(MessageVO message){
 		messages.add(message);
 		message.setAnnounce(this);
@@ -387,6 +396,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	@Override
 	public String toString() {
-		return "AnnounceVO{" + "id=" + id + ", departure='" + departure + '\'' + ", arrival='" + arrival + '\'' + ", startDate=" + startDate + ", endDate=" + endDate + ", transport=" + transport + ", price=" + price + ", goldPrice=" + goldPrice + ", preniumPrice=" + preniumPrice + ", weight=" + weight + ", remainWeight=" + remainWeight + ", announceType=" + announceType + ", user=" + user + ", status=" + status + ", cancelled=" + cancelled + ", description='" + description + '\'' + ", descriptionTransport='" + descriptionTransport + '\'' + ", category=" + category + ", messages=" + messages + ", announceId=" + announceId  + '\'' + '}';
+		return "AnnounceVO{" + "id=" + id + ", departure='" + departure + '\'' + ", arrival='" + arrival + '\'' + ", startDate=" + startDate + ", endDate=" + endDate + ", image=" + image + ", transport=" + transport + ", price=" + price + ", goldPrice=" + goldPrice + ", preniumPrice=" + preniumPrice + ", weight=" + weight + ", remainWeight=" + remainWeight + ", announceType=" + announceType + ", user=" + user + ", status=" + status + ", cancelled=" + cancelled + ", description='" + description + '\'' + ", descriptionTransport='" + descriptionTransport + '\'' + ", categories=" + categories + ", messages=" + messages + ", announceId=" + announceId + ", userInfo=" + userInfo + '}';
 	}
 }

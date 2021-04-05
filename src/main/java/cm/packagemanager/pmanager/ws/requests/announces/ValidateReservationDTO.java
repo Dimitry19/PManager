@@ -1,7 +1,5 @@
 package cm.packagemanager.pmanager.ws.requests.announces;
 
-
-
 import javax.validation.constraints.NotNull;
 
 public class ValidateReservationDTO {
