@@ -53,15 +53,6 @@ public class UserController extends CommonController {
 
 	protected final Log logger = LogFactory.getLog(UserController.class);
 
-	@Autowired
-	protected UserService userService;
-
-	@Autowired
-	protected NotificationService notificationService;
-
-	@Autowired
-	MailSender mailSender;
-
 
 	@ApiOperation(value = "Register an user ",response = Response.class)
 	@ApiResponses(value = {
@@ -316,9 +307,47 @@ public class UserController extends CommonController {
 		} finally {
 			finishOpentracingSpan();
 		}
+		return  null;
+	}
+
+	@ApiOperation(value = " Update user ",response = UserVO.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful update",
+					response = UserVO.class, responseContainer = "Object") })
+	//@RequestMapping(value =UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	@PutMapping(value =USER_WS_PASSWORD_UPDATE_ID, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	public @ResponseBody
+	ResponseEntity<Response> editPassword(HttpServletResponse response, HttpServletRequest request, @PathVariable long userId,
+	                              @RequestBody @Valid ManagePasswordDTO managePassword) throws UserException,ValidationException, IOException {
+
+		logger.info("edit  user password  request in");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		try {
+			createOpentracingSpan("UserController - edit password");
+			Response pmresponse= new Response();
+
+			if(managePassword!=null){
+				boolean edited=userService.editPassword(userId,managePassword.getOldPassword(),managePassword.getNewPassword());
+				if (edited){
+					pmresponse.setRetCode(0);
+					pmresponse.setRetDescription(WebServiceResponseCode.UPDATE_PASSWORD_LABEL);
+				}
+				return  new ResponseEntity<Response>(pmresponse,HttpStatus.OK);
+			}
+		} catch (UserException e) {
+			logger.error("Erreur durant l'ajournement de l'utilisateur  " + managePassword.toString() +"{}",e);
+			throw  e;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			finishOpentracingSpan();
+		}
 
 		return  null;
-
 	}
 
 	@ApiOperation(value = " Retrieve password",response = Response.class)

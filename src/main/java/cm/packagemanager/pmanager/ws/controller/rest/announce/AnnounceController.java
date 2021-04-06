@@ -52,10 +52,6 @@ public class AnnounceController extends CommonController {
 	protected final Log logger = LogFactory.getLog(AnnounceController.class);
 
 
-	@Autowired
-	protected AnnounceService announceService;
-	@Autowired
-	ServiceAnnounce announceTester;
 
 	/**
 	 * Cette methode cree unae annonce

@@ -3,20 +3,21 @@ package cm.packagemanager.pmanager.ws.controller.rest.review;
 
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
-import cm.packagemanager.pmanager.user.ent.service.UserService;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.review.ReviewDTO;
 import cm.packagemanager.pmanager.ws.requests.review.UpdateReviewDTO;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.ws.rs.core.MediaType;
 
 import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
@@ -25,10 +26,11 @@ import static cm.packagemanager.pmanager.constant.WSConstants.*;
 @RequestMapping(REVIEW_WS)
 @Api(value="reviews-service", description="Reviews Operations")
 public class ReviewController extends CommonController {
-	@Autowired
-	UserService userService;
 
-	@PostMapping(value = REVIEW_WS_ADD)
+
+	protected final Log logger = LogFactory.getLog(ReviewController.class);
+
+	@PostMapping(value = REVIEW_WS_ADD, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public ResponseEntity<ReviewVO> add(@RequestBody @Valid  ReviewDTO reviewDTO) throws Exception {
 		try{
 			logger.info("add  review  request in");
@@ -42,6 +44,7 @@ public class ReviewController extends CommonController {
 			}
  		        return new ResponseEntity<ReviewVO>(review, HttpStatus.EXPECTATION_FAILED);
 		}catch (Exception e){
+			logger.error("add  review  error ",e);
 			throw e;
 		}finally {
 			finishOpentracingSpan();
@@ -49,14 +52,16 @@ public class ReviewController extends CommonController {
  	}
 
 
-	@PostMapping(value = REVIEW_WS_UPDATE)
-	ReviewVO update(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid UpdateReviewDTO reviewDTO) throws Exception {
+	@PutMapping(value =REVIEW_WS_UPDATE, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	public @ResponseBody
+	ReviewVO update(HttpServletResponse response, HttpServletRequest request, @PathVariable long id,
+	                @RequestBody @Valid UpdateReviewDTO reviewDTO) throws Exception {
 
 			try{
 			logger.info("update  review  request in");
 			createOpentracingSpan("ReviewController -update");
 
-			ReviewVO review = userService.updateReview(reviewDTO);
+			ReviewVO review = userService.updateReview(id,reviewDTO);
 
 			if (review!=null){
 				review.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -68,7 +73,8 @@ public class ReviewController extends CommonController {
 			}
 			return review;
 		}catch (Exception e){
-			throw e;
+				logger.error("update  review  error ",e);
+				throw e;
 		}finally {
 			finishOpentracingSpan();
 		}
@@ -83,7 +89,7 @@ public class ReviewController extends CommonController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value =REVIEW_WS_DELETE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	@DeleteMapping(value =REVIEW_WS_DELETE, headers = WSConstants.HEADER_ACCEPT)
 	public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -103,9 +109,10 @@ public class ReviewController extends CommonController {
 			}
 		}
 		catch (Exception e){
-			//response.getWriter().write(e.getMessage());
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(e.getMessage());
+			logger.error("delete  review  error ",e);
+			throw e;
 		}finally {
 			finishOpentracingSpan();
 		}

@@ -29,11 +29,6 @@ public class MailController extends CommonController {
 
 	protected final Log logger = LogFactory.getLog(MailController.class);
 
-	@Autowired
-	MailService mailService;
-
-	@Autowired
-	MailSender mailSender;
 
 	@ApiOperation(value = "Contact us ",response = Response.class)
 	@ApiResponses(value = {

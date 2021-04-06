@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.user.ent.service;
 
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.MailType;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static cm.packagemanager.pmanager.constant.FieldConstants.FACEBOOK_PROVIDER;
 import static cm.packagemanager.pmanager.constant.FieldConstants.GOOGLE_PROVIDER;
@@ -101,18 +103,21 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 	public UserVO login(LoginDTO lr ) throws Exception {
-		checkLoginAdmin(lr);
-		UserVO user=null;
-		if(lr.getUsername()!=null){
-			user= userDAO.login(lr.getUsername(), lr.getPassword());
+
+		UserVO user=checkLoginAdmin(lr);
+		if(user!=null) {
+			return user;
 		}
+
+		user= userDAO.login(lr.getUsername(), lr.getPassword());
+
 
 		if(user== null){
 			if(lr.getEmail()!=null){
 				user=userDAO.findByEmail(lr.getEmail());
 			}
 
-			if(lr.getProvider()!=null){
+			/*if(lr.getProvider()!=null){
 
 				if(lr.getProvider().equals(GOOGLE_PROVIDER)){
 					user=userDAO.findByGoogleId(lr.getSocialId());
@@ -121,7 +126,7 @@ public class UserServiceImpl  implements  UserService{
 				if(lr.getProvider().equals(FACEBOOK_PROVIDER)){
 					user=userDAO.findByFacebookId(lr.getSocialId());
 				}
-			}
+			}*/
 		}
 		return user;
 	}
@@ -135,14 +140,28 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 
-	public void checkLoginAdmin(LoginDTO loginD){
-		//TODO implementer le login de l'administrateur
+	public UserVO checkLoginAdmin(LoginDTO login) throws Exception {
+		AtomicBoolean found= new AtomicBoolean(false);
+
+		UserVO admin = userDAO.findByEmail(login.getEmail());
+		if (admin==null) {
+			 admin=userDAO.findByUsername(login.getUsername());
+		}
+		if (admin!=null){
+			admin.getRoles().forEach(x->{
+				if (RoleEnum.ADMIN.equals(RoleEnum.fromValue(x.getDescription().name()))){
+					found.set(true);
+				}
+			});
+			return found.get()?admin:null;
+		}
+
+		return null;
 	}
 	@Override
 	public boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException {
 
 		return userDAO.editPassword(userId,oldPassword,newPassword);
-
 	}
 
 	@Override
@@ -315,7 +334,7 @@ public class UserServiceImpl  implements  UserService{
 	}
 
 	@Override
-	public ReviewVO updateReview(UpdateReviewDTO reviewDTO) throws Exception{
+	public ReviewVO updateReview(long id,UpdateReviewDTO reviewDTO) throws Exception{
 		UserVO user = getUser(reviewDTO.getUserId());
 		UserVO ratingUser =getUser(reviewDTO.getRatingUserId());
 
@@ -323,7 +342,7 @@ public class UserServiceImpl  implements  UserService{
 			throw new UserException("Un utilisateur ne peut donner un avis sur lui même");
 		}
 
-		ReviewVO review = reviewDAO.findById(reviewDTO.getId());
+		ReviewVO review = reviewDAO.findById(id);
 		if (review ==null){
 			throw new Exception("Avis non existant");
 		}

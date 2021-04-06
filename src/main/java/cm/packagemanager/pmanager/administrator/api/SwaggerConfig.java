@@ -60,6 +60,9 @@ public class SwaggerConfig {
 	@Value("${swagger.api.groupname.image}")
 	private String apiGroupNameImage;
 
+	@Value("${swagger.api.groupname.communication}")
+	private String apiGroupNameCommunication;
+
 /*	@Bean
 	public Docket pmanagerRestApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -117,6 +120,11 @@ public class SwaggerConfig {
 	@Bean
 	public Docket imageApi() {
 		return	createDocket(apiGroupNameImage,"/pmanager/ws/image.*");
+	}
+
+	@Bean
+	public Docket dashBoardCommunicationApi() {
+		return	createDocket(apiGroupNameCommunication,"/pmanager/ws/dashboard/communication.*");
 	}
 
 	private ApiInfo metaData() {

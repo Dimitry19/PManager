@@ -4,7 +4,11 @@ import cm.packagemanager.pmanager.notification.firebase.ent.service.Notification
 import cm.packagemanager.pmanager.notification.firebase.ent.service.PushNotificationService;
 import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationRequest;
 import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationResponse;
+import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
+import cm.packagemanager.pmanager.ws.controller.rest.message.MessageController;
 import io.swagger.annotations.Api;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +23,10 @@ import static cm.packagemanager.pmanager.constant.WSConstants.*;
 @RestController
 @RequestMapping(NOTIFICATION_WS)
 @Api(value="notifications-service", description="Reviews Operations")
-public class  NotificationController {
+public class  NotificationController extends CommonController {
 
-	@Autowired
-	private PushNotificationService pushNotificationService;
+	protected final Log logger = LogFactory.getLog(NotificationController.class);
 
-	@Autowired
-	private NotificationService notificationService;
 
 
 	@PostMapping("/notification/topic")

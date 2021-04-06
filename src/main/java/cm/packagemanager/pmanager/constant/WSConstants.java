@@ -28,6 +28,7 @@ public class WSConstants {
 	public static final String USER_WS_MAIL="/mail";
 	public static final String USER_WS_ROLE="/role";
 	public static final String USER_WS_UPDATE_ID="/update/{userId}";
+	public static final String USER_WS_PASSWORD_UPDATE_ID="/password/{userId}";
 	public static final String USER_WS_PASSWORD="/password";
 	public static final String USER_WS_USER_ID="/info/{userId}";
 	public static final String SUBSCRIPTIONS_WS="/subscriptions";
@@ -87,7 +88,7 @@ public class WSConstants {
 	public static final String REVIEW_WS_ADD="/add";
 	public static final String REVIEWS_WS="/reviews";
 	public static final String REVIEW_WS_DELETE= "/delete";
-	public static final String REVIEW_WS_UPDATE="/update";
+	public static final String REVIEW_WS_UPDATE="/update/{id}";
 
 
 	/************ NOTIFICATION REQUEST*************/
