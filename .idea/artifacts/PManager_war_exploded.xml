@@ -34,9 +34,6 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.0" />
-          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-tomcat:2.3.0.RELEASE" />
-          <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:9.0.35" />
-          <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.35" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-validation:2.3.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.hibernate.validator:hibernate-validator:6.1.5.Final" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:5.2.6.RELEASE" />
@@ -61,7 +58,9 @@
           <element id="library" level="project" name="Maven: org.glassfish.hk2:hk2-core:2.6.1" />
           <element id="library" level="project" name="Maven: org.glassfish.hk2:hk2-runlevel:2.6.1" />
           <element id="library" level="project" name="Maven: org.glassfish.hk2:class-model:2.6.1" />
+          <element id="library" level="project" name="Maven: org.ow2.asm:asm:7.1" />
           <element id="library" level="project" name="Maven: org.ow2.asm:asm-analysis:7.1" />
+          <element id="library" level="project" name="Maven: org.ow2.asm:asm-commons:7.1" />
           <element id="library" level="project" name="Maven: org.ow2.asm:asm-tree:7.1" />
           <element id="library" level="project" name="Maven: org.ow2.asm:asm-util:7.1" />
           <element id="library" level="project" name="Maven: org.glassfish.hk2:spring-bridge:2.6.1" />
@@ -98,6 +97,9 @@
           <element id="library" level="project" name="Maven: org.springframework.ws:spring-xml:3.0.9.RELEASE" />
           <element id="library" level="project" name="Maven: com.h2database:h2:1.4.200" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.20" />
+          <element id="library" level="project" name="Maven: org.glassfish:jakarta.el:3.0.3" />
+          <element id="library" level="project" name="Maven: org.webjars:sockjs-client:1.0.2" />
+          <element id="library" level="project" name="Maven: org.webjars:stomp-websocket:2.3.3" />
           <element id="library" level="project" name="Maven: com.jayway.jsonpath:json-path:2.4.0" />
           <element id="library" level="project" name="Maven: net.minidev:json-smart:2.3" />
           <element id="library" level="project" name="Maven: net.minidev:accessors-smart:1.2" />
@@ -240,33 +242,6 @@
           <element id="library" level="project" name="Maven: io.netty:netty-handler:4.1.49.Final" />
           <element id="library" level="project" name="Maven: io.netty:netty-resolver:4.1.49.Final" />
           <element id="library" level="project" name="Maven: io.netty:netty-transport:4.1.49.Final" />
-          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-jetty:2.3.0.RELEASE" />
-          <element id="library" level="project" name="Maven: jakarta.servlet:jakarta.servlet-api:4.0.3" />
-          <element id="library" level="project" name="Maven: jakarta.websocket:jakarta.websocket-api:1.1.2" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-servlets:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-continuation:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-http:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-util:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-io:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-webapp:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-xml:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-servlet:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-security:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-server:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty.websocket:websocket-server:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty.websocket:websocket-common:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty.websocket:websocket-api:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty.websocket:websocket-client:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-client:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty.websocket:websocket-servlet:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty.websocket:javax-websocket-server-impl:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-annotations:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-plus:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-jndi:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.ow2.asm:asm:7.2" />
-          <element id="library" level="project" name="Maven: org.ow2.asm:asm-commons:7.2" />
-          <element id="library" level="project" name="Maven: org.eclipse.jetty.websocket:javax-websocket-client-impl:9.4.28.v20200408" />
-          <element id="library" level="project" name="Maven: org.glassfish:jakarta.el:3.0.3" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-websocket:2.3.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-messaging:5.2.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-websocket:5.2.6.RELEASE" />
