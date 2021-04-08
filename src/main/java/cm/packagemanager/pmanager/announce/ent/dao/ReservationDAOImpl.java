@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.announce.ent.dao;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
+import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
@@ -11,6 +12,7 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.BigDecimalUtils;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
@@ -67,8 +69,6 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			logger.error("add reservation {},{} non trouvé ou {} non trouvée","La reservation n'a pas été ajoutée","Utilisateur avec id="+reservationDTO.getUserId()," Annonce avec id="+reservationDTO.getAnnounceId());
 			throw  new Exception("Announce non trouve");
 		}
-
-		//List<CategoryVO> allCategories=categoryDAO.all(CategoryVO.class);
 
 			checkRemainWeight(announce,reservationDTO.getWeight());
 			announce.setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));
@@ -205,6 +205,11 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 					categories.add(category);
 				}
 			});
+		}else {
+			CategoryVO category=categoryDAO.findByCode(FieldConstants.DEFAULT_CATEGORY);
+			if(category!=null){
+				categories.add(category);
+			}
 		}
 		reservation.setCategories(categories);
 	}
