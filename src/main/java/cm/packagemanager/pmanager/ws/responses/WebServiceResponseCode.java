@@ -30,6 +30,7 @@ public class WebServiceResponseCode
 	public static final String UPDATED_REVIEW_LABEL = "L'avis  a ete ajourne correctement";
 	public static final String SUBSCRIBE_LABEL = "Abonnement reussi";
 	public static final String UNSUBSCRIBE_LABEL = "Desabonnement reussi";
+	public static final String UPDATE_PASSWORD_LABEL = "Mot de passe ajourné correctement";
 
 	public static final String CONTACT_US_LABEL = "Merci pour votre correspondance, vous serez recontacté";
 

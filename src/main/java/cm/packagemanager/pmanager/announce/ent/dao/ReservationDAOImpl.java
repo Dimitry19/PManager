@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.announce.ent.dao;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
+import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
@@ -18,7 +19,6 @@ import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,8 +70,6 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			throw  new Exception("Announce non trouve");
 		}
 
-		//List<CategoryVO> allCategories=categoryDAO.all(CategoryVO.class);
-
 			checkRemainWeight(announce,reservationDTO.getWeight());
 			announce.setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));
 
@@ -80,7 +78,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			reservation.setAnnounce(announce);
 			handleCategories(reservation,reservationDTO.getCategories());
 			reservation.setWeight(reservationDTO.getWeight());
-			reservation.setDescription(reservationDTO.getDescription());
+			reservation.setDescription(reservationDTO.getNote());
 			save(reservation);
 			return reservation;
 	}
@@ -110,7 +108,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			}
 			handleCategories(reservation,reservationDTO.getCategories());
 			reservation.setWeight(reservationDTO.getWeight());
-			reservation.setDescription(reservationDTO.getDescription());
+			reservation.setDescription(reservationDTO.getNote());
 			update(reservation);
 			return reservation;
 	}
@@ -207,6 +205,11 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 					categories.add(category);
 				}
 			});
+		}else {
+			CategoryVO category=categoryDAO.findByCode(FieldConstants.DEFAULT_CATEGORY);
+			if(category!=null){
+				categories.add(category);
+			}
 		}
 		reservation.setCategories(categories);
 	}

@@ -3,6 +3,8 @@ package cm.packagemanager.pmanager.announce.ent.vo;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
+import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OrderBy;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -46,9 +48,11 @@ public class ReservationVO  extends WSCommonResponseVO {
 	@Column(name = "WEIGTH", nullable = false)
 	private BigDecimal weight;
 
-	@Access(AccessType.PROPERTY)
-	@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.DETACH)
-	@JsonManagedReference
+/*	@Access(AccessType.PROPERTY)
+	@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.DETACH)*/
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
+	@JoinTable(name = "RESERVATION_CATEGORY", joinColumns = @JoinColumn(name = "RESERVATION_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
+	@JsonProperty
 	private Set<CategoryVO> categories=new HashSet<>();
 
 
@@ -72,6 +76,30 @@ public class ReservationVO  extends WSCommonResponseVO {
 	@Column(name="DESCRIPTION" , length = FieldConstants.DESC)
 	private String description;
 
+	@Transient
+	@JsonProperty
+	private UserInfo userInfo;
+
+	@Transient
+	@JsonProperty
+	private AnnounceInfo announceInfo;
+
+	public AnnounceInfo getAnnounceInfo() {
+		return announceInfo;
+	}
+
+	public void setAnnounceInfo(AnnounceInfo announceInfo) {
+		this.announceInfo = announceInfo;
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
 	public ReservationVO(){
 		super();
 	}
@@ -91,6 +119,7 @@ public class ReservationVO  extends WSCommonResponseVO {
 
 	public void setUser(UserVO user) {
 		this.user = user;
+		userInfo= new UserInfo(user);
 	}
 
 	public AnnounceVO getAnnounce() {
@@ -99,6 +128,7 @@ public class ReservationVO  extends WSCommonResponseVO {
 
 	public void setAnnounce(AnnounceVO announce) {
 		this.announce = announce;
+		announceInfo = new AnnounceInfo(announce);
 	}
 
 	public BigDecimal getWeight() {
@@ -146,7 +176,7 @@ public class ReservationVO  extends WSCommonResponseVO {
 		categories.add(category);
 	}
 
-	public void removeMessage(CategoryVO category){
+	public void removeCategory(CategoryVO category){
 
 		if(categories.contains(category)){
 			categories.remove(category);

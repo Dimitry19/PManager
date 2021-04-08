@@ -3,9 +3,8 @@ package cm.packagemanager.pmanager.ws.requests.announces;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
-import java.util.List;
 
-public class CommonReservationDTO {
+public class CommonReservationDTO extends CategoriesDTO {
 
 	@NotNull(message = "L'utilisateur doit etre valorisé")
 	private Long userId;
@@ -14,10 +13,8 @@ public class CommonReservationDTO {
 	@Positive(message = "Le poids doit etre doit etre valorisé")
 	private BigDecimal weight;
 
-	@NotNull(message = "La categorie doit etre valorisée")
-	private List<String> categories;
 
-	private String description;
+	private String note;
 
 	public Long getUserId() {
 		return userId;
@@ -35,19 +32,11 @@ public class CommonReservationDTO {
 		this.weight = weight;
 	}
 
-	public List<String> getCategories() {
-		return categories;
+	public String getNote() {
+		return note;
 	}
 
-	public void setCategories(List<String> categories) {
-		this.categories = categories;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setNote(String note) {
+		this.note = note;
 	}
 }

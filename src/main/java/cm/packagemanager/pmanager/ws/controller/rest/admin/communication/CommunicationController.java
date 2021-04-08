@@ -11,5 +11,5 @@ import static cm.packagemanager.pmanager.constant.WSConstants.*;
 @RequestMapping(COMMUNICATION_WS)
 @Api(value="Communication-service", description="Communication Operations")
 public class CommunicationController extends CommonController {
-	//Implementer le controle tel que seul l'admin peut opere ici
+	//Implementer le controle tel que seul l'admin peut operer ici
 }

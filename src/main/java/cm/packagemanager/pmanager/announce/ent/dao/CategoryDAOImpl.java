@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class CategoryDAOImpl extends CommonFilter implements CategoryDAO {
@@ -16,6 +18,7 @@ public class CategoryDAOImpl extends CommonFilter implements CategoryDAO {
 	SessionFactory sessionFactory;
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public CategoryVO findByCode(String code) throws ResourceNotFoundException {
 
 		Session session=sessionFactory.getCurrentSession();

@@ -16,8 +16,7 @@ import static cm.packagemanager.pmanager.constant.WSConstants.*;
 @RequestMapping(ROLE_WS)
 public class RoleController extends CommonController {
 
-	@Autowired
-	RoleService roleService;
+
 
 	@PostMapping(value = ROLE_WS_ADD)
 	public ResponseEntity<RoleVO> add(@RequestBody RoleDTO role) throws Exception {

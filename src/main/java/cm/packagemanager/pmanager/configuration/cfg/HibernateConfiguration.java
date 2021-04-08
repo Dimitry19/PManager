@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.configuration.cfg;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -24,7 +25,7 @@ public class HibernateConfiguration {
 	@Value("${db.password}")
 	private String PASSWORD;
 
-	@Value("${db.url}")
+	@Value("${hibernate.datasource.url}")
 	private String URL;
 
 	@Value("${db.username}")
@@ -61,6 +62,7 @@ public class HibernateConfiguration {
 	private int POOL_SIZE;
 
 	@Bean
+	@ConfigurationProperties(prefix="hibernate.datasource")
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(DRIVER);

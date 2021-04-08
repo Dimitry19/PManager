@@ -89,7 +89,7 @@ public interface UserService{
 
 	ReviewVO addReview(ReviewDTO review) throws Exception;
 
-	ReviewVO updateReview(UpdateReviewDTO review) throws Exception;
+	ReviewVO updateReview(long id,UpdateReviewDTO review) throws Exception;
 
 	boolean deleteReview(Long reviewId) throws Exception;
 

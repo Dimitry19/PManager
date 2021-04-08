@@ -43,11 +43,6 @@ public class ReservationController extends CommonController {
 
 	protected final Log logger = LogFactory.getLog(ReservationController.class);
 
-	@Autowired
-	protected ReservationService reservationService;
-
-
-
 	@ApiOperation(value = "create an reservation ",response = ReservationVO.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),

@@ -36,9 +36,6 @@ public class MessageController extends CommonController  {
 
 		protected final Log logger = LogFactory.getLog(MessageController.class);
 
-		@Autowired
-		protected MessageService messageService;
-
 
 		@PutMapping(value =MESSAGE_WS_UPDATE, produces = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 		MessageVO  update(HttpServletResponse response, HttpServletRequest request, @PathVariable long id,

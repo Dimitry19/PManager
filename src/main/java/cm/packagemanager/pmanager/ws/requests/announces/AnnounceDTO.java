@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.ws.requests.announces;
 
+
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
@@ -9,9 +10,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
-import java.util.Date;
 
-public class AnnounceDTO {
+
+
+public class AnnounceDTO extends CategoriesDTO{
+
 
 	@NotNull(message = "Le lieu de depart de l'annonce doit etre valorisé")
 	@NotBlank(message = "Le lieu de depart de l'annonce doit etre valorisé")
@@ -46,7 +49,6 @@ public class AnnounceDTO {
 	@NotNull(message = "L'id  de l'utilisateur de l'annonce doit etre valorisé")
 	private Long userId;
 
-	private String category;
 
 	@NotNull(message = "La date de depart de l'annonce doit etre valorisé")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = DateUtils.FORMAT_STD_PATTERN_4)
@@ -75,14 +77,6 @@ public class AnnounceDTO {
 
 	public void setEndDate(long endDate) {
 		this.endDate = endDate;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
 	}
 
 	public String getDeparture() {
