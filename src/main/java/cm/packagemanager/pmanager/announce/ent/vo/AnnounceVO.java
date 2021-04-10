@@ -44,6 +44,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
 	public static final String FINDBYTYPE="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByType";
 	public static final String SQL_FIND_BY_USER=" FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
+	public static final String ANNOUNCE_STATUS=" FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -108,7 +109,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@JsonProperty
 	private UserVO user;
 
-	@JsonIgnore
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS",length = 10)
 	private StatusEnum status;

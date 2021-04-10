@@ -1,35 +1,24 @@
 package cm.packagemanager.pmanager.batch.jobs.cron;
 
-import cm.packagemanager.pmanager.batch.config.cron.QuartzCronConfiguration;
-import org.quartz.JobDetail;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
-import org.springframework.scheduling.quartz.JobDetailFactoryBean;
+
 
 @Configuration
 public class QuartzSubmitJobs {
-	private static final String CRON_EVERY_FIVE_MINUTES = "0 0/5 * ? * * *";
-	private static final String CRON_EVERY_TWO_MINUTES = "0 0/1 * ? * * *";
+	protected static final String CRON_EVERY_FIVE_MINUTES = "0 0/5 * ? * * *";
+	protected static final String CRON_EVERY_SIX_HOURS = "0 0 */6 ? * *";
+	protected static final String CRON_EVERY_TWO_MINUTES = "0 0/2 * ? * * *";
+	protected static final String CRON_EVERY_SATURDAY_AT_15 = "0 0 15 ? * SAT";
+
+
 
 	/*@Bean(name = "userStats")
 	public JobDetailFactoryBean jobMemberStats() {
-		return QuartzConfiguration.createJobDetail(Demo.class, "Member Statistics Job");
+		return QuartzCronConfiguration.createJobDetail(Demo.class, "Member Statistics Job");
 	}
 
 	@Bean(name = "memberStatsTrigger")
 	public SimpleTriggerFactoryBean triggerMemberStats(@Qualifier("userStats") JobDetail jobDetail) {
-		return QuartzConfiguration.createTrigger(jobDetail, 60000, "Member Statistics Trigger");
-	}
-
-	@Bean(name = "memberClassStats")
-	public JobDetailFactoryBean jobMemberClassStats() {
-		return QuartzCronConfiguration.createJobDetail(UserManagerJob.class, "Class Statistics Job");
-	}
-
-	@Bean(name = "memberClassStatsTrigger")
-	public CronTriggerFactoryBean triggerMemberClassStats(@Qualifier("memberClassStats") JobDetail jobDetail) {
-		return QuartzCronConfiguration.createCronTrigger(jobDetail, CRON_EVERY_TWO_MINUTES, "Class Statistics Trigger");
+		return QuartzCronConfiguration.createTrigger(jobDetail, 60000, "Member Statistics Trigger");
 	}*/
 }

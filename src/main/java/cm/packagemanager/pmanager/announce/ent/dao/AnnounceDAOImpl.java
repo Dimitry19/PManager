@@ -37,8 +37,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -47,19 +49,20 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	private static Logger logger = LoggerFactory.getLogger(AnnounceDAOImpl.class);
 
 	@Autowired
-	private AirlineDAO airlineDAO;
+	protected AirlineDAO airlineDAO;
 
 	@Autowired
-	private UserDAO userDAO;
+	protected UserDAO userDAO;
 
 	@Autowired
-	CategoryDAO categoryDAO;
+	protected CategoryDAO categoryDAO;
 
 	@Autowired
-	Constants constants;
+	protected Constants constants;
 
 	@Autowired
-	QueryUtils queryUtils;
+	protected QueryUtils queryUtils;
+
 
 
 	@Override
@@ -192,6 +195,18 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		return query.list();
 	}
 
+	@Override
+	@Transactional(propagation = Propagation. REQUIRED)
+	public void annoucesStatus() throws Exception {
+		List<AnnounceVO> announces = Optional.ofNullable(allAndOrderBy(AnnounceVO.class, "startDate", true, null)).orElseGet(Collections::emptyList);
+		if (CollectionsUtils.isNotEmpty(announces)) {
+			announces.stream().filter(ann->!ann.isCancelled() && DateUtils.isBefore(ann.getEndDate(),new Date()))
+				.forEach(a->{
+					a.setStatus(StatusEnum.COMPLETED);
+					update(a);
+				});
+		}
+	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)

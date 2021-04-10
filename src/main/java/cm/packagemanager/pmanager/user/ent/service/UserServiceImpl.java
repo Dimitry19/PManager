@@ -182,7 +182,7 @@ public class UserServiceImpl  implements  UserService{
 		return userDAO.getAllUsers();
 	}
 
-	public List<UserVO> getAllUsersToConfirm()throws UserException {
+	public List<UserVO> getAllUsersToConfirm() throws Exception {
 		return userDAO.getAllUsersToConfirm();
 	}
 

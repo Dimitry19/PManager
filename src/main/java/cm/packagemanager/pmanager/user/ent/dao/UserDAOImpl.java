@@ -134,14 +134,9 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
-	public List<UserVO> getAllUsersToConfirm() {
-		logger.info("User: all users");
-		Session session = this.sessionFactory.getCurrentSession();
-		List  users =
-				 session.createQuery("from UserVO where confirmationToken is not  null  and active =:act")
-				.setParameter("act",0).setMaxResults(20)
-				.list();
-		return users;
+	public List<UserVO> getAllUsersToConfirm() throws Exception {
+		logger.info("User:  users to confirm");
+		return findBy(UserVO.JOB_CONFIRM, UserVO.class,0,"act",null);
 	}
 
 	@Override

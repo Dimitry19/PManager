@@ -248,11 +248,11 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 
 	@Override
 	@Transactional
-	public List<T> findBy(String queryName,Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception {
+	public List<T> findBy(String namedQuery,Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
-		Query query=session.createNamedQuery(queryName,clazz);
+		Query query=session.createNamedQuery(namedQuery,clazz);
 
 		if(StringUtils.isNotEmpty(paramName) && id!=null){
 			query.setParameter(paramName, id);

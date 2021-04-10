@@ -53,13 +53,13 @@ public class ReservationController extends CommonController {
 					response = ReservationVO.class, responseContainer = "Object") })
 	@PostMapping(value =ADD,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	ResponseEntity<ReservationVO> reservation(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ReservationDTO reservationDTO) throws ValidationException,Exception{
+	ResponseEntity<ReservationVO> addReservation(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ReservationDTO reservationDTO) throws ValidationException,Exception{
 
 		try{
 			response.setHeader("Access-Control-Allow-Origin", "*");
 			logger.info("add reservation request in");
 
-			createOpentracingSpan("ReservationController - reservation");
+			createOpentracingSpan("ReservationController - add reservation");
 			ReservationVO reservation =reservationService.addReservation(reservationDTO);
 			if(reservation==null){
 				reservation=new ReservationVO();
@@ -69,7 +69,6 @@ public class ReservationController extends CommonController {
 			}else{
 				reservation.setRetDescription(WebServiceResponseCode.RESERV_CREATE_LABEL);
 				reservation.setRetCode(WebServiceResponseCode.OK_CODE);
-
 			}
 
 			return new ResponseEntity<>(reservation,HttpStatus.CREATED);

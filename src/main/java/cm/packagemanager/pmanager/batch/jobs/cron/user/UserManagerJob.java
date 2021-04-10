@@ -1,6 +1,5 @@
-package cm.packagemanager.pmanager.batch.jobs.cron;
+package cm.packagemanager.pmanager.batch.jobs.cron.user;
 
-import cm.packagemanager.pmanager.batch.config.cron.QuartzCronConfiguration;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Component;
 @DisallowConcurrentExecution
 public class UserManagerJob implements Job {
 
-	private static Logger log = LoggerFactory.getLogger(QuartzCronConfiguration.class);
+	private static Logger log = LoggerFactory.getLogger(UserManagerJob.class);
 
 	@Autowired
 	UserDAO userDAO;
@@ -30,12 +29,17 @@ public class UserManagerJob implements Job {
 	public void execute(JobExecutionContext context) {
 		log.info("Job ** {} ** starting @ {}", context.getJobDetail().getKey().getName(), context.getFireTime());
 
-		for (UserVO userVO:userDAO.getAllUsersToConfirm()){
-			System.out.println("USERNAME:" +userVO.getUsername());
-			userVO.setActive(1);
-			userDAO.updateUser(userVO);
-			System.out.println("UPDATED USER:" +userVO.getUsername());
+		try {
+			for (UserVO userVO:userDAO.getAllUsersToConfirm()){
+				System.out.println("USERNAME:" +userVO.getUsername());
+				userVO.setActive(1);
+				userDAO.updateUser(userVO);
+				System.out.println("UPDATED USER:" +userVO.getUsername());
 
+			}
+		} catch (Exception e) {
+			log.error("Error Job ** {}- {}", context.getJobDetail().getKey().getName(), e);
+			e.printStackTrace();
 		}
 
 		log.info("Job ** {} ** completed.  Next job scheduled @ {}", context.getJobDetail().getKey().getName(), context.getNextFireTime());

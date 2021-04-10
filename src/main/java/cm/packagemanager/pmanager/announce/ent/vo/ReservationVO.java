@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
+import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
@@ -63,9 +64,9 @@ public class ReservationVO  extends WSCommonResponseVO {
 	private AnnounceVO announce;
 
 	@Basic(optional = false)
+	@Enumerated(EnumType.STRING)
 	@Column(name="VALIDATE")
-	@JsonIgnore
-	private boolean validate;
+	private ValidateEnum validate;
 
 	@Basic(optional = false)
 	@Column(name="CANCELLED")
@@ -147,11 +148,11 @@ public class ReservationVO  extends WSCommonResponseVO {
 		this.categories = categories;
 	}
 
-	public boolean isValidate() {
+	public ValidateEnum getValidate() {
 		return validate;
 	}
 
-	public void setValidate(boolean validate) {
+	public void setValidate(ValidateEnum validate) {
 		this.validate = validate;
 	}
 

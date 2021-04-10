@@ -45,4 +45,10 @@ public interface AnnounceDAO extends CommonDAO {
 	List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws Exception;
 
 
+	void annoucesStatus() throws Exception;
+
+
+
+
+
 }
