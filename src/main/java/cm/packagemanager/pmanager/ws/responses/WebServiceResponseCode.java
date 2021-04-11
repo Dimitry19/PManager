@@ -36,7 +36,7 @@ public class WebServiceResponseCode
 
 
 	public static final String RESERV_CREATE_LABEL="Reservation creee correctement";
-	public static final String UPDATED_RESERV_LABEL = "La reservation ete modifiée correctement";
+	public static final String UPDATED_RESERV_LABEL = "La reservation ete {0} correctement";
 	public static final String CANCELLED_RESERV_OK_LABEL = "Votre reservation a été correctement effacé";
 
 
@@ -77,8 +77,8 @@ public class WebServiceResponseCode
 
 
 	public static final String ERROR_RESERV_CREATE_LABEL = "La reservation n'a pas pu etre cree";
-	public static final String ERROR_DELETE_RESERV_CODE_LABEL = "La reservation ne peut pas etre eliminee car inexistant";
-	public static final String ERROR_UPDATE_RESERV_CODE_LABEL = "La reservation ne peut pas etre ajournee car inexistant";
+	public static final String ERROR_DELETE_RESERV_CODE_LABEL = "La reservation ne peut pas etre eliminee car inexistante";
+	public static final String ERROR_UPDATE_RESERV_CODE_LABEL = "La reservation ne peut pas etre ajournee car inexistante";
 	public static final String ERROR_GET_RESERV_CODE_LABEL = "La reservation inexistante";
 
 }

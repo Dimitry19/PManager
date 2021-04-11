@@ -1,9 +1,6 @@
 package cm.packagemanager.pmanager.batch.jobs.cron.announce;
 
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
-import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
-import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
@@ -27,7 +24,7 @@ public class AnnounceManagerJob implements Job {
 		log.info("Job ** {} ** starting @ {}", context.getJobDetail().getKey().getName(), context.getFireTime());
 
 		try {
-			announceDAO.annoucesStatus();
+			announceDAO.announcesStatus();
 		} catch (Exception e) {
 			log.error("{}",context.getJobDetail().getKey().getName());
 			e.printStackTrace();

@@ -125,9 +125,9 @@ public class AnnounceVO extends WSCommonResponseVO {
 	private String descriptionTransport;
 
 
-	@Access(AccessType.PROPERTY)
-	@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.DETACH)
-	@JsonManagedReference
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
+	@JoinTable(name = "ANNOUNCE_CATEGORY", joinColumns = @JoinColumn(name = "ANNOUNCE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
+	@JsonProperty
 	private Set<CategoryVO> categories=new HashSet<>();
 
 	@Access(AccessType.PROPERTY)

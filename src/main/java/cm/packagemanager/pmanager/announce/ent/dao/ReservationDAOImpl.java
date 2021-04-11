@@ -6,6 +6,8 @@ import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.AnnounceType;
+import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
@@ -58,7 +60,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor ={Exception.class,UserNotFoundException.class})
-	public ReservationVO addReservation(ReservationDTO reservationDTO) throws Exception {
+	public ReservationVO  addReservation(ReservationDTO reservationDTO) throws Exception {
 		logger.info("add reservation ");
 
 		UserVO user = userDAO.findById(reservationDTO.getUserId());
@@ -70,8 +72,8 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 				logger.error("add reservation {},{} non trouvé ou {} non trouvée","La reservation n'a pas été ajoutée","Utilisateur avec id="+reservationDTO.getUserId()," Annonce avec id="+reservationDTO.getAnnounceId());
 				throw  new Exception("Announce non trouve");
 			}
-
-			checkRemainWeight(announce,reservationDTO.getWeight());
+			checkUserReservation(announce,announceDAO.findByUser(user));
+		checkRemainWeight(announce,reservationDTO.getWeight());
 			List<ReservationVO> reservations=findByUser(ReservationVO.class,user.getId(),null);
 			if (CollectionsUtils.isNotEmpty(reservations)){
 
@@ -209,8 +211,27 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 
 	}
 
+    private void checkUserReservation(AnnounceVO announce , List<AnnounceVO> userAnnounces) throws Exception {
+	    if (announce.getAnnounceType()== AnnounceType.BUYER){
+		    if(CollectionsUtils.isEmpty(userAnnounces)){
+			    throw new Exception("Impossible pour cet utilisateur de faire " +
+					    "une reservation car ne propose pas de voyage");
+		    }
+		    List check=Optional.ofNullable(userAnnounces.stream().filter(ua->ua.getStatus()!= StatusEnum.COMPLETED
+				    && !ua.isCancelled() &&
+				    StringUtils.equals(ua.getDeparture(),announce.getDeparture())
+				    && StringUtils.equals(ua.getArrival(),announce.getArrival())
+				    && ua.getStartDate().equals(announce.getStartDate()))
+				    .collect(Collectors.toList()))
+				    .orElseGet(Collections::emptyList);
 
-	void checkRemainWeight(AnnounceVO announce, BigDecimal weight){
+		    if(CollectionsUtils.isEmpty(check)){
+			    throw new Exception("Impossible pour cet utilisateur de faire " +
+					    "une reservation car ne propose pas de voyage");
+		    }
+	    }
+    }
+	private void checkRemainWeight(AnnounceVO announce, BigDecimal weight){
 
 		if(BigDecimalUtils.lessThan(announce.getRemainWeight(),weight) || BigDecimalUtils.lessThan(announce.getWeight(), weight)) {
 			throw new BusinessResourceException("Impossible de reserver une quantité superieure ["+weight+" kg] à la quantité disponible ["+announce.getRemainWeight()+" kg]");

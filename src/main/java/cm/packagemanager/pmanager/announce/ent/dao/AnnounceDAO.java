@@ -5,12 +5,10 @@ import cm.packagemanager.pmanager.common.ent.dao.CommonDAO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.exception.*;
-import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
-import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -23,7 +21,7 @@ public interface AnnounceDAO extends CommonDAO {
 
 	int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws BusinessResourceException, Exception;
 
-	AnnounceVO findByUser(UserVO user) throws BusinessResourceException,UserNotFoundException,RecordNotFoundException;
+	List<AnnounceVO> findByUser(UserVO user) throws Exception;
 
 	List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws Exception;
 
@@ -45,7 +43,7 @@ public interface AnnounceDAO extends CommonDAO {
 	List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws Exception;
 
 
-	void annoucesStatus() throws Exception;
+	void announcesStatus() throws Exception;
 
 
 

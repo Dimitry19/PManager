@@ -87,6 +87,6 @@ public class CategoryVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ProductCategoryVO{" + "code='" + code + '\'' + ", description='" + description + '\'' + '}';
+		return "CategoryVO{" + "code='" + code + '\'' + ", description='" + description + '\'' + '}';
 	}
 }

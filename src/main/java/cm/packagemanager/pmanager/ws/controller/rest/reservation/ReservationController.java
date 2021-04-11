@@ -31,6 +31,7 @@ import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
+import java.text.MessageFormat;
 import java.util.List;
 
 import static cm.packagemanager.pmanager.constant.WSConstants.*;
@@ -73,7 +74,7 @@ public class ReservationController extends CommonController {
 
 			return new ResponseEntity<>(reservation,HttpStatus.CREATED);
 		}catch (Exception e){
-			logger.error(e.getMessage());
+			logger.error("Erreur durant la creation d'ue reservation",e);
 			throw e;
 		}finally {
 			finishOpentracingSpan();
@@ -207,8 +208,9 @@ public class ReservationController extends CommonController {
 
 			if (reservationService.validate(urr)){
 				response.setStatus(200);
+				String mes=(urr.isValidate())?" acceptée":" refusée";
 				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-				pmResponse.setRetDescription(WebServiceResponseCode.UPDATED_RESERV_LABEL);
+				pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_RESERV_LABEL,mes));
 				return new ResponseEntity<>(pmResponse,HttpStatus.OK);
 
 			}else{

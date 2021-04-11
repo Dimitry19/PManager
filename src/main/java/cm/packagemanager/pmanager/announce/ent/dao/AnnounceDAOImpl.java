@@ -197,7 +197,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 	@Override
 	@Transactional(propagation = Propagation. REQUIRED)
-	public void annoucesStatus() throws Exception {
+	public void announcesStatus() throws Exception {
 		List<AnnounceVO> announces = Optional.ofNullable(allAndOrderBy(AnnounceVO.class, "startDate", true, null)).orElseGet(Collections::emptyList);
 		if (CollectionsUtils.isNotEmpty(announces)) {
 			announces.stream().filter(ann->!ann.isCancelled() && DateUtils.isBefore(ann.getEndDate(),new Date()))
@@ -259,7 +259,6 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		announce.setArrival(adto.getArrival());
 		announce.setDeparture(adto.getDeparture());
 		announce.setDescription(adto.getDescription());
-		fillProductCategory(adto);
 		announce.setAnnounceType(adto.getAnnounceType());
 		handleCategories(announce,adto.getCategories());
 		announce.setTransport(adto.getTransport());
@@ -299,8 +298,9 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 
 	@Override
-	public AnnounceVO findByUser(UserVO user) throws BusinessResourceException {
-		return null;
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public List<AnnounceVO> findByUser(UserVO user) throws Exception {
+		return findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, user.getId(), null);
 	}
 
 	@Override
@@ -351,15 +351,6 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		return null;
 	}
 
-	private void fillProductCategory(AnnounceDTO adto) {
-		switch (adto.getAnnounceType().name()) {
-			case Constants.BUYER:
-				break;
-			case Constants.SELLER:
-				//adto.setCategory(constants.DEFAULT_CATEGORIE);
-				break;
-		}
-	}
 
 	@Override
 	public String composeQuery(Object obj, String alias) throws Exception {
@@ -507,7 +498,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	private void handleCategories(AnnounceVO announce, List<String> rcategories) throws Exception {
 
 		if (CollectionsUtils.isNotEmpty(rcategories)) {
-			rcategories.forEach(x -> {
+			rcategories.stream().filter(cat->StringUtils.isNotEmpty(cat)).forEach(x -> {
 				CategoryVO category = null;
 				try {
 					category = categoryDAO.findByCode(x);
