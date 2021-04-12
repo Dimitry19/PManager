@@ -103,7 +103,7 @@ public class UserVO extends WSCommonResponseVO {
 	@Column(name = "GENDER",length = 10)
 	private Gender gender;
 
-	@OneToOne
+	@OneToOne(cascade =CascadeType.REMOVE,fetch = FetchType.LAZY)
 	private ImageVO image;
 
 	/*private String picture;*/

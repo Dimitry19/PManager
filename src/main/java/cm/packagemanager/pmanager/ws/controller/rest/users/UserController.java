@@ -121,7 +121,7 @@ public class UserController extends CommonController {
 		return null;
 	}
 	/*https://www.codejava.net/frameworks/spring-boot/upload-multiple-files-example*/
-	@PostMapping(path = IMAGE,consumes = {MediaType.APPLICATION_JSON})
+	//@PostMapping(path = IMAGE,consumes = {MediaType.APPLICATION_JSON})
 	public RedirectView picture(HttpServletRequest request ,HttpServletResponse response,
 	                            @RequestParam("userId") @Valid Long userId,
 	                            @RequestParam("image") @Valid MultipartFile multipartFile) throws IOException {

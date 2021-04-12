@@ -4,7 +4,7 @@ import cm.packagemanager.pmanager.common.utils.StringUtils;
 
 public enum UploadImageType {
 
-	USER("Utilisateur"),
+	USER("User"),
 	ANNOUNCE("Announce");
 
 	String value;
