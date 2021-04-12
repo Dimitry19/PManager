@@ -88,7 +88,7 @@ public class ImageController extends CommonController {
 	public ResponseEntity.BodyBuilder uploadImage(HttpServletRequest request, HttpServletResponse response,
 	                                                  @RequestParam("id") @Valid Long id,
 	                                                  @RequestParam("type") @Valid UploadImageType type,
-	                                                  @RequestParam("imageFile") MultipartFile file
+	                                                  @RequestParam("file") MultipartFile file
 	                                                  ) throws Exception {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		logger.info(" upload user image request in");
