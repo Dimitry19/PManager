@@ -101,7 +101,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws Exception {
+	public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws Exception {
 
 		UserVO user = userDAO.findById(userId);
 		if (user == null) {
@@ -113,19 +113,20 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws Exception {
+	public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws Exception {
 
 		return findBy(AnnounceVO.FINDBYTYPE, AnnounceVO.class, type, "type", pageBy);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
-	public AnnounceVO findById(Long id) throws Exception {
+	public AnnounceVO announce(Long id) throws Exception {
 
 		AnnounceVO announce = (AnnounceVO) findById(AnnounceVO.class, id);
 		if (announce == null) return null;
 		double rating = calcolateAverage(announce.getUser());
 		announce.getUserInfo().setRating(rating);
+		countReservation(announce);
 		return announce;
 	}
 
@@ -166,7 +167,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 			throw new RecordNotFoundException("Aucun utilisateur trouvé");
 		}
 
-		AnnounceVO announce = findById(adto.getId());
+		AnnounceVO announce = announce(adto.getId());
 		if (announce == null) {
 			throw new RecordNotFoundException("Aucune annonce  trouvée");
 		}
@@ -177,6 +178,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		announce.getUserInfo().setRating(rating);
 		setAnnounce(announce, user, adto);
 		update(announce);
+		countReservation(announce);
 		return announce;
 
 	}
@@ -299,7 +301,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public List<AnnounceVO> findByUser(UserVO user) throws Exception {
+	public List<AnnounceVO> announcesByUser(UserVO user) throws Exception {
 		return findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, user.getId(), null);
 	}
 
@@ -316,7 +318,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		try {
 
 			Session session = sessionFactory.getCurrentSession();
-			AnnounceVO announce = findById(id);
+			AnnounceVO announce = announce(id);
 			if (announce != null) {
 				announce.updateDeleteChildrens();
 				announce.setCancelled(true);
@@ -331,6 +333,11 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		return result;
 	}
 
+	@Transactional
+	void countReservation(AnnounceVO announce) throws Exception {
+		int count=countByNameQuery(ReservationVO.FINDBYANNOUNCE,ReservationVO.class,announce.getId(),"announceId", null);
+		announce.setCountReservation(count);
+	}
 
 	private TransportEnum getTransport(String transport) {
 		for (TransportEnum t : TransportEnum.values()) {

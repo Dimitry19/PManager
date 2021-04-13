@@ -3,7 +3,6 @@ package cm.packagemanager.pmanager.announce.ent.dao;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
-import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
@@ -51,7 +50,6 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 	CategoryDAO categoryDAO;
 
 
-	@Override
 	@Transactional
 	public int count(String queryname,Long id,String paramName,PageBy pageBy) throws Exception {
 
@@ -67,14 +65,14 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 		if (user==null)
 			throw  new UserNotFoundException("Utilisateur non trouve");
 
-			AnnounceVO announce=announceDAO.findById(reservationDTO.getAnnounceId());
+			AnnounceVO announce=announceDAO.announce(reservationDTO.getAnnounceId());
 			if (announce==null){
 				logger.error("add reservation {},{} non trouvé ou {} non trouvée","La reservation n'a pas été ajoutée","Utilisateur avec id="+reservationDTO.getUserId()," Annonce avec id="+reservationDTO.getAnnounceId());
 				throw  new Exception("Announce non trouve");
 			}
-			checkUserReservation(announce,announceDAO.findByUser(user));
+			checkUserReservation(announce,announceDAO.announcesByUser(user));
 		checkRemainWeight(announce,reservationDTO.getWeight());
-			List<ReservationVO> reservations=findByUser(ReservationVO.class,user.getId(),null);
+			List<ReservationVO> reservations= findByUser(ReservationVO.class,user.getId(),null);
 			if (CollectionsUtils.isNotEmpty(reservations)){
 
 				List<ReservationVO>anReservations=Optional.ofNullable(reservations
@@ -175,7 +173,15 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 	public ReservationVO getReservation(long id) throws Exception {
-		return (ReservationVO) findById(ReservationVO.class,id);
+		 ReservationVO reservation = (ReservationVO)findById(ReservationVO.class,id);
+		 reservation.setOtherReservations(otherReservations(reservation.getUser().getId()));
+		 return reservation;
+	}
+
+
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+	public List<ReservationVO> otherReservations(long id) throws Exception {
+		return  findBy(ReservationVO.FIND_ANNOUNCE_USER,ReservationVO.class,id,"userId",null);
 	}
 
 	public boolean updateDelete(ReservationVO reservation) throws BusinessResourceException, UserException {

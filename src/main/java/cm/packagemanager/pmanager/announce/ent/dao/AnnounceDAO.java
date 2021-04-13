@@ -21,13 +21,13 @@ public interface AnnounceDAO extends CommonDAO {
 
 	int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws BusinessResourceException, Exception;
 
-	List<AnnounceVO> findByUser(UserVO user) throws Exception;
+	List<AnnounceVO> announcesByUser(UserVO user) throws Exception;
 
-	List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws Exception;
+	List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws Exception;
 
-	List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws Exception;
+	List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws Exception;
 
-	AnnounceVO findById(Long id) throws BusinessResourceException,RecordNotFoundException, Exception;
+	AnnounceVO announce(Long id) throws BusinessResourceException,RecordNotFoundException, Exception;
 
 	AnnounceVO create(AnnounceDTO announce) throws BusinessResourceException, Exception;
 

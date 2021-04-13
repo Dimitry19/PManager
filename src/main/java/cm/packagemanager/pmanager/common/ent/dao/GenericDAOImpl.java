@@ -112,7 +112,7 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<T> findByUser(Class<T> clazz,Long userId, PageBy pageBy) throws Exception {
+	public List<T> findByUser(Class<T> clazz, Long userId, PageBy pageBy) throws Exception {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
@@ -248,7 +248,7 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 
 	@Override
 	@Transactional
-	public List<T> findBy(String namedQuery,Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception {
+	public List<T> findBy(String namedQuery, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);

@@ -12,7 +12,6 @@ import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
 
 public interface ReservationDAO extends CommonDAO {
 
-	int count(String queryName,Long id, String paramName,PageBy pageBy)throws Exception   ;
 
 	ReservationVO addReservation(ReservationDTO reservation) throws BusinessResourceException, Exception;
 

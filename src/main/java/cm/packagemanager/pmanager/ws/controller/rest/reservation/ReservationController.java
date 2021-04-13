@@ -2,7 +2,6 @@ package cm.packagemanager.pmanager.ws.controller.rest.reservation;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
-import cm.packagemanager.pmanager.announce.ent.service.ReservationService;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
@@ -19,7 +18,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -104,7 +102,7 @@ public class ReservationController extends CommonController {
 			ReservationVO reservation=reservationService.updateReservation(urr);
 			if (reservation!=null){
 				reservation.setRetCode(WebServiceResponseCode.OK_CODE);
-				reservation.setRetDescription(WebServiceResponseCode.UPDATED_RESERV_LABEL);
+				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_RESERV_LABEL,"modifiée"));
 			}else{
 				reservation=new ReservationVO();
 				reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
@@ -266,7 +264,7 @@ public class ReservationController extends CommonController {
 			if (count == 0) {
 				headers.add(HEADER_TOTAL, Long.toString(count));
 			} else {
-				reservations = reservationService.findByUser(userId, pageBy);
+				reservations = reservationService.reservationsByUser(userId, pageBy);
 				if (CollectionsUtils.isNotEmpty(reservations)) {
 					paginateResponse.setCount(count);
 				}
@@ -322,7 +320,7 @@ public class ReservationController extends CommonController {
 				if(count==0){
 					headers.add(HEADER_TOTAL, Long.toString(count));
 				}else{
-					List<ReservationVO> reservations=reservationService.findByAnnounce(announceId,pageBy);
+					List<ReservationVO> reservations=reservationService.reservationsByAnnounce(announceId,pageBy);
 					paginateResponse.setCount(count);
 					paginateResponse.setResults(reservations);
 					headers.add(HEADER_TOTAL, Long.toString(reservations.size()));

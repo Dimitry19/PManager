@@ -22,4 +22,10 @@ public class CollectionsUtils {
 
 		return elements == null || elements.isEmpty();
 	}
+
+	public static int size(Collection<?> elements){
+
+		return isEmpty(elements)?0:elements.size();
+
+	}
 }

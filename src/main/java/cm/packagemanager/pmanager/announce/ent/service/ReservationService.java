@@ -22,7 +22,7 @@ public interface ReservationService {
 
 	int count(Long id,PageBy pageBy, boolean isUser)  throws Exception;
 
-	List<ReservationVO> findByUser(Long userId, PageBy pageBy) throws Exception;
+	List<ReservationVO> reservationsByUser(Long userId, PageBy pageBy) throws Exception;
 
-	List<ReservationVO> findByAnnounce(Long announceId, PageBy pageBy) throws Exception;
+	List<ReservationVO> reservationsByAnnounce(Long announceId, PageBy pageBy) throws Exception;
 }

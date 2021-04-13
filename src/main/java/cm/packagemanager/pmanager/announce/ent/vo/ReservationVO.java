@@ -17,6 +17,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,12 +25,14 @@ import java.util.Set;
 @NamedQueries({
 		@NamedQuery(name = ReservationVO.FINDBYANNOUNCE, query =" select r from  ReservationVO as r where r.announce.id =: announceId"),
 		@NamedQuery(name = ReservationVO.FINDBYUSER, query =" select r from  ReservationVO as r where r.user.id =: userId"),
+		@NamedQuery(name = ReservationVO.FIND_ANNOUNCE_USER, query =" select r from  ReservationVO as r inner join r.announce a where a.user.id =: userId"),
 })
 @Where(clause= FilterConstants.FILTER_WHERE_RESERVATION_CANCELLED)
 public class ReservationVO  extends WSCommonResponseVO {
 
 	public static final String FINDBYANNOUNCE="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounce";
 	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByUser";
+	public static final String FIND_ANNOUNCE_USER="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounceUser";
 
 
 
@@ -84,6 +87,18 @@ public class ReservationVO  extends WSCommonResponseVO {
 	@Transient
 	@JsonProperty
 	private AnnounceInfo announceInfo;
+
+	@Transient
+	@JsonProperty
+	private List<ReservationVO> otherReservations;
+
+	public List<ReservationVO> getOtherReservations() {
+		return otherReservations;
+	}
+
+	public void setOtherReservations(List<ReservationVO> otherReservations) {
+		this.otherReservations = otherReservations;
+	}
 
 	public AnnounceInfo getAnnounceInfo() {
 		return announceInfo;

@@ -27,7 +27,7 @@ public class CategoryVO implements Serializable {
 	@Column(name = "CODE", nullable = false,length = FieldConstants.AUTH_USER_LEN)
 	private String code;
 
-	@Basic(optional = true)
+	@Basic(optional = false)
 	@Column(name="DESCRIPTION")
 	private String description;
 
@@ -80,7 +80,7 @@ public class CategoryVO implements Serializable {
 	@Override
 	public int hashCode() {
 		int result = code.hashCode();
-		result = 31 * result + description.hashCode();
+		//result = 31 * result + description.hashCode();
 		return result;
 	}
 

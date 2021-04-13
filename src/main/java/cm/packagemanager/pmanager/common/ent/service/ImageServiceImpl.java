@@ -71,7 +71,7 @@ public class ImageServiceImpl implements ImageService{
 
 			case ANNOUNCE_TYPE_IMG_UPLOAD:
 				logger.info("save announce image");
-				AnnounceVO announce=announceDAO.findById(id);
+				AnnounceVO announce=announceDAO.announce(id);
 				announce.setImage(image);
 				announceDAO.update(announce);
 				logger.info("save announce image end");

@@ -143,6 +143,9 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@Transient
 	private UserInfo userInfo;
 
+	@Transient
+	private Integer countReservation;
+
 	public AnnounceVO(){ super();}
 
 
@@ -332,6 +335,14 @@ public class AnnounceVO extends WSCommonResponseVO {
 	public void setDescriptionTransport(String descriptionTransport){
 
 		this.descriptionTransport=this.transport.toValue();
+	}
+
+	public Integer getCountReservation() {
+		return countReservation;
+	}
+
+	public void setCountReservation(Integer countReservation) {
+		this.countReservation = countReservation;
 	}
 
 	public void addCategory(CategoryVO category){

@@ -24,10 +24,10 @@ public interface AnnounceService extends InitializingBean {
 
 	public AnnounceVO update(Integer id) throws Exception;
 
-	public List<AnnounceVO> findByUser(Long userId, PageBy pageBy) throws Exception;
-	public List<AnnounceVO> findByType(AnnounceType type, PageBy pageBy) throws Exception;
+	public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws Exception;
+	public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws Exception;
 
-	public AnnounceVO findById(Long id) throws Exception;
+	public AnnounceVO announce(Long id) throws Exception;
 
 	public boolean delete(Long id) throws Exception;
 
