@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 
+import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 
 import javax.persistence.*;
@@ -80,7 +81,9 @@ public class CategoryVO implements Serializable {
 	@Override
 	public int hashCode() {
 		int result = code.hashCode();
-		//result = 31 * result + description.hashCode();
+		if(StringUtils.isNotEmpty(description)){
+			result = 31 * result +description.hashCode();
+		}
 		return result;
 	}
 
