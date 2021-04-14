@@ -88,18 +88,6 @@ public class ReservationVO  extends WSCommonResponseVO {
 	@JsonProperty
 	private AnnounceInfo announceInfo;
 
-	@Transient
-	@JsonProperty
-	private List<ReservationVO> otherReservations;
-
-	public List<ReservationVO> getOtherReservations() {
-		return otherReservations;
-	}
-
-	public void setOtherReservations(List<ReservationVO> otherReservations) {
-		this.otherReservations = otherReservations;
-	}
-
 	public AnnounceInfo getAnnounceInfo() {
 		return announceInfo;
 	}

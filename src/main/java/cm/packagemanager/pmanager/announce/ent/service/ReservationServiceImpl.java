@@ -35,7 +35,7 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public boolean validate(ValidateReservationDTO reservationDTO) throws Exception {
+	public ReservationVO validate(ValidateReservationDTO reservationDTO) throws Exception {
 		return reservationDAO.validate(reservationDTO);
 	}
 
@@ -54,6 +54,12 @@ public class ReservationServiceImpl implements ReservationService{
 	public List<ReservationVO> reservationsByUser(Long userId, PageBy pageBy) throws Exception {
 
 		return reservationDAO.findByUser(ReservationVO.class,userId,pageBy);
+	}
+
+	@Override
+	public List<ReservationVO> otherReservationsByUser(Long userId, PageBy pageBy) throws Exception {
+
+		return reservationDAO.otherReservations(userId,pageBy);
 	}
 
 	@Override

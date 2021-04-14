@@ -12,6 +12,7 @@ import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -23,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -196,7 +198,7 @@ public class ReservationController extends CommonController {
 			@ApiResponse(code = 200, message = "Successful validate",
 					response = Response.class, responseContainer = "Object") })
 	@PostMapping(value = VALIDATE, produces = MediaType.APPLICATION_JSON)
-	ResponseEntity<Response>  validate(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid ValidateReservationDTO urr) throws Exception {
+	ResponseEntity<ReservationVO> validate(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid ValidateReservationDTO urr) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		try {
@@ -204,19 +206,21 @@ public class ReservationController extends CommonController {
 			Response pmResponse=new Response();
 			if (urr==null)	return null;
 
-			if (reservationService.validate(urr)){
+			ReservationVO reservation=reservationService.validate(urr);
+			if (reservation!=null){
 				response.setStatus(200);
 				String mes=(urr.isValidate())?" acceptée":" refusée";
-				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-				pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_RESERV_LABEL,mes));
-				return new ResponseEntity<>(pmResponse,HttpStatus.OK);
+				reservation.setRetCode(WebServiceResponseCode.OK_CODE);
+				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_RESERV_LABEL,mes));
+				return new ResponseEntity<>(reservation,HttpStatus.OK);
 
 			}else{
+				reservation=new ReservationVO();
 				response.setStatus(404);
-				pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-				pmResponse.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_RESERV_CODE_LABEL);
+				reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
+				reservation.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_RESERV_CODE_LABEL);
 			}
-			return new ResponseEntity<>(pmResponse,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(reservation,HttpStatus.NOT_FOUND);
 		}catch (Exception e){
 			logger.error(e.getMessage());
 			throw e;
@@ -257,6 +261,9 @@ public class ReservationController extends CommonController {
 
 		List<ReservationVO> reservations=null;
 
+		List<ReservationVO> otherReservations=null;
+
+
 		try{
 			createOpentracingSpan("ReservationController -reservationsByUser");
 
@@ -265,6 +272,7 @@ public class ReservationController extends CommonController {
 				headers.add(HEADER_TOTAL, Long.toString(count));
 			} else {
 				reservations = reservationService.reservationsByUser(userId, pageBy);
+				otherReservations = reservationService.otherReservationsByUser(userId, pageBy);
 				if (CollectionsUtils.isNotEmpty(reservations)) {
 					paginateResponse.setCount(count);
 				}

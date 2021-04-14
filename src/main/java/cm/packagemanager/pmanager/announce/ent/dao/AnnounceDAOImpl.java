@@ -87,7 +87,9 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	@Transactional(readOnly = true)
 	public List<AnnounceVO> announces(PageBy pageBy) throws Exception {
 
-		return allAndOrderBy(AnnounceVO.class, "startDate", true, pageBy);
+		List<AnnounceVO> announces= allAndOrderBy(AnnounceVO.class, "startDate", true, pageBy);
+		countReservation(announces);
+		return announces;
 	}
 
 	@Override
@@ -95,7 +97,10 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	public List<AnnounceVO> announces(int page, int size) throws Exception {
 
 		PageBy pageBy = new PageBy(page, size);
-		return allAndOrderBy(AnnounceVO.class, "startDate", true, pageBy);
+		List<AnnounceVO> announces= allAndOrderBy(AnnounceVO.class, "startDate", true, pageBy);
+		countReservation(announces);
+		return announces;
+
 	}
 
 
@@ -107,7 +112,9 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		if (user == null) {
 			throw new UserException("Aucun utilisateur trouvé avec cet id " + userId);
 		}
-		return findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId, pageBy);
+		List<AnnounceVO> announces= findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId, pageBy);
+		countReservation(announces);
+		return announces;
 
 	}
 
@@ -115,7 +122,9 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	@Transactional(readOnly = true)
 	public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws Exception {
 
-		return findBy(AnnounceVO.FINDBYTYPE, AnnounceVO.class, type, "type", pageBy);
+		List<AnnounceVO> announces= findBy(AnnounceVO.FINDBYTYPE, AnnounceVO.class, type, "type", pageBy);
+		countReservation(announces);
+		return announces;
 	}
 
 	@Override
@@ -151,6 +160,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 			announce.setCancelled(false);
 			save(announce);
 			addAnnounceToUser(announce);
+			announce.setCountReservation(0);
 			return announce;
 		}
 		return null;
@@ -194,8 +204,9 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		Query query = session.createQuery("from AnnounceVO  as a " + where);
 		composeQueryParameters(announceSearchDTO, query);
 		pageBy(query, pageBy);
-		return query.list();
-	}
+		List<AnnounceVO> announces= query.list();
+		countReservation(announces);
+		return announces;	}
 
 	@Override
 	@Transactional(propagation = Propagation. REQUIRED)
@@ -302,7 +313,9 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public List<AnnounceVO> announcesByUser(UserVO user) throws Exception {
-		return findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, user.getId(), null);
+		List<AnnounceVO> announces= findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, user.getId(), null);
+		countReservation(announces);
+		return announces;
 	}
 
 	@Override
@@ -334,9 +347,24 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	}
 
 	@Transactional
-	void countReservation(AnnounceVO announce) throws Exception {
-		int count=countByNameQuery(ReservationVO.FINDBYANNOUNCE,ReservationVO.class,announce.getId(),"announceId", null);
-		announce.setCountReservation(count);
+	void countReservation(AnnounceVO announce) {
+		try {
+			int count=countByNameQuery(ReservationVO.FINDBYANNOUNCE,ReservationVO.class,announce.getId(),"announceId", null);
+			announce.setCountReservation(count);
+		}catch (Exception e){
+			logger.error("Erreur dans le decompte des reservations",e);
+			e.printStackTrace();
+
+		}
+
+	}
+
+	void countReservation(List<AnnounceVO> announces){
+		if(CollectionsUtils.isNotEmpty(announces)){
+			announces.stream().filter(announce -> announce!=null).forEach(ann->{
+				countReservation(ann);
+			});
+		}
 	}
 
 	private TransportEnum getTransport(String transport) {
@@ -502,10 +530,10 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	}
 
 
-	private void handleCategories(AnnounceVO announce, List<String> rcategories) throws Exception {
+	private void handleCategories(AnnounceVO announce, List<String> categories) throws Exception {
 
-		if (CollectionsUtils.isNotEmpty(rcategories)) {
-			rcategories.stream().filter(cat->StringUtils.isNotEmpty(cat)).forEach(x -> {
+		if (CollectionsUtils.isNotEmpty(categories)) {
+			categories.stream().filter(cat->StringUtils.isNotEmpty(cat)).forEach(x -> {
 				CategoryVO category = null;
 				try {
 					category = categoryDAO.findByCode(x);

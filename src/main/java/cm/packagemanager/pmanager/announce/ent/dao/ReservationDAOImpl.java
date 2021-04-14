@@ -155,7 +155,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-	public boolean validate(ValidateReservationDTO reservationDTO) throws Exception {
+	public ReservationVO validate(ValidateReservationDTO reservationDTO) throws Exception {
 		ReservationVO reservation=(ReservationVO) findById(ReservationVO.class,reservationDTO.getId());
 		if (reservation==null){
 			throw  new Exception("Reservation non trouvee");
@@ -167,21 +167,20 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 		reservation.setValidate(reservationDTO.isValidate()?ValidateEnum.ACCEPTED:ValidateEnum.REFUSED);
 		update(reservation);
 
-		return  reservation.getId()!=null;
+		return  reservation.getId()!=null?reservation:null;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 	public ReservationVO getReservation(long id) throws Exception {
 		 ReservationVO reservation = (ReservationVO)findById(ReservationVO.class,id);
-		 reservation.setOtherReservations(otherReservations(reservation.getUser().getId()));
 		 return reservation;
 	}
 
-
+	@Override
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-	public List<ReservationVO> otherReservations(long id) throws Exception {
-		return  findBy(ReservationVO.FIND_ANNOUNCE_USER,ReservationVO.class,id,"userId",null);
+	public List<ReservationVO> otherReservations(long id,PageBy pageBy) throws Exception {
+		return  findBy(ReservationVO.FIND_ANNOUNCE_USER,ReservationVO.class,id,"userId",pageBy);
 	}
 
 	public boolean updateDelete(ReservationVO reservation) throws BusinessResourceException, UserException {
