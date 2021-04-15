@@ -84,7 +84,7 @@ public class ImageController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Image uploaded",
 					response = ResponseEntity.class, responseContainer = "Object") })
-	@PostMapping(UPLOAD)
+	@PutMapping(UPLOAD)
 	public ResponseEntity.BodyBuilder uploadImage(HttpServletRequest request, HttpServletResponse response,
 	                                                  @RequestParam("id") @Valid Long id,
 	                                                  @RequestParam("type") @Valid UploadImageType type,

@@ -532,6 +532,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 
 	private void handleCategories(AnnounceVO announce, List<String> categories) throws Exception {
 
+		announce.getCategories().clear();
 		if (CollectionsUtils.isNotEmpty(categories)) {
 			categories.stream().filter(cat->StringUtils.isNotEmpty(cat)).forEach(x -> {
 				CategoryVO category = null;

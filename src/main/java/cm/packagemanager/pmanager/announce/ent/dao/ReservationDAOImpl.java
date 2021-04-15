@@ -160,7 +160,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 		if (reservation==null){
 			throw  new Exception("Reservation non trouvee");
 		}
-		reservation.setCancelled(!reservationDTO.isValidate());
+		//reservation.setCancelled(!reservationDTO.isValidate());
 		reservation.getAnnounce().setRemainWeight(!reservationDTO.isValidate()?reservation.getAnnounce().getRemainWeight().add(reservation.getWeight())
 					:reservation.getAnnounce().getRemainWeight());
 

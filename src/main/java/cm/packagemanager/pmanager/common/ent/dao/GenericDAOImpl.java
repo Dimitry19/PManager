@@ -283,8 +283,8 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 		Query query = session.createNamedQuery(queryName,clazz);
 		query.setParameter(paramName, id);
 		pageBy(query, pageBy);
-
-		return CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
+		List results=query.list();
+		return CollectionsUtils.isNotEmpty(results)?results.size():0;
 	}
 
 	@Override
@@ -295,7 +295,8 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query = session.createQuery(FROM +clazz.getName());
 		pageBy(query, pageBy);
-		return CollectionsUtils.isNotEmpty(query.list())?query.list().size():0;
+		List results=query.list();
+		return CollectionsUtils.isNotEmpty(results)?results.size():0;
 	}
 
 
