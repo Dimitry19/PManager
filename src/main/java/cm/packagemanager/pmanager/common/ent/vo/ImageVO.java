@@ -72,7 +72,7 @@ public class ImageVO extends WSCommonResponseVO{
 		this.type = type;
 	}
 
-	@Column(name = "PIC_BYTE", length = 1000)
+	@Column(name = "PIC_BYTE", length = 5000)
 	public byte[] getPicByte() {
 		return picByte;
 	}

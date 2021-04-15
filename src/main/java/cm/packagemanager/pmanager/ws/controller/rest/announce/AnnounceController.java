@@ -2,8 +2,6 @@ package cm.packagemanager.pmanager.ws.controller.rest.announce;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.announce.ent.service.AnnounceService;
-import cm.packagemanager.pmanager.announce.ent.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
@@ -24,7 +22,6 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -246,7 +243,7 @@ public class AnnounceController extends CommonController {
 						headers.add(HEADER_TOTAL, Long.toString(count));
 						break;
 					default:
-						announces = announceService.findByUser(userId, pageBy);
+						announces = announceService.announcesByUser(userId, pageBy);
 						if (CollectionsUtils.isNotEmpty(announces)) {
 							paginateResponse.setCount(count);
 						}
@@ -307,7 +304,7 @@ public class AnnounceController extends CommonController {
 				if(count==0){
 					headers.add(HEADER_TOTAL, Long.toString(count));
 				}else{
-					announces=announceService.findByType(type,pageBy);
+					announces=announceService.announcesByType(type,pageBy);
 					if(CollectionsUtils.isNotEmpty(announces)){
 						paginateResponse.setCount(count);
 					}
@@ -378,7 +375,7 @@ public class AnnounceController extends CommonController {
 			createOpentracingSpan("AnnounceController -get announce");
 
 			if (id!=null){
-				announce=announceService.findById(id);
+				announce=announceService.announce(id);
 				if(announce==null) return new ResponseEntity<>(announce,HttpStatus.NOT_FOUND);
 			}
 		}

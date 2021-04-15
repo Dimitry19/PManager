@@ -44,6 +44,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
 	public static final String FINDBYTYPE="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByType";
 	public static final String SQL_FIND_BY_USER=" FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
+	public static final String ANNOUNCE_STATUS=" FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -108,7 +109,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@JsonProperty
 	private UserVO user;
 
-	@JsonIgnore
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS",length = 10)
 	private StatusEnum status;
@@ -125,9 +125,9 @@ public class AnnounceVO extends WSCommonResponseVO {
 	private String descriptionTransport;
 
 
-	@Access(AccessType.PROPERTY)
-	@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.DETACH)
-	@JsonManagedReference
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
+	@JoinTable(name = "ANNOUNCE_CATEGORY", joinColumns = @JoinColumn(name = "ANNOUNCE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
+	@JsonProperty
 	private Set<CategoryVO> categories=new HashSet<>();
 
 	@Access(AccessType.PROPERTY)
@@ -142,6 +142,9 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	@Transient
 	private UserInfo userInfo;
+
+	@Transient
+	private Integer countReservation;
 
 	public AnnounceVO(){ super();}
 
@@ -332,6 +335,14 @@ public class AnnounceVO extends WSCommonResponseVO {
 	public void setDescriptionTransport(String descriptionTransport){
 
 		this.descriptionTransport=this.transport.toValue();
+	}
+
+	public Integer getCountReservation() {
+		return countReservation;
+	}
+
+	public void setCountReservation(Integer countReservation) {
+		this.countReservation = countReservation;
 	}
 
 	public void addCategory(CategoryVO category){

@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
+import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
@@ -16,6 +17,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,12 +25,14 @@ import java.util.Set;
 @NamedQueries({
 		@NamedQuery(name = ReservationVO.FINDBYANNOUNCE, query =" select r from  ReservationVO as r where r.announce.id =: announceId"),
 		@NamedQuery(name = ReservationVO.FINDBYUSER, query =" select r from  ReservationVO as r where r.user.id =: userId"),
+		@NamedQuery(name = ReservationVO.FIND_ANNOUNCE_USER, query =" select r from  ReservationVO as r inner join r.announce a where a.user.id =: userId"),
 })
 @Where(clause= FilterConstants.FILTER_WHERE_RESERVATION_CANCELLED)
 public class ReservationVO  extends WSCommonResponseVO {
 
 	public static final String FINDBYANNOUNCE="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounce";
 	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByUser";
+	public static final String FIND_ANNOUNCE_USER="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounceUser";
 
 
 
@@ -63,9 +67,9 @@ public class ReservationVO  extends WSCommonResponseVO {
 	private AnnounceVO announce;
 
 	@Basic(optional = false)
+	@Enumerated(EnumType.STRING)
 	@Column(name="VALIDATE")
-	@JsonIgnore
-	private boolean validate;
+	private ValidateEnum validate;
 
 	@Basic(optional = false)
 	@Column(name="CANCELLED")
@@ -147,11 +151,11 @@ public class ReservationVO  extends WSCommonResponseVO {
 		this.categories = categories;
 	}
 
-	public boolean isValidate() {
+	public ValidateEnum getValidate() {
 		return validate;
 	}
 
-	public void setValidate(boolean validate) {
+	public void setValidate(ValidateEnum validate) {
 		this.validate = validate;
 	}
 

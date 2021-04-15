@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.zip.DataFormatException;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
+
 import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 /*1-https://dzone.com/articles/upload-and-retrieve-filesimages-using-spring-boot*/
@@ -76,11 +84,11 @@ public class ImageController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Image uploaded",
 					response = ResponseEntity.class, responseContainer = "Object") })
-	@PostMapping(UPLOAD_IMG_WS)
-	public ResponseEntity.BodyBuilder uploadUserOrAnnounceImage(HttpServletRequest request, HttpServletResponse response,
+	@PostMapping(UPLOAD)
+	public ResponseEntity.BodyBuilder uploadImage(HttpServletRequest request, HttpServletResponse response,
 	                                                  @RequestParam("id") @Valid Long id,
 	                                                  @RequestParam("type") @Valid UploadImageType type,
-	                                                  @RequestParam("imageFile") MultipartFile file
+	                                                  @RequestParam("file") MultipartFile file
 	                                                  ) throws Exception {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		logger.info(" upload user image request in");
@@ -88,7 +96,6 @@ public class ImageController extends CommonController {
 			createOpentracingSpan("ImageController - upload user or announce image");
 			logger.debug("Original Image Byte Size :"+ file.getBytes().length);
 			ImageVO img = new ImageVO(file.getOriginalFilename(), file.getContentType(),fileUtils.compressBytes(file.getBytes()));
-			imageService.save(img);
 			imageService.save(img,id,type);
 			return ResponseEntity.status(HttpStatus.OK);
 
@@ -109,7 +116,7 @@ public class ImageController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Image deleted",
 					response = ResponseEntity.class, responseContainer = "Object") })
-	@GetMapping(DELETE)
+	@DeleteMapping(value =DELETE, headers = WSConstants.HEADER_ACCEPT)
 	public ResponseEntity.BodyBuilder deleteImage(HttpServletRequest request, HttpServletResponse response,
 	                                                  @RequestParam("id") @Valid Long id,
 	                                                  @RequestParam("imageName") @Valid String filename
@@ -139,27 +146,26 @@ public class ImageController extends CommonController {
 			@ApiResponse(code = 200, message = "Image retrieve successfull",
 					response = ImageVO.class, responseContainer = "Object") })
 	@GetMapping(IMAGE)
-	public ImageVO getImage(HttpServletRequest request, HttpServletResponse response,
+	public ResponseEntity<ImageVO> getImage(HttpServletRequest request, HttpServletResponse response,
 	                        @PathVariable("imageName") String imageName) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
+		HttpHeaders headers = new HttpHeaders();
 		logger.info(" get image request in");
 		try {
 			createOpentracingSpan("ImageController - get image");
 			final ImageVO retrievedImage = imageService.findByName(imageName);
 
-			ImageVO img = new ImageVO(retrievedImage.getName(), retrievedImage.getType(),
-					fileUtils.decompressBytes(retrievedImage.getPicByte()));
-			return img;
+			if (retrievedImage == null) return new ResponseEntity<ImageVO>(null, headers, HttpStatus.NOT_FOUND);
+			ImageVO img = new ImageVO(retrievedImage.getName(), retrievedImage.getType(), fileUtils.decompressBytes(retrievedImage.getPicByte()));
+			return new ResponseEntity<ImageVO>(img, headers, HttpStatus.FOUND);
 
-		}catch (Exception e){
-			logger.error("Erreur durant la recuperation de l'image",e);
+		} catch (Exception e) {
+			logger.error("Erreur durant la recuperation de l'image", e);
 			throw e;
-		}
-		finally {
+		} finally {
 			finishOpentracingSpan();
 		}
-
 	}
 
 }

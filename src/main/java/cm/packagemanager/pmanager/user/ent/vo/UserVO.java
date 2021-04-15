@@ -46,6 +46,7 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 		@NamedQuery(name = UserVO.CONF_TOKEN, query = "select u from UserVO u where  u.confirmationToken =:ctoken "),
 		@NamedQuery(name = UserVO.FACEBOOK, query = "select u from UserVO u where  u.facebookId =:facebookId "),
 		@NamedQuery(name = UserVO.GOOGLE, query = "select u from UserVO u where  u.googleId =:googleId "),
+		@NamedQuery(name = UserVO.JOB_CONFIRM, query = "select u from UserVO u where u.confirmationToken is not  null and u.active =:act"),
 })
 
 @Filters({
@@ -67,6 +68,7 @@ public class UserVO extends WSCommonResponseVO {
 	public static final String EMAIL="cm.packagemanager.pmanager.user.ent.vo.UserVO.findByEmail";
 	public static final String FACEBOOK="cm.packagemanager.pmanager.user.ent.vo.UserVO.findByFacebookId";
 	public static final String GOOGLE="cm.packagemanager.pmanager.user.ent.vo.UserVO.findByGoogleId";
+	public static final String JOB_CONFIRM="cm.packagemanager.pmanager.user.ent.vo.UserVO.toConfirmByJob";
 
 
 	@Id
@@ -101,7 +103,7 @@ public class UserVO extends WSCommonResponseVO {
 	@Column(name = "GENDER",length = 10)
 	private Gender gender;
 
-	@OneToOne
+	@OneToOne(cascade =CascadeType.REMOVE,fetch = FetchType.LAZY)
 	private ImageVO image;
 
 	/*private String picture;*/

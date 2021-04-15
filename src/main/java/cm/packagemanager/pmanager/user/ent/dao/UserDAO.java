@@ -7,7 +7,6 @@ import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
-import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,7 +45,7 @@ public interface UserDAO extends CommonDAO {
 
 	public List<UserVO> getAllUsers() throws Exception;
 
-	public List<UserVO> getAllUsersToConfirm()  throws BusinessResourceException;
+	public List<UserVO> getAllUsersToConfirm() throws Exception;
 
 	public List<UserVO> getAllUsers(PageBy pageBy) throws Exception;
 

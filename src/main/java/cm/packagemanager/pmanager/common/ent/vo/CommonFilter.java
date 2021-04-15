@@ -5,11 +5,10 @@ import cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import org.hibernate.query.Query;
-
 import java.io.Serializable;
 
 
-public   class CommonFilter<T, ID extends Serializable> extends GenericDAOImpl {
+public  class CommonFilter<T, ID extends Serializable> extends GenericDAOImpl {
 
 
 	public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
@@ -17,7 +16,6 @@ public   class CommonFilter<T, ID extends Serializable> extends GenericDAOImpl {
 	}
 
 	public String composeQuery(Object o, String alias) throws Exception {
-
 		return null;
 	}
 

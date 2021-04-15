@@ -5,7 +5,6 @@ import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
-import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
@@ -54,18 +53,18 @@ public class AnnounceServiceImpl implements AnnounceService {
 		return announceDAO.update(id);
 	}
 
-	public AnnounceVO findById(Long id) throws Exception {
-		return announceDAO.findById(id);
+	public AnnounceVO announce(Long id) throws Exception {
+		return announceDAO.announce(id);
 	}
 
-	public List<AnnounceVO> findByUser(Long userId,PageBy pageBy) throws Exception {
+	public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws Exception {
 
-		return announceDAO.findByUser(userId,pageBy);
+		return announceDAO.announcesByUser(userId,pageBy);
 	}
 
-	public List<AnnounceVO> findByType(AnnounceType type,PageBy pageBy) throws Exception {
+	public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws Exception {
 
-		return announceDAO.findByType(type, pageBy);
+		return announceDAO.announcesByType(type, pageBy);
 	}
 
 	public boolean delete(Long id) throws Exception {

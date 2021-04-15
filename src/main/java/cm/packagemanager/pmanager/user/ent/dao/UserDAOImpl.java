@@ -6,12 +6,9 @@ import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
-import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
-import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
-import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -30,9 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -134,14 +128,9 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 	@Override
 	@Transactional(readOnly = true,propagation = Propagation. REQUIRED)
-	public List<UserVO> getAllUsersToConfirm() {
-		logger.info("User: all users");
-		Session session = this.sessionFactory.getCurrentSession();
-		List  users =
-				 session.createQuery("from UserVO where confirmationToken is not  null  and active =:act")
-				.setParameter("act",0).setMaxResults(20)
-				.list();
-		return users;
+	public List<UserVO> getAllUsersToConfirm() throws Exception {
+		logger.info("User:  users to confirm");
+		return findBy(UserVO.JOB_CONFIRM, UserVO.class,0,"act",null);
 	}
 
 	@Override

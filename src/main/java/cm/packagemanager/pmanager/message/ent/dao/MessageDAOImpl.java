@@ -15,7 +15,6 @@ import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.messages.MessageDTO;
 import cm.packagemanager.pmanager.ws.requests.messages.UpdateMessageDTO;
-import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +79,7 @@ public class MessageDAOImpl extends CommonFilter implements MessageDAO {
 		if(user==null){
 			throw new UserNotFoundException("Utisateur non trouvé");
 		}
-		AnnounceVO announce=announceDAO.findById(mdto.getAnnounceId());
+		AnnounceVO announce=announceDAO.announce(mdto.getAnnounceId());
 
 		if(announce==null){
 			throw new Exception("Announce non trouvé");

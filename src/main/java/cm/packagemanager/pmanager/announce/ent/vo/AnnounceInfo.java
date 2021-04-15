@@ -27,6 +27,7 @@ public class AnnounceInfo {
 	private BigDecimal preniumPrice;
 	private BigDecimal weight;
 	private BigDecimal remainWeight;
+	private Integer countReservation;
 
 	public AnnounceInfo(AnnounceVO announce) {
 		this.id = announce.getId();
@@ -40,6 +41,7 @@ public class AnnounceInfo {
 		this.preniumPrice = announce.getPreniumPrice();
 		this.weight = announce.getWeight();
 		this.remainWeight = announce.getRemainWeight();
+		this.countReservation=announce.getCountReservation();
 	}
 
 	public Long getId() {
@@ -128,5 +130,13 @@ public class AnnounceInfo {
 
 	public void setRemainWeight(BigDecimal remainWeight) {
 		this.remainWeight = remainWeight;
+	}
+
+	public Integer getCountReservation() {
+		return countReservation;
+	}
+
+	public void setCountReservation(Integer countReservation) {
+		this.countReservation = countReservation;
 	}
 }

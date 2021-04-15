@@ -39,7 +39,7 @@ public interface UserService{
 
 	public List<UserVO> getAllUsers() throws UserException, Exception;
 
-	public List<UserVO> getAllUsersToConfirm() throws UserException;
+	public List<UserVO> getAllUsersToConfirm() throws Exception;
 
 	public UserVO getUser(Long id) throws UserException;
 

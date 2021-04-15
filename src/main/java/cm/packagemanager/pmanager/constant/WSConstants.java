@@ -12,7 +12,7 @@ public class WSConstants {
 	public static final String BY_USER="/user";
 	public static final String FIND="/find";
 	public static final String VALIDATE="/validate";
-	public static final String IMAGE="/img/{imageName}";
+	public static final String IMAGE="/{imageName}";
 	public static final String UPLOAD="/upload";
 
 
@@ -37,7 +37,7 @@ public class WSConstants {
 	public static final String COMMUNICATIONS_WS="/communications/{userId}";
 	public static final String U_MESSAGES_WS="/messages/{userId}";
 	public static final String U_NOTIFICATIONS_WS="/notifications/{userId}";
-	public static final String ENABLE_NOTIFICATION_WS="/enable";
+	public static final String ENABLE_NOTIFICATION_WS="/notification";
 
 	public static final String USER_ADD_SUBSCRIPTION_WS="/subscriptions/add";
 	public static final String USER_ADD_SUBSCRIBER_WS="/subscribers/add";
@@ -112,5 +112,4 @@ public class WSConstants {
 
 	/******** IMG REQUEST ********/
 	public static final String IMG_WS="/ws/image/*";
-	public static final String UPLOAD_IMG_WS="/img";
 }
