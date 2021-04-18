@@ -103,10 +103,8 @@ public class UserVO extends WSCommonResponseVO {
 	@Column(name = "GENDER",length = 10)
 	private Gender gender;
 
-	@OneToOne(cascade =CascadeType.REMOVE,fetch = FetchType.LAZY)
+	@OneToOne(cascade =CascadeType.ALL,fetch = FetchType.EAGER)
 	private ImageVO image;
-
-	/*private String picture;*/
 
 	@Basic(optional = true)
 	@Column(name="FACEBOOK_ID")
@@ -329,18 +327,6 @@ public class UserVO extends WSCommonResponseVO {
 	public void setImage(ImageVO image) {
 		this.image = image;
 	}
-
-
-	/*
-	* 	@Basic(optional = true)
-	@Column(name="PICTURE", nullable=true,length = 64)
-	public String getPicture() {
-		return picture;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}*/
 	public double getRating() {
 		return rating;
 	}
@@ -352,13 +338,6 @@ public class UserVO extends WSCommonResponseVO {
 	public String getError() {
 		return error;
 	}
-
-/*	@Transient
-	public String getPhotosImagePath() {
-		if (picture == null || id == null) return null;
-
-		return "/user-photos/" + id + "/" + picture;
-	}*/
 
 	public void setError(String error) {
 		this.error = error;

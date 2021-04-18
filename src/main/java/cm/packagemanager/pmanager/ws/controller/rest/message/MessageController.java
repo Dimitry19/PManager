@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
+import java.text.MessageFormat;
 import java.util.List;
 
 import static cm.packagemanager.pmanager.constant.WSConstants.*;
@@ -49,11 +50,11 @@ public class MessageController extends CommonController  {
 			MessageVO message=messageService.update(umr);
 			if (message!=null){
 				message.setRetCode(WebServiceResponseCode.OK_CODE);
-				message.setRetDescription(WebServiceResponseCode.UPDATED_MESSAGE_LABEL);
+				message.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL,"Le commentaire"));
 			}else{
 				message=new MessageVO();
 				message.setRetCode(WebServiceResponseCode.NOK_CODE);
-				message.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_MESSAGE_CODE_LABEL);
+				message.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL,"Le commentaire"));
 			}
 			return message;
 		}catch (Exception e){
@@ -79,7 +80,7 @@ public class MessageController extends CommonController  {
 
 					if(message!=null){
 						message.setRetCode(WebServiceResponseCode.OK_CODE);
-						message.setRetDescription(WebServiceResponseCode.MESSAGE_CREATE_LABEL);
+						message.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL,"Commentaire"));
 						return new ResponseEntity<MessageVO>(message, headers, HttpStatus.OK);
 					}else{
 						return new ResponseEntity<MessageVO>(message, headers, HttpStatus.NOT_FOUND);
@@ -161,11 +162,13 @@ public class MessageController extends CommonController  {
 			if (id!=null){
 				if(messageService.delete(id)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-					pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_MESSAGE_LABEL);
+					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL,"Commentaire"));
+
 					return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 				}else{
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_MESSAGE_CODE_LABEL);
+					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL,"Commentaire"));
+
 				}
 			}
 			return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);

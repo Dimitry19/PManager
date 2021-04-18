@@ -6,6 +6,9 @@ import cm.packagemanager.pmanager.common.enums.UploadImageType;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
+import cm.packagemanager.pmanager.ws.responses.Response;
+import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import io.micrometer.core.instrument.util.StringUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -21,9 +24,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
+import javax.xml.transform.Result;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -40,11 +47,6 @@ public class ImageController extends CommonController {
 	@Autowired
 	ImageService imageService;
 
-	@Autowired
-	FileUtils fileUtils;
-
-
-
 	@ApiOperation(value = "Upload image ",response = ResponseEntity.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
@@ -55,7 +57,7 @@ public class ImageController extends CommonController {
 			@ApiResponse(code = 200, message = "Image uploaded",
 					response = ResponseEntity.class, responseContainer = "Object") })
 	//@PostMapping(UPLOAD)
-	@RequestMapping(value =UPLOAD, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.MULTIPART_FORM_DATA,headers = WSConstants.HEADER_ACCEPT)
+	//@RequestMapping(value =UPLOAD, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.MULTIPART_FORM_DATA,headers = WSConstants.HEADER_ACCEPT)
 	public ResponseEntity.BodyBuilder uploadImage(HttpServletRequest request, HttpServletResponse response,
 	                                              @RequestParam("imageFile") MultipartFile file) throws Exception {
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -63,8 +65,7 @@ public class ImageController extends CommonController {
 		try{
 			createOpentracingSpan("ImageController - upload image");
 			logger.debug("Original Image Byte Size :"+ file.getBytes().length);
-			ImageVO img = new ImageVO(file.getOriginalFilename(), file.getContentType(),fileUtils.compressBytes(file.getBytes()));
-			imageService.save(img);
+			//imageService.save(img);
 			return ResponseEntity.status(HttpStatus.OK);
 
 		}catch (Exception e){
@@ -84,20 +85,24 @@ public class ImageController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Image uploaded",
 					response = ResponseEntity.class, responseContainer = "Object") })
-	@PutMapping(UPLOAD)
-	public ResponseEntity.BodyBuilder uploadImage(HttpServletRequest request, HttpServletResponse response,
+	@PutMapping(value = UPLOAD, produces = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	public ResponseEntity<ImageVO> uploadImage(HttpServletRequest request, HttpServletResponse response,
 	                                                  @RequestParam("id") @Valid Long id,
 	                                                  @RequestParam("type") @Valid UploadImageType type,
-	                                                  @RequestParam("file") MultipartFile file
+	                                                  @RequestBody String file
 	                                                  ) throws Exception {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		logger.info(" upload user image request in");
+		HttpHeaders headers = new HttpHeaders();
 		try{
 			createOpentracingSpan("ImageController - upload user or announce image");
 			logger.debug("Original Image Byte Size :"+ file.getBytes().length);
-			ImageVO img = new ImageVO(file.getOriginalFilename(), file.getContentType(),fileUtils.compressBytes(file.getBytes()));
-			imageService.save(img,id,type);
-			return ResponseEntity.status(HttpStatus.OK);
+
+			ImageVO retrievedImage = imageService.save(file,id,type);
+			if (retrievedImage == null) return new ResponseEntity<ImageVO>(null, headers, HttpStatus.NOT_FOUND);
+			retrievedImage.setOrigin(file);
+			return new ResponseEntity<ImageVO>(retrievedImage, headers, HttpStatus.OK);
+
 
 		}catch (Exception e){
 			logger.error("Erreur durant l'upload de l'image",e);
@@ -117,17 +122,23 @@ public class ImageController extends CommonController {
 			@ApiResponse(code = 200, message = "Image deleted",
 					response = ResponseEntity.class, responseContainer = "Object") })
 	@DeleteMapping(value =DELETE, headers = WSConstants.HEADER_ACCEPT)
-	public ResponseEntity.BodyBuilder deleteImage(HttpServletRequest request, HttpServletResponse response,
-	                                                  @RequestParam("id") @Valid Long id,
-	                                                  @RequestParam("imageName") @Valid String filename
+	public ResponseEntity<Response> deleteImage(HttpServletRequest request, HttpServletResponse response,
+	                                                       @RequestParam("id") @Valid Long id,
+	                                                       @RequestParam("imageName") @Valid String filename
 	                                                  ) throws Exception {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		logger.info(" delete user image request in");
 		try{
 			createOpentracingSpan("ImageController - delete user or announce image");
-			imageService.delete(filename,id);
-			return ResponseEntity.status(HttpStatus.OK);
-
+			Response pmResponse= new Response();
+			if(imageService.delete(filename,id)) {
+				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+				pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL," L'image"));
+				return new ResponseEntity<>(pmResponse,HttpStatus.OK);
+			}
+			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+			pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL," L'image"));
+			return new ResponseEntity<>(pmResponse,HttpStatus.NOT_FOUND);
 		}catch (Exception e){
 			logger.error("Erreur durant l'upload de l'image",e);
 			throw e;
@@ -145,7 +156,7 @@ public class ImageController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Image retrieve successfull",
 					response = ImageVO.class, responseContainer = "Object") })
-	@GetMapping(IMAGE)
+	@GetMapping(value = IMAGE,produces = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public ResponseEntity<ImageVO> getImage(HttpServletRequest request, HttpServletResponse response,
 	                        @PathVariable("imageName") String imageName) throws Exception {
 
@@ -157,8 +168,7 @@ public class ImageController extends CommonController {
 			final ImageVO retrievedImage = imageService.findByName(imageName);
 
 			if (retrievedImage == null) return new ResponseEntity<ImageVO>(null, headers, HttpStatus.NOT_FOUND);
-			ImageVO img = new ImageVO(retrievedImage.getName(), retrievedImage.getType(), fileUtils.decompressBytes(retrievedImage.getPicByte()));
-			return new ResponseEntity<ImageVO>(img, headers, HttpStatus.FOUND);
+			return new ResponseEntity<ImageVO>(retrievedImage, headers, HttpStatus.FOUND);
 
 		} catch (Exception e) {
 			logger.error("Erreur durant la recuperation de l'image", e);
@@ -167,5 +177,68 @@ public class ImageController extends CommonController {
 			finishOpentracingSpan();
 		}
 	}
+
+	/*@RequestMapping(value = "/upload/base64", method = RequestMethod.POST)
+	@ResponseBody
+	public Result<String> saveBase64(@RequestParam(value = "img") String base64Str) {
+		StringBuffer fileName = new StringBuffer();
+		fileName.append(UUID.randomUUID().toString().replaceAll("-", ""));
+		if (StringUtils.isBlank(base64Str)) {
+			return new Result.Builder<String>().code(-1).msg("file cannot be defaulted").build();
+		} else if (base64Str.indexOf("data:image/png;") != -1) {
+			base64Str = base64Str.replace("data:image/png;base64,", "");
+			fileName.append(".png");
+		} else if (base64Str.indexOf("data:image/jpeg;") != -1) {
+			base64Str = base64Str.replace("data:image/jpeg;base64,", "");
+			fileName.append(".jpeg");
+		} else {
+			return new Result.Builder<String>()
+					.code(-1)
+					.msg("Please select a picture in .png.jpg format")
+					.build();
+		}
+		File file = new File(imagePath, fileName.toString());
+		byte[] fileBytes = Base64.getDecoder().decode(base64Str);
+		try {
+			FileUtils.writeByteArrayToFile(file, fileBytes);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new Result.Builder<String>()
+					.code(-1)
+					.msg("Save failed")
+					.build();
+		}
+		return new Result.Builder<String>().code(0).msg("success").data(imageHost + fileName.toString())
+				.build();
+	}*/
+	@RequestMapping(value = "/upload/file", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> saveFile(@RequestParam(value = "img") MultipartFile file) {
+		StringBuffer fileName = new StringBuffer();
+		fileName.append(UUID.randomUUID().toString().replaceAll("-", ""));
+		String type = file.getContentType();
+		if ("image/png".equals(type)) {
+			fileName.append(".png");
+		} else if ("image/jpeg".equals(type)) {
+			fileName.append(".jpeg");
+		} else if ("image/gif".equals(type)) {
+			fileName.append(".gif");
+		} else {
+			return new ResponseEntity<String>("Please select a picture in .png.jpg format",HttpStatus.NOT_ACCEPTABLE);
+		}
+		if (file.getSize() > 1024000L) {
+			return null;/*new Result.Builder<String>()
+					.code(-1)
+					.msg("Image over 1Mb")
+					.build();*/
+		}
+		//file.transferTo(new File(imagePath, fileName.toString()));
+		return null; /*new Result.Builder<String>()
+				.code(0)
+				.msg("success")
+				.data(imageHost + fileName.toString())
+				.build();*/
+	}
+
 
 }

@@ -16,28 +16,19 @@ public class WebServiceResponseCode
 	public static final String USER_REGISTER_ACTIVE_LABEL = "Votre compte a ete active.. effectuez le login";
 
 
-	public static final String ANNOUNCE_CREATE_LABEL="Annonce creee correctement";
-	public static final String CANCELLED_ANNOUNCE_LABEL = "L'annonce a ete elimine correctement";
-	public static final String UPDATED_ANNOUNCE_LABEL = "L'annonce a ete ajourne correctement";
+	public static final String CREATE_LABEL="{0} cree(e) correctement";
+	public static final String CANCELLED_LABEL = "{0} a ete elimine correctement";
+	public static final String UPDATED_LABEL = "{0}  a ete ajourne correctement";
 
 
-	public static final String MESSAGE_CREATE_LABEL="commentaire creee correctement";
-	public static final String CANCELLED_MESSAGE_LABEL = "Le commentaire a ete elimine correctement";
-	public static final String UPDATED_MESSAGE_LABEL = "Le commentaire  a ete ajourne correctement";
 
-	public static final String REVIEW_CREATE_LABEL=" Avis cree correctement";
-	public static final String CANCELLED_REVIEW_LABEL = "L'avis a ete elimine correctement";
-	public static final String UPDATED_REVIEW_LABEL = "L'avis  a ete ajourne correctement";
 	public static final String SUBSCRIBE_LABEL = "Abonnement reussi";
 	public static final String UNSUBSCRIBE_LABEL = "Desabonnement reussi";
 	public static final String UPDATE_PASSWORD_LABEL = "Mot de passe ajourné correctement";
 
 	public static final String CONTACT_US_LABEL = "Merci pour votre correspondance, vous serez recontacté";
-
-
-	public static final String RESERV_CREATE_LABEL="Reservation creee correctement";
 	public static final String UPDATED_RESERV_LABEL = "La reservation ete {0} correctement";
-	public static final String CANCELLED_RESERV_OK_LABEL = "Votre reservation a été correctement effacé";
+
 
 
 	// NOK LABEL
@@ -53,19 +44,10 @@ public class WebServiceResponseCode
 
 	public static final String ERROR_UPD_EMAIL_LABEL = "Email non valide ou deja utilise";
 
-	public static final String ERROR_ANNOUNCE_CREATE_LABEL = "Annonce n'a pas pu etre cree";
-	public static final String ERROR_DELETE_ANNOUNCE_CODE_LABEL = "L' annonce ne peut pas etre eliminee car inexistant";
-	public static final String ERROR_UPDATE_ANNOUNCE_CODE_LABEL = "L' annonce ne peut pas etre ajournee car inexistant";
+	public static final String ERROR_CREATE_LABEL = "{0} n'a pas pu etre cree";
+	public static final String ERROR_DELETE_LABEL = "{0} ne peut pas etre eliminee car inexistant";
+	public static final String ERROR_UPDATE_LABEL = "{0} ne peut pas etre ajournee car inexistant";
 
-
-	public static final String ERROR_MESSAGE_CREATE_LABEL = "Commentaire n'a pas pu etre cree";
-	public static final String ERROR_DELETE_MESSAGE_CODE_LABEL = "Le Commentaire ne peut pas etre elimine car inexistant";
-	public static final String ERROR_UPDATE_MESSAGE_CODE_LABEL = "Le Commentaire ne peut pas etre ajourne car inexistant";
-
-
-	public static final String ERROR_REVIEW_CREATE_LABEL = " L'avis n'a pas pu etre cree";
-	public static final String ERROR_DELETE_REVIEW_CODE_LABEL = "L'avis ne peut pas etre elimine car inexistant";
-	public static final String ERROR_UPDATE_REVIEW_CODE_LABEL = "L'avis ne peut pas etre ajourne car inexistant";
 
 
 	public static final String ERROR_SUBSCRIBE_LABEL = "Abonnement non reussi";
@@ -74,11 +56,6 @@ public class WebServiceResponseCode
 
 
 	public static final String ERROR_CONTACT_US_LABEL = "Impossible d'envoyer le message pour le moment";
-
-
-	public static final String ERROR_RESERV_CREATE_LABEL = "La reservation n'a pas pu etre cree";
-	public static final String ERROR_DELETE_RESERV_CODE_LABEL = "La reservation ne peut pas etre eliminee car inexistante";
-	public static final String ERROR_UPDATE_RESERV_CODE_LABEL = "La reservation ne peut pas etre ajournee car inexistante";
 	public static final String ERROR_GET_RESERV_CODE_LABEL = "La reservation inexistante";
 
 }

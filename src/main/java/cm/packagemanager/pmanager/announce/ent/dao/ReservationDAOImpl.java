@@ -145,6 +145,10 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			throw  new Exception("Reservation non trouve");
 		}
 
+		if(!reservation.getValidate().equals(ValidateEnum.INSERTED)){
+			throw new Exception("Impossible d'eliminer cette reservation car deja validée");
+		}
+
 			AnnounceVO announce=reservation.getAnnounce();
 			announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
 			update(announce);
