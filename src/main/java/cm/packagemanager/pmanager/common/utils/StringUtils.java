@@ -71,4 +71,13 @@ public class StringUtils {
 			return name;
 		}
 	}
+
+
+	public static String concatenate(String ...str){
+		StringBuilder sb=new StringBuilder();
+		for (String s:str) {
+			sb.append(s);
+		}
+		return sb.toString();
+	}
 }

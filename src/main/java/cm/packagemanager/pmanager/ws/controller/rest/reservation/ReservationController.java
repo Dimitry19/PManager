@@ -64,11 +64,11 @@ public class ReservationController extends CommonController {
 			ReservationVO reservation =reservationService.addReservation(reservationDTO);
 			if(reservation==null){
 				reservation=new ReservationVO();
-				reservation.setRetDescription(WebServiceResponseCode.ERROR_RESERV_CREATE_LABEL);
+				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL,"La reservation"));
 				reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
 				return new ResponseEntity<>(reservation,HttpStatus.INTERNAL_SERVER_ERROR);
 			}else{
-				reservation.setRetDescription(WebServiceResponseCode.RESERV_CREATE_LABEL);
+				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL,"La reservation"));
 				reservation.setRetCode(WebServiceResponseCode.OK_CODE);
 			}
 
@@ -108,7 +108,8 @@ public class ReservationController extends CommonController {
 			}else{
 				reservation=new ReservationVO();
 				reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
-				reservation.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_RESERV_CODE_LABEL);
+				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL,"La reservation"));
+
 				return new ResponseEntity<>(reservation,HttpStatus.NOT_FOUND);
 			}
 			return new ResponseEntity<>(reservation,HttpStatus.OK);
@@ -135,12 +136,13 @@ public class ReservationController extends CommonController {
 
 			if (reservationService.deleteReservation(id)){
 				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-				pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_RESERV_OK_LABEL);
+				pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL,"La reservation"));
 				return new ResponseEntity<>(pmResponse,HttpStatus.OK);
 
 			}else{
 				pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-				pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_RESERV_CODE_LABEL);
+				pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL,"La reservation"));
+
 			}
 			return new ResponseEntity<>(pmResponse,HttpStatus.NOT_FOUND);
 
@@ -218,7 +220,8 @@ public class ReservationController extends CommonController {
 				reservation=new ReservationVO();
 				response.setStatus(404);
 				reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
-				reservation.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_RESERV_CODE_LABEL);
+				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL,"La reservation"));
+
 			}
 			return new ResponseEntity<>(reservation,HttpStatus.NOT_FOUND);
 		}catch (Exception e){

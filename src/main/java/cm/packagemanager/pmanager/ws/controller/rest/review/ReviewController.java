@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 
+import java.text.MessageFormat;
+
 import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 
@@ -39,7 +41,7 @@ public class ReviewController extends CommonController {
 			ReviewVO review = userService.addReview(reviewDTO);
 			if (review!=null){
 				review.setRetCode(WebServiceResponseCode.OK_CODE);
-				review.setRetDescription(WebServiceResponseCode.REVIEW_CREATE_LABEL);
+				review.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL,"L'avis"));
  		        return new ResponseEntity<ReviewVO>(review, HttpStatus.CREATED);
 			}
  		        return new ResponseEntity<ReviewVO>(review, HttpStatus.EXPECTATION_FAILED);
@@ -65,11 +67,13 @@ public class ReviewController extends CommonController {
 
 			if (review!=null){
 				review.setRetCode(WebServiceResponseCode.OK_CODE);
-				review.setRetDescription(WebServiceResponseCode.UPDATED_REVIEW_LABEL);
+				review.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL,"L'avis"));
+
 			}else{
 				review=new ReviewVO();
 				review.setRetCode(WebServiceResponseCode.NOK_CODE);
-				review.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_REVIEW_CODE_LABEL);
+				review.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL,"L'avis"));
+
 			}
 			return review;
 		}catch (Exception e){
@@ -101,10 +105,13 @@ public class ReviewController extends CommonController {
 			if (id!=null){
 				if(userService.deleteReview(id)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-					pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_REVIEW_LABEL);
+					pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_LABEL);
+					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL,"L'avis"));
+
 				}else{
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_REVIEW_CODE_LABEL);
+					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_LABEL);
+					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL,"L'avis"));
 				}
 			}
 		}

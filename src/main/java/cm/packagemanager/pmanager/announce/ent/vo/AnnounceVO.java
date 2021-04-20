@@ -71,7 +71,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	private Date endDate;
 
-	@OneToOne
+	@OneToOne(cascade =CascadeType.ALL,fetch = FetchType.EAGER)
 	private ImageVO image;
 
 	@Enumerated(EnumType.STRING)

@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.common.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -27,6 +28,9 @@ public class ImageVO extends WSCommonResponseVO{
 	//which is more than the default length for picByte column
 	private byte[] picByte;
 
+	@Transient
+	private String origin;
+
 	private UserVO user;
 	private AnnounceVO announce;
 
@@ -40,6 +44,15 @@ public class ImageVO extends WSCommonResponseVO{
 		this.type = type;
 		this.picByte = picByte;
 	}
+	public ImageVO(String type, byte[] picByte) {
+		this.type = type;
+		this.picByte = picByte;
+	}
+
+	public ImageVO(byte[] picByte) {
+		this.picByte = picByte;
+	}
+
 
 	@Id
 	@Column(name = "ID")
@@ -72,7 +85,8 @@ public class ImageVO extends WSCommonResponseVO{
 		this.type = type;
 	}
 
-	@Column(name = "PIC_BYTE", length = 5000)
+	/*@Basic(optional = true)
+	//@Column(name = "PIC_BYTE", length = 15000)
 	public byte[] getPicByte() {
 		return picByte;
 	}
@@ -80,14 +94,15 @@ public class ImageVO extends WSCommonResponseVO{
 	public void setPicByte(byte[] picByte) {
 		this.picByte = picByte;
 	}
-
+*/
 	/**
 	 * Avec le mappedBy c'est l'entité UserVO qui se charge de manager la relation
-	 * Juste besoin de faire la user.setImage(image) et pas besoin de faire le
+	 * Juste besoin de faire la user.setImage(image) à condition que les Cascades soient bien gerees et pas besoin de faire le
 	 * image.setUser(user)
 	 * @return
 	 */
-	@OneToOne(mappedBy="image", cascade=CascadeType.ALL)
+	@JsonIgnore
+	@OneToOne(mappedBy="image", cascade=CascadeType.DETACH)
 	public UserVO getUser() {
 		return user;
 	}
@@ -96,13 +111,23 @@ public class ImageVO extends WSCommonResponseVO{
 		this.user = user;
 	}
 
-	@OneToOne(mappedBy="image", cascade=CascadeType.ALL)
+	@JsonIgnore
+	@OneToOne(mappedBy="image", cascade=CascadeType.DETACH)
 	public AnnounceVO getAnnounce() {
 		return announce;
 	}
 
 	public void setAnnounce(AnnounceVO announce) {
 		this.announce = announce;
+	}
+
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
 
 	@Override

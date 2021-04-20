@@ -36,6 +36,7 @@ import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 
@@ -82,13 +83,13 @@ public class AnnounceController extends CommonController {
 				announce= announceService.create(ar);
 
 				if(announce!=null){
-					announce.setRetDescription(WebServiceResponseCode.ANNOUNCE_CREATE_LABEL);
+					announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL,"L'annonce"));
 					announce.setRetCode(WebServiceResponseCode.OK_CODE);
 					return new ResponseEntity<>(announce,HttpStatus.CREATED);
 				}else{
 					announce=new AnnounceVO();
 					announce.setRetCode(WebServiceResponseCode.NOK_CODE);
-					announce.setRetDescription(WebServiceResponseCode.ERROR_ANNOUNCE_CREATE_LABEL);
+					announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL,"L'annonce"));
 					return new ResponseEntity<>(announce,HttpStatus.NOT_ACCEPTABLE);
 				}
 			}
@@ -126,13 +127,12 @@ public class AnnounceController extends CommonController {
 			AnnounceVO announce=announceService.update(uar);
 			if (announce!=null){
 				announce.setRetCode(WebServiceResponseCode.OK_CODE);
-				announce.setRetDescription(WebServiceResponseCode.UPDATED_ANNOUNCE_LABEL);
+				announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL,"L'annonce"));
 				return new ResponseEntity<>(announce,HttpStatus.OK);
 			}else{
 				announce=new AnnounceVO();
 				announce.setRetCode(WebServiceResponseCode.NOK_CODE);
-				announce.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_ANNOUNCE_CODE_LABEL);
-
+				announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL,"L'annonce"));
 			}
 			return new ResponseEntity<>(announce,HttpStatus.NOT_FOUND);
 		}catch (Exception e){
@@ -344,12 +344,14 @@ public class AnnounceController extends CommonController {
 			if (id!=null){
 				if(announceService.delete(id)){
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-					pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_ANNOUNCE_LABEL);
+					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL,"L'annonce"));
+
 					return new ResponseEntity<>(pmResponse,HttpStatus.OK);
 
 				}else{
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_ANNOUNCE_CODE_LABEL);
+					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL,"L'annonce"));
+
 				}
 			}
 			return new ResponseEntity<>(pmResponse,HttpStatus.NOT_FOUND);

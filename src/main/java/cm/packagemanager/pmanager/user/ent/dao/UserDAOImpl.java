@@ -489,7 +489,7 @@ public  class UserDAOImpl extends CommonFilter implements UserDAO {
 
 		String uploadDir = imagesFolder + user.getId();
 
-		fileUtils.saveFile(uploadDir, fileName, multipartFile);
+		fileUtils.saveFileToFileSystem(uploadDir, fileName, multipartFile);
 		return null;
 	}
 

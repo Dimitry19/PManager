@@ -7,9 +7,7 @@ public interface ImageService {
 
 	ImageVO findByName(String name) throws Exception;
 
-	void delete(String name, Long id) throws Exception;
+	boolean delete(String name, Long id) throws Exception;
 
-	void save(ImageVO image) throws Exception;
-
-	void save(ImageVO image, Long id, UploadImageType type) throws Exception;
+	ImageVO save(String file, Long id, UploadImageType type) throws Exception;
 }
