@@ -87,7 +87,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 					handleCategories(rsv,reservationDTO.getCategories());
 					StringBuilder noteBuilder= new StringBuilder();
 					noteBuilder.append(StringUtils.isNotEmpty(rsv.getDescription())?rsv.getDescription() +"\n":"")
-							.append(StringUtils.isNotEmpty(reservationDTO.getNote())?reservationDTO.getNote()+"\n":"");
+							.append(StringUtils.isNotEmpty(reservationDTO.getDescription())?reservationDTO.getDescription()+"\n":"");
 					rsv.setDescription(noteBuilder.toString());
 					update(rsv);
 					return rsv;
@@ -100,7 +100,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			reservation.setAnnounce(announce);
 			handleCategories(reservation,reservationDTO.getCategories());
 			reservation.setWeight(reservationDTO.getWeight());
-			reservation.setDescription(reservationDTO.getNote());
+			reservation.setDescription(reservationDTO.getDescription());
 			reservation.setValidate(ValidateEnum.INSERTED);
 			save(reservation);
 			return reservation;
@@ -131,7 +131,9 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 
 			handleCategories(reservation,reservationDTO.getCategories());
 			reservation.setWeight(reservationDTO.getWeight());
-			reservation.setDescription(reservationDTO.getNote());
+			if(StringUtils.isNotEmpty(reservationDTO.getDescription())){
+				reservation.setDescription(reservationDTO.getDescription());
+			}
 			update(reservation);
 			return reservation;
 	}

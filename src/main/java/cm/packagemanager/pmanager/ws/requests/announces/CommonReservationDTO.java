@@ -14,7 +14,7 @@ public class CommonReservationDTO extends CategoriesDTO {
 	private BigDecimal weight;
 
 
-	private String note;
+	private String description;
 
 	public Long getUserId() {
 		return userId;
@@ -32,11 +32,11 @@ public class CommonReservationDTO extends CategoriesDTO {
 		this.weight = weight;
 	}
 
-	public String getNote() {
-		return note;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setNote(String note) {
-		this.note = note;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
