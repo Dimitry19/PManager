@@ -70,18 +70,19 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 				logger.error("add reservation {},{} non trouvé ou {} non trouvée","La reservation n'a pas été ajoutée","Utilisateur avec id="+reservationDTO.getUserId()," Annonce avec id="+reservationDTO.getAnnounceId());
 				throw  new Exception("Announce non trouve");
 			}
-			checkUserReservation(announce,announceDAO.announcesByUser(user));
-		checkRemainWeight(announce,reservationDTO.getWeight());
+			List userAnnounces=announceDAO.announcesByUser(user);
+			checkUserReservation(announce,userAnnounces);
+			checkRemainWeight(announce,reservationDTO.getWeight());
 			List<ReservationVO> reservations= findByUser(ReservationVO.class,user.getId(),null);
 			if (CollectionsUtils.isNotEmpty(reservations)){
 
 				List<ReservationVO>anReservations=Optional.ofNullable(reservations
 								.stream()
-								.filter(res ->res.getAnnounce().getId().equals(announce.getId()))
+								.filter(res ->res.getValidate().equals(ValidateEnum.INSERTED) && res.getAnnounce().getId().equals(announce.getId()))
 								.collect(Collectors.toList())).get();
 								//.orElseGet(Collections::emptyList);
 				if (CollectionsUtils.isNotEmpty(anReservations)){
-					ReservationVO rsv=anReservations.get(0);
+					ReservationVO rsv=(ReservationVO)CollectionsUtils.getFirst(anReservations);
 					rsv.getAnnounce().setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));
 					rsv.setWeight(rsv.getWeight().add(reservationDTO.getWeight()));
 					handleCategories(rsv,reservationDTO.getCategories());
@@ -151,11 +152,11 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			throw new Exception("Impossible d'eliminer cette reservation car deja validée");
 		}
 
-			AnnounceVO announce=reservation.getAnnounce();
-			announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
-			update(announce);
-			//delete(ReservationVO.class,id,true);
-			return updateDelete(reservation);
+		AnnounceVO announce=reservation.getAnnounce();
+		announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
+		update(announce);
+		//delete(ReservationVO.class,id,true);
+		return updateDelete(reservation);
 
 	}
 
@@ -222,25 +223,40 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 
 	}
 
+	/**
+	 * Permet de controler dans le cas d'une reservation sur une annoncce du type BUYER
+	 * si l'utilisateur qui fait la reservation a une annonce de voyage de la destination souhaitée
+	 * @param announce
+	 * @param userAnnounces
+	 * @throws Exception
+	 */
     private void checkUserReservation(AnnounceVO announce , List<AnnounceVO> userAnnounces) throws Exception {
-	    if (announce.getAnnounceType()== AnnounceType.BUYER){
-		    if(CollectionsUtils.isEmpty(userAnnounces)){
-			    throw new Exception("Impossible pour cet utilisateur de faire " +
-					    "une reservation car ne propose pas de voyage");
-		    }
-		    List check=Optional.ofNullable(userAnnounces.stream().filter(ua->ua.getStatus()!= StatusEnum.COMPLETED
-				    && !ua.isCancelled() &&
-				    StringUtils.equals(ua.getDeparture(),announce.getDeparture())
-				    && StringUtils.equals(ua.getArrival(),announce.getArrival())
-				    && ua.getStartDate().equals(announce.getStartDate()))
-				    .collect(Collectors.toList()))
-				    .orElseGet(Collections::emptyList);
 
-		    if(CollectionsUtils.isEmpty(check)){
-			    throw new Exception("Impossible pour cet utilisateur de faire " +
-					    "une reservation car ne propose pas de voyage");
-		    }
+    	switch (announce.getAnnounceType()){
+		    case BUYER:
+			    if(CollectionsUtils.isEmpty(userAnnounces)){
+				    throw new Exception("Impossible pour cet utilisateur de faire " +
+						    "une reservation car ne propose pas de voyage");
+			    }
+			    List check=Optional.ofNullable(userAnnounces.stream().filter(ua->ua.getStatus()!= StatusEnum.COMPLETED
+					    && !ua.isCancelled() &&
+					    StringUtils.equals(ua.getDeparture(),announce.getDeparture())
+					    && StringUtils.equals(ua.getArrival(),announce.getArrival())
+					    && ua.getStartDate().equals(announce.getStartDate()))
+					    .collect(Collectors.toList()))
+					    .orElseGet(Collections::emptyList);
+
+			    if(CollectionsUtils.isEmpty(check)){
+				    throw new Exception("Impossible pour cet utilisateur de faire " +
+						    "une reservation car ne propose pas de voyage");
+			    }
+		    	break;
+		    case SELLER:
+		    	break;
+		    default:
+		    	break;
 	    }
+
     }
 	private void checkRemainWeight(AnnounceVO announce, BigDecimal weight){
 

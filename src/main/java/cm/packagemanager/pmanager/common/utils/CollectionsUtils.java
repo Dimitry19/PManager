@@ -12,6 +12,10 @@ public class CollectionsUtils {
 		}
 		return null;
 	}
+	public static Object getFirst(Collection<?> elements){
+			return elements.iterator().next();
+	}
+
 
 	public static boolean isNotEmpty(Collection<?> elements){
 
