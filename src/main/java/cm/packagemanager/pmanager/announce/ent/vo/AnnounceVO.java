@@ -122,6 +122,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@Column(name = "DESCRIPTION", nullable = true)
 	private String description;
 
+	@Transient
 	private String descriptionTransport;
 
 
@@ -326,7 +327,7 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.userInfo = userInfo;
 	}
 
-	@Transient
+
 	public String getDescriptionTransport() {
 	
 		return descriptionTransport;

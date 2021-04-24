@@ -37,10 +37,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Repository
@@ -182,6 +179,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 			throw new RecordNotFoundException("Aucune annonce  trouvée");
 		}
 		if (CollectionsUtils.isEmpty(adto.getCategories())) {
+			adto.setCategories(new ArrayList<>());
 			adto.getCategories().add(constants.DEFAULT_CATEGORIE);
 		}
 		double rating = calcolateAverage(announce.getUser());
@@ -538,10 +536,17 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 				CategoryVO category = null;
 				try {
 					category = categoryDAO.findByCode(x);
-					if (category == null) throw new Exception("Valoriser la categorie");
+					if (category == null) {
+						throw new Exception("Valoriser la categorie");
+					}
 					announce.addCategory(category);
 				} catch (Exception e) {
 					logger.error("Erreur durant la recuperation des categories",e);
+					try {
+						throw e;
+					} catch (Exception exception) {
+						exception.printStackTrace();
+					}
 				}
 			});
 		}
