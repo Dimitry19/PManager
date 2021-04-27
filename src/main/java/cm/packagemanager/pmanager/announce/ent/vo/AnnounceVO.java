@@ -373,11 +373,9 @@ public class AnnounceVO extends WSCommonResponseVO {
 
 	public void updateDeleteChildrens() {
 
-		Iterator<MessageVO> itermessage = this.messages.iterator();
-		while (itermessage.hasNext()) {
-			MessageVO message = itermessage.next();
+		this.messages.stream().forEach(message ->{
 			message.setCancelled(true);
-		}
+		} );
 	}
 	@Override
 	public int hashCode() {

@@ -61,7 +61,6 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 	protected QueryUtils queryUtils;
 
 
-
 	@Override
 	@Transactional(readOnly = true)
 	public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws Exception {
@@ -247,7 +246,7 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 		BigDecimal price = adto.getPrice();
 		BigDecimal preniumPrice = adto.getPreniumPrice();
 		BigDecimal goldenPrice = adto.getGoldPrice();
-		BigDecimal weigth = adto.getWeight();
+		BigDecimal weight = adto.getWeight();
 		Date startDate = DateUtils.milliSecondToDate(adto.getStartDate());
 		Date endDate = DateUtils.milliSecondToDate(adto.getEndDate());
 
@@ -259,11 +258,20 @@ public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
 			throw new Exception("La date de depart ne peut pas etre superierure à celle de retour");
 		}
 
+
+		BigDecimal oldRemainWeight=announce.getRemainWeight();
+		BigDecimal oldWeight=announce.getWeight();
+		BigDecimal diffWeight=weight.subtract(oldWeight);
+		if(BigDecimalUtils.lessThan(weight,oldRemainWeight)) {
+				throw new UnsupportedOperationException("La quantité de Kg ne peut etre inférieure à celle réservée");
+		}
+
+
 		announce.setPrice(price);
 		announce.setPreniumPrice(preniumPrice);
 		announce.setGoldPrice(goldenPrice);
-		announce.setWeight(weigth);
-		announce.setRemainWeight(weigth);
+		announce.setWeight(weight);
+		announce.setRemainWeight(oldRemainWeight.add(diffWeight));
 		announce.setUser(user);
 		announce.setStartDate(startDate);
 		announce.setEndDate(endDate);
