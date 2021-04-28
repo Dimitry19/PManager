@@ -92,7 +92,7 @@ public class CommonController {
 
 	@PostConstruct
 	public void init() {
-		//GlobalTracer.register(gTracer);
+		GlobalTracer.register(gTracer);
 	}
 
 	protected void createOpentracingSpan(String spanName){
