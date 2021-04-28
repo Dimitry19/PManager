@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.announce.ent.dao;
 
+import cm.packagemanager.pmanager.announce.ent.vo.AnnounceInfo;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
@@ -16,6 +17,7 @@ import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
+import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
@@ -186,7 +188,35 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 	public List<ReservationVO> otherReservations(long id,PageBy pageBy) throws Exception {
-		return  findBy(ReservationVO.FIND_ANNOUNCE_USER,ReservationVO.class,id,"userId",pageBy);
+		List<ReservationVO> reservations= findBy(ReservationVO.FIND_ANNOUNCE_USER,ReservationVO.class,id,"userId",pageBy);
+		return handleReservationInfos(reservations);
+	}
+
+	@Override
+	public List<ReservationVO> reservationByAnnounce(Long announceId, PageBy pageBy) throws Exception {
+		 List<ReservationVO> reservations=findBy(ReservationVO.FINDBYANNOUNCE,ReservationVO.class,announceId,"announceId",pageBy);
+
+		return handleReservationInfos(reservations);
+	}
+
+	@Override
+	public List<ReservationVO> reservationByUser(Long userId, PageBy pageBy) throws Exception {
+		List<ReservationVO> reservations=findByUser(ReservationVO.class,userId,pageBy);
+
+		return handleReservationInfos(reservations);
+	}
+
+
+	private List<ReservationVO> handleReservationInfos(List<ReservationVO> reservations) {
+		if (CollectionsUtils.isNotEmpty(reservations)){
+			reservations.stream().forEach(r->{
+				AnnounceInfo ai=new AnnounceInfo(r.getAnnounce());
+				r.setAnnounceInfo(ai);
+				UserInfo ui=new UserInfo(r.getUser());
+				r.setUserInfo(ui);
+			});
+		}
+		return reservations;
 	}
 
 	public boolean updateDelete(ReservationVO reservation) throws BusinessResourceException, UserException {
@@ -266,10 +296,10 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 
 	private void handleCategories(ReservationVO reservation, List<String> rcategories) {
 		Set<CategoryVO> categories= new HashSet<>();
-		categories.addAll(reservation.getCategories());
 
+		reservation.getCategories().clear();
 		if(CollectionsUtils.isNotEmpty(rcategories)){
-			rcategories.forEach(x->{
+			rcategories.stream().filter(x->StringUtils.isNotEmpty(x)).forEach(x->{
 				CategoryVO category=categoryDAO.findByCode(x);
 				fillCategories(category, categories);
 			});
@@ -281,8 +311,6 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 	}
 
 	private void fillCategories(CategoryVO category,Set<CategoryVO> categories){
-    	if(CollectionsUtils.isEmpty(categories) || category ==null)
-    		return;
 		categories.add(category);
 	}
 }

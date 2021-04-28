@@ -41,8 +41,9 @@ public class ReservationVO  extends WSCommonResponseVO {
 	@Column(name = "ID", nullable = false)
 	private Long id;
 
+	//@JsonIgnore
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="R_USER_ID", updatable = false)
 	@JsonBackReference
 	private UserVO user;
@@ -60,7 +61,6 @@ public class ReservationVO  extends WSCommonResponseVO {
 	private Set<CategoryVO> categories=new HashSet<>();
 
 
-	@Access(AccessType.PROPERTY)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="R_ANNOUNCE_ID", updatable = true)
 	@JsonBackReference

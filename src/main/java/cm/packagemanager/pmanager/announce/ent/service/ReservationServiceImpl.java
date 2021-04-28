@@ -53,7 +53,7 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public List<ReservationVO> reservationsByUser(Long userId, PageBy pageBy) throws Exception {
 
-		return reservationDAO.findByUser(ReservationVO.class,userId,pageBy);
+		return reservationDAO.reservationByUser(userId,pageBy);
 	}
 
 	@Override
@@ -64,7 +64,6 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
 	public List<ReservationVO> reservationsByAnnounce(Long announceId, PageBy pageBy) throws Exception {
-
-		return reservationDAO.findBy(ReservationVO.FINDBYANNOUNCE,ReservationVO.class,announceId,"announceId",pageBy);
+		return reservationDAO.reservationByAnnounce(announceId,pageBy);
 	}
 }

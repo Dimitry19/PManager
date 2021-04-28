@@ -26,4 +26,8 @@ public interface ReservationDAO extends CommonDAO {
 	ReservationVO getReservation(long id) throws Exception;
 
 	List<ReservationVO> otherReservations(long id,PageBy pageBy) throws Exception;
+
+	List<ReservationVO> reservationByAnnounce(Long announceId, PageBy pageBy) throws Exception;
+
+	List<ReservationVO> reservationByUser(Long userId, PageBy pageBy) throws Exception;
 }
