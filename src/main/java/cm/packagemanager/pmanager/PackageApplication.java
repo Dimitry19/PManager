@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
@@ -21,13 +20,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * https://www.springboottutorial.com/hibernate-jpa-tutorial-with-spring-boot-starter-jpa
  */
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, 	DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
 @EnableBatchProcessing
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass=true)
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, 	DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
+//@EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = "cm.packagemanager.pmanager")
-//@SpringBootApplication(scanBasePackages = "cm.packagemanager.pmanager.*")
 public class PackageApplication extends SpringBootServletInitializer {
 
 	private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);

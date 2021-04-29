@@ -15,8 +15,8 @@ import java.io.Serializable;
 		typeClass = RoleType.class
 )
 @NamedQueries({
-		@NamedQuery(name = RoleVO.FINDBYID, query = "select u from RoleVO u where id  =:id"),
-		@NamedQuery(name = RoleVO.FINDBYDESC, query = "select u from RoleVO u where description =:description "),
+		@NamedQuery(name = RoleVO.FINDBYID, query = "select r from RoleVO r where r.id  =:id"),
+		@NamedQuery(name = RoleVO.FINDBYDESC, query = "select r from RoleVO r where r.description =:description "),
 
 })
 public class RoleVO implements Serializable {

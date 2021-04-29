@@ -12,7 +12,7 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.Constants;
-import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
+import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
@@ -41,7 +41,7 @@ import java.util.*;
 
 
 @Repository
-public class AnnounceDAOImpl extends CommonFilter  implements AnnounceDAO {
+public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(AnnounceDAOImpl.class);
 

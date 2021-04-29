@@ -37,11 +37,11 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 @Entity(name = "UserVO")
 @Table(name="USER", schema = "PUBLIC")
 @NamedQueries({
-		@NamedQuery(name = UserVO.Q_AC_ITEM, query = "select u from UserVO u where (upper(lastName) like :searchFilter) or(upper(firstName) like :" +
-				"searchFilter ) or(username like :searchFilter) or( email like :searchFilter)  order by firstName"),
-		@NamedQuery(name = UserVO.ALL, query = "select u from UserVO u   order by firstName"),
-		@NamedQuery(name = UserVO.FINDBYID, query = "select u from UserVO u where id  =:id"),
-		@NamedQuery(name = UserVO.USERNAME, query = "select u from UserVO u where username like :username "),
+		@NamedQuery(name = UserVO.Q_AC_ITEM, query = "select u from UserVO u where (upper(u.lastName) like :searchFilter) or(upper(u.firstName) like :" +
+				"searchFilter ) or(u.username like :searchFilter) or( u.email like :searchFilter)  order by u.firstName"),
+		@NamedQuery(name = UserVO.ALL, query = "select u from UserVO u   order by u.firstName"),
+		@NamedQuery(name = UserVO.FINDBYID, query = "select u from UserVO u where u.id  =:id"),
+		@NamedQuery(name = UserVO.USERNAME, query = "select u from UserVO u where u.username like :username "),
 		@NamedQuery(name = UserVO.EMAIL, query = "select u from UserVO u where  u.email =:email "),
 		@NamedQuery(name = UserVO.CONF_TOKEN, query = "select u from UserVO u where  u.confirmationToken =:ctoken "),
 		@NamedQuery(name = UserVO.FACEBOOK, query = "select u from UserVO u where  u.facebookId =:facebookId "),
@@ -53,7 +53,6 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 		@Filter(name = FilterConstants.CANCELLED),
 		@Filter(name= FilterConstants.ACTIVE_MBR)
 })
-//@JsonIgnoreProperties({"roles"})
 @Where(clause= FilterConstants.FILTER_WHERE_USER_CANCELLED)
 public class UserVO extends WSCommonResponseVO {
 

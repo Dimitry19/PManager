@@ -1,13 +1,12 @@
 package cm.packagemanager.pmanager.common.ent.dao;
 
-import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
 @Repository
-public class ImageDAOImpl extends CommonFilter implements ImageDAO {
+public class ImageDAOImpl extends CommonGenericDAO implements ImageDAO {
 
 
 

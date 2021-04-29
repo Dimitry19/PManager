@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
-import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
+import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 
 
 @Repository
-public  class UserDAOImpl extends CommonFilter implements UserDAO {
+public  class UserDAOImpl extends Generic implements UserDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 

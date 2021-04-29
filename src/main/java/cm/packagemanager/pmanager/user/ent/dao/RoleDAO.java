@@ -14,7 +14,7 @@ public interface RoleDAO extends CommonDAO {
 
 	Collection<UserVO> usersWithRole(String description);
 
-	Collection<RoleVO> getAllRoles();
+	Collection<RoleVO> getAllRoles() throws Exception;
 
 	RoleVO addRole(RoleVO role);
 

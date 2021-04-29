@@ -4,7 +4,7 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceInfo;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
-import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
+import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 
 
 @Repository("reservationDAO")
-public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
+public class ReservationDAOImpl extends Generic implements ReservationDAO{
 
 	private static Logger logger = LoggerFactory.getLogger(ReservationDAOImpl.class);
 

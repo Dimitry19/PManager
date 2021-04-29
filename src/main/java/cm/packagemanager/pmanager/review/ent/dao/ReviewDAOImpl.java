@@ -1,17 +1,15 @@
 package cm.packagemanager.pmanager.review.ent.dao;
 
-import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
+import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -20,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public  class ReviewDAOImpl extends CommonFilter implements ReviewDAO{
+public  class ReviewDAOImpl extends Generic implements ReviewDAO{
 
 	private static Logger logger = LoggerFactory.getLogger(ReviewDAOImpl.class);
 

@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Configuration;
 public class BatchConfig {
 
 	private static Logger log = LoggerFactory.getLogger(BatchConfig.class);
+
 	@Autowired
 	public JobBuilderFactory jobBuilderFactory;
 

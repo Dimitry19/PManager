@@ -3,7 +3,7 @@ package cm.packagemanager.pmanager.message.ent.dao;
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.Constants;
-import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
+import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class MessageDAOImpl extends CommonFilter implements MessageDAO {
+public class MessageDAOImpl extends Generic implements MessageDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(MessageDAOImpl.class);
 

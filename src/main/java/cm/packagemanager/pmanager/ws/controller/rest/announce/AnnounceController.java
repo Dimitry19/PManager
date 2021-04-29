@@ -442,7 +442,7 @@ public class AnnounceController extends CommonController {
 	}
 
 	//@RequestMapping(ANNOUNCE_WS_USER_ID_PAGE_NO)
-	@ResponseBody public List<AnnounceVO> getAllPosts(@PathVariable int pageno,@PageableDefault(value=10, page=0) Pageable pageable) throws Exception {
+	@ResponseBody public List<AnnounceVO> getAllPosts(@PathVariable("page") int pageno,@PageableDefault(value=10, page=0) Pageable pageable) throws Exception {
 
 		logger.info("retrieve  announces request in");
 		Page page = announceService.announces(pageable);
