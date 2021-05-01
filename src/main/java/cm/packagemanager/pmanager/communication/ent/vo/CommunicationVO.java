@@ -1,12 +1,13 @@
 package cm.packagemanager.pmanager.communication.ent.vo;
 
 import cm.packagemanager.pmanager.administrator.ent.vo.AdminVO;
-import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
+import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.enums.CommunicationType;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ import java.util.Set;
 		@NamedQuery(name =CommunicationVO.FIND_BY_USER_ID, query = "select c from CommunicationVO c")
 })
 @Table(name = "COMMUNICATION",schema = "PUBLIC")
-public class CommunicationVO extends WSCommonResponseVO {
+public class CommunicationVO extends CommonVO {
 
 	public static final String FIND_BY_USER_ID="cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO.findByUserId";
 
@@ -25,7 +26,7 @@ public class CommunicationVO extends WSCommonResponseVO {
 	private AdminVO admin;
 	private String content;
 	private CommunicationType type;
-	private Set<UserVO> users;
+	private Set<UserVO> users =new HashSet<>();
 
 
 	@Id

@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
+import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
@@ -28,7 +29,7 @@ import java.util.Set;
 		@NamedQuery(name = ReservationVO.FIND_ANNOUNCE_USER, query =" select r from  ReservationVO as r inner join r.announce a where a.user.id =: userId"),
 })
 @Where(clause= FilterConstants.FILTER_WHERE_RESERVATION_CANCELLED)
-public class ReservationVO  extends WSCommonResponseVO {
+public class ReservationVO  extends CommonVO {
 
 	public static final String FINDBYANNOUNCE="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounce";
 	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByUser";
@@ -53,8 +54,7 @@ public class ReservationVO  extends WSCommonResponseVO {
 	@Column(name = "WEIGTH", nullable = false)
 	private BigDecimal weight;
 
-/*	@Access(AccessType.PROPERTY)
-	@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.DETACH)*/
+
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
 	@JoinTable(name = "RESERVATION_CATEGORY", joinColumns = @JoinColumn(name = "RESERVATION_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
 	@JsonProperty
@@ -71,10 +71,6 @@ public class ReservationVO  extends WSCommonResponseVO {
 	@Column(name="VALIDATE")
 	private ValidateEnum validate;
 
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
-	@JsonIgnore
-	private boolean cancelled;
 
 	@Basic(optional = false)
 	@Column(name="DESCRIPTION" , length = FieldConstants.DESC)
@@ -167,15 +163,6 @@ public class ReservationVO  extends WSCommonResponseVO {
 		this.description = description;
 	}
 
-	public boolean isCancelled() {
-		return cancelled;
-	}
-
-	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
-	}
-
-
 	public void addCategory(CategoryVO category){
 		categories.add(category);
 	}
@@ -187,7 +174,7 @@ public class ReservationVO  extends WSCommonResponseVO {
 		}
 	}
 
-	public void removeMessages() {
+	public void removeCategories() {
 		Iterator<CategoryVO> iterator = this.categories.iterator();
 		while (iterator.hasNext()) {
 			iterator.remove();

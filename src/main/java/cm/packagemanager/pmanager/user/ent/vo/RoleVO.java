@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.user.ent.vo;
 
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.enums.RoleType;
 import org.hibernate.annotations.Type;
@@ -19,7 +20,7 @@ import java.io.Serializable;
 		@NamedQuery(name = RoleVO.FINDBYDESC, query = "select r from RoleVO r where r.description =:description "),
 
 })
-public class RoleVO implements Serializable {
+public class RoleVO extends WSCommonResponseVO {
 
 	private static final long serialVersionUID = 2284252532274015507L;
 

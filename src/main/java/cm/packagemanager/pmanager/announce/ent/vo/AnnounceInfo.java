@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AnnounceInfo {
 
@@ -27,6 +29,7 @@ public class AnnounceInfo {
 	private BigDecimal preniumPrice;
 	private BigDecimal weight;
 	private BigDecimal remainWeight;
+	private Set<CategoryVO> categories=new HashSet<>();
 	private Integer countReservation;
 
 	public AnnounceInfo(AnnounceVO announce) {
@@ -35,13 +38,14 @@ public class AnnounceInfo {
 		this.arrival = announce.getArrival();
 		this.startDate = announce.getStartDate();
 		this.endDate = announce.getEndDate();
-		this.transport = announce.getDescriptionTransport();
+		this.transport = announce.getTransport().toValue();
 		this.price = announce.getPrice();
 		this.goldPrice = announce.getGoldPrice();
 		this.preniumPrice = announce.getPreniumPrice();
 		this.weight = announce.getWeight();
 		this.remainWeight = announce.getRemainWeight();
 		this.countReservation=announce.getCountReservation();
+		this.categories.addAll(announce.getCategories());
 	}
 
 	public Long getId() {

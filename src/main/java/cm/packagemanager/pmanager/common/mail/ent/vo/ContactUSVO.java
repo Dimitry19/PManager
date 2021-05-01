@@ -14,8 +14,6 @@ public class ContactUSVO extends EmailVO{
 		super();
 	}
 
-
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")

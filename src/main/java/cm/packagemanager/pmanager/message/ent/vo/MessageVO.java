@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.message.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  *
@@ -26,7 +28,7 @@ import javax.persistence.*;
 		@Filter(name = FilterConstants.CANCELLED)
 })
 //@Where(clause= FilterConstants.FILTER_WHERE_MESSAGE_CANCELLED)
-public class MessageVO extends WSCommonResponseVO {
+public class MessageVO extends CommonVO {
 
 	public static final String FINDALL="cm.packagemanager.pmanager.message.ent.vo.MessageVO.findAll";
 
@@ -55,14 +57,8 @@ public class MessageVO extends WSCommonResponseVO {
 	@Transient
 	private String username;
 
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
-	private boolean cancelled;
-
-
 	@EmbeddedId
 	MessageIdVO id;
-
 
 	public MessageIdVO getId() {
 		return id;
@@ -82,14 +78,6 @@ public class MessageVO extends WSCommonResponseVO {
 
 	public UserVO getUser(){
 		return user;
-	}
-
-	public boolean isCancelled() {
-		return cancelled;
-	}
-
-	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
 	}
 
 	public void setUser(UserVO user) {
@@ -113,5 +101,23 @@ public class MessageVO extends WSCommonResponseVO {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		MessageVO messageVO = (MessageVO) o;
+		return Objects.equals(content, messageVO.content) && username.equals(messageVO.username) && id.equals(messageVO.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(username, id);
+	}
+
+	@Override
+	public String toString() {
+		return "MessageVO{" + "user=" + user + ", announce=" + announce + ", content='" + content + '\'' + ", username='" + username + '\'' + ", id=" + id + ", cancelled=" + cancelled + '}';
 	}
 }

@@ -210,6 +210,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO{
 	private List<ReservationVO> handleReservationInfos(List<ReservationVO> reservations) {
 		if (CollectionsUtils.isNotEmpty(reservations)){
 			reservations.stream().forEach(r->{
+				System.out.println(r.toString());
 				AnnounceInfo ai=new AnnounceInfo(r.getAnnounce());
 				r.setAnnounceInfo(ai);
 				UserInfo ui=new UserInfo(r.getUser());

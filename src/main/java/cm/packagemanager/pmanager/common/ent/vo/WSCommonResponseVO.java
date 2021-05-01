@@ -2,7 +2,7 @@ package cm.packagemanager.pmanager.common.ent.vo;
 
 import javax.persistence.Transient;
 
-public class WSCommonResponseVO extends CommonVO{
+public class WSCommonResponseVO{
 
 
 	private long retCode;

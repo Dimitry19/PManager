@@ -4,7 +4,6 @@ import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import org.hibernate.query.Query;
-
 import java.io.Serializable;
 
 

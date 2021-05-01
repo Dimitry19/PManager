@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable> implements GenericDAO<T, ID,NID> {
+public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable> implements GenericDAO<T,ID,NID> {
 
 
 	private static Logger logger = LoggerFactory.getLogger(GenericDAOImpl.class);

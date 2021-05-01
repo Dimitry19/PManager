@@ -214,6 +214,16 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 				.forEach(a->{
 					a.setStatus(StatusEnum.COMPLETED);
 					update(a);
+					try {
+						List<ReservationVO> reservations=findReservations(a.getId());
+						if(CollectionsUtils.isNotEmpty(reservations)){
+							// Todo Ameliorer et ajouter le status a la reservation et les modifications liees:
+							//filtre de la reserv.
+						}
+					} catch (Exception e) {
+						logger.error("Erreur durant l''execution du Batch d''ajournement de status de l'annonce");
+						e.printStackTrace();
+					}
 				});
 		}
 	}

@@ -1,8 +1,8 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 
+import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
-import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
@@ -25,7 +25,6 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 
@@ -38,8 +37,8 @@ import java.util.Set;
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
 })
-@Where(clause= FilterConstants.FILTER_WHERE_ANNOUNCE_CANCELLED)
-public class AnnounceVO extends WSCommonResponseVO {
+@Where(clause= FilterConstants.FILTER_WHERE_ANNOUNCE_CANCELLED_AND_COMPLETED)
+public class AnnounceVO extends CommonVO {
 
 	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
 	public static final String FINDBYTYPE="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByType";
@@ -113,18 +112,12 @@ public class AnnounceVO extends WSCommonResponseVO {
 	@Column(name = "STATUS",length = 10)
 	private StatusEnum status;
 
-	@JsonIgnore
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
-	private boolean cancelled;
-
 	@Basic(optional = false)
 	@Column(name = "DESCRIPTION", nullable = true)
 	private String description;
 
 	@Transient
 	private String descriptionTransport;
-
 
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
 	@JoinTable(name = "ANNOUNCE_CATEGORY", joinColumns = @JoinColumn(name = "ANNOUNCE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
@@ -217,7 +210,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 		this.remainWeight = remainWeight;
 	}
 
-
 	public BigDecimal getGoldPrice() {
 		return goldPrice;
 	}
@@ -245,7 +237,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 	public AnnounceType getAnnounceType(){
 		return announceType;
 	}
-
 
 	public void setAnnounceType(AnnounceType announceType) {
 		this.announceType = announceType;
@@ -276,14 +267,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 		userInfo= new UserInfo(user);
 	}
 
-	public boolean isCancelled() {
-		return cancelled;
-	}
-
-	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -291,7 +274,6 @@ public class AnnounceVO extends WSCommonResponseVO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 
 	public Set<CategoryVO> getCategories() {
 		return categories;

@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.common.mail.ent.vo;
 
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -10,7 +11,7 @@ import javax.validation.constraints.Email;
 
 
 @MappedSuperclass
-public class EmailVO extends CommonVO {
+public class EmailVO extends WSCommonResponseVO {
 
 	@Email(message = "Email : format non valide")
 	@Basic(optional = false)

@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.user.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
@@ -54,7 +55,7 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 		@Filter(name= FilterConstants.ACTIVE_MBR)
 })
 @Where(clause= FilterConstants.FILTER_WHERE_USER_CANCELLED)
-public class UserVO extends WSCommonResponseVO {
+public class UserVO extends CommonVO {
 
 
 	private static final long serialVersionUID = 6181438160768077660L;
@@ -124,11 +125,6 @@ public class UserVO extends WSCommonResponseVO {
 	@JsonIgnore
 	@Column(name = "ACTIVE", insertable=true, updatable = true, nullable=false)
 	private Integer active;
-
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
-	@JsonIgnore
-	private boolean cancelled;
 
 	@Basic(optional = true)
 	@Column(name = "ENABLE_NOTIF")
@@ -242,11 +238,6 @@ public class UserVO extends WSCommonResponseVO {
 
 	public Gender getGender(){
 		return gender;
-	}
-
-
-	public boolean isCancelled() {
-		return cancelled;
 	}
 
 	public String getFacebookId() {
@@ -390,10 +381,6 @@ public class UserVO extends WSCommonResponseVO {
 	public void setId(Long id) {this.id = id;}
 
 	public void setPassword(String password) {this.password = password;	}
-
-	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
-	}
 
 	public void setFacebookId(String facebookId) {
 		this.facebookId = facebookId;

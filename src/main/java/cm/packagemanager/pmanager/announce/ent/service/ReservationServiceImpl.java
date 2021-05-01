@@ -57,7 +57,7 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public List<ReservationVO> otherReservationsByUser(Long userId, PageBy pageBy) throws Exception {
+	public List<ReservationVO> receivedReservations(Long userId, PageBy pageBy) throws Exception {
 
 		return reservationDAO.otherReservations(userId,pageBy);
 	}

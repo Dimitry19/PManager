@@ -5,6 +5,9 @@ public class Response  {
 	private long retCode;
 	private String retDescription;
 
+	public Response() {
+	}
+
 	public long getRetCode() {
 		return retCode;
 	}

@@ -41,6 +41,7 @@ public  class UserDAOImpl extends Generic implements UserDAO {
 
 	@Autowired
 	RoleDAO roleDAO;
+
 	@Autowired
 	Span span;
 	public UserDAOImpl() {
