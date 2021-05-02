@@ -176,6 +176,19 @@ public class UserVO extends CommonVO {
 	@JsonProperty
 	private double rating=0;
 
+/*
+	@Formula(value = "select count(id) from ANNOUNCE a where  a.r_user_id = id and a.cancelled is false")
+	private Integer countAnnounce;
+
+	@Transient
+	@JsonProperty
+	public Integer getCountAnnounce() {
+		return countAnnounce;
+	}
+
+	public void setCountAnnounce(Integer countAnnounce) {
+		this.countAnnounce = countAnnounce;
+	}*/
 
 	public UserVO() {
 		super();
@@ -434,7 +447,6 @@ public class UserVO extends CommonVO {
 
 		while (iterator.hasNext()) {
 			MessageVO message = iterator.next();
-
 			message.setUser(null);
 			iterator.remove();
 		}

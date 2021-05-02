@@ -8,9 +8,9 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.Query;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface GenericDAO <T, ID extends Serializable,NID extends Serializable> {
@@ -26,6 +26,8 @@ public interface GenericDAO <T, ID extends Serializable,NID extends Serializable
 	void delete(Class<T> clazz, ID id, boolean enableFlushSession) throws RecordNotFoundException;
 
 	List<T> findByUser(Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
+
+	List<T> findByUserId(Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
 
 	List<T> all(Class<T> clazz, PageBy pageBy) throws Exception;
 
@@ -49,6 +51,15 @@ public interface GenericDAO <T, ID extends Serializable,NID extends Serializable
 	boolean updateDelete(Class<T> clazz, ID id, boolean enableFlushSession) throws BusinessResourceException;
 
 	void save(T t) throws Exception;
+
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor ={BusinessResourceException.class, Exception.class})
+	T findByNaturalIds(Class<T> clazz,Map naturalIds, String... filters) throws BusinessResourceException;
+
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true,rollbackFor ={BusinessResourceException.class, Exception.class})
+	T findByNaturalId(Class<T> clazz,NID naturalId, String... filters) throws BusinessResourceException;
+
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true,rollbackFor ={BusinessResourceException.class, Exception.class})
+	T findByNaturalId(Class<T> clazz,NID naturalId) throws BusinessResourceException;
 
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor ={BusinessResourceException.class, Exception.class})

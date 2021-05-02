@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.announce.ent.service;
 import cm.packagemanager.pmanager.announce.ent.dao.ReservationDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
@@ -51,9 +52,9 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public List<ReservationVO> reservationsByUser(Long userId, PageBy pageBy) throws Exception {
+	public List reservationsByUser(Long userId,ReservationType type, PageBy pageBy) throws Exception {
 
-		return reservationDAO.reservationByUser(userId,pageBy);
+		return reservationDAO.reservationByUser(userId,type,pageBy);
 	}
 
 	@Override

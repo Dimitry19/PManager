@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.announce.ent.service;
 
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
@@ -22,7 +23,7 @@ public interface ReservationService {
 
 	int count(Long id,PageBy pageBy, boolean isUser)  throws Exception;
 
-	List<ReservationVO> reservationsByUser(Long userId, PageBy pageBy) throws Exception;
+	List<ReservationVO> reservationsByUser(Long userId,  ReservationType type, PageBy pageBy) throws Exception;
 	List<ReservationVO> receivedReservations(Long userId, PageBy pageBy) throws Exception;
 
 	List<ReservationVO> reservationsByAnnounce(Long announceId, PageBy pageBy) throws Exception;

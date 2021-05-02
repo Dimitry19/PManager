@@ -299,7 +299,6 @@ public class AnnounceController extends CommonController {
 		try{
 			createOpentracingSpan("AnnounceController - announcesByType");
 
-			if (type!=null){
 				int count = announceService.count(null,pageBy);
 				if(count==0){
 					headers.add(HEADER_TOTAL, Long.toString(count));
@@ -311,10 +310,9 @@ public class AnnounceController extends CommonController {
 					paginateResponse.setResults(announces);
 					headers.add(HEADER_TOTAL, Long.toString(announces.size()));
 				}
-			}else response.getWriter().write("Utilisateur non existant");
 		}
 		catch (Exception e){
-			logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
+			logger.info(" AnnounceController -announcesByType:Exception occurred while fetching the response from the database.", e);
 			throw e;
 		}finally {
 			finishOpentracingSpan();
@@ -370,17 +368,18 @@ public class AnnounceController extends CommonController {
 	public ResponseEntity<AnnounceVO> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
-		AnnounceVO announce=null;
 
 		try{
 			logger.info("retrieve announce request in");
 			createOpentracingSpan("AnnounceController -get announce");
-
+			AnnounceVO announce=null;
 			if (id!=null){
 				announce=announceService.announce(id);
-				if(announce==null) return new ResponseEntity<>(announce,HttpStatus.NOT_FOUND);
+				if(announce==null) return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
 			}
+			return new ResponseEntity<>(announce,HttpStatus.OK);
 		}
+
 		catch (UserException e){
 			logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
             throw e;
@@ -391,7 +390,6 @@ public class AnnounceController extends CommonController {
 		} finally {
 			finishOpentracingSpan();
 		}
-		return new ResponseEntity<>(announce,HttpStatus.OK);
 	}
 
 	/**

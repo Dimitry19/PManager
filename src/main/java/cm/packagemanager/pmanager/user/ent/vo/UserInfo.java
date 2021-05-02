@@ -48,7 +48,7 @@ public class UserInfo {
 		this.phone = user.getPhone();
 		this.dateCreated=user.getDateCreated();
 		this.rating=user.getRating();
-		this.count  = CollectionsUtils.isNotEmpty(user.getAnnounces())? user.getAnnounces().size():0;
+		this.count  = CollectionsUtils.size(user.getAnnounces());
 
 	}
 

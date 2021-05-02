@@ -25,7 +25,7 @@ public class MessageIdVO extends CommonIdVO {
 		this.token=token;
 	}
 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ID")
 	public Long getId() {
 		return id;

@@ -1,11 +1,9 @@
 package cm.packagemanager.pmanager.announce.ent.dao;
 
-import cm.packagemanager.pmanager.announce.ent.vo.AnnounceInfo;
-import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
-import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
+import cm.packagemanager.pmanager.announce.ent.vo.*;
 import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
@@ -104,6 +102,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO{
 			reservation.setWeight(reservationDTO.getWeight());
 			reservation.setDescription(reservationDTO.getDescription());
 			reservation.setValidate(ValidateEnum.INSERTED);
+			reservation.setStatus(StatusEnum.VALID);
 			save(reservation);
 			return reservation;
 	}
@@ -189,35 +188,52 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO{
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 	public List<ReservationVO> otherReservations(long id,PageBy pageBy) throws Exception {
 		List<ReservationVO> reservations= findBy(ReservationVO.FIND_ANNOUNCE_USER,ReservationVO.class,id,"userId",pageBy);
-		return handleReservationInfos(reservations);
+		 handleReservationInfos(reservations);
+		return reservations;
 	}
 
 	@Override
 	public List<ReservationVO> reservationByAnnounce(Long announceId, PageBy pageBy) throws Exception {
 		 List<ReservationVO> reservations=findBy(ReservationVO.FINDBYANNOUNCE,ReservationVO.class,announceId,"announceId",pageBy);
+		 handleReservationInfos(reservations);
+		return reservations;
 
-		return handleReservationInfos(reservations);
 	}
 
 	@Override
-	public List<ReservationVO> reservationByUser(Long userId, PageBy pageBy) throws Exception {
-		List<ReservationVO> reservations=findByUser(ReservationVO.class,userId,pageBy);
+	public List reservationByUser(Long userId, ReservationType type, PageBy pageBy) throws Exception {
+		List<ReservationUserVO> reservations=null;
 
-		return handleReservationInfos(reservations);
+		switch (type){
+				case RECEIVED:
+					reservations=findByUserId(ReservationReceivedUserVO.class,userId,pageBy);
+					break;
+				case CREATED:
+					reservations=findByUserId(ReservationUserVO.class,userId,pageBy);
+					break;
+			}
+		 handleReservationInfos(reservations);
+		return reservations;
 	}
 
 
-	private List<ReservationVO> handleReservationInfos(List<ReservationVO> reservations) {
+	private void handleReservationInfos(List reservations) {
 		if (CollectionsUtils.isNotEmpty(reservations)){
 			reservations.stream().forEach(r->{
-				System.out.println(r.toString());
-				AnnounceInfo ai=new AnnounceInfo(r.getAnnounce());
-				r.setAnnounceInfo(ai);
-				UserInfo ui=new UserInfo(r.getUser());
-				r.setUserInfo(ui);
+				if (r instanceof ReservationUserVO){
+					ReservationUserVO res= (ReservationUserVO)r;
+					AnnounceInfo ai=new AnnounceInfo(res.getAnnounce());
+					res.setAnnounceInfo(ai);
+				}
+				if (r instanceof ReservationVO){
+					ReservationVO res= (ReservationVO)r;
+					AnnounceInfo ai=new AnnounceInfo(res.getAnnounce());
+					res.setAnnounceInfo(ai);
+					UserInfo ui=new UserInfo(res.getUser());
+					res.setUserInfo(ui);
+				}
 			});
 		}
-		return reservations;
 	}
 
 	public boolean updateDelete(ReservationVO reservation) throws BusinessResourceException, UserException {

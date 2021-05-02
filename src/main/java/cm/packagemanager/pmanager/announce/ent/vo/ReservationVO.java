@@ -1,24 +1,20 @@
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
-import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
+import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.OrderBy;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,7 +24,7 @@ import java.util.Set;
 		@NamedQuery(name = ReservationVO.FINDBYUSER, query =" select r from  ReservationVO as r where r.user.id =: userId"),
 		@NamedQuery(name = ReservationVO.FIND_ANNOUNCE_USER, query =" select r from  ReservationVO as r inner join r.announce a where a.user.id =: userId"),
 })
-@Where(clause= FilterConstants.FILTER_WHERE_RESERVATION_CANCELLED)
+@Where(clause= FilterConstants.FILTER_WHERE_RESERVATION_CANC_COMPLETED)
 public class ReservationVO  extends CommonVO {
 
 	public static final String FINDBYANNOUNCE="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounce";
@@ -75,6 +71,19 @@ public class ReservationVO  extends CommonVO {
 	@Basic(optional = false)
 	@Column(name="DESCRIPTION" , length = FieldConstants.DESC)
 	private String description;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "STATUS",length = 10)
+	private StatusEnum status;
+
+	public StatusEnum getStatus(){
+		return status;
+	}
+
+	public void setStatus(StatusEnum status) {
+		this.status = status;
+	}
+
 
 	@Transient
 	@JsonProperty

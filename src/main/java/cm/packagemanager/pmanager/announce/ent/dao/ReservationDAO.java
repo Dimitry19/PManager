@@ -3,7 +3,9 @@ package cm.packagemanager.pmanager.announce.ent.dao;
 
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.ent.dao.CommonDAO;
+import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
@@ -12,7 +14,7 @@ import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
 import java.util.List;
 
 
-public interface ReservationDAO extends CommonDAO {
+public interface ReservationDAO<T extends CommonVO> extends CommonDAO {
 
 
 	ReservationVO addReservation(ReservationDTO reservation) throws BusinessResourceException, Exception;
@@ -29,5 +31,5 @@ public interface ReservationDAO extends CommonDAO {
 
 	List<ReservationVO> reservationByAnnounce(Long announceId, PageBy pageBy) throws Exception;
 
-	List<ReservationVO> reservationByUser(Long userId, PageBy pageBy) throws Exception;
+	List<T> reservationByUser(Long userId, ReservationType type, PageBy pageBy) throws Exception;
 }

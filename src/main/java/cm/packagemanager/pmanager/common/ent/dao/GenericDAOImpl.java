@@ -1,6 +1,5 @@
 package cm.packagemanager.pmanager.common.ent.dao;
 
-
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
@@ -10,6 +9,7 @@ import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import org.hibernate.NaturalIdLoadAccess;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -23,8 +23,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable> implements GenericDAO<T,ID,NID> {
@@ -75,6 +74,43 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 		return Optional.ofNullable(session.get(clazz, id));
 	}
 
+
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true,rollbackFor ={BusinessResourceException.class, Exception.class})
+	public T findByNaturalIds(Class<T> clazz, Map naturalIds, String... filters) throws BusinessResourceException {
+
+		logger.info(" find by NaturalIds");
+		Session session = this.sessionFactory.getCurrentSession();
+		for (String filter:filters) {
+			session.enableFilter(filter);
+		}
+		NaturalIdLoadAccess x= (NaturalIdLoadAccess) session.byNaturalId(clazz);
+		naturalIds.forEach((k,v)->{
+			x.using((String) k,v);
+		});
+		return (T)x.getReference();
+	}
+
+
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true,rollbackFor ={BusinessResourceException.class, Exception.class})
+	public T findByNaturalId(Class<T> clazz, NID naturalId, String... filters) throws BusinessResourceException {
+		logger.info(" find by NaturalId");
+		if(CollectionsUtils.isEmpty(Arrays.asList(filters))){
+			return findByNaturalId(clazz,naturalId);
+		}
+		Session session = this.sessionFactory.getCurrentSession();
+		for (String filter:filters) {
+			session.enableFilter(filter);
+		}
+		return  session.bySimpleNaturalId(clazz).load(naturalId);
+	}
+
+	@Override
+	public T findByNaturalId(Class<T> clazz, NID naturalId) throws BusinessResourceException {
+		logger.info(" find by NaturalId");
+		Session session = this.sessionFactory.getCurrentSession();
+		return  session.bySimpleNaturalId(clazz).load(naturalId);
+	}
+
 	@Override
 	@Transactional
 	public  T findById(Class<T> clazz, ID id) {
@@ -117,6 +153,18 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query=session.createQuery(FROM +clazz.getName()+" as elt where elt.user.id =:userId",clazz);
+		query.setParameter(USER_PARAM, userId);
+		pageBy(query, pageBy);
+
+		return query.getResultList();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<T> findByUserId(Class<T> clazz, Long userId, PageBy pageBy) throws Exception {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query=session.createQuery(FROM +clazz.getName()+" as elt where elt.userId =:userId",clazz);
 		query.setParameter(USER_PARAM, userId);
 		pageBy(query, pageBy);
 

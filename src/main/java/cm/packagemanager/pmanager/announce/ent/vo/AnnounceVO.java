@@ -37,7 +37,7 @@ import java.util.Set;
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
 })
-@Where(clause= FilterConstants.FILTER_WHERE_ANNOUNCE_CANCELLED_AND_COMPLETED)
+@Where(clause= FilterConstants.FILTER_ANNOUNCE_CANC_COMPLETED)
 public class AnnounceVO extends CommonVO {
 
 	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
@@ -127,7 +127,6 @@ public class AnnounceVO extends CommonVO {
 	@Access(AccessType.PROPERTY)
 	@OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE}, mappedBy="announce",fetch=FetchType.LAZY)
 	@JsonManagedReference
-	//@Fetch(value = SELECT)
 	@OrderBy(clause = "id.id ASC")
 	@Where(clause = "cancelled=false")
 	private Set<MessageVO> messages=new HashSet<>();
@@ -137,7 +136,7 @@ public class AnnounceVO extends CommonVO {
 	@Transient
 	private UserInfo userInfo;
 
-	@Transient
+	@Formula(value = "select count(id) from RESERVATION r where  r.r_announce_id = id and r.cancelled is false")
 	private Integer countReservation;
 
 	public AnnounceVO(){ super();}
@@ -291,7 +290,6 @@ public class AnnounceVO extends CommonVO {
 		this.image = image;
 	}
 
-	//@NaturalId
 	public AnnounceIdVO getAnnounceId() {
 		return announceId;
 	}
@@ -299,7 +297,6 @@ public class AnnounceVO extends CommonVO {
 	public void setAnnounceId(AnnounceIdVO announceId) {
 		this.announceId = announceId;
 	}
-
 
 	public UserInfo getUserInfo() {
 		return userInfo;
@@ -320,6 +317,7 @@ public class AnnounceVO extends CommonVO {
 		this.descriptionTransport=this.transport.toValue();
 	}
 
+	@Transient
 	public Integer getCountReservation() {
 		return countReservation;
 	}
@@ -351,7 +349,6 @@ public class AnnounceVO extends CommonVO {
 			message.setAnnounce(null);
 		}
 	}
-
 
 	public void updateDeleteChildrens() {
 
@@ -386,8 +383,4 @@ public class AnnounceVO extends CommonVO {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "AnnounceVO{" + "id=" + id + ", departure='" + departure + '\'' + ", arrival='" + arrival + '\'' + ", startDate=" + startDate + ", endDate=" + endDate + ", image=" + image + ", transport=" + transport + ", price=" + price + ", goldPrice=" + goldPrice + ", preniumPrice=" + preniumPrice + ", weight=" + weight + ", remainWeight=" + remainWeight + ", announceType=" + announceType + ", user=" + user + ", status=" + status + ", cancelled=" + cancelled + ", description='" + description + '\'' + ", descriptionTransport='" + descriptionTransport + '\'' + ", categories=" + categories + ", messages=" + messages + ", announceId=" + announceId + ", userInfo=" + userInfo + '}';
-	}
 }

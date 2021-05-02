@@ -116,8 +116,4 @@ public class MessageVO extends CommonVO {
 		return Objects.hash(username, id);
 	}
 
-	@Override
-	public String toString() {
-		return "MessageVO{" + "user=" + user + ", announce=" + announce + ", content='" + content + '\'' + ", username='" + username + '\'' + ", id=" + id + ", cancelled=" + cancelled + '}';
-	}
 }
