@@ -5,7 +5,6 @@ import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
-import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
@@ -272,16 +271,18 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 		if(CollectionsUtils.isNotEmpty(rcategories)){
 			rcategories.forEach(x->{
 				CategoryVO category=categoryDAO.findByCode(x);
-				if(category!=null && !categories.contains(category)){
-					categories.add(category);
-				}
+				fillCategories(category, categories);
 			});
 		}else {
 			CategoryVO category=categoryDAO.findByCode(FieldConstants.DEFAULT_CATEGORY);
-			if(category!=null && !categories.contains(category)){
-				categories.add(category);
-			}
+			fillCategories(category, categories);
 		}
 		reservation.setCategories(categories);
+	}
+
+	private void fillCategories(CategoryVO category,Set<CategoryVO> categories){
+    	if(CollectionsUtils.isEmpty(categories) || category ==null)
+    		return;
+		categories.add(category);
 	}
 }

@@ -12,9 +12,13 @@
 @org.hibernate.annotations.FilterDefs({
 		@FilterDef (name= FilterConstants.ACTIVE_MBR        ,defaultCondition="ACTIVE=true" ),
 		@FilterDef (name= FilterConstants.CANCELLED         ,defaultCondition="CANCELLED=false"),
+		@FilterDef(name="dateFilter", parameters=@ParamDef( name="fromDate", type="timestamp" ) )
+
 })
+
 
 package cm.packagemanager.pmanager.configuration.filters;
 
 import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 
