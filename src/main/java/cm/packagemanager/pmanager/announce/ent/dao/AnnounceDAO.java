@@ -15,35 +15,33 @@ import java.util.List;
 
 public interface AnnounceDAO extends CommonDAO {
 
-	List<AnnounceVO> announces(int page, int  size) throws Exception;
+	public List<AnnounceVO> announces(int page, int  size) throws Exception;
 
-	List<AnnounceVO> announces(PageBy pageBy) throws Exception;
+	public List<AnnounceVO> announces(PageBy pageBy) throws Exception;
 
-	int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws BusinessResourceException, Exception;
+	public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws BusinessResourceException, Exception;
 
-	List<AnnounceVO> announcesByUser(UserVO user) throws Exception;
+	public List<AnnounceVO> announcesByUser(UserVO user) throws Exception;
 
-	List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws Exception;
+	public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws Exception;
 
-	List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws Exception;
+	public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws Exception;
 
-	AnnounceVO announce(Long id) throws BusinessResourceException,RecordNotFoundException, Exception;
+	public AnnounceVO announce(Long id) throws BusinessResourceException,RecordNotFoundException, Exception;
 
-	AnnounceVO create(AnnounceDTO announce) throws BusinessResourceException, Exception;
+	public AnnounceVO create(AnnounceDTO announce) throws BusinessResourceException, Exception;
 
-	AnnounceVO delete(AnnounceVO announce) throws BusinessResourceException,RecordNotFoundException;
+	public AnnounceVO delete(AnnounceVO announce) throws BusinessResourceException,RecordNotFoundException;
 
-	boolean delete(Long id) throws BusinessResourceException;
+	public boolean delete(Long id) throws BusinessResourceException;
 
-	AnnounceVO update(UpdateAnnounceDTO announceDTO) throws Exception;
+	public AnnounceVO update(UpdateAnnounceDTO announceDTO) throws Exception;
 
+	public AnnounceVO update(Integer id) throws BusinessResourceException;
 
-	AnnounceVO update(Integer id) throws BusinessResourceException;
+	public List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws Exception;
 
-	List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws Exception;
-
-
-	void announcesStatus() throws Exception;
+	public void announcesStatus() throws Exception;
 
 
 

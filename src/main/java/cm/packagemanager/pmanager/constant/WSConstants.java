@@ -107,6 +107,8 @@ public class WSConstants {
 	public static final String RESERVATION_WS_BY_ANNOUNCE="/announce";
 	public static final String RESERVATION_WS_UPDATE_ID="/update/{id}";
 	public static final String RESERVATION_WS_BY_ID="/reservation";
+	public static final String RESERVATION_WS_CREATED="/user/own";
+	public static final String RESERVATION_WS_RECEIVED="/user/received";
 
 
 

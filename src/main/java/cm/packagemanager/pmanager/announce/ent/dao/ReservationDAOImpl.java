@@ -1,10 +1,9 @@
 package cm.packagemanager.pmanager.announce.ent.dao;
 
-import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
-import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
-import cm.packagemanager.pmanager.common.ent.vo.CommonFilter;
+import cm.packagemanager.pmanager.announce.ent.vo.*;
+import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
@@ -16,6 +15,7 @@ import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
+import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 
 
 @Repository("reservationDAO")
-public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
+public class ReservationDAOImpl extends Generic implements ReservationDAO{
 
 	private static Logger logger = LoggerFactory.getLogger(ReservationDAOImpl.class);
 
@@ -102,6 +102,7 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 			reservation.setWeight(reservationDTO.getWeight());
 			reservation.setDescription(reservationDTO.getDescription());
 			reservation.setValidate(ValidateEnum.INSERTED);
+			reservation.setStatus(StatusEnum.VALID);
 			save(reservation);
 			return reservation;
 	}
@@ -186,7 +187,53 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 	public List<ReservationVO> otherReservations(long id,PageBy pageBy) throws Exception {
-		return  findBy(ReservationVO.FIND_ANNOUNCE_USER,ReservationVO.class,id,"userId",pageBy);
+		List<ReservationVO> reservations= findBy(ReservationVO.FIND_ANNOUNCE_USER,ReservationVO.class,id,"userId",pageBy);
+		 handleReservationInfos(reservations);
+		return reservations;
+	}
+
+	@Override
+	public List<ReservationVO> reservationByAnnounce(Long announceId, PageBy pageBy) throws Exception {
+		 List<ReservationVO> reservations=findBy(ReservationVO.FINDBYANNOUNCE,ReservationVO.class,announceId,"announceId",pageBy);
+		 handleReservationInfos(reservations);
+		return reservations;
+
+	}
+
+	@Override
+	public List reservationByUser(Long userId, ReservationType type, PageBy pageBy) throws Exception {
+		List<ReservationUserVO> reservations=null;
+
+		switch (type){
+				case RECEIVED:
+					reservations=findByUserId(ReservationReceivedUserVO.class,userId,pageBy);
+					break;
+				case CREATED:
+					reservations=findByUserId(ReservationUserVO.class,userId,pageBy);
+					break;
+			}
+		 handleReservationInfos(reservations);
+		return reservations;
+	}
+
+
+	private void handleReservationInfos(List reservations) {
+		if (CollectionsUtils.isNotEmpty(reservations)){
+			reservations.stream().forEach(r->{
+				if (r instanceof ReservationUserVO){
+					ReservationUserVO res= (ReservationUserVO)r;
+					AnnounceInfo ai=new AnnounceInfo(res.getAnnounce());
+					res.setAnnounceInfo(ai);
+				}
+				if (r instanceof ReservationVO){
+					ReservationVO res= (ReservationVO)r;
+					AnnounceInfo ai=new AnnounceInfo(res.getAnnounce());
+					res.setAnnounceInfo(ai);
+					UserInfo ui=new UserInfo(res.getUser());
+					res.setUserInfo(ui);
+				}
+			});
+		}
 	}
 
 	public boolean updateDelete(ReservationVO reservation) throws BusinessResourceException, UserException {
@@ -266,10 +313,10 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 
 	private void handleCategories(ReservationVO reservation, List<String> rcategories) {
 		Set<CategoryVO> categories= new HashSet<>();
-		categories.addAll(reservation.getCategories());
 
+		reservation.getCategories().clear();
 		if(CollectionsUtils.isNotEmpty(rcategories)){
-			rcategories.forEach(x->{
+			rcategories.stream().filter(x->StringUtils.isNotEmpty(x)).forEach(x->{
 				CategoryVO category=categoryDAO.findByCode(x);
 				fillCategories(category, categories);
 			});
@@ -281,8 +328,6 @@ public class ReservationDAOImpl extends CommonFilter implements ReservationDAO{
 	}
 
 	private void fillCategories(CategoryVO category,Set<CategoryVO> categories){
-    	if(CollectionsUtils.isEmpty(categories) || category ==null)
-    		return;
 		categories.add(category);
 	}
 }

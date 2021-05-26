@@ -19,16 +19,6 @@ public class OpenTracingConfig {
 	private int agentport;
 
 
-	/*@Bean
-	public io.opentracing.Tracer jaegerTracer(){
-		return new Configuration(
-				"my Service",
-				new Configuration.SamplerConfiguration("const", 1),
-				new Configuration.ReporterConfiguration(
-						false, agentHost, null, 1000, 10000)
-		).getTracer();
-	}*/
-
 	@Bean
 	public Span spanTracer(){
 		GlobalTracer.register(jaegerTracer());

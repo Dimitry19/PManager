@@ -7,6 +7,7 @@ import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  *
@@ -15,8 +16,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="AIRLINE", schema = "PUBLIC")
 @NamedQueries({
-		@NamedQuery(name = AirlineVO.FINDBYCODE, query = "select a from AirlineVO a where id.code  =:code"),
-		@NamedQuery(name = AirlineVO.ALL, query = "select a from AirlineVO a order by description"),
+		@NamedQuery(name = AirlineVO.FINDBYCODE, query = "select a from AirlineVO a where a.id.code  =:code"),
+		@NamedQuery(name = AirlineVO.ALL, query = "select a from AirlineVO a order by a.description"),
 })
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
@@ -29,19 +30,15 @@ public class AirlineVO extends CommonVO {
 
 	@EmbeddedId
 	private AirlineIdVO id;
-
 	private String description;
-
-	private boolean cancelled;
 
 
 	public AirlineIdVO getId() {
 		return id;
-
 	}
 
 	@Basic(optional = false)
-	@Column(name="DESCRITPTION", nullable = false)
+	@Column(name="DESCRIPTION", nullable = false)
 	public String getDescription() {
 		return description;
 	}
@@ -54,14 +51,16 @@ public class AirlineVO extends CommonVO {
 		this.id = id;
 	}
 
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
-	public boolean isCancelled() {
-		return cancelled;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		AirlineVO airlineVO = (AirlineVO) o;
+		return id.equals(airlineVO.id) && Objects.equals(description, airlineVO.description);
 	}
 
-	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, description);
 	}
-
 }

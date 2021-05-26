@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.announce.ent.service;
 import cm.packagemanager.pmanager.announce.ent.dao.ReservationDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
@@ -51,20 +52,19 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public List<ReservationVO> reservationsByUser(Long userId, PageBy pageBy) throws Exception {
+	public List reservationsByUser(Long userId,ReservationType type, PageBy pageBy) throws Exception {
 
-		return reservationDAO.findByUser(ReservationVO.class,userId,pageBy);
+		return reservationDAO.reservationByUser(userId,type,pageBy);
 	}
 
 	@Override
-	public List<ReservationVO> otherReservationsByUser(Long userId, PageBy pageBy) throws Exception {
+	public List<ReservationVO> receivedReservations(Long userId, PageBy pageBy) throws Exception {
 
 		return reservationDAO.otherReservations(userId,pageBy);
 	}
 
 	@Override
 	public List<ReservationVO> reservationsByAnnounce(Long announceId, PageBy pageBy) throws Exception {
-
-		return reservationDAO.findBy(ReservationVO.FINDBYANNOUNCE,ReservationVO.class,announceId,"announceId",pageBy);
+		return reservationDAO.reservationByAnnounce(announceId,pageBy);
 	}
 }

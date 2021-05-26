@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.ws.controller.rest.reservation;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
@@ -12,7 +13,6 @@ import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -24,7 +24,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -233,7 +232,7 @@ public class ReservationController extends CommonController {
 	}
 
 	/**
-	 *  Cette methode recherche toutes les reservations d'un utilisateur
+	 *  Cette methode recherche toutes les reservations créees par un utilisateur
 	 * @param response
 	 * @param request
 	 * @param userId
@@ -242,7 +241,7 @@ public class ReservationController extends CommonController {
 	 * @return
 	 * @throws Exception
 	 */
-	@ApiOperation(value = "Retrieve reservations by user with an ID",response = ResponseEntity.class)
+	@ApiOperation(value = "Retrieve user reservations",response = ResponseEntity.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -250,40 +249,35 @@ public class ReservationController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful retrieval",
 					response = ResponseEntity.class, responseContainer = "List") })
-	@RequestMapping(value =BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+	@RequestMapping(value =BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<PaginateResponse> reservationsByUser(HttpServletResponse response, HttpServletRequest request,
-	                                                           @RequestParam @Valid long userId,
-	                                                           @RequestParam (required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
-	                                                           @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+	                                                                     @RequestParam @Valid long userId,
+	                                                                     @RequestParam @Valid ReservationType type,
+	                                                                     @RequestParam (required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
+	                                                                     @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		HttpHeaders headers = new HttpHeaders();
-		PaginateResponse paginateResponse=new PaginateResponse();
+
 		logger.info("find reservation by user request in");
 		PageBy pageBy= new PageBy(page,size);
 
-		List<ReservationVO> reservations=null;
-
-		List<ReservationVO> otherReservations=null;
-
+		List  reservations=null;
 
 		try{
-			createOpentracingSpan("ReservationController -reservationsByUser");
+				createOpentracingSpan("ReservationController -reservationsByUser");
+				PaginateResponse res=new PaginateResponse();
+				int count=0;
+				reservations = reservationService.reservationsByUser(userId, type,pageBy);
 
-				int count = reservationService.count(userId,pageBy,true);
-			if (count == 0) {
-				headers.add(HEADER_TOTAL, Long.toString(count));
-			} else {
-				reservations = reservationService.reservationsByUser(userId, pageBy);
-				otherReservations = reservationService.otherReservationsByUser(userId, pageBy);
+				count=CollectionsUtils.size(reservations);
 				if (CollectionsUtils.isNotEmpty(reservations)) {
-					paginateResponse.setCount(count);
+					res.setCount(count);
+					res.setResults(reservations);
 				}
-				paginateResponse.setResults(reservations);
-				headers.add(HEADER_TOTAL, Long.toString(reservations.size()));
-			}
-			return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+				headers.add(HEADER_TOTAL, Long.toString(count));
 
+			return new ResponseEntity<PaginateResponse>(res, headers, HttpStatus.OK);
 		}
 		catch (Exception e){
 			logger.info(" ReservationController - reservationsByUser:Exception occurred while fetching the response from the database.", e);
@@ -311,7 +305,6 @@ public class ReservationController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful retrieval",
 					response = ResponseEntity.class, responseContainer = "List") })
-	//@RequestMapping(value =RESERVATION_WS_BY_ANNOUNCE,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
 	@GetMapping(value = RESERVATION_WS_BY_ANNOUNCE, produces = MediaType.APPLICATION_JSON,headers = HEADER_ACCEPT)
 	public ResponseEntity<PaginateResponse> reservationsByAnnounce(HttpServletResponse response, HttpServletRequest request,
 	                                                           @RequestParam @Valid long announceId,

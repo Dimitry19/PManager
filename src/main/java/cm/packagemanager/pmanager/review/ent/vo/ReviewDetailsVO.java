@@ -1,9 +1,7 @@
 package cm.packagemanager.pmanager.review.ent.vo;
 
 import cm.packagemanager.pmanager.rating.enums.Rating;
-
 import java.io.Serializable;
-import java.util.Date;
 
 public class ReviewDetailsVO implements Serializable {
 

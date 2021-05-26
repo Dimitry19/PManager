@@ -1,6 +1,8 @@
 package cm.packagemanager.pmanager.review.ent.vo;
 
 import javax.persistence.*;
+
+import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.rating.enums.Rating;
@@ -23,7 +25,7 @@ https://github.com/cloudControl/spring-boot-example-app/tree/master/src/main
 @Filters({
 		@Filter(name = FilterConstants.CANCELLED)
 })
-public class ReviewVO extends WSCommonResponseVO {
+public class ReviewVO extends CommonVO {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,8 +45,6 @@ public class ReviewVO extends WSCommonResponseVO {
 	private String title;
 
 	private String details;
-
-	private boolean cancelled;
 
 	private ReviewIdVO reviewId;
 
@@ -102,16 +102,6 @@ public class ReviewVO extends WSCommonResponseVO {
 		return this.details;
 	}
 
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
-	public boolean isCancelled() {
-		return cancelled;
-	}
-
-	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
-	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -130,13 +120,6 @@ public class ReviewVO extends WSCommonResponseVO {
 		this.user = user;
 	}
 
-
-/*
-	public void setRatingUser(UserVO ratingUser) {
-		this.ratingUser = ratingUser;
-	}
-*/
-
 	public void setIndex(int index) {
 		this.index = index;
 	}
@@ -150,6 +133,7 @@ public class ReviewVO extends WSCommonResponseVO {
 		new ReviewVO(user,  index,  details);
 		this.ratingUser=ratingUser;
 	}
+
 	public  ReviewVO(UserVO  user, int index, ReviewDetailsVO details) {
 		Assert.notNull(user, "User must not be null");
 		Assert.notNull(details, "Details must not be null");

@@ -1,27 +1,20 @@
-package cm.packagemanager.pmanager.common.ent.vo;
+package cm.packagemanager.pmanager.common.ent.dao;
 
 import cm.packagemanager.pmanager.common.Constants;
-import cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import org.hibernate.query.Query;
 import java.io.Serializable;
 
 
-public  class CommonFilter<T, ID extends Serializable> extends GenericDAOImpl {
+public abstract class Generic<T, ID extends Serializable> extends CommonGenericDAO {
 
 
-	public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
-		return false;
-	}
+	public abstract boolean updateDelete(Long id) throws BusinessResourceException, UserException ;
 
-	public String composeQuery(Object o, String alias) throws Exception {
-		return null;
-	}
+	public abstract String composeQuery(Object o, String alias) throws Exception ;
 
-	public void composeQueryParameters(Object o, Query query) throws Exception {
-	}
-
+	public abstract void composeQueryParameters(Object o, Query query) throws Exception ;
 
 	public void buildAndOr(StringBuilder hql,boolean addCondition,boolean andOrOr){
 		if (addCondition){

@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.user.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
@@ -37,11 +38,11 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 @Entity(name = "UserVO")
 @Table(name="USER", schema = "PUBLIC")
 @NamedQueries({
-		@NamedQuery(name = UserVO.Q_AC_ITEM, query = "select u from UserVO u where (upper(lastName) like :searchFilter) or(upper(firstName) like :" +
-				"searchFilter ) or(username like :searchFilter) or( email like :searchFilter)  order by firstName"),
-		@NamedQuery(name = UserVO.ALL, query = "select u from UserVO u   order by firstName"),
-		@NamedQuery(name = UserVO.FINDBYID, query = "select u from UserVO u where id  =:id"),
-		@NamedQuery(name = UserVO.USERNAME, query = "select u from UserVO u where username like :username "),
+		@NamedQuery(name = UserVO.Q_AC_ITEM, query = "select u from UserVO u where (upper(u.lastName) like :searchFilter) or(upper(u.firstName) like :" +
+				"searchFilter ) or(u.username like :searchFilter) or( u.email like :searchFilter)  order by u.firstName"),
+		@NamedQuery(name = UserVO.ALL, query = "select u from UserVO u   order by u.firstName"),
+		@NamedQuery(name = UserVO.FINDBYID, query = "select u from UserVO u where u.id  =:id"),
+		@NamedQuery(name = UserVO.USERNAME, query = "select u from UserVO u where u.username like :username "),
 		@NamedQuery(name = UserVO.EMAIL, query = "select u from UserVO u where  u.email =:email "),
 		@NamedQuery(name = UserVO.CONF_TOKEN, query = "select u from UserVO u where  u.confirmationToken =:ctoken "),
 		@NamedQuery(name = UserVO.FACEBOOK, query = "select u from UserVO u where  u.facebookId =:facebookId "),
@@ -53,9 +54,8 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 		@Filter(name = FilterConstants.CANCELLED),
 		@Filter(name= FilterConstants.ACTIVE_MBR)
 })
-//@JsonIgnoreProperties({"roles"})
 @Where(clause= FilterConstants.FILTER_WHERE_USER_CANCELLED)
-public class UserVO extends WSCommonResponseVO {
+public class UserVO extends CommonVO {
 
 
 	private static final long serialVersionUID = 6181438160768077660L;
@@ -126,11 +126,6 @@ public class UserVO extends WSCommonResponseVO {
 	@Column(name = "ACTIVE", insertable=true, updatable = true, nullable=false)
 	private Integer active;
 
-	@Basic(optional = false)
-	@Column(name="CANCELLED")
-	@JsonIgnore
-	private boolean cancelled;
-
 	@Basic(optional = true)
 	@Column(name = "ENABLE_NOTIF")
 	private Boolean enableNotification=true;
@@ -181,6 +176,19 @@ public class UserVO extends WSCommonResponseVO {
 	@JsonProperty
 	private double rating=0;
 
+/*
+	@Formula(value = "select count(id) from ANNOUNCE a where  a.r_user_id = id and a.cancelled is false")
+	private Integer countAnnounce;
+
+	@Transient
+	@JsonProperty
+	public Integer getCountAnnounce() {
+		return countAnnounce;
+	}
+
+	public void setCountAnnounce(Integer countAnnounce) {
+		this.countAnnounce = countAnnounce;
+	}*/
 
 	public UserVO() {
 		super();
@@ -243,11 +251,6 @@ public class UserVO extends WSCommonResponseVO {
 
 	public Gender getGender(){
 		return gender;
-	}
-
-
-	public boolean isCancelled() {
-		return cancelled;
 	}
 
 	public String getFacebookId() {
@@ -392,10 +395,6 @@ public class UserVO extends WSCommonResponseVO {
 
 	public void setPassword(String password) {this.password = password;	}
 
-	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
-	}
-
 	public void setFacebookId(String facebookId) {
 		this.facebookId = facebookId;
 	}
@@ -448,7 +447,6 @@ public class UserVO extends WSCommonResponseVO {
 
 		while (iterator.hasNext()) {
 			MessageVO message = iterator.next();
-
 			message.setUser(null);
 			iterator.remove();
 		}

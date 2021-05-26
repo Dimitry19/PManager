@@ -5,6 +5,10 @@ import java.util.Base64;
 public class PasswordGenerator {
 
 	private static final byte[] keyValue = new byte[] { 'T', 'E', 'S', 'T' };
+	
+	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static Random rnd = new Random(System.currentTimeMillis());
+    private static private final int LENGHT = 10;
 
 	public static String encrypt(String strToEncrypt){
 
@@ -33,6 +37,19 @@ public class PasswordGenerator {
 		return null;
 
 	}
+	
+	
+ 
+    public static String generate() {
+ 
+    	StringBuffer sb = new StringBuffer(LENGHT);
+        /*StringBuilder sb = new StringBuilder(LENGHT);*/
+        for (int i = 0; i < LENGHT; i++) {
+            sb.append(ALPHABET.charAt(rnd.nextInt(ALPHABET.length())));
+        }
+        return sb.toString();
+
+    }
 
 
 }
