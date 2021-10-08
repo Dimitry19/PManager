@@ -10,10 +10,30 @@
 	</parent>
 	<groupId>cm.packagermanager</groupId>
 	<artifactId>pmanager</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>packagemanager</name>
 	<description>Package Manager</description>
+
+	<repositories>
+		<repository>
+			<id>central</id>
+			<name>Maven Central</name>
+			<layout>default</layout>
+			<url>https://repo1.maven.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-releases</id>
+			<name>Spring Releases</name>
+			<url>https://repo.spring.io/release</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -21,8 +41,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!--remplace la version embarquée de Tomcat &ndash;&gt;-->
-		<!--<tomcat.version>8.0.46</tomcat.version>
-		<tomcat.version>9.0.35</tomcat.version>-->
+<!--		<tomcat.version>8.0.46</tomcat.version>-->
+<!--		<tomcat.version>9.0.35</tomcat.version>-->
 	</properties>
 
 	<dependencies>
@@ -52,10 +72,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jersey -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jersey</artifactId>
+			<version>2.3.0.RELEASE</version>
+<!--			<version>2.3.0.RELEASE</version>-->
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
@@ -246,11 +270,12 @@
 		</dependency>
 		<!-- NOTIFICATION FIREBASE END-->
 
-		<!-- WEBSOCKET START-->
+
 		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jetty</artifactId>
 		</dependency>-->
+		<!-- WEBSOCKET START-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
@@ -284,7 +309,17 @@
             <version>19.0.0</version>
             <scope>compile</scope>
         </dependency>
-        <!-- WEBSOCKET END-->
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.ws.rs</groupId>
+			<artifactId>jakarta.ws.rs-api</artifactId>
+			<version>2.1.6</version>
+		</dependency>
+		<!-- WEBSOCKET END-->
 
 	</dependencies>
 
@@ -312,6 +347,31 @@
     				</execution> 
   				</executions> 
 			</plugin>
+
+
+			<!-- Ceci permet de le frontend compilé-->
+
+
+			<!-- <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>npm</executable>
+					<workingDirectory>src/main/resources/frontend/dist/frontEnd</workingDirectory>
+					<arguments>
+						<argument>build</argument>
+					</arguments>
+				</configuration>
+			</plugin>-->
 		</plugins>
 	</build>
 

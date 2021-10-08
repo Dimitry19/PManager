@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.security;
 
 import java.util.Base64;
+import java.util.Random;
 
 public class PasswordGenerator {
 
@@ -8,7 +9,7 @@ public class PasswordGenerator {
 	
 	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static Random rnd = new Random(System.currentTimeMillis());
-    private static private final int LENGHT = 10;
+    private static  final int LENGHT = 10;
 
 	public static String encrypt(String strToEncrypt){
 

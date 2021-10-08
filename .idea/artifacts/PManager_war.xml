@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="pmanager-0.0.1-SNAPSHOT.war">
+    <root id="archive" name="pmanager-1.0.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="PManager:war exploded" />
     </root>
   </artifact>

@@ -8,21 +8,7 @@
       <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
       <user-name>sa</user-name>
-      <schema-mapping>
-        <introspection-scope>
-          <node negative="1">
-            <node kind="database" qname="MANAGER">
-              <node kind="schema">
-                <name qname="PUBLIC" />
-                <name qname="VIEWS" />
-              </node>
-            </node>
-            <node kind="database" qname="PM">
-              <node kind="schema" qname="PUBLIC" />
-            </node>
-          </node>
-        </introspection-scope>
-      </schema-mapping>
+      <introspection-schemas>@:@</introspection-schemas>
     </data-source>
     <data-source name="Hibernate" uuid="f5601717-7195-450b-ad74-d596ce5860c7">
       <database-info product="H2" version="1.4.200 (2019-10-14)" jdbc-version="4.1" driver-name="H2 JDBC Driver" driver-version="1.4.200 (2019-10-14)" dbms="H2" exact-version="1.4.200" exact-driver-version="1.4">
@@ -31,13 +17,6 @@
       <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
       <user-name>sa</user-name>
-      <schema-mapping>
-        <introspection-scope>
-          <node kind="database" qname="@">
-            <node kind="schema" qname="@" />
-          </node>
-        </introspection-scope>
-      </schema-mapping>
     </data-source>
   </component>
 </project>

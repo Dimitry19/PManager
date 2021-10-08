@@ -139,7 +139,9 @@ public class AnnounceVO extends CommonVO {
 	@Formula(value = "select count(id) from RESERVATION r where  r.r_announce_id = id and r.cancelled is false")
 	private Integer countReservation;
 
-	public AnnounceVO(){ super();}
+	public AnnounceVO(){
+		super();
+	}
 
 
 	public Long getId() {

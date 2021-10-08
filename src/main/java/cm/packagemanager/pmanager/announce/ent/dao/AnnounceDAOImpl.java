@@ -70,7 +70,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 			Session session = this.sessionFactory.getCurrentSession();
 			session.enableFilter(FilterConstants.CANCELLED);
 			String where = composeQuery(announceSearch, "a");
-			Query query = session.createQuery("from AnnounceVO  as a " + where);
+			Query query = session.createQuery("from AnnounceVO  as a  join CategoryVO  c " + where);
 			composeQueryParameters(announceSearch, query);
 			return CollectionsUtils.isNotEmpty(query.list()) ? query.list().size() : 0;
 		} else {
@@ -175,8 +175,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 			adto.setCategories(new ArrayList<>());
 			adto.getCategories().add(constants.DEFAULT_CATEGORIE);
 		}
-		double rating = calcolateAverage(announce.getUser());
-		announce.getUserInfo().setRating(rating);
+		//double rating = calcolateAverage(announce.getUser());
+		//announce.getUserInfo().setRating(rating);
 		setAnnounce(announce, user, adto);
 		update(announce);
 		return announce;
@@ -429,7 +429,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (StringUtils.isNotEmpty(announceSearch.getCategory())) {
 				buildAndOr(hql, addCondition, andOrOr);
-				hql.append(alias + ".category.code=:category ");
+				hql.append("c.code=:category ");
 			}
 			/*addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (ObjectUtils.isCallable(announceSearch,"userId")){
