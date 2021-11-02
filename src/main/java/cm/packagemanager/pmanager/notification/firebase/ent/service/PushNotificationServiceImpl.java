@@ -1,12 +1,10 @@
 package cm.packagemanager.pmanager.notification.firebase.ent.service;
 
 
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationRequest;
+import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,7 +34,7 @@ public class PushNotificationServiceImpl implements PushNotificationService{
 		}
 	}
 
-	public void sendPushNotification(NotificationRequest request) {
+	public void sendPushNotification(Notification request) {
 		try {
 			fcmService.sendMessage(getSamplePayloadData(), request);
 		} catch (InterruptedException | ExecutionException e) {
@@ -44,7 +42,7 @@ public class PushNotificationServiceImpl implements PushNotificationService{
 		}
 	}
 
-	public void sendPushNotificationWithoutData(NotificationRequest request) {
+	public void sendPushNotificationWithoutData(Notification request) {
 		try {
 			fcmService.sendMessageWithoutData(request);
 		} catch (InterruptedException | ExecutionException e) {
@@ -53,7 +51,7 @@ public class PushNotificationServiceImpl implements PushNotificationService{
 	}
 
 
-	public void sendPushNotificationToToken(NotificationRequest request) {
+	public void sendPushNotificationToToken(Notification request) {
 		try {
 			fcmService.sendMessageToToken(request);
 		} catch (InterruptedException | ExecutionException e) {
@@ -70,10 +68,12 @@ public class PushNotificationServiceImpl implements PushNotificationService{
 	}
 
 
-	private NotificationRequest getSamplePushNotificationRequest() {
-		NotificationRequest request = new NotificationRequest(defaults.get("title"),
+	private Notification getSamplePushNotificationRequest() {
+		Notification request = new Notification(
+				defaults.get("title"),
 				defaults.get("message"),
-				defaults.get("topic"));
+				defaults.get("topic"),
+				defaults.get("url"));
 		return request;
 	}
 

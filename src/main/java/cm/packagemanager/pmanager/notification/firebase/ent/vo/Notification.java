@@ -1,19 +1,21 @@
 package cm.packagemanager.pmanager.notification.firebase.ent.vo;
 
-public class NotificationRequest {
+public class Notification {
 
 	private String title;
 	private String message;
 	private String topic;
 	private String token;
+	private String url;
 
-	public NotificationRequest() {
+	public Notification() {
 	}
 
-	public NotificationRequest(String title, String messageBody, String topicName) {
+	public Notification(String title, String messageBody, String topicName, String url) {
 		this.title = title;
 		this.message = messageBody;
 		this.topic = topicName;
+		this.url=url;
 	}
 
 	public String getTitle() {
@@ -47,4 +49,8 @@ public class NotificationRequest {
 	public void setToken(String token) {
 		this.token = token;
 	}
+
+	public String getUrl() {return url;	}
+
+	public void setUrl(String url) {this.url = url;	}
 }

@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.websocket.config;
 
+import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -34,13 +35,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/notification");
-		registry.setApplicationDestinationPrefixes("/swns");
+		registry.enableSimpleBroker(WebSocketConstants.PREFIX_DESTINATION_BROKER);
+		registry.setApplicationDestinationPrefixes(WebSocketConstants.PREFIX_DESTINATION_APP);
 	}
+
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/notifications")
-				.setAllowedOrigins("*")
+		registry.addEndpoint(WebSocketConstants.END_POINT)
+				.setAllowedOrigins(WebSocketConstants.ORIGIN_ALL)
 				.withSockJS();
 	}
 	/***
