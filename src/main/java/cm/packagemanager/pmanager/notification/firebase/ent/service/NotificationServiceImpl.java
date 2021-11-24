@@ -64,10 +64,8 @@ public class NotificationServiceImpl implements NotificationService{
 			headerAccessor.setSessionId(listener);
 			headerAccessor.setLeaveMutable(true);
 
-			Notification notification=new Notification(
-					"title", "message","topic","url");
-			messagingTemplate.convertAndSendToUser(
-					listener,
+			Notification notification=new Notification("title", "message","topic","url");
+			messagingTemplate.convertAndSendToUser(listener,
 					SEND,
 					notification,
 					headerAccessor.getMessageHeaders());

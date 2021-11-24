@@ -35,18 +35,18 @@ Client=function () {
 
 			$("#js-start").click(function () {
 				if (stompClient) {
-					stompClient.send("/swns/start", {});
+					stompClient.send("/pm-swns/notification/announce", {});
 				}
 			});
 			$("#js-comment-start").click(function () {
 				if (stompClient) {
-					stompClient.send("/swns/comment/start", {});
+					stompClient.send("/pm-swns/comment/start", {});
 				}
 			});
 
 			$("#js-stop").click(function () {
 				if (stompClient) {
-					stompClient.send("/swns/stop", {});
+					stompClient.send("/pm-swns/stop", {});
 				}
 			});
 		});

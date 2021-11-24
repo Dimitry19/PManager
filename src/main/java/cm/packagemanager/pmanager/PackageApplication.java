@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager;
 
 
+import cm.packagemanager.pmanager.websocket.client.WebSocketSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;

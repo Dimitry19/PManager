@@ -94,6 +94,9 @@ public class WSConstants {
 	/************ NOTIFICATION REQUEST*************/
 	public static final String NOTIFICATION_WS="/ws/notification/*";
 
+	/************ SOCKET NOTIFICATION REQUEST*************/
+	public static final String SOCKET_NOTIFICATION_WS="/ws/socket/notification/*";
+
 
 
 
