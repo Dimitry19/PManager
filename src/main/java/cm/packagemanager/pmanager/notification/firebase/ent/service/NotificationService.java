@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.notification.firebase.ent.service;
 
 import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 
 public interface NotificationService {
 
@@ -10,7 +11,7 @@ public interface NotificationService {
 
 	void sendToUser(String sessionId, long id, String email, String username, Notification notification);
 
-	void add(String sessionId);
+	void add(String sessionId, NotificationType notificationType);
 
 	void remove(String sessionId);
 

@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.ws.controller.rest.notification;
 
 
 import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificationService;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
 import io.swagger.annotations.Api;
 import org.apache.commons.logging.Log;
@@ -29,14 +30,14 @@ public class WebSocketNotificationController {
 
     @MessageMapping("/start")
     public void start(StompHeaderAccessor stompHeaderAccessor) {
-        dispatcher.add(stompHeaderAccessor.getSessionId());
+        dispatcher.add(stompHeaderAccessor.getSessionId(),NotificationType.USER);
     }
 
 
     @MessageMapping(WebSocketConstants.ANNOUNCE_SEND)
     @SendTo(WebSocketConstants.ANNOUNCE_SEND)
     public void announceNotification(StompHeaderAccessor stompHeaderAccessor) {
-        dispatcher.add(stompHeaderAccessor.getSessionId());
+        dispatcher.add(stompHeaderAccessor.getSessionId() , NotificationType.ANNOUNCE);
     }
 
     @MessageMapping("/comment/start")

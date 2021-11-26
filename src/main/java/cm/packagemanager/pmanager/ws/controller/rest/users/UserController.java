@@ -35,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -84,14 +85,14 @@ public class UserController extends CommonController {
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(usr.getError());
 
-					return new ResponseEntity<Response>(pmResponse,HttpStatus.CONFLICT);
+					return new ResponseEntity<>(pmResponse,HttpStatus.CONFLICT);
 				}
 
 				if(usr==null){
 
 					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
-					return new ResponseEntity<Response>(pmResponse,HttpStatus.CONFLICT);
+					return new ResponseEntity<>(pmResponse,HttpStatus.CONFLICT);
 				}
 
 				com.sendgrid.Response sent = userService.buildAndSendMail(request,usr);
@@ -100,21 +101,21 @@ public class UserController extends CommonController {
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
 					response.setStatus(200);
-					return new ResponseEntity<Response>(pmResponse,HttpStatus.OK);
+					return new ResponseEntity<>(pmResponse,HttpStatus.OK);
 
 				}else{
 					pmResponse.setRetCode(sent.getStatusCode());
 					pmResponse.setRetDescription(sent.getBody());
 					response.setStatus(sent.getStatusCode());
 					userService.remove(usr);
-					return new ResponseEntity<Response>(pmResponse,HttpStatus.INTERNAL_SERVER_ERROR);
+					return new ResponseEntity<>(pmResponse,HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 			}
 		}catch (Exception e){
 			logger.error("Errore eseguendo register: ", e);
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
-			return new ResponseEntity<Response>(pmResponse,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(pmResponse,HttpStatus.INTERNAL_SERVER_ERROR);
 		}finally {
 			finishOpentracingSpan();
 		}
@@ -189,7 +190,7 @@ public class UserController extends CommonController {
 			logger.error("Errore eseguendo confirm: ", e);
 			throw e;
 		}finally {finishOpentracingSpan(); }
-		return new ResponseEntity<Response>(pmResponse,HttpStatus.OK);
+		return new ResponseEntity<>(pmResponse,HttpStatus.OK);
 	}
 
 	@ApiOperation(value = " Login user ",response = UserVO.class)
@@ -206,6 +207,7 @@ public class UserController extends CommonController {
 	ResponseEntity<UserVO> login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login)	throws Exception{
 		logger.info("login request in");
 		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.addCookie(new Cookie("username", login.getUsername()));
 		UserVO user = null;
 
 		try{
@@ -217,7 +219,6 @@ public class UserController extends CommonController {
 				if(user!=null){
 					user.setRetCode(WebServiceResponseCode.OK_CODE);
 					user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
-					notificationService.add("");
 					return  new ResponseEntity<UserVO>(user,HttpStatus.OK);
 				}else{
 					user=new UserVO();
@@ -747,6 +748,24 @@ public class UserController extends CommonController {
 		return null;
 	}
 
+	@RequestMapping(value = USER_WS_LOGOUT, method = RequestMethod.GET,headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
+	public @ResponseBody ResponseEntity<Response> logout(HttpServletRequest request, HttpServletResponse response,@PathVariable("username") @Valid String username) throws IOException {
+		for (Cookie cookie : request.getCookies()) {
+			if (cookie.getName().equalsIgnoreCase(username)) {
+				cookie.setValue(null);
+				cookie.setMaxAge(0);
+				cookie.setPath(request.getContextPath());
+				response.addCookie(cookie);
+			}
+		}
+		/*response.sendRedirect("/");
+		return "redirect:/";*/
+		Response pmResponse =new Response();
+		pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+		pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+		return new ResponseEntity<>(pmResponse,HttpStatus.OK);
+	}
+
 	private ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, List<UserVO> users) {
 		if(CollectionsUtils.isEmpty(users)){
 			headers.add(HEADER_TOTAL, Long.toString(0));
@@ -755,6 +774,6 @@ public class UserController extends CommonController {
 			paginateResponse.setResults(users);
 			headers.add(HEADER_TOTAL, Long.toString(users.size()));
 		}
-		return new ResponseEntity<PaginateResponse>(paginateResponse, HttpStatus.OK);
+		return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
 	}
 }

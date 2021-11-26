@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.notification.firebase.ent.service;
 
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.
 import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.SEND;
 
 @Service
-public class NotificationServiceImpl implements NotificationService{
+public class NotificationServiceImpl  implements NotificationService{
 
 	private static Logger logger = LoggerFactory.getLogger(NotificationServiceImpl.class);
 
@@ -95,7 +96,7 @@ public class NotificationServiceImpl implements NotificationService{
 	}
 
 	@Override
-	public void add(String sessionId) {
+	public void add(String sessionId, NotificationType notificationType) {
 		if (StringUtils.isNotEmpty(sessionId)){
 			listeners.add(sessionId);
 		}

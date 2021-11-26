@@ -6,9 +6,7 @@
     </facet>
     <facet type="web" name="Web">
       <configuration>
-        <webroots>
-          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
-        </webroots>
+        <webroots />
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
@@ -20,7 +18,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="Entities" />
+          <factory-entry name="Entities" value="5bd01531-bd90-4f79-9ad4-e345b761356f" />
           <factory-entry name="PManager" value="5bd01531-bd90-4f79-9ad4-e345b761356f" />
         </datasource-mapping>
         <naming-strategy-map />

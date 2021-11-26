@@ -1,3 +1,5 @@
+-- AJOURNE LE 26/11/2021
+
 --Sequeunces batch
 --create sequence HIBERNATE_SEQUENCE;
 --create sequence BATCH_STEP_EXECUTION_SEQ;
@@ -121,6 +123,23 @@ create table USER_ROLE
         foreign key (R_USER) references USER (ID),
     constraint FKN1RN9QODD3U4LE8UF3KL33QE3
         foreign key (ROLE_ID) references ROLE (ID)
+);
+
+create table NOTIFICATION
+(
+    ID            BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_4C0C169B_FD14_40FE_87B7_31A8A97D07B3) auto_increment
+        primary key,
+    CANCELLED     BOOLEAN      not null,
+    DATECREATED   TIMESTAMP(26, 6),
+    LASTUPDATED   TIMESTAMP(26, 6),
+    R_ANNOUNCE_ID BIGINT,
+    MESSAGE       VARCHAR(10)  not null,
+    R_USER_ID     BIGINT,
+    SESSION_ID    VARCHAR(255) not null,
+    STATUS        VARCHAR(10)  not null,
+    TITLE         VARCHAR(10)  not null,
+    TYPE          VARCHAR(10)  not null,
+    USER_ID       BIGINT       not null
 );
 
 /*

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2021.  PManager entièrement realisé par Dimitri Sime.
+ * Tous les droits lui sont exclusivement réservés
+ */
+
 package cm.packagemanager.pmanager.announce.ent.vo;
 
 
@@ -8,6 +13,7 @@ import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
+import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -40,14 +46,17 @@ import java.util.Set;
 @Where(clause= FilterConstants.FILTER_ANNOUNCE_CANC_COMPLETED)
 public class AnnounceVO extends CommonVO {
 
-	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
-	public static final String FINDBYTYPE="cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByType";
-	public static final String SQL_FIND_BY_USER=" FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
-	public static final String ANNOUNCE_STATUS=" FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
+	private static final long serialVersionUID = -6128390864869421614L;
+
+
+	public static final String FINDBYUSER = "cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
+	public static final String FINDBYTYPE = "cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByType";
+	public static final String SQL_FIND_BY_USER = " FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
+	public static final String ANNOUNCE_STATUS = " FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID",nullable = false,unique = true)
+	@Column(name = "ID", nullable = false, unique = true)
 	private Long id;
 
 	@Basic(optional = false)
@@ -70,11 +79,11 @@ public class AnnounceVO extends CommonVO {
 	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	private Date endDate;
 
-	@OneToOne(cascade =CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private ImageVO image;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="TRANSPORT", updatable = true, nullable = false)
+	@Column(name = "TRANSPORT", nullable = false)
 	private TransportEnum transport;
 
 	@Basic(optional = false)
@@ -94,42 +103,42 @@ public class AnnounceVO extends CommonVO {
 	private BigDecimal weight;
 
 	@Basic(optional = false)
-	@Column(name = "REMAIN_WEIGHT", updatable = true)
+	@Column(name = "REMAIN_WEIGHT")
 	private BigDecimal remainWeight;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "ANNOUNCE_TYPE",length = 10)
+	@Column(name = "ANNOUNCE_TYPE", length = FieldConstants.ENUM_LEN)
 	private AnnounceType announceType;
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
-	@JoinColumn(name="R_USER_ID", updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "R_USER_ID", updatable = false)
 	@JsonBackReference
 	@JsonProperty
 	private UserVO user;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "STATUS",length = 10)
+	@Column(name = "STATUS", length = FieldConstants.ENUM_LEN)
 	private StatusEnum status;
 
 	@Basic(optional = false)
-	@Column(name = "DESCRIPTION", nullable = true)
+	@Column(name = "DESCRIPTION")
 	private String description;
 
 	@Transient
 	private String descriptionTransport;
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
 	@JoinTable(name = "ANNOUNCE_CATEGORY", joinColumns = @JoinColumn(name = "ANNOUNCE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
 	@JsonProperty
-	private Set<CategoryVO> categories=new HashSet<>();
+	private Set<CategoryVO> categories = new HashSet<>();
 
 	@Access(AccessType.PROPERTY)
-	@OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE}, mappedBy="announce",fetch=FetchType.LAZY)
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.MERGE}, mappedBy = "announce", fetch = FetchType.LAZY)
 	@JsonManagedReference
 	@OrderBy(clause = "id.id ASC")
 	@Where(clause = "cancelled=false")
-	private Set<MessageVO> messages=new HashSet<>();
+	private Set<MessageVO> messages = new HashSet<>();
 
 	private AnnounceIdVO announceId;
 
@@ -139,7 +148,7 @@ public class AnnounceVO extends CommonVO {
 	@Formula(value = "select count(id) from RESERVATION r where  r.r_announce_id = id and r.cancelled is false")
 	private Integer countReservation;
 
-	public AnnounceVO(){
+	public AnnounceVO() {
 		super();
 	}
 
@@ -184,7 +193,7 @@ public class AnnounceVO extends CommonVO {
 		this.arrival = arrival;
 	}
 
-	public TransportEnum  getTransport() {
+	public TransportEnum getTransport() {
 		//setDescriptionTransport(this.transport.toValue());
 		setDescriptionTransport("");
 
@@ -235,7 +244,7 @@ public class AnnounceVO extends CommonVO {
 		this.price = price;
 	}
 
-	public AnnounceType getAnnounceType(){
+	public AnnounceType getAnnounceType() {
 		return announceType;
 	}
 
@@ -243,7 +252,7 @@ public class AnnounceVO extends CommonVO {
 		this.announceType = announceType;
 	}
 
-	public StatusEnum getStatus(){
+	public StatusEnum getStatus() {
 		return status;
 	}
 
@@ -264,10 +273,11 @@ public class AnnounceVO extends CommonVO {
 	}
 
 	public void setUser(UserVO user) {
-		this.user = user;
-		userInfo= new UserInfo(user);
+		if (user != null){
+			this.user = user;
+		userInfo = new UserInfo(user);
+	  }
 	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -354,7 +364,7 @@ public class AnnounceVO extends CommonVO {
 
 	public void updateDeleteChildrens() {
 
-		this.messages.stream().forEach(message ->{
+		this.messages.forEach(message ->{
 			message.setCancelled(true);
 		} );
 	}
@@ -375,7 +385,7 @@ public class AnnounceVO extends CommonVO {
 		if (getClass() != obj.getClass())
 			return false;
 		AnnounceVO other = (AnnounceVO) obj;
-		if (id != other.id)
+		if (id.equals(other.id))
 			return false;
 		if (user == null) {
 			if (other.user != null)
