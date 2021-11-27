@@ -11,22 +11,6 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.*;
 
-/*@Configuration
-@EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-
-	@Override
-	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.setApplicationDestinationPrefixes("/app")
-				.enableSimpleBroker("/socket");
-	}
-
-	@Override public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/socket")
-				.setAllowedOrigins("*")
-				.withSockJS();
-	}
-}*/
 
 /*https://www.codesandnotes.be/2020/03/31/websocket-based-notification-system-using-spring/*/
 

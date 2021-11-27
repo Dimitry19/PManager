@@ -16,6 +16,7 @@ public abstract class Generic<T, ID extends Serializable> extends CommonGenericD
 
 	public abstract void composeQueryParameters(Object o, Query query) throws Exception ;
 
+
 	public void buildAndOr(StringBuilder hql,boolean addCondition,boolean andOrOr){
 		if (addCondition){
 			if (!andOrOr) {

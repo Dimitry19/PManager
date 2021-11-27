@@ -7,6 +7,7 @@ package cm.packagemanager.pmanager.announce.ent.dao;
  *
  * */
 import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
+import cm.packagemanager.pmanager.announce.event.AnnounceEvent;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
@@ -22,6 +23,8 @@ import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.*;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
+import cm.packagemanager.pmanager.common.event.IEvent;
+import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
@@ -41,7 +44,7 @@ import java.util.*;
 
 
 @Repository
-public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
+public class AnnounceDAOImpl extends Generic implements AnnounceDAO , IEvent {
 
 	private static Logger logger = LoggerFactory.getLogger(AnnounceDAOImpl.class);
 
@@ -59,6 +62,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 	@Autowired
 	protected QueryUtils queryUtils;
+
+	@Autowired
+	NotificatorServiceImpl notificatorServiceImpl;
 
 
 	@Override
@@ -151,6 +157,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 			announce.setCancelled(false);
 			save(announce);
 			addAnnounceToUser(announce);
+
+
 			return announce;
 		}
 		return null;
@@ -519,6 +527,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 	}
 
 
+
 	private void handleCategories(AnnounceVO announce, List<String> categories) throws Exception {
 
 		announce.getCategories().clear();
@@ -540,5 +549,14 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 				}
 			});
 		}
+	}
+
+	@Override
+	public void generateEvent(Class clazz) {
+
+		AnnounceEvent event = null;
+
+		notificatorServiceImpl.addEvent(null);
+
 	}
 }

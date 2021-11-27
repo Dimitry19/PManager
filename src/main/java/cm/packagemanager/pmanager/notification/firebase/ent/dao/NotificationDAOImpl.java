@@ -25,6 +25,11 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
     }
 
     @Override
+    public void add(NotificationVO notification) throws Exception {
+        save(notification);
+    }
+
+    @Override
     public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
         return false;
     }

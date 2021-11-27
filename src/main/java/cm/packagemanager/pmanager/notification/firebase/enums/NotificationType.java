@@ -5,6 +5,7 @@ import cm.packagemanager.pmanager.common.utils.StringUtils;
 public enum NotificationType {
 
     USER("Notification utilisateur"),
+    COMMENT("Notification utilisateur"),
     ANNOUNCE("Notification annonce");
 
     String value;

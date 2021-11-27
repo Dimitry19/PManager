@@ -9,4 +9,6 @@ import java.util.List;
 public interface NotificationDAO extends CommonDAO {
 
     List<NotificationVO>  all() throws Exception;
+
+    void add(NotificationVO notification) throws Exception;
 }

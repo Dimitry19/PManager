@@ -14,6 +14,9 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
 import static cm.packagemanager.pmanager.constant.WSConstants.SOCKET_NOTIFICATION_WS;
 
 @Controller
@@ -24,7 +27,7 @@ public class WebSocketNotificationController {
 
     protected final Log logger = LogFactory.getLog(WebSocketNotificationController.class);
 
-    @Autowired
+    @Resource(name = "notificator")
     private  NotificationService dispatcher;
 
 
@@ -34,15 +37,15 @@ public class WebSocketNotificationController {
     }
 
 
-    @MessageMapping(WebSocketConstants.ANNOUNCE_SEND)
-    @SendTo(WebSocketConstants.ANNOUNCE_SEND)
+    @MessageMapping(WebSocketConstants.SUSCRIBE_QUEUE_ANNOUNCE_SEND)
+    @SendTo(WebSocketConstants.SUSCRIBE_QUEUE_ANNOUNCE_SEND)
     public void announceNotification(StompHeaderAccessor stompHeaderAccessor) {
         dispatcher.add(stompHeaderAccessor.getSessionId() , NotificationType.ANNOUNCE);
     }
 
     @MessageMapping("/comment/start")
     public void commentStart(StompHeaderAccessor stompHeaderAccessor) {
-        dispatcher.addComment(stompHeaderAccessor.getSessionId(), null);
+        dispatcher.add(stompHeaderAccessor.getSessionId(), NotificationType.COMMENT);
     }
 
     @MessageMapping("/stop")

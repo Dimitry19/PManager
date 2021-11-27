@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.websocket.listeners;
 
+import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class WebSocketEventListener {
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
 
     @Autowired
+    NotificatorServiceImpl notificationService;
+
+    @Autowired
     private SimpMessageSendingOperations messagingTemplate;
 
     @EventListener
@@ -29,21 +33,23 @@ public class WebSocketEventListener {
         StompHeaderAccessor stompAccessor = StompHeaderAccessor.wrap(event.getMessage());
         @SuppressWarnings("rawtypes")
         GenericMessage connectHeader = (GenericMessage) stompAccessor
-                .getHeader(SimpMessageHeaderAccessor.CONNECT_MESSAGE_HEADER); // FIXME find a way to pass the username
+                .getHeader(SimpMessageHeaderAccessor.CONNECT_MESSAGE_HEADER);
         // to the server
         @SuppressWarnings("unchecked")
         Map<String, List<String>> nativeHeaders = (Map<String, List<String>>) connectHeader.getHeaders()
                 .get(SimpMessageHeaderAccessor.NATIVE_HEADERS);
 
        if (nativeHeaders!=null){
-           String login = nativeHeaders.get("userId").get(0);
+           String user = nativeHeaders.get("user").get(0);
            String sessionId = stompAccessor.getSessionId();
-           logger.info("Chat connection by user <{}> with sessionId <{}>", login, sessionId);
+           logger.info(" Connection by user <{}> with sessionId <{}>", user, sessionId);
+
+           notificationService.addConnectedUser(user,sessionId);
+
+
+           //TODO
 
        }
-
-
-
     }
 
     @EventListener
@@ -51,6 +57,11 @@ public class WebSocketEventListener {
         StompHeaderAccessor stompAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String sessionId = stompAccessor.getSessionId();
         logger.info("Chat connection by user <{}> with sessionId <{}>", "Nop", sessionId);
+        notificationService.removeConnectedUser(sessionId);
+
+
+
+        //TODO
 
     }
 }

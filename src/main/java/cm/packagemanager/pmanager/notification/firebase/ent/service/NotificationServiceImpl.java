@@ -19,10 +19,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.NOTIFY_SEND;
-import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.SEND;
+import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.*;
 
-@Service
+//@Service
 public class NotificationServiceImpl  implements NotificationService{
 
 	private static Logger logger = LoggerFactory.getLogger(NotificationServiceImpl.class);
@@ -31,8 +30,6 @@ public class NotificationServiceImpl  implements NotificationService{
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
 
-	private Set<String> listeners = new HashSet<>();
-	private Map<String,String> commentListeners = new HashMap<>();
 
 
 	/**
@@ -67,7 +64,7 @@ public class NotificationServiceImpl  implements NotificationService{
 
 			Notification notification=new Notification("title", "message","topic","url");
 			messagingTemplate.convertAndSendToUser(listener,
-					SEND,
+					SUSCRIBE_QUEUE_ITEM_SEND,
 					notification,
 					headerAccessor.getMessageHeaders());
 		}
@@ -90,24 +87,26 @@ public class NotificationServiceImpl  implements NotificationService{
 			int value = (int) Math.round(Math.random() * 100d);
 			messagingTemplate.convertAndSendToUser(
 					listener,
-					SEND,
+					SUSCRIBE_QUEUE_ITEM_SEND,
 					notification,
 					headerAccessor.getMessageHeaders());
 	}
 
 	@Override
 	public void add(String sessionId, NotificationType notificationType) {
+
+		switch (notificationType){
+			case ANNOUNCE:
+				announceListeners.put("",sessionId);
+				break;
+			case USER:
+				break;
+		}
 		if (StringUtils.isNotEmpty(sessionId)){
 			listeners.add(sessionId);
 		}
 	}
 
-	@Override
-	public void addComment(String sessionId, String user) {
-		if (StringUtils.isNotEmpty(sessionId) && StringUtils.isNotEmpty(user)){
-			commentListeners.put(user,sessionId);
-		}
-	}
 
 	@Override
 	public void remove(String sessionId) {
