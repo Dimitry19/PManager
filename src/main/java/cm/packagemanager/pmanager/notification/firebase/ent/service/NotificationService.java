@@ -1,16 +1,34 @@
 package cm.packagemanager.pmanager.notification.firebase.ent.service;
 
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationRequest;
+import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 
-public interface NotificationService {
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-	public void notify(NotificationRequest notification, String username);
+public  interface NotificationService {
+
+
+	Set<String> listeners = new HashSet<>();
+	Map commentListeners = new HashMap<>();
+	Map userListeners = new HashMap<>();
+	Map announceListeners = new HashMap<>();
+	Map connectedUsers= new HashMap();
+	Map sessionUserMap = new HashMap<>();
+
+
+	public void notify(Notification notification, String username);
 
 	void dispatch();
 
-	void sendToUser(String sessionId, long id, String email, String username, NotificationRequest notification);
+	void sendToUser(String sessionId, long id, String email, String username, Notification notification);
 
-	void add(String sessionId);
+	void add(String sessionId, NotificationType notificationType);
 
-	void remove(String sessionId);
+	void remove(String id);
+
+
+
 }

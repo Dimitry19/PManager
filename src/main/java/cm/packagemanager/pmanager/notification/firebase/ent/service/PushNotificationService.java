@@ -1,14 +1,14 @@
 package cm.packagemanager.pmanager.notification.firebase.ent.service;
 
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationRequest;
+import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
 
 public interface PushNotificationService {
 	void sendSamplePushNotification();
 
-	void sendPushNotification(NotificationRequest request);
+	void sendPushNotification(Notification request);
 
-	void sendPushNotificationToToken(NotificationRequest request);
+	void sendPushNotificationToToken(Notification request);
 
-	void sendPushNotificationWithoutData(NotificationRequest request);
+	void sendPushNotificationWithoutData(Notification request);
 
 }

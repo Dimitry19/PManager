@@ -74,8 +74,8 @@ public class ImageServiceImpl implements ImageService{
 	@Override
 	public ImageVO save(String data, Long id, UploadImageType type) throws Exception {
 
-		String ext=fileUtils.retrieveImageExtension(data);
-		data=fileUtils.clean(data);
+		String ext=fileUtils.getExtension(data);
+		//data=fileUtils.clean(data);
 		ImageVO image = new ImageVO(fileUtils.compressBytes(data.getBytes()));
 		switch (type.name()){
 			case USER_TYPE_IMG_UPLOAD:

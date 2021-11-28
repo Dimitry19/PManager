@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DefaultController {
 	private static final Logger logger = LoggerFactory.getLogger(DefaultController.class);
 
-//	@GetMapping(value = "/")
+    @GetMapping(value = "/")
 	public ResponseEntity<String> ping() {
 		logger.info("Démarrage des services OK .....");
 		return new ResponseEntity<String>("Réponse du serveur: "+HttpStatus.OK.name(), HttpStatus.OK);
 	}
 
-	@RequestMapping("/")
+	@RequestMapping("/index")
 	public String index() {
 
 		return "index";

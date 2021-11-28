@@ -12,6 +12,7 @@ public class WebServiceResponseCode
 	public static final String CANCELLED_USER_LABEL = "L'utilisateur a ete elimine correctement";
 	public static final String RETRIVEVE_PASSWORD_LABEL = "Le mot de posse a ete envoye correctement...";
 	public static final String LOGIN_OK_LABEL = "Login effectue correctement";
+	public static final String LOGOUT_OK_LABEL = "Logout effectue correctement";
 	public static final String USER_REGISTER_LABEL = "Enregistrement complete, consultez votre email pour confirmer votre enregistrement";
 	public static final String USER_REGISTER_ACTIVE_LABEL = "Votre compte a ete active.. effectuez le login";
 

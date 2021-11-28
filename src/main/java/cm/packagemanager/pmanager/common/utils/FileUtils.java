@@ -6,9 +6,9 @@ import java.util.Base64;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,12 +19,30 @@ import javax.xml.bind.DatatypeConverter;
 public class FileUtils {
 	protected final Log logger = LogFactory.getLog(FileUtils.class);
 
+
+	public String getExtension(String data) throws Exception{
+
+		JSONObject json = new JSONObject(data);
+		String type = json.getString("type");
+
+		if(StringUtils.isNotEmpty(type) && StringUtils.equals(type, "image/png")){
+			return StringUtils.concatenate(".png");
+		}
+
+		if(StringUtils.isNotEmpty(type) && StringUtils.equals(type, "image/jpeg")){
+			return StringUtils.concatenate(".jpeg");
+		}
+		throw  new Exception("Please select a picture in .png.jpg format");
+
+	}
+
+
 	public String retrieveImageExtension(String base64File) throws Exception{
 		if (io.micrometer.core.instrument.util.StringUtils.isBlank(base64File)) {
 			throw  new Exception("Please select a picture in .png.jpg format");
-		} else if (base64File.indexOf("data:image/png;") != -1) {
+		} else if (base64File.indexOf("image/png;") != -1) {
 			return StringUtils.concatenate(".png");
-		} else if (base64File.indexOf("data:image/jpeg;") != -1) {
+		} else if (base64File.indexOf("image/jpeg;") != -1) {
 			return StringUtils.concatenate(".jpeg");
 		}else{
 			throw  new Exception("Please select a picture in .png.jpg format");

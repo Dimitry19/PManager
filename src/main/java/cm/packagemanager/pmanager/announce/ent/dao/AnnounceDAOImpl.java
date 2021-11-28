@@ -7,6 +7,7 @@ package cm.packagemanager.pmanager.announce.ent.dao;
  *
  * */
 import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
+import cm.packagemanager.pmanager.announce.event.AnnounceEvent;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
@@ -22,6 +23,8 @@ import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.*;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
+import cm.packagemanager.pmanager.common.event.IEvent;
+import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
@@ -41,7 +44,7 @@ import java.util.*;
 
 
 @Repository
-public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
+public class AnnounceDAOImpl extends Generic implements AnnounceDAO , IEvent {
 
 	private static Logger logger = LoggerFactory.getLogger(AnnounceDAOImpl.class);
 
@@ -60,6 +63,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 	@Autowired
 	protected QueryUtils queryUtils;
 
+	@Autowired
+	NotificatorServiceImpl notificatorServiceImpl;
+
 
 	@Override
 	@Transactional(readOnly = true)
@@ -70,7 +76,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 			Session session = this.sessionFactory.getCurrentSession();
 			session.enableFilter(FilterConstants.CANCELLED);
 			String where = composeQuery(announceSearch, "a");
-			Query query = session.createQuery("from AnnounceVO  as a " + where);
+			Query query = session.createQuery("from AnnounceVO  as a  join CategoryVO  c " + where);
 			composeQueryParameters(announceSearch, query);
 			return CollectionsUtils.isNotEmpty(query.list()) ? query.list().size() : 0;
 		} else {
@@ -151,6 +157,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 			announce.setCancelled(false);
 			save(announce);
 			addAnnounceToUser(announce);
+
+
 			return announce;
 		}
 		return null;
@@ -175,8 +183,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 			adto.setCategories(new ArrayList<>());
 			adto.getCategories().add(constants.DEFAULT_CATEGORIE);
 		}
-		double rating = calcolateAverage(announce.getUser());
-		announce.getUserInfo().setRating(rating);
+		//double rating = calcolateAverage(announce.getUser());
+		//announce.getUserInfo().setRating(rating);
 		setAnnounce(announce, user, adto);
 		update(announce);
 		return announce;
@@ -429,7 +437,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (StringUtils.isNotEmpty(announceSearch.getCategory())) {
 				buildAndOr(hql, addCondition, andOrOr);
-				hql.append(alias + ".category.code=:category ");
+				hql.append("c.code=:category ");
 			}
 			/*addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
 			if (ObjectUtils.isCallable(announceSearch,"userId")){
@@ -519,6 +527,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 	}
 
 
+
 	private void handleCategories(AnnounceVO announce, List<String> categories) throws Exception {
 
 		announce.getCategories().clear();
@@ -540,5 +549,14 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 				}
 			});
 		}
+	}
+
+	@Override
+	public void generateEvent(Class clazz) {
+
+		AnnounceEvent event = null;
+
+		notificatorServiceImpl.addEvent(null);
+
 	}
 }

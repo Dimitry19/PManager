@@ -1,7 +1,7 @@
 package cm.packagemanager.pmanager.notification.firebase.ent.service;
 
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationParameter;
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationRequest;
+import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -41,7 +41,7 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
 	}
 
 	@Override
-	public void sendMessageWithoutData(NotificationRequest request)
+	public void sendMessageWithoutData(Notification request)
 			throws InterruptedException, ExecutionException {
 		Message message = getPreconfiguredMessageWithoutData(request);
 		String response = sendAndGetResponse(message);
@@ -49,7 +49,7 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
 	}
 
 	@Override
-	public void sendMessage(Map<String, String> data, NotificationRequest request)
+	public void sendMessage(Map<String, String> data, Notification request)
 			throws InterruptedException, ExecutionException {
 		Message message = getPreconfiguredMessageWithData(data, request);
 		String response = sendAndGetResponse(message);
@@ -57,7 +57,7 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
 	}
 
 	@Override
-	public void sendMessageToToken(NotificationRequest request)
+	public void sendMessageToToken(Notification request)
 			throws InterruptedException, ExecutionException {
 		Message message = getPreconfiguredMessageToToken(request);
 		String response = sendAndGetResponse(message);
@@ -65,12 +65,12 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
 	}
 
 
-	private Message getPreconfiguredMessageWithData(Map<String, String> data, NotificationRequest request) {
+	private Message getPreconfiguredMessageWithData(Map<String, String> data, Notification request) {
 		return getPreconfiguredMessageBuilder(request).putAllData(data).setTopic(request.getTopic())
 				.build();
 	}
 
-	private Message getPreconfiguredMessageToToken(NotificationRequest request) {
+	private Message getPreconfiguredMessageToToken(Notification request) {
 		return getPreconfiguredMessageBuilder(request).setToken(request.getToken())
 				.build();
 	}
@@ -92,13 +92,13 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
 				.setAps(Aps.builder().setCategory(topic).setThreadId(topic).build()).build();
 	}
 
-	private Message getPreconfiguredMessageWithoutData(NotificationRequest request) {
+	private Message getPreconfiguredMessageWithoutData(Notification request) {
 		return getPreconfiguredMessageBuilder(request).setTopic(request.getTopic())
 				.build();
 	}
 
 
-	private Message.Builder getPreconfiguredMessageBuilder(NotificationRequest request) {
+	private Message.Builder getPreconfiguredMessageBuilder(Notification request) {
 		AndroidConfig androidConfig = getAndroidConfig(request.getTopic());
 		ApnsConfig apnsConfig = getApnsConfig(request.getTopic());
 
