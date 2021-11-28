@@ -38,7 +38,7 @@ public class WebSocketNotificationController {
 
 
     @MessageMapping(WebSocketConstants.SUSCRIBE_QUEUE_ANNOUNCE_SEND)
-    @SendTo(WebSocketConstants.SUSCRIBE_QUEUE_ANNOUNCE_SEND)
+   /// @SendTo(WebSocketConstants.SUSCRIBE_QUEUE_ANNOUNCE_SEND)
     public void announceNotification(StompHeaderAccessor stompHeaderAccessor) {
         dispatcher.add(stompHeaderAccessor.getSessionId() , NotificationType.ANNOUNCE);
     }

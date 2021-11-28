@@ -326,7 +326,7 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 
 	@Override
 	public int countByNameQuery(String queryName, Class<T> clazz, ID id, String paramName,PageBy pageBy) throws Exception {
-hhiih		Session session = this.sessionFactory.getCurrentSession();
+		Session session = this.sessionFactory.getCurrentSession();
 		session.enableFilter(FilterConstants.CANCELLED);
 		Query query = session.createNamedQuery(queryName,clazz);
 		query.setParameter(paramName, id);

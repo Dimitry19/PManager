@@ -365,26 +365,42 @@
 			<!-- Ceci permet de le frontend compilé-->
 
 
-			<!-- <plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.6.0</version>
 				<executions>
 					<execution>
-						<phase>validate</phase>
+						<id>exec-npm-install</id>
+						<phase>package</phase>
+						<configuration>
+							<workingDirectory>src/main/resources/PMFrontend</workingDirectory>
+							<executable>npm</executable>
+							<arguments>
+								<argument>install</argument>
+							</arguments>
+						</configuration>
 						<goals>
 							<goal>exec</goal>
 						</goals>
 					</execution>
+					<execution>
+					<id>exec-npm-ng-build</id>
+					<phase>package</phase>
+					<configuration>
+						<workingDirectory>src/main/resources/PMFrontend</workingDirectory>
+						<executable>ng</executable>
+						<arguments>
+							<argument>build</argument>
+							<argument>--base-href=/pmanager/</argument>
+						</arguments>
+					</configuration>
+					<goals>
+						<goal>exec</goal>
+					</goals>
+				</execution>
 				</executions>
-				<configuration>
-					<executable>npm</executable>
-					<workingDirectory>src/main/resources/frontend/dist/frontEnd</workingDirectory>
-					<arguments>
-						<argument>build</argument>
-					</arguments>
-				</configuration>
-			</plugin>-->
+			</plugin>
 		</plugins>
 	</build>
 

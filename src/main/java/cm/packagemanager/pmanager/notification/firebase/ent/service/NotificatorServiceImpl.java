@@ -14,6 +14,8 @@ import cm.packagemanager.pmanager.notification.firebase.ent.dao.NotificationDAO;
 import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
 import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationVO;
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -22,6 +24,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import static cm.packagemanager.pmanager.notification.firebase.enums.NotificationType.ANNOUNCE;
+import static cm.packagemanager.pmanager.notification.firebase.enums.NotificationType.USER;
 import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.*;
 
 
@@ -30,6 +35,7 @@ import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.
 @EnableScheduling
 public class NotificatorServiceImpl implements NotificationService {
 
+    private static Logger logger = LoggerFactory.getLogger(NotificatorServiceImpl.class);
 
 
     @Autowired
@@ -45,38 +51,47 @@ public class NotificatorServiceImpl implements NotificationService {
     public void addEvent(Event event) { events.add(event);}
 
 
-    public void dispatch(String sessionId, NotificationType type) throws Exception{
+    @Override
+    public void dispatch(){
 
+        logger.info(" dispatch !");
 
+        announceListeners.forEach((k,v)->{
+
+            String sessionId=(String)v;
             SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
             headerAccessor.setSessionId(sessionId);
             headerAccessor.setLeaveMutable(true);
 
-            String queue=null;
-
             NotificationVO notification=new NotificationVO();
+            notification.setMessage("Message test!");
 
-            switch (type){
-                case USER:
+            logger.info(" notification {}",notification.getMessage());
 
-                    queue=SUSCRIBE_QUEUE_ITEM_SEND;
-                    break;
-                case ANNOUNCE:
-                    queue=SUSCRIBE_QUEUE_ITEM_SEND;
-                    break;
+            try {
+                //notificationDAO.add(notification);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            logger.info(" add {} queue {}", sessionId , SUSCRIBE_QUEUE_ANNOUNCE_SEND);
 
-        notificationDAO.add(notification);
-        messagingTemplate.convertAndSendToUser(sessionId,queue,notification,headerAccessor.getMessageHeaders());
+            messagingTemplate.convertAndSendToUser(sessionId,SUSCRIBE_QUEUE_ANNOUNCE_SEND,notification,headerAccessor.getMessageHeaders());
+        });
+
 
     }
 
     @Async
     @Scheduled(fixedRate = 5000)
     public void doNotify() throws IOException {
+        logger.info(" doNotify");
+
+
+        dispatch();
         List<Event> deadEmitters = new ArrayList<>();
         events.forEach(event -> {
             try {
+
 
             } catch (Exception e) {
                 deadEmitters.add(event);
@@ -88,6 +103,9 @@ public class NotificatorServiceImpl implements NotificationService {
 
     @Override
     public void add(String sessionId, NotificationType notificationType) {
+
+        logger.info(" add {} type {}", sessionId , notificationType);
+
 
         switch (notificationType){
             case ANNOUNCE:
@@ -125,10 +143,6 @@ public class NotificatorServiceImpl implements NotificationService {
 
     }
 
-    @Override
-    public void dispatch() {
-
-    }
 
     @Override
     public void sendToUser(String sessionId, long id, String email, String username, Notification notification) {

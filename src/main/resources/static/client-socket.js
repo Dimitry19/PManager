@@ -50,6 +50,7 @@ Client=function () {
 					var headers = {ack: 'client', 'selector': "location = 'Europe'"};
 					//   client.subscribe("/queue/test", message_callback, headers);
 					stompClient.subscribe('/user/notification/item', subscribe_callback);
+					stompClient.subscribe('/user/notification/announce', subscribe_callback);
 				}
 			});
 
