@@ -52,6 +52,8 @@ public interface GenericDAO <T, ID extends Serializable,NID extends Serializable
 
 	void save(T t) throws Exception;
 
+	void persist(T t) throws Exception;
+
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor ={BusinessResourceException.class, Exception.class})
 	T findByNaturalIds(Class<T> clazz,Map naturalIds, String... filters) throws BusinessResourceException;
 

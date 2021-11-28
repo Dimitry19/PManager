@@ -25,8 +25,8 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
     }
 
     @Override
-    public void add(NotificationVO notification) throws Exception {
-        save(notification);
+    public void persist(NotificationVO notification) throws Exception {
+        persist(notification);
     }
 
     @Override

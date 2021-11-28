@@ -97,7 +97,7 @@ public class NotificationServiceImpl  implements NotificationService{
 
 		switch (notificationType){
 			case ANNOUNCE:
-				announceListeners.put("",sessionId);
+				//announceListeners.put("",sessionId);
 				break;
 			case USER:
 				break;

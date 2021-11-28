@@ -381,6 +381,14 @@ public class GenericDAOImpl <T, ID extends Serializable,NID extends Serializable
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void persist(T t) {
+		Session session= sessionFactory.getCurrentSession();
+		session.persist(t);
+		//session.flush();
+	}
+
+	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor ={BusinessResourceException.class, Exception.class})
 	public T update(T t) throws BusinessResourceException {
 		logger.info("Generic update");
