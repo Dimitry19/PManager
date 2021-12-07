@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "opentracing.jaeger.udp-ser.port",
+      "type": "java.lang.String",
+      "description": "Description for opentracing.jaeger.udp-sender.port."
+  }
+] }

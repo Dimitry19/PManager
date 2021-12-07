@@ -1,0 +1,1315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="integration Angular">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-03-28-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-03-29-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-01-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-04-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-05-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-08-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-09-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-11-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-12-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-13-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-14-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-15-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-17-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-18-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-19-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-20-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-21-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-22-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-23-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-26-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PackManager/application.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/_index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/client-socket.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sockjs-0.3.4.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/stomp.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/awselect.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/bootstrap-slider.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/.npmignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/HELP-US-OUT.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/css/font-awesome.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/css/font-awesome.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/css/font-awesome.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/FontAwesome.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/fontawesome-webfont.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/fontawesome-webfont.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/fontawesome-webfont.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/fontawesome-webfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/fontawesome-webfont.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/animated.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/bordered-pulled.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/core.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/fixed-width.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/font-awesome.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/icons.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/larger.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/list.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/mixins.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/path.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/rotated-flipped.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/screen-reader.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/stacked.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/variables.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_animated.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_bordered-pulled.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_core.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_fixed-width.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_icons.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_larger.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_list.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_mixins.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_path.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_rotated-flipped.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_screen-reader.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_stacked.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_variables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/font-awesome.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/background.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/background_signin.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/find.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/loupe.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/profile.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/travel_favicon-removebg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/travel_favicon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/travel_favicon1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/travel_titre.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/user-account.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/zoom-lens.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/js/awselect.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/js/bootstrap-slider.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/js/highlight.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/js/modernizr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/index.html" beforeDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/PManagerBE$PM.ic" NAME="PM Coverage Results" MODIFIED="1614511897375" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="Database" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="Hibernate" type="feb32156:DbDataSourceImpl" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="DefaultController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="29" column="1" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>passwo</find>
+      <find>code</find>
+      <find>transpo</find>
+      <find>cou</find>
+      <find>find</find>
+      <find>announce/</find>
+      <find>update</find>
+      <find>vali</find>
+      <find>mo</find>
+      <find>jar</find>
+      <find>pmana</find>
+      <find>dist</find>
+      <find>data</find>
+      <find>json</find>
+      <find>ResourceHttp</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="Login20200601" />
+              </list>
+            </value>
+          </entry>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/Login20200601" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/service/ServiceAnnounce.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/MailSender.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/service/UserServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/MailSenderManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/AnnounceDTO.java" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console_2.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ProductCategoryDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnouncesVO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/QuartzNoCronConfiguration.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/cron/UserManagerJob.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/cron/QuartzSubmitJobs.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/users/LoginDTO.java" />
+        <option value="$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT.sql" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console_3.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console_4.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/CategoryVO.java" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java" />
+        <option value="5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/IMAGE.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/security/PasswordGenerator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/PMFrontend/src/app/constancesURL.ts" />
+        <option value="$PROJECT_DIR$/src/main/resources/PMFrontend/tsconfig.json" />
+        <option value="$PROJECT_DIR$/src/main/resources/PMFrontend/tsconfig.app.json" />
+        <option value="$PROJECT_DIR$/src/main/resources/PMFrontend/package.json" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/client-socket.js" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/PMFrontend/angular.json" />
+        <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/spring-mvc-demo-servlet.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/dist/index.html" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" />
+    </packageJsonPaths>
+  </component>
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="PManagerBE" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManagerBE" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PManagerBE" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManagerBE" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PManagerBE" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManagerBE" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PManagerBE" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManagerBE" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="SearchEverywhereHistoryKey" value="ResourceHttpHa&#9;PSI&#9;JAVA://org.springframework.web.servlet.resource.ResourceHttpRequestHandler&#10;text/html&#9;FILE&#9;jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home/jre/lib/resources.jar!/javax/swing/text/html/parser/html32.bdtd&#10;content-t&#9;null&#9;null&#10;servl&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ServletInitializer&#10;applicationCont&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.AutowiringSpringBeanJobFactory#setApplicationContext&#10;applicationContext&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.QuartzCronConfiguration#applicationContext&#10;nosni&#9;PSI&#9;JAVA://org.glassfish.jersey.jackson.internal.jackson.jaxrs.cfg.JaxRSFeature#ADD_NO_SNIFF_HEADER&#10;nosniff&#9;PSI&#9;JAVA://org.springframework.security.web.server.header.ContentTypeOptionsServerHttpHeadersWriter#NOSNIFF&#10;appl&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;app&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;Defau&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;pom&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;No&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java&#10;index&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/dist/index.html&#10;webCon&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;application.lo&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/logs/PackManager/application.log&#10;defa&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;application.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;weso&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;commonContro&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java&#10;webs&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;pom.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;Gene&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl&#10;Rese&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.dao.ReservationDAOImpl&#10;RESEVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.vo.ReservationVO&#10;Val&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.enums.ValidateEnum&#10;Annou&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java&#10;Reser&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.reservation.ReservationController&#10;Announce&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;Anno&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;application.p&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;Web&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.websocket.config.WebSocketConfig&#10;Rest&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.administrator.exception.RestExceptionHandler&#10;applica&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;swagger&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.administrator.api.SwaggerConfig&#10;UDT&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO&#10;an&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;messa&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.message.MessageController&#10;UserVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.user.ent.vo.UserVO&#10;REVI&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.review.ent.dao.ReviewDAOImpl&#10;Announc&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java&#10;Batch&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.BatchConfig&#10;AnnounceCOn&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.announce.AnnounceController&#10;AnnounceVO&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;announ&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/AnnounceDTO.java&#10;USCO&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java&#10;AnnounceIm&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAOImpl&#10;Ann&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;Mail&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.mail.MailSender&#10;Mai&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.mail.MailSender" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.database.dataSource.DataSourceTemplate" value="H2" />
+    <property name="database.console.LAST_STATE" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="Console" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/src/main/resources/PMFrontend/node_modules/typescript/lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/templates" />
+      <recent name="$PROJECT_DIR$/src/main/resources/dist" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.PM">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <properties />
+      <listeners />
+    </configuration>
+    <list>
+      <item itemvalue="Maven.maven-clean" />
+      <item itemvalue="Maven.maven-package" />
+      <item itemvalue="Maven.maven-compile" />
+      <item itemvalue="Maven.maven-install" />
+      <item itemvalue="Spring Boot.PM" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="" />
+      <created>1613503275228</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1613503275228</updated>
+      <workItem from="1613503276527" duration="876000" />
+      <workItem from="1613504399667" duration="5133000" />
+      <workItem from="1613638765729" duration="9485000" />
+      <workItem from="1613809668313" duration="1780000" />
+      <workItem from="1613933308313" duration="2935000" />
+      <workItem from="1614410959688" duration="2262000" />
+      <workItem from="1614463975588" duration="4630000" />
+      <workItem from="1614474957220" duration="8639000" />
+      <workItem from="1614712690300" duration="4474000" />
+      <workItem from="1615112475143" duration="4825000" />
+      <workItem from="1615127328553" duration="5990000" />
+      <workItem from="1615449710841" duration="1517000" />
+      <workItem from="1615638799515" duration="676000" />
+      <workItem from="1615732491839" duration="1172000" />
+      <workItem from="1615880272003" duration="2077000" />
+      <workItem from="1615977503198" duration="1252000" />
+      <workItem from="1616135410208" duration="6117000" />
+      <workItem from="1616874113064" duration="715000" />
+      <workItem from="1616874940816" duration="289000" />
+      <workItem from="1616875373604" duration="329000" />
+      <workItem from="1616942006806" duration="15652000" />
+      <workItem from="1617172290579" duration="13189000" />
+      <workItem from="1617522677076" duration="6867000" />
+      <workItem from="1617628867282" duration="3930000" />
+      <workItem from="1617867820267" duration="5039000" />
+      <workItem from="1618134022507" duration="4995000" />
+      <workItem from="1618472599613" duration="24495000" />
+      <workItem from="1618945773893" duration="4975000" />
+      <workItem from="1619367270695" duration="147000" />
+      <workItem from="1619420153786" duration="12555000" />
+      <workItem from="1620149503256" duration="2076000" />
+      <workItem from="1620922918080" duration="480000" />
+      <workItem from="1621321591621" duration="181000" />
+      <workItem from="1621428555067" duration="103000" />
+      <workItem from="1621432217745" duration="189000" />
+      <workItem from="1621949669531" duration="908000" />
+      <workItem from="1622013962392" duration="10011000" />
+      <workItem from="1622390361186" duration="576000" />
+      <workItem from="1622640391060" duration="274000" />
+      <workItem from="1625819489807" duration="722000" />
+      <workItem from="1626014913597" duration="306000" />
+      <workItem from="1626072408195" duration="219000" />
+      <workItem from="1626236807517" duration="661000" />
+      <workItem from="1630441470121" duration="581000" />
+      <workItem from="1630443973839" duration="133000" />
+      <workItem from="1631083557024" duration="727000" />
+      <workItem from="1633325341151" duration="949000" />
+      <workItem from="1636398902009" duration="233000" />
+      <workItem from="1637486852410" duration="972000" />
+      <workItem from="1638080623296" duration="5777000" />
+      <workItem from="1638092241536" duration="15228000" />
+      <workItem from="1638109027550" duration="7353000" />
+      <workItem from="1638518769700" duration="22176000" />
+      <workItem from="1638784792370" duration="6250000" />
+      <workItem from="1638865613233" duration="10349000" />
+    </task>
+    <task id="LOCAL-00001" summary="Ajout de la categorie de l'annonce">
+      <created>1613510383183</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1613510383183</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Ajout de la categorie de l'annonce">
+      <created>1613639171805</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1613639171805</updated>
+    </task>
+    <task id="LOCAL-00003" summary="commit file de .idea (contraint)">
+      <created>1613639338741</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1613639338742</updated>
+    </task>
+    <task id="LOCAL-00004" summary="commit file de .idea (contraint)">
+      <created>1614461530546</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1614461530547</updated>
+    </task>
+    <task id="LOCAL-00005" summary="log execution time">
+      <created>1614474892766</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1614474892766</updated>
+    </task>
+    <task id="LOCAL-00006" summary="raccourci maven">
+      <created>1615081572302</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1615081572302</updated>
+    </task>
+    <task id="LOCAL-00007" summary="raccourci maven">
+      <created>1615127390812</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1615127390812</updated>
+    </task>
+    <task id="LOCAL-00008" summary="raccourci maven">
+      <created>1615127453933</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1615127453933</updated>
+    </task>
+    <task id="LOCAL-00009" summary="raccourci maven">
+      <created>1615127528297</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1615127528297</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
+      <created>1615142277589</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1615142277589</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
+      <created>1615646492741</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1615646492741</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
+      <created>1616874178995</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1616874178995</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
+      <created>1616874463246</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1616874463246</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
+      <created>1616874558842</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1616874558842</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;PManager.iml">
+      <created>1616874684494</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1616874684494</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;PManager.iml">
+      <created>1616874811066</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1616874811066</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;PManager.iml">
+      <created>1616875437635</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1616875437635</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java">
+      <created>1617349113273</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1617349113273</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java">
+      <created>1617867532519</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1617867532519</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log">
+      <created>1617868201697</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1617868201697</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log">
+      <created>1618481449338</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1618481449338</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1618484437476</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1618484437476</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1618515560924</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1618515560924</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1618951678037</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1618951678037</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1618963559080</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1618963559080</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1619188240525</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1619188240525</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1619435053269</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1619435053269</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1619435149615</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1619435149615</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log">
+      <created>1621952378433</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1621952378433</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log">
+      <created>1621952443730</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1621952443730</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log">
+      <created>1622013993763</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1622013993764</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log">
+      <created>1638107050278</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1638107050278</updated>
+    </task>
+    <task id="LOCAL-00033" summary="test">
+      <created>1638109560386</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1638109560386</updated>
+    </task>
+    <task id="LOCAL-00034" summary="integration Angular">
+      <created>1638116198613</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1638116198613</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="244451000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5114449" side_tool="true" weight="0.56208277" />
+      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Database" order="3" sideWeight="0.49810606" weight="0.19957082" />
+      <window_info id="Structure" order="1" sideWeight="0.5019305" side_tool="true" weight="0.24964234" />
+      <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49810606" weight="0.24964234" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.490701" weight="0.5367156" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
+      <window_info anchor="bottom" id="Messages" order="7" sideWeight="0.48712447" weight="0.49750623" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="bottom" id="Java Enterprise" order="7" sideWeight="0.49928468" weight="0.32843792" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.48354793" weight="0.32843792" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.48855507" visible="true" weight="0.2755611" />
+      <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32969698" />
+      <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="7" sideWeight="0.49570817" type="SLIDING" weight="0.3271028" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.23032904" />
+      <window_info anchor="right" id="Bean Validation" order="3" sideWeight="0.49810606" weight="0.3297568" />
+      <window_info id="Web" order="2" side_tool="true" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="Persistence" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.32917705" />
+      <window_info anchor="right" id="Coverage" order="4" sideWeight="0.50189394" side_tool="true" weight="0.24964234" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Database Console" order="8" sideWeight="0.49928468" weight="0.32901555" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="TypeScript" order="8" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32793018" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Message" order="0" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Persistence" order="8" side_tool="true" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49928468" weight="0.32901555" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.490701" visible="true" weight="0.511658" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49810606" weight="0.24964234" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32901555" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5100143" side_tool="true" weight="0.32901555" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49570817" weight="0.32901555" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info id="Image Layers" order="6" />
+      <window_info anchor="bottom" id="Java Enterprise" order="11" />
+      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.4899857" weight="0.32901555" />
+      <window_info anchor="right" id="Maven Projects" order="5" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.23462088" />
+      <window_info anchor="right" id="Database" order="6" sideWeight="0.49810606" visible="true" weight="0.19957082" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info id="Web" order="7" side_tool="true" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info id="Structure" order="1" sideWeight="0.5019305" side_tool="true" weight="0.24964234" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Coverage" order="10" sideWeight="0.50189394" side_tool="true" weight="0.24964234" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32901555" />
+      <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49810606" weight="0.3297568" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49356222" weight="0.33678755" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Ajout de la categorie de l'annonce" />
+    <MESSAGE value="commit file de .idea (contraint)" />
+    <MESSAGE value="log execution time" />
+    <MESSAGE value="raccourci maven" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;PManager.iml" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log" />
+    <MESSAGE value="test" />
+    <MESSAGE value="integration Angular" />
+    <option name="LAST_COMMIT_MESSAGE" value="integration Angular" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java</url>
+          <line>73</line>
+          <properties />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>183</line>
+          <properties />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>171</line>
+          <properties />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>200</line>
+          <properties />
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>389</line>
+          <properties />
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>441</line>
+          <properties />
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>456</line>
+          <properties />
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>187</line>
+          <properties />
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>184</line>
+          <properties />
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>466</line>
+          <properties />
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>423</line>
+          <properties />
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>425</line>
+          <properties />
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java</url>
+          <line>344</line>
+          <properties />
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>293</line>
+          <properties />
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>82</line>
+          <properties />
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>536</line>
+          <properties />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>533</line>
+          <properties />
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>126</line>
+          <properties />
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>189</line>
+          <properties />
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java</url>
+          <line>328</line>
+          <properties />
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java</url>
+          <line>60</line>
+          <properties />
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/cron/QuartzCronConfiguration.java</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+      </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="47" />
+    </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/trouble-shooting.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/listeners/WebSocketEventListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="46" column="32" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/vo/Notification.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="58" column="63" selection-start-line="58" selection-end-line="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/public/index.html" />
+    <entry file="file://$PROJECT_DIR$/logs/PackManager/application.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1173763" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/PMFrontend/src/assets/images/travel_favicon-removebg.png" />
+    <entry file="file://$PROJECT_DIR$/src/main/resources/dist/travel_titre-removebg.png" />
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/travel_favicon-removebg.png" />
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/dist/favicon.ico" />
+    <entry file="file://$PROJECT_DIR$/src/main/resources/PMFrontend/src/assets/images/travel_titre-removebg.png" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/constants/WebSocketConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/__index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/client-socket.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="795">
+          <caret line="53" selection-start-line="53" selection-end-line="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1350">
+          <caret line="115" column="78" selection-start-line="115" selection-start-column="78" selection-end-line="115" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/_index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PManager.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-88">
+          <caret line="23" column="80" selection-start-line="23" selection-start-column="80" selection-end-line="23" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.2.6.RELEASE/spring-web-5.2.6.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="101" selection-start-line="101" selection-end-line="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/PMFrontend/angular.json" />
+    <entry file="file://$PROJECT_DIR$/src/main/resources/PMFrontend/package.json" />
+    <entry file="file://$PROJECT_DIR$/.idea/dataSources.local.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/dataSources.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/sqldialects.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/uiDesigner.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="1319" column="39" selection-start-line="1319" selection-start-column="39" selection-end-line="1319" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/jarRepositories.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="328" selection-start-line="328" selection-end-line="328" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1856#1884#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1800">
+          <caret line="120" column="18" lean-forward="true" selection-start-line="120" selection-start-column="18" selection-end-line="120" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/media/jersey-media-json-jackson/2.30.1/jersey-media-json-jackson-2.30.1.jar!/org/glassfish/jersey/jackson/internal/jackson/jaxrs/cfg/JaxRSFeature.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/5.3.2.RELEASE/spring-security-web-5.3.2.RELEASE.jar!/org/springframework/security/web/server/header/ContentTypeOptionsServerHttpHeadersWriter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="12" column="4" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.2.6.RELEASE/spring-context-5.2.6.RELEASE.jar!/org/springframework/context/ApplicationContext.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/cron/QuartzCronConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="28" column="24" lean-forward="true" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/cron/AutowiringSpringBeanJobFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="13" column="50" lean-forward="true" selection-start-line="13" selection-start-column="50" selection-end-line="13" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/quartz.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manifest.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/additional-spring-configuration-metadata.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/PackageApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="90" column="37" selection-start-line="90" selection-start-column="37" selection-end-line="90" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot/2.3.0.RELEASE/spring-boot-2.3.0.RELEASE.jar!/org/springframework/boot/web/servlet/support/SpringBootServletInitializer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="124" column="74" selection-start-line="124" selection-start-column="53" selection-end-line="124" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ServletInitializer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/web.xml" />
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/spring-mvc-demo-servlet.xml" />
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="368" column="52" selection-start-line="368" selection-start-column="52" selection-end-line="368" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/webjars/sockjs-client/1.0.2/sockjs-client-1.0.2.jar!/META-INF/resources/webjars/sockjs-client/1.0.2/sockjs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="988">
+          <caret line="1942" column="53" lean-forward="true" selection-start-line="1942" selection-start-column="53" selection-end-line="1942" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/dist/index.html" />
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.2.6.RELEASE/spring-webmvc-5.2.6.RELEASE.jar!/org/springframework/web/servlet/resource/ResourceHttpRequestHandler.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="58" column="74" lean-forward="true" selection-start-line="58" selection-start-column="74" selection-end-line="58" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="1" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>package:war</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Web (PManager)|Web</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Web|PManager</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: antlr:antlr:2.7.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
