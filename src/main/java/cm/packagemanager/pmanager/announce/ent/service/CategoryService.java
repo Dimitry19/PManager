@@ -5,6 +5,6 @@ import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
 
 public interface CategoryService {
 
-	public CategoryVO findByCode(String code) throws Exception;
+    CategoryVO findByCode(String code) throws Exception;
 
 }

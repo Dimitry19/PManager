@@ -5,6 +5,6 @@ import cm.packagemanager.pmanager.common.ent.dao.CommonDAO;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 
-public interface CategoryDAO extends CommonDAO{
-	public CategoryVO findByCode(String code) throws ResourceNotFoundException;
+public interface CategoryDAO extends CommonDAO {
+    CategoryVO findByCode(String code) throws ResourceNotFoundException;
 }

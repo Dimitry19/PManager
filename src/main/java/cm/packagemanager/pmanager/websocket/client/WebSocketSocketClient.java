@@ -1,7 +1,5 @@
 package cm.packagemanager.pmanager.websocket.client;
 
-import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.*;
-
 import cm.packagemanager.pmanager.websocket.client.handler.MyStompFrameHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,13 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.*;
+
 //@Component
 public class WebSocketSocketClient {
 
     protected static final Log logger = LogFactory.getLog(WebSocketSocketClient.class);
 
     //@EventListener(ApplicationReadyEvent.class) // Permet d'executer la methode après le demarrage de springboot
-    public static  void client() {
+    public static void client() {
 
 
         try {
@@ -34,24 +34,22 @@ public class WebSocketSocketClient {
                     .get();*/
 
             WebSocketClient webSocketClient = new StandardWebSocketClient();
-            List transports= new ArrayList();
+            List transports = new ArrayList();
             transports.add(new WebSocketTransport(webSocketClient));
-            SockJsClient sockJsClient =new SockJsClient(transports);
+            SockJsClient sockJsClient = new SockJsClient(transports);
 
             WebSocketStompClient stompClient = new WebSocketStompClient(sockJsClient);
             stompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
-            StompSessionHandler sessionHandler= new  MyStompFrameHandler();
+            StompSessionHandler sessionHandler = new MyStompFrameHandler();
 
-            ListenableFuture<StompSession> connect= stompClient.connect(URL,sessionHandler);
-            StompSession session=connect.get();
-            logger.info("Session id "+ session.getSessionId());
-
-
+            ListenableFuture<StompSession> connect = stompClient.connect(URL, sessionHandler);
+            StompSession session = connect.get();
+            logger.info("Session id " + session.getSessionId());
 
 
             //session.subscribe(NOTIFY_SEND, sessionHandler);
-            session.send(PREFIX_DESTINATION_APP+ SUSCRIBE_QUEUE_ANNOUNCE_SEND, null);
+            session.send(PREFIX_DESTINATION_APP + SUSCRIBE_QUEUE_ANNOUNCE_SEND, null);
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }

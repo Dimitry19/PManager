@@ -8,18 +8,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceAnnounce {
 
-	//@Autowired
-	//AnnounceRep movieRepository;
+    //@Autowired
+    //AnnounceRep movieRepository;
 
-	// Save movies in the database.
-	public void save(final AnnounceVO movie) {
-		//movieRepository.save(movie);
-	}
+    // Save movies in the database.
+    public void save(final AnnounceVO movie) {
+        //movieRepository.save(movie);
+    }
 
-	// Fetch all movies from the database.
-	public Page<AnnounceVO> getAllMovies(final Pageable pageable) {
+    // Fetch all movies from the database.
+    public Page<AnnounceVO> getAllMovies(final Pageable pageable) {
 
-		return null;//movieRepository.findAll(pageable);
-	}
+        return null;//movieRepository.findAll(pageable);
+    }
 
 }

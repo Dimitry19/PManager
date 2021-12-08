@@ -1,35 +1,14 @@
 package cm.packagemanager.pmanager.user.ent.bo;
 
-import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
-import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.user.ent.dao.RoleDAO;
-import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
-import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
-import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import org.apache.commons.collections4.IteratorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Component("userBO")
 public class UserBOImpl {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserBOImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserBOImpl.class);
 /*
 
 	@Autowired

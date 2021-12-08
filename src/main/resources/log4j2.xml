@@ -10,11 +10,14 @@
 	</Console>
 
 	<RollingFile name="file"
-				 fileName="${APP_LOG_ROOT}/PackManager/application.log"
+                 fileName="${APP_LOG_ROOT}/PackManager/application.log"
 				 filePattern="${APP_LOG_ROOT}/PackManager/application-%d{yyyy-MM-dd}-%i.log">
 		<PatternLayout pattern="${LOG_PATTERN}" />
 		<Policies>
-			<SizeBasedTriggeringPolicy size="19500KB" />
+			<SizeBasedTriggeringPolicy size="1MB" />
+			<maxFileSize size="1MB" />
+			<maxHistory  size="10" />
+			<cleanHistoryOnStart value="true" />
 		</Policies>
 		<DefaultRolloverStrategy max="1" />
 	</RollingFile>
@@ -23,7 +26,7 @@
                  filePattern="${APP_LOG_ROOT}/PackManager/application-error-%d{yyyy-MM-dd}-%i.log">
         <PatternLayout pattern="${LOG_PATTERN}" />
         <Policies>
-            <SizeBasedTriggeringPolicy size="1950KB" />
+            <SizeBasedTriggeringPolicy size="1MB" />
         </Policies>
         <DefaultRolloverStrategy max="1" />
     </RollingFile>

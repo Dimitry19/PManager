@@ -7,7 +7,7 @@ import org.springframework.messaging.simp.stomp.*;
 
 import java.lang.reflect.Type;
 
-public class  MyStompFrameHandler extends StompSessionHandlerAdapter implements StompFrameHandler {
+public class MyStompFrameHandler extends StompSessionHandlerAdapter implements StompFrameHandler {
 
     private Logger logger = LogManager.getLogger(MyStompSessionHandler.class);
 
@@ -30,7 +30,7 @@ public class  MyStompFrameHandler extends StompSessionHandlerAdapter implements 
 
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
-    Notification msg = (Notification) payload;
+        Notification msg = (Notification) payload;
         System.out.println(msg.toString());
         logger.info("Received : " + msg.toString());
     }

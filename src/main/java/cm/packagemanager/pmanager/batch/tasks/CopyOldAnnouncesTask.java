@@ -6,14 +6,13 @@ import org.springframework.batch.repeat.RepeatStatus;
 
 public class CopyOldAnnouncesTask extends CommonTask {
 
-	@Override
-	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception
-	{
-		System.out.println("CopyOldAnnounces start..");
+    @Override
+    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+        System.out.println("CopyOldAnnounces start..");
 
-		// ... your code
+        // ... your code
 
-		System.out.println("CopyOldAnnounces done..");
-		return RepeatStatus.FINISHED;
-	}
+        System.out.println("CopyOldAnnounces done..");
+        return RepeatStatus.FINISHED;
+    }
 }

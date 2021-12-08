@@ -14,182 +14,182 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "VALID_RESERVATION_RECEIVED",schema = "VIEWS")
+@Table(name = "VALID_RESERVATION_RECEIVED", schema = "VIEWS")
 @Immutable
 public class ReservationReceivedUserVO implements Serializable {
 
-	@Id
-	@Column(name = "ID")
-	private Long id;
+    @Id
+    @Column(name = "ID")
+    private Long id;
 
-	@Column(name="R_USER_ID")
-	private Long userId;
+    @Column(name = "R_USER_ID")
+    private Long userId;
 
-	@Basic(optional = false)
-	@Column(name="FIRST_NAME")
-	private String firstName;
+    @Basic(optional = false)
+    @Column(name = "FIRST_NAME")
+    private String firstName;
 
-	@Column(name = "USERNAME")
-	private String username;
+    @Column(name = "USERNAME")
+    private String username;
 
-	@Column(name="LAST_NAME")
-	private String lastName;
+    @Column(name = "LAST_NAME")
+    private String lastName;
 
-	@Column(name="EMAIL")
-	private String email;
+    @Column(name = "EMAIL")
+    private String email;
 
-	@Column(name="PHONE")
-	private String phone;
+    @Column(name = "PHONE")
+    private String phone;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "GENDER",length = 10)
-	private Gender gender;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "GENDER", length = 10)
+    private Gender gender;
 
-	@Basic(optional = false)
-	@Column(name = "WEIGTH", nullable = false)
-	private BigDecimal weight;
-
-
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-	@JoinTable(name = "RESERVATION_CATEGORY", joinColumns = {
-			@JoinColumn(name = "RESERVATION_ID", referencedColumnName = "ID", insertable = false, updatable = false)},
-			inverseJoinColumns = { @JoinColumn(name = "CATEGORIES_CODE", insertable = false, updatable = false)})
-	@JsonProperty
-	private Set<CategoryVO> categories=new HashSet<>();
+    @Basic(optional = false)
+    @Column(name = "WEIGTH", nullable = false)
+    private BigDecimal weight;
 
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="R_ANNOUNCE_ID", updatable = false,insertable = false)
-	@JsonBackReference
-	@Immutable
-	private AnnounceVO announce;
-
-	@Enumerated(EnumType.STRING)
-	@Column(name="VALIDATE")
-	private ValidateEnum validate;
-
-	@Column(name="DESCRIPTION" , length = FieldConstants.DESC)
-	private String description;
-
-	@Transient
-	@JsonProperty
-	private AnnounceInfo announceInfo;
-
-	public AnnounceInfo getAnnounceInfo() {
-		return announceInfo;
-	}
-
-	public void setAnnounceInfo(AnnounceInfo announceInfo) {
-		this.announceInfo = announceInfo;
-	}
-
-	public ReservationReceivedUserVO(){
-		super();
-	}
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(name = "RESERVATION_CATEGORY", joinColumns = {
+            @JoinColumn(name = "RESERVATION_ID", referencedColumnName = "ID", insertable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "CATEGORIES_CODE", insertable = false, updatable = false)})
+    @JsonProperty
+    private Set<CategoryVO> categories = new HashSet<>();
 
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "R_ANNOUNCE_ID", updatable = false, insertable = false)
+    @JsonBackReference
+    @Immutable
+    private AnnounceVO announce;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "VALIDATE")
+    private ValidateEnum validate;
 
-	public Long getUserId() {
-		return userId;
-	}
+    @Column(name = "DESCRIPTION", length = FieldConstants.DESC)
+    private String description;
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    @Transient
+    @JsonProperty
+    private AnnounceInfo announceInfo;
 
-	public AnnounceVO getAnnounce() {
-		return announce;
-	}
+    public AnnounceInfo getAnnounceInfo() {
+        return announceInfo;
+    }
 
-	public void setAnnounce(AnnounceVO announce) {
-		this.announce = announce;
-		announceInfo = new AnnounceInfo(announce);
-	}
+    public void setAnnounceInfo(AnnounceInfo announceInfo) {
+        this.announceInfo = announceInfo;
+    }
 
-	public BigDecimal getWeight() {
-		return weight;
-	}
+    public ReservationReceivedUserVO() {
+        super();
+    }
 
-	public void setWeight(BigDecimal weight) {
-		this.weight = weight;
-	}
 
-	public Set<CategoryVO> getCategories() {
-		return categories;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setCategories(Set<CategoryVO> categories) {
-		this.categories = categories;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public ValidateEnum getValidate() {
-		return validate;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public void setValidate(ValidateEnum validate) {
-		this.validate = validate;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public AnnounceVO getAnnounce() {
+        return announce;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setAnnounce(AnnounceVO announce) {
+        this.announce = announce;
+        announceInfo = new AnnounceInfo(announce);
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public BigDecimal getWeight() {
+        return weight;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public Set<CategoryVO> getCategories() {
+        return categories;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setCategories(Set<CategoryVO> categories) {
+        this.categories = categories;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public ValidateEnum getValidate() {
+        return validate;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setValidate(ValidateEnum validate) {
+        this.validate = validate;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public Gender getGender() {
-		return gender;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 }

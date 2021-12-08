@@ -17,19 +17,19 @@ import java.util.List;
 public interface ReservationDAO<T extends CommonVO> extends CommonDAO {
 
 
-	ReservationVO addReservation(ReservationDTO reservation) throws BusinessResourceException, Exception;
+    ReservationVO addReservation(ReservationDTO reservation) throws Exception;
 
-	ReservationVO updateReservation(UpdateReservationDTO reservation) throws Exception;
+    ReservationVO updateReservation(UpdateReservationDTO reservation) throws Exception;
 
-	boolean deleteReservation(Long id) throws Exception;
+    boolean deleteReservation(Long id) throws Exception;
 
-	ReservationVO validate(ValidateReservationDTO reservationDTO) throws Exception;
+    ReservationVO validate(ValidateReservationDTO reservationDTO) throws Exception;
 
-	ReservationVO getReservation(long id) throws Exception;
+    ReservationVO getReservation(long id) throws Exception;
 
-	List<ReservationVO> otherReservations(long id,PageBy pageBy) throws Exception;
+    List<ReservationVO> otherReservations(long id, PageBy pageBy) throws Exception;
 
-	List<ReservationVO> reservationByAnnounce(Long announceId, PageBy pageBy) throws Exception;
+    List<ReservationVO> reservationByAnnounce(Long announceId, PageBy pageBy) throws Exception;
 
-	List<T> reservationByUser(Long userId, ReservationType type, PageBy pageBy) throws Exception;
+    List<T> reservationByUser(Long userId, ReservationType type, PageBy pageBy) throws Exception;
 }

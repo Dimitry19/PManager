@@ -4,28 +4,29 @@ import cm.packagemanager.pmanager.common.utils.StringUtils;
 
 public enum Gender {
 
-	MALE("Male"),
-	FEMALE("Feminin");
+    MALE("Male"),
+    FEMALE("Feminin");
 
-	String value;
-	private Gender(String value) {
-		this.value = value;
-	}
+    String value;
 
-	public String toValue(){
-		return value;
-	}
+    Gender(String value) {
+        this.value = value;
+    }
 
-	public static Gender fromValue(String value){
-		if(StringUtils.isEmpty(value)){
-			return null;
-		}
+    public String toValue() {
+        return value;
+    }
 
-		for (Gender e : values()) {
-			if(e.value.equals(value)){
-				return e;
-			}
-		}
-		throw new RuntimeException("Valore " + value + " non valido");
-	}
+    public static Gender fromValue(String value) {
+        if (StringUtils.isEmpty(value)) {
+            return null;
+        }
+
+        for (Gender e : values()) {
+            if (e.value.equals(value)) {
+                return e;
+            }
+        }
+        throw new RuntimeException("Valore " + value + " non valido");
+    }
 }

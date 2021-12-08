@@ -21,27 +21,27 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * https://www.springboottutorial.com/hibernate-jpa-tutorial-with-spring-boot-starter-jpa
  */
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, 	DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableBatchProcessing
 @EnableScheduling
-@EnableAspectJAutoProxy(proxyTargetClass=true)
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 //@EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = "cm.packagemanager.pmanager")
 public class PackageApplication extends SpringBootServletInitializer {
 
-	private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);
+    private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);
 
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		SpringApplication application = new SpringApplication(PackageApplication.class);
-		application.run(args);
-	}
+        SpringApplication application = new SpringApplication(PackageApplication.class);
+        application.run(args);
+    }
 
-	 // Pour deployer dans tomcat extene
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(PackageApplication.class);
-	}
+    // Pour deployer dans tomcat extene
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(PackageApplication.class);
+    }
 
 }

@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
 @RestController
-@RequestMapping(value = "/employee-management", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(value = "/employee-management", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated
 public class EmployeeController {
 	/*@Autowired

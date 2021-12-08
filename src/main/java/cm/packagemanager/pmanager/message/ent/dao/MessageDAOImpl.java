@@ -20,155 +20,156 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 @Repository
 public class MessageDAOImpl extends Generic implements MessageDAO {
 
-	private static Logger logger = LoggerFactory.getLogger(MessageDAOImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(MessageDAOImpl.class);
 
-	@Autowired
-	QueryUtils queryUtils;
+    @Autowired
+    QueryUtils queryUtils;
 
-	@Autowired
-	UserDAO userDAO;
+    @Autowired
+    UserDAO userDAO;
 
-	@Autowired
-	AnnounceDAO announceDAO;
+    @Autowired
+    AnnounceDAO announceDAO;
 
-	@Override
-	public int count(PageBy pageBy) throws BusinessResourceException {
-		logger.info("Message: count");
-		return  count(MessageVO.class,pageBy);
-	}
+    @Override
+    public int count(PageBy pageBy) throws BusinessResourceException {
+        logger.info("Message: count");
+        return count(MessageVO.class, pageBy);
+    }
 
-	@Override
-	public MessageVO update(UpdateMessageDTO mdto) throws Exception {
-		logger.info("Message: update");
+    @Override
+    public MessageVO update(UpdateMessageDTO mdto) throws Exception {
+        logger.info("Message: update");
 
-		UserVO user = userDAO.findByUsername(mdto.getUsername());
+        UserVO user = userDAO.findByUsername(mdto.getUsername());
 
-		if(user==null){
-			 user = userDAO.findByEmail(mdto.getUsername());
-		}
-
-		if(user==null){
-			throw new RecordNotFoundException("Aucun utilisateur trouvé");
-		}
-
-		MessageVO message =findById(new MessageIdVO(mdto.getId(), Constants.DEFAULT_TOKEN));
-		if(message==null){
-			throw new RecordNotFoundException("Aucune message  trouvé");
-		}
-		message.setContent(mdto.getContent());
-		update(message);
-		return message;
-	}
-
-	@Override
-	public MessageVO addMessage(MessageDTO mdto) throws Exception {
-
-		logger.info("Message: add message");
-
-		UserVO user = userDAO.findByOnlyUsername(mdto.getUsername(),false);
-
-		if(user==null){
+        if (user == null) {
             user = userDAO.findByEmail(mdto.getUsername());
         }
 
-		if(user==null){
-			throw new UserNotFoundException("Utisateur non trouvé");
-		}
-		AnnounceVO announce=announceDAO.announce(mdto.getAnnounceId());
+        if (user == null) {
+            throw new RecordNotFoundException("Aucun utilisateur trouvé");
+        }
 
-		if(announce==null){
-			throw new Exception("Announce non trouvé");
-		}
+        MessageVO message = findById(new MessageIdVO(mdto.getId(), Constants.DEFAULT_TOKEN));
+        if (message == null) {
+            throw new RecordNotFoundException("Aucune message  trouvé");
+        }
+        message.setContent(mdto.getContent());
+        update(message);
+        return message;
+    }
 
-		Long id= queryUtils.calcolateId(MessageVO.GET_ID_SQL);
+    @Override
+    public MessageVO addMessage(MessageDTO mdto) throws Exception {
 
-		MessageIdVO messageId=new MessageIdVO(id,announce.getAnnounceId().getToken());
-		MessageVO message =new MessageVO();
-		setMessage(announce,user,message,mdto);
-		message.setId(messageId);
-		announce.addMessage(message);
-		save(message);
-		return message;
+        logger.info("Message: add message");
 
-	}
+        UserVO user = userDAO.findByOnlyUsername(mdto.getUsername(), false);
 
-	@Override
-	public List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws Exception {
+        if (user == null) {
+            user = userDAO.findByEmail(mdto.getUsername());
+        }
 
-		if (user==null) return null;
-		return messagesByUser(user.getId(),pageBy);
-	}
+        if (user == null) {
+            throw new UserNotFoundException("Utisateur non trouvé");
+        }
+        AnnounceVO announce = announceDAO.announce(mdto.getAnnounceId());
 
-	@Override
-	public List<MessageVO> messagesByUser(Long id,PageBy pageBy) throws Exception {
-		logger.info("Message: user message");
+        if (announce == null) {
+            throw new Exception("Announce non trouvé");
+        }
 
-		if (id==null) return null;
-		return findByUser(MessageVO.class,id,pageBy);
-	}
+        Long id = queryUtils.calcolateId(MessageVO.GET_ID_SQL);
 
-	@Override
-	public List<MessageVO> messages(PageBy pageBy) throws Exception {
-		logger.info("Message: all message");
+        MessageIdVO messageId = new MessageIdVO(id, announce.getAnnounceId().getToken());
+        MessageVO message = new MessageVO();
+        setMessage(announce, user, message, mdto);
+        message.setId(messageId);
+        announce.addMessage(message);
+        save(message);
+        return message;
 
-		return findBy(MessageVO.FINDALL,MessageVO.class, null, null, pageBy);
-	}
+    }
 
-	@Override
-	public MessageVO findById(MessageIdVO id) throws BusinessResourceException {
-		logger.info("Message: findBy");
-		MessageVO message=(MessageVO) findById(MessageVO.class,id);
-		return message;
-	}
+    @Override
+    public List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws Exception {
 
+        if (user == null) return null;
+        return messagesByUser(user.getId(), pageBy);
+    }
 
-	@Override
-	public boolean delete(Long id) throws BusinessResourceException {
-		logger.info("Message: delete");
-		//MessageIdVO messageId= new MessageIdVO(id, Constants.DEFAULT_TOKEN);
-		//delete(MessageVO.class,messageId,true);
-		return updateDelete(id);
-	}
+    @Override
+    public List<MessageVO> messagesByUser(Long id, PageBy pageBy) throws Exception {
+        logger.info("Message: user message");
 
-	private void setMessage(AnnounceVO announce, UserVO user,MessageVO message, MessageDTO mdto){
-		message.setAnnounce(announce);
-		message.setContent(mdto.getContent());
-		message.setCancelled(false);
-		message.setUser(user);
-	}
+        if (id == null) return null;
+        return findByUser(MessageVO.class, id, pageBy);
+    }
 
-	@Override
-	public boolean updateDelete(Long id) throws BusinessResourceException{
-		boolean result=false;
+    @Override
+    public List<MessageVO> messages(PageBy pageBy) throws Exception {
+        logger.info("Message: all message");
 
-		try{
+        return findBy(MessageVO.FINDALL, MessageVO.class, null, null, pageBy);
+    }
+
+    @Override
+    public MessageVO findById(MessageIdVO id) throws BusinessResourceException {
+        logger.info("Message: findBy");
+        MessageVO message = (MessageVO) findById(MessageVO.class, id);
+        return message;
+    }
 
 
-			MessageIdVO messageId =new MessageIdVO(id,Constants.DEFAULT_TOKEN);
-			MessageVO message=findById(messageId);
-			if(message!=null) {
-				message.setCancelled(true);
-				message= (MessageVO) merge(message);
-				result= (message!=null) && (message.isCancelled());
-			}
-		}catch (Exception e){
-			throw new BusinessResourceException(e.getMessage());
-		}
-		return result;
-	}
+    @Override
+    public boolean delete(Long id) throws BusinessResourceException {
+        logger.info("Message: delete");
+        //MessageIdVO messageId= new MessageIdVO(id, Constants.DEFAULT_TOKEN);
+        //delete(MessageVO.class,messageId,true);
+        return updateDelete(id);
+    }
 
-	@Override
-	public String composeQuery(Object o, String alias) {
-		return null;
-	}
+    private void setMessage(AnnounceVO announce, UserVO user, MessageVO message, MessageDTO mdto) {
+        message.setAnnounce(announce);
+        message.setContent(mdto.getContent());
+        message.setCancelled(false);
+        message.setUser(user);
+    }
 
-	@Override
-	public void composeQueryParameters(Object o, Query query) {
+    @Override
+    public boolean updateDelete(Long id) throws BusinessResourceException {
+        boolean result = false;
 
-	}
+        try {
+
+
+            MessageIdVO messageId = new MessageIdVO(id, Constants.DEFAULT_TOKEN);
+            MessageVO message = findById(messageId);
+            if (message != null) {
+                message.setCancelled(true);
+                message = (MessageVO) merge(message);
+                result = (message != null) && (message.isCancelled());
+            }
+        } catch (Exception e) {
+            throw new BusinessResourceException(e.getMessage());
+        }
+        return result;
+    }
+
+    @Override
+    public String composeQuery(Object o, String alias) {
+        return null;
+    }
+
+    @Override
+    public void composeQueryParameters(Object o, Query query) {
+
+    }
 }

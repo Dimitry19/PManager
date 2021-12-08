@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 public abstract class CommonReview implements Serializable {
 
-	CommonReview(){}
-	CommonReview(Object o, int index, ReviewDetailsVO details) {
+    CommonReview() {
+    }
 
-	}
+    CommonReview(Object o, int index, ReviewDetailsVO details) {
+
+    }
 }

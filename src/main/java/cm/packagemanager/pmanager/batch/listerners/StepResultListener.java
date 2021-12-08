@@ -6,14 +6,14 @@ import org.springframework.batch.core.StepExecutionListener;
 
 public class StepResultListener implements StepExecutionListener {
 
-	@Override
-	public void beforeStep(StepExecution stepExecution) {
-		System.out.println("Called beforeStep().");
-	}
+    @Override
+    public void beforeStep(StepExecution stepExecution) {
+        System.out.println("Called beforeStep().");
+    }
 
-	@Override
-	public ExitStatus afterStep(StepExecution stepExecution) {
-		System.out.println("Called afterStep().");
-		return ExitStatus.COMPLETED;
-	}
+    @Override
+    public ExitStatus afterStep(StepExecution stepExecution) {
+        System.out.println("Called afterStep().");
+        return ExitStatus.COMPLETED;
+    }
 }

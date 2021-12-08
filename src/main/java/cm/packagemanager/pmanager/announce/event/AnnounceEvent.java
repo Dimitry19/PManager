@@ -16,18 +16,21 @@ public class AnnounceEvent extends Event {
     private String message;
 
 
-
-    public AnnounceEvent(Date date, NotificationType type){
-        super(date,type);
+    public AnnounceEvent(Date date, NotificationType type) {
+        super(date, type);
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getMessage() {  return message;  }
+    public String getMessage() {
+        return message;
+    }
 
-    public void setMessage(String message) {  this.message = message;  }
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public void setId(Long id) {
         this.id = id;

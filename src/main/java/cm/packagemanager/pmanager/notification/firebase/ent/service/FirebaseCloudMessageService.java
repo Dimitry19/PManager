@@ -7,11 +7,11 @@ import java.util.concurrent.ExecutionException;
 
 public interface FirebaseCloudMessageService {
 
-	public void sendMessageWithoutData(Notification request)
-			throws InterruptedException, ExecutionException;
+    void sendMessageWithoutData(Notification request)
+            throws InterruptedException, ExecutionException;
 
-	public void sendMessage(Map<String, String> data, Notification request)
-			throws InterruptedException, ExecutionException;
+    void sendMessage(Map<String, String> data, Notification request)
+            throws InterruptedException, ExecutionException;
 
-	void sendMessageToToken(Notification request) throws InterruptedException, ExecutionException;
+    void sendMessageToToken(Notification request) throws InterruptedException, ExecutionException;
 }

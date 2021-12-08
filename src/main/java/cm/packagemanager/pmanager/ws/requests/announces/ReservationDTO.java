@@ -4,19 +4,19 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 
-public class ReservationDTO extends CommonReservationDTO{
+public class ReservationDTO extends CommonReservationDTO {
 
-	@NotNull(message = "L'annonce doit etre valorisée")
-	@PositiveOrZero
-	private Long announceId;
+    @NotNull(message = "L'annonce doit etre valorisée")
+    @PositiveOrZero
+    private Long announceId;
 
-	public Long getAnnounceId() {
-		return announceId;
-	}
+    public Long getAnnounceId() {
+        return announceId;
+    }
 
-	public void setAnnounceId(Long announceId) {
-		this.announceId = announceId;
-	}
+    public void setAnnounceId(Long announceId) {
+        this.announceId = announceId;
+    }
 
 
 }

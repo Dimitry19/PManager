@@ -8,29 +8,28 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public  interface NotificationService {
+public interface NotificationService {
 
 
-	Set<String> listeners = new HashSet<>();
-	Set notifications = new HashSet<>();
-	Set notificationsToPersist = new HashSet<>();
-	Map commentListeners = new HashMap<>();
-	Map userListeners = new HashMap<>();
-	Map announceListeners = new HashMap<>();
-	Map connectedUsers= new HashMap();
-	Map sessionUserMap = new HashMap<>();
+    Set<String> listeners = new HashSet<>();
+    Set notifications = new HashSet<>();
+    Set notificationsToPersist = new HashSet<>();
+    Map commentListeners = new HashMap<>();
+    Map userListeners = new HashMap<>();
+    Map announceListeners = new HashMap<>();
+    Map connectedUsers = new HashMap();
+    Map sessionUserMap = new HashMap<>();
 
 
-	public void notify(Notification notification, String username);
+    void notify(Notification notification, String username);
 
-	void dispatch();
+    void dispatch();
 
-	void sendToUser(String sessionId, long id, String email, String username, Notification notification);
+    void sendToUser(String sessionId, long id, String email, String username, Notification notification);
 
-	void add(String sessionId, NotificationType notificationType);
+    void add(String sessionId, NotificationType notificationType);
 
-	void remove(String id);
-
+    void remove(String id);
 
 
 }

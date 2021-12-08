@@ -37,308 +37,306 @@ import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 @RestController
 @RequestMapping(RESERVATION_WS)
-@Api(value="reservations-service", description="Reservation Operations")
+@Api(value = "reservations-service", description = "Reservation Operations")
 public class ReservationController extends CommonController {
 
 
-	protected final Log logger = LogFactory.getLog(ReservationController.class);
+    protected final Log logger = LogFactory.getLog(ReservationController.class);
 
-	@ApiOperation(value = "create an reservation ",response = ReservationVO.class)
-	@ApiResponses(value = {
-			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-			@ApiResponse(code = 200, message = "Successful create reservation",
-					response = ReservationVO.class, responseContainer = "Object") })
-	@PostMapping(value =ADD,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
-	public @ResponseBody
-	ResponseEntity<ReservationVO> addReservation(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ReservationDTO reservationDTO) throws ValidationException,Exception{
+    @ApiOperation(value = "create an reservation ", response = ReservationVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful create reservation",
+                    response = ReservationVO.class, responseContainer = "Object")})
+    @PostMapping(value = ADD, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+    public @ResponseBody
+    ResponseEntity<ReservationVO> addReservation(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ReservationDTO reservationDTO) throws Exception {
 
-		try{
-			response.setHeader("Access-Control-Allow-Origin", "*");
-			logger.info("add reservation request in");
+        try {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            logger.info("add reservation request in");
 
-			createOpentracingSpan("ReservationController - add reservation");
-			ReservationVO reservation =reservationService.addReservation(reservationDTO);
-			if(reservation==null){
-				reservation=new ReservationVO();
-				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL,"La reservation"));
-				reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
-				return new ResponseEntity<>(reservation,HttpStatus.INTERNAL_SERVER_ERROR);
-			}else{
-				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL,"La reservation"));
-				reservation.setRetCode(WebServiceResponseCode.OK_CODE);
-			}
+            createOpentracingSpan("ReservationController - add reservation");
+            ReservationVO reservation = reservationService.addReservation(reservationDTO);
+            if (reservation == null) {
+                reservation = new ReservationVO();
+                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "La reservation"));
+                reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
+                return new ResponseEntity<>(reservation, HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "La reservation"));
+                reservation.setRetCode(WebServiceResponseCode.OK_CODE);
+            }
 
-			return new ResponseEntity<>(reservation,HttpStatus.CREATED);
-		}catch (Exception e){
-			logger.error("Erreur durant la creation d'ue reservation",e);
-			throw e;
-		}finally {
-			finishOpentracingSpan();
-		}
-	}
-
-
-	@ApiOperation(value = "Update an reservation ",response = ReservationVO.class)
-	@ApiResponses(value = {
-			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-			@ApiResponse(code = 200, message = "Successful retrieval",
-					response = ReservationVO.class, responseContainer = "Object") })
-
-	@PutMapping(value =RESERVATION_WS_UPDATE_ID, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
-	ResponseEntity<ReservationVO>  updateReservation(HttpServletResponse response, HttpServletRequest request,@PathVariable @Valid long id, @RequestBody @Valid UpdateReservationDTO urr) throws Exception, ValidationException {
-
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		try {
-			createOpentracingSpan("ReservationController -update");
-
-			if (urr==null)	return null;
-			urr.setId(id);
-
-			ReservationVO reservation=reservationService.updateReservation(urr);
-			if (reservation!=null){
-				reservation.setRetCode(WebServiceResponseCode.OK_CODE);
-				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_RESERV_LABEL,"modifiée"));
-			}else{
-				reservation=new ReservationVO();
-				reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
-				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL,"La reservation"));
-
-				return new ResponseEntity<>(reservation,HttpStatus.NOT_FOUND);
-			}
-			return new ResponseEntity<>(reservation,HttpStatus.OK);
-
-		}catch (Exception e){
-			logger.error("{}",e);
-			throw e;
-		}finally {
-			finishOpentracingSpan();
-		}
-	}
-
-	@ApiOperation(value = "Delete reservation",response = Response.class)
-	@DeleteMapping(value =DELETE, headers = WSConstants.HEADER_ACCEPT)
-	public ResponseEntity<Response> deleteReservation(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
-
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		Response pmResponse = new Response();
+            return new ResponseEntity<>(reservation, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("Erreur durant la creation d'ue reservation", e);
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
+    }
 
 
-		try{
-			logger.info("delete reservation request in");
-			createOpentracingSpan("ReservationController - delete reservation");
+    @ApiOperation(value = "Update an reservation ", response = ReservationVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful retrieval",
+                    response = ReservationVO.class, responseContainer = "Object")})
 
-			if (reservationService.deleteReservation(id)){
-				pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-				pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL,"La reservation"));
-				return new ResponseEntity<>(pmResponse,HttpStatus.OK);
+    @PutMapping(value = RESERVATION_WS_UPDATE_ID, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+    ResponseEntity<ReservationVO> updateReservation(HttpServletResponse response, HttpServletRequest request, @PathVariable @Valid long id, @RequestBody @Valid UpdateReservationDTO urr) throws Exception {
 
-			}else{
-				pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-				pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL,"La reservation"));
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        try {
+            createOpentracingSpan("ReservationController -update");
 
-			}
-			return new ResponseEntity<>(pmResponse,HttpStatus.NOT_FOUND);
+            if (urr == null) return null;
+            urr.setId(id);
 
-		}
-		catch (Exception e){
-			logger.error(" ReservationController - delete reservation:Exception occurred while fetching the response from the database.", e);
-			throw e;
-		}
-		finally {
-			finishOpentracingSpan();
-		}
-	}
+            ReservationVO reservation = reservationService.updateReservation(urr);
+            if (reservation != null) {
+                reservation.setRetCode(WebServiceResponseCode.OK_CODE);
+                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_RESERV_LABEL, "modifiée"));
+            } else {
+                reservation = new ReservationVO();
+                reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
+                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "La reservation"));
 
-	@ApiOperation(value = "retrieve  an reservation ",response = ReservationVO.class)
-	@ApiResponses(value = {
-			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-			@ApiResponse(code = 200, message = "Retrieve reservation",
-					response = ReservationVO.class, responseContainer = "Object") })
-	@GetMapping(RESERVATION_WS_BY_ID)
-	public ResponseEntity<ReservationVO> getReservation(HttpServletRequest request,
-	                                                    HttpServletResponse response,@RequestParam("id") long id) throws Exception{
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		try {
-			createOpentracingSpan("ReservationController - retrieve reservation");
+                return new ResponseEntity<>(reservation, HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(reservation, HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.error("{}", e);
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
+    }
+
+    @ApiOperation(value = "Delete reservation", response = Response.class)
+    @DeleteMapping(value = DELETE, headers = WSConstants.HEADER_ACCEPT)
+    public ResponseEntity<Response> deleteReservation(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        Response pmResponse = new Response();
 
 
-			ReservationVO reservation=reservationService.getReservation(id);
-			if (reservation!=null){
-				reservation.setRetCode(WebServiceResponseCode.OK_CODE);
-				return new ResponseEntity<>(reservation,HttpStatus.OK);
-			}
-			reservation=new ReservationVO();
-			reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
-			reservation.setRetDescription(WebServiceResponseCode.ERROR_GET_RESERV_CODE_LABEL);
+        try {
+            logger.info("delete reservation request in");
+            createOpentracingSpan("ReservationController - delete reservation");
 
-			return new ResponseEntity<>(reservation,HttpStatus.NOT_FOUND);
-		}catch (Exception e){
-			logger.error(e.getMessage());
-			throw e;
-		}finally {
-			finishOpentracingSpan();
-		}
+            if (reservationService.deleteReservation(id)) {
+                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La reservation"));
+                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 
-	}
+            } else {
+                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, "La reservation"));
 
-	@ApiOperation(value = "Validate an reservation ",response = AnnounceVO.class)
-	@ApiResponses(value = {
-			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-			@ApiResponse(code = 200, message = "Successful validate",
-					response = Response.class, responseContainer = "Object") })
-	@PostMapping(value = VALIDATE, produces = MediaType.APPLICATION_JSON)
-	ResponseEntity<ReservationVO> validate(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid ValidateReservationDTO urr) throws Exception {
+            }
+            return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
 
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		try {
-			createOpentracingSpan("ReservationController - validate");
-			Response pmResponse=new Response();
-			if (urr==null)	return null;
+        } catch (Exception e) {
+            logger.error(" ReservationController - delete reservation:Exception occurred while fetching the response from the database.", e);
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
+    }
 
-			ReservationVO reservation=reservationService.validate(urr);
-			if (reservation!=null){
-				response.setStatus(200);
-				String mes=(urr.isValidate())?" acceptée":" refusée";
-				reservation.setRetCode(WebServiceResponseCode.OK_CODE);
-				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_RESERV_LABEL,mes));
-				return new ResponseEntity<>(reservation,HttpStatus.OK);
+    @ApiOperation(value = "retrieve  an reservation ", response = ReservationVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Retrieve reservation",
+                    response = ReservationVO.class, responseContainer = "Object")})
+    @GetMapping(RESERVATION_WS_BY_ID)
+    public ResponseEntity<ReservationVO> getReservation(HttpServletRequest request,
+                                                        HttpServletResponse response, @RequestParam("id") long id) throws Exception {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        try {
+            createOpentracingSpan("ReservationController - retrieve reservation");
 
-			}else{
-				reservation=new ReservationVO();
-				response.setStatus(404);
-				reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
-				reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL,"La reservation"));
 
-			}
-			return new ResponseEntity<>(reservation,HttpStatus.NOT_FOUND);
-		}catch (Exception e){
-			logger.error(e.getMessage());
-			throw e;
-		}finally {
-			finishOpentracingSpan();
-		}
-	}
+            ReservationVO reservation = reservationService.getReservation(id);
+            if (reservation != null) {
+                reservation.setRetCode(WebServiceResponseCode.OK_CODE);
+                return new ResponseEntity<>(reservation, HttpStatus.OK);
+            }
+            reservation = new ReservationVO();
+            reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
+            reservation.setRetDescription(WebServiceResponseCode.ERROR_GET_RESERV_CODE_LABEL);
 
-	/**
-	 *  Cette methode recherche toutes les reservations créees par un utilisateur
-	 * @param response
-	 * @param request
-	 * @param userId
-	 * @param page
-	 * @param size
-	 * @return
-	 * @throws Exception
-	 */
-	@ApiOperation(value = "Retrieve user reservations",response = ResponseEntity.class)
-	@ApiResponses(value = {
-			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-			@ApiResponse(code = 200, message = "Successful retrieval",
-					response = ResponseEntity.class, responseContainer = "List") })
-	@RequestMapping(value =BY_USER,method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
-	public ResponseEntity<PaginateResponse> reservationsByUser(HttpServletResponse response, HttpServletRequest request,
-	                                                                     @RequestParam @Valid long userId,
-	                                                                     @RequestParam @Valid ReservationType type,
-	                                                                     @RequestParam (required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
-	                                                                     @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+            return new ResponseEntity<>(reservation, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
 
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		HttpHeaders headers = new HttpHeaders();
+    }
 
-		logger.info("find reservation by user request in");
-		PageBy pageBy= new PageBy(page,size);
+    @ApiOperation(value = "Validate an reservation ", response = AnnounceVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful validate",
+                    response = Response.class, responseContainer = "Object")})
+    @PostMapping(value = VALIDATE, produces = MediaType.APPLICATION_JSON)
+    ResponseEntity<ReservationVO> validate(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid ValidateReservationDTO urr) throws Exception {
 
-		List  reservations=null;
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        try {
+            createOpentracingSpan("ReservationController - validate");
+            Response pmResponse = new Response();
+            if (urr == null) return null;
 
-		try{
-				createOpentracingSpan("ReservationController -reservationsByUser");
-				PaginateResponse res=new PaginateResponse();
-				int count=0;
-				reservations = reservationService.reservationsByUser(userId, type,pageBy);
+            ReservationVO reservation = reservationService.validate(urr);
+            if (reservation != null) {
+                response.setStatus(200);
+                String mes = (urr.isValidate()) ? " acceptée" : " refusée";
+                reservation.setRetCode(WebServiceResponseCode.OK_CODE);
+                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_RESERV_LABEL, mes));
+                return new ResponseEntity<>(reservation, HttpStatus.OK);
 
-				count=CollectionsUtils.size(reservations);
-				if (CollectionsUtils.isNotEmpty(reservations)) {
-					res.setCount(count);
-					res.setResults(reservations);
-				}
-				headers.add(HEADER_TOTAL, Long.toString(count));
+            } else {
+                reservation = new ReservationVO();
+                response.setStatus(404);
+                reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
+                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "La reservation"));
 
-			return new ResponseEntity<PaginateResponse>(res, headers, HttpStatus.OK);
-		}
-		catch (Exception e){
-			logger.info(" ReservationController - reservationsByUser:Exception occurred while fetching the response from the database.", e);
-			throw e;
-		}finally {
-			finishOpentracingSpan();
-		}
-	}
+            }
+            return new ResponseEntity<>(reservation, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
+    }
 
-	/**
-	 *  Cette methode recherche toutes les reservations d'une annonce
-	 * @param response
-	 * @param request
-	 * @param announceId
-	 * @param page
-	 * @param size
-	 * @return
-	 * @throws Exception
-	 */
-	@ApiOperation(value = "Retrieve reservations by an announce with an ID",response = ResponseEntity.class)
-	@ApiResponses(value = {
-			@ApiResponse(code = 500, message = "Server error"),
-			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-			@ApiResponse(code = 200, message = "Successful retrieval",
-					response = ResponseEntity.class, responseContainer = "List") })
-	@GetMapping(value = RESERVATION_WS_BY_ANNOUNCE, produces = MediaType.APPLICATION_JSON,headers = HEADER_ACCEPT)
-	public ResponseEntity<PaginateResponse> reservationsByAnnounce(HttpServletResponse response, HttpServletRequest request,
-	                                                           @RequestParam @Valid long announceId,
-	                                                           @RequestParam (required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
-	                                                           @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception{
+    /**
+     * Cette methode recherche toutes les reservations créees par un utilisateur
+     *
+     * @param response
+     * @param request
+     * @param userId
+     * @param page
+     * @param size
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "Retrieve user reservations", response = ResponseEntity.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful retrieval",
+                    response = ResponseEntity.class, responseContainer = "List")})
+    @RequestMapping(value = BY_USER, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<PaginateResponse> reservationsByUser(HttpServletResponse response, HttpServletRequest request,
+                                                               @RequestParam @Valid long userId,
+                                                               @RequestParam @Valid ReservationType type,
+                                                               @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
+                                                               @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
 
-		try{
-			response.setHeader("Access-Control-Allow-Origin", "*");
-			HttpHeaders headers = new HttpHeaders();
-			PaginateResponse paginateResponse=new PaginateResponse();
-			logger.info("find reservation by announce request in");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        HttpHeaders headers = new HttpHeaders();
 
-			createOpentracingSpan("ReservationController -reservations by announce");
+        logger.info("find reservation by user request in");
+        PageBy pageBy = new PageBy(page, size);
 
-				PageBy pageBy= new PageBy(page,size);
-				int count = reservationService.count(announceId,pageBy,false);
-				if(count==0){
-					headers.add(HEADER_TOTAL, Long.toString(count));
-				}else{
-					List<ReservationVO> reservations=reservationService.reservationsByAnnounce(announceId,pageBy);
-					paginateResponse.setCount(count);
-					paginateResponse.setResults(reservations);
-					headers.add(HEADER_TOTAL, Long.toString(reservations.size()));
-				}
+        List reservations = null;
 
-			return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+        try {
+            createOpentracingSpan("ReservationController -reservationsByUser");
+            PaginateResponse res = new PaginateResponse();
+            int count = 0;
+            reservations = reservationService.reservationsByUser(userId, type, pageBy);
 
-		}
-		catch (Exception e){
-			logger.info(" ReservationController - reservationsByAnnounce:Exception occurred while fetching the response from the database.", e);
-			throw e;
-		}finally {
-			finishOpentracingSpan();
-		}
-	}
+            count = CollectionsUtils.size(reservations);
+            if (CollectionsUtils.isNotEmpty(reservations)) {
+                res.setCount(count);
+                res.setResults(reservations);
+            }
+            headers.add(HEADER_TOTAL, Long.toString(count));
+
+            return new ResponseEntity<PaginateResponse>(res, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info(" ReservationController - reservationsByUser:Exception occurred while fetching the response from the database.", e);
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
+    }
+
+    /**
+     * Cette methode recherche toutes les reservations d'une annonce
+     *
+     * @param response
+     * @param request
+     * @param announceId
+     * @param page
+     * @param size
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "Retrieve reservations by an announce with an ID", response = ResponseEntity.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful retrieval",
+                    response = ResponseEntity.class, responseContainer = "List")})
+    @GetMapping(value = RESERVATION_WS_BY_ANNOUNCE, produces = MediaType.APPLICATION_JSON, headers = HEADER_ACCEPT)
+    public ResponseEntity<PaginateResponse> reservationsByAnnounce(HttpServletResponse response, HttpServletRequest request,
+                                                                   @RequestParam @Valid long announceId,
+                                                                   @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
+                                                                   @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
+
+        try {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            HttpHeaders headers = new HttpHeaders();
+            PaginateResponse paginateResponse = new PaginateResponse();
+            logger.info("find reservation by announce request in");
+
+            createOpentracingSpan("ReservationController -reservations by announce");
+
+            PageBy pageBy = new PageBy(page, size);
+            int count = reservationService.count(announceId, pageBy, false);
+            if (count == 0) {
+                headers.add(HEADER_TOTAL, Long.toString(count));
+            } else {
+                List<ReservationVO> reservations = reservationService.reservationsByAnnounce(announceId, pageBy);
+                paginateResponse.setCount(count);
+                paginateResponse.setResults(reservations);
+                headers.add(HEADER_TOTAL, Long.toString(reservations.size()));
+            }
+
+            return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.info(" ReservationController - reservationsByAnnounce:Exception occurred while fetching the response from the database.", e);
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
+    }
 
 }

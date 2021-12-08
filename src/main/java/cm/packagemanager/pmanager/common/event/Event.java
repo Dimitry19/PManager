@@ -16,9 +16,9 @@ public abstract class Event {
     protected Object object;
     protected NotificationType type;
 
-    public Event(Date date , NotificationType type){
-        this.date=date;
-        this.type=type;
+    public Event(Date date, NotificationType type) {
+        this.date = date;
+        this.type = type;
     }
 
     public Date getDate() {
@@ -29,19 +29,27 @@ public abstract class Event {
         return type;
     }
 
-    public Object getObject() { return object;  }
+    public Object getObject() {
+        return object;
+    }
 
-    public Long getUserId() {  return userId;  }
+    public Long getUserId() {
+        return userId;
+    }
 
     public void setDate(Date date) {
         this.date = date;
     }
 
-    public void setObject(Object object) {  this.object = object; }
+    public void setObject(Object object) {
+        this.object = object;
+    }
 
     public void setType(NotificationType type) {
         this.type = type;
     }
 
-    public void setUserId(Long userId) {   this.userId = userId;  }
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

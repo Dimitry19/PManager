@@ -4,11 +4,11 @@ import java.sql.Timestamp;
 
 public interface Auditable {
 
-	Timestamp getDateCreated();
+    Timestamp getDateCreated();
 
-	void setDateCreated(Timestamp dateCreated);
+    void setDateCreated(Timestamp dateCreated);
 
-	Timestamp getLastUpdated();
+    Timestamp getLastUpdated();
 
-	void setLastUpdated(Timestamp lastUpdated);
+    void setLastUpdated(Timestamp lastUpdated);
 }

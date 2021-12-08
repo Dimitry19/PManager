@@ -9,21 +9,22 @@ public enum NotificationType {
     ANNOUNCE("Notification annonce");
 
     String value;
-    private NotificationType(String value) {
+
+    NotificationType(String value) {
         this.value = value;
     }
 
-    public String toValue(){
+    public String toValue() {
         return value;
     }
 
-    public static NotificationType fromValue(String value){
-        if(StringUtils.isEmpty(value)){
+    public static NotificationType fromValue(String value) {
+        if (StringUtils.isEmpty(value)) {
             return null;
         }
 
         for (NotificationType e : values()) {
-            if(e.value.equals(value)){
+            if (e.value.equals(value)) {
                 return e;
             }
         }

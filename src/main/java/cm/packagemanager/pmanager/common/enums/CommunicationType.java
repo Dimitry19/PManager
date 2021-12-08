@@ -3,29 +3,30 @@ package cm.packagemanager.pmanager.common.enums;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 
 public enum CommunicationType {
-	SERVICE("Service"),
-	WARNING("Warning"),
-	NEWS("Nouveautés");
+    SERVICE("Service"),
+    WARNING("Warning"),
+    NEWS("Nouveautés");
 
-	String value;
-	private CommunicationType(String value) {
-		this.value = value;
-	}
+    String value;
 
-	public String toValue(){
-		return value;
-	}
+    CommunicationType(String value) {
+        this.value = value;
+    }
 
-	public static CommunicationType fromValue(String value){
-		if(StringUtils.isEmpty(value)){
-			return null;
-		}
+    public String toValue() {
+        return value;
+    }
 
-		for (CommunicationType e : values()) {
-			if(e.value.equals(value)){
-				return e;
-			}
-		}
-		throw new RuntimeException("Valeur  " + value + " non valide");
-	}
+    public static CommunicationType fromValue(String value) {
+        if (StringUtils.isEmpty(value)) {
+            return null;
+        }
+
+        for (CommunicationType e : values()) {
+            if (e.value.equals(value)) {
+                return e;
+            }
+        }
+        throw new RuntimeException("Valeur  " + value + " non valide");
+    }
 }

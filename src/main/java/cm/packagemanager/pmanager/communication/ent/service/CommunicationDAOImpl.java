@@ -5,5 +5,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class CommunicationDAOImpl implements CommunicationDAO{
+public class CommunicationDAOImpl implements CommunicationDAO {
 }

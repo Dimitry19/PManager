@@ -9,15 +9,16 @@ import java.util.Collection;
 
 public interface RoleDAO extends CommonDAO {
 
-	RoleVO findByDescription(String description) throws Exception;
-	RoleVO find(Long id);
+    RoleVO findByDescription(String description) throws Exception;
 
-	Collection<UserVO> usersWithRole(String description);
+    RoleVO find(Long id);
 
-	Collection<RoleVO> getAllRoles() throws Exception;
+    Collection<UserVO> usersWithRole(String description);
 
-	RoleVO addRole(RoleVO role);
+    Collection<RoleVO> getAllRoles() throws Exception;
 
-	//@Query("select role from RoleVO role")
-	//Stream<RoleVO> getAllRolesStream();// Java8 Stream : on place la liste des rôles dans un Stream
+    RoleVO addRole(RoleVO role);
+
+    //@Query("select role from RoleVO role")
+    //Stream<RoleVO> getAllRolesStream();// Java8 Stream : on place la liste des rôles dans un Stream
 }

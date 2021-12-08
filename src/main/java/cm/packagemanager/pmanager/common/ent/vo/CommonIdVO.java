@@ -1,14 +1,12 @@
 package cm.packagemanager.pmanager.common.ent.vo;
 
 import cm.packagemanager.pmanager.airline.ent.vo.AirlineIdVO;
-import cm.packagemanager.pmanager.common.ent.bo.Auditable;
 import cm.packagemanager.pmanager.common.listener.audit.TableListener;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 /**
  *
@@ -17,33 +15,33 @@ import java.sql.Timestamp;
 @EntityListeners(TableListener.class)
 public class CommonIdVO implements Serializable {
 
-	protected String token;
+    protected String token;
 
 
-	@Column(name = "TOKEN",nullable = false)
-	public String getToken() {
-		return token;
-	}
+    @Column(name = "TOKEN", nullable = false)
+    public String getToken() {
+        return token;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		AirlineIdVO that = (AirlineIdVO) o;
+        AirlineIdVO that = (AirlineIdVO) o;
 
-		if (!token.equals(that.token)) return false;
-		return token.equals(that.token);
-	}
+        if (!token.equals(that.token)) return false;
+        return token.equals(that.token);
+    }
 
-	@Override
-	public int hashCode() {
-		int result = token.hashCode();
-		result = 31 * result + token.hashCode();
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        int result = token.hashCode();
+        result = 31 * result + token.hashCode();
+        return result;
+    }
 }

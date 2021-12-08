@@ -5,5 +5,5 @@ import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
 
 public interface ContactUSDAO {
 
-	public void save(ContactUSVO contact) throws BusinessResourceException;
+    void save(ContactUSVO contact) throws BusinessResourceException;
 }

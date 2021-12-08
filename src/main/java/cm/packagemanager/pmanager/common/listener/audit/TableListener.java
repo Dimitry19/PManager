@@ -10,16 +10,16 @@ import java.time.Instant;
 public class TableListener {
 
 
-	@PrePersist
-	void preCreate(Auditable auditable) {
-		Timestamp now = Timestamp.from(Instant.now());
-		auditable.setDateCreated(now);
-		auditable.setLastUpdated(now);
-	}
+    @PrePersist
+    void preCreate(Auditable auditable) {
+        Timestamp now = Timestamp.from(Instant.now());
+        auditable.setDateCreated(now);
+        auditable.setLastUpdated(now);
+    }
 
-	@PreUpdate
-	void preUpdate(Auditable auditable) {
-		Timestamp now = Timestamp.from(Instant.now());
-		auditable.setLastUpdated(now);
-	}
+    @PreUpdate
+    void preUpdate(Auditable auditable) {
+        Timestamp now = Timestamp.from(Instant.now());
+        auditable.setLastUpdated(now);
+    }
 }

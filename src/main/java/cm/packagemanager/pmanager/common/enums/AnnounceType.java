@@ -3,28 +3,29 @@ package cm.packagemanager.pmanager.common.enums;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 
 public enum AnnounceType {
-	BUYER("Acheteur"),
-	SELLER("Vendeur");
+    BUYER("Acheteur"),
+    SELLER("Vendeur");
 
-	String value;
-	private AnnounceType(String value) {
-		this.value = value;
-	}
+    String value;
 
-	public String toValue(){
-		return value;
-	}
+    AnnounceType(String value) {
+        this.value = value;
+    }
 
-	public static AnnounceType fromValue(String value){
-		if(StringUtils.isEmpty(value)){
-			return null;
-		}
+    public String toValue() {
+        return value;
+    }
 
-		for (AnnounceType e : values()) {
-			if(e.value.equals(value)){
-				return e;
-			}
-		}
-		throw new RuntimeException("Valeur  " + value + " non valide");
-	}
+    public static AnnounceType fromValue(String value) {
+        if (StringUtils.isEmpty(value)) {
+            return null;
+        }
+
+        for (AnnounceType e : values()) {
+            if (e.value.equals(value)) {
+                return e;
+            }
+        }
+        throw new RuntimeException("Valeur  " + value + " non valide");
+    }
 }

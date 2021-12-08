@@ -7,9 +7,7 @@ import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
 import io.swagger.annotations.Api;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,25 +20,25 @@ import static cm.packagemanager.pmanager.constant.WSConstants.SOCKET_NOTIFICATIO
 @Controller
 @RestController
 @RequestMapping(SOCKET_NOTIFICATION_WS)
-@Api(value="socket-notifications-service", description="Socket Notifications ")
+@Api(value = "socket-notifications-service", description = "Socket Notifications ")
 public class WebSocketNotificationController {
 
     protected final Log logger = LogFactory.getLog(WebSocketNotificationController.class);
 
     @Resource(name = "notificator")
-    private  NotificationService dispatcher;
+    private NotificationService dispatcher;
 
 
     @MessageMapping("/start")
     public void start(StompHeaderAccessor stompHeaderAccessor) {
-        dispatcher.add(stompHeaderAccessor.getSessionId(),NotificationType.USER);
+        dispatcher.add(stompHeaderAccessor.getSessionId(), NotificationType.USER);
     }
 
 
     @MessageMapping(WebSocketConstants.SUSCRIBE_QUEUE_ANNOUNCE_SEND)
-   /// @SendTo(WebSocketConstants.SUSCRIBE_QUEUE_ANNOUNCE_SEND)
+    /// @SendTo(WebSocketConstants.SUSCRIBE_QUEUE_ANNOUNCE_SEND)
     public void announceNotification(StompHeaderAccessor stompHeaderAccessor) {
-        dispatcher.add(stompHeaderAccessor.getSessionId() , NotificationType.ANNOUNCE);
+        dispatcher.add(stompHeaderAccessor.getSessionId(), NotificationType.ANNOUNCE);
     }
 
     @MessageMapping("/comment/start")

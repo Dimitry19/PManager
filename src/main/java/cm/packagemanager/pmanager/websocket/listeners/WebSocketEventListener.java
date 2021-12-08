@@ -39,17 +39,17 @@ public class WebSocketEventListener {
         Map<String, List<String>> nativeHeaders = (Map<String, List<String>>) connectHeader.getHeaders()
                 .get(SimpMessageHeaderAccessor.NATIVE_HEADERS);
 
-       if (nativeHeaders!=null){
-           String user = nativeHeaders.get("user").get(0);
-           String sessionId = stompAccessor.getSessionId();
-           logger.info(" Connection by user <{}> with sessionId <{}>", user, sessionId);
+        if (nativeHeaders != null) {
+            String user = nativeHeaders.get("user").get(0);
+            String sessionId = stompAccessor.getSessionId();
+            logger.info(" Connection by user <{}> with sessionId <{}>", user, sessionId);
 
-           notificationService.addConnectedUser(user,sessionId);
+            notificationService.addConnectedUser(user, sessionId);
 
 
-           //TODO
+            //TODO
 
-       }
+        }
     }
 
     @EventListener
@@ -58,7 +58,6 @@ public class WebSocketEventListener {
         String sessionId = stompAccessor.getSessionId();
         logger.info("Chat connection by user <{}> with sessionId <{}>", "Nop", sessionId);
         notificationService.removeConnectedUser(sessionId);
-
 
 
         //TODO

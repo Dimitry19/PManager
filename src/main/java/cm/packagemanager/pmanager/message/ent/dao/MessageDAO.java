@@ -4,7 +4,6 @@ import cm.packagemanager.pmanager.common.ent.dao.CommonDAO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
-import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -16,12 +15,19 @@ import java.util.List;
 public interface MessageDAO extends CommonDAO {
 
 
-	public int  count(PageBy pageBy)  throws Exception;
-	public  MessageVO update(UpdateMessageDTO messageDTO) throws Exception;
-	public List<MessageVO> messagesByUser(UserVO user,PageBy pageBy) throws Exception;
-	public List<MessageVO> messagesByUser(Long id,PageBy pageBy) throws Exception;
-	public List<MessageVO> messages(PageBy pageBy ) throws Exception;
-	public MessageVO findById(MessageIdVO id) throws BusinessResourceException;
-	public boolean delete(Long id) throws BusinessResourceException;
-	MessageVO addMessage(MessageDTO messageDTO) throws BusinessResourceException, RecordNotFoundException, Exception;
+    int count(PageBy pageBy) throws Exception;
+
+    MessageVO update(UpdateMessageDTO messageDTO) throws Exception;
+
+    List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws Exception;
+
+    List<MessageVO> messagesByUser(Long id, PageBy pageBy) throws Exception;
+
+    List<MessageVO> messages(PageBy pageBy) throws Exception;
+
+    MessageVO findById(MessageIdVO id) throws BusinessResourceException;
+
+    boolean delete(Long id) throws BusinessResourceException;
+
+    MessageVO addMessage(MessageDTO messageDTO) throws Exception;
 }
