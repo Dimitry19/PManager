@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="sockjs-0.3.4.min.js"></script>
+	<script src="stomp.min.js"></script>
+	<script src="client-socket.js"></script>
+</head>
+
+<body>
+<p th:inline="text">
+	You are logged as: <b>[[${#httpServletRequest.remoteUser}]]</b>
+	(<a href="/pmanager/logout">logout</a>)
+</p>
+<p>
+	Click the button below to perform an action.
+	<br />
+	<strong>UserA</strong> will be notified via web socket.
+</p>
+<div>
+	<input id="js-connect" type="button" value="Connect" />
+	<input id="js-disconnect" type="button" value="Deconnect" />
+	<input id="js-start" type="button" value="Start" />
+	<input id="js-subscriber" type="button" value="Subscribe channel" />
+	<input id="js-announce-start" type="button" value="Announce start" />
+	<input id="js-comment-start" type="button" value="Comment start" />
+	<input id="js-stop" type="button" value="Stop" />
+</div>
+
+
+<textarea id="js-notifications" cols="60" rows="10" readonly="readonly"></textarea>
+
+
+<!-- Javascript functions -->
+<script>
+
+	/**
+	 * Init operations.
+	 */
+	$(document).ready(function() {
+		Client.loadClient();
+	});
+
+</script>
+
+<br />
+<hr />
+</body>
+
+</html>
