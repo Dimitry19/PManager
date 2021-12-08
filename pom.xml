@@ -366,7 +366,7 @@
 			<!-- Ceci permet de le frontend compilé-->
 
 
-			<!--<plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.6.0</version>
@@ -393,7 +393,7 @@
 						<executable>ng</executable>
 						<arguments>
 							<argument>build</argument>
-							<argument>&#45;&#45;base-href=/pmanager/</argument>
+							<argument>--base-href=/pmanager/</argument>
 						</arguments>
 					</configuration>
 					<goals>
@@ -401,7 +401,7 @@
 					</goals>
 				</execution>
 				</executions>
-			</plugin>-->
+			</plugin>
 		</plugins>
 	</build>
 
