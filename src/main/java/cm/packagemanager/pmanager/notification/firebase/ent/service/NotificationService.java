@@ -12,6 +12,8 @@ public  interface NotificationService {
 
 
 	Set<String> listeners = new HashSet<>();
+	Set notifications = new HashSet<>();
+	Set notificationsToPersist = new HashSet<>();
 	Map commentListeners = new HashMap<>();
 	Map userListeners = new HashMap<>();
 	Map announceListeners = new HashMap<>();

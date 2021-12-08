@@ -2,96 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="integration Angular">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-03-28-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-03-29-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-01-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-04-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-05-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-08-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-09-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-11-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-12-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-13-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-14-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-15-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-17-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-18-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-19-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-20-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-21-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-22-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-23-1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-2021-04-26-1.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/PM.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/PM.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documentations/ToDo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Documentations/ToDo.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documentations/examples.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Documentations/examples.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documentations/link-doc.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Documentations/link-doc.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/user/007-p.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/user/007-p.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/user/B20-p.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/user/B20-p.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/user/lool-p.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/user/lool-p.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/PackManager/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PackManager/application.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/_index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/client-socket.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sockjs-0.3.4.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/stomp.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/awselect.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/bootstrap-slider.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/.npmignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/HELP-US-OUT.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/css/font-awesome.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/css/font-awesome.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/css/font-awesome.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/FontAwesome.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/fontawesome-webfont.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/fontawesome-webfont.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/fontawesome-webfont.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/fontawesome-webfont.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/fonts/fontawesome-webfont.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/animated.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/bordered-pulled.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/core.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/fixed-width.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/font-awesome.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/icons.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/larger.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/list.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/mixins.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/path.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/rotated-flipped.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/screen-reader.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/stacked.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/less/variables.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_animated.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_bordered-pulled.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_core.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_fixed-width.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_icons.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_larger.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_list.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_mixins.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_path.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_rotated-flipped.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_screen-reader.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_stacked.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/_variables.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/font-awesome/scss/font-awesome.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/css/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/background.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/background_signin.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/find.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/loupe.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/profile.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/travel_favicon-removebg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/travel_favicon.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/travel_favicon1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/travel_titre.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/user-account.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/images/zoom-lens.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/js/awselect.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/js/bootstrap-slider.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/js/highlight.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/assets/js/modernizr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dist/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/event/AnnounceEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/event/AnnounceEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/StatusEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/StatusEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/event/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/event/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/event/IEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/event/IEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_titre.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_titre.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_titre.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.13aa3637841b2560fe44.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.13aa3637841b2560fe44.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/travel_titre.jpg" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -230,10 +179,10 @@
         <option value="$PROJECT_DIR$/src/main/resources/PMFrontend/angular.json" />
         <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/spring-mvc-demo-servlet.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/dist/index.html" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -262,10 +211,11 @@
       <path value="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -297,6 +247,14 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="PManagerBE" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManagerBE" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -311,16 +269,16 @@
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelWidth1" value="75" />
-    <property name="SearchEverywhereHistoryKey" value="ResourceHttpHa&#9;PSI&#9;JAVA://org.springframework.web.servlet.resource.ResourceHttpRequestHandler&#10;text/html&#9;FILE&#9;jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home/jre/lib/resources.jar!/javax/swing/text/html/parser/html32.bdtd&#10;content-t&#9;null&#9;null&#10;servl&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ServletInitializer&#10;applicationCont&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.AutowiringSpringBeanJobFactory#setApplicationContext&#10;applicationContext&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.QuartzCronConfiguration#applicationContext&#10;nosni&#9;PSI&#9;JAVA://org.glassfish.jersey.jackson.internal.jackson.jaxrs.cfg.JaxRSFeature#ADD_NO_SNIFF_HEADER&#10;nosniff&#9;PSI&#9;JAVA://org.springframework.security.web.server.header.ContentTypeOptionsServerHttpHeadersWriter#NOSNIFF&#10;appl&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;app&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;Defau&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;pom&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;No&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java&#10;index&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/dist/index.html&#10;webCon&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;application.lo&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/logs/PackManager/application.log&#10;defa&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;application.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;weso&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;commonContro&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java&#10;webs&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;pom.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;Gene&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl&#10;Rese&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.dao.ReservationDAOImpl&#10;RESEVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.vo.ReservationVO&#10;Val&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.enums.ValidateEnum&#10;Annou&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java&#10;Reser&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.reservation.ReservationController&#10;Announce&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;Anno&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;application.p&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;Web&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.websocket.config.WebSocketConfig&#10;Rest&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.administrator.exception.RestExceptionHandler&#10;applica&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;swagger&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.administrator.api.SwaggerConfig&#10;UDT&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO&#10;an&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;messa&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.message.MessageController&#10;UserVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.user.ent.vo.UserVO&#10;REVI&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.review.ent.dao.ReviewDAOImpl&#10;Announc&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java&#10;Batch&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.BatchConfig&#10;AnnounceCOn&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.announce.AnnounceController&#10;AnnounceVO&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;announ&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/AnnounceDTO.java&#10;USCO&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java&#10;AnnounceIm&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAOImpl&#10;Ann&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;Mail&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.mail.MailSender&#10;Mai&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.mail.MailSender" />
+    <property name="SearchEverywhereHistoryKey" value="jdk&#9;ACTION&#9;SwitchBootJdk&#10;ResourceHttpHa&#9;PSI&#9;JAVA://org.springframework.web.servlet.resource.ResourceHttpRequestHandler&#10;text/html&#9;FILE&#9;jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home/jre/lib/resources.jar!/javax/swing/text/html/parser/html32.bdtd&#10;content-t&#9;null&#9;null&#10;servl&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ServletInitializer&#10;applicationCont&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.AutowiringSpringBeanJobFactory#setApplicationContext&#10;applicationContext&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.QuartzCronConfiguration#applicationContext&#10;nosni&#9;PSI&#9;JAVA://org.glassfish.jersey.jackson.internal.jackson.jaxrs.cfg.JaxRSFeature#ADD_NO_SNIFF_HEADER&#10;nosniff&#9;PSI&#9;JAVA://org.springframework.security.web.server.header.ContentTypeOptionsServerHttpHeadersWriter#NOSNIFF&#10;appl&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;app&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;Defau&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;pom&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;No&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java&#10;index&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/dist/index.html&#10;webCon&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;application.lo&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/logs/PackManager/application.log&#10;defa&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;application.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;weso&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;commonContro&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java&#10;webs&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;pom.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;Gene&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl&#10;Rese&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.dao.ReservationDAOImpl&#10;RESEVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.vo.ReservationVO&#10;Val&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.enums.ValidateEnum&#10;Annou&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java&#10;Reser&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.reservation.ReservationController&#10;Announce&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;Anno&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;application.p&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;Web&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.websocket.config.WebSocketConfig&#10;Rest&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.administrator.exception.RestExceptionHandler&#10;applica&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;swagger&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.administrator.api.SwaggerConfig&#10;UDT&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO&#10;an&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;messa&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.message.MessageController&#10;UserVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.user.ent.vo.UserVO&#10;REVI&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.review.ent.dao.ReviewDAOImpl&#10;Announc&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java&#10;Batch&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.BatchConfig&#10;AnnounceCOn&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.announce.AnnounceController&#10;AnnounceVO&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;announ&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/AnnounceDTO.java&#10;USCO&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java&#10;AnnounceIm&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAOImpl&#10;Ann&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;Mail&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.mail.MailSender" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="H2" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="Console" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/src/main/resources/PMFrontend/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
@@ -456,6 +414,7 @@
       <workItem from="1638518769700" duration="22176000" />
       <workItem from="1638784792370" duration="6250000" />
       <workItem from="1638865613233" duration="10349000" />
+      <workItem from="1638979394693" duration="3177000" />
     </task>
     <task id="LOCAL-00001" summary="Ajout de la categorie de l'annonce">
       <created>1613510383183</created>
@@ -699,7 +658,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="244451000" />
+    <option name="totallyTimeSpent" value="255405000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -712,10 +671,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5114449" side_tool="true" weight="0.56208277" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.51216024" side_tool="true" weight="0.2755611" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info id="Capture Tool" order="2" />
@@ -729,13 +687,13 @@
       <window_info anchor="bottom" id="Messages" order="7" sideWeight="0.48712447" weight="0.49750623" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
-      <window_info anchor="bottom" id="Java Enterprise" order="7" sideWeight="0.49928468" weight="0.32843792" />
+      <window_info anchor="bottom" id="Java Enterprise" order="7" sideWeight="0.49928468" weight="0.32793018" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.48354793" weight="0.32843792" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.48855507" visible="true" weight="0.2755611" />
-      <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32969698" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48783976" visible="true" weight="0.2755611" />
+      <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
       <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="7" sideWeight="0.49570817" type="SLIDING" weight="0.3271028" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.23032904" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.23319027" />
       <window_info anchor="right" id="Bean Validation" order="3" sideWeight="0.49810606" weight="0.3297568" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
@@ -825,6 +783,9 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
+    </ignored-roots>
     <MESSAGE value="Ajout de la categorie de l'annonce" />
     <MESSAGE value="commit file de .idea (contraint)" />
     <MESSAGE value="log execution time" />
@@ -856,31 +817,31 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>171</line>
+          <line>172</line>
           <properties />
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>200</line>
+          <line>201</line>
           <properties />
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>389</line>
+          <line>390</line>
           <properties />
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>441</line>
+          <line>442</line>
           <properties />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>456</line>
+          <line>457</line>
           <properties />
           <option name="timeStamp" value="15" />
         </line-breakpoint>
@@ -898,7 +859,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>466</line>
+          <line>467</line>
           <properties />
           <option name="timeStamp" value="19" />
         </line-breakpoint>
@@ -922,25 +883,25 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>293</line>
+          <line>294</line>
           <properties />
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>82</line>
+          <line>83</line>
           <properties />
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>536</line>
+          <line>537</line>
           <properties />
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>533</line>
+          <line>534</line>
           <properties />
           <option name="timeStamp" value="36" />
         </line-breakpoint>
@@ -952,7 +913,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>189</line>
+          <line>190</line>
           <properties />
           <option name="timeStamp" value="39" />
         </line-breakpoint>
@@ -964,7 +925,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java</url>
-          <line>60</line>
+          <line>57</line>
           <properties />
           <option name="timeStamp" value="44" />
         </line-breakpoint>
@@ -986,9 +947,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/trouble-shooting.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/listeners/WebSocketEventListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
@@ -1035,13 +993,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/client-socket.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/client-socket.js" />
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1350">
@@ -1056,13 +1008,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/_index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/_index.html" />
     <entry file="file://$PROJECT_DIR$/PManager.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-88">
@@ -1121,13 +1067,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1800">
-          <caret line="120" column="18" lean-forward="true" selection-start-line="120" selection-start-column="18" selection-end-line="120" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/media/jersey-media-json-jackson/2.30.1/jersey-media-json-jackson-2.30.1.jar!/org/glassfish/jersey/jackson/internal/jackson/jaxrs/cfg/JaxRSFeature.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1179,13 +1118,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="90" column="37" selection-start-line="90" selection-start-column="37" selection-end-line="90" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot/2.3.0.RELEASE/spring-boot-2.3.0.RELEASE.jar!/org/springframework/boot/web/servlet/support/SpringBootServletInitializer.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="406">
@@ -1202,13 +1134,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/web.xml" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/spring-mvc-demo-servlet.xml" />
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="368" column="52" selection-start-line="368" selection-start-column="52" selection-end-line="368" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/webjars/sockjs-client/1.0.2/sockjs-client-1.0.2.jar!/META-INF/resources/webjars/sockjs-client/1.0.2/sockjs.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="988">
@@ -1221,6 +1146,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="58" column="74" lean-forward="true" selection-start-line="58" selection-start-column="74" selection-end-line="58" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="380" column="49" selection-start-line="380" selection-start-column="42" selection-end-line="380" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.2.6.RELEASE/spring-webmvc-5.2.6.RELEASE.jar!/org/springframework/web/servlet/DispatcherServlet.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="101" column="11" selection-start-line="101" selection-start-column="11" selection-end-line="101" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="114" column="16" lean-forward="true" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="120" column="18" selection-start-line="120" selection-start-column="18" selection-end-line="120" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -1276,7 +1229,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.8</last-edited>
+          <last-edited>11</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1288,7 +1241,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Web|PManager</last-edited>
+          <last-edited>PManager</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

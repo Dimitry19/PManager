@@ -25,6 +25,7 @@ import cm.packagemanager.pmanager.common.utils.*;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.common.event.IEvent;
 import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
@@ -551,12 +552,15 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO , IEvent {
 		}
 	}
 
+
+
 	@Override
-	public void generateEvent(Class clazz) {
+	public void generateEvent(Map props) {
+		AnnounceEvent event = new AnnounceEvent(DateUtils.DateToSQLDate(new Date()), NotificationType.ANNOUNCE);
+		event.setId((Long) props.get("id"));
+		event.setMessage((String) props.get("message"));
+		event.setUserId((Long) props.get("user"));
 
-		AnnounceEvent event = null;
-
-		notificatorServiceImpl.addEvent(null);
-
+		notificatorServiceImpl.addEvent(event);
 	}
 }

@@ -5,8 +5,10 @@
 
 package cm.packagemanager.pmanager.common.event;
 
+import java.util.Map;
+
 public interface IEvent<T> {
 
-    void generateEvent(Class<T> clazz);
+    void generateEvent(Map props);
 
 }

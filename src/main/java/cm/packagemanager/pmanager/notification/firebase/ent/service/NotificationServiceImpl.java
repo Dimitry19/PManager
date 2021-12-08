@@ -21,7 +21,7 @@ import java.util.Set;
 
 import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.*;
 
-//@Service
+@Service("notificationService")
 public class NotificationServiceImpl  implements NotificationService{
 
 	private static Logger logger = LoggerFactory.getLogger(NotificationServiceImpl.class);
@@ -97,7 +97,7 @@ public class NotificationServiceImpl  implements NotificationService{
 
 		switch (notificationType){
 			case ANNOUNCE:
-				announceListeners.put("",sessionId);
+				//announceListeners.put("",sessionId);
 				break;
 			case USER:
 				break;
