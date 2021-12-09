@@ -13,7 +13,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -29,8 +31,15 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
     @PostConstruct
     public void initialize() {
         try {
+
+            final InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(firebaseConfigPath);
+
+            if (resourceAsStream==null){
+                logger.info(" Firebase config file not found!");
+                return;
+            }
             FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())).build();
+                    .setCredentials(GoogleCredentials.fromStream(resourceAsStream)).build();
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
                 logger.info("Firebase application has been initialized");

@@ -1,649 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="91eb49c1-6437-46aa-86fa-d0fdf04ca62a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backup/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/additional-spring-configuration-metadata.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application-dev.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/PackageApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/PackageApplicationDemo$Dummy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/PackageApplicationDemo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ServletInitializer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/administrator/api/ApiError.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/administrator/api/SwaggerConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/administrator/ent/vo/AdminVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/administrator/exception/RestExceptionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/administrator/tracing/OpenTracingConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/airline/ent/bo/AirlineBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/airline/ent/vo/AirlineIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/airline/ent/vo/AirlineVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/bo/AnnounceBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/bo/CategoryBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/service/AnnounceService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/service/AnnounceServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/service/CategoryService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/service/CategoryServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/service/ReservationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/service/ReservationServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/service/ServiceAnnounce.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/vo/AnnounceIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/vo/AnnounceInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/vo/CategoryIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/vo/CategoryVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/vo/ReservationReceivedUserVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/vo/ReservationUserIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/vo/ReservationUserVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/ent/vo/ReservationVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/announce/event/AnnounceEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/config/BatchConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/config/QuartzNoCronConfiguration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/config/cron/AutowiringSpringBeanJobFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/config/cron/QuartzCronConfiguration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/jobs/CustomQuartzJob.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/jobs/cron/QuartzSubmitJobs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/jobs/cron/announce/AnnounceManagerJob.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/jobs/cron/announce/AnnounceSubmitJobs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/jobs/cron/user/UserManagerJob.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/jobs/cron/user/UserSubmitJobs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/listerners/JobResultListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/listerners/StepResultListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/tasks/CommonTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/tasks/ConfirmUsersTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/batch/tasks/CopyOldAnnouncesTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/buyer/ent/vo/BuyerVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/Constants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/bo/Auditable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/bo/CollectionsManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/dao/CommonDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/dao/CommonGenericDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/dao/Generic.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/dao/GenericDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/dao/ImageDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/dao/ImageDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/dto/ResponseDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/service/ImageService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/vo/CommonIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/vo/CommonVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/vo/ImageVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/vo/Movie.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/vo/PageBy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/ent/vo/WSCommonResponseVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/enums/AnnounceType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/enums/CommunicationType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/enums/Gender.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/enums/ReservationType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/enums/RoleEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/enums/RoleType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/enums/StatusEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/enums/TransportEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/enums/TransportType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/enums/UploadImageType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/enums/ValidateEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/event/Event.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/event/IEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/exception/BusinessResourceException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/exception/CustomExceptionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/exception/ErrorResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/exception/MissingHeaderInfoException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/exception/RecordNotFoundException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/exception/ResponseException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/exception/UserException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/exception/UserNotFoundException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/listener/audit/TableListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/mail/MailManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/mail/MailSender$SMTPAuthenticator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/mail/MailSender.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/mail/MailType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/mail/ent/service/MailService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/mail/ent/service/MailServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/mail/ent/vo/ContactUSVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/mail/ent/vo/EmailVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/pagination/PaginationVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/utils/BigDecimalUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/utils/CollectionsUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/utils/DateUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/utils/FileUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/utils/HTMLEntities.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/utils/ObjectUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/utils/QueryUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/utils/StringUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/common/utils/Utility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/communication/ent/service/CommunicationDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/communication/ent/service/CommunicationDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/communication/ent/vo/CommunicationVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/component/AuthenticationEntryPointImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/component/CrossDomainFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/configuration/cfg/CommonAspect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/configuration/cfg/ConfigTestToDelete.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/configuration/cfg/CustomWebMvcConfigurerAdapter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/configuration/cfg/HibernateConfiguration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/configuration/filters/FilterConstants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/configuration/filters/package-info.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/constant/FieldConstants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/constant/WSConstants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/message/ent/bo/MessageBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/message/ent/dao/MessageDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/message/ent/service/MessageService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/message/ent/service/MessageServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/message/ent/vo/MessageIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/message/ent/vo/MessageVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/FireBaseNotificationSender.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationServiceImpl$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/PushNotificationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/PushNotificationServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/vo/Notification.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/vo/NotificationResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/ent/vo/NotificationVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/enums/NotificationParameter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/notification/firebase/enums/NotificationType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/rating/ent/vo/RatingCountVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/rating/enums/Rating.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/review/ent/bo/ReviewsSummaryBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/review/ent/dao/ReviewDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/review/ent/dao/ReviewDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/review/ent/service/ReviewService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/review/ent/service/ReviewServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/review/ent/vo/CommonReview.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/review/ent/vo/ReviewDetailsVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/review/ent/vo/ReviewIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/review/ent/vo/ReviewVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/scheduler/tasklet/FileDeletingTasklet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/security/PasswordGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/security/WebSecurityConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/seller/ent/vo/SellerVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/transport/ent/vo/TransportVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/bo/RoleBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/bo/RoleBOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/bo/UserBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/bo/UserBOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/dao/RoleDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/dao/RoleDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/dao/UserDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/service/RoleService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/service/RoleServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/service/UserService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/service/UserServiceImpl$ReviewsSummaryBOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/service/UserServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/vo/RoleVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/vo/UserIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/vo/UserInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/user/ent/vo/UserVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/utils/PasswordEncoder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/client/WebSocketSocketClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/client/handler/MyStompFrameHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/client/handler/MyStompSessionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener$SessionConnectedListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener$SessionDisconnectListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener$SessionSubscribeListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener$SessionUnsubscribeListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener$SessionsListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/config/WebSocketConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/constants/WebSocketConstants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/websocket/listeners/WebSocketEventListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/DefaultController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/ErrorController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/CommonController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/EmployeeController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/UserControllerTemplate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/admin/communication/CommunicationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/mail/MailController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/message/MessageController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/notification/NotificationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/reservation/ReservationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/review/ReviewController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/users/RoleController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/CommonSearchDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/announces/AnnounceDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/announces/AnnounceSearchDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/announces/CategoriesDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/announces/CommonReservationDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/announces/ReservationDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/announces/UpdateAnnounceDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/announces/UpdateReservationDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/announces/ValidateReservationDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/mail/ContactUSDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/mail/MailDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/messages/MessageDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/messages/MessageSearchDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/messages/UpdateMessageDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/review/ReviewDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/review/UpdateReviewDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/users/LoginDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/users/ManagePasswordDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/users/PasswordDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/users/RegisterDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/users/RoleDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/users/RoleToUserDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/users/SubscribeDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/users/UpdateUserDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/requests/users/UserSeachDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/responses/PaginateResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/responses/Response.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cm/packagemanager/pmanager/ws/responses/WebServiceResponseCode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/keystore/cert.crt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/keystore/keystore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/keystore/pswd.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/keystore/selfsigned.jks" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/log4j2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/quartz.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/__index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/client-socket.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/sockjs-0.3.4.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/stomp.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/Lost Password.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/__index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/confirm-registration.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/error/404.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/retrieve-password.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/send-mail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT.war" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/META-INF/additional-spring-configuration-metadata.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/application-dev.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/PackageApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/PackageApplicationDemo$Dummy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/PackageApplicationDemo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ServletInitializer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/administrator/api/ApiError.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/administrator/api/SwaggerConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/administrator/ent/vo/AdminVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/administrator/exception/RestExceptionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/administrator/tracing/OpenTracingConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/airline/ent/bo/AirlineBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/airline/ent/vo/AirlineIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/airline/ent/vo/AirlineVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/bo/AnnounceBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/bo/CategoryBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/service/AnnounceService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/service/AnnounceServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/service/CategoryService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/service/CategoryServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/service/ReservationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/service/ReservationServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/service/ServiceAnnounce.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/vo/AnnounceIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/vo/AnnounceInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/vo/CategoryIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/vo/CategoryVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/vo/ReservationReceivedUserVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/vo/ReservationUserIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/vo/ReservationUserVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/ent/vo/ReservationVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/announce/event/AnnounceEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/config/BatchConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/config/QuartzNoCronConfiguration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/config/cron/AutowiringSpringBeanJobFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/config/cron/QuartzCronConfiguration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/jobs/CustomQuartzJob.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/jobs/cron/QuartzSubmitJobs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/jobs/cron/announce/AnnounceManagerJob.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/jobs/cron/announce/AnnounceSubmitJobs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/jobs/cron/user/UserManagerJob.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/jobs/cron/user/UserSubmitJobs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/listerners/JobResultListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/listerners/StepResultListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/tasks/CommonTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/tasks/ConfirmUsersTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/batch/tasks/CopyOldAnnouncesTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/buyer/ent/vo/BuyerVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/Constants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/bo/Auditable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/bo/CollectionsManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/dao/CommonDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/dao/CommonGenericDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/dao/Generic.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/dao/GenericDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/dao/ImageDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/dao/ImageDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/dto/ResponseDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/service/ImageService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/vo/CommonIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/vo/CommonVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/vo/ImageVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/vo/Movie.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/vo/PageBy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/ent/vo/WSCommonResponseVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/enums/AnnounceType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/enums/CommunicationType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/enums/Gender.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/enums/ReservationType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/enums/RoleEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/enums/RoleType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/enums/StatusEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/enums/TransportEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/enums/TransportType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/enums/UploadImageType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/enums/ValidateEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/event/Event.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/event/IEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/exception/BusinessResourceException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/exception/CustomExceptionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/exception/ErrorResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/exception/MissingHeaderInfoException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/exception/RecordNotFoundException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/exception/ResponseException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/exception/UserException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/exception/UserNotFoundException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/listener/audit/TableListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/mail/MailManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/mail/MailSender$SMTPAuthenticator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/mail/MailSender.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/mail/MailType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/mail/ent/service/MailService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/mail/ent/service/MailServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/mail/ent/vo/ContactUSVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/mail/ent/vo/EmailVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/pagination/PaginationVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/utils/BigDecimalUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/utils/CollectionsUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/utils/DateUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/utils/FileUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/utils/HTMLEntities.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/utils/ObjectUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/utils/QueryUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/utils/StringUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/common/utils/Utility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/communication/ent/service/CommunicationDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/communication/ent/service/CommunicationDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/communication/ent/vo/CommunicationVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/component/AuthenticationEntryPointImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/component/CrossDomainFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/configuration/cfg/CommonAspect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/configuration/cfg/ConfigTestToDelete.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/configuration/cfg/CustomWebMvcConfigurerAdapter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/configuration/cfg/HibernateConfiguration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/configuration/filters/FilterConstants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/configuration/filters/package-info.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/constant/FieldConstants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/constant/WSConstants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/message/ent/bo/MessageBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/message/ent/dao/MessageDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/message/ent/service/MessageService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/message/ent/service/MessageServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/message/ent/vo/MessageIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/message/ent/vo/MessageVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/FireBaseNotificationSender.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationServiceImpl$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/PushNotificationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/service/PushNotificationServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/vo/Notification.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/vo/NotificationResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/ent/vo/NotificationVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/enums/NotificationParameter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/notification/firebase/enums/NotificationType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/rating/ent/vo/RatingCountVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/rating/enums/Rating.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/review/ent/bo/ReviewsSummaryBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/review/ent/dao/ReviewDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/review/ent/dao/ReviewDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/review/ent/service/ReviewService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/review/ent/service/ReviewServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/review/ent/vo/CommonReview.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/review/ent/vo/ReviewDetailsVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/review/ent/vo/ReviewIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/review/ent/vo/ReviewVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/scheduler/tasklet/FileDeletingTasklet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/security/PasswordGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/security/WebSecurityConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/seller/ent/vo/SellerVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/transport/ent/vo/TransportVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/bo/RoleBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/bo/RoleBOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/bo/UserBO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/bo/UserBOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/dao/RoleDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/dao/RoleDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/dao/UserDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/service/RoleService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/service/RoleServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/service/UserService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/service/UserServiceImpl$ReviewsSummaryBOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/service/UserServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/vo/RoleVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/vo/UserIdVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/vo/UserInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/user/ent/vo/UserVO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/utils/PasswordEncoder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/client/WebSocketSocketClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/client/handler/MyStompFrameHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/client/handler/MyStompSessionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener$SessionConnectedListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener$SessionDisconnectListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener$SessionSubscribeListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener$SessionUnsubscribeListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener$SessionsListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/config/WebSocketConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/constants/WebSocketConstants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/websocket/listeners/WebSocketEventListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/DefaultController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/ErrorController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/CommonController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/EmployeeController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/UserControllerTemplate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/admin/communication/CommunicationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/mail/MailController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/message/MessageController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/notification/NotificationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/reservation/ReservationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/review/ReviewController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/users/RoleController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/CommonSearchDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/announces/AnnounceDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/announces/AnnounceSearchDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/announces/CategoriesDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/announces/CommonReservationDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/announces/ReservationDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/announces/UpdateAnnounceDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/announces/UpdateReservationDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/announces/ValidateReservationDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/mail/ContactUSDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/mail/MailDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/messages/MessageDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/messages/MessageSearchDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/messages/UpdateMessageDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/review/ReviewDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/review/UpdateReviewDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/users/LoginDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/users/ManagePasswordDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/users/PasswordDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/users/RegisterDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/users/RoleDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/users/RoleToUserDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/users/SubscribeDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/users/UpdateUserDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/requests/users/UserSeachDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/responses/PaginateResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/responses/Response.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/cm/packagemanager/pmanager/ws/responses/WebServiceResponseCode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/keystore/cert.crt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/keystore/keystore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/keystore/pswd.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/keystore/selfsigned.jks" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/log4j2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/quartz.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/static/__index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/static/client-socket.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/static/sockjs-0.3.4.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/static/stomp.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/templates/Lost Password.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/templates/__index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/templates/confirm-registration.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/templates/error/404.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/templates/retrieve-password.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/classes/templates/send-mail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/HikariCP-3.4.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/accessors-smart-1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/aopalliance-repackaged-2.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/asm-7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/asm-analysis-7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/asm-commons-7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/asm-tree-7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/asm-util-7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/aspectjweaver-1.9.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/class-model-2.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/classmate-1.5.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/evo-inflector-1.2.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/h2-1.4.200.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/hibernate-validator-6.1.5.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/hk2-2.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/hk2-api-2.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/hk2-core-2.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/hk2-locator-2.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/hk2-runlevel-2.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/hk2-utils-2.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-annotations-2.11.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-core-2.11.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-databind-2.11.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-datatype-jdk8-2.11.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-datatype-jsr310-2.11.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-module-jaxb-annotations-2.11.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-module-parameter-names-2.11.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.activation-1.2.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.activation-api-1.2.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.annotation-api-1.3.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.el-3.0.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.inject-2.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.jws-api-2.1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.mail-1.6.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.validation-api-2.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.ws.rs-api-2.1.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.xml.bind-api-2.3.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.xml.soap-api-1.4.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.xml.ws-api-2.3.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jboss-logging-3.4.1.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jersey-bean-validation-2.30.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jersey-client-2.30.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jersey-common-2.30.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jersey-container-servlet-2.30.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jersey-container-servlet-core-2.30.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jersey-entity-filtering-2.30.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jersey-hk2-2.30.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jersey-media-jaxb-2.30.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jersey-media-json-jackson-2.30.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jersey-server-2.30.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jersey-spring5-2.30.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/json-path-2.4.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/json-smart-2.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/jul-to-slf4j-1.7.30.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/log4j-api-2.13.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/mchange-commons-java-0.2.15.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/mysql-connector-java-8.0.20.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/osgi-resource-locator-1.0.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/quartz-2.3.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/reactive-streams-1.0.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/reactor-core-3.3.5.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/saaj-impl-1.5.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/slf4j-api-1.7.30.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/snakeyaml-1.26.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-aop-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-beans-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-autoconfigure-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-aop-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-data-rest-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-integration-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-jdbc-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-jersey-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-json-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-mail-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-quartz-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-security-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-validation-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-web-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-web-services-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-bridge-2.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-context-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-context-support-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-core-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-data-commons-2.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-data-rest-core-3.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-data-rest-webmvc-3.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-expression-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-hateoas-1.1.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-integration-core-5.3.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-jcl-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-jdbc-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-messaging-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-oxm-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-plugin-core-2.0.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-retry-1.2.5.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-security-config-5.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-security-core-5.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-security-web-5.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-tx-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-web-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-webmvc-5.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-ws-core-3.0.9.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/spring-xml-3.0.9.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/package-0.0.1-SNAPSHOT/WEB-INF/lib/stax-ex-1.8.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/cm/packagemanager/pmanager/user/ent/TestNotification.class" beforeDir="false" />
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="integration Angular">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20211128-103718.reason.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20211128-103718.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/awselect.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/bootstrap-slider.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/.npmignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/HELP-US-OUT.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/FontAwesome.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/animated.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/bordered-pulled.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/core.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/fixed-width.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/font-awesome.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/icons.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/larger.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/list.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/mixins.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/path.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/rotated-flipped.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/screen-reader.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/stacked.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/variables.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_animated.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_bordered-pulled.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_core.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_fixed-width.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_icons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_larger.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_list.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_mixins.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_path.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_rotated-flipped.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_screen-reader.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_stacked.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/font-awesome.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/background.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/background_signin.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/find.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/loupe.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/profile.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_favicon-removebg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_favicon.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_favicon1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_titre-removebg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_titre.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/user-account.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/zoom-lens.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/js/awselect.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/js/bootstrap-slider.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/js/highlight.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/assets/js/modernizr.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/background.8b867812ffb6bfb9cd9b.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/background_signin.36b5d3294bf96cdd0000.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.20fd1704ea223900efa9.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.8b43027f47b20503057d.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.f691f37e57f04c152e23.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es2015.72ddc1766ed6c1a34ac7.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es5.72ddc1766ed6c1a34ac7.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/polyfills-es2015.23e4061cb9749259368f.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/polyfills-es5.91bacdbb83aa65f9c411.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/runtime-es2015.a4dadbc03350107420a4.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/runtime-es5.a4dadbc03350107420a4.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/scripts.3bd42039c0602d1afe84.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/sort_asc.4bba59196d7ce2619696.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/sort_asc_disabled.07c018ae0160704a3290.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/sort_both.8b117faa9d4dd934d6bb.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/sort_desc.c4196d3286cc33244c83.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/sort_desc_disabled.27ac5d1bc294b1fae056.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/styles.0bc1fa401b9cbdbdba29.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/PM.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/PM.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/google-firebase/demonotifications.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/google-firebase/demonotifications.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-error.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/component/CrossDomainFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/component/CrossDomainFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/config/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/__index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/client-socket.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sockjs-0.3.4.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/stomp.min.js" beforeDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/out/" />
-    <ignored path="$PROJECT_DIR$/src/main/resources/PMFrontend/dist/" />
-    <ignored path="$PROJECT_DIR$/src/main/resources/PMFrontend/tmp/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -651,23 +116,262 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/PManagerBE$PM.ic" NAME="PM Coverage Results" MODIFIED="1614511897375" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="Database" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="Hibernate" type="feb32156:DbDataSourceImpl" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="188">
+              <caret line="254" column="32" selection-start-line="254" selection-start-column="32" selection-end-line="254" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="124">
+              <caret line="41" column="54" selection-start-line="41" selection-start-column="54" selection-end-line="41" selection-end-column="54" />
+              <folding>
+                <element signature="e#896#932#1" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/google-firebase/demonotifications.json">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.2.6.RELEASE/spring-beans-5.2.6.RELEASE.jar!/org/springframework/beans/factory/annotation/InitDestroyAnnotationBeanPostProcessor.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="127">
+              <caret line="92" selection-start-line="92" selection-end-line="92" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.2.6.RELEASE/spring-beans-5.2.6.RELEASE.jar!/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="127">
+              <caret line="381" selection-start-line="381" selection-end-line="381" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.2.6.RELEASE/spring-core-5.2.6.RELEASE.jar!/org/springframework/core/io/ClassPathResource.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="110">
+              <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
+              <folding>
+                <element signature="e#714#715#0" expanded="true" />
+                <element signature="e#759#760#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/com/google/auth/google-auth-library-oauth2-http/0.20.0/google-auth-library-oauth2-http-0.20.0.jar!/com/google/auth/oauth2/GoogleCredentials.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="127">
+              <caret line="41" column="36" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/logs/PackManager/application.log">
+          <provider selected="true" editor-type-id="LogFileEditorProvider">
+            <state relative-caret-position="-4225">
+              <caret line="196" column="100" selection-start-line="196" selection-start-column="100" selection-end-line="196" selection-end-column="100" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ServletInitializer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/log4j2.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>passwo</find>
+      <find>code</find>
+      <find>transpo</find>
+      <find>cou</find>
+      <find>find</find>
+      <find>announce/</find>
+      <find>update</find>
+      <find>vali</find>
+      <find>mo</find>
+      <find>jar</find>
+      <find>pmana</find>
+      <find>dist</find>
+      <find>data</find>
+      <find>json</find>
+      <find>ResourceHttp</find>
+      <find>error</find>
+      <find>PRO</find>
+      <find>logging.level.org.hibernate.type</find>
+      <find>app.firebase-configuration-file</find>
+      <find>keyst</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="Login20200601" />
+              </list>
+            </value>
+          </entry>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/Login20200601" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/service/ServiceAnnounce.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/MailSender.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/service/UserServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/MailSenderManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/AnnounceDTO.java" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console_2.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ProductCategoryDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnouncesVO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/QuartzNoCronConfiguration.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/cron/UserManagerJob.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/cron/QuartzSubmitJobs.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/users/LoginDTO.java" />
+        <option value="$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT.sql" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console_3.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console_4.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/CategoryVO.java" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java" />
+        <option value="5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/IMAGE.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/security/PasswordGenerator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/PMFrontend/src/app/constancesURL.ts" />
+        <option value="$PROJECT_DIR$/src/main/resources/PMFrontend/tsconfig.json" />
+        <option value="$PROJECT_DIR$/src/main/resources/PMFrontend/tsconfig.app.json" />
+        <option value="$PROJECT_DIR$/src/main/resources/PMFrontend/package.json" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/client-socket.js" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/PMFrontend/angular.json" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/spring-mvc-demo-servlet.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/dist/index.html" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/config/WebSocketConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/component/CrossDomainFilter.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/main/resources/log4j2.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/META-INF/additional-spring-configuration-metadata.json" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
+      </list>
+    </option>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="24" />
     <option name="width" value="1400" />
     <option name="height" value="851" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -693,22 +397,53 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="google-firebase" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="CatdeaLogs" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SearchEverywhereHistoryKey" value="jdk&#9;ACTION&#9;SwitchBootJdk&#10;ResourceHttpHa&#9;PSI&#9;JAVA://org.springframework.web.servlet.resource.ResourceHttpRequestHandler&#10;text/html&#9;FILE&#9;jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home/jre/lib/resources.jar!/javax/swing/text/html/parser/html32.bdtd&#10;content-t&#9;null&#9;null&#10;servl&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ServletInitializer&#10;applicationCont&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.AutowiringSpringBeanJobFactory#setApplicationContext&#10;applicationContext&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.QuartzCronConfiguration#applicationContext&#10;nosni&#9;PSI&#9;JAVA://org.glassfish.jersey.jackson.internal.jackson.jaxrs.cfg.JaxRSFeature#ADD_NO_SNIFF_HEADER&#10;nosniff&#9;PSI&#9;JAVA://org.springframework.security.web.server.header.ContentTypeOptionsServerHttpHeadersWriter#NOSNIFF&#10;appl&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;app&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;Defau&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;pom&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;No&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java&#10;index&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/dist/index.html&#10;webCon&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;application.lo&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/logs/PackManager/application.log&#10;defa&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;application.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;weso&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;commonContro&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java&#10;webs&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;pom.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;Gene&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl&#10;Rese&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.dao.ReservationDAOImpl&#10;RESEVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.vo.ReservationVO&#10;Val&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.enums.ValidateEnum&#10;Annou&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java&#10;Reser&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.reservation.ReservationController&#10;Announce&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;Anno&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;application.p&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;Web&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.websocket.config.WebSocketConfig&#10;Rest&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.administrator.exception.RestExceptionHandler&#10;applica&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;swagger&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.administrator.api.SwaggerConfig&#10;UDT&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.requests.users.UpdateUserDTO&#10;an&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;messa&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.message.MessageController&#10;UserVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.user.ent.vo.UserVO&#10;REVI&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.review.ent.dao.ReviewDAOImpl&#10;Announc&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java&#10;Batch&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.BatchConfig&#10;AnnounceCOn&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.announce.AnnounceController&#10;AnnounceVO&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;announ&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/AnnounceDTO.java&#10;USCO&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java&#10;AnnounceIm&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAOImpl&#10;Ann&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;Mail&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.mail.MailSender" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.database.dataSource.DataSourceTemplate" value="H2" />
+    <property name="database.console.LAST_STATE" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="copyright" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/src/main/resources/PMFrontend/node_modules/typescript/lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/main/resources/templates" />
+      <recent name="$PROJECT_DIR$/src/main/resources/dist" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static/assets/images" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -722,71 +457,983 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Maven.maven-clean" />
+  <component name="RunManager" selected="Spring Boot.PM">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Maven.maven-clean" />
+      <item itemvalue="Maven.maven-package" />
+      <item itemvalue="Maven.maven-compile" />
+      <item itemvalue="Maven.maven-install" />
+      <item itemvalue="Spring Boot.PM" />
+    </list>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="91eb49c1-6437-46aa-86fa-d0fdf04ca62a" name="Default Changelist" comment="" />
-      <created>1638993993167</created>
+      <changelist id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="" />
+      <created>1613503275228</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1638993993167</updated>
-      <workItem from="1638994003804" duration="1228000" />
+      <updated>1613503275228</updated>
+      <workItem from="1613503276527" duration="876000" />
+      <workItem from="1613504399667" duration="5133000" />
+      <workItem from="1613638765729" duration="9485000" />
+      <workItem from="1613809668313" duration="1780000" />
+      <workItem from="1613933308313" duration="2935000" />
+      <workItem from="1614410959688" duration="2262000" />
+      <workItem from="1614463975588" duration="4630000" />
+      <workItem from="1614474957220" duration="8639000" />
+      <workItem from="1614712690300" duration="4474000" />
+      <workItem from="1615112475143" duration="4825000" />
+      <workItem from="1615127328553" duration="5990000" />
+      <workItem from="1615449710841" duration="1517000" />
+      <workItem from="1615638799515" duration="676000" />
+      <workItem from="1615732491839" duration="1172000" />
+      <workItem from="1615880272003" duration="2077000" />
+      <workItem from="1615977503198" duration="1252000" />
+      <workItem from="1616135410208" duration="6117000" />
+      <workItem from="1616874113064" duration="715000" />
+      <workItem from="1616874940816" duration="289000" />
+      <workItem from="1616875373604" duration="329000" />
+      <workItem from="1616942006806" duration="15652000" />
+      <workItem from="1617172290579" duration="13189000" />
+      <workItem from="1617522677076" duration="6867000" />
+      <workItem from="1617628867282" duration="3930000" />
+      <workItem from="1617867820267" duration="5039000" />
+      <workItem from="1618134022507" duration="4995000" />
+      <workItem from="1618472599613" duration="24495000" />
+      <workItem from="1618945773893" duration="4975000" />
+      <workItem from="1619367270695" duration="147000" />
+      <workItem from="1619420153786" duration="12555000" />
+      <workItem from="1620149503256" duration="2076000" />
+      <workItem from="1620922918080" duration="480000" />
+      <workItem from="1621321591621" duration="181000" />
+      <workItem from="1621428555067" duration="103000" />
+      <workItem from="1621432217745" duration="189000" />
+      <workItem from="1621949669531" duration="908000" />
+      <workItem from="1622013962392" duration="10011000" />
+      <workItem from="1622390361186" duration="576000" />
+      <workItem from="1622640391060" duration="274000" />
+      <workItem from="1625819489807" duration="722000" />
+      <workItem from="1626014913597" duration="306000" />
+      <workItem from="1626072408195" duration="219000" />
+      <workItem from="1626236807517" duration="661000" />
+      <workItem from="1630441470121" duration="581000" />
+      <workItem from="1630443973839" duration="133000" />
+      <workItem from="1631083557024" duration="727000" />
+      <workItem from="1633325341151" duration="949000" />
+      <workItem from="1636398902009" duration="233000" />
+      <workItem from="1637486852410" duration="972000" />
+      <workItem from="1638080623296" duration="5777000" />
+      <workItem from="1638092241536" duration="15228000" />
+      <workItem from="1638109027550" duration="7353000" />
+      <workItem from="1638518769700" duration="22176000" />
+      <workItem from="1638784792370" duration="6250000" />
+      <workItem from="1638865613233" duration="10349000" />
+      <workItem from="1638979394693" duration="3177000" />
+      <workItem from="1639003503099" duration="5179000" />
     </task>
+    <task id="LOCAL-00001" summary="Ajout de la categorie de l'annonce">
+      <created>1613510383183</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1613510383183</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Ajout de la categorie de l'annonce">
+      <created>1613639171805</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1613639171805</updated>
+    </task>
+    <task id="LOCAL-00003" summary="commit file de .idea (contraint)">
+      <created>1613639338741</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1613639338742</updated>
+    </task>
+    <task id="LOCAL-00004" summary="commit file de .idea (contraint)">
+      <created>1614461530546</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1614461530547</updated>
+    </task>
+    <task id="LOCAL-00005" summary="log execution time">
+      <created>1614474892766</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1614474892766</updated>
+    </task>
+    <task id="LOCAL-00006" summary="raccourci maven">
+      <created>1615081572302</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1615081572302</updated>
+    </task>
+    <task id="LOCAL-00007" summary="raccourci maven">
+      <created>1615127390812</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1615127390812</updated>
+    </task>
+    <task id="LOCAL-00008" summary="raccourci maven">
+      <created>1615127453933</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1615127453933</updated>
+    </task>
+    <task id="LOCAL-00009" summary="raccourci maven">
+      <created>1615127528297</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1615127528297</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
+      <created>1615142277589</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1615142277589</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
+      <created>1615646492741</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1615646492741</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
+      <created>1616874178995</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1616874178995</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
+      <created>1616874463246</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1616874463246</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
+      <created>1616874558842</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1616874558842</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;PManager.iml">
+      <created>1616874684494</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1616874684494</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;PManager.iml">
+      <created>1616874811066</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1616874811066</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;PManager.iml">
+      <created>1616875437635</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1616875437635</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java">
+      <created>1617349113273</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1617349113273</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java">
+      <created>1617867532519</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1617867532519</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log">
+      <created>1617868201697</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1617868201697</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log">
+      <created>1618481449338</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1618481449338</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1618484437476</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1618484437476</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1618515560924</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1618515560924</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1618951678037</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1618951678037</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1618963559080</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1618963559080</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1619188240525</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1619188240525</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1619435053269</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1619435053269</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
+      <created>1619435149615</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1619435149615</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log">
+      <created>1621952378433</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1621952378433</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log">
+      <created>1621952443730</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1621952443730</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log">
+      <created>1622013993763</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1622013993764</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log">
+      <created>1638107050278</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1638107050278</updated>
+    </task>
+    <task id="LOCAL-00033" summary="test">
+      <created>1638109560386</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1638109560386</updated>
+    </task>
+    <task id="LOCAL-00034" summary="integration Angular">
+      <created>1638116198613</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1638116198613</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1228000" />
+    <option name="totallyTimeSpent" value="267047000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1400" height="851" extended-state="0" />
     <layout>
-      <window_info id="Persistence" side_tool="true" />
-      <window_info id="Designer" />
-      <window_info id="Image Layers" />
-      <window_info id="UI Designer" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info id="Capture Tool" />
       <window_info id="Learn" />
-      <window_info id="Web" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2496318" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Spring" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.32880434" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Java Enterprise" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.2496318" />
+      <window_info id="Structure" order="1" sideWeight="0.5019305" side_tool="true" weight="0.24964234" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Web" order="5" side_tool="true" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info id="Persistence" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32793018" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48783976" weight="0.6086956" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.490701" visible="true" weight="0.4293478" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
+      <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
+      <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.3271028" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.51216024" side_tool="true" weight="0.2755611" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.48712447" weight="0.4972826" />
+      <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
+      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.48354793" weight="0.32843792" />
+      <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49928468" weight="0.32901555" />
+      <window_info anchor="bottom" id="TypeScript" order="15" />
+      <window_info anchor="bottom" id="Inspection Results" order="16" weight="0.32917705" />
+      <window_info anchor="right" id="Maven" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49810606" weight="0.24964234" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Maven Projects" order="5" />
+      <window_info anchor="right" id="Database" order="6" sideWeight="0.49810606" weight="0.19957082" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49810606" weight="0.3297568" />
+      <window_info anchor="right" id="Coverage" order="10" sideWeight="0.50189394" side_tool="true" weight="0.24964234" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.23462088" />
+      <window_info id="Structure" order="1" sideWeight="0.5019305" side_tool="true" weight="0.24964234" />
+      <window_info id="Designer" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Image Layers" order="6" />
+      <window_info id="Web" order="7" side_tool="true" />
+      <window_info id="Persistence" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32901555" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.490701" visible="true" weight="0.511658" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49356222" weight="0.33678755" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Bean Validation" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32901555" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5100143" side_tool="true" weight="0.32901555" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49570817" weight="0.32901555" />
+      <window_info anchor="bottom" id="Java Enterprise" order="11" />
+      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.4899857" weight="0.32901555" />
+      <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49928468" weight="0.32901555" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49810606" weight="0.24964234" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Maven Projects" order="5" />
+      <window_info anchor="right" id="Database" order="6" sideWeight="0.49810606" visible="true" weight="0.19957082" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49810606" weight="0.3297568" />
+      <window_info anchor="right" id="Coverage" order="10" sideWeight="0.50189394" side_tool="true" weight="0.24964234" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
+    </ignored-roots>
+    <MESSAGE value="Ajout de la categorie de l'annonce" />
+    <MESSAGE value="commit file de .idea (contraint)" />
+    <MESSAGE value="log execution time" />
+    <MESSAGE value="raccourci maven" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;PManager.iml" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log" />
+    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log" />
+    <MESSAGE value="test" />
+    <MESSAGE value="integration Angular" />
+    <option name="LAST_COMMIT_MESSAGE" value="integration Angular" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java</url>
+          <line>73</line>
+          <properties />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>183</line>
+          <properties />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>172</line>
+          <properties />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>201</line>
+          <properties />
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>390</line>
+          <properties />
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>442</line>
+          <properties />
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>457</line>
+          <properties />
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>187</line>
+          <properties />
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>184</line>
+          <properties />
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>467</line>
+          <properties />
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>423</line>
+          <properties />
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>425</line>
+          <properties />
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java</url>
+          <line>344</line>
+          <properties />
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>294</line>
+          <properties />
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>83</line>
+          <properties />
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>537</line>
+          <properties />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>534</line>
+          <properties />
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>126</line>
+          <properties />
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>190</line>
+          <properties />
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java</url>
+          <line>328</line>
+          <properties />
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java</url>
+          <line>57</line>
+          <properties />
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/cron/QuartzCronConfiguration.java</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java</url>
+          <line>23</line>
+          <properties />
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageServiceImpl.java</url>
+          <line>41</line>
+          <properties />
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageServiceImpl.java</url>
+          <line>34</line>
+          <properties />
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/cron/QuartzCronConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="28" column="24" lean-forward="true" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/cron/AutowiringSpringBeanJobFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="13" column="50" lean-forward="true" selection-start-line="13" selection-start-column="50" selection-end-line="13" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manifest.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot/2.3.0.RELEASE/spring-boot-2.3.0.RELEASE.jar!/org/springframework/boot/web/servlet/support/SpringBootServletInitializer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="124" column="74" selection-start-line="124" selection-start-column="53" selection-end-line="124" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/web.xml" />
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/spring-mvc-demo-servlet.xml" />
+    <entry file="jar://$MAVEN_REPOSITORY$/org/webjars/sockjs-client/1.0.2/sockjs-client-1.0.2.jar!/META-INF/resources/webjars/sockjs-client/1.0.2/sockjs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="988">
+          <caret line="1942" column="53" lean-forward="true" selection-start-line="1942" selection-start-column="53" selection-end-line="1942" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/dist/index.html" />
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.2.6.RELEASE/spring-webmvc-5.2.6.RELEASE.jar!/org/springframework/web/servlet/resource/ResourceHttpRequestHandler.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="58" column="74" lean-forward="true" selection-start-line="58" selection-start-column="74" selection-end-line="58" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="380" column="49" selection-start-line="380" selection-start-column="42" selection-end-line="380" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.2.6.RELEASE/spring-webmvc-5.2.6.RELEASE.jar!/org/springframework/web/servlet/DispatcherServlet.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="101" column="11" selection-start-line="101" selection-start-column="11" selection-end-line="101" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="22" column="55" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/ErrorController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-736">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/EmployeeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-452">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/UserControllerTemplate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-362">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-10620">
+          <caret line="48" column="13" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/main-es5.72ddc1766ed6c1a34ac7.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret column="1880" selection-start-column="1880" selection-end-column="1880" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/main-es2015.72ddc1766ed6c1a34ac7.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="29" column="498" selection-start-line="29" selection-start-column="466" selection-end-line="29" selection-end-column="498" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-websocket/5.2.6.RELEASE/spring-websocket-5.2.6.RELEASE.jar!/org/springframework/web/socket/config/annotation/WebSocketMessageBrokerConfigurer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-80">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/PackManager/application-error-%d{yyyy-MM-dd}-%i.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/quartz.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/PackManager/application-trace.log">
+      <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="LogFileEditorProvider" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/PackManager/application-2021-12-03-1.log">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="-128353" />
+      </provider>
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="-450188" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/application.log">
+      <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="-21264" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/PackageApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="31" column="85" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/security/WebSecurityConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-47">
+          <caret line="68" column="51" selection-start-line="68" selection-start-column="51" selection-end-line="68" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-websocket/5.2.6.RELEASE/spring-websocket-5.2.6.RELEASE.jar!/org/springframework/web/socket/config/annotation/WebSocketMessageBrokerConfigurationSupport.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-39">
+          <caret line="97" column="39" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/component/CrossDomainFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="34" column="77" selection-start-line="34" selection-start-column="77" selection-end-line="34" selection-end-column="77" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot/2.3.0.RELEASE/spring-boot-2.3.0.RELEASE.jar!/org/springframework/boot/context/logging/LoggingApplicationListener.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-100">
+          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/config/WebSocketConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="49" column="29" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/PackManager/application-debug.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/PackManager/application-info.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ServletInitializer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/google-firebase/demonotifications.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backup/pom_before_jetty_server.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/PackManager/application.log">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="-146588" />
+      </provider>
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="-4225">
+          <caret line="196" column="100" selection-start-line="196" selection-start-column="100" selection-end-line="196" selection-end-column="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/additional-spring-configuration-metadata.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/auth/google-auth-library-oauth2-http/0.20.0/google-auth-library-oauth2-http-0.20.0.jar!/com/google/auth/oauth2/GoogleCredentials.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="41" column="36" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.2.6.RELEASE/spring-core-5.2.6.RELEASE.jar!/org/springframework/core/io/ClassPathResource.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
+          <folding>
+            <element signature="e#714#715#0" expanded="true" />
+            <element signature="e#759#760#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/firebase/firebase-admin/7.1.0/firebase-admin-7.1.0.jar!/com/google/firebase/FirebaseOptions.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/PackManager/application-error.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j2.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="254" column="32" selection-start-line="254" selection-start-column="32" selection-end-line="254" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.2.6.RELEASE/spring-beans-5.2.6.RELEASE.jar!/org/springframework/beans/factory/annotation/InitDestroyAnnotationBeanPostProcessor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="92" selection-start-line="92" selection-end-line="92" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.2.6.RELEASE/spring-beans-5.2.6.RELEASE.jar!/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="381" selection-start-line="381" selection-end-line="381" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="41" column="54" selection-start-line="41" selection-start-column="54" selection-end-line="41" selection-end-column="54" />
+          <folding>
+            <element signature="e#896#932#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/google-firebase/demonotifications.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
   </component>
   <component name="masterDetails">
     <states>
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>package:war</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

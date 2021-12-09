@@ -15,9 +15,6 @@
 		<PatternLayout pattern="${LOG_PATTERN}" />
 		<Policies>
 			<SizeBasedTriggeringPolicy size="1MB" />
-			<maxFileSize size="1MB" />
-			<maxHistory  size="10" />
-			<cleanHistoryOnStart value="true" />
 		</Policies>
 		<DefaultRolloverStrategy max="1" />
 	</RollingFile>
@@ -33,12 +30,10 @@
 
 </Appenders>
 <Loggers>
-	<Root level="info">
-		<AppenderRef ref="console" />
-		<AppenderRef ref="file" />
-	</Root>
-    <!--<Root level="debug">
-        <AppenderRef ref="error" />
-    </Root>-->
+	<Root>
+		<AppenderRef ref="console" 	level="info"/>
+		<AppenderRef ref="file" 	level="info"/>
+        <AppenderRef ref="error"  	level="error"/>
+    </Root>
 </Loggers>
 </Configuration>

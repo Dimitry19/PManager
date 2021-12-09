@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.websocket.config;
 
+import cm.packagemanager.pmanager.component.CrossDomainFilter;
 import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,5 +44,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         container.setMaxTextMessageBufferSize(8192);
         container.setMaxBinaryMessageBufferSize(8192);
         return container;
+    }
+
+    @Bean
+    public CrossDomainFilter corsFilter() throws Exception {
+        return new CrossDomainFilter();
     }
 }
