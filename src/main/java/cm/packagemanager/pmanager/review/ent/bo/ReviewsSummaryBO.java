@@ -5,6 +5,6 @@ import cm.packagemanager.pmanager.rating.enums.Rating;
 
 public interface ReviewsSummaryBO {
 
-	long getNumberOfReviewsWithRating(Rating rating);
+    long getNumberOfReviewsWithRating(Rating rating);
 
 }

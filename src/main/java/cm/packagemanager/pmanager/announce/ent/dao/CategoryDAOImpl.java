@@ -13,15 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class CategoryDAOImpl extends CommonGenericDAO implements CategoryDAO {
 
-	@Autowired
-	SessionFactory sessionFactory;
+    @Autowired
+    SessionFactory sessionFactory;
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
-	public CategoryVO findByCode(String code) throws ResourceNotFoundException {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CategoryVO findByCode(String code) throws ResourceNotFoundException {
 
-		if(StringUtils.isEmpty(code)) return null;
-		CategoryVO category= (CategoryVO) findById(CategoryVO.class, code.toUpperCase());
-		return category;
-	}
+        if (StringUtils.isEmpty(code)) return null;
+        CategoryVO category = (CategoryVO) findById(CategoryVO.class, code.toUpperCase());
+        return category;
+    }
 }

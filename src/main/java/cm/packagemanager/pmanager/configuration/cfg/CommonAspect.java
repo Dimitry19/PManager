@@ -19,25 +19,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommonAspect {
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
 
-	private static Logger logger = LoggerFactory.getLogger(CommonAspect.class);
+    private static Logger logger = LoggerFactory.getLogger(CommonAspect.class);
 
-		@Before(value = "execution(* cm.packagemanager.pmanager.user.ent.service.UserService.login(..)) && args(lr)")
-		public void beforeAdvice(JoinPoint joinPoint, LoginDTO lr) throws Exception {
+    @Before(value = "execution(* cm.packagemanager.pmanager.user.ent.service.UserService.login(..)) && args(lr)")
+    public void beforeAdvice(JoinPoint joinPoint, LoginDTO lr) throws Exception {
 
-			if(!userService.checkLogin(lr)){
-				throw new UserException("Le compte n'est pas actif");
-			}
-			logger.info("Before method:" + joinPoint.getSignature());
+        if (!userService.checkLogin(lr)) {
+            throw new UserException("Le compte n'est pas actif");
+        }
+        logger.info("Before method:" + joinPoint.getSignature());
 
-		}
+    }
 
-		@After(value = "execution(* cm.packagemanager.pmanager.user.ent.service.UserService.*(..)) && args(userId)")
-		public void afterAdvice(JoinPoint joinPoint, Long  userId) {
-			logger.info("After method:" + joinPoint.getSignature());
+    @After(value = "execution(* cm.packagemanager.pmanager.user.ent.service.UserService.*(..)) && args(userId)")
+    public void afterAdvice(JoinPoint joinPoint, Long userId) {
+        logger.info("After method:" + joinPoint.getSignature());
 
-		}
+    }
 
 }

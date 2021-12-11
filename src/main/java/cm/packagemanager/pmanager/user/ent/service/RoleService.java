@@ -5,5 +5,5 @@ import cm.packagemanager.pmanager.ws.requests.users.RoleDTO;
 
 public interface RoleService {
 
-	public RoleVO add(RoleDTO role) throws Exception;
+    RoleVO add(RoleDTO role) throws Exception;
 }

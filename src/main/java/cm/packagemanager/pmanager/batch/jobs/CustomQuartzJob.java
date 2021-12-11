@@ -12,50 +12,46 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 public class CustomQuartzJob extends QuartzJobBean {
 
-	private String jobName;
-	private JobLauncher jobLauncher;
-	private JobLocator jobLocator;
+    private String jobName;
+    private JobLauncher jobLauncher;
+    private JobLocator jobLocator;
 
-	public String getJobName() {
-		return jobName;
-	}
+    public String getJobName() {
+        return jobName;
+    }
 
-	public void setJobName(String jobName) {
-		this.jobName = jobName;
-	}
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
 
-	public JobLauncher getJobLauncher() {
-		return jobLauncher;
-	}
+    public JobLauncher getJobLauncher() {
+        return jobLauncher;
+    }
 
-	public void setJobLauncher(JobLauncher jobLauncher) {
-		this.jobLauncher = jobLauncher;
-	}
+    public void setJobLauncher(JobLauncher jobLauncher) {
+        this.jobLauncher = jobLauncher;
+    }
 
-	public JobLocator getJobLocator() {
-		return jobLocator;
-	}
+    public JobLocator getJobLocator() {
+        return jobLocator;
+    }
 
-	public void setJobLocator(JobLocator jobLocator) {
-		this.jobLocator = jobLocator;
-	}
+    public void setJobLocator(JobLocator jobLocator) {
+        this.jobLocator = jobLocator;
+    }
 
-	@Override
-	protected void executeInternal(JobExecutionContext context) throws JobExecutionException
-	{
-		try
-		{
-			System.out.println("Called CustomQuartzJob."+ jobName+ " "+String.valueOf(System.currentTimeMillis()));
-			Job job = jobLocator.getJob(jobName);
-			JobParameters params = new JobParametersBuilder()
-					.addString("JobID", String.valueOf(System.currentTimeMillis()))
-					.toJobParameters();
+    @Override
+    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+        try {
+            System.out.println("Called CustomQuartzJob." + jobName + " " + System.currentTimeMillis());
+            Job job = jobLocator.getJob(jobName);
+            JobParameters params = new JobParametersBuilder()
+                    .addString("JobID", String.valueOf(System.currentTimeMillis()))
+                    .toJobParameters();
 
-			jobLauncher.run(job, params);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+            jobLauncher.run(job, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

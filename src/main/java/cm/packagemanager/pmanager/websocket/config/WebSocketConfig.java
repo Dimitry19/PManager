@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.websocket.config;
 
+import cm.packagemanager.pmanager.component.CrossDomainFilter;
 import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,28 +20,34 @@ import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-	@Override
-	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker(PREFIX_DESTINATION_BROKER,PREFIX_DESTINATION_BROKER_ANNOUNCE,PREFIX_DESTINATION_BROKER_USER);
-		registry.setApplicationDestinationPrefixes(WebSocketConstants.PREFIX_DESTINATION_APP);
-	}
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
+        registry.enableSimpleBroker(PREFIX_DESTINATION_BROKER, PREFIX_DESTINATION_BROKER_ANNOUNCE, PREFIX_DESTINATION_BROKER_USER);
+        registry.setApplicationDestinationPrefixes(WebSocketConstants.PREFIX_DESTINATION_APP);
+    }
 
-	@Override
-	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint(WebSocketConstants.END_POINT)
-				.setAllowedOrigins(WebSocketConstants.ORIGIN_ALL)
-				.withSockJS();
-	}
-	/***
-	 * Permet de faire fonctionner la WSocket avec tomcat(Cas de Spring)
-	 * http://host:port/{path-to-sockjs-endpoint}/{server-id}/{session-id}/{transport}
-	 */
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint(WebSocketConstants.END_POINT)
+                .setAllowedOrigins(WebSocketConstants.ORIGIN_ALL)
+                .withSockJS();
+    }
 
-	@Bean
-	public WebSocketContainerFactoryBean createWebSocketContainer() {
-		WebSocketContainerFactoryBean container = new WebSocketContainerFactoryBean();
-		container.setMaxTextMessageBufferSize(8192);
-		container.setMaxBinaryMessageBufferSize(8192);
-		return container;
-	}
+    /***
+     * Permet de faire fonctionner la WSocket avec tomcat(Cas de Spring)
+     * http://host:port/{path-to-sockjs-endpoint}/{server-id}/{session-id}/{transport}
+     */
+
+    @Bean
+    public WebSocketContainerFactoryBean createWebSocketContainer() {
+        WebSocketContainerFactoryBean container = new WebSocketContainerFactoryBean();
+        container.setMaxTextMessageBufferSize(8192);
+        container.setMaxBinaryMessageBufferSize(8192);
+        return container;
+    }
+
+    @Bean
+    public CrossDomainFilter corsFilter() throws Exception {
+        return new CrossDomainFilter();
+    }
 }

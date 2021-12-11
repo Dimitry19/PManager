@@ -6,9 +6,9 @@ import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -18,175 +18,172 @@ import java.util.Iterator;
 import java.util.Set;
 
 @Entity
-@Table(name = "RESERVATION",schema = "PUBLIC")
+@Table(name = "RESERVATION", schema = "PUBLIC")
 @NamedQueries({
-		@NamedQuery(name = ReservationVO.FINDBYANNOUNCE, query =" select r from  ReservationVO as r where r.announce.id =: announceId"),
-		@NamedQuery(name = ReservationVO.FINDBYUSER, query =" select r from  ReservationVO as r where r.user.id =: userId"),
-		@NamedQuery(name = ReservationVO.FIND_ANNOUNCE_USER, query =" select r from  ReservationVO as r inner join r.announce a where a.user.id =: userId"),
+        @NamedQuery(name = ReservationVO.FINDBYANNOUNCE, query = " select r from  ReservationVO as r where r.announce.id =: announceId"),
+        @NamedQuery(name = ReservationVO.FINDBYUSER, query = " select r from  ReservationVO as r where r.user.id =: userId"),
+        @NamedQuery(name = ReservationVO.FIND_ANNOUNCE_USER, query = " select r from  ReservationVO as r inner join r.announce a where a.user.id =: userId"),
 })
-@Where(clause= FilterConstants.FILTER_WHERE_RESERVATION_CANC_COMPLETED)
-public class ReservationVO  extends CommonVO {
+@Where(clause = FilterConstants.FILTER_WHERE_RESERVATION_CANC_COMPLETED)
+public class ReservationVO extends CommonVO {
 
-	public static final String FINDBYANNOUNCE="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounce";
-	public static final String FINDBYUSER="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByUser";
-	public static final String FIND_ANNOUNCE_USER="cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounceUser";
-
-
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", nullable = false)
-	private Long id;
-
-	//@JsonIgnore
-	@Access(AccessType.PROPERTY)
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="R_USER_ID", updatable = false)
-	@JsonBackReference
-	private UserVO user;
+    public static final String FINDBYANNOUNCE = "cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounce";
+    public static final String FINDBYUSER = "cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByUser";
+    public static final String FIND_ANNOUNCE_USER = "cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounceUser";
 
 
-	@Basic(optional = false)
-	@Column(name = "WEIGTH", nullable = false)
-	private BigDecimal weight;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false)
+    private Long id;
+
+    //@JsonIgnore
+    @Access(AccessType.PROPERTY)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "R_USER_ID", updatable = false)
+    @JsonBackReference
+    private UserVO user;
 
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
-	@JoinTable(name = "RESERVATION_CATEGORY", joinColumns = @JoinColumn(name = "RESERVATION_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
-	@JsonProperty
-	private Set<CategoryVO> categories=new HashSet<>();
+    @Basic(optional = false)
+    @Column(name = "WEIGTH", nullable = false)
+    private BigDecimal weight;
 
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="R_ANNOUNCE_ID", updatable = true)
-	@JsonBackReference
-	private AnnounceVO announce;
-
-	@Basic(optional = false)
-	@Enumerated(EnumType.STRING)
-	@Column(name="VALIDATE")
-	private ValidateEnum validate;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "RESERVATION_CATEGORY", joinColumns = @JoinColumn(name = "RESERVATION_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
+    @JsonProperty
+    private Set<CategoryVO> categories = new HashSet<>();
 
 
-	@Basic(optional = false)
-	@Column(name="DESCRIPTION" , length = FieldConstants.DESC)
-	private String description;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "R_ANNOUNCE_ID", updatable = true)
+    @JsonBackReference
+    private AnnounceVO announce;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "STATUS",length = 10)
-	private StatusEnum status;
-
-	public StatusEnum getStatus(){
-		return status;
-	}
-
-	public void setStatus(StatusEnum status) {
-		this.status = status;
-	}
+    @Basic(optional = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "VALIDATE")
+    private ValidateEnum validate;
 
 
-	@Transient
-	@JsonProperty
-	private UserInfo userInfo;
+    @Basic(optional = false)
+    @Column(name = "DESCRIPTION", length = FieldConstants.DESC)
+    private String description;
 
-	@Transient
-	@JsonProperty
-	private AnnounceInfo announceInfo;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS", length = 10)
+    private StatusEnum status;
 
-	public AnnounceInfo getAnnounceInfo() {
-		return announceInfo;
-	}
+    public StatusEnum getStatus() {
+        return status;
+    }
 
-	public void setAnnounceInfo(AnnounceInfo announceInfo) {
-		this.announceInfo = announceInfo;
-	}
-
-	public UserInfo getUserInfo() {
-		return userInfo;
-	}
-
-	public void setUserInfo(UserInfo userInfo) {
-		this.userInfo = userInfo;
-	}
-
-	public ReservationVO(){
-		super();
-	}
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
 
 
-	public Long getId() {
-		return id;
-	}
+    @Transient
+    @JsonProperty
+    private UserInfo userInfo;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Transient
+    @JsonProperty
+    private AnnounceInfo announceInfo;
 
-	public UserVO getUser() {
-		return user;
-	}
+    public AnnounceInfo getAnnounceInfo() {
+        return announceInfo;
+    }
 
-	public void setUser(UserVO user) {
-		this.user = user;
-		userInfo= new UserInfo(user);
-	}
+    public void setAnnounceInfo(AnnounceInfo announceInfo) {
+        this.announceInfo = announceInfo;
+    }
 
-	public AnnounceVO getAnnounce() {
-		return announce;
-	}
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
 
-	public void setAnnounce(AnnounceVO announce) {
-		this.announce = announce;
-		announceInfo = new AnnounceInfo(announce);
-	}
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
 
-	public BigDecimal getWeight() {
-		return weight;
-	}
+    public ReservationVO() {
+        super();
+    }
 
-	public void setWeight(BigDecimal weight) {
-		this.weight = weight;
-	}
 
-	public Set<CategoryVO> getCategories() {
-		return categories;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setCategories(Set<CategoryVO> categories) {
-		this.categories = categories;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public ValidateEnum getValidate() {
-		return validate;
-	}
+    public UserVO getUser() {
+        return user;
+    }
 
-	public void setValidate(ValidateEnum validate) {
-		this.validate = validate;
-	}
+    public void setUser(UserVO user) {
+        this.user = user;
+        userInfo = new UserInfo(user);
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public AnnounceVO getAnnounce() {
+        return announce;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setAnnounce(AnnounceVO announce) {
+        this.announce = announce;
+        announceInfo = new AnnounceInfo(announce);
+    }
 
-	public void addCategory(CategoryVO category){
-		categories.add(category);
-	}
+    public BigDecimal getWeight() {
+        return weight;
+    }
 
-	public void removeCategory(CategoryVO category){
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
+    }
 
-		if(categories.contains(category)){
-			categories.remove(category);
-		}
-	}
+    public Set<CategoryVO> getCategories() {
+        return categories;
+    }
 
-	public void removeCategories() {
-		Iterator<CategoryVO> iterator = this.categories.iterator();
-		while (iterator.hasNext()) {
-			iterator.remove();
-		}
-	}
+    public void setCategories(Set<CategoryVO> categories) {
+        this.categories = categories;
+    }
+
+    public ValidateEnum getValidate() {
+        return validate;
+    }
+
+    public void setValidate(ValidateEnum validate) {
+        this.validate = validate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void addCategory(CategoryVO category) {
+        categories.add(category);
+    }
+
+    public void removeCategory(CategoryVO category) {
+
+        categories.remove(category);
+    }
+
+    public void removeCategories() {
+        Iterator<CategoryVO> iterator = this.categories.iterator();
+        while (iterator.hasNext()) {
+            iterator.remove();
+        }
+    }
 }

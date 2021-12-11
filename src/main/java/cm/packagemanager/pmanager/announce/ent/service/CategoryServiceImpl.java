@@ -8,12 +8,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
-	@Autowired
-	CategoryDAO categoryDAO;
+public class CategoryServiceImpl implements CategoryService {
+    @Autowired
+    CategoryDAO categoryDAO;
 
-	@Transactional(propagation = Propagation.REQUIRED)
-	public CategoryVO findByCode(String code) throws Exception{
-		return categoryDAO.findByCode(code);
-	}
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CategoryVO findByCode(String code) throws Exception {
+        return categoryDAO.findByCode(code);
+    }
 }

@@ -12,21 +12,21 @@ import javax.persistence.*;
 @Entity
 @Table(name = "NOTIFICATION", schema = "PUBLIC")
 
-@Where(clause= FilterConstants.FILTER_NOTIFICATION_CANC_COMPLETED)
+@Where(clause = FilterConstants.FILTER_NOTIFICATION_CANC_COMPLETED)
 public class NotificationVO extends CommonVO {
 
     private static final long serialVersionUID = 6473029882566244786L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ID",nullable = false,unique = true)
+    @Column(name = "ID", nullable = false, unique = true)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="TYPE", length = FieldConstants.ENUM_LEN, nullable = false)
+    @Column(name = "TYPE", length = FieldConstants.ENUM_LEN, nullable = false)
     private NotificationType type;
 
     @Basic(optional = false)
-    @Column(name = "MESSAGE", nullable = false,length = FieldConstants.MSG_LEN)
+    @Column(name = "MESSAGE", nullable = false, length = FieldConstants.MSG_LEN)
     private String message;
 
     @Basic(optional = false)
@@ -38,19 +38,19 @@ public class NotificationVO extends CommonVO {
     private String sessionId;
 
     @Basic(optional = false)
-    @Column(name="USER_ID", nullable = false)
-    private Long  userId;
+    @Column(name = "USER_ID", nullable = false)
+    private Long userId;
 
-    @Column(name="R_USER_ID")
-    private Long  ruserId;
+    @Column(name = "R_USER_ID")
+    private Long ruserId;
 
-    @Column(name="R_ANNOUNCE_ID", nullable = true)
-    private Long  announceId;
+    @Column(name = "R_ANNOUNCE_ID", nullable = true)
+    private Long announceId;
 
     @Basic(optional = false)
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "STATUS",length = FieldConstants.ENUM_LEN)
+    @Column(name = "STATUS", length = FieldConstants.ENUM_LEN)
     private StatusEnum status;
 
     public Long getId() {

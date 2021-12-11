@@ -18,91 +18,91 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public  class ReviewDAOImpl extends Generic implements ReviewDAO{
+public class ReviewDAOImpl extends Generic implements ReviewDAO {
 
-	private static Logger logger = LoggerFactory.getLogger(ReviewDAOImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(ReviewDAOImpl.class);
 
-	@Override
-	public Page<ReviewVO> findByUser(UserVO user, Pageable pageable) {
-		return null;//session.find();
-	}
+    @Override
+    public Page<ReviewVO> findByUser(UserVO user, Pageable pageable) {
+        return null;//session.find();
+    }
 
-	@Override
-	public ReviewVO findByUserAndIndex(UserVO user, int index) {
-		return null;
-	}
+    @Override
+    public ReviewVO findByUserAndIndex(UserVO user, int index) {
+        return null;
+    }
 
-	@Override
-	@Transactional(propagation = Propagation. REQUIRED)
-	public ReviewVO save(ReviewVO review) throws Exception{
-		Session session = sessionFactory.getCurrentSession();
-		session.save(review);
-		return session.get(ReviewVO.class,review.getId());
-	}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public ReviewVO save(ReviewVO review) throws Exception {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(review);
+        return session.get(ReviewVO.class, review.getId());
+    }
 
-	@Override
-	@Transactional(propagation = Propagation. REQUIRED)
-	public ReviewVO update(ReviewVO review) throws BusinessResourceException {
-		  logger.info("Review: update ");
-			Session session = this.sessionFactory.getCurrentSession();
-			if(review!=null){
-				session.update(review);
-				return review;
-			}
-			return null;
-	}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public ReviewVO update(ReviewVO review) throws BusinessResourceException {
+        logger.info("Review: update ");
+        Session session = this.sessionFactory.getCurrentSession();
+        if (review != null) {
+            session.update(review);
+            return review;
+        }
+        return null;
+    }
 
-	@Override
-	@Transactional(propagation = Propagation. REQUIRED)
-	public ReviewVO findById(Long id) throws Exception {
-		try{
-			logger.info("Review: find by id");
-			Session session = sessionFactory.getCurrentSession();
-			session.enableFilter(FilterConstants.CANCELLED);
-			return  (ReviewVO) session.find(ReviewVO.class,id);
-		}catch (Exception e){
-			throw  new Exception(e.getMessage());
-		}
-	}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public ReviewVO findById(Long id) throws Exception {
+        try {
+            logger.info("Review: find by id");
+            Session session = sessionFactory.getCurrentSession();
+            session.enableFilter(FilterConstants.CANCELLED);
+            return session.find(ReviewVO.class, id);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 
-	@Override
-	@Transactional(propagation = Propagation. REQUIRED)
-	public boolean delete(Long id) throws Exception {
-		try {
-			return updateDelete(id);//delete(ReviewVO.class,id,true);
-		} catch (Exception e) {
-			throw new BusinessResourceException(e.getMessage());
-		}
-	}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public boolean delete(Long id) throws Exception {
+        try {
+            return updateDelete(id);//delete(ReviewVO.class,id,true);
+        } catch (Exception e) {
+            throw new BusinessResourceException(e.getMessage());
+        }
+    }
 
 
-	@Override
-	public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
-		boolean result=false;
+    @Override
+    public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
+        boolean result = false;
 
-		try{
+        try {
 
-			Session session=sessionFactory.getCurrentSession();
-			ReviewVO review= (ReviewVO) findByIdViaSession(ReviewVO.class,id).get();
-			if(review!=null) {
-				review.setCancelled(true);
-				session.merge(review);
-				review = session.get(ReviewVO.class, id);
-				result= (review!=null) && (review.isCancelled());
-			}
-		}catch (Exception e){
-			throw new BusinessResourceException(e.getMessage());
-		}
-		return result;
-	}
+            Session session = sessionFactory.getCurrentSession();
+            ReviewVO review = (ReviewVO) findByIdViaSession(ReviewVO.class, id).get();
+            if (review != null) {
+                review.setCancelled(true);
+                session.merge(review);
+                review = session.get(ReviewVO.class, id);
+                result = (review != null) && (review.isCancelled());
+            }
+        } catch (Exception e) {
+            throw new BusinessResourceException(e.getMessage());
+        }
+        return result;
+    }
 
-	@Override
-	public String composeQuery(Object o, String alias) throws Exception {
-		return null;
-	}
+    @Override
+    public String composeQuery(Object o, String alias) throws Exception {
+        return null;
+    }
 
-	@Override
-	public void composeQueryParameters(Object o, Query query) throws Exception {
+    @Override
+    public void composeQueryParameters(Object o, Query query) throws Exception {
 
-	}
+    }
 }

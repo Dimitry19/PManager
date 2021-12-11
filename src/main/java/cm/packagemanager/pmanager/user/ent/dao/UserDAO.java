@@ -17,80 +17,84 @@ import java.util.List;
 public interface UserDAO extends CommonDAO {
 
 
-	UserVO findByUsername(String username) throws Exception;
+    UserVO findByUsername(String username) throws Exception;
 
-	UserVO findByOnlyUsername(String username, boolean isRegistration) throws Exception;
+    UserVO findByOnlyUsername(String username, boolean isRegistration) throws Exception;
 
-	List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException;
+    List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException;
 
-	UserVO findByToken(String token) throws Exception;
+    UserVO findByToken(String token) throws Exception;
 
-	UserVO findById(Long userId) throws UserException;
-
-
-	UserVO login(String username) throws UserException;
-
-	int count(PageBy pageBy) throws BusinessResourceException;
-
-	UserVO login(String username, String password) throws UserException;
-
-	public  void  subscribe(SubscribeDTO subscribe) throws UserException;
-
-	public  void  unsubscribe(SubscribeDTO subscribe) throws UserException;
-
-	public  List<UserVO>  subscriptions(Long  userId) throws UserException;
-
-	public  List<UserVO>  subscribers(Long  userId) throws UserException;
+    UserVO findById(Long userId) throws UserException;
 
 
-	public List<UserVO> getAllUsers() throws Exception;
+    UserVO login(String username) throws UserException;
 
-	public List<UserVO> getAllUsersToConfirm() throws Exception;
+    int count(PageBy pageBy) throws BusinessResourceException;
 
-	public List<UserVO> getAllUsers(PageBy pageBy) throws Exception;
+    UserVO login(String username, String password) throws UserException;
 
-	//public UserVO getUser(int id)  throws BusinessResourceException;
+    void subscribe(SubscribeDTO subscribe) throws UserException;
 
-	public UserVO getUser(Long id) throws UserException;
+    void unsubscribe(SubscribeDTO subscribe) throws UserException;
 
-	public UserVO register(RegisterDTO register) throws BusinessResourceException, UserException;
+    List<UserVO> subscriptions(Long userId) throws UserException;
 
-	public void updateUser(UserVO user)  throws BusinessResourceException;
-
-	public UserVO updateUser(UpdateUserDTO user) throws Exception;
-
-	public boolean deleteUser(Long id)  throws UserException;
-
-	public UserVO save(UserVO user)  throws BusinessResourceException;
-
-	public void remove(UserVO user)  throws BusinessResourceException;
+    List<UserVO> subscribers(Long userId) throws UserException;
 
 
-	public UserVO findByEmail(String email) throws Exception;
+    List<UserVO> getAllUsers() throws Exception;
+
+    List<UserVO> getAllUsersToConfirm() throws Exception;
+
+    List<UserVO> getAllUsers(PageBy pageBy) throws Exception;
+
+    //public UserVO getUser(int id)  throws BusinessResourceException;
+
+    UserVO getUser(Long id) throws UserException;
+
+    UserVO register(RegisterDTO register) throws BusinessResourceException, UserException;
+
+    void updateUser(UserVO user) throws BusinessResourceException;
+
+    UserVO updateUser(UpdateUserDTO user) throws Exception;
+
+    boolean deleteUser(Long id) throws UserException;
+
+    UserVO save(UserVO user) throws BusinessResourceException;
+
+    void remove(UserVO user) throws BusinessResourceException;
 
 
-	public UserVO findByFacebookId(String facebookId) throws Exception;
+    UserVO findByEmail(String email) throws Exception;
 
 
-	public UserVO findByGoogleId(String googleId) throws Exception;
+    UserVO findByFacebookId(String facebookId) throws Exception;
 
 
-	public boolean setRole(UserVO user, RoleEnum roleId) throws Exception;
-	public boolean setRole(String email, RoleEnum roleId) throws Exception;
-
-	public boolean deleteUser(UserVO user) throws BusinessResourceException, UserException;
-
-	public boolean checkLogin(LoginDTO lr ) throws Exception;
-
-	//List<RatingCountVO> findRatingCounts(UserVO user);
+    UserVO findByGoogleId(String googleId) throws Exception;
 
 
-	UserVO updateImage(Long userId, MultipartFile multipartFile) throws IOException;
+    boolean setRole(UserVO user, RoleEnum roleId) throws Exception;
 
-	UserVO manageNotification(Long userId, boolean enableNotification) throws UserException;
+    boolean setRole(String email, RoleEnum roleId) throws Exception;
 
-	boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException;
-	List<CommunicationVO> communications(Long userId) throws Exception;
-	List notifications(Long userId) throws Exception;
-	List messages(Long userId) throws Exception;
+    boolean deleteUser(UserVO user) throws BusinessResourceException, UserException;
+
+    boolean checkLogin(LoginDTO lr) throws Exception;
+
+    //List<RatingCountVO> findRatingCounts(UserVO user);
+
+
+    UserVO updateImage(Long userId, MultipartFile multipartFile) throws IOException;
+
+    UserVO manageNotification(Long userId, boolean enableNotification) throws UserException;
+
+    boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException;
+
+    List<CommunicationVO> communications(Long userId) throws Exception;
+
+    List notifications(Long userId) throws Exception;
+
+    List messages(Long userId) throws Exception;
 }

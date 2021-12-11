@@ -20,72 +20,72 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private static Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
+    private static Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
 
-	@Autowired
-	private AuthenticationEntryPoint authEntryPoint;
+    @Autowired
+    private AuthenticationEntryPoint authEntryPoint;
 
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 
 
-		logger.info("into configure");
-		http.csrf().disable();
-		http.httpBasic().disable();
+        logger.info("into configure");
+        http.csrf().disable();
+        http.httpBasic().disable();
 
-		// All requests send to the Web Server request must be authenticated
-		//http.antMatcher("/sv/**").authorizeRequests().anyRequest().authenticated();
+        // All requests send to the Web Server request must be authenticated
+        //http.antMatcher("/sv/**").authorizeRequests().anyRequest().authenticated();
 
-		// Use AuthenticationEntryPoint to authenticate user/password
-		//http.httpBasic().authenticationEntryPoint(authEntryPoint);
-	}
+        // Use AuthenticationEntryPoint to authenticate user/password
+        //http.httpBasic().authenticationEntryPoint(authEntryPoint);
+    }
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		return bCryptPasswordEncoder;
-	}
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
+    }
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-		auth.inMemoryAuthentication()
-				.withUser("user").password("{noop}password").roles("USER");
+        auth.inMemoryAuthentication()
+                .withUser("user").password("{noop}password").roles("USER");
 
-		String password = "password2";
+        String password = "password2";
 
-		String encrytedPassword = "$2a$10$PTJsddL7mIzmov0UE4lBNuSpWUQocANJbSnkRfOfrgKDF2SVrUB8W";//this.passwordEncoder().encode(password);
-		//System.out.println("Encoded password of password2=" + encrytedPassword);
+        String encrytedPassword = "$2a$10$PTJsddL7mIzmov0UE4lBNuSpWUQocANJbSnkRfOfrgKDF2SVrUB8W";//this.passwordEncoder().encode(password);
+        //System.out.println("Encoded password of password2=" + encrytedPassword);
 
 
-		InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder> //
-				mngConfig = auth.inMemoryAuthentication();
+        InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder> //
+                mngConfig = auth.inMemoryAuthentication();
 
-		// Defines 2 users, stored in memory.
-		// ** Spring BOOT >= 2.x (Spring Security 5.x)
-		// Spring auto add ROLE_
-		//UserDetails u1 = User.withUsername("demo").password(encrytedPassword).roles("USER").build();
-		//UserDetails u2 = User.withUsername("demo1").password(encrytedPassword).roles("USER").build();
+        // Defines 2 users, stored in memory.
+        // ** Spring BOOT >= 2.x (Spring Security 5.x)
+        // Spring auto add ROLE_
+        //UserDetails u1 = User.withUsername("demo").password(encrytedPassword).roles("USER").build();
+        //UserDetails u2 = User.withUsername("demo1").password(encrytedPassword).roles("USER").build();
 
-		//mngConfig.withUser(u1);
-		//mngConfig.withUser(u2);
+        //mngConfig.withUser(u1);
+        //mngConfig.withUser(u2);
 
-		// If Spring BOOT < 2.x (Spring Security 4.x)):
-		// Spring auto add ROLE_
-		// mngConfig.withUser("tom").password("123").roles("USER");
-		// mngConfig.withUser("jerry").password("123").roles("USER");
-	}
+        // If Spring BOOT < 2.x (Spring Security 4.x)):
+        // Spring auto add ROLE_
+        // mngConfig.withUser("tom").password("123").roles("USER");
+        // mngConfig.withUser("jerry").password("123").roles("USER");
+    }
 
-	@Bean
-	public FilterRegistrationBean<AuthenticationFilter> filterRegistrationBean() {
-		FilterRegistrationBean < AuthenticationFilter > registrationBean = new FilterRegistrationBean();
-		AuthenticationFilter customURLFilter = new AuthenticationFilter();
+    @Bean
+    public FilterRegistrationBean<AuthenticationFilter> filterRegistrationBean() {
+        FilterRegistrationBean<AuthenticationFilter> registrationBean = new FilterRegistrationBean();
+        AuthenticationFilter customURLFilter = new AuthenticationFilter();
 
-		registrationBean.setFilter(customURLFilter);
-		registrationBean.addUrlPatterns("/user/*");
-		registrationBean.setOrder(2); //set precedence
-		return registrationBean;
-	}
+        registrationBean.setFilter(customURLFilter);
+        registrationBean.addUrlPatterns("/user/*");
+        registrationBean.setOrder(2); //set precedence
+        return registrationBean;
+    }
 }

@@ -14,17 +14,17 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 @Configuration
 public class UserSubmitJobs extends QuartzSubmitJobs {
 
-	private static Logger log = LoggerFactory.getLogger(UserSubmitJobs.class);
+    private static Logger log = LoggerFactory.getLogger(UserSubmitJobs.class);
 
-	@Bean(name = "confirmUsers")
-	public JobDetailFactoryBean jobConfirmUsers() {
-		return QuartzCronConfiguration.createJobDetail(UserManagerJob.class, "User comfirmation Job");
-	}
+    @Bean(name = "confirmUsers")
+    public JobDetailFactoryBean jobConfirmUsers() {
+        return QuartzCronConfiguration.createJobDetail(UserManagerJob.class, "User comfirmation Job");
+    }
 
-	@Bean(name = "confirmUsersTrigger")
-	public CronTriggerFactoryBean triggerConfirmUsers(@Qualifier("confirmUsers") JobDetail jobDetail) {
-		log.info("User comfirmation Job started...");
+    @Bean(name = "confirmUsersTrigger")
+    public CronTriggerFactoryBean triggerConfirmUsers(@Qualifier("confirmUsers") JobDetail jobDetail) {
+        log.info("User comfirmation Job started...");
 
-		return QuartzCronConfiguration.createCronTrigger(jobDetail, CRON_EVERY_SIX_HOURS, "User comfirmation Trigger");
-	}
+        return QuartzCronConfiguration.createCronTrigger(jobDetail, CRON_EVERY_SIX_HOURS, "User comfirmation Trigger");
+    }
 }

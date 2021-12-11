@@ -1,8 +1,6 @@
 package cm.packagemanager.pmanager.ws.controller.rest;
 
 
-
-
 public class UserControllerTemplate {//NB: pas de logique métier dans le contrôleur, mais, uniquement l'appel des services
 
 /*	@Autowired

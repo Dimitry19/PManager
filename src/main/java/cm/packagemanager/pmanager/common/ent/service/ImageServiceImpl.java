@@ -2,7 +2,6 @@ package cm.packagemanager.pmanager.common.ent.service;
 
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-
 import cm.packagemanager.pmanager.common.ent.dao.ImageDAO;
 import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.enums.UploadImageType;
@@ -18,102 +17,99 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import javax.xml.bind.DatatypeConverter;
-import java.io.*;
-import java.util.*;
+import java.util.UUID;
 
 import static cm.packagemanager.pmanager.common.Constants.ANNOUNCE_TYPE_IMG_UPLOAD;
 import static cm.packagemanager.pmanager.common.Constants.USER_TYPE_IMG_UPLOAD;
 
 @Service
-public class ImageServiceImpl implements ImageService{
+public class ImageServiceImpl implements ImageService {
 
-	protected final Log logger = LogFactory.getLog(ImageServiceImpl.class);
+    protected final Log logger = LogFactory.getLog(ImageServiceImpl.class);
 
-	@Value("${profile.user.img.folder}")
-	private String imageUser;
+    @Value("${profile.user.img.folder}")
+    private String imageUser;
 
-	@Value("${profile.announce.img.folder}")
-	private String imageAnnounce;
+    @Value("${profile.announce.img.folder}")
+    private String imageAnnounce;
 
-	@Autowired
-	ImageDAO imageDAO;
+    @Autowired
+    ImageDAO imageDAO;
 
-	@Autowired
-	UserDAO userDAO;
+    @Autowired
+    UserDAO userDAO;
 
-	@Autowired
-	AnnounceDAO announceDAO;
+    @Autowired
+    AnnounceDAO announceDAO;
 
-	@Autowired
-	FileUtils fileUtils;
-
-
-	@Override
-	public ImageVO findByName(String name) throws Exception {
-		logger.info("find image by name ");
-		ImageVO retrievedImage= imageDAO.findByName(name);
-		return retrievedImage;//new ImageVO(retrievedImage.getName(), retrievedImage.getType(), fileUtils.decompressBytes(retrievedImage.getPicByte()));
-	}
-
-	@Override
-	@Transactional
-	public boolean delete(String name, Long id) throws Exception {
-		logger.info("delete image by name ");
-		 ImageVO image=imageDAO.findByName(name);
-		 if (image==null){
-		 	image= (ImageVO) imageDAO.findById(ImageVO.class,id);
-		 }
-		 if (image==null) throw new Exception("Image not found");
-		 imageDAO.delete(ImageVO.class,image.getId(),true);
-		 return imageDAO.find(ImageVO.class,id)!=null;
-	}
+    @Autowired
+    FileUtils fileUtils;
 
 
-	@Override
-	public ImageVO save(String data, Long id, UploadImageType type) throws Exception {
+    @Override
+    public ImageVO findByName(String name) throws Exception {
+        logger.info("find image by name ");
+        ImageVO retrievedImage = imageDAO.findByName(name);
+        return retrievedImage;//new ImageVO(retrievedImage.getName(), retrievedImage.getType(), fileUtils.decompressBytes(retrievedImage.getPicByte()));
+    }
 
-		String ext=fileUtils.getExtension(data);
-		//data=fileUtils.clean(data);
-		ImageVO image = new ImageVO(fileUtils.compressBytes(data.getBytes()));
-		switch (type.name()){
-			case USER_TYPE_IMG_UPLOAD:
-				logger.info("save user image");
-				UserVO user=userDAO.findById(id);
-				if (user==null)
-					throw new UserNotFoundException();
+    @Override
+    @Transactional
+    public boolean delete(String name, Long id) throws Exception {
+        logger.info("delete image by name ");
+        ImageVO image = imageDAO.findByName(name);
+        if (image == null) {
+            image = (ImageVO) imageDAO.findById(ImageVO.class, id);
+        }
+        if (image == null) throw new Exception("Image not found");
+        imageDAO.delete(ImageVO.class, image.getId(), true);
+        return imageDAO.find(ImageVO.class, id) != null;
+    }
 
-				if(user.getImage()!=null){
-					image = user.getImage();
-				}
-				image.setType(USER_TYPE_IMG_UPLOAD);
-				image.setName(StringUtils.concatenate(user.getUsername(),"-p",ext));
-				fileUtils.saveFileToFileSystem(imageUser,image.getName(),data);
-				user.setImage(image);
-				userDAO.update(user);
-				logger.info("save user image end");
-				break;
 
-			case ANNOUNCE_TYPE_IMG_UPLOAD:
-				logger.info("save announce image");
-				image.setType(ANNOUNCE_TYPE_IMG_UPLOAD);
+    @Override
+    public ImageVO save(String data, Long id, UploadImageType type) throws Exception {
 
-				AnnounceVO announce=announceDAO.announce(id);
-				if (announce==null)
-					throw new Exception("Announce non trouvée");
+        String ext = fileUtils.getExtension(data);
+        //data=fileUtils.clean(data);
+        ImageVO image = new ImageVO(fileUtils.compressBytes(data.getBytes()));
+        switch (type.name()) {
+            case USER_TYPE_IMG_UPLOAD:
+                logger.info("save user image");
+                UserVO user = userDAO.findById(id);
+                if (user == null)
+                    throw new UserNotFoundException();
 
-				if(announce.getImage()!=null){
-					image = announce.getImage();
-				}
-				image.setName(StringUtils.concatenate(String.valueOf(announce.getId()),UUID.randomUUID().toString().replaceAll("-", ""),ext));
-				announce.setImage(image);
-				announceDAO.update(announce);
-				logger.info("save announce image end");
-				break;
-			default:
-				break;
-		}
-		return imageDAO.findByName(image.getName());
-	}
+                if (user.getImage() != null) {
+                    image = user.getImage();
+                }
+                image.setType(USER_TYPE_IMG_UPLOAD);
+                image.setName(StringUtils.concatenate(user.getUsername(), "-p", ext));
+                fileUtils.saveFileToFileSystem(imageUser, image.getName(), data);
+                user.setImage(image);
+                userDAO.update(user);
+                logger.info("save user image end");
+                break;
+
+            case ANNOUNCE_TYPE_IMG_UPLOAD:
+                logger.info("save announce image");
+                image.setType(ANNOUNCE_TYPE_IMG_UPLOAD);
+
+                AnnounceVO announce = announceDAO.announce(id);
+                if (announce == null)
+                    throw new Exception("Announce non trouvée");
+
+                if (announce.getImage() != null) {
+                    image = announce.getImage();
+                }
+                image.setName(StringUtils.concatenate(String.valueOf(announce.getId()), UUID.randomUUID().toString().replaceAll("-", ""), ext));
+                announce.setImage(image);
+                announceDAO.update(announce);
+                logger.info("save announce image end");
+                break;
+            default:
+                break;
+        }
+        return imageDAO.findByName(image.getName());
+    }
 }

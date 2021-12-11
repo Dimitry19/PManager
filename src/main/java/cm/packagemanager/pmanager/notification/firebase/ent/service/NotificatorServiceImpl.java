@@ -30,7 +30,6 @@ import java.util.List;
 import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.*;
 
 
-
 @Service("notificator")
 @EnableScheduling
 public class NotificatorServiceImpl implements NotificationService {
@@ -42,26 +41,28 @@ public class NotificatorServiceImpl implements NotificationService {
     private SimpMessageSendingOperations messagingTemplate;
 
     @Autowired
-    NotificationDAO  notificationDAO;
+    NotificationDAO notificationDAO;
 
 
-    final List<Event> events= new ArrayList();
+    final List<Event> events = new ArrayList();
 
 
-    public void addEvent(Event event) { events.add(event);}
+    public void addEvent(Event event) {
+        events.add(event);
+    }
 
 
     @Override
-    public void dispatch(){
+    public void dispatch() {
 
         logger.info(" dispatch !");
 
-        notifications.forEach(n->{
+        notifications.forEach(n -> {
 
             try {
                 elaborate((NotificationVO) n);
             } catch (Exception e) {
-                logger.error("Erreur durant l'elaboration de la notification {} {}", n,e);
+                logger.error("Erreur durant l'elaboration de la notification {} {}", n, e);
             }
 
         });
@@ -70,50 +71,48 @@ public class NotificatorServiceImpl implements NotificationService {
     }
 
 
-
-
-    private void elaborate(NotificationVO notification) throws Exception{
+    private void elaborate(NotificationVO notification) throws Exception {
 
         logger.info(" elaborate  !");
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
         headerAccessor.setLeaveMutable(true);
-        String queue=null;
+        String queue = null;
 
 
-        if( connectedUsers.get(notification.getUserId())==null){
+        if (connectedUsers.get(notification.getUserId()) == null) {
             notification.setStatus(StatusEnum.TO_DELIVERED);
             notificationsToPersist.add(notification);
             return;
         }
 
-        if (notification.getStatus().equals(StatusEnum.VALID)){
-            switch (notification.getType()){
+        if (notification.getStatus().equals(StatusEnum.VALID)) {
+            switch (notification.getType()) {
                 case ANNOUNCE:
 
-                    announceListeners.forEach((k,v)->{
+                    announceListeners.forEach((k, v) -> {
 
-                        String sessionId=(String)v;
+                        String sessionId = (String) v;
                         headerAccessor.setSessionId(sessionId);
 
-                        logger.info(" notification  {}",notification.getMessage());
-                        logger.info(" elaborate {} queue {}", sessionId , SUSCRIBE_QUEUE_ANNOUNCE_SEND);
-                        messagingTemplate.convertAndSendToUser(sessionId,SUSCRIBE_QUEUE_ANNOUNCE_SEND,notification,headerAccessor.getMessageHeaders());
+                        logger.info(" notification  {}", notification.getMessage());
+                        logger.info(" elaborate {} queue {}", sessionId, SUSCRIBE_QUEUE_ANNOUNCE_SEND);
+                        messagingTemplate.convertAndSendToUser(sessionId, SUSCRIBE_QUEUE_ANNOUNCE_SEND, notification, headerAccessor.getMessageHeaders());
 
                     });
 
                     break;
                 case COMMENT:
-                    queue=SUSCRIBE_QUEUE_COMMENT_SEND;
+                    queue = SUSCRIBE_QUEUE_COMMENT_SEND;
                     //commentListeners.put(sessionUserMap.get(sessionId),sessionId);
                     break;
 
                 case USER:
-                    queue=SUSCRIBE_QUEUE_USER_SEND;
+                    queue = SUSCRIBE_QUEUE_USER_SEND;
                     //userListeners.put(sessionUserMap.get(sessionId),sessionId);
                     break;
             }
 
-         }
+        }
         notifications.remove(notification);
     }
 
@@ -140,19 +139,19 @@ public class NotificatorServiceImpl implements NotificationService {
     @Override
     public void add(String sessionId, NotificationType notificationType) {
 
-        logger.info(" add {} type {}", sessionId , notificationType);
+        logger.info(" add {} type {}", sessionId, notificationType);
 
 
-        switch (notificationType){
+        switch (notificationType) {
             case ANNOUNCE:
-                announceListeners.put(sessionUserMap.get(sessionId),sessionId);
+                announceListeners.put(sessionUserMap.get(sessionId), sessionId);
                 break;
             case COMMENT:
-                commentListeners.put(sessionUserMap.get(sessionId),sessionId);
+                commentListeners.put(sessionUserMap.get(sessionId), sessionId);
                 break;
 
             case USER:
-                userListeners.put(sessionUserMap.get(sessionId),sessionId);
+                userListeners.put(sessionUserMap.get(sessionId), sessionId);
                 break;
         }
         /*if (StringUtils.isNotEmpty(sessionId)){
@@ -162,38 +161,38 @@ public class NotificatorServiceImpl implements NotificationService {
 
     @Override
     public void remove(String sessionId) {
-        String  userId=(String)sessionUserMap.get(sessionId);
+        String userId = (String) sessionUserMap.get(sessionId);
 
-        if(connectedUsers.containsKey(userId)){
+        if (connectedUsers.containsKey(userId)) {
             cleanListener(userId);
         }
 
     }
 
-    private void persistNotification(){
-        notificationsToPersist.forEach(n->{
+    private void persistNotification() {
+        notificationsToPersist.forEach(n -> {
             try {
-                notificationDAO.persist((NotificationVO)n);
+                notificationDAO.persist((NotificationVO) n);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
 
-    protected void createNotification(Event event){
+    protected void createNotification(Event event) {
 
         NotificationVO notification = new NotificationVO();
 
-        if(event instanceof AnnounceEvent){
+        if (event instanceof AnnounceEvent) {
             notification.setTitle("Announce Notification");
 
-            AnnounceEvent evt=(AnnounceEvent) event;
+            AnnounceEvent evt = (AnnounceEvent) event;
             notification.setAnnounceId(evt.getId());
             notification.setMessage(evt.getMessage());
         }
 
 
-        if(notification!=null){
+        if (notification != null) {
             notification.setUserId(event.getUserId());
             notification.setStatus(StatusEnum.VALID);
             notification.setType(event.getType());
@@ -213,28 +212,22 @@ public class NotificatorServiceImpl implements NotificationService {
     }
 
 
-    public void addConnectedUser(String userId, String sessionId){
-        connectedUsers.put(userId,sessionId);
-        sessionUserMap.put(sessionId,userId);
+    public void addConnectedUser(String userId, String sessionId) {
+        connectedUsers.put(userId, sessionId);
+        sessionUserMap.put(sessionId, userId);
     }
 
-    public void  removeConnectedUser(String sessionId){
-        String userId=(String)sessionUserMap.get(sessionId);
+    public void removeConnectedUser(String sessionId) {
+        String userId = (String) sessionUserMap.get(sessionId);
         connectedUsers.remove(userId);
         sessionUserMap.remove(sessionId);
     }
 
-    private void cleanListener(String userId){
+    private void cleanListener(String userId) {
 
-        if(commentListeners.containsKey(userId)){
-            commentListeners.remove(userId);
-        }
-        if(announceListeners.containsKey(userId)){
-            announceListeners.remove(userId);
-        }
-        if(userListeners.containsKey(userId)){
-            userListeners.remove(userId);
-        }
+        commentListeners.remove(userId);
+        announceListeners.remove(userId);
+        userListeners.remove(userId);
 
     }
 }

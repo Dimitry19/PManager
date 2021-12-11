@@ -1,8 +1,6 @@
 package cm.packagemanager.pmanager.administrator.tracing;
 
 import com.uber.jaeger.Configuration;
-
-
 import com.uber.jaeger.samplers.ProbabilisticSampler;
 import io.opentracing.Span;
 import io.opentracing.util.GlobalTracer;
@@ -12,25 +10,25 @@ import org.springframework.context.annotation.Bean;
 @org.springframework.context.annotation.Configuration
 public class OpenTracingConfig {
 
-	@Value("${jaeger.agent.host}")
-	private String agentHost;
+    @Value("${jaeger.agent.host}")
+    private String agentHost;
 
-	@Value("${jaeger.agent.port}")
-	private int agentport;
+    @Value("${jaeger.agent.port}")
+    private int agentport;
 
 
-	@Bean
-	public Span spanTracer(){
-		GlobalTracer.register(jaegerTracer());
-		return GlobalTracer.get().buildSpan("").start();
-	}
+    @Bean
+    public Span spanTracer() {
+        GlobalTracer.register(jaegerTracer());
+        return GlobalTracer.get().buildSpan("").start();
+    }
 
-	@Bean
-	public io.opentracing.Tracer jaegerTracer() {
-		return new Configuration("PManagerService", new Configuration.SamplerConfiguration(ProbabilisticSampler.TYPE, 1),
-				new Configuration
-						.ReporterConfiguration())
-						.getTracer();
-	}
+    @Bean
+    public io.opentracing.Tracer jaegerTracer() {
+        return new Configuration("PManagerService", new Configuration.SamplerConfiguration(ProbabilisticSampler.TYPE, 1),
+                new Configuration
+                        .ReporterConfiguration())
+                .getTracer();
+    }
 
 }

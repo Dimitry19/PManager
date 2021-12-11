@@ -23,7 +23,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.3.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.3.0.RELEASE" level="project" />
@@ -223,7 +223,7 @@
     <orderEntry type="library" name="Maven: io.opentracing:opentracing-util:0.22.0" level="project" />
     <orderEntry type="library" name="Maven: io.opentracing.contrib:opentracing-spanmanager:0.0.5" level="project" />
     <orderEntry type="library" name="Maven: io.opentracing:opentracing-noop:0.22.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:r05" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.firebase:firebase-admin:7.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.30.10" level="project" />
     <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client:1.31.0" level="project" />

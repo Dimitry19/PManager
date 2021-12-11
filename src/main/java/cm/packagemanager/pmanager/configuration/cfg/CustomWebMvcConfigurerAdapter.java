@@ -1,15 +1,6 @@
 package cm.packagemanager.pmanager.configuration.cfg;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import java.util.List;
 
 
 /*@Configuration
@@ -20,7 +11,7 @@ public class CustomWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
 	//More configuration....
 
 	*//* Here we register the Hibernate4Module into an ObjectMapper, then set this custom-configured ObjectMapper
-	 * to the MessageConverter and return it to be added to the HttpMessageConverters of our application*//*
+     * to the MessageConverter and return it to be added to the HttpMessageConverters of our application*//*
 	public MappingJackson2HttpMessageConverter jacksonMessageConverter(){
 		MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
 

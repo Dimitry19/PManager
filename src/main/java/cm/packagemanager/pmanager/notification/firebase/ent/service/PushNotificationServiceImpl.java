@@ -13,68 +13,68 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class PushNotificationServiceImpl implements PushNotificationService{
+public class PushNotificationServiceImpl implements PushNotificationService {
 
-	@Autowired
-	private FirebaseCloudMessageService fcmService;
-
-
-	//@Value("${app.notifications.defaults}")
-	private Map<String, String> defaults;
-
-	private Logger logger = LoggerFactory.getLogger(PushNotificationService.class);
+    @Autowired
+    private FirebaseCloudMessageService fcmService;
 
 
-	//@Scheduled(initialDelay = 60000, fixedDelay = 60000)
-	public void sendSamplePushNotification() {
-		try {
-			fcmService.sendMessageWithoutData(getSamplePushNotificationRequest());
-		} catch (InterruptedException | ExecutionException e) {
-			logger.error(e.getMessage());
-		}
-	}
+    //@Value("${app.notifications.defaults}")
+    private Map<String, String> defaults;
 
-	public void sendPushNotification(Notification request) {
-		try {
-			fcmService.sendMessage(getSamplePayloadData(), request);
-		} catch (InterruptedException | ExecutionException e) {
-			logger.error(e.getMessage());
-		}
-	}
-
-	public void sendPushNotificationWithoutData(Notification request) {
-		try {
-			fcmService.sendMessageWithoutData(request);
-		} catch (InterruptedException | ExecutionException e) {
-			logger.error(e.getMessage());
-		}
-	}
+    private Logger logger = LoggerFactory.getLogger(PushNotificationService.class);
 
 
-	public void sendPushNotificationToToken(Notification request) {
-		try {
-			fcmService.sendMessageToToken(request);
-		} catch (InterruptedException | ExecutionException e) {
-			logger.error(e.getMessage());
-		}
-	}
+    //@Scheduled(initialDelay = 60000, fixedDelay = 60000)
+    public void sendSamplePushNotification() {
+        try {
+            fcmService.sendMessageWithoutData(getSamplePushNotificationRequest());
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error(e.getMessage());
+        }
+    }
+
+    public void sendPushNotification(Notification request) {
+        try {
+            fcmService.sendMessage(getSamplePayloadData(), request);
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error(e.getMessage());
+        }
+    }
+
+    public void sendPushNotificationWithoutData(Notification request) {
+        try {
+            fcmService.sendMessageWithoutData(request);
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error(e.getMessage());
+        }
+    }
 
 
-	private Map<String, String> getSamplePayloadData() {
-		Map<String, String> pushData = new HashMap<>();
-		pushData.put("messageId", defaults.get("payloadMessageId"));
-		pushData.put("text", defaults.get("payloadData") + " " + LocalDateTime.now());
-		return pushData;
-	}
+    public void sendPushNotificationToToken(Notification request) {
+        try {
+            fcmService.sendMessageToToken(request);
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error(e.getMessage());
+        }
+    }
 
 
-	private Notification getSamplePushNotificationRequest() {
-		Notification request = new Notification(
-				defaults.get("title"),
-				defaults.get("message"),
-				defaults.get("topic"),
-				defaults.get("url"));
-		return request;
-	}
+    private Map<String, String> getSamplePayloadData() {
+        Map<String, String> pushData = new HashMap<>();
+        pushData.put("messageId", defaults.get("payloadMessageId"));
+        pushData.put("text", defaults.get("payloadData") + " " + LocalDateTime.now());
+        return pushData;
+    }
+
+
+    private Notification getSamplePushNotificationRequest() {
+        Notification request = new Notification(
+                defaults.get("title"),
+                defaults.get("message"),
+                defaults.get("topic"),
+                defaults.get("url"));
+        return request;
+    }
 
 }

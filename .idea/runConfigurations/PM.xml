@@ -3,11 +3,11 @@
     <log_file alias="LOG" path="$PROJECT_DIR$/src/main/resources/log4j2.xml" />
     <module name="PManager" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="cm.packagemanager.pmanager.PackageApplication" />
-    <option name="DEBUG_MODE" value="true" />
-    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="ALTERNATIVE_JRE_PATH" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home" />
     <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-    <method />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
   </configuration>
 </component>

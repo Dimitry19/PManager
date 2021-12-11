@@ -4,57 +4,58 @@ import org.springframework.http.HttpStatus;
 
 public class BusinessResourceException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
-	private Long resourceId;
-	private String errorCode;
-	private HttpStatus status;
+    private static final long serialVersionUID = 1L;
+    private Long resourceId;
+    private String errorCode;
+    private HttpStatus status;
 
-	public BusinessResourceException(String message) {
-		super(message);
-	}
+    public BusinessResourceException(String message) {
+        super(message);
+    }
 
-	public BusinessResourceException(Long resourceId, String message) {
-		super(message);
-		this.resourceId = resourceId;
-	}
-	public BusinessResourceException(Long resourceId, String errorCode, String message) {
-		super(message);
-		this.resourceId = resourceId;
-		this.errorCode = errorCode;
-	}
+    public BusinessResourceException(Long resourceId, String message) {
+        super(message);
+        this.resourceId = resourceId;
+    }
 
-	public BusinessResourceException(String errorCode, String message) {
-		super(message);
-		this.errorCode = errorCode;
-	}
+    public BusinessResourceException(Long resourceId, String errorCode, String message) {
+        super(message);
+        this.resourceId = resourceId;
+        this.errorCode = errorCode;
+    }
 
-	public BusinessResourceException(String errorCode, String message, HttpStatus status) {
-		super(message);
-		this.errorCode = errorCode;
-		this.status = status;
-	}
+    public BusinessResourceException(String errorCode, String message) {
+        super(message);
+        this.errorCode = errorCode;
+    }
 
-	public Long getResourceId() {
-		return resourceId;
-	}
+    public BusinessResourceException(String errorCode, String message, HttpStatus status) {
+        super(message);
+        this.errorCode = errorCode;
+        this.status = status;
+    }
 
-	public void setResourceId(Long resourceId) {
-		this.resourceId = resourceId;
-	}
+    public Long getResourceId() {
+        return resourceId;
+    }
 
-	public String getErrorCode() {
-		return errorCode;
-	}
+    public void setResourceId(Long resourceId) {
+        this.resourceId = resourceId;
+    }
 
-	public void setErrorCode(String errorCode) {
-		this.errorCode = errorCode;
-	}
+    public String getErrorCode() {
+        return errorCode;
+    }
 
-	public HttpStatus getStatus() {
-		return status;
-	}
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
 
-	public void setStatus(HttpStatus status) {
-		this.status = status;
-	}
+    public HttpStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(HttpStatus status) {
+        this.status = status;
+    }
 }

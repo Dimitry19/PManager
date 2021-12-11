@@ -14,20 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class QueryUtils {
 
-	@Autowired
-	SessionFactory sessionFactory;
+    @Autowired
+    SessionFactory sessionFactory;
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-	public  Long  calcolateId(String namedQuery){
-		Session sess = sessionFactory.getCurrentSession();
-		sess.disableFilter(FilterConstants.CANCELLED);
-		Query query= sess.createNamedQuery(namedQuery);
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+    public Long calcolateId(String namedQuery) {
+        Session sess = sessionFactory.getCurrentSession();
+        sess.disableFilter(FilterConstants.CANCELLED);
+        Query query = sess.createNamedQuery(namedQuery);
 
-		Long id = (Long) query.uniqueResult();
+        Long id = (Long) query.uniqueResult();
 
-		if(id!=null){
-			return new Long(String.valueOf(id))+ new Long(1);
-		}
-		return new Long(1);
-	}
+        if (id != null) {
+            return new Long(String.valueOf(id)) + new Long(1);
+        }
+        return new Long(1);
+    }
 }

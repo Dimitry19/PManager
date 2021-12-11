@@ -9,10 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class ImageDAOImpl extends CommonGenericDAO implements ImageDAO {
 
 
-
-	@Override
-	@Transactional(readOnly = true)
-	public ImageVO findByName(String name) throws Exception {
-		return (ImageVO) findByUniqueResult(ImageVO.IMG_BY_NAME,ImageVO.class,name,"name");
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public ImageVO findByName(String name) throws Exception {
+        return (ImageVO) findByUniqueResult(ImageVO.IMG_BY_NAME, ImageVO.class, name, "name");
+    }
 }

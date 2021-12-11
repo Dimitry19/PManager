@@ -16,54 +16,55 @@ import java.util.List;
 
 
 @Repository
-public  class RoleDAOImpl extends CommonGenericDAO implements RoleDAO {
+public class RoleDAOImpl extends CommonGenericDAO implements RoleDAO {
 
 
-	private static Logger logger = LoggerFactory.getLogger(RoleDAOImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(RoleDAOImpl.class);
 
-	public RoleDAOImpl(){
+    public RoleDAOImpl() {
 
-	}
+    }
 
-	@Override
-	public RoleVO addRole(RoleVO role){
-		logger.info("Add role");
-		if(role!=null){
-			save(role);
-		}
-		return role;
-	}
-	@Override
-	public Collection<RoleVO> getAllRoles() throws Exception {
+    @Override
+    public RoleVO addRole(RoleVO role) {
+        logger.info("Add role");
+        if (role != null) {
+            save(role);
+        }
+        return role;
+    }
 
-		List<RoleVO> roles = all(RoleVO.class);
+    @Override
+    public Collection<RoleVO> getAllRoles() throws Exception {
 
-		return IteratorUtils.toList(roles.iterator());
-	}
+        List<RoleVO> roles = all(RoleVO.class);
+
+        return IteratorUtils.toList(roles.iterator());
+    }
 
 	/*@Override
 	public Stream<RoleVO> getAllRolesStream() {
 		return this.getAllRolesStream();
 	}*/
 
-	@Override
-	@Transactional
-	public RoleVO findByDescription(String description) throws Exception {
+    @Override
+    @Transactional
+    public RoleVO findByDescription(String description) throws Exception {
 
-		return (RoleVO) findByUniqueResult(RoleVO.FINDBYDESC, RoleVO.class,RoleEnum.fromValue(description),"description");
-	}
+        return (RoleVO) findByUniqueResult(RoleVO.FINDBYDESC, RoleVO.class, RoleEnum.fromValue(description), "description");
+    }
 
-	@Override
-	@Transactional
-	public RoleVO find(Long id) {
+    @Override
+    @Transactional
+    public RoleVO find(Long id) {
 
-		return (RoleVO) findById(RoleVO.class,id);
+        return (RoleVO) findById(RoleVO.class, id);
 
-	}
+    }
 
-	@Override
-	@Transactional
-	public Collection<UserVO> usersWithRole(String description) {
-		return null;
-	}
+    @Override
+    @Transactional
+    public Collection<UserVO> usersWithRole(String description) {
+        return null;
+    }
 }

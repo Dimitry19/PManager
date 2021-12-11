@@ -11,16 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Repository
-public class ContactUSDAOImpl  implements ContactUSDAO{
-	@Autowired
-	private SessionFactory sessionFactory;
+public class ContactUSDAOImpl implements ContactUSDAO {
+    @Autowired
+    private SessionFactory sessionFactory;
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public void save(ContactUSVO contact) throws BusinessResourceException {
-		Session session = sessionFactory.getCurrentSession();
-			session.save(contact);
-			session.flush();
-	}
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void save(ContactUSVO contact) throws BusinessResourceException {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(contact);
+        session.flush();
+    }
 
 }

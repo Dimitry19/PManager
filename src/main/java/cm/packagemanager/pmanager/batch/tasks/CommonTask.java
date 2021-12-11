@@ -7,13 +7,12 @@ import org.springframework.batch.repeat.RepeatStatus;
 
 public abstract class CommonTask implements Tasklet {
 
-	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception
-	{
-		System.out.println("MyTaskTwo start..");
+    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+        System.out.println("MyTaskTwo start..");
 
-		// ... your code
+        // ... your code
 
-		System.out.println("MyTaskTwo done..");
-		return RepeatStatus.FINISHED;
-	}
+        System.out.println("MyTaskTwo done..");
+        return RepeatStatus.FINISHED;
+    }
 }

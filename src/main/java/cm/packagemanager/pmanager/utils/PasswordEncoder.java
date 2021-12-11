@@ -6,14 +6,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Classe permettant de créer des mots de passe hachés pour des besoins de tests
- *et d'initialisation de la base de données
- *
+ * et d'initialisation de la base de données
  */
 public class PasswordEncoder {
 
-	private static BCryptPasswordEncoder bCryptPasswordEncoder;
+    private static BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		/*bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		String toDecrypt="$2a$10$LWwcozXhlpodDoSgeZSD7emHVIibpJGq.KZCSDO1JYUvJmsYxLYi6";
 		String password ="password2";
@@ -24,11 +23,11 @@ public class PasswordEncoder {
 		System.out.println("Le mot de passe est bien haché : "+bCryptPasswordEncoder.matches(password, encodedPassword));
 		System.out.println("Decrypt : "+toDecrypt);*/
 
-		String e =PasswordGenerator.encrypt("password2");
-		//System.out.println("encrypt : "+e);
-		String d =PasswordGenerator.decrypt("cGFzc3dvcmQyQHRyQHZlbA==");
-		//System.out.println("decrypt : "+d);
+        String e = PasswordGenerator.encrypt("password2");
+        //System.out.println("encrypt : "+e);
+        String d = PasswordGenerator.decrypt("cGFzc3dvcmQyQHRyQHZlbA==");
+        //System.out.println("decrypt : "+d);
 
-	}
+    }
 
 }

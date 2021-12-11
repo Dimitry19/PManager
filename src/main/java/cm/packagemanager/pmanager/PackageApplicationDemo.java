@@ -1,41 +1,35 @@
 package cm.packagemanager.pmanager;
 
-import cm.packagemanager.pmanager.user.ent.bo.RoleBO;
 import cm.packagemanager.pmanager.user.ent.bo.UserBO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
 
 //@SpringBootApplication(scanBasePackages = "cm.packagemanager.pmanager")
 public class PackageApplicationDemo {
 
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
+    public static void main(String[] args) {
 
-	public static void main(String[] args) {
+        SpringApplication.run(PackageApplicationDemo.class, args);
+    }
 
-		SpringApplication.run(PackageApplicationDemo.class, args);
-	}
-
-	@Component
-	class Dummy implements CommandLineRunner {
-
-
-		UserBO userBO;
+    @Component
+    class Dummy implements CommandLineRunner {
 
 
-		@Override
-		public void run(String... string) throws Exception {
+        UserBO userBO;
 
-		}
-	}
 
+        @Override
+        public void run(String... string) throws Exception {
+
+        }
+    }
 
 
 }

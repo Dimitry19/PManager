@@ -1,16 +1,16 @@
 package cm.packagemanager.pmanager.common.utils;
 
 
-import java.lang.reflect.Method;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Method;
+
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
     private static final Logger log = LoggerFactory.getLogger(ObjectUtils.class);
-	
-	//if (ObjectUtils.isCallable(activityFindWrapper,"article.id.itemCode") || ObjectUtils.isCallable(activityFindWrapper,"articleFather.id.itemCode")) How to use
+
+    //if (ObjectUtils.isCallable(activityFindWrapper,"article.id.itemCode") || ObjectUtils.isCallable(activityFindWrapper,"articleFather.id.itemCode")) How to use
 
     public ObjectUtils() {
     }
@@ -25,13 +25,13 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
                 String[] token = path.split("\\.");
                 if (ArrayUtils.isEmpty(token)) {
                     token = new String[]{path};
-					}
+                }
 
                 Object currentObj = obj;
                 String[] tokens = token;
                 int length = token.length;
 
-                for(int i = 0; i < length; ++i) {
+                for (int i = 0; i < length; ++i) {
                     String methodName = tokens[i];
                     Method method = currentObj.getClass().getMethod("get" + StringUtils.capitalize(methodName));
                     if (method == null) {

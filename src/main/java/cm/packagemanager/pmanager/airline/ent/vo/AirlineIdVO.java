@@ -12,42 +12,42 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class AirlineIdVO extends CommonIdVO {
 
-	private String code ;
+    private String code;
 
-	public AirlineIdVO() {
+    public AirlineIdVO() {
 
-	}
+    }
 
-	public AirlineIdVO(String code, String token) {
-		this.code=code;
-		this.token=token;
-	}
+    public AirlineIdVO(String code, String token) {
+        this.code = code;
+        this.token = token;
+    }
 
-	@Basic(optional = false)
-	@Column(name = "CODE", nullable = false,length = FieldConstants.AIR_ID_LEN)
-	public String getCode() {
-		return code;
-	}
+    @Basic(optional = false)
+    @Column(name = "CODE", nullable = false, length = FieldConstants.AIR_ID_LEN)
+    public String getCode() {
+        return code;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		AirlineIdVO that = (AirlineIdVO) o;
+        AirlineIdVO that = (AirlineIdVO) o;
 
-		if (!code.equals(that.code)) return false;
-		return token.equals(that.token);
-	}
+        if (!code.equals(that.code)) return false;
+        return token.equals(that.token);
+    }
 
-	@Override
-	public int hashCode() {
-		int result = code.hashCode();
-		result = 31 * result + token.hashCode();
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        int result = code.hashCode();
+        result = 31 * result + token.hashCode();
+        return result;
+    }
 }

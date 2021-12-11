@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class QuartzSubmitJobs {
-	protected static final String CRON_EVERY_FIVE_MINUTES = "0 0/5 * ? * * *";
-	protected static final String CRON_EVERY_SIX_HOURS = "0 0 */6 ? * *";
-	protected static final String CRON_EVERY_TWO_MINUTES = "0 0/2 * ? * * *";
-	protected static final String CRON_EVERY_SATURDAY_AT_15 = "0 0 15 ? * SAT";
+    protected static final String CRON_EVERY_FIVE_MINUTES = "0 0/5 * ? * * *";
+    protected static final String CRON_EVERY_SIX_HOURS = "0 0 */6 ? * *";
+    protected static final String CRON_EVERY_TWO_MINUTES = "0 0/2 * ? * * *";
+    protected static final String CRON_EVERY_SATURDAY_AT_15 = "0 0 15 ? * SAT";
 
 
 
