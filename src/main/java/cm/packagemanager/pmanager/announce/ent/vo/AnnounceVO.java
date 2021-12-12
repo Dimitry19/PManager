@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;

@@ -77,9 +77,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
             Session session = this.sessionFactory.getCurrentSession();
             session.enableFilter(FilterConstants.CANCELLED);
             String where = composeQuery(announceSearch, "a");
-            Query query = session.createQuery("from AnnounceVO  as a  join CategoryVO  c " + where);
+            Query query = session.createQuery("from AnnounceVO  as a join a.categories as c " + where);
             composeQueryParameters(announceSearch, query);
-            return CollectionsUtils.isNotEmpty(query.list()) ? query.list().size() : 0;
+            List result=query.list();
+            return CollectionsUtils.isNotEmpty(result) ? result.size() : 0;
         } else {
             return count(AnnounceVO.class, pageBy);
         }
@@ -200,10 +201,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
         session.enableFilter(FilterConstants.CANCELLED);
 
         String where = composeQuery(announceSearchDTO, "a");
-        Query query = session.createQuery("from AnnounceVO  as a " + where);
+        Query query = session.createQuery(" select a from AnnounceVO  as a join a.categories as c " + where);
         composeQueryParameters(announceSearchDTO, query);
         pageBy(query, pageBy);
-        return query.list();
+        List<AnnounceVO> result= query.list();
+
+
+        return result;
     }
 
     @Override
@@ -264,7 +268,11 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
         Date endDate = DateUtils.milliSecondToDate(adto.getEndDate());
 
         if (startDate == null || endDate == null) {
-            throw new Exception("Une des dates est invalide");
+            throw new Exception("Une des dates n'est pas valide");
+        }
+
+        if (weight == null ) {
+            throw new Exception("Quantité n'est pas valide, elle doit etre superieure a zero");
         }
 
         if (DateUtils.isAfter(startDate, endDate)) {
@@ -272,9 +280,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
         }
 
 
-        BigDecimal oldRemainWeight = announce.getRemainWeight();
+        BigDecimal oldRemainWeight = announce.getRemainWeight()==null?BigDecimal.ZERO:announce.getRemainWeight();
         BigDecimal oldWeight = announce.getWeight();
-        BigDecimal diffWeight = weight.subtract(oldWeight);
+        BigDecimal diffWeight = oldWeight!=null ?weight.subtract(oldWeight): weight;
         if (BigDecimalUtils.lessThan(weight, oldRemainWeight)) {
             throw new UnsupportedOperationException("La quantité de Kg ne peut etre inférieure à celle réservée");
         }
@@ -389,7 +397,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
 
         AnnounceSearchDTO announceSearch = (AnnounceSearchDTO) obj;
 
-        StringBuilder hql = new StringBuilder(" where ");
+        StringBuilder hql = new StringBuilder();
+
+        boolean joinCategory=StringUtils.isNotEmpty(announceSearch.getCategory());
+
+        hql.append(" where ");
+
+
         try {
             boolean andOrOr = announceSearch.isAnd();
             boolean addCondition = false;
@@ -397,13 +411,16 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
             if (StringUtils.isNotEmpty(announceSearch.getTransport())) {
                 hql.append(alias + ".transport=:transport ");
             }
-            addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+
+            addCondition = addCondition(hql.toString());
+
             if (StringUtils.isNotEmpty(announceSearch.getAnnounceType())) {
                 buildAndOr(hql, addCondition, andOrOr);
                 hql.append(alias + ".announceType=:announceType ");
             }
 
-            addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+            addCondition = addCondition(hql.toString());
+
             if (ObjectUtils.isCallable(announceSearch, "price")) {
                 BigDecimal price = announceSearch.getPrice();
                 //AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
@@ -412,44 +429,50 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
                     hql.append(" ( " + alias + ".goldPrice<=:goldPrice or " + alias + ".price<=:price or " + alias + ".preniumPrice<=:preniumPrice) ");
                 }
             }
-            addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+            addCondition = addCondition(hql.toString());
+
             if (ObjectUtils.isCallable(announceSearch, "startDate") && announceSearch.getStartDate() > 0) {
                 buildAndOr(hql, addCondition, andOrOr);
                 hql.append(alias + ".startDate=:startDate ");
             }
 
-            addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+            addCondition = addCondition(hql.toString());
+
             if (ObjectUtils.isCallable(announceSearch, "endDate") && announceSearch.getEndDate() > 0) {
                 buildAndOr(hql, addCondition, andOrOr);
                 hql.append(alias + ".endDate=:endDate ");
             }
 
-            addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+            addCondition = addCondition(hql.toString());
+
             if (StringUtils.isNotEmpty(announceSearch.getDeparture())) {
                 buildAndOr(hql, addCondition, andOrOr);
                 hql.append(alias + ".departure like:departure ");
             }
-            addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+            addCondition = addCondition(hql.toString());
+
             if (StringUtils.isNotEmpty(announceSearch.getArrival())) {
                 buildAndOr(hql, addCondition, andOrOr);
                 hql.append(alias + ".arrival like:arrival ");
             }
-            addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
-            if (StringUtils.isNotEmpty(announceSearch.getCategory())) {
+
+
+            addCondition = addCondition(hql.toString());
+            if (joinCategory) {
                 buildAndOr(hql, addCondition, andOrOr);
-                hql.append("c.code=:category ");
+                hql.append(" c.code =:category");
             }
-			/*addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			/*addCondition = addCondition(hql.toString());
 			if (ObjectUtils.isCallable(announceSearch,"userId")){
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(alias+".user.id=:userId ");
 			}
-			addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+			addCondition = addCondition(hql.toString());
 			if (StringUtils.isNotEmpty(announceSearch.getUser())) {
 				buildAndOr(hql, addCondition, andOrOr);
 				hql.append(" ( "+alias+".user.username like:user or "+alias+".user.email like:email) ");
 			}*/
-            addCondition = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
+            addCondition = addCondition(hql.toString());
             if (!addCondition) {
                 hql = new StringBuilder();
             }
@@ -526,6 +549,11 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
         }
     }
 
+
+    private boolean addCondition(String val){
+        return  StringUtils.isNotEmpty(val) && !StringUtils.equals(val, " where ");
+
+    }
 
     private void handleCategories(AnnounceVO announce, List<String> categories) throws Exception {
 
