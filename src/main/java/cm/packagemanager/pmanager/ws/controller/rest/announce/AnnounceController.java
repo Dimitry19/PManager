@@ -375,7 +375,7 @@ public class AnnounceController extends CommonController {
             AnnounceVO announce = null;
             if (id != null) {
                 announce = announceService.announce(id);
-                if (announce == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+                if (announce == null) return new ResponseEntity<>((AnnounceVO) null, HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(announce, HttpStatus.OK);
         } catch (UserException e) {

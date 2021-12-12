@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 @Controller
@@ -19,11 +20,11 @@ public class DefaultController {
 	private static final Logger logger = LoggerFactory.getLogger(DefaultController.class);
 
    @RequestMapping (value = "/", method = RequestMethod.GET)
-	public ResponseEntity<String> ping(HttpServletResponse response) {
+	public void ping(HttpServletResponse response) throws IOException {
 		logger.info("Démarrage des services OK .....");
-		response.setContentType("text/html");
-		return new ResponseEntity<String>("Réponse du serveur: "+HttpStatus.OK.name(), HttpStatus.OK);
-	   //return "public/index";
+		//response.setContentType("text/html");
+		//return new ResponseEntity<String>("Réponse du serveur: "+HttpStatus.OK.name(), HttpStatus.OK);
+	    response.sendRedirect("/pmanager/index.html");
 	}
 
 
