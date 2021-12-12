@@ -52,7 +52,7 @@ public class AnnounceController extends CommonController {
 
 
     /**
-     * Cette methode cree unae annonce
+     * Cette methode cree une annonce
      *
      * @param response
      * @param request

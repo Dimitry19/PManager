@@ -18,6 +18,15 @@
 		</Policies>
 		<DefaultRolloverStrategy max="1" />
 	</RollingFile>
+	<RollingFile name="hibernate"
+				 fileName="${APP_LOG_ROOT}/PackManager/application.log"
+				 filePattern="${APP_LOG_ROOT}/PackManager/application-hbn-%d{yyyy-MM-dd}-%i.log">
+		<PatternLayout pattern="${LOG_PATTERN}" />
+		<Policies>
+			<SizeBasedTriggeringPolicy size="1MB" />
+		</Policies>
+		<DefaultRolloverStrategy max="1" />
+	</RollingFile>
     <RollingFile name="error"
                  fileName="${APP_LOG_ROOT}/PackManager/application-error.log"
                  filePattern="${APP_LOG_ROOT}/PackManager/application-error-%d{yyyy-MM-dd}-%i.log">
@@ -35,5 +44,9 @@
 		<AppenderRef ref="file" 	level="info"/>
         <AppenderRef ref="error"  	level="error"/>
     </Root>
+	<logger name="org.hibernate.SQL" level="trace" additivity="false">
+		<appender-ref ref="hibernate" />
+	</logger>
+
 </Loggers>
 </Configuration>
