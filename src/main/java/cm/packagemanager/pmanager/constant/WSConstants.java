@@ -110,4 +110,5 @@ public class WSConstants {
 
     /******** IMG REQUEST ********/
     public static final String IMG_WS = "/ws/image/*";
+
 }

@@ -24,7 +24,7 @@ public class DefaultController {
 		logger.info("Démarrage des services OK .....");
 		//response.setContentType("text/html");
 		//return new ResponseEntity<String>("Réponse du serveur: "+HttpStatus.OK.name(), HttpStatus.OK);
-	   response.sendRedirect("/pmanager/index.html");
+	    response.sendRedirect("/pmanager/index.html");
 	}
 
 

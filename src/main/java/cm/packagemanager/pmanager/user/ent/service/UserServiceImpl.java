@@ -39,6 +39,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static cm.packagemanager.pmanager.common.event.IEvent.*;
+
 
 /*
 Le fait d’avoir des singletons a un impact en environnement multi-threadé
@@ -103,6 +105,14 @@ public class UserServiceImpl implements UserService {
 
         UserVO user = checkLoginAdmin(lr);
         if (user != null) {
+
+            // TODO  à effacer et eliminer l'implementation de IEvent
+            props.put(PROP_ID,user.getId());
+            props.put(PROP_MSG,"l'utilisateur "+user.getFirstName() +" a été ajournée ");
+            props.put(PROP_USR_ID, user.getId());
+            props.put(PROP_USR_NAME, user.getUsername());
+
+            userDAO.generateEvent();
             return user;
         }
 
@@ -150,6 +160,7 @@ public class UserServiceImpl implements UserService {
                     found.set(true);
                 }
             });
+
             return found.get() ? admin : null;
         }
 
@@ -361,6 +372,7 @@ public class UserServiceImpl implements UserService {
     private List<RatingCountVO> findRatingCounts(UserVO user) {
         return userDAO.findRatingCounts(user);
     }
+
 
     private static class ReviewsSummaryBOImpl implements ReviewsSummaryBO {
 

@@ -12,6 +12,7 @@ import java.util.Date;
 public abstract class Event {
 
     protected Long userId;
+    protected String username;
     protected Date date;
     protected Object object;
     protected NotificationType type;
@@ -51,5 +52,13 @@ public abstract class Event {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -456,4 +456,8 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         return query.getResultList();
     }
 
+    @Override
+    public void generateEvent() {
+
+    }
 }

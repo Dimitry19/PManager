@@ -3,15 +3,20 @@ package cm.packagemanager.pmanager.user.ent.dao;
 import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
+import cm.packagemanager.pmanager.common.event.IEvent;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
+import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import cm.packagemanager.pmanager.user.event.UserEvent;
 import cm.packagemanager.pmanager.ws.requests.users.*;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.hibernate.Session;
@@ -27,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,6 +46,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Autowired
     RoleDAO roleDAO;
+
+    @Autowired
+    NotificatorServiceImpl notificatorServiceImpl;
 
 
     public UserDAOImpl() {
@@ -56,12 +65,18 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public UserVO login(String username, String password) {
+    public UserVO login(String username, String password) throws Exception {
 		/*Optional optional=internalLogin(username,password);
 		if (optional==null) return null;
 		return  (UserVO) optional.get();*/
         logger.info("User: login");
-        return internalLogin(username, password);
+
+        UserVO user=internalLogin(username, password);
+
+        fillProps(props,user.getId(),"l'utilisateur "+user.getFirstName() +" a été ajournée ", user.getId(), user.getUsername());
+        generateEvent();
+
+        return user;
     }
 
     @Override
@@ -519,9 +534,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
             logger.error("Erreur : mots de passe inexacts {}-{}:", decryptedPassword, oldPassword);
             throw new UserException("Le mot de passe ne correspond pas: veuillez contrôler l'ancien mot de passe");
         }
-        Session session = sessionFactory.getCurrentSession();
+
         user.setPassword(PasswordGenerator.encrypt(newPassword));
-        session.merge(user);
+        merge(user);
         return true;
     }
 
@@ -608,6 +623,17 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public void composeQueryParameters(Object o, Query query) {
+
+    }
+
+    @Override
+    public void generateEvent() {
+        UserEvent event = new UserEvent(DateUtils.DateToSQLDate(new Date()), NotificationType.USER);
+        event.setId((Long) props.get(PROP_ID));
+        event.setMessage((String) props.get(PROP_MSG));
+        event.setUserId((Long) props.get(PROP_USR_ID));
+        event.setUsername((String) props.get(PROP_USR_NAME));
+        notificatorServiceImpl.addEvent(event);
 
     }
 }

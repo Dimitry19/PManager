@@ -45,7 +45,7 @@ public class NotificationServiceImpl implements NotificationService {
         return;
     }
 
-    @Scheduled(fixedDelay = 2000)
+    //@Scheduled(fixedDelay = 2000)
     @Override
     public void dispatch() {
         for (String listener : listeners) {
@@ -100,6 +100,11 @@ public class NotificationServiceImpl implements NotificationService {
         if (StringUtils.isNotEmpty(sessionId)) {
             listeners.add(sessionId);
         }
+    }
+
+    @Override
+    public void addAll(String sessionId) {
+
     }
 
 

@@ -15,7 +15,6 @@ public class AnnounceEvent extends Event {
     private Long id;
     private String message;
 
-
     public AnnounceEvent(Date date, NotificationType type) {
         super(date, type);
     }

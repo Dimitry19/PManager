@@ -1,4 +1,4 @@
--- AJOURNE LE 26/11/2021
+-- AJOURNE LE 12/12/2021
 
 --Sequeunces batch
 --create sequence HIBERNATE_SEQUENCE;
@@ -133,11 +133,11 @@ create table NOTIFICATION
     DATECREATED   TIMESTAMP(26, 6),
     LASTUPDATED   TIMESTAMP(26, 6),
     R_ANNOUNCE_ID BIGINT,
-    MESSAGE       VARCHAR(10)  not null,
+    MESSAGE       VARCHAR(255)  not null,
     R_USER_ID     BIGINT,
-    SESSION_ID    VARCHAR(255) not null,
+    SESSION_ID    VARCHAR(255),
     STATUS        VARCHAR(10)  not null,
-    TITLE         VARCHAR(10)  not null,
+    TITLE         VARCHAR(60)  not null,
     TYPE          VARCHAR(10)  not null,
     USER_ID       BIGINT       not null
 );

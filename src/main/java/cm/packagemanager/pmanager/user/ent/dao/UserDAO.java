@@ -32,7 +32,7 @@ public interface UserDAO extends CommonDAO {
 
     int count(PageBy pageBy) throws BusinessResourceException;
 
-    UserVO login(String username, String password) throws UserException;
+    UserVO login(String username, String password) throws Exception;
 
     void subscribe(SubscribeDTO subscribe) throws UserException;
 

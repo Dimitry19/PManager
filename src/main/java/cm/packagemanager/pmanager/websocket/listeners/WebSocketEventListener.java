@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.websocket.listeners;
 
 import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,8 @@ public class WebSocketEventListener {
             logger.info(" Connection by user <{}> with sessionId <{}>", user, sessionId);
 
             notificationService.addConnectedUser(user, sessionId);
+            notificationService.addAll(sessionId);
+
 
 
             //TODO
@@ -57,6 +60,7 @@ public class WebSocketEventListener {
         StompHeaderAccessor stompAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String sessionId = stompAccessor.getSessionId();
         logger.info("Chat connection by user <{}> with sessionId <{}>", "Nop", sessionId);
+        notificationService.remove(sessionId);
         notificationService.removeConnectedUser(sessionId);
 
 

@@ -26,15 +26,15 @@ public class NotificationVO extends CommonVO {
     private NotificationType type;
 
     @Basic(optional = false)
-    @Column(name = "MESSAGE", nullable = false, length = FieldConstants.MSG_LEN)
+    @Column(name = "MESSAGE", nullable = false, length = FieldConstants.DESC)
     private String message;
 
     @Basic(optional = false)
-    @Column(name = "TITLE", nullable = false, length = FieldConstants.ENUM_LEN)
+    @Column(name = "TITLE", nullable = false, length = 60)
     private String title;
 
-    @Basic(optional = false)
-    @Column(name = "SESSION_ID", nullable = false)
+    @Basic(optional = true)
+    @Column(name = "SESSION_ID")
     private String sessionId;
 
     @Basic(optional = false)
@@ -48,10 +48,12 @@ public class NotificationVO extends CommonVO {
     private Long announceId;
 
     @Basic(optional = false)
-
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS", length = FieldConstants.ENUM_LEN)
     private StatusEnum status;
+
+    @Transient
+    private String username;
 
     public Long getId() {
         return id;
@@ -123,5 +125,13 @@ public class NotificationVO extends CommonVO {
 
     public void setRuserId(Long ruserId) {
         this.ruserId = ruserId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

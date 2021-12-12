@@ -28,6 +28,7 @@ public interface NotificationService {
     void sendToUser(String sessionId, long id, String email, String username, Notification notification);
 
     void add(String sessionId, NotificationType notificationType);
+    void addAll(String sessionId);
 
     void remove(String id);
 

@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.common.ent.dao;
 
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.event.IEvent;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public interface GenericDAO<T, ID extends Serializable, NID extends Serializable> {
+public interface GenericDAO<T, ID extends Serializable, NID extends Serializable>  extends IEvent {
 
     Optional<T> find(Class<T> clazz, ID id);
 

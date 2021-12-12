@@ -18,7 +18,6 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
-import cm.packagemanager.pmanager.common.event.IEvent;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
@@ -45,7 +44,7 @@ import java.util.*;
 
 
 @Repository
-public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
+public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     private static Logger logger = LoggerFactory.getLogger(AnnounceDAOImpl.class);
 
@@ -189,6 +188,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
         //announce.getUserInfo().setRating(rating);
         setAnnounce(announce, user, adto);
         update(announce);
+
+        fillProps(props,announce.getId(),"l'annonce "+announce.getDescription() +" a été ajournée ", user.getId(), user.getUsername());
+        generateEvent();
         return announce;
 
     }
@@ -581,12 +583,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
 
 
     @Override
-    public void generateEvent(Map props) {
+    public void generateEvent() {
         AnnounceEvent event = new AnnounceEvent(DateUtils.DateToSQLDate(new Date()), NotificationType.ANNOUNCE);
-        event.setId((Long) props.get("id"));
-        event.setMessage((String) props.get("message"));
-        event.setUserId((Long) props.get("user"));
-
+        event.setId((Long) props.get(PROP_ID));
+        event.setMessage((String) props.get(PROP_MSG));
+        event.setUserId((Long) props.get(PROP_USR_ID));
+        event.setUsername((String) props.get(PROP_USR_NAME));
         notificatorServiceImpl.addEvent(event);
     }
 }
