@@ -280,9 +280,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO, IEvent {
         }
 
 
-        BigDecimal oldRemainWeight = announce.getRemainWeight()==null?BigDecimal.ZERO:announce.getRemainWeight();
+        BigDecimal oldRemainWeight = announce.getRemainWeight()==null ? BigDecimal.ZERO:announce.getRemainWeight();
         BigDecimal oldWeight = announce.getWeight();
-        BigDecimal diffWeight = oldWeight!=null ?weight.subtract(oldWeight): weight;
+        BigDecimal diffWeight = oldWeight!=null ? weight.subtract(oldWeight): weight;
+
         if (BigDecimalUtils.lessThan(weight, oldRemainWeight)) {
             throw new UnsupportedOperationException("La quantité de Kg ne peut etre inférieure à celle réservée");
         }

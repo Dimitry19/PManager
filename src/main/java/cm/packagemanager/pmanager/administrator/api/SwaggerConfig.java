@@ -52,6 +52,9 @@ public class SwaggerConfig {
     @Value("${swagger.api.groupname.communication}")
     private String apiGroupNameCommunication;
 
+    @Value("${swagger.api.groupname.websocket}")
+    private String apiGroupNameWebsocket;
+
 /*	@Bean
 	public Docket pmanagerRestApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -112,12 +115,17 @@ public class SwaggerConfig {
     }
 
     @Bean
+    public Docket websocketApi() {
+        return createDocket(apiGroupNameWebsocket, "/pmanager/ws/socket/notification.*");
+    }
+
+    @Bean
     public Docket dashBoardCommunicationApi() {
         return createDocket(apiGroupNameCommunication, "/pmanager/ws/dashboard/communication.*");
     }
 
     private ApiInfo metaData() {
-        Contact contact = new Contact("Dimitri S.", "", "packagemanager@gmail.com");
+        Contact contact = new Contact("Dimitri S. / Ludovic N.", "", "packagemanager@gmail.com");
 
         return new ApiInfoBuilder().title("Tr@vel Post REST API")
                 .description("Tr@vel Post REST API reference for developers")
