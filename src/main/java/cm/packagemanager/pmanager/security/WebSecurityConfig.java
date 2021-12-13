@@ -34,6 +34,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         logger.info("into configure");
         http.csrf().disable();
         http.httpBasic().disable();
+        
+       /* Gestion probleme Cors de la websocket
+       http.cors().and().headers().frameOptions().disable()
+                .and().csrf().disable().authorizeRequests().antMatchers("/notifications").permitAll().anyRequest()
+                    .authenticated();*/
 
         // All requests send to the Web Server request must be authenticated
         //http.antMatcher("/sv/**").authorizeRequests().anyRequest().authenticated();
