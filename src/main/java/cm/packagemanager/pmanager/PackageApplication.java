@@ -29,7 +29,7 @@ import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 //@EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = "cm.packagemanager.pmanager")
-public class PackageApplication extends SpringBootServletInitializer {
+public class PackageApplication extends SpringBootServletInitializer implements CommandLineRunner{
 
     private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);
     
@@ -47,6 +47,11 @@ public class PackageApplication extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(PackageApplication.class);
     }
+	
+	@Override
+	public void run(String... args) throws Exception {
+		websocketDemo();
+	}
     
    @Bean
 	public CommandLineRunner websocketDemo() {
