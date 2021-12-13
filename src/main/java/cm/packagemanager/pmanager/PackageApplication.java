@@ -14,6 +14,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
+import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.*;
 
 
 /*
@@ -30,7 +32,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class PackageApplication extends SpringBootServletInitializer {
 
     private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);
-
+    
+    @Autowired
+	private SimpMessageSendingOperations messagingTemplate;
 
     public static void main(String[] args) {
 
@@ -38,10 +42,32 @@ public class PackageApplication extends SpringBootServletInitializer {
         application.run(args);
     }
 
-    // Pour deployer dans tomcat extene
+    // Pour deployer dans tomcat externe
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(PackageApplication.class);
     }
+    
+   @Bean
+	public CommandLineRunner websocketDemo() {
+		return (args) -> {
+			while (true) {
+				try {
+					Thread.sleep(3*1000); // Each 3 sec.
+					Notification notification = new Notification("Test Notification", "Bonjour Ludo", null, null);
+                    notification.setTopic(SUSCRIBE_QUEUE_ANNOUNCE_SEND);
+          			messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
+					 
+					notification.setTopic(SUSCRIBE_QUEUE_COMMENT_SEND);
+          			messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
+					
+					notification.setTopic(SUSCRIBE_QUEUE_USER_SEND);
+          			messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+	}
 
 }
