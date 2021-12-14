@@ -105,7 +105,7 @@ public class NotificatorServiceImpl implements NotificationService {
                         notif.setTopic(SUSCRIBE_QUEUE_ANNOUNCE_SEND);
                         logger.info(" notification  {}", notif.getMessage());
                         logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
-                        messagingTemplate.convertAndSendToUser(sessionId, notif.getTopic(), notif, headerAccessor.getMessageHeaders());
+                        messagingTemplate.convertAndSend(notif.getTopic(), notif, headerAccessor.getMessageHeaders());
 
                     });
 
@@ -120,7 +120,8 @@ public class NotificatorServiceImpl implements NotificationService {
                         notif.setTopic(SUSCRIBE_QUEUE_COMMENT_SEND);
                         logger.info(" notification  {}", notif.getMessage());
                         logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
-                        messagingTemplate.convertAndSendToUser(sessionId, notif.getTopic(), notif, headerAccessor.getMessageHeaders());
+                        messagingTemplate.convertAndSend(
+                                 notif.getTopic(), notif, headerAccessor.getMessageHeaders());
 
                     });
                     break;
@@ -135,7 +136,7 @@ public class NotificatorServiceImpl implements NotificationService {
 
                         logger.info(" notification  {}", notification.getMessage());
                         logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
-                        messagingTemplate.convertAndSendToUser(sessionId, notif.getTopic(), notif, headerAccessor.getMessageHeaders());
+                        messagingTemplate.convertAndSend( notif.getTopic(), notif, headerAccessor.getMessageHeaders());
 
                     });
 
@@ -143,7 +144,7 @@ public class NotificatorServiceImpl implements NotificationService {
             }
 
         }
-        notifications.remove(notification);
+        //notifications.remove(notification);
     }
 
     @Async

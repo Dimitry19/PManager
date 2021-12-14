@@ -56,7 +56,7 @@ public class PackageApplication extends SpringBootServletInitializer implements 
 	
 	@Override
 	public void run(String... args) throws Exception {
-		websocketDemo();
+		//websocketDemo();
 	}
     
    @Bean
@@ -67,13 +67,13 @@ public class PackageApplication extends SpringBootServletInitializer implements 
 					Thread.sleep(3*1000); // Each 3 sec.
 					Notification notification = new Notification("Test Notification", "Bonjour Ludo", null, null);
                     notification.setTopic(SUSCRIBE_QUEUE_ANNOUNCE_SEND);
-          			messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
+          			//messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
 					 
 					notification.setTopic(SUSCRIBE_QUEUE_COMMENT_SEND);
-          			messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
+          			//messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
 					
 					notification.setTopic(SUSCRIBE_QUEUE_USER_SEND);
-          			messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
+          			//messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

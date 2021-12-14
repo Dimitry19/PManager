@@ -744,7 +744,7 @@ public class UserController extends CommonController {
 
     @RequestMapping(value = USER_WS_LOGOUT, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
     public @ResponseBody
-    ResponseEntity<Response> logout(HttpServletRequest request, HttpServletResponse response, @PathVariable("username") @Valid String username) throws IOException {
+    ResponseEntity<Response> logout(HttpServletRequest request, HttpServletResponse response, @RequestParam  @Valid String username) throws IOException {
         for (Cookie cookie : request.getCookies()) {
             if (cookie.getName().equalsIgnoreCase(username)) {
                 cookie.setValue(null);

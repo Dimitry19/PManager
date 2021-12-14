@@ -21,7 +21,7 @@ public class WSConstants {
     public static final String USER_WS_REGISTRATION = "/register";
     public static final String USER_WS_CONFIRMATION = "/confirm";
     public static final String USER_WS_LOGIN = "/ulogin";
-    public static final String USER_WS_LOGOUT = "/logout/{username}";
+    public static final String USER_WS_LOGOUT = "/logout";
     public static final String USER_WS_USERS = "/users";
     public static final String USER_WS_USERS_PAGE_NO = "/users/{pageno}";
     public static final String USER_WS_MAIL = "/mail";

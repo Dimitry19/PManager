@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.websocket.listeners;
 
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl;
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import org.slf4j.Logger;
@@ -41,12 +42,16 @@ public class WebSocketEventListener {
                 .get(SimpMessageHeaderAccessor.NATIVE_HEADERS);
 
         if (nativeHeaders != null) {
-            String user = nativeHeaders.get("user").get(0);
-            String sessionId = stompAccessor.getSessionId();
-            logger.info(" Connection by user <{}> with sessionId <{}>", user, sessionId);
+            if(CollectionsUtils.isNotEmpty(nativeHeaders.get("user"))){
+                String user = nativeHeaders.get("user").get(0);
+                String sessionId = stompAccessor.getSessionId();
+                logger.info(" Connection by user <{}> with sessionId <{}>", user, sessionId);
+                notificationService.addConnectedUser(user, sessionId);
+                notificationService.addAll(sessionId);
+            }
 
-            notificationService.addConnectedUser(user, sessionId);
-            notificationService.addAll(sessionId);
+
+
 
 
 
@@ -59,7 +64,7 @@ public class WebSocketEventListener {
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor stompAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String sessionId = stompAccessor.getSessionId();
-        logger.info("Chat connection by user <{}> with sessionId <{}>", "Nop", sessionId);
+        logger.info("Socket disconnection by user <{}> with sessionId <{}>", "Nop", sessionId);
         notificationService.remove(sessionId);
         notificationService.removeConnectedUser(sessionId);
 
