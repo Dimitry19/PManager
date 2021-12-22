@@ -90,6 +90,7 @@ public class WSConstants {
 
     /************ SOCKET NOTIFICATION REQUEST*************/
     public static final String SOCKET_NOTIFICATION_WS = "/ws/socket/notification/*";
+    public static final String SOCKET_NOTIFICATION_WS_BIS = "/swns/*";
     public static final String SUBSCRIPTIONS_SOCKET_WS = "/subcriptions-socket";
 
 

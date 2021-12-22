@@ -7,11 +7,13 @@ public class WebSocketConstants {
     public static final String SUSCRIBE_QUEUE_ITEM_SEND = "/notification/item";
     public static final String SUSCRIBE_QUEUE_COMMENT_SEND = "/notification/comment";
     public static final String SUSCRIBE_QUEUE_ANNOUNCE_SEND = "/notification/announce";
+    //public static final String SUSCRIBE_QUEUE_USER_SEND = "/notification/user";
     public static final String SUSCRIBE_QUEUE_USER_SEND = "/notification/user";
 
 
-    public static final String BROKER = "/notification";
-    public static final String PREFIX_DESTINATION_APP = "/pm-swns";
+    public static final String BROKER_NOTIF = "/notification";
+    public static final String BROKER_USER = "/user";
+    public static final String PREFIX_DESTINATION_APP = "/swns";
 
 
     public static final String NOTIFY_SEND = "/queue/notify";
