@@ -102,10 +102,10 @@ public class NotificatorServiceImpl implements NotificationService {
                         String sessionId = (String) v;
                         headerAccessor.setSessionId(sessionId);
 
-                        notif.setTopic(SUSCRIBE_QUEUE_ANNOUNCE_SEND);
+                        notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
                         logger.info(" notification  {}", notif.getMessage());
                         logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
-                        messagingTemplate.convertAndSend(notif.getTopic(), notif, headerAccessor.getMessageHeaders());
+                        messagingTemplate.convertAndSendToUser(sessionId,notif.getTopic(), notif, headerAccessor.getMessageHeaders());
 
                     });
 
@@ -117,10 +117,10 @@ public class NotificatorServiceImpl implements NotificationService {
                         String sessionId = (String) v;
                         headerAccessor.setSessionId(sessionId);
 
-                        notif.setTopic(SUSCRIBE_QUEUE_COMMENT_SEND);
+                        notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
                         logger.info(" notification  {}", notif.getMessage());
                         logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
-                        messagingTemplate.convertAndSend(
+                        messagingTemplate.convertAndSendToUser(sessionId,
                                  notif.getTopic(), notif, headerAccessor.getMessageHeaders());
 
                     });
@@ -132,11 +132,11 @@ public class NotificatorServiceImpl implements NotificationService {
                         String sessionId = (String) v;
                         headerAccessor.setSessionId(sessionId);
 
-                        notif.setTopic(SUSCRIBE_QUEUE_USER_SEND);
+                        notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
 
                         logger.info(" notification  {}", notification.getMessage());
                         logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
-                        messagingTemplate.convertAndSend( notif.getTopic(), notif, headerAccessor.getMessageHeaders());
+                        messagingTemplate.convertAndSendToUser( sessionId,notif.getTopic(), notif, headerAccessor.getMessageHeaders());
 
                     });
 
@@ -152,6 +152,7 @@ public class NotificatorServiceImpl implements NotificationService {
     public void doNotify() throws IOException {
         logger.info(" doNotify");
 
+        notifyUser();
         List<Event> deadEvents = new ArrayList<>();
         events.forEach(event -> {
             try {
@@ -183,7 +184,8 @@ public class NotificatorServiceImpl implements NotificationService {
                 break;
 
             case USER:
-                userListeners.put(sessionUserMap.get(sessionId), sessionId);
+                //userListeners.put(sessionUserMap.get(sessionId), sessionId);
+                userListeners.put(sessionId, sessionId);
                 break;
         }
         /*if (StringUtils.isNotEmpty(sessionId)){
@@ -286,6 +288,27 @@ public class NotificatorServiceImpl implements NotificationService {
         commentListeners.remove(userId);
         announceListeners.remove(userId);
         userListeners.remove(userId);
+
+    }
+
+
+    void notifyUser(){
+        SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
+        headerAccessor.setLeaveMutable(true);
+        userListeners.forEach((k, v) -> {
+
+
+            String sessionId = (String) v;
+            headerAccessor.setSessionId(sessionId);
+
+            Notification notif = new Notification("Title", "message", SUSCRIBE_QUEUE_ITEM_SEND, null);
+
+            notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
+            logger.info(" notification  {}", notif.getMessage());
+            logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
+            messagingTemplate.convertAndSendToUser(sessionId,notif.getTopic(), notif, headerAccessor.getMessageHeaders());
+
+        });
 
     }
 }

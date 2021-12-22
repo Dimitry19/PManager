@@ -31,14 +31,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker(BROKER);
+        registry.enableSimpleBroker(BROKER_NOTIF);
         registry.setApplicationDestinationPrefixes(WebSocketConstants.PREFIX_DESTINATION_APP);
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint(WebSocketConstants.END_POINT)
-                .setAllowedOrigins(WebSocketConstants.ORIGIN_ALL)
+                .setAllowedOrigins("http://localhost:4200", "http://127.0.0.1:4200")
                 .withSockJS();
     }
 
@@ -47,13 +47,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
      * http://host:port/{path-to-sockjs-endpoint}/{server-id}/{session-id}/{transport}
      */
 
-    @Bean
+   /* @Bean
     public WebSocketContainerFactoryBean createWebSocketContainer() {
         WebSocketContainerFactoryBean container = new WebSocketContainerFactoryBean();
         container.setMaxTextMessageBufferSize(8192);
         container.setMaxBinaryMessageBufferSize(8192);
         return container;
     }
+    */
 
     @Bean
     public CrossDomainFilter corsFilter() throws Exception {

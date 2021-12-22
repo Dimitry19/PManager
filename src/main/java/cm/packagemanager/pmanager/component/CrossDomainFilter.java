@@ -26,7 +26,7 @@ public class CrossDomainFilter extends OncePerRequestFilter {
         String origin = httpServletRequest.getHeader(ORIGIN);
 
         logger.info("Cross Domain origin : {}",origin);
-        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*"); //toutes les URI sont autorisées
+       // httpServletResponse.addHeader("Access-Control-Allow-Origin", "*"); //toutes les URI sont autorisées
         httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST,PUT,DELETE,OPTIONS");
         httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
         httpServletResponse.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, x-req,token,content-type, authorization");
