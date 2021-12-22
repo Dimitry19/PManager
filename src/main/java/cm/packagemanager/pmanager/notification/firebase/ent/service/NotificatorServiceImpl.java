@@ -134,7 +134,6 @@ public class NotificatorServiceImpl implements NotificationService {
     public void doNotify() throws IOException {
         logger.info(" doNotify");
 
-        notifyUser();
         List<Event> deadEvents = new ArrayList<>();
         events.forEach(event -> {
             try {
