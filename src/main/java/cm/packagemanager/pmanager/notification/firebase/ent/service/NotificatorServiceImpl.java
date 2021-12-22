@@ -102,7 +102,7 @@ public class NotificatorServiceImpl implements NotificationService {
                         String sessionId = (String) v;
                         headerAccessor.setSessionId(sessionId);
 
-                        notif.setTopic(SUSCRIBE_QUEUE_ANNOUNCE_SEND);
+                        notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
                         logger.info(" notification  {}", notif.getMessage());
                         logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
                         messagingTemplate.convertAndSendToUser(sessionId,notif.getTopic(), notif, headerAccessor.getMessageHeaders());
@@ -117,7 +117,7 @@ public class NotificatorServiceImpl implements NotificationService {
                         String sessionId = (String) v;
                         headerAccessor.setSessionId(sessionId);
 
-                        notif.setTopic(SUSCRIBE_QUEUE_COMMENT_SEND);
+                        notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
                         logger.info(" notification  {}", notif.getMessage());
                         logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
                         messagingTemplate.convertAndSendToUser(sessionId,
@@ -132,7 +132,7 @@ public class NotificatorServiceImpl implements NotificationService {
                         String sessionId = (String) v;
                         headerAccessor.setSessionId(sessionId);
 
-                        notif.setTopic(SUSCRIBE_QUEUE_USER_SEND);
+                        notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
 
                         logger.info(" notification  {}", notification.getMessage());
                         logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());

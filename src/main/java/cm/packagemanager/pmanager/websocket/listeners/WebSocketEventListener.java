@@ -50,11 +50,6 @@ public class WebSocketEventListener {
                 notificationService.addAll(sessionId);
             }
 
-
-
-
-
-
             //TODO
 
         }
