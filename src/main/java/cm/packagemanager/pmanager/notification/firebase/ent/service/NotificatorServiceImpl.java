@@ -27,7 +27,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.*;
 
@@ -89,59 +91,39 @@ public class NotificatorServiceImpl implements NotificationService {
             return;
         }
 
-        if (notification.getStatus().equals(StatusEnum.VALID)) {
+        if (notification.getStatus().equals(StatusEnum.VALID) ||  notification.getStatus().equals(StatusEnum.TO_DELIV)) {
 
             Notification notif = new Notification(notification.getTitle(), notification.getMessage(), null, null);
 
+            Map listeners= new HashMap();
 
             switch (notification.getType()) {
                 case ANNOUNCE:
-
-                    announceListeners.forEach((k, v) -> {
-
-                        String sessionId = (String) v;
-                        headerAccessor.setSessionId(sessionId);
-
-                        notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
-                        logger.info(" notification  {}", notif.getMessage());
-                        logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
-                        messagingTemplate.convertAndSendToUser(sessionId,notif.getTopic(), notif, headerAccessor.getMessageHeaders());
-
-                    });
+                    listeners= announceListeners;
 
                     break;
                 case COMMENT:
 
-                    commentListeners.forEach((k, v) -> {
-
-                        String sessionId = (String) v;
-                        headerAccessor.setSessionId(sessionId);
-
-                        notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
-                        logger.info(" notification  {}", notif.getMessage());
-                        logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
-                        messagingTemplate.convertAndSendToUser(sessionId,
-                                 notif.getTopic(), notif, headerAccessor.getMessageHeaders());
-
-                    });
+                    listeners=  commentListeners;
                     break;
 
                 case USER:
-                    userListeners.forEach((k, v) -> {
-
-                        String sessionId = (String) v;
-                        headerAccessor.setSessionId(sessionId);
-
-                        notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
-
-                        logger.info(" notification  {}", notification.getMessage());
-                        logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
-                        messagingTemplate.convertAndSendToUser( sessionId,notif.getTopic(), notif, headerAccessor.getMessageHeaders());
-
-                    });
+                    listeners= userListeners;
 
                     break;
+
             }
+            listeners.forEach((k, v) -> {
+
+                String sessionId = (String) v;
+                headerAccessor.setSessionId(sessionId);
+
+                notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
+                logger.info(" notification  {}", notif.getMessage());
+                logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
+                messagingTemplate.convertAndSendToUser(sessionId,notif.getTopic(), notif, headerAccessor.getMessageHeaders());
+
+            });
 
         }
         //notifications.remove(notification);
@@ -152,7 +134,6 @@ public class NotificatorServiceImpl implements NotificationService {
     public void doNotify() throws IOException {
         logger.info(" doNotify");
 
-        notifyUser();
         List<Event> deadEvents = new ArrayList<>();
         events.forEach(event -> {
             try {
