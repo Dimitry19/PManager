@@ -71,6 +71,9 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     T merge(T t) throws BusinessResourceException;
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    T get(Class<T> clazz, ID naturalId) throws BusinessResourceException;
+
     void pageBy(org.hibernate.query.Query query, PageBy pageBy);
 
     double calcolateAverage(T t) throws Exception;

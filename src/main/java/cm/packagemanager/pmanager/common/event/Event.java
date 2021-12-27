@@ -8,6 +8,8 @@ package cm.packagemanager.pmanager.common.event;
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 public abstract class Event {
 
@@ -16,6 +18,7 @@ public abstract class Event {
     protected Date date;
     protected Object object;
     protected NotificationType type;
+    protected Set users;
 
     public Event(Date date, NotificationType type) {
         this.date = date;
@@ -34,8 +37,12 @@ public abstract class Event {
         return object;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getUserId() {  return userId;   }
+
+    public Set getUsers() {  return users;  }
+
+    public void setUsers(Set users) {
+        this.users = users;
     }
 
     public void setDate(Date date) {

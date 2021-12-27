@@ -73,9 +73,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         UserVO user=internalLogin(username, password);
 
-        fillProps(props,user.getId(),"l'utilisateur "+user.getFirstName() +" a été ajournée ", user.getId(), user.getUsername());
-        generateEvent();
-
         return user;
     }
 
@@ -89,9 +86,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             subscriber.addSubscription(subscription);
             subscription.addSubscriber(subscriber);
 
-            Session session = sessionFactory.getCurrentSession();
-            session.update(subscriber);
-            session.update(subscription);
+            update(subscriber);
+            update(subscription);
         } else throw new UserException("Une erreur survenue pendant l'abonnement, veuillez reessayer");
     }
 
@@ -106,9 +102,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             subscriber.removeSubscription(subscription);
             subscription.removeSubscriber(subscriber);
 
-            Session session = sessionFactory.getCurrentSession();
-            session.update(subscriber);
-            session.update(subscription);
+            update(subscriber);
+            update(subscription);
         } else throw new UserException("Une erreur survenue pendant la desinscription, veuillez reessayer");
     }
 
@@ -506,12 +501,12 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         UserVO user = findById(userId);
         try {
-            Session session = sessionFactory.getCurrentSession();
+
             boolean precedent = user.isEnableNotification();
             if (user != null && precedent != enableNotification) {
                 user.setEnableNotification(enableNotification);
-                session.update(user);
-                return session.get(UserVO.class, userId);
+                update(user);
+                return (UserVO) get(UserVO.class, userId);
             }
         } catch (UserException e) {
             logger.error("Erreur durant la modification de la gestion des notifications");

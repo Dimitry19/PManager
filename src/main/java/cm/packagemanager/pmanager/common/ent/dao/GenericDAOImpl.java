@@ -416,6 +416,16 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         return null;
     }
 
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    public T get(Class<T> clazz, ID id) throws BusinessResourceException {
+
+        Session session = this.sessionFactory.getCurrentSession();
+
+        return session.get(clazz , id);
+    }
+
     @Override
     public void pageBy(Query query, PageBy pageBy) {
         if (pageBy != null) {

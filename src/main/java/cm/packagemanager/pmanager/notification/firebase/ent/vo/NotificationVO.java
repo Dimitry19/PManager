@@ -5,9 +5,12 @@ import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "NOTIFICATION", schema = "PUBLIC")
@@ -41,8 +44,9 @@ public class NotificationVO extends CommonVO {
     @Column(name = "USER_ID", nullable = false)
     private Long userId;
 
-    @Column(name = "R_USER_ID")
-    private Long ruserId;
+
+    @ManyToMany(mappedBy = "notifications", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private Set<UserVO> users = new HashSet();
 
     @Column(name = "R_ANNOUNCE_ID", nullable = true)
     private Long announceId;
@@ -119,13 +123,9 @@ public class NotificationVO extends CommonVO {
         this.sessionId = sessionId;
     }
 
-    public Long getRuserId() {
-        return ruserId;
-    }
+    public Set<UserVO> getUsers() {  return users;  }
 
-    public void setRuserId(Long ruserId) {
-        this.ruserId = ruserId;
-    }
+    public void setUsers(Set<UserVO> users) {   this.users = users;  }
 
     public String getUsername() {
         return username;

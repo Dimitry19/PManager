@@ -84,12 +84,10 @@ public class NotificatorServiceImpl implements NotificationService {
         headerAccessor.setLeaveMutable(true);
 
 
-        if (connectedUsers.get(notification.getUsername()) == null) {
-            notification.setStatus(StatusEnum.TO_DELIV);
-            notification.setSessionId((String) sessionUserMap.get(notification.getUsername()));
-            notificationsToPersist.add(notification);
-            return;
-        }
+
+        notification.setStatus(StatusEnum.TO_DELIV);
+        notification.setSessionId((String) sessionUserMap.get(notification.getUsername()));
+        notificationsToPersist.add(notification);
 
         if (notification.getStatus().equals(StatusEnum.VALID) ||  notification.getStatus().equals(StatusEnum.TO_DELIV)) {
 
@@ -126,7 +124,7 @@ public class NotificatorServiceImpl implements NotificationService {
             });
 
         }
-        //notifications.remove(notification);
+        notifications.remove(notification);
     }
 
     @Async
@@ -165,8 +163,8 @@ public class NotificatorServiceImpl implements NotificationService {
                 break;
 
             case USER:
-                //userListeners.put(sessionUserMap.get(sessionId), sessionId);
-                userListeners.put(sessionId, sessionId);
+                userListeners.put(sessionUserMap.get(sessionId), sessionId);
+               // userListeners.put(sessionId, sessionId);
                 break;
         }
         /*if (StringUtils.isNotEmpty(sessionId)){
@@ -223,13 +221,13 @@ public class NotificatorServiceImpl implements NotificationService {
 
             UserEvent evt = (UserEvent) event;
             notification.setUserId(evt.getId());
-            notification.setRuserId(event.getUserId());
             notification.setMessage(evt.getMessage());
             notification.setUsername(evt.getUsername());
 
         }
 
         if (notification != null) {
+            notification.setUsers(event.getUsers());
             notification.setStatus(StatusEnum.VALID);
             notification.setType(event.getType());
         }

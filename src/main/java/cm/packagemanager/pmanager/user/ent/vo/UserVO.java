@@ -8,13 +8,17 @@ import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
+import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.*;
 
+import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -165,6 +169,10 @@ public class UserVO extends CommonVO {
     @Column(name = "CONFIRM_TOKEN")
     private String confirmationToken;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private Set<NotificationVO> notifications = new HashSet();
+
+
     @Transient
     @JsonIgnore
     private String error;
@@ -256,6 +264,15 @@ public class UserVO extends CommonVO {
     public String getGoogleId() {
         return googleId;
     }
+
+    public Set<NotificationVO> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Set<NotificationVO> notifications) {
+        this.notifications = notifications;
+    }
+
 
     public void setGoogleId(String googleId) {
         this.googleId = googleId;
