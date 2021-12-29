@@ -45,7 +45,10 @@ public class NotificationVO extends CommonVO {
     private Long userId;
 
 
-    @ManyToMany(mappedBy = "notifications", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(name = "USER_NOTIFICATION", joinColumns = @JoinColumn(name = "NOTIFICATIONS_ID"),
+            inverseJoinColumns = @JoinColumn(name = "USERS_ID"))
     private Set<UserVO> users = new HashSet();
 
     @Column(name = "R_ANNOUNCE_ID", nullable = true)

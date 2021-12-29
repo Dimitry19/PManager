@@ -49,9 +49,6 @@ public class WebSocketEventListener {
                 notificationService.addConnectedUser(user, sessionId);
                 notificationService.addAll(sessionId);
             }
-
-            //TODO
-
         }
     }
 
@@ -62,9 +59,5 @@ public class WebSocketEventListener {
         logger.info("Socket disconnection by user <{}> with sessionId <{}>", "Nop", sessionId);
         notificationService.remove(sessionId);
         notificationService.removeConnectedUser(sessionId);
-
-
-        //TODO
-
     }
 }

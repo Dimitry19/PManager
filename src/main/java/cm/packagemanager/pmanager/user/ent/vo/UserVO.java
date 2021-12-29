@@ -169,7 +169,8 @@ public class UserVO extends CommonVO {
     @Column(name = "CONFIRM_TOKEN")
     private String confirmationToken;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "users",cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JsonBackReference
     private Set<NotificationVO> notifications = new HashSet();
 
 
@@ -495,6 +496,14 @@ public class UserVO extends CommonVO {
 
     public void removeSubscription(UserVO subscription) {
         this.subscriptions.remove(subscription);
+    }
+
+    public void addNotification(NotificationVO notification) {
+        this.notifications.add(notification);
+    }
+
+    public void removeNotification(NotificationVO notification) {
+        this.notifications.remove(notification);
     }
 
     public void removeSubscriptions() {

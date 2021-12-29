@@ -43,6 +43,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -606,7 +607,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         Set subscribers=new HashSet();
 
         if(CollectionsUtils.isNotEmpty(user.getSubscribers())){
-            subscribers.addAll(user.getSubscribers());
+            subscribers.addAll(user.getSubscribers().stream().filter(u->u.isEnableNotification()).collect(Collectors.toSet()));
         }
         List<ReservationVO> reservations=findReservations(announce.getId());
         if(CollectionsUtils.isNotEmpty(reservations)){
@@ -623,7 +624,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
         if (CollectionsUtils.isNotEmpty(subscribers)){
             fillProps(props,announce.getId(),message, user.getId(),subscribers);
-            generateEvent();
+            generateEvent( NotificationType.ANNOUNCE);
         }
 
     }

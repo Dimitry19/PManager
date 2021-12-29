@@ -8,9 +8,11 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.QueryUtils;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.messages.MessageDTO;
@@ -21,7 +23,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.text.MessageFormat;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class MessageDAOImpl extends Generic implements MessageDAO {
@@ -89,12 +94,16 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         Long id = queryUtils.calcolateId(MessageVO.GET_ID_SQL);
 
         MessageIdVO messageId = new MessageIdVO(id, announce.getAnnounceId().getToken());
-        MessageVO message = new MessageVO();
-        setMessage(announce, user, message, mdto);
-        message.setId(messageId);
-        announce.addMessage(message);
-        save(message);
-        return message;
+        MessageVO comment = new MessageVO();
+        setMessage(announce, user, comment, mdto);
+        comment.setId(messageId);
+        announce.addMessage(comment);
+        save(comment);
+
+        String message= MessageFormat.format(notificationMessagePattern,user.getUsername()," a commenté l'annonce ",announce.getDeparture() +"/"+announce.getArrival());
+
+        generateEvent(comment,message);
+        return comment;
 
     }
 
@@ -170,6 +179,30 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
 
     @Override
     public void composeQueryParameters(Object o, Query query) {
+
+    }
+
+    @Override
+    public void generateEvent(Object obj , String message) throws Exception {
+
+        MessageVO comment= (MessageVO) obj;
+        UserVO user= comment.getUser();
+        AnnounceVO announce=comment.getAnnounce();
+
+        Set subscribers=new HashSet();
+        subscribers.add(announce.getUser());
+
+        if(CollectionsUtils.isNotEmpty(announce.getMessages())) {
+            announce.getMessages().stream().filter(m->m.getUser()!=user && m.getUser().isEnableNotification()).forEach(m->{
+                subscribers.add(m.getUser());
+            });
+        }
+
+
+        if (CollectionsUtils.isNotEmpty(subscribers)){
+            fillProps(props,comment.getId().getId(),message, user.getId(),subscribers);
+            generateEvent( NotificationType.COMMENT);
+        }
 
     }
 }

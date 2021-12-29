@@ -3,20 +3,18 @@ package cm.packagemanager.pmanager.user.ent.dao;
 import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
-import cm.packagemanager.pmanager.common.event.IEvent;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
-import cm.packagemanager.pmanager.common.utils.DateUtils;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
-import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl;
+import cm.packagemanager.pmanager.notification.firebase.ent.dao.NotificationDAO;
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.user.event.UserEvent;
 import cm.packagemanager.pmanager.ws.requests.users.*;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import org.hibernate.Session;
@@ -31,10 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.text.MessageFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -46,9 +42,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Autowired
     RoleDAO roleDAO;
-
-    @Autowired
-    NotificatorServiceImpl notificatorServiceImpl;
 
 
     public UserDAOImpl() {
@@ -76,6 +69,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         return user;
     }
 
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public void subscribe(SubscribeDTO subscribe) throws UserException {
@@ -88,6 +82,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
             update(subscriber);
             update(subscription);
+            String message= MessageFormat.format(notificationMessagePattern,subscriber.getUsername()," s'est abonné "," à votre profil");
+            generateEvent(subscription,message);
         } else throw new UserException("Une erreur survenue pendant l'abonnement, veuillez reessayer");
     }
 
@@ -104,6 +100,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
             update(subscriber);
             update(subscription);
+
+            String message= MessageFormat.format(notificationMessagePattern,subscriber.getUsername()," s'est désabonné "," à votre profil");
+            generateEvent(subscription,message);
         } else throw new UserException("Une erreur survenue pendant la desinscription, veuillez reessayer");
     }
 
@@ -275,9 +274,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Transactional(propagation = Propagation.REQUIRED)
     public UserVO save(UserVO user) throws BusinessResourceException {
         logger.info("User: save");
-        Session session = this.sessionFactory.getCurrentSession();
         if (user != null) {
-            session.update(user);
+            update(user);
             return user;
         }
         return null;
@@ -286,10 +284,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessResourceException.class)
-    public void remove(UserVO user) throws BusinessResourceException {
-        Session session = this.sessionFactory.getCurrentSession();
+    public void removeUser(UserVO user) throws BusinessResourceException {
         if (user != null) {
-            session.remove(user);
+            remove(user);
         }
     }
 
@@ -369,11 +366,12 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         try {
             logger.info("User: find by id");
-            Session session = sessionFactory.getCurrentSession();
-            session.enableFilter(FilterConstants.ACTIVE_MBR);
-            session.enableFilter(FilterConstants.CANCELLED);
 
-            UserVO user = session.find(UserVO.class, id);
+            filters = new String[2];
+            filters[0] = FilterConstants.ACTIVE_MBR;
+            filters[1] = FilterConstants.CANCELLED;
+
+            UserVO user = (UserVO) find(UserVO.class, id,filters);
             //Hibernate.initialize(user.getMessages()); // on l'utilise quand la fetch avec message est lazy
             return user;
         } catch (Exception e) {
@@ -384,10 +382,11 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public UserVO login(String username) throws UserException {
-        Session session = this.sessionFactory.getCurrentSession();
-        session.enableFilter(FilterConstants.CANCELLED);
-        session.enableFilter(FilterConstants.ACTIVE_MBR);
-        return session.get(UserVO.class, username);
+
+        filters = new String[2];
+        filters[0] = FilterConstants.ACTIVE_MBR;
+        filters[1] = FilterConstants.CANCELLED;
+        return (UserVO) findById(UserVO.class, username,filters);
     }
 
     @Override
@@ -622,13 +621,25 @@ public class UserDAOImpl extends Generic implements UserDAO {
     }
 
     @Override
-    public void generateEvent() {
-        UserEvent event = new UserEvent(DateUtils.DateToSQLDate(new Date()), NotificationType.USER);
-        event.setId((Long) props.get(PROP_ID));
-        event.setMessage((String) props.get(PROP_MSG));
-        event.setUserId((Long) props.get(PROP_USR_ID));
-        event.setUsername((String) props.get(PROP_USR_NAME));
-        notificatorServiceImpl.addEvent(event);
+    public void generateEvent(Object obj , String message)  {
+
+        UserVO user= (UserVO) obj;
+        Set subscribers=new HashSet();
+
+        if(user.isEnableNotification()){
+            subscribers.add(user);
+        }
+
+        if (CollectionsUtils.isNotEmpty(subscribers)){
+            try {
+                fillProps(props,user.getId(),message, user.getId(),subscribers);
+                generateEvent( NotificationType.USER);
+            } catch (Exception e) {
+                logger.error("Erreur durant la generation de l'event {}",e);
+                e.printStackTrace();
+            }
+
+        }
 
     }
 }

@@ -18,11 +18,17 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     Optional<T> find(Class<T> clazz, ID id);
 
+    @Transactional
+    T find(Class<T> clazz, ID id, String... filters);
+
     Optional<T> findByIdViaSession(Class<T> clazz, ID id);
 
     int count(Class<T> clazz, PageBy pageBy);
 
     T findById(Class<T> clazz, ID id);
+
+    @Transactional
+    T findById(Class<T> clazz, ID id, String... filters);
 
     void delete(Class<T> clazz, ID id, boolean enableFlushSession) throws RecordNotFoundException;
 
@@ -67,6 +73,9 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     T update(T t) throws BusinessResourceException;
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    void remove(T t) throws BusinessResourceException;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     T merge(T t) throws BusinessResourceException;

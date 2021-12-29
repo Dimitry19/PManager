@@ -38,7 +38,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint(WebSocketConstants.END_POINT)
-                .setAllowedOrigins("http://localhost:4200", "http://127.0.0.1:4200")
+                //.setAllowedOrigins("http://localhost:4200", "http://127.0.0.1:4200")
+                .setAllowedOrigins("*")
                 .withSockJS();
     }
 
@@ -68,16 +69,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
             public Message<?> preSend(Message<?> message, MessageChannel channel) {
                 StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
-
-
                 if(StompCommand.CONNECT.equals(accessor.getCommand())){
-                    System.out.println("Connect ");
+                    //System.out.println("Connect ");
                 } else if(StompCommand.SUBSCRIBE.equals(accessor.getCommand())){
-                    System.out.println("Subscribe to :"+message);
+                    //System.out.println("Subscribe to :"+message);
                 } else if(StompCommand.SEND.equals(accessor.getCommand())){
-                    System.out.println("Send message " );
+                    //System.out.println("Send message " );
                 } else if(StompCommand.DISCONNECT.equals(accessor.getCommand())){
-                    System.out.println("Exit ");
+                    //System.out.println("Exit ");
                 } else {
                 }
                 return message;

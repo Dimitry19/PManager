@@ -152,7 +152,6 @@ public class UserServiceImpl implements UserService {
                     found.set(true);
                 }
             });
-
             return found.get() ? admin : null;
         }
 

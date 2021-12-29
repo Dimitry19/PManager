@@ -142,6 +142,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
             reservation.setDescription(reservationDTO.getDescription());
         }
         update(reservation);
+        String message= MessageFormat.format(notificationMessagePattern,user.getUsername()," a modifié une reservation sur votre annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        generateEvent(announce,message);
         return reservation;
     }
 
@@ -162,6 +164,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
         update(announce);
         //delete(ReservationVO.class,id,true);
+        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername()," a supprimé une reservation sur votre annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        generateEvent(announce,message);
         return updateDelete(reservation);
 
     }
@@ -288,7 +292,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
 
         if (CollectionsUtils.isNotEmpty(subscribers)){
             fillProps(props,announce.getId(),message, user.getId(),subscribers);
-            generateEvent();
+            generateEvent( NotificationType.ANNOUNCE);
         }
 
     }

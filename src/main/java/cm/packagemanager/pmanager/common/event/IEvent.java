@@ -10,6 +10,9 @@
 package cm.packagemanager.pmanager.common.event;
 
 
+import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +26,7 @@ public interface IEvent<T> {
 
     Map props=new HashMap();
 
-    void generateEvent();
+    void generateEvent(NotificationType type);
 
     void generateEvent(T clazz, String message) throws Exception;
 
