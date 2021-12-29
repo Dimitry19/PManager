@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public interface GenericDAO<T, ID extends Serializable, NID extends Serializable>  extends IEvent {
+public interface GenericDAO<T, ID extends Serializable, NID extends Serializable>  extends  IEvent {
 
     Optional<T> find(Class<T> clazz, ID id);
 

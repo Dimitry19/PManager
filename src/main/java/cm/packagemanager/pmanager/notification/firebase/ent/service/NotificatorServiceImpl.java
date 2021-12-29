@@ -71,9 +71,8 @@ public class NotificatorServiceImpl implements NotificationService {
             }
 
         });
-
-        //notifications.clear();
-        //persistNotification();
+        notifications.clear();
+        persistNotification();
     }
 
 
@@ -128,7 +127,7 @@ public class NotificatorServiceImpl implements NotificationService {
     }
 
     @Async
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 50000)
     public void doNotify() throws IOException {
         logger.info(" doNotify");
 
@@ -138,7 +137,7 @@ public class NotificatorServiceImpl implements NotificationService {
 
                 createNotification(event);
                 dispatch();
-               // deadEvents.add(event);
+                deadEvents.add(event);
 
             } catch (Exception e) {
                 deadEvents.add(event);
@@ -164,12 +163,8 @@ public class NotificatorServiceImpl implements NotificationService {
 
             case USER:
                 userListeners.put(sessionUserMap.get(sessionId), sessionId);
-               // userListeners.put(sessionId, sessionId);
                 break;
         }
-        /*if (StringUtils.isNotEmpty(sessionId)){
-            listeners.add(sessionId);
-        }*/
     }
 
     @Override

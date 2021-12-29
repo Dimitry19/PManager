@@ -1,19 +1,23 @@
 package cm.packagemanager.pmanager.announce.ent.dao;
 
 import cm.packagemanager.pmanager.announce.ent.vo.*;
+import cm.packagemanager.pmanager.announce.event.AnnounceEvent;
 import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
+import cm.packagemanager.pmanager.common.event.Event;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.BigDecimalUtils;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.FieldConstants;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -30,6 +34,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -104,6 +109,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         reservation.setValidate(ValidateEnum.INSERTED);
         reservation.setStatus(StatusEnum.VALID);
         save(reservation);
+        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername()," a fait une reservation sur votre annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        generateEvent(announce,message);
         return reservation;
     }
 
@@ -269,6 +276,23 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
 
     }
 
+
+    @Override
+    public void generateEvent(Object obj , String message) throws Exception {
+
+        AnnounceVO announce= (AnnounceVO) obj;
+        UserVO user= announce.getUser();
+
+        Set subscribers=new HashSet();
+        subscribers.add(user);
+
+        if (CollectionsUtils.isNotEmpty(subscribers)){
+            fillProps(props,announce.getId(),message, user.getId(),subscribers);
+            generateEvent();
+        }
+
+    }
+
     /**
      * Permet de controler dans le cas d'une reservation sur une annoncce du type BUYER
      * si l'utilisateur qui fait la reservation a une annonce de voyage de la destination souhaitée
@@ -332,4 +356,6 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
     private void fillCategories(CategoryVO category, Set<CategoryVO> categories) {
         categories.add(category);
     }
+
+
 }
