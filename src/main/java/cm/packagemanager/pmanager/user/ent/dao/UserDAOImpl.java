@@ -10,7 +10,6 @@ import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
-import cm.packagemanager.pmanager.notification.firebase.ent.dao.NotificationDAO;
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;

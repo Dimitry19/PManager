@@ -9,6 +9,8 @@ import cm.packagemanager.pmanager.announce.event.AnnounceEvent;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.event.Event;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
+import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
+import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.notification.firebase.ent.dao.NotificationDAO;
 import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
 import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationVO;
@@ -59,17 +61,27 @@ public class NotificatorServiceImpl implements NotificationSocketService {
     public void dispatch() {
 
         logger.info(" dispatch !");
+        try {
 
-        notifications.forEach(n -> {
 
-            try {
-                elaborate((NotificationVO) n);
+            List<NotificationVO> notifications=notificationDAO.all(NotificationVO.class);
 
-            } catch (Exception e) {
-                logger.error("Erreur durant l'elaboration de la notification {} {}", n, e);
-            }
-        });
-        persistNotification();
+            notifications.stream().filter(n->!n.getStatus().equals(StatusEnum.COMPLETED)).forEach(n -> {
+
+                try {
+
+                    elaborate(n);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            });
+
+        } catch (Exception e) {
+            logger.error("Erreur durant l'elaboration de la notification {}", e);
+        }
+
     }
 
 
@@ -78,8 +90,6 @@ public class NotificatorServiceImpl implements NotificationSocketService {
         logger.info(" elaborate  !");
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
         headerAccessor.setLeaveMutable(true);
-
-        notificationsToPersist.add(notification);
 
         if (notification.getStatus().equals(StatusEnum.VALID) ||  notification.getStatus().equals(StatusEnum.TO_DELIV)) {
 
@@ -130,6 +140,7 @@ public class NotificatorServiceImpl implements NotificationSocketService {
             try {
 
                 createNotification(event);
+                persistNotification();
                 dispatch();
                 deadEvents.add(event);
 
@@ -178,13 +189,12 @@ public class NotificatorServiceImpl implements NotificationSocketService {
     }
 
     private void persistNotification() {
-        notificationsToPersist.forEach(n -> {
+        notifications.forEach(n -> {
             NotificationVO notification =(NotificationVO)n;
             notification.getUsers().stream().forEach(u->{
 
                 u.addNotification(notification);
                 notification.getUsers().add(u);
-
 
             });
 
@@ -194,7 +204,7 @@ public class NotificatorServiceImpl implements NotificationSocketService {
                 e.printStackTrace();
             }
         });
-        notificationsToPersist.clear();
+
     }
 
     protected void createNotification(Event event) {
