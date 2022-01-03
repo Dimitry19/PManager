@@ -14,15 +14,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public interface GenericDAO<T, ID extends Serializable, NID extends Serializable>  extends IEvent {
+public interface GenericDAO<T, ID extends Serializable, NID extends Serializable>  extends  IEvent {
 
     Optional<T> find(Class<T> clazz, ID id);
+
+    @Transactional
+    T find(Class<T> clazz, ID id, String... filters);
 
     Optional<T> findByIdViaSession(Class<T> clazz, ID id);
 
     int count(Class<T> clazz, PageBy pageBy);
 
     T findById(Class<T> clazz, ID id);
+
+    @Transactional
+    T findById(Class<T> clazz, ID id, String... filters);
 
     void delete(Class<T> clazz, ID id, boolean enableFlushSession) throws RecordNotFoundException;
 
@@ -69,7 +75,13 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     T update(T t) throws BusinessResourceException;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    void remove(T t) throws BusinessResourceException;
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     T merge(T t) throws BusinessResourceException;
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    T get(Class<T> clazz, ID naturalId) throws BusinessResourceException;
 
     void pageBy(org.hibernate.query.Query query, PageBy pageBy);
 

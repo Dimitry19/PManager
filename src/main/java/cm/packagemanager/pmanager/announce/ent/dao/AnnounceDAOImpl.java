@@ -30,6 +30,7 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -40,7 +41,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -63,8 +66,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Autowired
     protected QueryUtils queryUtils;
 
-    @Autowired
-    NotificatorServiceImpl notificatorServiceImpl;
+
 
 
     @Override
@@ -160,6 +162,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             addAnnounceToUser(announce);
 
 
+            String message= MessageFormat.format(notificationMessagePattern,announce.getUser().getUsername()," a creé l'annonce ",announce.getDeparture() +"/"+announce.getArrival());
+            generateEvent(announce,message);
+
             return announce;
         }
         return null;
@@ -184,13 +189,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             adto.setCategories(new ArrayList<>());
             adto.getCategories().add(constants.DEFAULT_CATEGORIE);
         }
-        //double rating = calcolateAverage(announce.getUser());
-        //announce.getUserInfo().setRating(rating);
+        double rating = calcolateAverage(user);
+        announce.getUserInfo().setRating(rating);
         setAnnounce(announce, user, adto);
         update(announce);
 
-        fillProps(props,announce.getId(),"l'annonce "+announce.getDescription() +" a été ajournée ", user.getId(), user.getUsername());
-        generateEvent();
+        String message= MessageFormat.format(notificationMessagePattern,user.getUsername()," a modifié l'annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        generateEvent(announce,message);
         return announce;
 
     }
@@ -243,6 +248,18 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         logger.info("Announce: delete");
 
         //delete(AnnounceVO.class,id,true);
+
+        try {
+            AnnounceVO announce = announce(id);
+
+            String message= MessageFormat.format(notificationMessagePattern,announce.getUser().getUsername()," a supprimé l'annonce ",announce.getDeparture() +"/"+announce.getArrival());
+            generateEvent(announce,message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
         return updateDelete(id);
     }
 
@@ -581,14 +598,34 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
     }
 
-
     @Override
-    public void generateEvent() {
-        AnnounceEvent event = new AnnounceEvent(DateUtils.DateToSQLDate(new Date()), NotificationType.ANNOUNCE);
-        event.setId((Long) props.get(PROP_ID));
-        event.setMessage((String) props.get(PROP_MSG));
-        event.setUserId((Long) props.get(PROP_USR_ID));
-        event.setUsername((String) props.get(PROP_USR_NAME));
-        notificatorServiceImpl.addEvent(event);
+    public void generateEvent(Object obj , String message) throws Exception {
+
+        AnnounceVO announce= (AnnounceVO) obj;
+        UserVO user= announce.getUser();
+
+        Set subscribers=new HashSet();
+
+        if(CollectionsUtils.isNotEmpty(user.getSubscribers())){
+            subscribers.addAll(user.getSubscribers().stream().filter(u->u.isEnableNotification()).collect(Collectors.toSet()));
+        }
+        List<ReservationVO> reservations=findReservations(announce.getId());
+        if(CollectionsUtils.isNotEmpty(reservations)){
+            reservations.stream().filter(r->r.getUser()!=user && r.getUser().isEnableNotification()).forEach(r->{
+                subscribers.add(r.getUser());
+
+            });
+        }
+
+        if(CollectionsUtils.isNotEmpty(announce.getMessages())) {
+            announce.getMessages().stream().filter(m->m.getUser()!=user && m.getUser().isEnableNotification()).forEach(m->{
+                subscribers.add(m.getUser());
+            });
+        }
+        if (CollectionsUtils.isNotEmpty(subscribers)){
+            fillProps(props,announce.getId(),message, user.getId(),subscribers);
+            generateEvent( NotificationType.ANNOUNCE);
+        }
+
     }
 }

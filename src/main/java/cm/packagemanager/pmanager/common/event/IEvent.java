@@ -9,6 +9,10 @@
  */
 package cm.packagemanager.pmanager.common.event;
 
+
+import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,9 +22,12 @@ public interface IEvent<T> {
     static final String PROP_MSG="message";
     static final String PROP_USR_ID ="userId";
     static final String PROP_USR_NAME ="username";
+    static final String PROP_SUBSCRIBERS ="subscribers";
 
     Map props=new HashMap();
 
-    void generateEvent();
+    void generateEvent(NotificationType type);
+
+    void generateEvent(T clazz, String message) throws Exception;
 
 }

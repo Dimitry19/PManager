@@ -105,14 +105,6 @@ public class UserServiceImpl implements UserService {
 
         UserVO user = checkLoginAdmin(lr);
         if (user != null) {
-
-            // TODO  à effacer et eliminer l'implementation de IEvent
-            props.put(PROP_ID,user.getId());
-            props.put(PROP_MSG,"l'utilisateur "+user.getFirstName() +" a été ajournée ");
-            props.put(PROP_USR_ID, user.getId());
-            props.put(PROP_USR_NAME, user.getUsername());
-
-            userDAO.generateEvent();
             return user;
         }
 
@@ -160,7 +152,6 @@ public class UserServiceImpl implements UserService {
                     found.set(true);
                 }
             });
-
             return found.get() ? admin : null;
         }
 

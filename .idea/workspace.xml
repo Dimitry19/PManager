@@ -2,9 +2,54 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="new implementation for socket">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationSocketService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/PM.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/PM.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT_20210305.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT_20210305.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PackManager/application-error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/PackManager/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PackManager/application.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/PackageApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/PackageApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/Generic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/Generic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/event/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/event/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/event/IEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/event/IEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/cfg/ConfigTestToDelete.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/cfg/CustomWebMvcConfigurerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/cfg/CustomWebMvcConfigurerAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/FilterConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/FilterConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/constant/WSConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/constant/WSConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/dao/NotificationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/vo/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/vo/Notification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/vo/NotificationVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/vo/NotificationVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/config/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/listeners/WebSocketEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/listeners/WebSocketEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/ErrorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/ErrorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.91a40dec85ccece3bf1f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.91a40dec85ccece3bf1f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.c98ac864e6ca785f4cc7.css" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,7 +80,14 @@
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="Hibernate" type="feb32156:DbDataSourceImpl" />
+        <item name="Database" type="feb32156:DbDataSourceImpl" />
+        <item name="MANAGER: database" type="c8e2528e:H2ImplModel$Database" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="Database" type="feb32156:DbDataSourceImpl" />
+        <item name="MANAGER: database" type="c8e2528e:H2ImplModel$Database" />
+        <item name="PUBLIC: schema" type="4f7ca4f5:H2ImplModel$Schema" />
       </path>
     </expand>
     <select />
@@ -44,17 +96,7 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="NotificatorServiceImpl.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="260" column="49" selection-start-line="260" selection-start-column="49" selection-end-line="260" selection-end-column="49" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -152,7 +194,6 @@
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/FirebaseCloudMessageServiceImpl.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console.sql" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java" />
         <option value="$PROJECT_DIR$/src/main/resources/log4j2.xml" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" />
@@ -162,6 +203,8 @@
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/PackageApplication.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
+        <option value="$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT_20210305.sql" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console.sql" />
       </list>
     </option>
   </component>
@@ -200,6 +243,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -219,19 +264,10 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="PManagerBE" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManagerBE" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="CatdeaLogs" />
     </panes>
   </component>
@@ -248,7 +284,7 @@
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="H2" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
@@ -418,6 +454,7 @@
       <workItem from="1640185041858" duration="1362000" />
       <workItem from="1640200567904" duration="853000" />
       <workItem from="1640284984742" duration="5521000" />
+      <workItem from="1641110726396" duration="7023000" />
     </task>
     <task id="LOCAL-00001" summary="Ajout de la categorie de l'annonce">
       <created>1613510383183</created>
@@ -731,7 +768,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="351984000" />
+    <option name="totallyTimeSpent" value="359007000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -746,18 +783,18 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.518598" side_tool="true" visible="true" weight="0.31670824" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5193133" side_tool="true" weight="0.31670824" />
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info id="Capture Tool" order="7" />
       <window_info id="Designer" order="2" />
-      <window_info anchor="right" id="Database" order="6" sideWeight="0.49810606" visible="true" weight="0.083690986" />
+      <window_info anchor="right" id="Database" order="6" sideWeight="0.49810606" weight="0.23748212" />
       <window_info id="Structure" order="1" sideWeight="0.5019305" side_tool="true" weight="0.24964234" />
       <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49810606" weight="0.24964234" />
       <window_info id="UI Designer" order="4" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.490701" weight="0.4293478" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.48497853" weight="0.3840399" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.48426324" weight="0.3840399" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
@@ -766,7 +803,7 @@
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.481402" visible="true" weight="0.31670824" />
       <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
       <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.32689655" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.16595136" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.16809729" />
       <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49810606" weight="0.3297568" />
       <window_info id="Web" order="5" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="8" />
@@ -778,7 +815,7 @@
       <window_info id="Learn" order="9" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="17" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49928468" weight="0.4673913" />
+      <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49928468" weight="0.46633416" />
       <window_info anchor="right" id="Maven" order="11" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
@@ -1028,67 +1065,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/5.2.6.RELEASE/spring-aop-5.2.6.RELEASE.jar!/org/springframework/aop/framework/ReflectiveMethodInvocation.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="69" selection-start-line="69" selection-end-line="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="151" column="112" selection-start-line="151" selection-start-column="112" selection-end-line="151" selection-end-column="112" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/AnnounceServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2625">
-          <caret line="215" column="37" selection-start-line="215" selection-start-column="37" selection-end-line="215" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5355">
-          <caret line="384" selection-start-line="384" selection-end-line="384" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/AnnounceDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/CategoriesDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j2.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
-          <caret line="47" column="36" selection-start-line="47" selection-start-column="36" selection-end-line="47" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/PackManager/application.log">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="-146588" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/logs/PackManager/application-error.log" />
     <entry file="file://$PROJECT_DIR$/logs/PackManager/application-2021-12-12-1.log" />
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java">
@@ -1375,12 +1351,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/rating/ent/vo/RatingCountVO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="260" column="49" selection-start-line="260" selection-start-column="49" selection-end-line="260" selection-end-column="49" />
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3825">
+          <caret line="260" selection-start-line="260" selection-end-line="260" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/USER">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/MESSAGE">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/NOTIFICATION">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddl/Views_20210207.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT_20210305.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="155" lean-forward="true" selection-start-line="155" selection-end-line="155" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/USER_NOTIFICATION">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/user/elodie90-p.jpeg">
+      <provider selected="true" editor-type-id="images" />
     </entry>
   </component>
   <component name="masterDetails">
@@ -1393,6 +1430,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -1400,6 +1438,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
+          <last-edited>Spring</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1422,6 +1461,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
+          <last-edited>1.8</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1433,6 +1473,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
+          <last-edited>PManager</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1444,6 +1485,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
+          <last-edited>Maven: antlr:antlr:2.7.7</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

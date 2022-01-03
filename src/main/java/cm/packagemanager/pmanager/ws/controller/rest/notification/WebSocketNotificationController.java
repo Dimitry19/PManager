@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.ws.controller.rest.notification;
 
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificationService;
+import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificationSocketService;
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
@@ -34,7 +35,7 @@ public class WebSocketNotificationController extends CommonController {
     protected final Log logger = LogFactory.getLog(WebSocketNotificationController.class);
 
     @Resource(name = "notificator")
-    private NotificationService dispatcher;
+    private NotificationSocketService dispatcher;
 
 
     @MessageMapping("/start")

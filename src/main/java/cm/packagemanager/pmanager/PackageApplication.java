@@ -14,14 +14,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
-import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.*;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.messaging.simp.SimpMessageType;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 
 
 /*
@@ -35,7 +29,7 @@ import org.springframework.context.annotation.Bean;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 //@EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = "cm.packagemanager.pmanager")
-public class PackageApplication extends SpringBootServletInitializer implements CommandLineRunner{
+public class PackageApplication extends SpringBootServletInitializer { //implements CommandLineRunner{
 
     private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);
     
@@ -54,7 +48,7 @@ public class PackageApplication extends SpringBootServletInitializer implements 
         return application.sources(PackageApplication.class);
     }
 	
-	@Override
+	/*@Override
 	public void run(String... args) throws Exception {
 		//websocketDemo();
 	}
@@ -79,6 +73,6 @@ public class PackageApplication extends SpringBootServletInitializer implements 
 				}
 			}
 		};
-	}
+	}*/
 
 }

@@ -1,7 +1,9 @@
 package cm.packagemanager.pmanager.airline.ent.dao;
 
 import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
+import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,12 +16,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class AirlineDAOImpl implements AirlineDAO {
+public class AirlineDAOImpl extends Generic implements AirlineDAO {
 
     private static Logger logger = LoggerFactory.getLogger(AirlineDAOImpl.class);
 
-    @Autowired
-    private SessionFactory sessionFactory;
 
     @Override
     public AirlineVO findByCode(String code) throws BusinessResourceException {
@@ -28,6 +28,7 @@ public class AirlineDAOImpl implements AirlineDAO {
 
         Session session = this.sessionFactory.getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
+
         Query query = session.getNamedQuery(AirlineVO.FINDBYCODE);
         query.setParameter("code", code);
         List<AirlineVO> airlines = query.list();
@@ -45,5 +46,20 @@ public class AirlineDAOImpl implements AirlineDAO {
         session.enableFilter(FilterConstants.CANCELLED);
 
         return null;
+    }
+
+    @Override
+    public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
+        return false;
+    }
+
+    @Override
+    public String composeQuery(Object o, String alias) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void composeQueryParameters(Object o, Query query) throws Exception {
+
     }
 }

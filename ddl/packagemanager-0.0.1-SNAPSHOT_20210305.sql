@@ -142,6 +142,21 @@ create table NOTIFICATION
     USER_ID       BIGINT       not null
 );
 
+create table USER_NOTIFICATION
+(
+    USERS_ID BIGINT not null,
+    NOTIFICATIONS_ID BIGINT not null,
+    primary key (USERS_ID, NOTIFICATIONS_ID),
+    constraint FK8HR3CBMBTB3NDL456F6BASWMN
+        foreign key (NOTIFICATIONS_ID) references NOTIFICATION,
+    constraint FKO1QX6Y02V6L3UXNG68RXJD9GR
+        foreign key (USERS_ID) references USER
+);
+
+
+
+
+
 /*
 create table BATCH_JOB_INSTANCE
 (

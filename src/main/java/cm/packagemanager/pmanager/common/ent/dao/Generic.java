@@ -8,11 +8,13 @@ import org.hibernate.query.Query;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Set;
 
 
 public abstract class Generic<T, ID extends Serializable> extends CommonGenericDAO {
 
 
+    public String notificationMessagePattern = "{0} {1} {2}";
     public abstract boolean updateDelete(Long id) throws BusinessResourceException, UserException;
 
     public abstract String composeQuery(Object o, String alias) throws Exception;
@@ -20,12 +22,12 @@ public abstract class Generic<T, ID extends Serializable> extends CommonGenericD
     public abstract void composeQueryParameters(Object o, Query query) throws Exception;
 
 
-    public void fillProps(Map props, Long id, String message, Long userId,String username) throws Exception {
+    public void fillProps(Map props, Long id, String message, Long userId,Set subscribers) throws Exception {
 
             props.put(IEvent.PROP_ID,id);
             props.put(IEvent.PROP_MSG,message);
             props.put(IEvent.PROP_USR_ID,userId);
-            props.put(IEvent.PROP_USR_NAME,username);
+            props.put(IEvent.PROP_SUBSCRIBERS,subscribers);
 
     }
 

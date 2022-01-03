@@ -87,6 +87,7 @@ public class WSConstants {
 
     /************ NOTIFICATION REQUEST*************/
     public static final String NOTIFICATION_WS = "/ws/notification/*";
+    public static final String NOTIFICATIION_WS_BY_ID = "/notification";
 
     /************ SOCKET NOTIFICATION REQUEST*************/
     public static final String SOCKET_NOTIFICATION_WS = "/ws/socket/notification/*";

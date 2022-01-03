@@ -1,33 +1,32 @@
 package cm.packagemanager.pmanager.configuration.cfg;
 
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
-/*@Configuration
-@EnableWebMvc*/
-public class CustomWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
 
-/*
-	//More configuration....
+@Configuration
+/*@EnableWebMvc*/
+public class CustomWebMvcConfigurerAdapter implements WebMvcConfigurer {
 
-	*//* Here we register the Hibernate4Module into an ObjectMapper, then set this custom-configured ObjectMapper
-     * to the MessageConverter and return it to be added to the HttpMessageConverters of our application*//*
-	public MappingJackson2HttpMessageConverter jacksonMessageConverter(){
-		MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
 
-		ObjectMapper mapper = new ObjectMapper();
-		//Registering Hibernate4Module to support lazy objects
-		mapper.registerModule(new Hibernate5Module());
 
-		messageConverter.setObjectMapper(mapper);
-		return messageConverter;
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/notFound").setViewName("forward:/index.html");
+    }
 
-	}
 
-	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-		//Here we add our custom-configured HttpMessageConverter
-		converters.add(jacksonMessageConverter());
-		super.configureMessageConverters(converters);
-	}*/
+    @Bean
+    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
+        return container -> {
+            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notFound"));
+        };
+    }
 }

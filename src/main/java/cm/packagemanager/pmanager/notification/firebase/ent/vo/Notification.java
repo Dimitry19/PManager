@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.notification.firebase.ent.vo;
 
 public class Notification {
 
+    private Long id;
     private String title;
     private String message;
     private String topic;
@@ -9,6 +10,14 @@ public class Notification {
     private String url;
 
     public Notification() {
+    }
+
+    public Notification(Long id,String title, String messageBody, String topicName, String url) {
+        this.title = title;
+        this.message = messageBody;
+        this.topic = topicName;
+        this.url = url;
+        this.id=id;
     }
 
     public Notification(String title, String messageBody, String topicName, String url) {
@@ -56,5 +65,13 @@ public class Notification {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

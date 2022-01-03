@@ -63,7 +63,7 @@ public interface UserDAO extends CommonDAO {
 
     UserVO save(UserVO user) throws BusinessResourceException;
 
-    void remove(UserVO user) throws BusinessResourceException;
+    void removeUser(UserVO user) throws BusinessResourceException;
 
 
     UserVO findByEmail(String email) throws Exception;
@@ -97,4 +97,5 @@ public interface UserDAO extends CommonDAO {
     List notifications(Long userId) throws Exception;
 
     List messages(Long userId) throws Exception;
+
 }

@@ -1,11 +1,16 @@
 package cm.packagemanager.pmanager.common.ent.dao;
 
+
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.event.Event;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
+import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl;
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -24,10 +29,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable> implements GenericDAO<T, ID, NID> {
@@ -53,6 +56,9 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Value("${profile.user.img.folder}")
     protected String imagesFolder;
 
+    @Autowired
+    protected NotificatorServiceImpl notificatorServiceImpl;
+
 
     @Override
     @Transactional
@@ -63,6 +69,20 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         }
 
         return Optional.ofNullable(sessionFactory.getCurrentSession().find(clazz, id));
+    }
+
+    @Override
+    @Transactional
+    public T find(Class<T> clazz, ID id, String... filters) {
+
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
+        Session session = this.sessionFactory.getCurrentSession();
+        for (String filter : filters) {
+            session.enableFilter(filter);
+        }
+        return session.find(clazz, id);
     }
 
     @Override
@@ -124,6 +144,22 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         }
 
         Session session = sessionFactory.getCurrentSession();
+
+        return session.get(clazz, id);
+    }
+
+    @Override
+    @Transactional
+    public T findById(Class<T> clazz, ID id, String... filters) {
+
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
+
+        Session session = this.sessionFactory.getCurrentSession();
+        for (String filter : filters) {
+            session.enableFilter(filter);
+        }
 
         return session.get(clazz, id);
     }
@@ -406,6 +442,17 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    public void remove(T t) throws BusinessResourceException {
+        logger.info("Remove");
+        Session session = this.sessionFactory.getCurrentSession();
+        if (t != null) {
+            session.remove(t);
+
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     public T merge(T t) throws BusinessResourceException {
         logger.info("Generic merge");
         Session session = this.sessionFactory.getCurrentSession();
@@ -414,6 +461,16 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
             return t;
         }
         return null;
+    }
+
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    public T get(Class<T> clazz, ID id) throws BusinessResourceException {
+
+        Session session = this.sessionFactory.getCurrentSession();
+
+        return session.get(clazz , id);
     }
 
     @Override
@@ -457,7 +514,20 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
     @Override
-    public void generateEvent() {
+    public void generateEvent( NotificationType type) {
+        Event event = new Event(DateUtils.DateToSQLDate(new Date()),type);
+
+        event.setId((Long) props.get(PROP_ID));
+        event.setMessage((String) props.get(PROP_MSG));
+        event.setUserId((Long) props.get(PROP_USR_ID));
+        event.setUsers((Set<UserVO>) props.get(PROP_SUBSCRIBERS));
+        notificatorServiceImpl.addEvent(event);
+
 
     }
+
+    public void generateEvent(Object obj, String message) throws Exception{
+
+    }
+
 }

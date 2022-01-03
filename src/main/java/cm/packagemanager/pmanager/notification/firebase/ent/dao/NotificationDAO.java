@@ -11,4 +11,6 @@ public interface NotificationDAO extends CommonDAO {
     List<NotificationVO> all() throws Exception;
 
     void persist(NotificationVO notification) throws Exception;
+
+    NotificationVO read(Long id) throws Exception;
 }
