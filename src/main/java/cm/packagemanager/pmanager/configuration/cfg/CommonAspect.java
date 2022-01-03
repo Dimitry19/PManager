@@ -28,7 +28,7 @@ public class CommonAspect {
     public void beforeAdvice(JoinPoint joinPoint, LoginDTO lr) throws Exception {
 
         if (!userService.checkLogin(lr)) {
-            throw new UserException("Le compte n'est pas actif");
+            throw new UserException("Le compte n'est pas actif ou mot de passe non valide");
         }
         logger.info("Before method:" + joinPoint.getSignature());
 

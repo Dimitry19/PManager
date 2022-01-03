@@ -43,7 +43,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String[] code = new String[1];
         code[0] = String.valueOf(HttpStatus.NOT_FOUND.value());
 
-        return new ResponseEntity<>(new ErrorResponse("user.error", details, code, -1), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ErrorResponse("user.error", details, code, -1), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler({UserNotFoundException.class})
