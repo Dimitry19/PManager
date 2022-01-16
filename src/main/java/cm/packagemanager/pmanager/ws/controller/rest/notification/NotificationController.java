@@ -48,7 +48,7 @@ public class NotificationController extends CommonController {
         return new ResponseEntity<>(new NotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
     }
 
-    @GetMapping("/notification")
+    @GetMapping("/notification/sample")
     public ResponseEntity sendSampleNotification() {
         pushNotificationService.sendSamplePushNotification();
         return new ResponseEntity<>(new NotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
