@@ -125,6 +125,7 @@ create table USER_ROLE
         foreign key (ROLE_ID) references ROLE (ID)
 );
 
+DROP TABLE NOTIFICATION;
 create table NOTIFICATION
 (
     ID            BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_4C0C169B_FD14_40FE_87B7_31A8A97D07B3) auto_increment
@@ -142,6 +143,7 @@ create table NOTIFICATION
     USER_ID       BIGINT       not null
 );
 
+DROP TABLE UER_NOTIFICATION;
 create table USER_NOTIFICATION
 (
     USERS_ID BIGINT not null,
