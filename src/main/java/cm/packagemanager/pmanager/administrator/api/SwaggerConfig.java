@@ -55,6 +55,9 @@ public class SwaggerConfig {
     @Value("${swagger.api.groupname.websocket}")
     private String apiGroupNameWebsocket;
 
+    @Value("${swagger.api.groupname.notification}")
+    private String apiGroupNameNotification;
+
 /*	@Bean
 	public Docket pmanagerRestApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -117,6 +120,11 @@ public class SwaggerConfig {
     @Bean
     public Docket websocketApi() {
         return createDocket(apiGroupNameWebsocket, "/pmanager/ws/socket/notification.*");
+    }
+
+    @Bean
+    public Docket notificationApi() {
+        return createDocket(apiGroupNameNotification, "/pmanager/ws/notification.*");
     }
 
     @Bean
