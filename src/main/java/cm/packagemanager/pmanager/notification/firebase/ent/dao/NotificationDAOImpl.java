@@ -33,6 +33,10 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
     public NotificationVO read(Long id) throws Exception {
          NotificationVO notification=(NotificationVO) findById(NotificationVO.class,id);
 
+         if(notification==null){
+             return null;
+         }
+
          notification.setStatus(StatusEnum.COMPLETED);
          update(notification);
         return notification;

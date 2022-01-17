@@ -53,5 +53,6 @@ public class WebServiceResponseCode {
 
     public static final String ERROR_CONTACT_US_LABEL = "Impossible d'envoyer le message pour le moment";
     public static final String ERROR_GET_RESERV_CODE_LABEL = "La reservation inexistante";
+    public static final String ERROR_INEXIST_CODE_LABEL = "{0} inexistant(e)";
 
 }

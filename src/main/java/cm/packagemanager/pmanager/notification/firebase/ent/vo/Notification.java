@@ -1,5 +1,7 @@
 package cm.packagemanager.pmanager.notification.firebase.ent.vo;
 
+import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+
 public class Notification {
 
     private Long id;
@@ -7,24 +9,25 @@ public class Notification {
     private String message;
     private String topic;
     private String token;
-    private String url;
+    private NotificationType type;
+    private Long  elementId;
 
     public Notification() {
     }
 
-    public Notification(Long id,String title, String messageBody, String topicName, String url) {
+    public Notification(Long id,String title, String messageBody, NotificationType type, Long  elementId) {
         this.title = title;
         this.message = messageBody;
-        this.topic = topicName;
-        this.url = url;
+        this.type = type;
+        this.elementId = elementId;
         this.id=id;
     }
 
-    public Notification(String title, String messageBody, String topicName, String url) {
+    public Notification(String title, String messageBody, String topic, Long elementId) {
         this.title = title;
         this.message = messageBody;
-        this.topic = topicName;
-        this.url = url;
+        this.topic = topic;
+        this.elementId = elementId;
     }
 
     public String getTitle() {
@@ -51,21 +54,13 @@ public class Notification {
         this.topic = topic;
     }
 
-    public String getToken() {
-        return token;
-    }
+    public NotificationType getType() {    return type;  }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+    public void setType(NotificationType type) {  this.type = type;  }
 
-    public String getUrl() {
-        return url;
-    }
+    public Long getElementId() {  return elementId;  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+    public void setElementId(Long elementId) {  this.elementId = elementId;  }
 
     public Long getId() {
         return id;
@@ -74,4 +69,8 @@ public class Notification {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getToken() {  return token;  }
+
+    public void setToken(String token) {  this.token = token;  }
 }

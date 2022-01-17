@@ -193,7 +193,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         subscribers.add(announce.getUser());
 
         if(CollectionsUtils.isNotEmpty(announce.getMessages())) {
-            announce.getMessages().stream().filter(m->m.getUser()!=user && m.getUser().isEnableNotification()).forEach(m->{
+            announce.getMessages().stream().filter(m->m.getUser()!=null && m.getUser().getId()!=user.getId() && m.getUser().isEnableNotification()).forEach(m->{
                 subscribers.add(m.getUser());
             });
         }

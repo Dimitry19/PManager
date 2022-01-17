@@ -4,6 +4,7 @@ package cm.packagemanager.pmanager.ws.controller.rest.announce;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
@@ -70,7 +71,7 @@ public class AnnounceController extends CommonController {
                     response = AnnounceVO.class, responseContainer = "Object")})
     @PostMapping(value = CREATE, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
-    ResponseEntity<AnnounceVO> create(HttpServletResponse response, HttpServletRequest request,
+    ResponseEntity<Object> create(HttpServletResponse response, HttpServletRequest request,
                                       @RequestBody @Valid AnnounceDTO ar) throws Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -88,10 +89,10 @@ public class AnnounceController extends CommonController {
                     announce.setRetCode(WebServiceResponseCode.OK_CODE);
                     return new ResponseEntity<>(announce, HttpStatus.CREATED);
                 } else {
-                    announce = new AnnounceVO();
-                    announce.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "L'annonce"));
-                    return new ResponseEntity<>(announce, HttpStatus.NOT_ACCEPTABLE);
+                    WSCommonResponseVO  commonResponse= new WSCommonResponseVO();
+                    commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "L'annonce"));
+                    return new ResponseEntity<>(commonResponse, HttpStatus.NOT_ACCEPTABLE);
                 }
             }
         } catch (Exception e) {
@@ -114,7 +115,7 @@ public class AnnounceController extends CommonController {
             @ApiResponse(code = 200, message = "Successful Update Announce",
                     response = AnnounceVO.class, responseContainer = "Object")})
     @PutMapping(value = UPDATE_ID, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
-    ResponseEntity<AnnounceVO> update(HttpServletResponse response, HttpServletRequest request, @PathVariable("id") @Valid long id,
+    ResponseEntity<Object> update(HttpServletResponse response, HttpServletRequest request, @PathVariable("id") @Valid long id,
                                       @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -130,11 +131,11 @@ public class AnnounceController extends CommonController {
                 announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "L'annonce"));
                 return new ResponseEntity<>(announce, HttpStatus.OK);
             } else {
-                announce = new AnnounceVO();
-                announce.setRetCode(WebServiceResponseCode.NOK_CODE);
-                announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "L'annonce"));
+                WSCommonResponseVO  commonResponse = new WSCommonResponseVO();
+                commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "L'annonce"));
+                return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(announce, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logger.error("Erreur durant l'ajournement de l'announce " + uar.toString() + "{ }", e);
             throw e;
@@ -365,7 +366,7 @@ public class AnnounceController extends CommonController {
 
     @ApiOperation(value = "Retrieve an announce with an ID", response = AnnounceVO.class)
     @GetMapping(value = ANNOUNCE_WS_BY_ID, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<AnnounceVO> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
+    public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -375,7 +376,13 @@ public class AnnounceController extends CommonController {
             AnnounceVO announce = null;
             if (id != null) {
                 announce = announceService.announce(id);
-                if (announce == null) return new ResponseEntity<>((AnnounceVO) null, HttpStatus.NOT_FOUND);
+                if (announce == null) {
+                    WSCommonResponseVO wsResponse = new WSCommonResponseVO();
+                    wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, "L'annonce"));
+                    return new ResponseEntity<>((Object) wsResponse, HttpStatus.NOT_FOUND);
+
+                }
             }
             return new ResponseEntity<>(announce, HttpStatus.OK);
         } catch (UserException e) {

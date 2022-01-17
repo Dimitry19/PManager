@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.ws.controller.rest.users;
 
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
@@ -203,7 +204,7 @@ public class UserController extends CommonController {
     //@RequestMapping(value = USER_WS_LOGIN, method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
     @PostMapping(path = USER_WS_LOGIN, consumes = {MediaType.APPLICATION_JSON}, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
-    ResponseEntity<UserVO> login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login) throws Exception {
+    ResponseEntity<Object> login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login) throws Exception {
         logger.info("login request in");
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.addCookie(new Cookie("username", login.getUsername()));
@@ -218,12 +219,12 @@ public class UserController extends CommonController {
                 if (user != null) {
                     user.setRetCode(WebServiceResponseCode.OK_CODE);
                     user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
-                    return new ResponseEntity<UserVO>(user, HttpStatus.OK);
+                    return new ResponseEntity<>(user, HttpStatus.OK);
                 } else {
-                    user = new UserVO();
-                    user.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    user.setRetDescription(WebServiceResponseCode.ERROR_LOGIN_LABEL);
-                    return new ResponseEntity<UserVO>(user, HttpStatus.NOT_FOUND);
+                    WSCommonResponseVO commonResponse = new WSCommonResponseVO();
+                    commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    commonResponse.setRetDescription(WebServiceResponseCode.ERROR_LOGIN_LABEL);
+                    return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
                 }
             }
         } catch (Exception e) {
@@ -290,9 +291,9 @@ public class UserController extends CommonController {
                 userDTO.setId(userId);
                 UserVO user = userService.updateUser(userDTO);
                 if (user == null) {
-                    user = new UserVO();
-                    user.setRetCode(-1);
-                    user.setRetDescription(WebServiceResponseCode.ERROR_UPD_EMAIL_LABEL);
+                    WSCommonResponseVO commonResponse = new WSCommonResponseVO();
+                    commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    commonResponse.setRetDescription(WebServiceResponseCode.ERROR_UPD_EMAIL_LABEL);
                     throw new UserNotFoundException("Utilisateur non trouv&egrave;");
 
                 }
@@ -753,8 +754,8 @@ public class UserController extends CommonController {
                 response.addCookie(cookie);
             }
         }
-		/*response.sendRedirect("/");
-		return "redirect:/";*/
+
+
         Response pmResponse = new Response();
         pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
         pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);

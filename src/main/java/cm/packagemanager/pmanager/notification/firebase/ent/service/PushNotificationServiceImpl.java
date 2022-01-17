@@ -69,11 +69,7 @@ public class PushNotificationServiceImpl implements PushNotificationService {
 
 
     private Notification getSamplePushNotificationRequest() {
-        Notification request = new Notification(
-                defaults.get("title"),
-                defaults.get("message"),
-                defaults.get("topic"),
-                defaults.get("url"));
+        Notification request = new Notification();
         return request;
     }
 

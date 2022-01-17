@@ -14,6 +14,7 @@ import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
 import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationVO;
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class NotificatorServiceImpl implements NotificationSocketService {
     NotificationDAO notificationDAO;
 
     final List<Event> events = new ArrayList();
+    final List alreadySent = new ArrayList();
 
 
     public void addEvent(Event event) {
@@ -87,13 +89,11 @@ public class NotificatorServiceImpl implements NotificationSocketService {
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
         headerAccessor.setLeaveMutable(true);
 
-        if (notification.getStatus().equals(StatusEnum.VALID) ||  notification.getStatus().equals(StatusEnum.TO_DELIV)) {
+        Notification notif = new Notification(notification.getId(),notification.getTitle(), notification.getMessage(), NotificationType.ANNOUNCE, notification.getId());
 
-            Notification notif = new Notification(notification.getId(),notification.getTitle(), notification.getMessage(), null, null);
+        Map map= new HashMap();
 
-            Map map= new HashMap();
-
-            switch (notification.getType()) {
+           switch (notification.getType()) {
                 case ANNOUNCE:
                 case COMMENT:
                     map= announceListeners;
@@ -120,9 +120,10 @@ public class NotificatorServiceImpl implements NotificationSocketService {
                 logger.info(" notification  {}", notif.getMessage());
                 logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
                 messagingTemplate.convertAndSendToUser(sessionId,notif.getTopic(), notif, headerAccessor.getMessageHeaders());
+                alreadySent.add(notif.getId());
 
             });
-        }
+
         notifications.remove(notification);
     }
 
@@ -137,13 +138,13 @@ public class NotificatorServiceImpl implements NotificationSocketService {
 
                 createNotification(event);
                 persistNotification();
-                dispatch();
                 deadEvents.add(event);
 
             } catch (Exception e) {
                 deadEvents.add(event);
             }
         });
+        dispatch();
         events.removeAll(deadEvents);
     }
 
