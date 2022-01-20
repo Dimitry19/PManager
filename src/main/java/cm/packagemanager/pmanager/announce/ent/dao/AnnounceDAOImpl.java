@@ -162,7 +162,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             addAnnounceToUser(announce);
 
 
-            String message= MessageFormat.format(notificationMessagePattern,announce.getUser().getUsername()," a creé l'annonce ",announce.getDeparture() +"/"+announce.getArrival());
+            String message= MessageFormat.format(notificationMessagePattern,announce.getUser().getUsername(),
+                    " a creé l'annonce " + announce.getDeparture() +"/"+announce.getArrival(),
+                    "pour la date " + DateUtils.getDateStandard(announce.getStartDate())
+                            + "et retour le "+ DateUtils.getDateStandard(announce.getEndDate()));
             generateEvent(announce,message);
 
             return announce;
@@ -194,7 +197,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         setAnnounce(announce, user, adto);
         update(announce);
 
-        String message= MessageFormat.format(notificationMessagePattern,user.getUsername()," a modifié l'annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        String message= MessageFormat.format(notificationMessagePattern,user.getUsername(),
+                " a modifié l'annonce "+announce.getDeparture() +"/"+announce.getArrival(),
+                " de " + DateUtils.getDateStandard(announce.getStartDate())
+                        + " au "+ DateUtils.getDateStandard(announce.getEndDate()));
         generateEvent(announce,message);
         return announce;
 
@@ -252,7 +258,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         try {
             AnnounceVO announce = announce(id);
 
-            String message= MessageFormat.format(notificationMessagePattern,announce.getUser().getUsername()," a supprimé l'annonce ",announce.getDeparture() +"/"+announce.getArrival());
+            String message= MessageFormat.format(notificationMessagePattern,announce.getUser().getUsername(),
+                    " a supprimé l'annonce "+announce.getDeparture() +"/"+announce.getArrival(),
+                    " du " + DateUtils.getDateStandard(announce.getStartDate())
+                            + " au "+ DateUtils.getDateStandard(announce.getEndDate()));
             generateEvent(announce,message);
         } catch (Exception e) {
             e.printStackTrace();

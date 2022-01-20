@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.websocket.listeners;
 
+import cm.packagemanager.pmanager.common.session.SessionManager;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl;
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class WebSocketEventListener {
+public class WebSocketEventListener  {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
 
@@ -56,7 +57,9 @@ public class WebSocketEventListener {
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor stompAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String sessionId = stompAccessor.getSessionId();
-        logger.info("Socket disconnection by user <{}> with sessionId <{}>", "Nop", sessionId);
+
+        String user=notificationService.getConnectedUser(sessionId);
+        logger.info("Socket disconnection by user <{}> with sessionId <{}>", user, sessionId);
         notificationService.remove(sessionId);
         notificationService.removeConnectedUser(sessionId);
     }

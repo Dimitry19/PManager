@@ -73,8 +73,8 @@ public class NotificationController extends CommonController {
                 notification = notificationService.read(id);
                 if (notification == null) {
                     WSCommonResponseVO wsResponse = new WSCommonResponseVO();
-                    wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, "La notification"));
+                    wsResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.READ_CODE_LABEL, "La notification"));
                     return new ResponseEntity<>((WSCommonResponseVO) wsResponse, HttpStatus.NOT_FOUND);
                 }
             }

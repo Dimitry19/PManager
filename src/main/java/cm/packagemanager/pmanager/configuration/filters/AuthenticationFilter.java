@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.configuration.filters;
 
 
 import cm.packagemanager.pmanager.common.exception.ErrorResponse;
+import cm.packagemanager.pmanager.common.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,11 +10,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -47,25 +51,12 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
-/*
-		String apiKey=request.getHeader("AUTH_API_KEY");
-		String calledUrl=request.getRequestURI();
 
-		if(!calledUrl.contains("confirm")&&calledUrl.contains(service) && (StringUtils.isEmpty(apiKey)|| !apiKey.equals(token))){
-			ErrorResponse errorResponse = new ErrorResponse();
-			List<String> details= new ArrayList<>();
-			errorResponse.setCode(HttpStatus.UNAUTHORIZED);
-			errorResponse.setDetails(details);
-			errorResponse.setMessage("Unauthorized Access");
+        if(!authorized(servletRequest,  servletResponse)){
+            return;
+        };
 
-			byte[] responseToSend = restResponseBytes(errorResponse);
-			((HttpServletResponse) response).setHeader("Content-Type", "application/json");
-			((HttpServletResponse) response).setStatus(401);
-			response.getOutputStream().write(responseToSend);
-			return;
-		}
-*/
-        //call next filter in the filter chain
+            //call next filter in the filter chain
         filterChain.doFilter(request, response);
 
         logger.info("Logging Response :{}", response.getContentType());
@@ -77,8 +68,37 @@ public class AuthenticationFilter implements Filter {
 
     }
 
-    private byte[] restResponseBytes(ErrorResponse eErrorResponse) throws IOException {
-        String serialized = new ObjectMapper().writeValueAsString(eErrorResponse);
+    private byte[] restResponseBytes(ErrorResponse errorResponse) throws IOException {
+        String serialized = new ObjectMapper().writeValueAsString(errorResponse);
         return serialized.getBytes();
+    }
+
+    private boolean authorized(ServletRequest servletRequest,ServletResponse servletResponse) throws IOException {
+
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        String[] codes=new String[1];
+        codes[0]="401";
+
+
+        String apiKey=request.getHeader("AUTH_API_KEY");
+        String calledUrl=request.getRequestURI();
+
+        if(!calledUrl.contains("confirm")&&calledUrl.contains(service) && (StringUtils.isEmpty(apiKey)|| !apiKey.equals(token))){
+            ErrorResponse errorResponse = new ErrorResponse();
+            List<String> details= new ArrayList();
+            errorResponse.setCode(codes);
+            errorResponse.setDetails(details);
+            errorResponse.setMessage("Unauthorized Access");
+
+            byte[] responseToSend = restResponseBytes(errorResponse);
+            ((HttpServletResponse) response).setHeader("Content-Type", "application/json");
+            ((HttpServletResponse) response).setStatus(401);
+            response.getOutputStream().write(responseToSend);
+            return false;
+        }
+
+        return true;
+
     }
 }

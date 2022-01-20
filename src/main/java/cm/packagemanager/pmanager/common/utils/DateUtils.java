@@ -30,6 +30,14 @@ public class DateUtils {
         }
     }
 
+    public static String getDateStandard(Date date) {
+        try {
+            return new SimpleDateFormat(STD_PATTERN).format(date);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     public static Date milliSecondToDateCalendar(long currentDateTime) {
 
 
@@ -94,7 +102,7 @@ public class DateUtils {
         return timestamp;
     }
 
-    public static Date StringToDate(String dateStr) {
+    public static Date stringToDate(String dateStr) {
         Date date = null;
         try {
             if (dateStr != null && dateStr.length() > 0) {
@@ -108,7 +116,7 @@ public class DateUtils {
         return date;
     }
 
-    public static Date StringToDate(String dateStr, String format) {
+    public static Date stringToDate(String dateStr, String format) {
         Date date = null;
         try {
             if (dateStr != null && dateStr.length() > 0) {
@@ -122,7 +130,7 @@ public class DateUtils {
         return date;
     }
 
-    public static String DateToString(Date date) {
+    public static String dateToString(Date date) {
         String dateStr = "";
         try {
             if (date != null) {
@@ -135,7 +143,7 @@ public class DateUtils {
         return dateStr;
     }
 
-    public static String DateTimeToString(Date date) {
+    public static String dateTimeToString(Date date) {
         String dateStr = "";
         try {
             if (date != null) {

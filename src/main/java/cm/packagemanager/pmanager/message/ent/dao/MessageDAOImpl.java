@@ -9,6 +9,7 @@ import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.common.utils.QueryUtils;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
@@ -100,7 +101,10 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         announce.addMessage(comment);
         save(comment);
 
-        String message= MessageFormat.format(notificationMessagePattern,user.getUsername()," a commenté l'annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        String message= MessageFormat.format(notificationMessagePattern,user.getUsername()
+                ," a commenté l'annonce "+announce.getDeparture() +"/"+announce.getArrival(),
+                 " pour la date " + DateUtils.getDateStandard(announce.getStartDate())
+                         + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()));
 
         generateEvent(comment,message);
         return comment;

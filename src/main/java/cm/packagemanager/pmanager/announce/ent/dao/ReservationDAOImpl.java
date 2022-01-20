@@ -109,7 +109,10 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         reservation.setValidate(ValidateEnum.INSERTED);
         reservation.setStatus(StatusEnum.VALID);
         save(reservation);
-        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername()," a fait une reservation sur votre annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername(),
+                " a fait une reservation sur votre annonce "+announce.getDeparture() +"/"+announce.getArrival(),
+                " du" + DateUtils.getDateStandard(announce.getStartDate())
+                        + " au "+ DateUtils.getDateStandard(announce.getEndDate()));
         generateEvent(announce,message);
         return reservation;
     }
@@ -142,7 +145,10 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
             reservation.setDescription(reservationDTO.getDescription());
         }
         update(reservation);
-        String message= MessageFormat.format(notificationMessagePattern,user.getUsername()," a modifié une reservation sur votre annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        String message= MessageFormat.format(notificationMessagePattern,user.getUsername(),
+                " a modifié une reservation sur votre annonce "+announce.getDeparture() +"/"+announce.getArrival(),
+                " du " + DateUtils.getDateStandard(announce.getStartDate())
+                        + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()));
         generateEvent(announce,message);
         return reservation;
     }
@@ -164,7 +170,10 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
         update(announce);
         //delete(ReservationVO.class,id,true);
-        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername()," a supprimé une reservation sur votre annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername(),
+                " a supprimé une reservation sur votre annonce "+ announce.getDeparture() +"/"+announce.getArrival(),
+                " de la date du " + DateUtils.getDateStandard(announce.getStartDate())
+                        + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()));
         generateEvent(announce,message);
         return updateDelete(reservation);
 
