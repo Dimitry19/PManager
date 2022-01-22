@@ -3,9 +3,11 @@ package cm.packagemanager.pmanager.ws.controller.rest;
 import cm.packagemanager.pmanager.announce.ent.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.ent.service.ReservationService;
 import cm.packagemanager.pmanager.announce.ent.service.ServiceAnnounce;
+import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.ent.service.MailService;
 import cm.packagemanager.pmanager.common.session.SessionManager;
+import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.message.ent.service.MessageService;
 import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificationService;
 import cm.packagemanager.pmanager.notification.firebase.ent.service.PushNotificationService;
@@ -29,6 +31,8 @@ import org.springframework.web.server.WebSession;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.SessionTrackingMode;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * L'annotation @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600) permet de favoriser une communication distante entre le client et le serveur,
@@ -86,6 +90,9 @@ public class CommonController  {
     @Value("${pagination.size}")
     public Integer size;
 
+    @Autowired
+    FileUtils fileUtils;
+
 
     protected Span packageManagerSpan;
 
@@ -106,5 +113,25 @@ public class CommonController  {
         if (packageManagerSpan != null) {
             packageManagerSpan.finish();
         }
+    }
+
+
+    protected void
+    manageImage(HttpServletResponse response,String filename,byte[] data) throws IOException {
+
+        String contentType = servletContext.getMimeType(filename);
+        response.setContentType(contentType);
+        response.setContentLength(data.length);
+        response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
+
+        System.out.println(response.getContentType());
+        System.out.println(response.getHeaderNames());
+        System.out.println(response.getHeader("Content-Disposition"));
+        // Write image data to Response.
+        response.getOutputStream().write(fileUtils.decompressBytes(data));
+
+    }
+    protected boolean imageCheck(ImageVO image){
+        return (image!=null && image.getPicByte()!=null);
     }
 }

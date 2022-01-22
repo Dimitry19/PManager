@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.ws.controller.rest.users;
 
+
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.exception.UserException;
@@ -30,7 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -219,6 +219,10 @@ public class UserController extends CommonController {
                 if (user != null) {
                     user.setRetCode(WebServiceResponseCode.OK_CODE);
                     user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+
+                    if(imageCheck(user.getImage())){
+                        manageImage(response,user.getImage().getName(),user.getImage().getPicByte());
+                    }
                     return new ResponseEntity<>(user, HttpStatus.OK);
                 } else {
                     WSCommonResponseVO commonResponse = new WSCommonResponseVO();
@@ -295,7 +299,10 @@ public class UserController extends CommonController {
                     commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                     commonResponse.setRetDescription(WebServiceResponseCode.ERROR_UPD_EMAIL_LABEL);
                     throw new UserNotFoundException("Utilisateur non trouv&egrave;");
+                }
 
+                if(imageCheck(user.getImage())){
+                    manageImage(response,user.getImage().getName(),user.getImage().getPicByte());
                 }
                 return new ResponseEntity<UserVO>(user, HttpStatus.OK);
             }

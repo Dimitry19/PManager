@@ -3,7 +3,9 @@ package cm.packagemanager.pmanager.common.utils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.bind.DatatypeConverter;
@@ -39,6 +41,10 @@ public class FileUtils {
 
     }
 
+    public String getFilename(String data) throws Exception {
+        String filename = data.substring(data.indexOf("filename=")+10, data.indexOf("Content-Type")-3);
+        return filename;
+    }
 
     public String retrieveImageExtension(String base64File) throws Exception {
         if (io.micrometer.core.instrument.util.StringUtils.isBlank(base64File)) {
@@ -85,9 +91,9 @@ public class FileUtils {
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
-
-        byte[] buffer = DatatypeConverter.parseBase64Binary(data);
         File fileSaved = new File(StringUtils.concatenate(uploadDir, fileName));
+        byte[] buffer = convertByteArray( uploadDir, fileName);//(DatatypeConverter.parseBase64Binary(data));
+
         try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(fileSaved))) {
             outputStream.write(buffer);
         } catch (IOException e) {
@@ -179,4 +185,15 @@ public class FileUtils {
     }
 
 
+    public  byte[] convertByteArray(String uploadDir,String fileName) throws IOException {
+
+        Path uploadPath = Paths.get(uploadDir);
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        ClassPathResource imageFile = new ClassPathResource(StringUtils.concatenate(uploadDir,fileName));
+        return StreamUtils.copyToByteArray(imageFile.getInputStream());
+    }
 }

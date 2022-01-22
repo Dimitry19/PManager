@@ -48,8 +48,11 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
     @Autowired
     NotificationDAO notificationDAO;
 
+
+
     final List<Event> events = new ArrayList();
     List alreadySent = new ArrayList();
+    Map finalMap = new HashMap();
 
 
     public void addEvent(Event event) {
@@ -91,11 +94,12 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
         headerAccessor.setLeaveMutable(true);
 
-        Notification notif = new Notification(notification.getId(),notification.getTitle(), notification.getMessage(), NotificationType.ANNOUNCE, notification.getId());
+        Notification notifica = new Notification(notification.getId(),notification.getTitle(), notification.getMessage(), notification.getType(), notification.getId());
 
         Map map= new HashMap();
 
            switch (notification.getType()) {
+                case RESERVATION:
                 case ANNOUNCE:
                 case COMMENT:
                     map= announceListeners;
@@ -107,29 +111,24 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
             }
 
             List<String> listeners = (List<String>) map.keySet().stream().collect(Collectors.toList());
-
-
             Set<UserVO> subscribers= notification.getUsers();
             Set users = subscribers.stream().map(UserVO::getUsername).collect(Collectors.toSet());
-            Map finalMap = map;
+
+            finalMap=map;
             listeners.stream().filter(l->users.contains(l)).forEach(l->{
 
                 String sessionId = (String) finalMap.get(l);
                 headerAccessor.setSessionId(sessionId);
 
-                notif.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
-                logger.info(" notification  {}", notif.getMessage());
-                logger.info(" elaborate {} queue {}", sessionId, notif.getTopic());
-
+                notifica.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
                 alreadySent= (List) getFromSession(l);
 
-                if(CollectionsUtils.isEmpty(alreadySent) ||(CollectionsUtils.isNotEmpty(alreadySent) && !alreadySent.contains(notif))){
+                if(CollectionsUtils.isEmpty(alreadySent) ||(CollectionsUtils.isNotEmpty(alreadySent) && !alreadySent.contains(notifica))){
 
-                    messagingTemplate.convertAndSendToUser(sessionId,notif.getTitle(), notif, headerAccessor.getMessageHeaders());
-                    alreadySent.add(notif);
-                    remove(l);
+                    messagingTemplate.convertAndSendToUser(sessionId,notifica.getTopic(), notifica, headerAccessor.getMessageHeaders());
+                    alreadySent.add(notifica);
+                    removeToSession(l);
                     addToSession(l,alreadySent);
-
                 }
             });
 
@@ -191,7 +190,6 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
         if (connectedUsers.containsKey(userId)) {
             cleanListener(userId);
         }
-
     }
 
     private void persistNotification() {
@@ -207,6 +205,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
             try {
                 notificationDAO.save(notification);
             } catch (Exception e) {
+                logger.error(" Erreur duranrt la sauvegarde de la notification {}",notification.getMessage());
                 e.printStackTrace();
             }
         });

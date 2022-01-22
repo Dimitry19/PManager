@@ -40,7 +40,7 @@ public class AuthenticationFilter implements Filter {
 
         System.out.println("init() method has been get invoked");
         System.out.println("Filter name is " + filterConfig.getFilterName());
-        System.out.println("ServletContext name is" + filterConfig.getServletContext());
+        System.out.println("ServletContext name is " + filterConfig.getServletContext());
         System.out.println("init() method is ended");
     }
 
@@ -52,9 +52,9 @@ public class AuthenticationFilter implements Filter {
 
         logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
 
-        if(!authorized(servletRequest,  servletResponse)){
+        /*if(!authorized(servletRequest,  servletResponse)){
             return;
-        };
+        };*/
 
             //call next filter in the filter chain
         filterChain.doFilter(request, response);

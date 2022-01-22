@@ -63,13 +63,20 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
             throw new RecordNotFoundException("Aucun utilisateur trouvé");
         }
 
-        MessageVO message = findById(new MessageIdVO(mdto.getId(), Constants.DEFAULT_TOKEN));
-        if (message == null) {
+        MessageVO comment = findById(new MessageIdVO(mdto.getId(), Constants.DEFAULT_TOKEN));
+        if (comment == null) {
             throw new RecordNotFoundException("Aucune message  trouvé");
         }
-        message.setContent(mdto.getContent());
-        update(message);
-        return message;
+        comment.setContent(mdto.getContent());
+        update(comment);
+
+        String message= MessageFormat.format(notificationMessagePattern,user.getUsername()
+                ," a modifié son commentaire sur l'annonce "+comment.getAnnounce().getDeparture() +"/"+comment.getAnnounce().getArrival(),
+                " pour la date " + DateUtils.getDateStandard(comment.getAnnounce().getStartDate())
+                        + " et retour le "+ DateUtils.getDateStandard(comment.getAnnounce().getEndDate()));
+
+        generateEvent(comment,message);
+        return comment;
     }
 
     @Override

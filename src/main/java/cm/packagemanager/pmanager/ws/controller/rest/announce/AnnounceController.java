@@ -87,6 +87,10 @@ public class AnnounceController extends CommonController {
                 if (announce != null) {
                     announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "L'annonce"));
                     announce.setRetCode(WebServiceResponseCode.OK_CODE);
+
+                    if(imageCheck(announce.getImage())){
+                        manageImage(response,announce.getImage().getName(),announce.getImage().getPicByte());
+                    }
                     return new ResponseEntity<>(announce, HttpStatus.CREATED);
                 } else {
                     WSCommonResponseVO  commonResponse= new WSCommonResponseVO();
@@ -382,6 +386,9 @@ public class AnnounceController extends CommonController {
                     wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, "L'annonce"));
                     return new ResponseEntity<>((Object) wsResponse, HttpStatus.NOT_FOUND);
 
+                }
+                if(imageCheck(announce.getImage())){
+                    manageImage(response,announce.getImage().getName(),announce.getImage().getPicByte());
                 }
             }
             return new ResponseEntity<>(announce, HttpStatus.OK);
