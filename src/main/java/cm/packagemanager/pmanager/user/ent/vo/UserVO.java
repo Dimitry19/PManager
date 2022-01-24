@@ -236,11 +236,7 @@ public class UserVO extends CommonVO {
         return password;
     }
 
-    public String getFirstName() {
-
-        return firstName;
-    }
-
+    public String getFirstName() { return firstName; }
 
     public String getLastName() {
         return lastName;
@@ -274,7 +270,6 @@ public class UserVO extends CommonVO {
         this.notifications = notifications;
     }
 
-
     public void setGoogleId(String googleId) {
         this.googleId = googleId;
     }
@@ -282,7 +277,6 @@ public class UserVO extends CommonVO {
     public Integer getActive() {
         return active;
     }
-
 
     public Set<RoleVO> getRoles() {
         return roles;
@@ -299,7 +293,6 @@ public class UserVO extends CommonVO {
     public Set<ReviewVO> getReviews() {
         return reviews;
     }
-
 
     public String getConfirmationToken() {
         return confirmationToken;
@@ -477,12 +470,10 @@ public class UserVO extends CommonVO {
         this.subscribers.add(subscriber);
     }
 
-    public void removeSubscriber(UserVO subscriber) {
-
-        this.subscribers.remove(subscriber);
-    }
+    public void removeSubscriber(UserVO subscriber) { this.subscribers.remove(subscriber);  }
 
     public void removeSubscribers() {
+
         Iterator<UserVO> iterator = this.subscribers.iterator();
 
         while (iterator.hasNext()) {
@@ -525,6 +516,7 @@ public class UserVO extends CommonVO {
     }
 
     public void removeReviews() {
+
         Iterator<ReviewVO> iterator = this.reviews.iterator();
 
         while (iterator.hasNext()) {
@@ -536,6 +528,7 @@ public class UserVO extends CommonVO {
     }
 
     public void updateDeleteChildrens() {
+
         Iterator<ReviewVO> itereview = this.reviews.iterator();
 
         while (itereview.hasNext()) {

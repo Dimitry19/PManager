@@ -109,7 +109,10 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         reservation.setValidate(ValidateEnum.INSERTED);
         reservation.setStatus(StatusEnum.VALID);
         save(reservation);
-        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername()," a fait une reservation sur votre annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername(),
+                " a fait une reservation sur votre annonce "+announce.getDeparture() +"/"+announce.getArrival(),
+                " du " + DateUtils.getDateStandard(announce.getStartDate())
+                        + " au "+ DateUtils.getDateStandard(announce.getEndDate()));
         generateEvent(announce,message);
         return reservation;
     }
@@ -142,7 +145,10 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
             reservation.setDescription(reservationDTO.getDescription());
         }
         update(reservation);
-        String message= MessageFormat.format(notificationMessagePattern,user.getUsername()," a modifié une reservation sur votre annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        String message= MessageFormat.format(notificationMessagePattern,user.getUsername(),
+                " a modifié une reservation sur votre annonce "+announce.getDeparture() +"/"+announce.getArrival(),
+                " du " + DateUtils.getDateStandard(announce.getStartDate())
+                        + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()));
         generateEvent(announce,message);
         return reservation;
     }
@@ -164,7 +170,10 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
         update(announce);
         //delete(ReservationVO.class,id,true);
-        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername()," a supprimé une reservation sur votre annonce ",announce.getDeparture() +"/"+announce.getArrival());
+        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername(),
+                " a supprimé une reservation sur votre annonce "+ announce.getDeparture() +"/"+announce.getArrival(),
+                " de la date du " + DateUtils.getDateStandard(announce.getStartDate())
+                        + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()));
         generateEvent(announce,message);
         return updateDelete(reservation);
 
@@ -181,8 +190,18 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         reservation.getAnnounce().setRemainWeight(!reservationDTO.isValidate() ? reservation.getAnnounce().getRemainWeight().add(reservation.getWeight())
                 : reservation.getAnnounce().getRemainWeight());
 
+
         reservation.setValidate(reservationDTO.isValidate() ? ValidateEnum.ACCEPTED : ValidateEnum.REFUSED);
         update(reservation);
+
+        String validate= reservationDTO.isValidate() ?  " accepté ":" refusé ";
+
+        String message= MessageFormat.format(notificationMessagePattern,
+                reservation.getAnnounce().getUser().getUsername(),
+                " a " +validate +" votre reservation sur l' annonce "+ reservation.getAnnounce().getDeparture() +"/"+reservation.getAnnounce().getArrival(),
+                " de la date du " + DateUtils.getDateStandard(reservation.getAnnounce().getStartDate())
+                        + " et retour le "+ DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()));
+        generateEvent(reservation.getAnnounce(),message);
 
         return reservation.getId() != null ? reservation : null;
     }
@@ -284,17 +303,34 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
     @Override
     public void generateEvent(Object obj , String message) throws Exception {
 
-        AnnounceVO announce= (AnnounceVO) obj;
-        UserVO user= announce.getUser();
 
         Set subscribers=new HashSet();
+        Long id =null;
+        UserVO user=null;
+        NotificationType type=null;
+
+        if(obj instanceof AnnounceVO){
+
+            AnnounceVO announce= (AnnounceVO) obj;
+            user= announce.getUser();
+            id=announce.getId();
+            type=NotificationType.ANNOUNCE;
+        }
+
+        if (obj instanceof ReservationVO){
+
+            ReservationVO reservation= (ReservationVO)obj;
+            user= reservation.getUser();
+            id=reservation.getId();
+            type=NotificationType.RESERVATION;
+        }
+
         subscribers.add(user);
 
         if (CollectionsUtils.isNotEmpty(subscribers)){
-            fillProps(props,announce.getId(),message, user.getId(),subscribers);
-            generateEvent( NotificationType.ANNOUNCE);
+            fillProps(props,id,message, user.getId(),subscribers);
+            generateEvent(type);
         }
-
     }
 
     /**

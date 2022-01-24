@@ -2,6 +2,8 @@ package cm.packagemanager.pmanager.notification.firebase.ent.vo;
 
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 
+import java.util.Objects;
+
 public class Notification {
 
     private Long id;
@@ -73,4 +75,19 @@ public class Notification {
     public String getToken() {  return token;  }
 
     public void setToken(String token) {  this.token = token;  }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Notification that = (Notification) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(message, that.message) &&
+                type == that.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, message, type);
+    }
 }

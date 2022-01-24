@@ -81,7 +81,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
             update(subscriber);
             update(subscription);
-            String message= MessageFormat.format(notificationMessagePattern,subscriber.getUsername()," s'est abonné "," à votre profil");
+            String message= MessageFormat.format(notificationMessagePattern,subscriber.getUsername(),
+                    " s'est abonné "," à votre profil");
             generateEvent(subscription,message);
         } else throw new UserException("Une erreur survenue pendant l'abonnement, veuillez reessayer");
     }
