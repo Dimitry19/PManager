@@ -86,8 +86,8 @@ public class ImageVO extends WSCommonResponseVO {
         this.type = type;
     }
 
-	/*@Basic(optional = true)
-	//@Column(name = "PIC_BYTE", length = 15000)
+	@Basic(optional = true)
+	@Column(name = "PIC_BYTE", length = 15000)
 	public byte[] getPicByte() {
 		return picByte;
 	}
@@ -95,7 +95,6 @@ public class ImageVO extends WSCommonResponseVO {
 	public void setPicByte(byte[] picByte) {
 		this.picByte = picByte;
 	}
-*/
 
     /**
      * Avec le mappedBy c'est l'entité UserVO qui se charge de manager la relation
