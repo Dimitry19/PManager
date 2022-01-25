@@ -20,7 +20,7 @@ public class ReviewDTO {
     @NotNull(message = "Le titre doit etre valorisé")
     private String title;
 
-    @NotNull(message = "Les detaails de l'avis  doivent etre valorisés")
+    @NotNull(message = "Les details de l'avis  doivent etre valorisés")
     private String details;
 
     public Long getUserId() {

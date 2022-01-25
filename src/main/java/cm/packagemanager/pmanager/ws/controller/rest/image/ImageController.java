@@ -48,7 +48,7 @@ public class ImageController extends CommonController {
             @ApiResponse(code = 200, message = "Image uploaded",
                     response = ResponseEntity.class, responseContainer = "Object")})
     //@PostMapping(UPLOAD)
-    @RequestMapping(value =UPLOAD, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+    //@RequestMapping(value =UPLOAD, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.MULTIPART_FORM_DATA,headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity.BodyBuilder uploadImage(HttpServletRequest request, HttpServletResponse response,
                                                   @RequestParam("imageFile") MultipartFile file) throws Exception {
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -76,7 +76,7 @@ public class ImageController extends CommonController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Image uploaded",
                     response = ResponseEntity.class, responseContainer = "Object")})
-    //@PutMapping(value = UPLOAD, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+    @PutMapping(value = UPLOAD, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<byte []> uploadImage(HttpServletRequest request, HttpServletResponse response,
                                                @RequestParam("id") @Valid Long id,
                                                @RequestParam("type") @Valid UploadImageType type,
@@ -91,7 +91,9 @@ public class ImageController extends CommonController {
 
             ImageVO image = imageService.save(file, id, type);
             if (!imageCheck(image)) return new ResponseEntity<>(null, headers, HttpStatus.NOT_FOUND);
-            //image.setOrigin(file);
+            image.setOrigin(file);
+
+            String contentType = servletContext.getMimeType(image.getName());
 
             return ResponseEntity.ok().contentType(org.springframework.http.MediaType.IMAGE_JPEG).body(image.getPicByte());
 

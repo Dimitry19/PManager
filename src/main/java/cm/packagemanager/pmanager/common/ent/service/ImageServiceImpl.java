@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -70,9 +71,8 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageVO save(String data, Long id, UploadImageType type) throws Exception {
 
-        String ext = fileUtils.getExtension(data);
-        //data=fileUtils.clean(data);
-        ImageVO image = new ImageVO(fileUtils.compressBytes(data.getBytes()));
+        String filename="rereer.jpeg";//fileUtils.getFilename(data);
+        ImageVO image = new ImageVO();
         switch (type.name()) {
             case USER_TYPE_IMG_UPLOAD:
                 logger.info("save user image");
@@ -82,10 +82,12 @@ public class ImageServiceImpl implements ImageService {
 
                 if (user.getImage() != null) {
                     image = user.getImage();
+                    return image;
                 }
                 image.setType(USER_TYPE_IMG_UPLOAD);
-                image.setName(StringUtils.concatenate(user.getUsername(), "-p", ext));
+                image.setName(filename);
                 fileUtils.saveFileToFileSystem(imageUser, image.getName(), data);
+                image.setPicByte(fileUtils.convertByteArray(imageUser,image.getName()));
                 user.setImage(image);
                 userDAO.update(user);
                 logger.info("save user image end");
@@ -102,8 +104,8 @@ public class ImageServiceImpl implements ImageService {
                 if (announce.getImage() != null) {
                     image = announce.getImage();
                 }
-                image.setName(StringUtils.concatenate(String.valueOf(announce.getId()), UUID.randomUUID().toString().replaceAll("-", ""), ext));
-                announce.setImage(image);
+                image.setName(StringUtils.concatenate(String.valueOf(announce.getId()), UUID.randomUUID().toString().replaceAll("-", ""), "jpeg"));
+                image.setPicByte(fileUtils.convertByteArray(imageUser,image.getName()));                announce.setImage(image);
                 announceDAO.update(announce);
                 logger.info("save announce image end");
                 break;
