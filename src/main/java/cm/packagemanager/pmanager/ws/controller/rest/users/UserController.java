@@ -221,7 +221,7 @@ public class UserController extends CommonController {
                     user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
 
                     if(imageCheck(user.getImage())){
-                        manageImage(response,user.getImage().getName(),user.getImage().getPicByte());
+                        //manageImage(response,user.getImage().getName(),user.getImage().getPicByte());
                     }
                     return new ResponseEntity<>(user, HttpStatus.OK);
                 } else {
@@ -302,7 +302,7 @@ public class UserController extends CommonController {
                 }
 
                 if(imageCheck(user.getImage())){
-                    manageImage(response,user.getImage().getName(),user.getImage().getPicByte());
+                    //manageImage(response,user.getImage().getName(),user.getImage().getPicByte());
                 }
                 return new ResponseEntity<UserVO>(user, HttpStatus.OK);
             }

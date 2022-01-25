@@ -93,7 +93,8 @@ public class ImageController extends CommonController {
             if (!imageCheck(image)) return new ResponseEntity<>(null, headers, HttpStatus.NOT_FOUND);
             //image.setOrigin(file);
 
-            return ResponseEntity.ok().contentType(org.springframework.http.MediaType.IMAGE_JPEG).body(image.getPicByte());
+            return ResponseEntity.ok().contentType(org.springframework.http.MediaType.IMAGE_JPEG).body(null);
+                    //.body(image.getPicByte());
 
            // manageImage(response,image.getName(),image.getPicByte());
             // Write image data to Response.
@@ -165,7 +166,7 @@ public class ImageController extends CommonController {
 
             if (!imageCheck(image)) return new ResponseEntity<ImageVO>(null, headers, HttpStatus.NOT_FOUND);
 
-            manageImage(response,image.getName(),image.getPicByte());
+            //manageImage(response,image.getName(),image.getPicByte());
 
             return new ResponseEntity<ImageVO>(image, headers, HttpStatus.FOUND);
 
