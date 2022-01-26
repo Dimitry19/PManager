@@ -5,3 +5,5 @@ logs
 target
 workspace
 application.log
+application.log
+workspace.xml
