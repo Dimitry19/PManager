@@ -76,11 +76,11 @@ public class ImageController extends CommonController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Image uploaded",
                     response = ResponseEntity.class, responseContainer = "Object")})
-    @PutMapping(value = UPLOAD, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+    @PostMapping(value = UPLOAD, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<byte []> uploadImage(HttpServletRequest request, HttpServletResponse response,
                                                @RequestParam("id") @Valid Long id,
                                                @RequestParam("type") @Valid UploadImageType type,
-                                               @RequestBody String file
+                                               @RequestParam("image") MultipartFile file
     ) throws Exception {
         response.setHeader("Access-Control-Allow-Origin", "*");
         logger.info(" upload user image request in");
@@ -91,17 +91,7 @@ public class ImageController extends CommonController {
 
             ImageVO image = imageService.save(file, id, type);
             if (!imageCheck(image)) return new ResponseEntity<>(null, headers, HttpStatus.NOT_FOUND);
-            image.setOrigin(file);
-
-            String contentType = servletContext.getMimeType(image.getName());
-
-            return ResponseEntity.ok().contentType(org.springframework.http.MediaType.IMAGE_JPEG).body(image.getPicByte());
-
-           // manageImage(response,image.getName(),image.getPicByte());
-            // Write image data to Response.
-           // return new ResponseEntity<ImageVO>(image, headers, HttpStatus.OK);
-
-
+            return manageImage(image.getName(),image.getPicByte());
         } catch (Exception e) {
             logger.error("Erreur durant l'upload de l'image", e);
             throw e;
@@ -155,7 +145,7 @@ public class ImageController extends CommonController {
             @ApiResponse(code = 200, message = "Image retrieve successfull",
                     response = ImageVO.class, responseContainer = "Object")})
     @GetMapping(value = IMAGE, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<ImageVO> getImage(HttpServletRequest request, HttpServletResponse response,
+    public ResponseEntity<byte []> getImage(HttpServletRequest request, HttpServletResponse response,
                                             @PathVariable("imageName") String imageName) throws Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -165,11 +155,9 @@ public class ImageController extends CommonController {
             createOpentracingSpan("ImageController - get image");
             final ImageVO image = imageService.findByName(imageName);
 
-            if (!imageCheck(image)) return new ResponseEntity<ImageVO>(null, headers, HttpStatus.NOT_FOUND);
+            if (!imageCheck(image)) return new ResponseEntity<>(null, headers, HttpStatus.NOT_FOUND);
 
-            manageImage(response,image.getName(),image.getPicByte());
-
-            return new ResponseEntity<ImageVO>(image, headers, HttpStatus.FOUND);
+            return manageImage(image.getName(),image.getPicByte());
 
         } catch (Exception e) {
             logger.error("Erreur durant la recuperation de l'image", e);
@@ -179,39 +167,6 @@ public class ImageController extends CommonController {
         }
     }
 
-    /*@RequestMapping(value = "/upload/base64", method = RequestMethod.POST)
-    @ResponseBody
-    public Result<String> saveBase64(@RequestParam(value = "img") String base64Str) {
-        StringBuffer fileName = new StringBuffer();
-        fileName.append(UUID.randomUUID().toString().replaceAll("-", ""));
-        if (StringUtils.isBlank(base64Str)) {
-            return new Result.Builder<String>().code(-1).msg("file cannot be defaulted").build();
-        } else if (base64Str.indexOf("data:image/png;") != -1) {
-            base64Str = base64Str.replace("data:image/png;base64,", "");
-            fileName.append(".png");
-        } else if (base64Str.indexOf("data:image/jpeg;") != -1) {
-            base64Str = base64Str.replace("data:image/jpeg;base64,", "");
-            fileName.append(".jpeg");
-        } else {
-            return new Result.Builder<String>()
-                    .code(-1)
-                    .msg("Please select a picture in .png.jpg format")
-                    .build();
-        }
-        File file = new File(imagePath, fileName.toString());
-        byte[] fileBytes = Base64.getDecoder().decode(base64Str);
-        try {
-            FileUtils.writeByteArrayToFile(file, fileBytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Result.Builder<String>()
-                    .code(-1)
-                    .msg("Save failed")
-                    .build();
-        }
-        return new Result.Builder<String>().code(0).msg("success").data(imageHost + fileName.toString())
-                .build();
-    }*/
     @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> saveFile(@RequestParam(value = "img") MultipartFile file) {

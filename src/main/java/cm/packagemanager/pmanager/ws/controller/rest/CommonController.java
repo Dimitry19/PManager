@@ -23,6 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -116,19 +117,13 @@ public class CommonController  {
     }
 
 
-    protected void
-    manageImage(HttpServletResponse response,String filename,byte[] data) throws IOException {
+    protected  ResponseEntity<byte []> manageImage(String filename,byte[] data) throws IOException {
 
-        String contentType = servletContext.getMimeType(filename);
-        response.setContentType(contentType);
-        response.setContentLength(data.length);
-        response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
-
-        System.out.println(response.getContentType());
-        System.out.println(response.getHeaderNames());
-        System.out.println(response.getHeader("Content-Disposition"));
-        // Write image data to Response.
-        response.getOutputStream().write(fileUtils.decompressBytes(data));
+         String contentType = servletContext.getMimeType(filename);
+         return ResponseEntity
+                .ok()
+                .contentType(org.springframework.http.MediaType.valueOf(contentType))
+                .body(data);
 
     }
     protected boolean imageCheck(ImageVO image){

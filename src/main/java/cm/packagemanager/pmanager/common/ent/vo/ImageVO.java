@@ -6,8 +6,11 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
 @Entity
 @Table(name = "IMAGE")
@@ -87,13 +90,13 @@ public class ImageVO extends WSCommonResponseVO {
     }
 
 	@Basic(optional = true)
-	@Column(name = "PIC_BYTE", length = 15000)
+	@Column(name = "PIC_BYTE")
 	public byte[] getPicByte() {
-		return picByte;
+		return decompressImage(picByte);
 	}
 
 	public void setPicByte(byte[] picByte) {
-		this.picByte = picByte;
+		this.picByte = compressImage(picByte);
 	}
 
     /**
@@ -150,5 +153,42 @@ public class ImageVO extends WSCommonResponseVO {
     @Override
     public String toString() {
         return "ImagesVO{" + "id=" + id + ", name='" + name + '\'' + ", type='" + type + '\'' + ", picByte=" + Arrays.toString(picByte) + '}';
+    }
+
+
+    public  byte[] decompressImage(byte[] data) {
+        Inflater inflater = new Inflater();
+        inflater.setInput(data);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        byte[] tmp = new byte[4*1024];
+        try {
+            while (!inflater.finished()) {
+                int count = inflater.inflate(tmp);
+                outputStream.write(tmp, 0, count);
+            }
+            outputStream.close();
+        } catch (Exception exception) {
+        }
+        return outputStream.toByteArray();
+    }
+
+    public byte[] compressImage(byte[] data) {
+
+        Deflater deflater = new Deflater();
+        deflater.setLevel(Deflater.BEST_COMPRESSION);
+        deflater.setInput(data);
+        deflater.finish();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        byte[] tmp = new byte[4*1024];
+        while (!deflater.finished()) {
+            int size = deflater.deflate(tmp);
+            outputStream.write(tmp, 0, size);
+        }
+        try {
+            outputStream.close();
+        } catch (Exception e) {
+        }
+        return outputStream.toByteArray();
     }
 }

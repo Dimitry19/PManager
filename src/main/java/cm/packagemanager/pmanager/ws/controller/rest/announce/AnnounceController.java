@@ -89,7 +89,7 @@ public class AnnounceController extends CommonController {
                     announce.setRetCode(WebServiceResponseCode.OK_CODE);
 
                     if(imageCheck(announce.getImage())){
-                        manageImage(response,announce.getImage().getName(),announce.getImage().getPicByte());
+                        //manageImage(response,announce.getImage().getName(),announce.getImage().getPicByte());
                     }
                     return new ResponseEntity<>(announce, HttpStatus.CREATED);
                 } else {
@@ -388,7 +388,7 @@ public class AnnounceController extends CommonController {
 
                 }
                 if(imageCheck(announce.getImage())){
-                    manageImage(response,announce.getImage().getName(),announce.getImage().getPicByte());
+                    //manageImage(response,announce.getImage().getName(),announce.getImage().getPicByte());
                 }
             }
             return new ResponseEntity<>(announce, HttpStatus.OK);

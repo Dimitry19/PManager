@@ -1,9 +1,9 @@
 package cm.packagemanager.pmanager.common.ent.vo;
 
+
 import javax.persistence.Transient;
 
 public class WSCommonResponseVO {
-
 
     private long retCode;
 
