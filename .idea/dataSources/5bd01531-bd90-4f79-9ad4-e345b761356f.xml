@@ -773,7 +773,7 @@ JOB_KEY</ColNames>
     </column>
     <column id="183" parent="19" name="PIC_BYTE">
       <Position>7</Position>
-      <DataType>binary(15000)|-3s</DataType>
+      <DataType>binary|-3s</DataType>
     </column>
     <index id="184" parent="19" name="PRIMARY_KEY_52">
       <NameSurrogate>1</NameSurrogate>
