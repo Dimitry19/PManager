@@ -1,4 +1,5 @@
 .DS_Store
-*/.idea/
-*/logs/
-*/target/
+workspace
+logs
+.idea
+target
