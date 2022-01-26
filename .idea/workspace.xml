@@ -1,35 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="new implementation for socket">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20210327-085537.reason.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20210327-085537.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20211128-103718.reason.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20211128-103718.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20211222-084330.reason.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20211222-084330.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20211222-105836.reason.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20211222-105836.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20211223-055533.reason.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20211223-055533.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f/storage_v2/_src_/database/MANAGER.jZuUXA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f/storage_v2/_src_/database/MANAGER.jZuUXA/schema/VIEWS.TiLeBA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f/storage_v2/_src_/database/MANAGER.jZuUXA/schema/VIEWS.TiLeBA.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.corrupted.20211222-035720.reason.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.corrupted.20211222-035720.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.corrupted.20211222-081606.reason.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.corrupted.20211222-081606.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.corrupted.20211222-084330.reason.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.corrupted.20211222-084330.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.corrupted.20211222-105836.reason.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.corrupted.20211222-105836.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.corrupted.20211223-055533.reason.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.corrupted.20211223-055533.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f5601717-7195-450b-ad74-d596ce5860c7.xml" beforeDir="false" />
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="add gitignore">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documentations/KB" beforeDir="false" afterPath="$PROJECT_DIR$/Documentations/KB" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PackManager/application.log" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -77,18 +52,9 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="116" selection-start-line="116" selection-end-line="116" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
+            <state relative-caret-position="1005">
               <caret line="93" column="26" selection-start-line="93" selection-start-column="26" selection-end-line="93" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -100,17 +66,67 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
+            <state relative-caret-position="1380">
               <caret line="125" column="27" selection-start-line="125" selection-start-column="27" selection-end-line="125" selection-end-column="27" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+            <state>
+              <caret column="9" selection-start-column="9" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Documentations/KB">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="7" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/review/ReviewController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="40" column="45" selection-start-line="40" selection-start-column="45" selection-end-line="40" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2685">
+              <caret line="219" selection-start-line="219" selection-end-line="219" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="585">
+              <caret line="76" selection-start-line="76" selection-end-line="76" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="344" selection-start-line="344" selection-end-line="344" />
+              <folding>
+                <element signature="e#0#6#0" expanded="true" />
+                <element signature="e#0#52#0" expanded="true" />
+                <element signature="e#0#51#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -118,7 +134,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/FileUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
+            <state relative-caret-position="180">
               <caret line="29" selection-start-line="29" selection-end-line="29" />
             </state>
           </provider>
@@ -127,45 +143,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/ImageVO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
+            <state relative-caret-position="1050">
               <caret line="98" column="45" selection-start-line="98" selection-start-column="45" selection-end-line="98" selection-end-column="45" />
-              <folding>
-                <element signature="e#1#48#0" expanded="true" />
-                <element signature="e#1369#1370#0" expanded="true" />
-                <element signature="e#1407#1408#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/WSCommonResponseVO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Documentations/batch.txt">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Documentations/examples.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.2.6.RELEASE/spring-core-5.2.6.RELEASE.jar!/org/springframework/cglib/proxy/MethodProxy.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="104" selection-start-line="104" selection-end-line="104" />
             </state>
           </provider>
         </entry>
@@ -230,7 +209,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/QuartzNoCronConfiguration.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/cron/UserManagerJob.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/cron/QuartzSubmitJobs.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java" />
@@ -281,6 +259,7 @@
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/Documentations/KB" />
       </list>
     </option>
   </component>
@@ -308,7 +287,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="CatdeaLogs" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -326,13 +304,18 @@
               <item name="PManager" type="462c0819:PsiDirectoryNode" />
               <item name="Documentations" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManager" type="462c0819:PsiDirectoryNode" />
+              <item name="logs" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="AndroidView" />
+      <pane id="CatdeaLogs" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -348,9 +331,9 @@
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="H2" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/ddl" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/src/main/resources/PMFrontend/node_modules/typescript/lib" />
   </component>
@@ -470,20 +453,7 @@
       <workItem from="1640200567904" duration="853000" />
       <workItem from="1640284984742" duration="5521000" />
       <workItem from="1641110726396" duration="10193000" />
-    </task>
-    <task id="LOCAL-00002" summary="Ajout de la categorie de l'annonce">
-      <created>1613639171805</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1613639171805</updated>
-    </task>
-    <task id="LOCAL-00003" summary="commit file de .idea (contraint)">
-      <created>1613639338741</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1613639338742</updated>
+      <workItem from="1643220527389" duration="765000" />
     </task>
     <task id="LOCAL-00004" summary="commit file de .idea (contraint)">
       <created>1614461530546</created>
@@ -814,11 +784,25 @@
       <option name="project" value="LOCAL" />
       <updated>1643158558271</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="add gitignore">
+      <created>1643158840905</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1643158840905</updated>
+    </task>
+    <task id="LOCAL-00052" summary="add gitignore">
+      <created>1643220637891</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1643220637892</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="370183000" />
+    <option name="totallyTimeSpent" value="371702000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -831,9 +815,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8508065" visible="true" weight="0.23748212" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.85130113" visible="true" weight="0.24034335" />
       <window_info id="Structure" order="1" sideWeight="0.14919356" side_tool="true" weight="0.23748212" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -846,17 +829,17 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32713756" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4806867" weight="0.31598514" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.490701" visible="true" weight="0.38537794" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.490701" weight="0.38537794" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
-      <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
-      <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.32689655" />
+      <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" visible="true" weight="0.3283767" />
+      <window_info active="true" anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" visible="true" weight="0.32713756" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5193133" side_tool="true" weight="0.31670824" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.48426324" weight="0.38289964" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.48354793" weight="0.36159602" />
+      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.48354793" weight="0.3605948" />
       <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49928468" weight="0.46633416" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
       <window_info anchor="bottom" id="Inspection Results" order="16" weight="0.32917705" />
@@ -1063,12 +1046,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>76</line>
-          <properties />
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
           <line>79</line>
           <properties />
           <option name="timeStamp" value="59" />
@@ -1139,6 +1116,18 @@
           <properties />
           <option name="timeStamp" value="122" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/review/ReviewController.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java</url>
+          <line>219</line>
+          <properties />
+          <option name="timeStamp" value="126" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
@@ -1191,23 +1180,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/rating/ent/vo/RatingCountVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="716">
-          <caret line="95" column="8" selection-start-line="95" selection-start-column="8" selection-end-line="95" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/USER">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1270,13 +1242,6 @@
     <entry file="file://$PROJECT_DIR$/ws-requests/announce/announce-by-user.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="76" selection-start-line="76" selection-end-line="76" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.2.6.RELEASE/spring-core-5.2.6.RELEASE-sources.jar!/org/springframework/cglib/proxy/MethodProxy.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/reservation/ReservationController.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1293,9 +1258,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20210327-085537.reason.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20210327-085537.reason.txt" />
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1317,13 +1280,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/review/ReviewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="40" column="45" selection-start-line="40" selection-start-column="45" selection-end-line="40" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -1379,13 +1335,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="304" column="22" selection-start-line="304" selection-start-column="22" selection-end-line="304" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/constant/WSConstants.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
@@ -1414,13 +1363,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ddl/dump_database/pm-202201.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="145" column="18" selection-start-line="145" selection-start-column="13" selection-end-line="145" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/ddl/dump_database/pm-202201.sql" />
     <entry file="file://$PROJECT_DIR$/ddl/pm-202201.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1448,35 +1391,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/ImageVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="98" column="45" selection-start-line="98" selection-start-column="45" selection-end-line="98" selection-end-column="45" />
-          <folding>
-            <element signature="e#1#48#0" expanded="true" />
-            <element signature="e#1369#1370#0" expanded="true" />
-            <element signature="e#1407#1408#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/FileUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
+        <state relative-caret-position="1410">
           <caret line="116" selection-start-line="116" selection-end-line="116" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
+        <state relative-caret-position="1005">
           <caret line="93" column="26" selection-start-line="93" selection-start-column="26" selection-end-line="93" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1486,15 +1410,69 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
+        <state relative-caret-position="1380">
           <caret line="125" column="27" selection-start-line="125" selection-start-column="27" selection-end-line="125" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/review/ReviewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="40" column="45" selection-start-line="40" selection-start-column="45" selection-end-line="40" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2685">
+          <caret line="219" selection-start-line="219" selection-end-line="219" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/FileUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/ImageVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1050">
+          <caret line="98" column="45" selection-start-line="98" selection-start-column="45" selection-end-line="98" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="344" selection-start-line="344" selection-end-line="344" />
+          <folding>
+            <element signature="e#0#6#0" expanded="true" />
+            <element signature="e#0#52#0" expanded="true" />
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        <state>
+          <caret column="9" selection-start-column="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Documentations/KB">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="7" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -1509,7 +1487,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -1557,6 +1534,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
