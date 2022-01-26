@@ -3,3 +3,5 @@ workspace
 logs
 .idea
 target
+workspace
+application.log
