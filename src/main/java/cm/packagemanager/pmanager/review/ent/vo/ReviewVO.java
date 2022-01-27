@@ -19,7 +19,7 @@ https://github.com/cloudControl/spring-boot-example-app/tree/master/src/main
 @Entity
 @Table(name = "REVIEW", schema = "PUBLIC")
 @NamedQueries({
-        @NamedQuery(name = ReviewVO.RATING, query = "select new cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO(r.rating, count(r)) from ReviewVO r where r.user =:userId group by r.rating order by r.rating DESC"),
+        @NamedQuery(name = ReviewVO.RATING, query = "select new cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO(r.rating, count(r)) from ReviewVO r where r.ratingUser =:userId group by r.rating order by r.rating DESC"),
 })
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
@@ -47,13 +47,7 @@ public class ReviewVO extends CommonVO {
 
     private ReviewIdVO reviewId;
 
-    public ReviewIdVO getReviewId() {
-        return reviewId;
-    }
 
-    public void setReviewId(ReviewIdVO reviewId) {
-        this.reviewId = reviewId;
-    }
 
     @Id
     @GeneratedValue
@@ -71,14 +65,14 @@ public class ReviewVO extends CommonVO {
         return this.user;
     }
 
-	/*@Access(AccessType.PROPERTY)
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
-	@JoinColumn(name="RATING_USER_ID", updatable = false)
-	@JsonBackReference
-	@JsonProperty
-	public UserVO getRatingUser() {
-		return ratingUser;
-	}*/
+    @Access(AccessType.PROPERTY)
+    @ManyToOne(optional = false)
+    @JoinColumn(name="RATING_USER_ID", updatable = false)
+    @JsonBackReference
+    @JsonProperty
+    public UserVO getRatingUser() {
+        return ratingUser;
+    }
 
     @Column(name = "INDEXES", nullable = false)
     public int getIndex() {
@@ -99,6 +93,10 @@ public class ReviewVO extends CommonVO {
     @Column(name = "DETAILS", nullable = false, length = 5000)
     public String getDetails() {
         return this.details;
+    }
+
+    public void setReviewId(ReviewIdVO reviewId) {
+        this.reviewId = reviewId;
     }
 
     public void setTitle(String title) {
@@ -125,15 +123,14 @@ public class ReviewVO extends CommonVO {
         this.index = index;
     }
 
+    public void setRatingUser(UserVO ratingUser) {    this.ratingUser = ratingUser;    }
+
+    public ReviewIdVO getReviewId() {   return reviewId;  }
+
     public ReviewVO() {
         super();
     }
 
-
-    public ReviewVO(UserVO user, UserVO ratingUser, int index, ReviewDetailsVO details) {
-        new ReviewVO(user, index, details);
-        this.ratingUser = ratingUser;
-    }
 
     public ReviewVO(UserVO user, int index, ReviewDetailsVO details) {
         Assert.notNull(user, "User must not be null");
@@ -143,6 +140,18 @@ public class ReviewVO extends CommonVO {
         this.rating = details.getRating();
         this.title = details.getTitle();
         this.details = details.getDetails();
+    }
+
+    public ReviewVO(UserVO user, UserVO ratingUser, int index, ReviewDetailsVO details) {
+
+        Assert.notNull(user, "User must not be null");
+        Assert.notNull(details, "Details must not be null");
+        this.user = user;
+        this.index = index;
+        this.rating = details.getRating();
+        this.title = details.getTitle();
+        this.details = details.getDetails();
+        this.ratingUser=ratingUser;
     }
 
     @Override
@@ -169,4 +178,5 @@ public class ReviewVO extends CommonVO {
             return other.title == null;
         } else return title.equals(other.title);
     }
+
 }

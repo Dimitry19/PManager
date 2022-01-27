@@ -6,6 +6,8 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import jdk.nashorn.internal.runtime.options.Option;
+import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -34,19 +36,17 @@ public class ReviewDAOImpl extends Generic implements ReviewDAO {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public ReviewVO save(ReviewVO review) throws Exception {
-        Session session = sessionFactory.getCurrentSession();
-        session.save(review);
-        return session.get(ReviewVO.class, review.getId());
+    public ReviewVO saves(ReviewVO review) throws Exception {
+                save(review);
+        return (ReviewVO) findById(ReviewVO.class, review.getId());
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public ReviewVO update(ReviewVO review) throws BusinessResourceException {
         logger.info("Review: update ");
-        Session session = this.sessionFactory.getCurrentSession();
         if (review != null) {
-            session.update(review);
+            update(review);
             return review;
         }
         return null;
@@ -57,9 +57,7 @@ public class ReviewDAOImpl extends Generic implements ReviewDAO {
     public ReviewVO findById(Long id) throws Exception {
         try {
             logger.info("Review: find by id");
-            Session session = sessionFactory.getCurrentSession();
-            session.enableFilter(FilterConstants.CANCELLED);
-            return session.find(ReviewVO.class, id);
+            return (ReviewVO) find(ReviewVO.class, id, FilterConstants.CANCELLED);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -82,12 +80,11 @@ public class ReviewDAOImpl extends Generic implements ReviewDAO {
 
         try {
 
-            Session session = sessionFactory.getCurrentSession();
             ReviewVO review = (ReviewVO) findByIdViaSession(ReviewVO.class, id).get();
             if (review != null) {
                 review.setCancelled(true);
-                session.merge(review);
-                review = session.get(ReviewVO.class, id);
+                merge(review);
+                review = (ReviewVO) findById(ReviewVO.class, id);
                 result = (review != null) && (review.isCancelled());
             }
         } catch (Exception e) {
