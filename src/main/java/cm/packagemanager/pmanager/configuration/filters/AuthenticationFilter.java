@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +53,19 @@ public class AuthenticationFilter implements Filter {
 
         logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
 
-        /*if(!authorized(servletRequest,  servletResponse)){
+        if(!authorized(servletRequest,  servletResponse)){
             return;
-        };*/
+        }
+
+        HttpSession sessionObj = request.getSession(false);
+
+        if (sessionObj == null) {
+            logger.info("Session not available, creating new session.");
+            sessionObj = request.getSession(true);
+        }
+
+        String activeSessions = sessionObj.getAttribute("activeSessions")!=null
+                ?sessionObj.getAttribute("activeSessions").toString()     :"0";
 
             //call next filter in the filter chain
         filterChain.doFilter(request, response);
