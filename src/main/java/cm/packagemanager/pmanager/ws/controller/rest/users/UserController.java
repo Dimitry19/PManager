@@ -34,6 +34,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
@@ -209,6 +210,8 @@ public class UserController extends CommonController {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.addCookie(new Cookie("username", login.getUsername()));
         UserVO user = null;
+
+
 
         try {
             createOpentracingSpan("UserController -login");

@@ -6,33 +6,25 @@ import cm.packagemanager.pmanager.announce.ent.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.ent.service.MailService;
-import cm.packagemanager.pmanager.common.session.SessionManager;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.message.ent.service.MessageService;
 import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificationService;
 import cm.packagemanager.pmanager.notification.firebase.ent.service.PushNotificationService;
 import cm.packagemanager.pmanager.user.ent.service.RoleService;
 import cm.packagemanager.pmanager.user.ent.service.UserService;
-import cm.packagemanager.pmanager.websocket.client.listeners.SessionListener;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import io.opentracing.util.GlobalTracer;
-import org.apache.catalina.Session;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.server.WebSession;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
-import javax.servlet.SessionTrackingMode;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -127,7 +119,6 @@ public class CommonController  {
 
     }
     protected boolean imageCheck(ImageVO image){
-        //return (image!=null && image.getPicByte()!=null);
-        return false;
+        return (image!=null && image.getPicByte()!=null);
     }
 }
