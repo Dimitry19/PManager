@@ -157,6 +157,8 @@ public class ImageVO extends WSCommonResponseVO {
 
 
     public  byte[] decompressImage(byte[] data) {
+
+        if (data== null) return null;
         Inflater inflater = new Inflater();
         inflater.setInput(data);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
@@ -173,6 +175,9 @@ public class ImageVO extends WSCommonResponseVO {
     }
 
     public byte[] compressImage(byte[] data) {
+
+        if (data== null) return null;
+
 
         Deflater deflater = new Deflater();
         deflater.setLevel(Deflater.BEST_COMPRESSION);
