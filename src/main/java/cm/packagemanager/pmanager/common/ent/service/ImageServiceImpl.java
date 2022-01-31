@@ -83,7 +83,7 @@ public class ImageServiceImpl implements ImageService {
                 if (user == null)
                     throw new UserNotFoundException();
 
-                if (user.getImage() != null) {
+               if (user.getImage() != null) {
                     image = user.getImage();
                 }
                 image.setType(USER_TYPE_IMG_UPLOAD);
@@ -102,9 +102,9 @@ public class ImageServiceImpl implements ImageService {
                 if (announce == null)
                     throw new Exception("Announce non trouvée");
 
-                if (announce.getImage() != null) {
+               /* if (announce.getImage() != null) {
                     image = announce.getImage();
-                }
+                }*/
                 image.setName(file.getOriginalFilename());
                 image.setPicByte(file.getBytes());
                 announce.setImage(image);

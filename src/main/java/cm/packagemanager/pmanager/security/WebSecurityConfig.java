@@ -16,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
+import static cm.packagemanager.pmanager.constant.WSConstants.BASE_PATTERN;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -59,37 +61,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("user").password("{noop}password").roles("USER");
 
-        String password = "password2";
-
-        String encrytedPassword = "$2a$10$PTJsddL7mIzmov0UE4lBNuSpWUQocANJbSnkRfOfrgKDF2SVrUB8W";//this.passwordEncoder().encode(password);
-        //System.out.println("Encoded password of password2=" + encrytedPassword);
-
-
-        InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder> //
-                mngConfig = auth.inMemoryAuthentication();
-
-        // Defines 2 users, stored in memory.
-        // ** Spring BOOT >= 2.x (Spring Security 5.x)
-        // Spring auto add ROLE_
-        //UserDetails u1 = User.withUsername("demo").password(encrytedPassword).roles("USER").build();
-        //UserDetails u2 = User.withUsername("demo1").password(encrytedPassword).roles("USER").build();
-
-        //mngConfig.withUser(u1);
-        //mngConfig.withUser(u2);
-
-        // If Spring BOOT < 2.x (Spring Security 4.x)):
-        // Spring auto add ROLE_
-        // mngConfig.withUser("tom").password("123").roles("USER");
-        // mngConfig.withUser("jerry").password("123").roles("USER");
     }
 
     @Bean
     public FilterRegistrationBean<AuthenticationFilter> filterRegistrationBean() {
         FilterRegistrationBean<AuthenticationFilter> registrationBean = new FilterRegistrationBean();
-        AuthenticationFilter customURLFilter = new AuthenticationFilter();
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
 
-        registrationBean.setFilter(customURLFilter);
-        registrationBean.addUrlPatterns("/user/*");
+        registrationBean.setFilter(authenticationFilter);
+        registrationBean.addUrlPatterns(BASE_PATTERN);
         registrationBean.setOrder(2); //set precedence
         return registrationBean;
     }

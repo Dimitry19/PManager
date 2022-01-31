@@ -127,7 +127,7 @@ public class CommonController  {
 
     }
     protected boolean imageCheck(ImageVO image){
-        //return (image!=null && image.getPicByte()!=null);
-        return false;
+        return (image!=null && image.getPicByte()!=null);
+
     }
 }

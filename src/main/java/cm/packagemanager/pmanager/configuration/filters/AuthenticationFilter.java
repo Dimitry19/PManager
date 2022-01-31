@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,9 +18,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cm.packagemanager.pmanager.constant.WSConstants.*;
+
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
-//@WebFilter(urlPatterns = "/users")
 public class AuthenticationFilter implements Filter {
 
     private static Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
@@ -38,11 +37,11 @@ public class AuthenticationFilter implements Filter {
         logger.info("########## Initiating AuthenticationFilter filter ##########");
         // this method will be called by container while deployment
 
-
+/*
         System.out.println("init() method has been get invoked");
         System.out.println("Filter name is " + filterConfig.getFilterName());
         System.out.println("ServletContext name is " + filterConfig.getServletContext());
-        System.out.println("init() method is ended");
+        System.out.println("init() method is ended");*/
     }
 
     @Override
@@ -54,18 +53,10 @@ public class AuthenticationFilter implements Filter {
         logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
 
         if(!authorized(servletRequest,  servletResponse)){
-            return;
+           // return;
         }
 
-        HttpSession sessionObj = request.getSession(false);
-
-        if (sessionObj == null) {
-            logger.info("Session not available, creating new session.");
-            sessionObj = request.getSession(true);
-        }
-
-        String activeSessions = sessionObj.getAttribute("activeSessions")!=null
-                ?sessionObj.getAttribute("activeSessions").toString()     :"0";
+        //validateSession(servletRequest);
 
             //call next filter in the filter chain
         filterChain.doFilter(request, response);
@@ -93,9 +84,11 @@ public class AuthenticationFilter implements Filter {
 
 
         String apiKey=request.getHeader("AUTH_API_KEY");
-        String calledUrl=request.getRequestURI();
+        boolean isService=request.getRequestURI().contains(service);
+        boolean isConfirm=request.getRequestURI().contains("confirm");
+        boolean isNotApiKey=(StringUtils.isEmpty(apiKey)|| !apiKey.equals(token));
 
-        if(!calledUrl.contains("confirm")&&calledUrl.contains(service) && (StringUtils.isEmpty(apiKey)|| !apiKey.equals(token))){
+        if(!isConfirm && isService && isNotApiKey){
             ErrorResponse errorResponse = new ErrorResponse();
             List<String> details= new ArrayList();
             errorResponse.setCode(codes);
@@ -110,6 +103,39 @@ public class AuthenticationFilter implements Filter {
         }
 
         return true;
+    }
 
+    private void validateSession(ServletRequest servletRequest){
+
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        String uri=request.getRequestURI();
+
+        String apiKey=request.getHeader("AUTH_API_KEY");
+        boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(token));
+        boolean isService=uri.contains(service) && isApiKey;
+
+        boolean isLogout=uri.contains(USER_WS_LOGOUT);
+        boolean isLogin=uri.contains(USER_WS_LOGIN);
+
+        HttpSession sessionObj = request.getSession(false);
+
+
+        if(isService && isLogin){
+            //check session exist or not if not available create new session
+            if (sessionObj == null) {
+                logger.info("Session not available, creating new session.");
+                String user=(String)request.getAttribute("user-x");
+                sessionObj = request.getSession(Boolean.TRUE);
+            }
+        }
+
+        if(isService && isLogout){
+            //check session exist or not if  available invalidate  session
+            if (sessionObj == null) {
+                logger.info("Session  available, invalidate  session.");
+                String sessionId=(String)request.getSession().getId();
+                sessionObj.invalidate();
+            }
+        }
     }
 }

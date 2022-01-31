@@ -34,6 +34,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
@@ -761,7 +762,11 @@ public class UserController extends CommonController {
                 response.addCookie(cookie);
             }
         }
+        HttpSession sessionObj = request.getSession(false);
 
+        if (sessionObj != null) {
+            sessionObj.invalidate();
+        }
 
         Response pmResponse = new Response();
         pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);

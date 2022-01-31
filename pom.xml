@@ -345,6 +345,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>-->
+
 	</dependencies>
 
 	<build>
@@ -371,7 +372,6 @@
     				</execution> 
   				</executions> 
 			</plugin>
-
 
 			<!-- Ceci permet de le frontend compilé-->
 
