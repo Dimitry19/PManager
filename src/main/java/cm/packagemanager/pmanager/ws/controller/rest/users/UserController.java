@@ -222,10 +222,6 @@ public class UserController extends CommonController {
                 if (user != null) {
                     user.setRetCode(WebServiceResponseCode.OK_CODE);
                     user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
-
-                    if(imageCheck(user.getImage())){
-                        //manageImage(response,user.getImage().getName(),user.getImage().getPicByte());
-                    }
                     return new ResponseEntity<>(user, HttpStatus.OK);
                 } else {
                     WSCommonResponseVO commonResponse = new WSCommonResponseVO();
@@ -302,10 +298,6 @@ public class UserController extends CommonController {
                     commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                     commonResponse.setRetDescription(WebServiceResponseCode.ERROR_UPD_EMAIL_LABEL);
                     throw new UserNotFoundException("Utilisateur non trouv&egrave;");
-                }
-
-                if(imageCheck(user.getImage())){
-                    //manageImage(response,user.getImage().getName(),user.getImage().getPicByte());
                 }
                 return new ResponseEntity<UserVO>(user, HttpStatus.OK);
             }
