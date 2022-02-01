@@ -2,10 +2,12 @@ package cm.packagemanager.pmanager.configuration.filters;
 
 
 import cm.packagemanager.pmanager.common.exception.ErrorResponse;
+import cm.packagemanager.pmanager.common.session.SessionManager;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -29,8 +31,18 @@ public class AuthenticationFilter implements Filter {
     @Value("${custom.api.auth.http.tokenValue}")
     private String token;
 
+    @Value("${custom.api.auth.http.tokenName}")
+    private String tokenName;
+
+    @Value("${custom.session.user}")
+    private String sessionHeader;
+
+
     @Value("${url.service}")
     private String service;
+
+    @Autowired
+    SessionManager sessionManager;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -56,9 +68,10 @@ public class AuthenticationFilter implements Filter {
             return;
         }
 
-        validateSession(servletRequest);
-
-            //call next filter in the filter chain
+        if(!validateSession(servletRequest,  servletResponse)){
+            return;
+        }
+        //call next filter in the filter chain
         filterChain.doFilter(request, response);
 
         logger.info("Logging Response :{}", response.getContentType());
@@ -79,63 +92,89 @@ public class AuthenticationFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String[] codes=new String[1];
-        codes[0]="401";
 
-
-        String apiKey=request.getHeader("AUTH_API_KEY");
+        String apiKey=request.getHeader(tokenName);
         boolean isService=request.getRequestURI().contains(service);
         boolean isConfirm=request.getRequestURI().contains("confirm");
         boolean isNotApiKey=(StringUtils.isEmpty(apiKey)|| !apiKey.equals(token));
 
         if(!isConfirm && isService && isNotApiKey){
-            ErrorResponse errorResponse = new ErrorResponse();
-            List<String> details= new ArrayList();
-            errorResponse.setCode(codes);
-            errorResponse.setDetails(details);
-            errorResponse.setMessage("Unauthorized Access");
-
-            byte[] responseToSend = restResponseBytes(errorResponse);
-            ((HttpServletResponse) response).setHeader("Content-Type", "application/json");
-            ((HttpServletResponse) response).setStatus(401);
-            response.getOutputStream().write(responseToSend);
+            error(response);
             return false;
         }
 
         return true;
     }
 
-    private void validateSession(ServletRequest servletRequest){
+    private boolean validateSession(ServletRequest servletRequest,ServletResponse servletResponse) throws IOException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
         String uri=request.getRequestURI();
 
-        String apiKey=request.getHeader("AUTH_API_KEY");
+        String apiKey=request.getHeader(tokenName);
+        String user=request.getHeader(sessionHeader);
+
         boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(token));
         boolean isService=uri.contains(service) && isApiKey;
 
         boolean isLogout=uri.contains(USER_WS_LOGOUT);
         boolean isLogin=uri.contains(USER_WS_LOGIN);
 
+        boolean isServiceLogin=isService && isLogin;
+        boolean isServiceLogout=isService && isLogout;
+
         HttpSession sessionObj = request.getSession(false);
 
-
-        if(isService && isLogin){
+        if(isServiceLogin){
             //check session exist or not if not available create new session
             if (sessionObj == null) {
                 logger.info("Session not available, creating new session.");
-                String user=(String)request.getAttribute("user-x");
                 sessionObj = request.getSession(Boolean.TRUE);
+                sessionManager.addToSession(user,sessionObj);
+                return Boolean.TRUE;
+
             }
         }
 
-        if(isService && isLogout){
-            //check session exist or not if  available invalidate  session
+        if(isServiceLogout){
             if (sessionObj == null) {
                 logger.info("Session  available, invalidate  session.");
-                String sessionId=(String)request.getSession().getId();
-                sessionObj.invalidate();
+                sessionObj=(HttpSession)sessionManager.getFromSession(user);
+            }
+            sessionObj.invalidate();
+            return Boolean.TRUE;
+
+        }
+
+        if(isService && !isServiceLogin && !isServiceLogout){
+
+            sessionObj=(HttpSession)sessionManager.getFromSession(user);
+
+            if (sessionObj == null) {
+                logger.info("Session  available, invalidate  session.");
+                error(response);
+                return Boolean.FALSE;
             }
         }
+        return Boolean.TRUE;
+    }
+
+
+    private void error(HttpServletResponse response) throws IOException {
+
+        String[] codes=new String[1];
+        codes[0]="401";
+        ErrorResponse errorResponse = new ErrorResponse();
+        List<String> details= new ArrayList();
+        errorResponse.setCode(codes);
+        errorResponse.setDetails(details);
+        errorResponse.setMessage("Unauthorized Access");
+
+        byte[] responseToSend = restResponseBytes(errorResponse);
+        response.setHeader("Content-Type", "application/json");
+        response.setStatus(401);
+        response.getOutputStream().write(responseToSend);
     }
 }

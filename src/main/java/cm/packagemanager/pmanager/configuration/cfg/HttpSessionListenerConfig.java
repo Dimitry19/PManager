@@ -26,13 +26,14 @@ public class HttpSessionListenerConfig {
             @Override
             public void sessionCreated(HttpSessionEvent se) {
                 logger.info("Session Created with session id {}" , se.getSession().getId());
-                sessions.put(se.getSession().getAttribute("user-x"),se.getSession().getId());
+
+                sessions.put(se.getSession().getAttribute("session-user"),se.getSession().getId());
 
             }
             @Override
             public void sessionDestroyed(HttpSessionEvent se) {
                 logger.info("Session Destroyed, Session id {}" , se.getSession().getId());
-                sessions.remove(se.getSession().getAttribute("user-x"));
+                sessions.remove(se.getSession().getAttribute("session-user"));
             }
         };
     }

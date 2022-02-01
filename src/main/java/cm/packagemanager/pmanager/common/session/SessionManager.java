@@ -5,12 +5,16 @@
 
 package cm.packagemanager.pmanager.common.session;
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class SessionManager<K,V> {
 
     protected Map session = new HashMap();
+
 
     public void  addToSession(K k, V v){
 

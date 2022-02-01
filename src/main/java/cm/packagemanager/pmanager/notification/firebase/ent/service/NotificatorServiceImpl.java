@@ -37,7 +37,7 @@ import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.
 
 @Service("notificator")
 @EnableScheduling
-public class NotificatorServiceImpl extends SessionManager implements NotificationSocketService  {
+public class NotificatorServiceImpl implements NotificationSocketService  {
 
     private static Logger logger = LoggerFactory.getLogger(NotificatorServiceImpl.class);
 
@@ -47,6 +47,9 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
 
     @Autowired
     NotificationDAO notificationDAO;
+
+    @Autowired
+    SessionManager sessionManager;
 
 
 
@@ -121,14 +124,14 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
                 headerAccessor.setSessionId(sessionId);
 
                 notifica.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
-                alreadySent= (List) getFromSession(l);
+                alreadySent= (List) sessionManager.getFromSession(l);
 
                 if(CollectionsUtils.isEmpty(alreadySent) ||(CollectionsUtils.isNotEmpty(alreadySent) && !alreadySent.contains(notifica))){
 
                     messagingTemplate.convertAndSendToUser(sessionId,notifica.getTopic(), notifica, headerAccessor.getMessageHeaders());
                     alreadySent.add(notifica);
-                    removeToSession(l);
-                    addToSession(l,alreadySent);
+                    sessionManager.removeToSession(l);
+                    sessionManager.addToSession(l,alreadySent);
                 }
             });
 
@@ -245,7 +248,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
     public void addConnectedUser(String userId, String sessionId) {
         connectedUsers.put(userId, sessionId);
         sessionUserMap.put(sessionId, userId);
-        addToSession(userId, new ArrayList());
+        sessionManager.addToSession(userId, new ArrayList());
     }
 
     public String getConnectedUser(String sessionId) {
@@ -255,7 +258,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
 
     public void removeConnectedUser(String sessionId) {
         String userId = (String) sessionUserMap.get(sessionId);
-        removeToSession(userId);
+        sessionManager.removeToSession(userId);
 
         if(StringUtils.isEmpty(userId)) return;
 

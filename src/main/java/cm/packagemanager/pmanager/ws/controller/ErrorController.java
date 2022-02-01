@@ -24,14 +24,9 @@ public class ErrorController {
 
     @RequestMapping(value = "/error", produces = "application/json")
     @ResponseBody
-    public Map<String, Object> handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("status", request.getAttribute("javax.servlet.error.status_code"));
-        map.put("reason", request.getAttribute("javax.servlet.error.message"));
+    public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.sendRedirect(redirectPage);
-        return map;
     }
 
     //@Override

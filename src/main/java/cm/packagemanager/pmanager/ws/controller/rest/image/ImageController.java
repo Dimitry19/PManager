@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
-import java.util.UUID;
 
 import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
