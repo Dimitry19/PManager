@@ -38,35 +38,6 @@ public class ImageController extends CommonController {
     @Autowired
     ImageService imageService;
 
-    @ApiOperation(value = "Upload image ", response = ResponseEntity.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 500, message = "Server error"),
-            @ApiResponse(code = 200, message = "Successfully Image uploaded"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-            @ApiResponse(code = 200, message = "Image uploaded",
-                    response = ResponseEntity.class, responseContainer = "Object")})
-    //@PostMapping(UPLOAD)
-    //@RequestMapping(value =UPLOAD, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.MULTIPART_FORM_DATA,headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity.BodyBuilder uploadImage(HttpServletRequest request, HttpServletResponse response,
-                                                  @RequestParam("imageFile") MultipartFile file) throws Exception {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        logger.info(" upload image request in");
-        try {
-            createOpentracingSpan("ImageController - upload image");
-            logger.debug("Original Image Byte Size :" + file.getBytes().length);
-            //imageService.save(img);
-            return ResponseEntity.status(HttpStatus.OK);
-
-        } catch (Exception e) {
-            logger.error("Erreur durant l'upload de l'image", e);
-            throw e;
-        } finally {
-            finishOpentracingSpan();
-        }
-    }
-
     @ApiOperation(value = "Upload user or announce image ", response = ResponseEntity.class)
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Server error"),
@@ -77,7 +48,7 @@ public class ImageController extends CommonController {
             @ApiResponse(code = 200, message = "Image uploaded",
                     response = ResponseEntity.class, responseContainer = "Object")})
     @PostMapping(value = UPLOAD, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<byte []> uploadImage(HttpServletRequest request, HttpServletResponse response,
+    public ResponseEntity<ImageVO> uploadImage(HttpServletRequest request, HttpServletResponse response,
                                                @RequestParam("id") @Valid Long id,
                                                @RequestParam("type") @Valid UploadImageType type,
                                                @RequestParam("image") MultipartFile file
@@ -91,7 +62,8 @@ public class ImageController extends CommonController {
 
             ImageVO image = imageService.save(file, id, type);
             if (!imageCheck(image)) return new ResponseEntity<>(null, headers, HttpStatus.NOT_FOUND);
-            return manageImage(image.getName(),image.getPicByte());
+
+            return ResponseEntity.status(HttpStatus.OK).body(image);
         } catch (Exception e) {
             logger.error("Erreur durant l'upload de l'image", e);
             throw e;
@@ -145,7 +117,7 @@ public class ImageController extends CommonController {
             @ApiResponse(code = 200, message = "Image retrieve successfull",
                     response = ImageVO.class, responseContainer = "Object")})
     @GetMapping(value = IMAGE, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<byte []> getImage(HttpServletRequest request, HttpServletResponse response,
+    public ResponseEntity<ImageVO> getImage(HttpServletRequest request, HttpServletResponse response,
                                             @PathVariable("imageName") String imageName) throws Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -157,42 +129,12 @@ public class ImageController extends CommonController {
 
             if (!imageCheck(image)) return new ResponseEntity<>(null, headers, HttpStatus.NOT_FOUND);
 
-            return manageImage(image.getName(),image.getPicByte());
-
+            return ResponseEntity.status(HttpStatus.OK).body(image);
         } catch (Exception e) {
             logger.error("Erreur durant la recuperation de l'image", e);
             throw e;
         } finally {
             finishOpentracingSpan();
         }
-    }
-
-    @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<String> saveFile(@RequestParam(value = "img") MultipartFile file) {
-        StringBuffer fileName = new StringBuffer();
-        fileName.append(UUID.randomUUID().toString().replaceAll("-", ""));
-        String type = file.getContentType();
-        if ("image/png".equals(type)) {
-            fileName.append(".png");
-        } else if ("image/jpeg".equals(type)) {
-            fileName.append(".jpeg");
-        } else if ("image/gif".equals(type)) {
-            fileName.append(".gif");
-        } else {
-            return new ResponseEntity<String>("Please select a picture in .png.jpg format", HttpStatus.NOT_ACCEPTABLE);
-        }
-        if (file.getSize() > 1024000L) {
-            return null;/*new Result.Builder<String>()
-					.code(-1)
-					.msg("Image over 1Mb")
-					.build();*/
-        }
-        //file.transferTo(new File(imagePath, fileName.toString()));
-        return null; /*new Result.Builder<String>()
-				.code(0)
-				.msg("success")
-				.data(imageHost + fileName.toString())
-				.build();*/
     }
 }

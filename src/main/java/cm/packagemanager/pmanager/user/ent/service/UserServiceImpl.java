@@ -319,8 +319,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ReviewVO addReview(ReviewDTO reviewDTO) throws Exception {
-        UserVO user = getUser(reviewDTO.getUserId());
-        UserVO ratingUser = getUser(reviewDTO.getRatingUserId());
+        UserVO user =  (UserVO)userDAO.checkAndResolve(UserVO.class,reviewDTO.getUserId());
+        UserVO ratingUser = (UserVO)userDAO.checkAndResolve(UserVO.class,reviewDTO.getRatingUserId());
 
         if (ratingUser.equals(user)) {
             throw new UserException("Un utilisateur ne peut pas s'evaluer");

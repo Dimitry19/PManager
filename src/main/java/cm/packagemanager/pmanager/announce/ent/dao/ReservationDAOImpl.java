@@ -201,7 +201,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
                 " a " +validate +" votre reservation sur l' annonce "+ reservation.getAnnounce().getDeparture() +"/"+reservation.getAnnounce().getArrival(),
                 " de la date du " + DateUtils.getDateStandard(reservation.getAnnounce().getStartDate())
                         + " et retour le "+ DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()));
-        generateEvent(reservation.getAnnounce(),message);
+        generateEvent(reservation,message);
 
         return reservation.getId() != null ? reservation : null;
     }
