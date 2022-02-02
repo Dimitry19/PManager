@@ -474,6 +474,15 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    public T  checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException {
+
+        if(clazz== null) return null;
+
+        return findById(clazz , id);
+    }
+
+    @Override
     public void pageBy(Query query, PageBy pageBy) {
         if (pageBy != null) {
             query.setFirstResult(pageBy.getPage());

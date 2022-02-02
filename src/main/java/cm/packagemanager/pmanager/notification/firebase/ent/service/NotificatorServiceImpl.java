@@ -136,7 +136,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
     }
 
     @Async
-    @Scheduled(fixedRate = 50000)
+    @Scheduled(fixedRate = 100000)
     public void doNotify() throws IOException {
         logger.info(" doNotify");
 
@@ -164,6 +164,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
 
 
         switch (notificationType) {
+            case RESERVATION:
             case ANNOUNCE:
             case COMMENT:
                 announceListeners.put(sessionUserMap.get(sessionId), sessionId);

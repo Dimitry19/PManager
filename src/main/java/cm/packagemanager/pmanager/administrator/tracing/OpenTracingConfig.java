@@ -19,7 +19,9 @@ public class OpenTracingConfig {
 
     @Bean
     public Span spanTracer() {
-        GlobalTracer.register(jaegerTracer());
+        if (!GlobalTracer.isRegistered()){
+            GlobalTracer.register(jaegerTracer());
+        }
         return GlobalTracer.get().buildSpan("").start();
     }
 
