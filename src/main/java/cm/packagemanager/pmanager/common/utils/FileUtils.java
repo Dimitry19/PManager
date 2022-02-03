@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Base64;
+import java.util.UUID;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -25,10 +26,16 @@ public class FileUtils {
     protected final Log logger = LogFactory.getLog(FileUtils.class);
 
 
+    public String generateFilename(String  filename) throws Exception {
+
+        String uuid=UUID.randomUUID().toString();
+        return  uuid.substring(0,uuid.length()-5)+filename;
+    }
+
     public void checkType(MultipartFile file) throws Exception {
 
         if (!StringUtils.equals(file.getContentType(),"image/png") &&  !StringUtils.equals(file.getContentType(),"image/jpeg")) {
-            throw new Exception("Please select a picture in .png.jpg format");
+            throw new Exception("Please select a picture in .png/jpg format");
         }
     }
 

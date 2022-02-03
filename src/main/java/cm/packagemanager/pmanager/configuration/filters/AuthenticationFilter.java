@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.configuration.filters;
 
 import cm.packagemanager.pmanager.common.exception.ErrorResponse;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
+import cm.packagemanager.pmanager.constant.WSConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +85,7 @@ public class AuthenticationFilter implements Filter {
         String apiKey=request.getHeader("AUTH_API_KEY");
         String calledUrl=request.getRequestURI();
 
-        if(!calledUrl.contains("confirm")&&calledUrl.contains(service) && (StringUtils.isEmpty(apiKey)|| !apiKey.equals(token))){
+        if(!calledUrl.contains(WSConstants.UPLOAD) && !calledUrl.contains("confirm") && calledUrl.contains(service) && (StringUtils.isEmpty(apiKey)|| !apiKey.equals(token))){
             ErrorResponse errorResponse = new ErrorResponse();
             List<String> details= new ArrayList();
             errorResponse.setCode(codes);

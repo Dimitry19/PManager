@@ -523,7 +523,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
     @Override
-    public void generateEvent( NotificationType type) {
+    public void generateEvent( NotificationType type) throws Exception{
         Event event = new Event(DateUtils.DateToSQLDate(new Date()),type);
 
         event.setId((Long) props.get(PROP_ID));
