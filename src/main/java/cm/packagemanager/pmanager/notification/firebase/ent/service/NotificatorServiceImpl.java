@@ -81,6 +81,8 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
     }
 
 
+
+
     private void elaborate(NotificationVO notificationVO) {
 
         logger.info(" Elaborate notification {} ", notificationVO.getId());
@@ -122,6 +124,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
                     alreadySent.add(notification);
                     removeToSession(l);
                     addToSession(l,alreadySent);
+
                 }
             });
 
@@ -206,6 +209,13 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
             }
         });
 
+    }
+
+    private void updateNotification(NotificationVO n, StatusEnum statusEnum) {
+
+        n.setStatus(statusEnum);
+
+        notificationDAO.update(n);
     }
 
     protected void createNotification(Event event) {
