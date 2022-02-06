@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.Random;
 import java.util.UUID;
 
 import static cm.packagemanager.pmanager.common.Constants.ANNOUNCE_TYPE_IMG_UPLOAD;
@@ -87,7 +88,8 @@ public class ImageServiceImpl implements ImageService {
                     image = user.getImage();
                 }
                 image.setType(USER_TYPE_IMG_UPLOAD);
-                image.setName(file.getOriginalFilename());
+                image.setOrigin(file.getContentType());
+                image.setName(file.getOriginalFilename()+"- "+user.getUsername()+"-"+System.currentTimeMillis());
                 image.setPicByte(file.getBytes());
                 user.setImage(image);
                 userDAO.update(user);
@@ -105,7 +107,8 @@ public class ImageServiceImpl implements ImageService {
                 if (announce.getImage() != null) {
                     image = announce.getImage();
                 }
-                image.setName(file.getOriginalFilename());
+                image.setName(file.getOriginalFilename()+"- "+announce.getId()+"-"+System.currentTimeMillis());
+                image.setOrigin(file.getContentType());
                 image.setPicByte(file.getBytes());
                 announce.setImage(image);
                 announceDAO.update(announce);
