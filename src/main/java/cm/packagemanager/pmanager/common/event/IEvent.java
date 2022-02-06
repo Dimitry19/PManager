@@ -26,7 +26,7 @@ public interface IEvent<T> {
 
     Map props=new HashMap();
 
-    void generateEvent(NotificationType type);
+    void generateEvent(NotificationType type) throws Exception;
 
     void generateEvent(T clazz, String message) throws Exception;
 

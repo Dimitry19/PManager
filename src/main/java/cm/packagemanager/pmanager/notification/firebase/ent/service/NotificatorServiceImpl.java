@@ -55,50 +55,45 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
     Map finalMap = new HashMap();
 
 
-    public void addEvent(Event event) {
+    public void addEvent(Event event) throws Exception{
         events.add(event);
     }
 
 
     @Override
-    public void dispatch() {
+    public void dispatch() throws Exception{
 
         logger.info(" dispatch !");
         try {
 
 
-            List<NotificationVO> notifications=notificationDAO.all(NotificationVO.class);
+           List<NotificationVO> notifications= notificationDAO.all(NotificationVO.class);
 
             notifications.stream().filter(n->!n.getStatus().equals(StatusEnum.COMPLETED)).forEach(n -> {
-
-                try {
-
-                    elaborate(n);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-
+                elaborate(n);
             });
 
         } catch (Exception e) {
             logger.error("Erreur durant l'elaboration de la notification {}", e);
+            throw e;
         }
 
     }
 
 
-    private void elaborate(NotificationVO notification) throws Exception {
 
-        logger.info(" Elaborate notification {} ", notification.getId());
+
+    private void elaborate(NotificationVO notificationVO) {
+
+        logger.info(" Elaborate notification {} ", notificationVO.getId());
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
         headerAccessor.setLeaveMutable(true);
 
-        Notification notifica = new Notification(notification.getId(),notification.getTitle(), notification.getMessage(), notification.getType(), notification.getId());
+        Notification notification = new Notification(notificationVO.getId(),notificationVO.getTitle(), notificationVO.getMessage(), notificationVO.getType(), notificationVO.getId());
 
         Map map= new HashMap();
 
-           switch (notification.getType()) {
+           switch (notificationVO.getType()) {
                 case RESERVATION:
                 case ANNOUNCE:
                 case COMMENT:
@@ -111,7 +106,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
             }
 
             List<String> listeners = (List<String>) map.keySet().stream().collect(Collectors.toList());
-            Set<UserVO> subscribers= notification.getUsers();
+            Set<UserVO> subscribers= notificationVO.getUsers();
             Set users = subscribers.stream().map(UserVO::getUsername).collect(Collectors.toSet());
 
             finalMap=map;
@@ -120,15 +115,16 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
                 String sessionId = (String) finalMap.get(l);
                 headerAccessor.setSessionId(sessionId);
 
-                notifica.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
+                notification.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
                 alreadySent= (List) getFromSession(l);
 
-                if(CollectionsUtils.isEmpty(alreadySent) ||(CollectionsUtils.isNotEmpty(alreadySent) && !alreadySent.contains(notifica))){
+                if(CollectionsUtils.isEmpty(alreadySent) ||(CollectionsUtils.isNotEmpty(alreadySent) && !alreadySent.contains(notification))){
 
-                    messagingTemplate.convertAndSendToUser(sessionId,notifica.getTopic(), notifica, headerAccessor.getMessageHeaders());
-                    alreadySent.add(notifica);
+                    messagingTemplate.convertAndSendToUser(sessionId,notification.getTopic(), notification, headerAccessor.getMessageHeaders());
+                    alreadySent.add(notification);
                     removeToSession(l);
                     addToSession(l,alreadySent);
+
                 }
             });
 
@@ -137,7 +133,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
 
     @Async
     @Scheduled(fixedRate = 100000)
-    public void doNotify() throws IOException {
+    public void doNotify() throws Exception {
         logger.info(" doNotify");
 
         List<Event> deadEvents = new ArrayList<>();
@@ -194,7 +190,9 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
     }
 
     private void persistNotification() {
+
         notifications.forEach(n -> {
+
             NotificationVO notification =(NotificationVO)n;
             notification.getUsers().stream().forEach(u->{
 
@@ -207,10 +205,17 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
                 notificationDAO.save(notification);
             } catch (Exception e) {
                 logger.error(" Erreur duranrt la sauvegarde de la notification {}",notification.getMessage());
-                e.printStackTrace();
+               e.printStackTrace();
             }
         });
 
+    }
+
+    private void updateNotification(NotificationVO n, StatusEnum statusEnum) {
+
+        n.setStatus(statusEnum);
+
+        notificationDAO.update(n);
     }
 
     protected void createNotification(Event event) {
@@ -228,17 +233,6 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
             notification.setType(event.getType());
 
             notifications.add(notification);
-    }
-
-    @Override
-    public void notify(Notification notification, String username) {
-
-    }
-
-
-    @Override
-    public void sendToUser(String sessionId, long id, String email, String username, Notification notification) {
-
     }
 
 

@@ -14,7 +14,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.UUID;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -24,11 +26,25 @@ import java.util.zip.Inflater;
 public class FileUtils {
     protected final Log logger = LogFactory.getLog(FileUtils.class);
 
+    static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    static SecureRandom rnd = new SecureRandom();
+
+    String randomString(int len){
+        StringBuilder sb = new StringBuilder(len);
+        for(int i = 0; i < len; i++)
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        return sb.toString();
+    }
+    public String generateFilename(String  filename) throws Exception {
+
+        String randomString=randomString(filename.length());
+        return  randomString+filename;
+    }
 
     public void checkType(MultipartFile file) throws Exception {
 
         if (!StringUtils.equals(file.getContentType(),"image/png") &&  !StringUtils.equals(file.getContentType(),"image/jpeg")) {
-            throw new Exception("Please select a picture in .png.jpg format");
+            throw new Exception("Please select a picture in .png/jpg format");
         }
     }
 

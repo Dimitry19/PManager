@@ -25,6 +25,10 @@ public class UserInfo {
 
     private double rating = 0;
 
+    private byte[] picByte;
+
+    private String origin;
+
     private Timestamp dateCreated;
 
 
@@ -49,6 +53,8 @@ public class UserInfo {
         this.dateCreated = user.getDateCreated();
         this.rating = user.getRating();
         this.count = CollectionsUtils.size(user.getAnnounces());
+        this.picByte=user.getImage()!=null?user.getImage().getPicByte():null;
+        this.origin=user.getImage()!=null?user.getImage().getOrigin():null;
 
     }
 
@@ -133,5 +139,22 @@ public class UserInfo {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    @JsonProperty
+    public byte[] getPicByte() {
+        return picByte;
+    }
+
+    public void setPicByte(byte[] picByte) {
+        this.picByte = picByte;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 }

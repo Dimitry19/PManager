@@ -1,20 +1,15 @@
 package cm.packagemanager.pmanager.notification.firebase.ent.service;
 
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationVO;
+
 import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public interface NotificationSocketService {
+public interface NotificationSocketService<T> {
 
 
     Set<String> listeners = new HashSet<>();
-    Set notifications = new HashSet<>();
-    Set notificationsToPersist = new HashSet<>();
+    Set notifications = new HashSet();
     Map commentListeners = new HashMap<>();
     Map userListeners = new HashMap<>();
     Map announceListeners = new HashMap<>();
@@ -22,13 +17,10 @@ public interface NotificationSocketService {
     Map sessionUserMap = new HashMap<>();
 
 
-    void notify(Notification notification, String username);
-
-    void dispatch();
-
-    void sendToUser(String sessionId, long id, String email, String username, Notification notification);
+    void dispatch() throws Exception;
 
     void add(String sessionId, NotificationType notificationType);
+
     void addAll(String sessionId);
 
     void remove(String id);
