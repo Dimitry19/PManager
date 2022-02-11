@@ -464,26 +464,6 @@ public class AnnounceController extends CommonController {
     }
 
 
-    //https://examples.javacodegeeks.com/spring-boot-pagination-tutorial/
-    //@GetMapping(value = ANNOUNCE_WS_ALL, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<ResponseDTO> getAllMovies(
-            @RequestParam(name = "pageNumber", defaultValue = "0") final int pageNumber,    // In spring the default page number starts with '0'.
-            @RequestParam(name = "pageSize", defaultValue = "2") final int pageSize) {
-		/*logger.info("Getting all the movies from the database for page-number= {} and page-size= {}.", pageNumber,
-				pageSize);*/
-        final ResponseEntity<ResponseDTO> responseEntity;
-        try {
-            final Pageable pageable = PageRequest.of(pageNumber, pageSize);
-            final Page<AnnounceVO> announces = announceTester.getAllMovies(pageable);
-            responseEntity = createResponseDto(announces);
-        } catch (final Exception e) {
-            logger.info("Exception occurred while fetching the response from the database.", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return responseEntity;
-    }
-
-
     private ResponseEntity<ResponseDTO> createResponseDto(final Page<AnnounceVO> moviesPage) {
         final List<AnnounceVO> movies = moviesPage.getContent();
         final ResponseEntity<ResponseDTO> responseEntity;

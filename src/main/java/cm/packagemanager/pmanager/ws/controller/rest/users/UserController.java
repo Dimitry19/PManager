@@ -47,7 +47,7 @@ import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 @RestController
 @RequestMapping(USER_WS)
-@Api(value = "user-service", description = "User Operations")
+@Api(value = "user-service", description = "User Operations",tags ="user" )
 public class UserController extends CommonController {
 
     protected final Log logger = LogFactory.getLog(UserController.class);
@@ -118,29 +118,6 @@ public class UserController extends CommonController {
             finishOpentracingSpan();
         }
         return null;
-    }
-
-    /*https://www.codejava.net/frameworks/spring-boot/upload-multiple-files-example*/
-    //@PostMapping(path = IMAGE,consumes = {MediaType.APPLICATION_JSON})
-    public RedirectView picture(HttpServletRequest request, HttpServletResponse response,
-                                @RequestParam("userId") @Valid Long userId,
-                                @RequestParam("image") @Valid MultipartFile multipartFile) throws IOException {
-
-        try {
-
-            logger.info("picture request in");
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            createOpentracingSpan("UserController - picture");
-
-            userService.updateImage(userId, multipartFile);
-            return new RedirectView("/users", true);
-        } catch (Exception e) {
-            logger.error("Erreur durant la sauvegarde de l'image");
-            throw e;
-        } finally {
-            finishOpentracingSpan();
-        }
-
     }
 
 

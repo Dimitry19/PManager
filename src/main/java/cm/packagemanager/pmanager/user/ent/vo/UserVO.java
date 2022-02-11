@@ -129,8 +129,8 @@ public class UserVO extends CommonVO {
     private Integer active;
 
     @Basic(optional = true)
-    @Column(name = "ENABLE_NOTIF")
-    private Boolean enableNotification = true;
+    @Column(name = "ENABLE_NOTIF",nullable = false)
+    private boolean enableNotification = true;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy(clause = "id.id DESC")
@@ -314,13 +314,11 @@ public class UserVO extends CommonVO {
         this.subscriptions = subscriptions;
     }
 
-    public Boolean isEnableNotification() {
+    public boolean isEnableNotification() {
         return enableNotification;
     }
 
-    public void setEnableNotification(Boolean enableNotification) {
-        this.enableNotification = enableNotification;
-    }
+    public void setEnableNotification(Boolean enableNotification) { this.enableNotification = enableNotification;  }
 
     public Set<CommunicationVO> getCommunications() {
         return communications;

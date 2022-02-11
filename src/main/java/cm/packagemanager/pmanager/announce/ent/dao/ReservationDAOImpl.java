@@ -84,7 +84,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
                     .stream()
                     .filter(res -> res.getValidate().equals(ValidateEnum.INSERTED) && res.getAnnounce().getId().equals(announce.getId()))
                     .collect(Collectors.toList())).get();
-            //.orElseGet(Collections::emptyList);
+
             if (CollectionsUtils.isNotEmpty(anReservations)) {
                 ReservationVO rsv = (ReservationVO) CollectionsUtils.getFirst(anReservations);
                 rsv.getAnnounce().setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));

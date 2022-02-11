@@ -29,12 +29,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 //@EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = "cm.packagemanager.pmanager")
-public class PackageApplication extends SpringBootServletInitializer { //implements CommandLineRunner{
+public class PackageApplication extends SpringBootServletInitializer {
 
     private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);
-    
-    @Autowired
-	private SimpMessageSendingOperations messagingTemplate;
+
 
     public static void main(String[] args) {
 
@@ -47,32 +45,5 @@ public class PackageApplication extends SpringBootServletInitializer { //impleme
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(PackageApplication.class);
     }
-	
-	/*@Override
-	public void run(String... args) throws Exception {
-		//websocketDemo();
-	}
-    
-   @Bean
-	public CommandLineRunner websocketDemo() {
-		return (args) -> {
-			while (true) {
-				try {
-					Thread.sleep(3*1000); // Each 3 sec.
-					Notification notification = new Notification("Test Notification", "Bonjour Ludo", null, null);
-                    notification.setTopic(SUSCRIBE_QUEUE_ANNOUNCE_SEND);
-          			//messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
-					 
-					notification.setTopic(SUSCRIBE_QUEUE_COMMENT_SEND);
-          			//messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
-					
-					notification.setTopic(SUSCRIBE_QUEUE_USER_SEND);
-          			//messagingTemplate.convertAndSend(notification.getTopic(), notification.getMessage());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		};
-	}*/
 
 }

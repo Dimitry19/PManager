@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = CommunicationVO.FIND_BY_USER_ID, query = "select c from CommunicationVO c")
+        @NamedQuery(name = CommunicationVO.FIND_BY_USER_ID, query = "select c from CommunicationVO c where c.admin=:adminId")
 })
 @Table(name = "COMMUNICATION", schema = "PUBLIC")
 public class CommunicationVO extends CommonVO {

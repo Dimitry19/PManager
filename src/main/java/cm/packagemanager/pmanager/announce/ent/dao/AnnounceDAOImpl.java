@@ -279,7 +279,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         if (user != null) {
             user.addAnnounce(announce);
-            return userDAO.save(user);
+             update(user);
+            return (UserVO) get(UserVO.class, user.getId());
         } else {
             return null;
         }

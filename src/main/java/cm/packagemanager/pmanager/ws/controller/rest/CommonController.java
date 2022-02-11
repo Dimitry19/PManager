@@ -2,7 +2,6 @@ package cm.packagemanager.pmanager.ws.controller.rest;
 
 import cm.packagemanager.pmanager.announce.ent.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.ent.service.ReservationService;
-import cm.packagemanager.pmanager.announce.ent.service.ServiceAnnounce;
 import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.mail.MailSender;
 import cm.packagemanager.pmanager.common.mail.ent.service.MailService;
@@ -59,8 +58,7 @@ public class CommonController  {
 
     @Autowired
     public AnnounceService announceService;
-    @Autowired
-    public ServiceAnnounce announceTester;
+
 
     @Autowired
     public MailService mailService;

@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.configuration.filters;
 
 
 import cm.packagemanager.pmanager.common.exception.ErrorResponse;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,18 +12,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
-//@WebFilter(urlPatterns = "/users")
 public class AuthenticationFilter implements Filter {
 
     private static Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
@@ -32,6 +31,7 @@ public class AuthenticationFilter implements Filter {
 
     @Value("${url.service}")
     private String service;
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -53,10 +53,9 @@ public class AuthenticationFilter implements Filter {
 
         logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
 
-       /* if(!authorized(servletRequest,  servletResponse)){
+        if(!authorized(servletRequest,  servletResponse)){
            return;
-        }*/
-
+        }
             //call next filter in the filter chain
         filterChain.doFilter(request, response);
 
