@@ -1,4 +1,9 @@
-package cm.packagemanager.pmanager.notification.firebase.ent.service;
+/*
+ * Copyright (c) 2022.  PManager entièrement realisé par Dimitri Sime.
+ * Tous les droits lui sont exclusivement réservés
+ */
+
+package cm.packagemanager.pmanager.notification.ent.service;
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;

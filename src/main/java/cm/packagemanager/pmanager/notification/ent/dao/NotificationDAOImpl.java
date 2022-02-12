@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2021.  PManager entièrement realisé par Dimitri Sime.
+ * Copyright (c) 2022.  PManager entièrement realisé par Dimitri Sime.
  * Tous les droits lui sont exclusivement réservés
  */
 
-package cm.packagemanager.pmanager.notification.firebase.ent.dao;
+package cm.packagemanager.pmanager.notification.ent.dao;
 
 import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationVO;
+import cm.packagemanager.pmanager.notification.ent.vo.NotificationVO;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,9 @@
-package cm.packagemanager.pmanager.notification.firebase.enums;
+/*
+ * Copyright (c) 2022.  PManager entièrement realisé par Dimitri Sime.
+ * Tous les droits lui sont exclusivement réservés
+ */
+
+package cm.packagemanager.pmanager.notification.enums;
 
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 

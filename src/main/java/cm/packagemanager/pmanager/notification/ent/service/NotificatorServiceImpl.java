@@ -1,9 +1,9 @@
 /*
- * Copyright (c) 2021.  PManager entièrement realisé par Dimitri Sime.
- * Tous les droits lui sont exclusivement réservés....
+ * Copyright (c) 2022.  PManager entièrement realisé par Dimitri Sime.
+ * Tous les droits lui sont exclusivement réservés
  */
 
-package cm.packagemanager.pmanager.notification.firebase.ent.service;
+package cm.packagemanager.pmanager.notification.ent.service;
 
 
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
@@ -11,10 +11,10 @@ import cm.packagemanager.pmanager.common.event.Event;
 import cm.packagemanager.pmanager.common.session.SessionManager;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
-import cm.packagemanager.pmanager.notification.firebase.ent.dao.NotificationDAO;
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationVO;
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.notification.ent.dao.NotificationDAO;
+import cm.packagemanager.pmanager.notification.ent.vo.Notification;
+import cm.packagemanager.pmanager.notification.ent.vo.NotificationVO;
+import cm.packagemanager.pmanager.notification.enums.NotificationType;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 
 import org.slf4j.Logger;
@@ -28,7 +28,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 

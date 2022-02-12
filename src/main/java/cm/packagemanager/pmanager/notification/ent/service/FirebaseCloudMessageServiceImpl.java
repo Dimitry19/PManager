@@ -1,7 +1,12 @@
-package cm.packagemanager.pmanager.notification.firebase.ent.service;
+/*
+ * Copyright (c) 2022.  PManager entièrement realisé par Dimitri Sime.
+ * Tous les droits lui sont exclusivement réservés
+ */
 
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationParameter;
+package cm.packagemanager.pmanager.notification.ent.service;
+
+import cm.packagemanager.pmanager.notification.ent.vo.Notification;
+import cm.packagemanager.pmanager.notification.enums.NotificationParameter;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -9,11 +14,9 @@ import com.google.firebase.messaging.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
@@ -50,7 +53,7 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
     }
 
     @Override
-    public void sendMessageWithoutData(Notification request)
+    public void sendMessageWithoutData(cm.packagemanager.pmanager.notification.ent.vo.Notification request)
             throws InterruptedException, ExecutionException {
         Message message = getPreconfiguredMessageWithoutData(request);
         String response = sendAndGetResponse(message);
@@ -58,7 +61,7 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
     }
 
     @Override
-    public void sendMessage(Map<String, String> data, Notification request)
+    public void sendMessage(Map<String, String> data, cm.packagemanager.pmanager.notification.ent.vo.Notification request)
             throws InterruptedException, ExecutionException {
         Message message = getPreconfiguredMessageWithData(data, request);
         String response = sendAndGetResponse(message);
@@ -66,7 +69,7 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
     }
 
     @Override
-    public void sendMessageToToken(Notification request)
+    public void sendMessageToToken(cm.packagemanager.pmanager.notification.ent.vo.Notification request)
             throws InterruptedException, ExecutionException {
         Message message = getPreconfiguredMessageToToken(request);
         String response = sendAndGetResponse(message);
@@ -74,12 +77,12 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
     }
 
 
-    private Message getPreconfiguredMessageWithData(Map<String, String> data, Notification request) {
+    private Message getPreconfiguredMessageWithData(Map<String, String> data, cm.packagemanager.pmanager.notification.ent.vo.Notification request) {
         return getPreconfiguredMessageBuilder(request).putAllData(data).setTopic(request.getTopic())
                 .build();
     }
 
-    private Message getPreconfiguredMessageToToken(Notification request) {
+    private Message getPreconfiguredMessageToToken(cm.packagemanager.pmanager.notification.ent.vo.Notification request) {
         return getPreconfiguredMessageBuilder(request).setToken(request.getToken())
                 .build();
     }
@@ -101,7 +104,7 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
                 .setAps(Aps.builder().setCategory(topic).setThreadId(topic).build()).build();
     }
 
-    private Message getPreconfiguredMessageWithoutData(Notification request) {
+    private Message getPreconfiguredMessageWithoutData(cm.packagemanager.pmanager.notification.ent.vo.Notification request) {
         return getPreconfiguredMessageBuilder(request).setTopic(request.getTopic())
                 .build();
     }

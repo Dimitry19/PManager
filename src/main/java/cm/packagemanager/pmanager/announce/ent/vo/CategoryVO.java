@@ -32,8 +32,6 @@ public class CategoryVO implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    //private boolean cancelled;
-
     public CategoryVO() {
     }
 
@@ -55,16 +53,6 @@ public class CategoryVO implements Serializable {
         this.code = code;
     }
 
-
-	/*@Basic(optional = false)
-	@Column(name="CANCELLED")
-	public boolean isCancelled() {
-		return cancelled;
-	}
-
-	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
-	}*/
 
 
     @Override

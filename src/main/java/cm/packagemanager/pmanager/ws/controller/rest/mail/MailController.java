@@ -56,7 +56,7 @@ public class MailController extends CommonController {
             contactUS.setSubject(contactus.getSubject());
 
             com.sendgrid.Response sent = mailService.contactUS(contactUS);
-            if (mailSender.manageResponse(sent)) {
+            if (mailSenderSendGrid.manageResponse(sent)) {
 
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                 pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);

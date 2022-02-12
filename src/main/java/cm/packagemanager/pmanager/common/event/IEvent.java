@@ -10,8 +10,7 @@
 package cm.packagemanager.pmanager.common.event;
 
 
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.notification.enums.NotificationType;
 
 import java.util.HashMap;
 import java.util.Map;

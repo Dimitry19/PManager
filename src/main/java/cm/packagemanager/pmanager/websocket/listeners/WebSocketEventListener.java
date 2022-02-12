@@ -1,9 +1,7 @@
 package cm.packagemanager.pmanager.websocket.listeners;
 
-import cm.packagemanager.pmanager.common.session.SessionManager;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
-import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl;
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

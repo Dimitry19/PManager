@@ -8,8 +8,7 @@ import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationVO;
+import cm.packagemanager.pmanager.notification.ent.vo.NotificationVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.*;
 
-import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;

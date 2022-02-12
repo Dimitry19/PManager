@@ -1,7 +1,12 @@
-package cm.packagemanager.pmanager.notification.firebase.ent.service;
+/*
+ * Copyright (c) 2022.  PManager entièrement realisé par Dimitri Sime.
+ * Tous les droits lui sont exclusivement réservés
+ */
+
+package cm.packagemanager.pmanager.notification.ent.service;
 
 
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.notification.enums.NotificationType;
 
 import java.util.*;
 

@@ -3,12 +3,12 @@ package cm.packagemanager.pmanager.ws.controller.rest;
 import cm.packagemanager.pmanager.announce.ent.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.ent.service.ReservationService;
 import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
-import cm.packagemanager.pmanager.common.mail.MailSender;
+import cm.packagemanager.pmanager.common.mail.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.mail.ent.service.MailService;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.message.ent.service.MessageService;
-import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificationService;
-import cm.packagemanager.pmanager.notification.firebase.ent.service.PushNotificationService;
+import cm.packagemanager.pmanager.notification.ent.service.NotificationService;
+import cm.packagemanager.pmanager.notification.ent.service.PushNotificationService;
 import cm.packagemanager.pmanager.user.ent.service.RoleService;
 import cm.packagemanager.pmanager.user.ent.service.UserService;
 import io.opentracing.Span;
@@ -48,7 +48,7 @@ public class CommonController  {
     public NotificationService notificationService;
 
     @Autowired
-    public MailSender mailSender;
+    public MailSenderSendGrid mailSenderSendGrid;
 
     @Autowired
     public RoleService roleService;

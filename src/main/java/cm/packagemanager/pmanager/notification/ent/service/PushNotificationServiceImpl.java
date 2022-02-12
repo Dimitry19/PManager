@@ -1,7 +1,12 @@
-package cm.packagemanager.pmanager.notification.firebase.ent.service;
+/*
+ * Copyright (c) 2022.  PManager entièrement realisé par Dimitri Sime.
+ * Tous les droits lui sont exclusivement réservés
+ */
+
+package cm.packagemanager.pmanager.notification.ent.service;
 
 
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
+import cm.packagemanager.pmanager.notification.ent.vo.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -14,9 +14,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.beans.factory.annotation.Autowired;
-
 
 /*
  * https://o7planning.org/11665/spring-boot-hibernate-and-spring-transaction
@@ -32,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class PackageApplication extends SpringBootServletInitializer {
 
     private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);
+
 
 
     public static void main(String[] args) {

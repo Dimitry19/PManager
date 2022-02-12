@@ -1,10 +1,15 @@
-package cm.packagemanager.pmanager.notification.firebase.ent.vo;
+/*
+ * Copyright (c) 2022.  PManager entièrement realisé par Dimitri Sime.
+ * Tous les droits lui sont exclusivement réservés
+ */
+
+package cm.packagemanager.pmanager.notification.ent.vo;
 
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.notification.enums.NotificationType;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.hibernate.annotations.Where;
 

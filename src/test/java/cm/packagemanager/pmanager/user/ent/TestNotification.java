@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.user.ent;
 
-import cm.packagemanager.pmanager.notification.firebase.ent.service.FireBaseNotificationSender;
+import cm.packagemanager.pmanager.notification.ent.service.FireBaseNotificationSender;
 
 import java.util.ArrayList;
 import java.util.List;

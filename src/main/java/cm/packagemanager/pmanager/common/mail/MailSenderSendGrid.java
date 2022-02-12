@@ -27,9 +27,9 @@ import java.util.*;
 /*https://github.com/sendgrid/sendgrid-java/*/
 
 @Service
-public class MailSender {
+public class MailSenderSendGrid {
 
-    private static org.slf4j.Logger logger = LoggerFactory.getLogger(MailSender.class);
+    private static org.slf4j.Logger logger = LoggerFactory.getLogger(MailSenderSendGrid.class);
 
 
     private static final String TEXT_PLAIN = "text/plain";
@@ -82,92 +82,10 @@ public class MailSender {
 
     private final static String SEPARATOR = ";";
 
-    public MailSender() {
+    public MailSenderSendGrid() {
 
     }
 
-	/*
-	public boolean sendMailMessage(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC,List<String> emailSendBCC,String from,String username) {
-
-		loadProperties();
-		Authenticator authenticator = new SMTPAuthenticator("packagemanager2020@gmail.com", "pmanager2020");
-
-		Session mailSession;
-		try	{
-			mailSession = Session.getDefaultInstance(properties, authenticator);
-			logger.debug(String.format("Sending a message To:%s CC:%s BCC:%s", emailSendTo, emailcc,emailbcc));
-
-			MimeMessage message = new MimeMessage(mailSession);
-			if(from==null){
-				from="noreply@travel.com";
-				username ="No reply";
-			}
-
-			message.setFrom(new InternetAddress(from, username));
-			Resource resource = new ClassPathResource("/templates/"+templateName);
-			InputStream emailTemplateStream = resource.getInputStream();
-			String emailTemplateString =Utility.convertStreamToString(emailTemplateStream);
-			message.setSubject(messageSubject);
-			String subj=messageSubject.toString();
-
-			try{
-				variableLabel.put("SUBJECT",subj );
-				for (Map.Entry<String, String> entry : variableLabel.entrySet()){
-					String value = entry.getValue().replaceAll("\\$", "\\\\\\$");
-					// Sostituzione case-insensitive mediante espressione
-					// regolare , ignora la differenza tra maiuscole e minuscoli
-					emailTemplateString = emailTemplateString.replaceAll("(?i)" + "%" + entry.getKey() + "%", value);
-				}
-			}
-			catch (Exception e){
-			}
-
-			message.setContent(emailTemplateString, "text/html");
-			EmailSendAddresses=formatEmails(emailSendTo);
-			EmailSendAddressesCC=formatEmails(emailSendCC);
-			EmailSendAddressesBCC=formatEmails(emailSendBCC);
-			String[] EmailSendAddressesArray = EmailSendAddresses.split(SEPARATOR);
-			String[] EmailSendAddressesCCArray=null;
-			String[] EmailSendAddressesBCCArray=null;
-
-			if(EmailSendAddressesCC!=null){
-			    EmailSendAddressesCCArray = EmailSendAddressesCC.split(SEPARATOR);
-			}
-
-			if(EmailSendAddressesBCC!=null){
-				EmailSendAddressesBCCArray = EmailSendAddressesBCC.split(SEPARATOR);
-			}
-
-
-			for (int i = 0; i < EmailSendAddressesArray.length; i++)
-			{
-				message.addRecipient(Message.RecipientType.TO, new InternetAddress(EmailSendAddressesArray[i]));
-			}
-
-			if(EmailSendAddressesCC!=null){
-				for (int i = 0; i < EmailSendAddressesCCArray.length; i++) {
-					message.addRecipient(Message.RecipientType.CC, new InternetAddress(EmailSendAddressesCCArray[i]));
-				}
-			}
-
-			if(EmailSendAddressesBCC!=null){
-				for (int i = 0; i < EmailSendAddressesBCCArray.length; i++) {
-					message.addRecipient(Message.RecipientType.BCC, new InternetAddress(EmailSendAddressesBCCArray[i]));
-				}
-			}
-
-			Transport.send(message);
-
-			logger.info(String.format("Email send completed with templateName[%s].", templateName));
-			return true;
-		}
-		catch (Exception e)
-		{
-			logger.error(String.format("Error sending email with templateName[%s], error[%s].", templateName, e.getMessage()));
-			e.printStackTrace();
-		}
-		return false;
-	}*/
 
     private void loadProperties() {
 

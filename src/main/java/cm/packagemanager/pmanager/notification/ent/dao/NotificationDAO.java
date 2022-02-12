@@ -1,7 +1,12 @@
-package cm.packagemanager.pmanager.notification.firebase.ent.dao;
+/*
+ * Copyright (c) 2022.  PManager entièrement realisé par Dimitri Sime.
+ * Tous les droits lui sont exclusivement réservés
+ */
+
+package cm.packagemanager.pmanager.notification.ent.dao;
 
 import cm.packagemanager.pmanager.common.ent.dao.CommonDAO;
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationVO;
+import cm.packagemanager.pmanager.notification.ent.vo.NotificationVO;
 
 import java.util.List;
 
