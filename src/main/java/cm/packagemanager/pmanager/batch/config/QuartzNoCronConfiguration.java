@@ -11,13 +11,14 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import java.io.IOException;
 import java.util.Properties;
 
-//@Configuration
+//@Configuration(Ne pas decommenter)
 public class QuartzNoCronConfiguration {
 
     private static Logger log = LoggerFactory.getLogger(QuartzNoCronConfiguration.class);

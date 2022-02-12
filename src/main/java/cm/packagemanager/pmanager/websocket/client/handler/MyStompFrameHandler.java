@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.websocket.client.handler;
 
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
+import cm.packagemanager.pmanager.notification.ent.vo.Notification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.messaging.simp.stomp.*;

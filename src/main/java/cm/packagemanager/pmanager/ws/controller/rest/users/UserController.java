@@ -27,14 +27,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
@@ -47,7 +44,7 @@ import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 @RestController
 @RequestMapping(USER_WS)
-@Api(value = "user-service", description = "User Operations")
+@Api(value = "user-service", description = "User Operations",tags ="user" )
 public class UserController extends CommonController {
 
     protected final Log logger = LogFactory.getLog(UserController.class);
@@ -95,7 +92,7 @@ public class UserController extends CommonController {
 
                 com.sendgrid.Response sent = userService.buildAndSendMail(request, usr);
 
-                if (mailSender.manageResponse(sent)) {
+                if (mailSenderSendGrid.manageResponse(sent)) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
                     response.setStatus(200);
@@ -118,29 +115,6 @@ public class UserController extends CommonController {
             finishOpentracingSpan();
         }
         return null;
-    }
-
-    /*https://www.codejava.net/frameworks/spring-boot/upload-multiple-files-example*/
-    //@PostMapping(path = IMAGE,consumes = {MediaType.APPLICATION_JSON})
-    public RedirectView picture(HttpServletRequest request, HttpServletResponse response,
-                                @RequestParam("userId") @Valid Long userId,
-                                @RequestParam("image") @Valid MultipartFile multipartFile) throws IOException {
-
-        try {
-
-            logger.info("picture request in");
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            createOpentracingSpan("UserController - picture");
-
-            userService.updateImage(userId, multipartFile);
-            return new RedirectView("/users", true);
-        } catch (Exception e) {
-            logger.error("Erreur durant la sauvegarde de l'image");
-            throw e;
-        } finally {
-            finishOpentracingSpan();
-        }
-
     }
 
 
@@ -373,7 +347,7 @@ public class UserController extends CommonController {
             createOpentracingSpan("UserController -password");
             if (password != null) {
 
-                if (mailSender.manageResponse(userService.managePassword(password.getEmail()))) {
+                if (mailSenderSendGrid.manageResponse(userService.managePassword(password.getEmail()))) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.RETRIVEVE_PASSWORD_LABEL + " " + password.getEmail());
                 } else {
@@ -517,7 +491,7 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController -sendMail");
             if (mail != null) {
-                if (mailSender.manageResponse(userService.sendMail(mail, true))) {
+                if (mailSenderSendGrid.manageResponse(userService.sendMail(mail, true))) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
                 } else {

@@ -6,7 +6,7 @@
 package cm.packagemanager.pmanager.user.event;
 
 import cm.packagemanager.pmanager.announce.event.AnnounceEvent;
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.notification.enums.NotificationType;
 
 import java.util.Date;
 

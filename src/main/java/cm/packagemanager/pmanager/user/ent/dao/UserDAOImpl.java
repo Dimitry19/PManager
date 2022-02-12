@@ -10,7 +10,7 @@ import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.notification.enums.NotificationType;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -42,6 +42,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Autowired
     RoleDAO roleDAO;
 
+    //@Autowired
+    UserHelper helper;
+
 
     public UserDAOImpl() {
 
@@ -58,9 +61,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserVO login(String username, String password) throws Exception {
-		/*Optional optional=internalLogin(username,password);
-		if (optional==null) return null;
-		return  (UserVO) optional.get();*/
+
         logger.info("User: login");
 
         UserVO user=internalLogin(username, password);
@@ -113,7 +114,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         if (user == null)
             throw new UserNotFoundException("Utilisateur non trouvé");
 
-        return new ArrayList<UserVO>(user.getSubscriptions());
+        return new ArrayList<>(user.getSubscriptions());
     }
 
     @Override
@@ -123,7 +124,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         if (user == null)
             throw new UserNotFoundException("Utilisateur non trouvé");
 
-        return new ArrayList<UserVO>(user.getSubscribers());
+        return new ArrayList<>(user.getSubscribers());
     }
 
 
@@ -150,7 +151,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
         filters[1] = FilterConstants.ACTIVE_MBR;
 
         logger.info("User: all users page by");
-        return all(UserVO.class, null, filters);
+        return  helper.allUsers();
+
+        //return all(UserVO.class, null, filters);
     }
 
     @Override
@@ -209,12 +212,11 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setLastName(register.getLastName());
             user.setPhone(register.getPhone());
             user.setActive(0);
-            user.setEnableNotification(true);
+            user.setEnableNotification(Boolean.FALSE);
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
 
-            Session session = this.sessionFactory.getCurrentSession();
-            session.save(user);
+            save(user);
             setRole(user, register.getRole());
             return user;
 
@@ -238,7 +240,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
 
         if (user != null) {
-            //user.setEmail(userDTO.getEmail()); // on ne peut pas ajourner le NaturalId
             user.setPhone(userDTO.getPhone());
             user.setGender(userDTO.getGender());
             user.setFirstName(userDTO.getFirstName());
@@ -267,18 +268,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
         logger.info("User: delete");
         //delete(UserVO.class,id,false);
         return updateDelete(id);
-    }
-
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public UserVO save(UserVO user) throws BusinessResourceException {
-        logger.info("User: save");
-        if (user != null) {
-            update(user);
-            return user;
-        }
-        return null;
     }
 
 
@@ -335,20 +324,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         return query.list();
     }
 
-    public UserVO findByNaturalIdss(String username, String email, boolean disableFilter) throws BusinessResourceException {
 
-        logger.info("User: find by NaturalIds");
-        Session session = this.sessionFactory.getCurrentSession();
-        if (!disableFilter) {
-            session.enableFilter(FilterConstants.CANCELLED);
-            session.enableFilter(FilterConstants.ACTIVE_MBR);
-        }
-        UserVO user = session.byNaturalId(UserVO.class)
-                .using("username", username)
-                .using("email", email)
-                .getReference();
-        return user;
-    }
 
 
     @Override
@@ -423,7 +399,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         if (user != null && role != null) {
             user.addRole(role);
-            return (save(user) != null);
+            return (update(user) != null);
         } else {
             return false;
         }
@@ -543,43 +519,26 @@ public class UserDAOImpl extends Generic implements UserDAO {
             throw new UserException("Aucun utilisateur trouvé avec cet identifiant" + userId);
         }
 
-		/*List<UserVO> communications=comms.stream()
-										.map(com ->com.getUsers())
-										.flatMap(c ->c.stream())
-										.filter(usr ->usr.getId()==userId)
-										.collect(Collectors.toList());*/
-
         return user.getCommunications().stream().collect(Collectors.toList());
     }
-
-    @Override
-    public List notifications(Long userId) throws Exception {
-        return null;
-    }
-
-    @Override
-    public List messages(Long userId) throws Exception {
-        return null;
-    }
-
 
     private UserVO internalLogin(String username, String password) throws BusinessResourceException {
         try {
             logger.info("User: internal login");
             String encryptedPassword = PasswordGenerator.encrypt(password);
 
-            if (encryptedPassword == null)
-                throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
-
             UserVO userFound = findByUsername(username);
-            if (userFound == null) {
-                return null;
+
+            if ((StringUtils.notEquals(encryptedPassword, userFound.getPassword())) || (encryptedPassword == null || userFound == null)) {
+                throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
             }
+
+
             if (encryptedPassword.equals(userFound.getPassword())) {
                 return userFound;
-            } else {
-                throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
             }
+            throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
+
         } catch (BusinessResourceException ex) {
             logger.error("Login ou mot de passe incorrect", ex);
             throw new BusinessResourceException("UserNotFound", " Nom utilisateur ou mot de passe incorrect", HttpStatus.NOT_FOUND);
@@ -587,6 +546,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             logger.error("Une erreur technique est survenue", ex);
             throw new BusinessResourceException("TechnicalError", "Une erreur technique est survenue", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 
     @Override

@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.common.mail.ent.service;
 
-import cm.packagemanager.pmanager.common.mail.MailSender;
+import cm.packagemanager.pmanager.common.mail.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.mail.ent.dao.ContactUSDAO;
 import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -25,8 +25,9 @@ public class MailServiceImpl implements MailService {
 
 
     private JavaMailSender javaMailSender;
+
     @Autowired
-    MailSender mailSender;
+    MailSenderSendGrid mailSenderSendGrid;
 
     @Autowired
     ContactUSDAO contactUSDAO;
@@ -34,10 +35,10 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public Response contactUS(ContactUSVO contactUS) throws MailException, IOException {
-        contactUSDAO.save(contactUS);
-        final Mail mail = mailSender.buildMail(contactUS, true);
+        contactUSDAO.saves(contactUS);
+        final Mail mail = mailSenderSendGrid.buildMail(contactUS, true);
         if (mail == null) return null;
-        final Response response = mailSender.send(mail);
+        final Response response = mailSenderSendGrid.send(mail);
         return response;
     }
 

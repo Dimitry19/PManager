@@ -57,7 +57,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     }
     */
 
-    @Bean
+    //@Bean
     public CrossDomainFilter corsFilter() throws Exception {
         return new CrossDomainFilter();
     }

@@ -16,6 +16,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
+import java.util.Collections;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+
 import static cm.packagemanager.pmanager.constant.WSConstants.BASE_PATTERN;
 
 @Configuration
@@ -28,27 +34,44 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationEntryPoint authEntryPoint;
 
+    private static final String[] AUTH_LIST = {
+            "/v2/api-docs",
+            "/configuration/ui",
+            "/swagger-resources",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/ws/**",
+            "/webjars/**"
+    };
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
 
-        logger.info("into configure");
-        http.csrf().disable();
-        http.httpBasic().disable();
-        
-       /* Gestion probleme Cors de la websocket
-       http.cors().and().headers().frameOptions().disable()
-                .and().csrf().disable().authorizeRequests().antMatchers("/notifications").permitAll().anyRequest()
-                    .authenticated();*/
+       logger.info("into configure");
+//        http.csrf().disable();
+//        http.httpBasic().disable();
 
-        // All requests send to the Web Server request must be authenticated
-        //http.antMatcher("/sv/**").authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests()
+                .antMatchers(AUTH_LIST)
+                .permitAll()
+                .and().httpBasic()
+                .and().cors().and().csrf().disable();
 
-        // Use AuthenticationEntryPoint to authenticate user/password
-        //http.httpBasic().authenticationEntryPoint(authEntryPoint);
     }
 
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
+        configuration.setAllowedMethods(Collections.singletonList("*"));
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -58,18 +81,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.inMemoryAuthentication()
-                .withUser("user").password("{noop}password").roles("USER");
 
     }
 
     @Bean
-    public FilterRegistrationBean<AuthenticationFilter> filterRegistrationBean() {
-        FilterRegistrationBean<AuthenticationFilter> registrationBean = new FilterRegistrationBean();
+    public FilterRegistrationBean  filterRegistrationBean() {
+        FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
         AuthenticationFilter authenticationFilter = new AuthenticationFilter();
 
         registrationBean.setFilter(authenticationFilter);
-        registrationBean.addUrlPatterns(BASE_PATTERN);
+        registrationBean.addUrlPatterns("/user/*");
         registrationBean.setOrder(2); //set precedence
         return registrationBean;
     }

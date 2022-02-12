@@ -13,7 +13,7 @@ import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.common.utils.QueryUtils;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.notification.enums.NotificationType;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.messages.MessageDTO;

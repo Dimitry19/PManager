@@ -198,9 +198,7 @@ public class AnnounceVO extends CommonVO {
     }
 
     public TransportEnum getTransport() {
-        //setDescriptionTransport(this.transport.toValue());
         setDescriptionTransport("");
-
         return transport;
     }
 

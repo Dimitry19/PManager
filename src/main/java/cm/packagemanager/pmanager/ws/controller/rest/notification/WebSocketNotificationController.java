@@ -2,15 +2,13 @@ package cm.packagemanager.pmanager.ws.controller.rest.notification;
 
 
 import cm.packagemanager.pmanager.constant.WSConstants;
-import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificationService;
-import cm.packagemanager.pmanager.notification.firebase.ent.service.NotificationSocketService;
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.notification.ent.service.NotificationSocketService;
+import cm.packagemanager.pmanager.notification.enums.NotificationType;
 import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import io.swagger.annotations.Api;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import java.awt.print.Pageable;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 

@@ -5,10 +5,9 @@
 
 package cm.packagemanager.pmanager.common.event;
 
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.notification.enums.NotificationType;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 public  class Event {

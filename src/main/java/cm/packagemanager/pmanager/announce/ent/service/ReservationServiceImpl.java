@@ -18,53 +18,53 @@ import java.util.List;
 public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
-    ReservationDAO reservationDAO;
+    ReservationDAO dao;
 
     @Override
     public ReservationVO addReservation(ReservationDTO reservationDTO) throws Exception {
-        return reservationDAO.addReservation(reservationDTO);
+        return dao.addReservation(reservationDTO);
     }
 
     @Override
     public ReservationVO updateReservation(UpdateReservationDTO reservationDTO) throws Exception {
-        return reservationDAO.updateReservation(reservationDTO);
+        return dao.updateReservation(reservationDTO);
     }
 
     @Override
     public ReservationVO getReservation(long id) throws Exception {
-        return reservationDAO.getReservation(id);
+        return dao.getReservation(id);
     }
 
     @Override
     public ReservationVO validate(ValidateReservationDTO reservationDTO) throws Exception {
-        return reservationDAO.validate(reservationDTO);
+        return dao.validate(reservationDTO);
     }
 
     @Override
     public boolean deleteReservation(Long id) throws Exception {
-        return reservationDAO.deleteReservation(id);
+        return dao.deleteReservation(id);
     }
 
     @Override
     public int count(Long id, PageBy pageBy, boolean isUser) throws Exception {
-        return (isUser) ? reservationDAO.countByNameQuery(ReservationVO.FINDBYUSER, ReservationVO.class, id, "userId", pageBy) :
-                reservationDAO.countByNameQuery(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, id, "announceId", pageBy);
+        return (isUser) ? dao.countByNameQuery(ReservationVO.FINDBYUSER, ReservationVO.class, id, "userId", pageBy) :
+                dao.countByNameQuery(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, id, "announceId", pageBy);
     }
 
     @Override
     public List reservationsByUser(Long userId, ReservationType type, PageBy pageBy) throws Exception {
 
-        return reservationDAO.reservationByUser(userId, type, pageBy);
+        return dao.reservationByUser(userId, type, pageBy);
     }
 
     @Override
     public List<ReservationVO> receivedReservations(Long userId, PageBy pageBy) throws Exception {
 
-        return reservationDAO.otherReservations(userId, pageBy);
+        return dao.otherReservations(userId, pageBy);
     }
 
     @Override
     public List<ReservationVO> reservationsByAnnounce(Long announceId, PageBy pageBy) throws Exception {
-        return reservationDAO.reservationByAnnounce(announceId, pageBy);
+        return dao.reservationByAnnounce(announceId, pageBy);
     }
 }

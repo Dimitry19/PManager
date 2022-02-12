@@ -4,6 +4,7 @@ package cm.packagemanager.pmanager.configuration.filters;
 import cm.packagemanager.pmanager.common.exception.ErrorResponse;
 import cm.packagemanager.pmanager.common.session.SessionManager;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
+import cm.packagemanager.pmanager.constant.WSConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static cm.packagemanager.pmanager.constant.WSConstants.*;

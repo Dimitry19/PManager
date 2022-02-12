@@ -74,8 +74,7 @@ public class ImageServiceImpl implements ImageService {
 
         fileUtils.checkType(file);
 
-
-        ImageVO image = new ImageVO();
+        ImageVO image = null;
         switch (type.name()) {
             case USER_TYPE_IMG_UPLOAD:
                 logger.info("save user image");
@@ -86,8 +85,12 @@ public class ImageServiceImpl implements ImageService {
                if (user.getImage() != null) {
                     image = user.getImage();
                 }
+                if(image==null){
+                    image=new ImageVO();
+                    image.setName(fileUtils.generateFilename(file.getOriginalFilename()));
+                }
                 image.setType(USER_TYPE_IMG_UPLOAD);
-                image.setName(file.getOriginalFilename());
+                image.setOrigin(file.getContentType());
                 image.setPicByte(file.getBytes());
                 user.setImage(image);
                 userDAO.update(user);
@@ -105,7 +108,14 @@ public class ImageServiceImpl implements ImageService {
                 if (announce.getImage() != null) {
                     image = announce.getImage();
                 }
-                image.setName(file.getOriginalFilename());
+
+                if(image==null){
+                    image=new ImageVO();
+                    image.setName(fileUtils.generateFilename(file.getOriginalFilename()));
+                }
+
+                image.setName(fileUtils.generateFilename(file.getOriginalFilename()));
+                image.setOrigin(file.getContentType());
                 image.setPicByte(file.getBytes());
                 announce.setImage(image);
                 announceDAO.update(announce);
