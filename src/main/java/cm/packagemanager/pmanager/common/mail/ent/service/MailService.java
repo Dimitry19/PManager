@@ -8,6 +8,7 @@ import org.springframework.mail.MailException;
 import java.io.IOException;
 
 public interface MailService {
+
     void sendEmail(UserVO user) throws MailException;
 
     Response contactUS(ContactUSVO contactUS) throws MailException, IOException;

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 public interface UserDAO extends CommonDAO {
 
@@ -61,7 +62,6 @@ public interface UserDAO extends CommonDAO {
 
     boolean deleteUser(Long id) throws UserException;
 
-    UserVO save(UserVO user) throws BusinessResourceException;
 
     void removeUser(UserVO user) throws BusinessResourceException;
 
@@ -83,9 +83,6 @@ public interface UserDAO extends CommonDAO {
 
     boolean checkLogin(LoginDTO lr) throws Exception;
 
-    //List<RatingCountVO> findRatingCounts(UserVO user);
-
-
     UserVO updateImage(Long userId, MultipartFile multipartFile) throws IOException;
 
     UserVO manageNotification(Long userId, boolean enableNotification) throws UserException;
@@ -94,8 +91,5 @@ public interface UserDAO extends CommonDAO {
 
     List<CommunicationVO> communications(Long userId) throws Exception;
 
-    List notifications(Long userId) throws Exception;
-
-    List messages(Long userId) throws Exception;
 
 }

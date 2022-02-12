@@ -8,8 +8,7 @@ import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.Notification;
-import cm.packagemanager.pmanager.notification.firebase.ent.vo.NotificationVO;
+import cm.packagemanager.pmanager.notification.ent.vo.NotificationVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.*;
 
-import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -129,8 +127,8 @@ public class UserVO extends CommonVO {
     private Integer active;
 
     @Basic(optional = true)
-    @Column(name = "ENABLE_NOTIF")
-    private Boolean enableNotification = true;
+    @Column(name = "ENABLE_NOTIF",nullable = false)
+    private boolean enableNotification = true;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy(clause = "id.id DESC")
@@ -314,13 +312,11 @@ public class UserVO extends CommonVO {
         this.subscriptions = subscriptions;
     }
 
-    public Boolean isEnableNotification() {
+    public boolean isEnableNotification() {
         return enableNotification;
     }
 
-    public void setEnableNotification(Boolean enableNotification) {
-        this.enableNotification = enableNotification;
-    }
+    public void setEnableNotification(Boolean enableNotification) { this.enableNotification = enableNotification;  }
 
     public Set<CommunicationVO> getCommunications() {
         return communications;

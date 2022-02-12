@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
@@ -23,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 /*https://howtodoinjava.com/spring-batch/java-config-multiple-steps/*/
 
 @Configuration("stepByStep")
-//@EnableBatchProcessing // enable batch support for our application
+//@EnableBatchProcessing // enable batch
 public class BatchConfig {
 
     private static Logger log = LoggerFactory.getLogger(BatchConfig.class);

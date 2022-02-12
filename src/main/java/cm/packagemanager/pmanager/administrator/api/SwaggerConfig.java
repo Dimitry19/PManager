@@ -1,11 +1,15 @@
 package cm.packagemanager.pmanager.administrator.api;
 
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -13,6 +17,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
@@ -20,8 +25,8 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 
 /* https://springfox.github.io/springfox/docs/current/#springfox-spring-mvc-and-spring-boot*/
-@Configuration
-@EnableSwagger2
+//@Configuration
+//@EnableSwagger2
 public class SwaggerConfig {
 
 
@@ -75,62 +80,63 @@ public class SwaggerConfig {
                 .apiInfo(metaData()).select().paths(PathSelectors.any()).build();
     }
 
-    @Bean
+   // @Bean
     public Docket announcesApi() {
         return createDocket(apiGroupNameAnnounce, "/pmanager/ws/announce.*");
     }
 
-    @Bean
+    // @Bean
     public Docket mailApi() {
         return createDocket(apiGroupNameMail, "/pmanager/ws/mail.*");
     }
 
-    @Bean
+    // @Bean
     public Docket reviewApi() {
         return createDocket(apiGroupNameReview, "/pmanager/ws/review.*");
     }
 
-    @Bean
+    // @Bean
     public Docket userApi() {
         return createDocket(apiGroupNameUser, "/pmanager/ws/user.*");
     }
 
 
-    @Bean
+    // @Bean
     public Docket messageApi() {
         return createDocket(apiGroupNameMessage, "/pmanager/ws/message.*");
     }
 
 
-    @Bean
+    // @Bean
     public Docket roleApi() {
         return createDocket(apiGroupNameRole, "/pmanager/ws/role.*");
     }
 
-    @Bean
+    // @Bean
     public Docket reservationApi() {
         return createDocket(apiGroupNameReservation, "/pmanager/ws/reservation.*");
     }
 
-    @Bean
+    // @Bean
     public Docket imageApi() {
         return createDocket(apiGroupNameImage, "/pmanager/ws/image.*");
     }
 
-    @Bean
+    //  @Bean
     public Docket websocketApi() {
         return createDocket(apiGroupNameWebsocket, "/pmanager/ws/socket/notification.*");
     }
 
-    @Bean
+    // @Bean
     public Docket notificationApi() {
         return createDocket(apiGroupNameNotification, "/pmanager/ws/notification.*");
     }
 
-    @Bean
+    // @Bean
     public Docket dashBoardCommunicationApi() {
         return createDocket(apiGroupNameCommunication, "/pmanager/ws/dashboard/communication.*");
     }
+
 
     private ApiInfo metaData() {
         Contact contact = new Contact("Dimitri S. / Ludovic N.", "", "packagemanager@gmail.com");
@@ -143,7 +149,7 @@ public class SwaggerConfig {
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("API", "PM2020", "header");
+        return new ApiKey("API", "AUTH_API_KEY", "header");
     }
 
     private SecurityContext securityContext() {
@@ -198,14 +204,31 @@ public class SwaggerConfig {
     }
 
     Docket createDocket(String groupname, String paths) {
-        return new Docket(DocumentationType.SWAGGER_2).groupName(groupname)
+        return new Docket(DocumentationType.SWAGGER_2)
+                 .forCodeGeneration(true)
+                //.globalRequestParameters(globalParameterList() )
+                //.globalOperationParameters(globalParameterList())
+                .groupName(groupname)
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                //.apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(regex(paths))
                 .build()
                 .securitySchemes(singletonList(apiKey()))
                 .securityContexts(singletonList(securityContext()))
                 .apiInfo(metaData());
     }
+
+    private List<Parameter> globalParameterList() {
+        return Collections.singletonList( new ParameterBuilder()
+                .name("AUTH_API_KEY") // name of the header
+                .modelRef(new ModelRef("string")) // data-type of the header
+                .required(true) // required/optional
+                .parameterType("header") // for query-param, this value can be 'query'
+                .description("Basic Auth Token")
+                .build());
+    }
+
+
 
 }

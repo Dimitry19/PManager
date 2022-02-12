@@ -1,13 +1,11 @@
 package cm.packagemanager.pmanager.announce.ent.dao;
 
 import cm.packagemanager.pmanager.announce.ent.vo.*;
-import cm.packagemanager.pmanager.announce.event.AnnounceEvent;
 import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
-import cm.packagemanager.pmanager.common.event.Event;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
@@ -17,7 +15,7 @@ import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.FieldConstants;
-import cm.packagemanager.pmanager.notification.firebase.enums.NotificationType;
+import cm.packagemanager.pmanager.notification.enums.NotificationType;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -84,7 +82,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
                     .stream()
                     .filter(res -> res.getValidate().equals(ValidateEnum.INSERTED) && res.getAnnounce().getId().equals(announce.getId()))
                     .collect(Collectors.toList())).get();
-            //.orElseGet(Collections::emptyList);
+
             if (CollectionsUtils.isNotEmpty(anReservations)) {
                 ReservationVO rsv = (ReservationVO) CollectionsUtils.getFirst(anReservations);
                 rsv.getAnnounce().setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));

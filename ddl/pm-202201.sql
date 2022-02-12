@@ -201,7 +201,7 @@ create table USER
     USERNAME VARCHAR(15) not null
         unique,
     IMAGE_ID BIGINT,
-    ENABLE_NOTIF BOOLEAN,
+    ENABLE_NOTIF BOOLEAN not null ,
     ERROR VARCHAR(255),
     unique (EMAIL, USERNAME),
     constraint FKPKUUKDHP1VI4PQWEMNYGTNO1T

@@ -1,26 +1,23 @@
 package cm.packagemanager.pmanager.common.ent.dto;
 
-
-import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.List;
 
 
 // @JsonInclude annotation ensures that only non null values are sent in the response.
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public final class ResponseDTO {
+public final class ResponseDTO<T> {
 
-    private final List<AnnounceVO> movies;
+    private final List<T> elements;
     private final int totalItems;
     private final int totalPages;
     private final int currentPage;
     private final Boolean isFirstPage;
     private final Boolean isLastPage;
 
-    private ResponseDTO(final List<AnnounceVO> movies, final int totalItems, final int totalPages, final int currentPage,
+    private ResponseDTO(final List<T> elements, final int totalItems, final int totalPages, final int currentPage,
                         final Boolean isFirstPage, final Boolean isLastPage) {
-        this.movies = movies;
+        this.elements = elements;
         this.totalItems = totalItems;
         this.totalPages = totalPages;
         this.currentPage = currentPage;
@@ -28,13 +25,13 @@ public final class ResponseDTO {
         this.isLastPage = isLastPage;
     }
 
-    public static ResponseDTO create(final List<AnnounceVO> movies, final int totalItems, final int totalPages,
+    public  ResponseDTO create(final List<T> elements, final int totalItems, final int totalPages,
                                      final int currentPage, final Boolean isFirstPage, final Boolean isLastPage) {
-        return new ResponseDTO(movies, totalItems, totalPages, currentPage, isFirstPage, isLastPage);
+        return new ResponseDTO(elements, totalItems, totalPages, currentPage, isFirstPage, isLastPage);
     }
 
-    public List<AnnounceVO> getMovies() {
-        return movies;
+    public List<T> getElements() {
+        return elements;
     }
 
     public int getTotalItems() {

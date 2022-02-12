@@ -4,7 +4,7 @@ import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.common.mail.MailSender;
+import cm.packagemanager.pmanager.common.mail.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.mail.MailType;
 import cm.packagemanager.pmanager.common.utils.HTMLEntities;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
     ReviewDAO reviewDAO;
 
     @Autowired
-    MailSender mailSender;
+    MailSenderSendGrid mailSenderSendGrid;
 
 
     @PostConstruct
@@ -229,7 +229,7 @@ public class UserServiceImpl implements UserService {
 
         emails.add(email);
 
-        return mailSender.sendMailMessage(MailType.PASSWORD_TEMPLATE, MailType.PASSWORD_TEMPLATE_TITLE, MailSender.replace(user, labels, null, decrypt),
+        return mailSenderSendGrid.sendMailMessage(MailType.PASSWORD_TEMPLATE, MailType.PASSWORD_TEMPLATE_TITLE, MailSenderSendGrid.replace(user, labels, null, decrypt),
                 emails, null, null, null, user.getUsername(), null, false);
     }
 
@@ -269,7 +269,7 @@ public class UserServiceImpl implements UserService {
 
             labels.add(MailType.BODY_KEY);
 
-            return mailSender.sendMailMessage(MailType.SEND_MAIL_TEMPLATE, mr.getSubject(), MailSender.replace(user, labels, mr.getBody(), null), mr.getTo(), mr.getCc(), mr.getBcc(), mr.getFrom(), user.getUsername(), null, true);
+            return mailSenderSendGrid.sendMailMessage(MailType.SEND_MAIL_TEMPLATE, mr.getSubject(), MailSenderSendGrid.replace(user, labels, mr.getBody(), null), mr.getTo(), mr.getCc(), mr.getBcc(), mr.getFrom(), user.getUsername(), null, true);
         }
         return null;
     }
@@ -292,7 +292,7 @@ public class UserServiceImpl implements UserService {
 
         emails.add(user.getEmail());
 
-        Response sent = mailSender.sendMailMessage(MailType.CONFIRM_TEMPLATE, MailType.CONFIRM_TEMPLATE_TITLE, MailSender.replace(user, labels, body, null),
+        Response sent = mailSenderSendGrid.sendMailMessage(MailType.CONFIRM_TEMPLATE, MailType.CONFIRM_TEMPLATE_TITLE, MailSenderSendGrid.replace(user, labels, body, null),
                 emails, null, null, null, user.getUsername(), null, false);
 
         return sent;

@@ -22,7 +22,7 @@ import java.util.List;
 public class AnnounceServiceImpl implements AnnounceService {
 
     @Autowired
-    AnnounceDAO announceDAO;
+    AnnounceDAO dao;
 
     /**
      * Permet de verifier que le bean a été instancié et ceci peut etre  fait avec afterPropertiesSet
@@ -36,50 +36,50 @@ public class AnnounceServiceImpl implements AnnounceService {
 	*/
     public AnnounceVO create(AnnounceDTO announceDTO) throws Exception {
 
-        return announceDAO.create(announceDTO);
+        return dao.create(announceDTO);
     }
 
     public List<AnnounceVO> find(AnnounceSearchDTO asdto, PageBy pageBy) throws Exception {
-        return announceDAO.find(asdto, pageBy);
+        return dao.find(asdto, pageBy);
     }
 
     public AnnounceVO update(UpdateAnnounceDTO announce) throws Exception {
-        return announceDAO.update(announce);
+        return dao.update(announce);
     }
 
     public AnnounceVO update(Integer id) throws Exception {
-        return announceDAO.update(id);
+        return dao.update(id);
     }
 
     public AnnounceVO announce(Long id) throws Exception {
-        return announceDAO.announce(id);
+        return dao.announce(id);
     }
 
     public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws Exception {
 
-        return announceDAO.announcesByUser(userId, pageBy);
+        return dao.announcesByUser(userId, pageBy);
     }
 
     public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws Exception {
 
-        return announceDAO.announcesByType(type, pageBy);
+        return dao.announcesByType(type, pageBy);
     }
 
     public boolean delete(Long id) throws Exception {
-        return announceDAO.delete(id);
+        return dao.delete(id);
     }
 
     public List<AnnounceVO> announces(PageBy pageBy) throws Exception {
-        return announceDAO.announces(pageBy);
+        return dao.announces(pageBy);
     }
 
 
     public Page announces(Pageable pageable) throws Exception {
-        return (Page) announceDAO.announces(pageable.getPageNumber(), pageable.getPageSize());
+        return (Page) dao.announces(pageable.getPageNumber(), pageable.getPageSize());
     }
 
     public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws Exception {
-        return announceDAO.count(announceSearch, pageBy);
+        return dao.count(announceSearch, pageBy);
     }
 
     public void afterPropertiesSet() throws Exception {

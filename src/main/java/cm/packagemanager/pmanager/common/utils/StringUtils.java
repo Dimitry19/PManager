@@ -36,6 +36,11 @@ public class StringUtils {
         return cs1.equals(cs2);
     }
 
+    public static boolean notEquals(final String cs1, final String cs2) {
+
+        return !equals(cs1,cs2);
+    }
+
     public static String formatZeroString(String str, int maxlenght) {
         if (isEmpty(str)) {
             return str;

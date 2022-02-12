@@ -15,7 +15,7 @@ import java.io.IOException;
 import static org.springframework.http.HttpHeaders.ORIGIN;
 
 
-@Component
+//@Component
 public class CrossDomainFilter extends OncePerRequestFilter {
 
     private static Logger logger = LoggerFactory.getLogger(CrossDomainFilter.class);
