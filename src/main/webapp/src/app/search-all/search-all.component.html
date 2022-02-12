@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            &nbsp;
+        </div>
+
+        <div class="col-md-5 cardSearch">
+            <div class="card">
+                <br>
+                <div class="">
+                    <h4 class="card-header-text">Trouver votre voyageur pour vos colis...</h4>
+                </div>
+                <br>
+                <div class="card-block">
+                    <div class="interval">
+                        <ng-autocomplete [data]="villes" [searchKeyword]="keyword" (selected)='selectEvent($event)' [(ngModel)]="lieux_depart" placeholder="De..." (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.name"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                    <div class="interval">
+                        &nbsp;
+                    </div>
+                    <div class="interval">
+                        <ng-autocomplete [data]="villes" [searchKeyword]="keyword" (selected)='selectEventA($event)' [(ngModel)]="lieux_arrivee" placeholder="À..." (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.name"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                    <div class="interval">
+                        &nbsp;
+                    </div>
+                    <div class="departDate">
+                        <ejs-datetimepicker id='startDate' placeholder='Le...' [(value)]="dateValue ? departDate:dateValue" [max]='dateValue_e' [min]='minDate_e' format='dd/MM/yyyy' (change)="depart()"></ejs-datetimepicker>
+                    </div>
+                    <div class="mb-2"></div>
+                    <div class="">
+                        <ng-select [items]="Transports" [(ngModel)]="valueTransport" name="Transport" placeholder=" En..." [clearable]="true" bindLabel="description" notFoundMsg="No Transports Found">
+                        </ng-select>
+                        <!-- <select id="immersive_dropdown" data-placeholder="En...">
+                            <option *ngFor="let c of Transports; let i=index; trackBy:tracbByFn" [value]="c.value" [innerHTML]="c.description"></option>													
+                        </select> -->
+                    </div>
+                    <div class="mb-2"></div>
+                    <div class="test">
+                        <ng-select [items]="Categories" [(ngModel)]="valueCategorie" name="category" placeholder=" Nature du colis..." [clearable]="true" bindLabel="description" notFoundMsg="No Category Found">
+                        </ng-select>
+                        <!-- <select id="immersive_dropdown1" data-placeholder="Nature du colis...">
+                            <option value=" " >Nature du colis...</option>
+                            <option *ngFor="let c of Categories; let i=index; trackBy:tracbByFn" [value]="c.value" [innerHTML]="c.description"></option>			
+                        </select> -->
+                    </div>
+                </div>
+                <button id="fl" class="btn btn-rounded btn-primary cardButton" type="button" (click)="search()">
+                    Trouver une solution
+                </button>
+            </div>
+            <br>
+        </div>
+
+    </div>
+
+</div>
