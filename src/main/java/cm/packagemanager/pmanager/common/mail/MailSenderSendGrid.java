@@ -251,13 +251,6 @@ public class MailSenderSendGrid {
             content.setValue(message);
             mail.addContent(content);
 
-			/*if (repyToEnabled) {
-				Email replyTo = new Email();
-				replyTo.setName(fromName);
-				replyTo.setEmail(adminEmail);
-				mail.setReplyTo(replyTo);
-			}*/
-
         } catch (Exception e) {
             logger.info(e.getMessage());
             e.printStackTrace();

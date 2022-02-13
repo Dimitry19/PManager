@@ -5,11 +5,13 @@
 
 package cm.packagemanager.pmanager.administrator.api;
 
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
@@ -129,28 +131,29 @@ public class SwaggerApiConfig {
                 .enable(true)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
-                .paths(regex(paths)).build();
+                .paths(regex(paths))
+                //.paths(PathSelectors.any())
+                .build();
     }
 
     private ApiKey apiToken() {
-        return new ApiKey("apiToken", "AUTH_API_KEY", "header");
+
+        return new ApiKey("APIKey", "AUTH_API_KEY", SecurityScheme.In.HEADER.name());
     }
 
 
     private SecurityContext securityContext() {
-       /* return SecurityContext.builder()
+        return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .forPaths(regex("/pmanager/anyPath.*"))
-                .build();*/
-        return SecurityContext.builder().securityReferences(defaultAuth()).build();
-
+                //.forPaths(regex("/pmanager/anyPath.*"))
+                .build();
     }
 
     private List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Collections.singletonList(new SecurityReference("AUTH_API_KEY", authorizationScopes));
+        return Collections.singletonList(new SecurityReference("APIKey", authorizationScopes));
     }
 
     private ApiInfo apiInfo() {

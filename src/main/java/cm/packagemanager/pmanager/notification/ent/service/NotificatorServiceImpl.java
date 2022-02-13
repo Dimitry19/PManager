@@ -117,13 +117,13 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
                 String sessionId = (String) finalMap.get(l);
                 headerAccessor.setSessionId(sessionId);
 
-                notifica.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
+                notification.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
                 alreadySent= (List) sessionManager.getFromSession(l);
 
                 if(CollectionsUtils.isEmpty(alreadySent) ||(CollectionsUtils.isNotEmpty(alreadySent) && !alreadySent.contains(notification))){
 
-                    messagingTemplate.convertAndSendToUser(sessionId,notifica.getTopic(), notifica, headerAccessor.getMessageHeaders());
-                    alreadySent.add(notifica);
+                    messagingTemplate.convertAndSendToUser(sessionId,notification.getTopic(), notification, headerAccessor.getMessageHeaders());
+                    alreadySent.add(notification);
                     sessionManager.removeToSession(l);
                     sessionManager.addToSession(l,alreadySent);
                 }
