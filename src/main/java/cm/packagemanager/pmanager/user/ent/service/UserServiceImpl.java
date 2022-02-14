@@ -7,6 +7,7 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.mail.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.mail.MailType;
 import cm.packagemanager.pmanager.common.utils.HTMLEntities;
+import cm.packagemanager.pmanager.common.utils.MailUtils;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.rating.enums.Rating;
 import cm.packagemanager.pmanager.review.ent.bo.ReviewsSummaryBO;
@@ -229,7 +230,7 @@ public class UserServiceImpl implements UserService {
 
         emails.add(email);
 
-        return mailSenderSendGrid.sendMailMessage(MailType.PASSWORD_TEMPLATE, MailType.PASSWORD_TEMPLATE_TITLE, MailSenderSendGrid.replace(user, labels, null, decrypt),
+        return mailSenderSendGrid.sendMailMessage(MailType.PASSWORD_TEMPLATE, MailType.PASSWORD_TEMPLATE_TITLE, MailUtils.replace(user, labels, null, decrypt),
                 emails, null, null, null, user.getUsername(), null, false);
     }
 
@@ -269,7 +270,7 @@ public class UserServiceImpl implements UserService {
 
             labels.add(MailType.BODY_KEY);
 
-            return mailSenderSendGrid.sendMailMessage(MailType.SEND_MAIL_TEMPLATE, mr.getSubject(), MailSenderSendGrid.replace(user, labels, mr.getBody(), null), mr.getTo(), mr.getCc(), mr.getBcc(), mr.getFrom(), user.getUsername(), null, true);
+            return mailSenderSendGrid.sendMailMessage(MailType.SEND_MAIL_TEMPLATE, mr.getSubject(), MailUtils.replace(user, labels, mr.getBody(), null), mr.getTo(), mr.getCc(), mr.getBcc(), mr.getFrom(), user.getUsername(), null, true);
         }
         return null;
     }
@@ -292,7 +293,7 @@ public class UserServiceImpl implements UserService {
 
         emails.add(user.getEmail());
 
-        Response sent = mailSenderSendGrid.sendMailMessage(MailType.CONFIRM_TEMPLATE, MailType.CONFIRM_TEMPLATE_TITLE, MailSenderSendGrid.replace(user, labels, body, null),
+        Response sent = mailSenderSendGrid.sendMailMessage(MailType.CONFIRM_TEMPLATE, MailType.CONFIRM_TEMPLATE_TITLE, MailUtils.replace(user, labels, body, null),
                 emails, null, null, null, user.getUsername(), null, false);
 
         return sent;

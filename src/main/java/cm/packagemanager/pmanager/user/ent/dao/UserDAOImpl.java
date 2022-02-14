@@ -212,7 +212,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setLastName(register.getLastName());
             user.setPhone(register.getPhone());
             user.setActive(0);
-            user.setEnableNotification(Boolean.FALSE);
+            user.setEnableNotification(Boolean.TRUE);
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
 

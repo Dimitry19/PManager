@@ -7,6 +7,7 @@ import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.enums.UploadImageType;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
+import cm.packagemanager.pmanager.common.utils.ImageUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.UUID;
 
 import static cm.packagemanager.pmanager.common.Constants.ANNOUNCE_TYPE_IMG_UPLOAD;
@@ -74,6 +76,11 @@ public class ImageServiceImpl implements ImageService {
 
         fileUtils.checkType(file);
 
+        if(ImageUtils.validateImageSize(file.getInputStream())){
+            InputStream is=ImageUtils.resizeImage(file.getInputStream(),file.getContentType());
+
+        }
+
         ImageVO image = null;
         switch (type.name()) {
             case USER_TYPE_IMG_UPLOAD:
@@ -85,8 +92,8 @@ public class ImageServiceImpl implements ImageService {
                if (user.getImage() != null) {
                     image = user.getImage();
                 }
-                if(image==null){
-                    image=new ImageVO();
+                if(image==null) {
+                    image = new ImageVO();
                     image.setName(fileUtils.generateFilename(file.getOriginalFilename()));
                 }
                 image.setType(USER_TYPE_IMG_UPLOAD);

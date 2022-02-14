@@ -1,0 +1,153 @@
+<!--<app-head [connected]="true" [username]="username"></app-head>-->
+<!-- Module home -->
+<main>
+    <!-- Banner -->
+    <section *ngIf="loggedUser" id="banner">
+        <div class="inner">
+            <header class="sliderText">
+
+                <div id="carouselExampleSlidesOnly" class="carousel slide carousel-fade rowtext" data-ride="carousel" data-interval="3000">
+                    <strong class="from">De</strong>
+                    <ul class="carousel-inner depart">
+                        <li class="carousel-item active">
+                            <span>Douala</span>
+                        </li>
+                        <li class="carousel-item">
+                            <span>Bologne</span>
+                        </li>
+                        <li class="carousel-item">
+                            <span>Yaoundé</span>
+                        </li>
+                        <li class="carousel-item">
+                            <span>Milan</span>
+                        </li>
+                    </ul>
+                    <!-- </div> -->
+                    <!-- <div id="carouselExampleSlidesOnly1" class="carousel slide carousel-fade rowtext" data-ride="carousel" data-interval="3000"> -->
+                    <strong class="from">À</strong>
+                    <ul id="carouselExampleSlidesOnly1" class="carousel slide carousel-fade" data-ride="carousel" data-interval="3000">
+                        <ul class="carousel-inner arrivee">
+                            <li class="carousel-item active">
+                                <span>Milan</span>
+                            </li>
+                            <li class="carousel-item">
+                                <span>Yaounde</span>
+                            </li>
+                            <li class="carousel-item">
+                                <span>Bologne</span>
+                            </li>
+                            <li class="carousel-item">
+                                <span>Douala</span>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
+            </header>
+
+            <!-- filtre de recherche -->
+            <button id="fl" class="btn btn-rounded btn-primary" type="button" data-toggle="collapse" data-target="#filtre" aria-expanded="false" aria-controls="filtre" (click)="toggle(filter)" #filter>
+				    Affiner la recherche
+			</button>
+            <div class="filter collapse" id="filtre">
+                <ul class="search_list">
+                    <li class="div_input_lieux space">
+                        <div class="ng-autocomplete">
+                            <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEvent($event)' [(ngModel)]="lieux_depart" placeholder="lieux de depart" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+                                [notFoundTemplate]="notFoundTemplate">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.name"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </li>
+                    <li class="div_input_lieux">
+                        <div class="ng-autocomplete">
+                            <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEventA($event)' [(ngModel)]="lieux_arrivee" placeholder="lieux d'arrivee" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+                                [notFoundTemplate]="notFoundTemplate">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.name"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </li>
+
+                    <li class="div_input_date">
+                        <form class="form-inline">
+                            <div class="form-group hidden">
+                                <div class="input-group">
+                                    <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker" [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" [startDate]="fromDate!">
+                                    <ng-template #t let-date let-focused="focused">
+                                        <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)" [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+													{{ date.day }}
+												</span>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input #dpFromDate class="form-control ajuste" placeholder="date de départ" name="dpFromDate" [value]="formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+                                    <span class="searchclear fa fa-times" (click)="clear()"></span>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">📅</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group ml-2">
+                                <div class="input-group">
+                                    <input #dpToDate class="form-control ajuste" placeholder="date d'arrivée" name="dpToDate" [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)">
+                                    <span class="searchclear fa fa-times" (click)="clear1()"></span>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">📅</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+
+                </ul>
+                <ul class="search_list_1">
+                    <li class="div_input1">
+                        <ng-select class="ngSelecct" [items]="Categories" [(ngModel)]="valueCategorie" name="category" placeholder=" Nature du colis..." [clearable]="true" bindLabel="description" notFoundMsg="No Category Found">
+                        </ng-select>
+                        <!-- <select id="immersive_dropdown" data-placeholder="Categorie">
+							<option *ngFor="let c of Categories; let i=index; trackBy:tracbByFn" [value]="c.value" [innerHTML]="c.description"></option>
+						</select> -->
+                    </li>
+                    <li class="div_input">
+                        <form class="range-field">
+                            <div class="form-group prix_kg">
+                                <label for="formControlRange">Prix du Kg(&euro;)</label>
+                                <span class="price">
+									<span id="myValue" [innerHTML]="prix1.value">&euro;</span>
+                                </span>
+                                <input id="formControlRange" type="text" data-slider-min="0" data-slider-max="50" data-slider-step="1" #prix1/>
+                            </div>
+                        </form>
+                    </li>
+                    <li *ngIf="false" class="userInput">
+                        <input type="text" name="" value="" placeholder="annonceur...">
+                    </li>
+                    <li class="fill">
+                        <!-- <img src="../../assets/images/loupe.png" alt="Recherche" class="search float-right" (click)="search()"> -->
+                    </li>
+                </ul>
+                <button type="button" name="button" class="btn btn-info waves-effect ml-auto btn-rounded my-3" (click)="search()">Rechercher</button>
+            </div>
+            <br><br><br><br>
+            <!-- fin filtre de recherche -->
+            <app-typed-product></app-typed-product>
+        </div>
+    </section>
+
+
+</main>

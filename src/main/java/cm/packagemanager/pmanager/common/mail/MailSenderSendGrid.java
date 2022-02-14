@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.common.mail;
 
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
+import cm.packagemanager.pmanager.common.utils.MailUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.common.utils.Utility;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -45,19 +46,19 @@ public class MailSenderSendGrid {
     @Value("${mail.smtp.auth}")
     private boolean AUTH;
 
-    @Value("${mail.admin.username}")
-    private String adminUsername;
+    @Value("${sendgrid.mail.sender.user}")
+    private String sender;
 
-    @Value("${mail.admin.password}")
+    @Value("${sendgrid.mail.sender.password}")
     private String adminPassword;
 
-    @Value("${mail.admin.email}")
+    @Value("${sendgrid.admin.email}")
     private String adminEmail;
 
-    @Value("${mail.email.bcc}")
+    @Value("${sendgrid.mail.email.bcc}")
     private String emailbcc;
 
-    @Value("${mail.email.cc}")
+    @Value("${sendgrid.mail.email.cc}")
     private String emailcc;
 
     @Value("${mail.email.from}")
@@ -68,98 +69,27 @@ public class MailSenderSendGrid {
     private String SENDGRID_API_KEY;
 
 
-    Properties properties;
-
-
-    //@Autowired
-    ResourceLoader resourceLoader;
-
     String EmailSendAddresses;
 
     String EmailSendAddressesCC;
 
     String EmailSendAddressesBCC;
 
-    private final static String SEPARATOR = ";";
 
     public MailSenderSendGrid() {
 
     }
 
 
-    private void loadProperties() {
-
-        properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", 587);
-        properties.put("mail.transport.protocol", "smtp");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.debug", "true");
-
-    }
-
-    private String formatEmails(List<String> emails) {
-
-        if (emails == null)
-            return null;
-
-        StringBuilder sb = new StringBuilder();
-
-        for (String email : emails) {
-            sb.append(email);
-            sb.append(SEPARATOR);
-        }
-        return sb.toString();
-
-    }
 
 
-    public static Map<String, String> replace(UserVO user, List<String> labels, String body, String password) {
-
-        Map<String, String> variableLabel = new HashMap<String, String>();
-
-        for (String label : labels) {
-
-            if (user != null && !label.equals(MailType.BODY_KEY)) {
-
-                if (label.equals(MailType.USERNAME_KEY)) {
-                    variableLabel.put(label, user.getFirstName());
-                }
 
 
-                if (label.equals(MailType.PASSWORD_KEY)) {
-                    variableLabel.put(label, password);
-                }
-
-            } else {
-                variableLabel.put(label, body);
-            }
-
-        }
-
-        return variableLabel;
-    }
-
-    class SMTPAuthenticator extends javax.mail.Authenticator {
-        String username;
-        String password;
-
-        public SMTPAuthenticator(String username, String password) {
-            this.username = username;
-            this.password = password;
-        }
-
-        public PasswordAuthentication getPasswordAuthentication() {
-
-            return new PasswordAuthentication(username, password);
-        }
-    }
 
 
-    public Response sendMailMessage(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC, List<String> emailSendBCC, String from, String username, String message, boolean repyToEnabled) {
+    public Response sendMailMessage(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC, List<String> emailSendBCC, String from, String username, String message, boolean replyToEnabled) {
         try {
-            final Mail mail = buildMailToSend(templateName, messageSubject, variableLabel, emailSendTo, emailSendCC, emailSendBCC, from, username, message, repyToEnabled);
+            final Mail mail = buildMailToSend(templateName, messageSubject, variableLabel, emailSendTo, emailSendCC, emailSendBCC, from, username, message, replyToEnabled);
             final Response response = send(mail);
             return response;
         } catch (Exception e) {
@@ -180,9 +110,8 @@ public class MailSenderSendGrid {
     }
 
     public Response send(final Mail mail) throws IOException {
-        final SendGrid sg = new SendGrid(SENDGRID_API_KEY);
-        //sg.addRequestHeader("X-Mock", "true");
 
+        final SendGrid sg = new SendGrid(SENDGRID_API_KEY);
         final Request request = new Request();
         request.setMethod(Method.POST);
         request.setEndpoint("mail/send");
@@ -203,8 +132,9 @@ public class MailSenderSendGrid {
 
             String emailTemplateString = Utility.convertStreamToString(emailTemplateStream);
 
+
             if (from == null) {
-                from = adminEmail;
+                from = sender;
             }
 
             genericPersonalizzation(messageSubject, from, username, mail, emailSendTo, emailSendCC, emailSendBCC);
@@ -292,25 +222,25 @@ public class MailSenderSendGrid {
 
     private void genericPersonalizzation(String messageSubject, String from, String username, Mail mail, List<String> emailSendTo, List<String> emailSendCC, List<String> emailSendBCC) {
 
-        EmailSendAddresses = formatEmails(emailSendTo);
-        EmailSendAddressesCC = formatEmails(emailSendCC);
-        EmailSendAddressesBCC = formatEmails(emailSendBCC);
+        EmailSendAddresses = MailUtils.formatEmails(emailSendTo);
+        EmailSendAddressesCC = MailUtils.formatEmails(emailSendCC);
+        EmailSendAddressesBCC = MailUtils.formatEmails(emailSendBCC);
 
 
-        String[] emailSendAddressesArray = EmailSendAddresses.split(SEPARATOR);
-        String[] emailSendAddressesCCArray = StringUtils.isNotEmpty(EmailSendAddressesCC) ? EmailSendAddressesCC.split(SEPARATOR) : null;
-        String[] emailSendAddressesBCCArray = StringUtils.isNotEmpty(EmailSendAddressesBCC) ? EmailSendAddressesBCC.split(SEPARATOR) : null;
+        String[] emailSendAddressesArray = EmailSendAddresses.split(MailUtils.SEPARATOR);
+        String[] emailSendAddressesCCArray = StringUtils.isNotEmpty(EmailSendAddressesCC) ? EmailSendAddressesCC.split(MailUtils.SEPARATOR) : null;
+        String[] emailSendAddressesBCCArray = StringUtils.isNotEmpty(EmailSendAddressesBCC) ? EmailSendAddressesBCC.split(MailUtils.SEPARATOR) : null;
 
         Email fromEmail = new Email();
-        fromEmail.setName(username);
-        fromEmail.setEmail(adminEmail);
+        fromEmail.setName(fromName);
+        fromEmail.setEmail(from);
         mail.setFrom(fromEmail);
         mail.setSubject(messageSubject);
 
         Personalization personalization = new Personalization();
         for (int i = 0; i < emailSendAddressesArray.length; i++) {
             Email to = new Email();
-            to.setName(adminUsername);
+            to.setName(username);
             to.setEmail(emailSendAddressesArray[i]);
             personalization.addTo(to);
         }
@@ -375,7 +305,7 @@ public class MailSenderSendGrid {
         }
     }
 
-    private Response testSend() throws IOException {
+  /*  private Response testSend() throws IOException {
 
         Email from = new Email("packagemanager2020@gmail.com");
         String subject = "Sending with Twilio SendGrid is Fun";
@@ -395,15 +325,5 @@ public class MailSenderSendGrid {
             throw ex;
         }
 
-
-		       /*
-		    personalization.addHeader("X-Test", "test");
-		    personalization.addHeader("X-Mock", "true");
-		    personalization.addSubstitution("%name%", "Example User");
-		    personalization.addSubstitution("%city%", "Riverside");
-		    personalization.addCustomArg("user_id", "343");
-		    personalization.addCustomArg("type", "marketing");
-		    personalization.setSendAt(1443636843);
-			*/
-    }
+    }*/
 }

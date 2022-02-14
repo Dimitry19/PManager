@@ -95,13 +95,15 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
+        String uri=request.getRequestURI();
         String apiKey=request.getHeader(tokenName);
-        boolean isService=request.getRequestURI().contains(service);
-        boolean isConfirm=request.getRequestURI().contains("confirm");
+        boolean isService=uri.contains(service);
+        boolean isConfirm=uri.contains("confirm");
         boolean isNotApiKey=(StringUtils.isEmpty(apiKey)|| !apiKey.equals(token));
+        boolean isNotUpload=!uri.contains(UPLOAD);
 
-        if(!isConfirm && isService && isNotApiKey){
-            error(response);
+        if(!isConfirm && isService && isNotApiKey && isNotUpload){
+            error(response,false);
             return false;
         }
 
@@ -123,6 +125,7 @@ public class AuthenticationFilter implements Filter {
 
         boolean isLogout=uri.contains(USER_WS_LOGOUT);
         boolean isLogin=uri.contains(USER_WS_LOGIN);
+        boolean isRegister=uri.contains(USER_WS_REGISTRATION);
 
         boolean isServiceLogin=isService && isLogin;
         boolean isServiceLogout=isService && isLogout;
@@ -145,18 +148,21 @@ public class AuthenticationFilter implements Filter {
                 logger.info("Session  available, invalidate  session.");
                 sessionObj=(HttpSession)sessionManager.getFromSession(user);
             }
-            sessionObj.invalidate();
+            if (sessionObj != null) {
+                sessionObj.invalidate();
+
+            }
             return Boolean.TRUE;
 
         }
 
-        if(isService && !isServiceLogin && !isServiceLogout){
+        if(isService && !isRegister && !isServiceLogin && !isServiceLogout){
 
             sessionObj=(HttpSession)sessionManager.getFromSession(user);
 
             if (sessionObj == null) {
-                logger.info("Session  available, invalidate  session.");
-                error(response);
+                logger.info("Session   not valide invalidate  session.");
+                error(response,true);
                 return Boolean.FALSE;
             }
         }
@@ -164,19 +170,19 @@ public class AuthenticationFilter implements Filter {
     }
 
 
-    private void error(HttpServletResponse response) throws IOException {
+    private void error(HttpServletResponse response, boolean isSession) throws IOException {
 
         String[] codes=new String[1];
-        codes[0]="401";
+        codes[0]=!isSession?"401":"400";
         ErrorResponse errorResponse = new ErrorResponse();
         List<String> details= new ArrayList();
         errorResponse.setCode(codes);
         errorResponse.setDetails(details);
-        errorResponse.setMessage("Unauthorized Access");
+        errorResponse.setMessage(!isSession?"Accès non autorisé": "Session invalide , se connecter de nouveau");
 
         byte[] responseToSend = restResponseBytes(errorResponse);
         response.setHeader("Content-Type", "application/json");
-        response.setStatus(401);
+        response.setStatus(!isSession?401:400);
         response.getOutputStream().write(responseToSend);
     }
 }

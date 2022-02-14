@@ -43,7 +43,7 @@ public class FileUtils {
 
     public void checkType(MultipartFile file) throws Exception {
 
-        if (!StringUtils.equals(file.getContentType(),"image/png") &&  !StringUtils.equals(file.getContentType(),"image/jpeg")) {
+        if (!StringUtils.equals(file.getContentType(),ImageUtils.IMG_JPEG) &&  !StringUtils.equals(file.getContentType(),ImageUtils.IMG_PNG)) {
             throw new Exception("Please select a picture in .png/jpg format");
         }
     }
@@ -90,47 +90,5 @@ public class FileUtils {
 
         ClassPathResource imageFile = new ClassPathResource(StringUtils.concatenate(uploadDir,fileName));
         return StreamUtils.copyToByteArray(imageFile.getInputStream());
-    }
-
-
-    public  static byte[] decompressImage(byte[] data) {
-
-        if (data== null) return null;
-        Inflater inflater = new Inflater();
-        inflater.setInput(data);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] tmp = new byte[4*1024];
-        try {
-            while (!inflater.finished()) {
-                int count = inflater.inflate(tmp);
-                outputStream.write(tmp, 0, count);
-            }
-            outputStream.close();
-        } catch (Exception exception) {
-        }
-        return outputStream.toByteArray();
-    }
-
-    public static  byte[] compressImage(byte[] data) {
-
-        if (data== null) return null;
-
-
-        Deflater deflater = new Deflater();
-        deflater.setLevel(Deflater.BEST_COMPRESSION);
-        deflater.setInput(data);
-        deflater.finish();
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] tmp = new byte[4*1024];
-        while (!deflater.finished()) {
-            int size = deflater.deflate(tmp);
-            outputStream.write(tmp, 0, size);
-        }
-        try {
-            outputStream.close();
-        } catch (Exception e) {
-        }
-        return outputStream.toByteArray();
     }
 }

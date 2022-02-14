@@ -1,0 +1,125 @@
+.labelName {
+    padding-right: 2.4em;
+}
+
+.labelEmail {
+    padding-right: 2em;
+}
+
+.labelMessage {
+    padding-right: 2em;
+    position: relative;
+    bottom: 6em;
+}
+
+.textMessage {
+    width: 20em;
+    border: 1px solid lightgray;
+}
+
+.inputName {
+    border: 1px solid #4099ff;
+    border-radius: 3em;
+    width: 20em;
+    padding: 0em 1em;
+}
+
+.iconPosition {
+    position: relative;
+    left: 19em;
+}
+
+.iconPositionInvalid {
+    position: relative;
+    left: 19em;
+    color: red;
+}
+
+.iconPositionValid {
+    position: relative;
+    left: 19em;
+    color: green;
+}
+
+.imgModal {
+    width: 50%;
+}
+
+.container.text-center.text-md-left.mt-5 .imgModal {
+    width: 10%;
+}
+
+.logoModal {
+    margin: 2em;
+}
+
+.errorMessage {
+    position: relative;
+    left: 6em;
+}
+
+
+/* FOOTER */
+
+.page-footer {
+    margin-top: 2em;
+}
+
+.page-footer a {
+    color: inherit;
+}
+
+.page-footer a:hover {
+    color: #007bff;
+}
+
+.bgColor {
+    background: floralwhite;
+}
+
+marquee {
+    background: #4099ff;
+}
+
+
+/* valiation input */
+
+input.ng-valid {
+    padding: 15px;
+    /* margin: 15px; */
+    background-color: #FFFFFF;
+    border-right: 9px solid;
+    margin-bottom: 10px;
+    box-shadow: 5px 7px 7px 5px rgba(0, 0, 0, 0.19), 10px 12px 20px 10px rgba(0, 0, 0, 0.19);
+}
+
+input.ng-valid {
+    border-color: #80D651;
+}
+
+.form-control {
+    display: initial;
+}
+
+.form-control.is-invalid {
+    background-image: none;
+}
+
+
+/* special style for buttom btn */
+
+.btn {
+    width: 8em;
+    height: 3em;
+    cursor: pointer;
+    background: #4199ff;
+    border: none;
+    color: white;
+    transition: all .4s;
+}
+
+.btn:hover {
+    border-radius: 2em;
+    transform: translateY(-10px);
+    box-shadow: 0 7px 0 -2px #22b24b, 0 15px 0 -4px #f85959, 0 16px 10px -3px #dbd839;
+}

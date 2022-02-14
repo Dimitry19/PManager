@@ -38,13 +38,13 @@ public class PackageApplicationDemo {
 
     private static Response testSend() {
 
-        Email from = new Email("packagemanager2020@gmail.com");
-        String subject = "Sending with Twilio SendGrid is Fun";
-        Email to = new Email("dimipasc@yahoo.fr");
+        Email from = new Email("dimipasc@hotmail.com");
+        String subject = "Sending with SendGrid is Fun";
+        Email to = new Email("packagemanager2020@gmail.com");
         Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid("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");
+        SendGrid sg = new SendGrid("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");
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
