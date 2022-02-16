@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.security;
 
 
 import cm.packagemanager.pmanager.configuration.filters.AuthenticationFilter;
+import cm.packagemanager.pmanager.configuration.filters.SessionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,20 +10,16 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
-
-import java.util.Collections;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-
-import static cm.packagemanager.pmanager.constant.WSConstants.BASE_PATTERN;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -85,13 +82,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public FilterRegistrationBean  filterRegistrationBean() {
+    public FilterRegistrationBean  authenticationFilterBean() {
         FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
         AuthenticationFilter authenticationFilter = new AuthenticationFilter();
 
         registrationBean.setFilter(authenticationFilter);
         registrationBean.addUrlPatterns("/user/*");
         registrationBean.setOrder(2); //set precedence
+        return registrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean  sessionFilterBean() {
+        FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
+        SessionFilter sessionFilter = new SessionFilter();
+
+        registrationBean.setFilter(sessionFilter);
+        registrationBean.addUrlPatterns("/user/*");
+        registrationBean.setOrder(2);
         return registrationBean;
     }
 }

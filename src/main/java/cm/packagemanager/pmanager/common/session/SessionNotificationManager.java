@@ -11,42 +11,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class SessionManager implements ISessionManager{
+public class SessionNotificationManager implements ISessionManager{
 
-    protected Map session = new HashMap();
     protected Map sessionNotifications = new HashMap();
 
     public Map getSession() {
-        return session;
+        return sessionNotifications;
     }
 
     public void setSession(Map session) {
-        this.session = session;
+        this.sessionNotifications = session;
     }
 
     @Override
     public void addToSession(Object k, Object v) {
-        session.putIfAbsent(k,v);
+        sessionNotifications.putIfAbsent(k,v);
 
     }
 
     @Override
     public void removeToSession(Object k) {
-        if(session.containsKey(k)){
-            session.remove(k);
+        if(sessionNotifications.containsKey(k)){
+            sessionNotifications.remove(k);
         }
     }
 
     @Override
     public void replaceIntoSession(Object k, Object v) {
-        if(session.containsKey(k)){
-            session.replace(k,v);
+        if(sessionNotifications.containsKey(k)){
+            sessionNotifications.replace(k,v);
         }
     }
 
     @Override
     public Object getFromSession(Object k) {
-        return session.get(k);
+        return sessionNotifications.get(k);
 
     }
 }

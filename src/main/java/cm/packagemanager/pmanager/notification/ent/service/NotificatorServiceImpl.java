@@ -9,6 +9,7 @@ package cm.packagemanager.pmanager.notification.ent.service;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.event.Event;
 import cm.packagemanager.pmanager.common.session.SessionManager;
+import cm.packagemanager.pmanager.common.session.SessionNotificationManager;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.notification.ent.dao.NotificationDAO;
@@ -20,6 +21,7 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessageType;
@@ -48,7 +50,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
     NotificationDAO notificationDAO;
 
     @Autowired
-    SessionManager sessionManager;
+    SessionNotificationManager sessionManager;
 
 
 
@@ -133,7 +135,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
     }
 
     @Async
-    @Scheduled(fixedRate = 100000)
+   // @Scheduled(fixedRate = 100000)
     public void doNotify() throws Exception {
         logger.info(" doNotify");
 

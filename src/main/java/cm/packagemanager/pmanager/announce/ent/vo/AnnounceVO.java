@@ -58,98 +58,49 @@ public class AnnounceVO extends CommonVO {
     public static final String SQL_FIND_BY_USER = " FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
     public static final String ANNOUNCE_STATUS = " FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false, unique = true)
+
     private Long id;
 
-    @Basic(optional = false)
-    @Column(name = "DEPARTURE", nullable = false)
     private String departure;
 
-    @Basic(optional = false)
-    @Column(name = "ARRIVAL", nullable = false)
     private String arrival;
 
-    @Basic(optional = false)
-    @Column(name = "START_DATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern = DateUtils.STD_PATTERN)
     private Date startDate;
 
-    @Basic(optional = false)
-    @Column(name = "END_DATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern = DateUtils.STD_PATTERN)
     private Date endDate;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private ImageVO image;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "TRANSPORT", nullable = false)
     private TransportEnum transport;
 
-    @Basic(optional = false)
-    @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
-    @Basic(optional = false)
-    @Column(name = "GOLD_PRICE", nullable = false)
     private BigDecimal goldPrice;
 
-    @Basic(optional = false)
-    @Column(name = "PRENIUM_PRICE", nullable = false)
     private BigDecimal preniumPrice;
 
-    @Basic(optional = false)
-    @Column(name = "WEIGHT", nullable = false)
     private BigDecimal weight;
 
-    @Basic(optional = false)
-    @Column(name = "REMAIN_WEIGHT")
     private BigDecimal remainWeight;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "ANNOUNCE_TYPE", length = FieldConstants.ENUM_LEN)
     private AnnounceType announceType;
 
-    @Access(AccessType.PROPERTY)
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-    @JoinColumn(name = "R_USER_ID", updatable = false)
-    @JsonBackReference
-    @JsonProperty
     private UserVO user;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "STATUS", length = FieldConstants.ENUM_LEN)
     private StatusEnum status;
 
-    @Basic(optional = false)
-    @Column(name = "DESCRIPTION")
     private String description;
 
-    @Transient
     private String descriptionTransport;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "ANNOUNCE_CATEGORY", joinColumns = @JoinColumn(name = "ANNOUNCE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
-    @JsonProperty
     private Set<CategoryVO> categories = new HashSet<>();
 
-    @Access(AccessType.PROPERTY)
-    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.MERGE}, mappedBy = "announce", fetch = FetchType.LAZY)
-    @JsonManagedReference
-    @OrderBy(clause = "id.id ASC")
-    @Where(clause = "cancelled=false")
     private Set<MessageVO> messages = new HashSet<>();
 
     private AnnounceIdVO announceId;
 
-    @Transient
     private UserInfo userInfo;
 
-    @Formula(value = "select count(id) from RESERVATION r where  r.r_announce_id = id and r.cancelled is false")
     private Integer countReservation;
 
     public AnnounceVO() {
@@ -157,184 +108,244 @@ public class AnnounceVO extends CommonVO {
     }
 
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false, unique = true)
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
+    @Basic(optional = false)
+    @Column(name = "START_DATE", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = DateUtils.STD_PATTERN)
     public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
 
+    @Basic(optional = false)
+    @Column(name = "END_DATE", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = DateUtils.STD_PATTERN)
     public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
 
+    @Basic(optional = false)
+    @Column(name = "DEPARTURE", nullable = false)
     public String getDeparture() {
         return departure;
     }
 
-    public void setDeparture(String departure) {
-        this.departure = departure;
-    }
-
+    @Basic(optional = false)
+    @Column(name = "ARRIVAL", nullable = false)
     public String getArrival() {
         return arrival;
     }
 
-    public void setArrival(String arrival) {
-        this.arrival = arrival;
-    }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TRANSPORT", nullable = false)
     public TransportEnum getTransport() {
         setDescriptionTransport("");
         return transport;
     }
 
-    public void setTransport(TransportEnum transport) {
-        this.transport = transport;
-    }
-
+    @Basic(optional = false)
+    @Column(name = "WEIGHT", nullable = false)
     public BigDecimal getWeight() {
         return weight;
     }
 
-    public void setWeight(BigDecimal weight) {
-        this.weight = weight;
-    }
 
+    @Basic(optional = false)
+    @Column(name = "REMAIN_WEIGHT")
     public BigDecimal getRemainWeight() {
         return remainWeight;
     }
 
-    public void setRemainWeight(BigDecimal remainWeight) {
-        this.remainWeight = remainWeight;
-    }
 
+    @Basic(optional = false)
+    @Column(name = "GOLD_PRICE", nullable = false)
     public BigDecimal getGoldPrice() {
         return goldPrice;
     }
 
-    public void setGoldPrice(BigDecimal goldPrice) {
-        this.goldPrice = goldPrice;
-    }
-
+    @Basic(optional = false)
+    @Column(name = "PRENIUM_PRICE", nullable = false)
     public BigDecimal getPreniumPrice() {
         return preniumPrice;
     }
 
-    public void setPreniumPrice(BigDecimal preniumPrice) {
-        this.preniumPrice = preniumPrice;
-    }
 
+    @Basic(optional = false)
+    @Column(name = "PRICE", nullable = false)
     public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ANNOUNCE_TYPE", length = FieldConstants.ENUM_LEN)
     public AnnounceType getAnnounceType() {
         return announceType;
     }
 
-    public void setAnnounceType(AnnounceType announceType) {
-        this.announceType = announceType;
-    }
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS", length = FieldConstants.ENUM_LEN)
     public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(StatusEnum status) {
-        this.status = status;
-    }
-
+    @Basic(optional = false)
+    @Access(AccessType.PROPERTY)
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.MERGE}, mappedBy = "announce", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @OrderBy(clause = "id.id ASC")
+    @Where(clause = "cancelled=false")
     public Set<MessageVO> getMessages() {
         return messages;
     }
 
-    public void setMessages(Set<MessageVO> messages) {
-        this.messages = messages;
-    }
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "R_USER_ID", updatable = false)
+    @JsonBackReference
+    @JsonProperty
     public UserVO getUser() {
         return user;
     }
 
-    public void setUser(UserVO user) {
-        if (user != null) {
-            this.user = user;
-            userInfo = new UserInfo(user);
-        }
-    }
 
+    @Basic(optional = false)
+    @Column(name = "DESCRIPTION")
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "ANNOUNCE_CATEGORY", joinColumns = @JoinColumn(name = "ANNOUNCE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
+    @JsonProperty
     public Set<CategoryVO> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<CategoryVO> categories) {
-        this.categories = categories;
-    }
-
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public ImageVO getImage() {
         return image;
-    }
-
-    public void setImage(ImageVO image) {
-        this.image = image;
     }
 
     public AnnounceIdVO getAnnounceId() {
         return announceId;
     }
 
+    @Transient
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    @Transient
+    @Formula(value = "select count(id) from RESERVATION r where  r.r_announce_id = id and r.cancelled is false")
+    public Integer getCountReservation() {
+        return countReservation;
+    }
+
+    @Transient
+    public String getDescriptionTransport() { return descriptionTransport; }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setDeparture(String departure) {
+        this.departure = departure;
+    }
+
+    public void setArrival(String arrival) {
+        this.arrival = arrival;
+    }
+
+    public void setTransport(TransportEnum transport) {
+        this.transport = transport;
+    }
+
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
+    }
+
+    public void setRemainWeight(BigDecimal remainWeight) {
+        this.remainWeight = remainWeight;
+    }
+
+    public void setGoldPrice(BigDecimal goldPrice) {
+        this.goldPrice = goldPrice;
+    }
+
+    public void setPreniumPrice(BigDecimal preniumPrice) {
+        this.preniumPrice = preniumPrice;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setAnnounceType(AnnounceType announceType) {
+        this.announceType = announceType;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
+    public void setMessages(Set<MessageVO> messages) {
+        this.messages = messages;
+    }
+
+    public void setUser(UserVO user) {
+        this.user = user;
+        if (user != null) {
+            userInfo = new UserInfo(user);
+        }
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCategories(Set<CategoryVO> categories) {
+        this.categories = categories;
+    }
+
+
+    public void setImage(ImageVO image) {
+        this.image = image;
+    }
+
+
     public void setAnnounceId(AnnounceIdVO announceId) {
         this.announceId = announceId;
     }
 
-    public UserInfo getUserInfo() {
-        return userInfo;
-    }
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
     }
 
-
-    public String getDescriptionTransport() {
-
-        return descriptionTransport;
-    }
-
     public void setDescriptionTransport(String descriptionTransport) {
 
         this.descriptionTransport = this.transport.toValue();
-    }
-
-    @Transient
-    public Integer getCountReservation() {
-        return countReservation;
     }
 
     public void setCountReservation(Integer countReservation) {

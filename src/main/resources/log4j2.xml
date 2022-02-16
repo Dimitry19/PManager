@@ -19,7 +19,7 @@
 		<DefaultRolloverStrategy max="1" />
 	</RollingFile>
 	<RollingFile name="hibernate"
-				 fileName="${APP_LOG_ROOT}/PackManager/application.log"
+				 fileName="${APP_LOG_ROOT}/PackManager/application-hbn.log"
 				 filePattern="${APP_LOG_ROOT}/PackManager/application-hbn-%d{yyyy-MM-dd}-%i.log">
 		<PatternLayout pattern="${LOG_PATTERN}" />
 		<Policies>
@@ -40,7 +40,7 @@
 </Appenders>
 <Loggers>
 	<Root>
-		<AppenderRef ref="console" 	level="error"/>
+		<AppenderRef ref="console" 	level="info"/>
 		<AppenderRef ref="file" 	level="error"/>
         <AppenderRef ref="error"  	level="error"/>
     </Root>

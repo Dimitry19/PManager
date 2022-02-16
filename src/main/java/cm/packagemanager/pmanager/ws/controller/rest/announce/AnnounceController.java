@@ -2,7 +2,6 @@ package cm.packagemanager.pmanager.ws.controller.rest.announce;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.common.ent.dto.ResponseDTO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
@@ -20,13 +19,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,11 +29,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
-import java.util.Collections;
 import java.util.List;
 
 import static cm.packagemanager.pmanager.constant.WSConstants.*;
@@ -270,7 +262,7 @@ public class AnnounceController extends CommonController {
 
 
     /**
-     * Cette methode recherche toutes les annonces d'un utilisateur
+     * Cette methode recherche toutes les annonces par type
      *
      * @param response
      * @param request
