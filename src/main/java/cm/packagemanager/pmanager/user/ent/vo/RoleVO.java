@@ -25,14 +25,8 @@ public class RoleVO extends WSCommonResponseVO {
     public static final String FINDBYID = "cm.packagemanager.pmanager.user.ent.vo.RoleVO.findById";
     public static final String FINDBYDESC = "cm.packagemanager.pmanager.user.ent.vo.RoleVO.findByDesc";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", updatable = false, nullable = false)
     private int id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "DESCRIPTION", updatable = true, nullable = false)
-    //@Type(type = "role_enum")
     private RoleEnum description;
 
 
@@ -46,17 +40,23 @@ public class RoleVO extends WSCommonResponseVO {
         this.description = description;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", updatable = false, nullable = false)
     public int getId() {
         return id;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "DESCRIPTION", updatable = true, nullable = false)
+    public RoleEnum getDescription() {
+        return description;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public RoleEnum getDescription() {
-        return description;
-    }
 
     public void setDescription(RoleEnum description) {
         this.description = description;

@@ -1,11 +1,11 @@
 package cm.packagemanager.pmanager;
 
-import cm.packagemanager.pmanager.user.ent.bo.UserBO;
+
 import com.sendgrid.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
+
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -25,10 +25,6 @@ public class PackageApplicationDemo {
 
     @Component
     class Dummy implements CommandLineRunner {
-
-
-        UserBO userBO;
-
 
         @Override
         public void run(String... string) throws Exception {
