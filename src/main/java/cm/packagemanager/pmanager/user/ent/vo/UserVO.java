@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.*;
 
+import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -230,6 +231,7 @@ public class UserVO extends CommonVO {
         return enableNotification;
     }
 
+    @Access(AccessType.PROPERTY)
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy(clause = "id.id DESC")
     @Where(clause = "cancelled = false")
@@ -237,6 +239,7 @@ public class UserVO extends CommonVO {
         return messages;
     }
 
+    @Access(AccessType.PROPERTY)
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
     @Fetch(value = SELECT)
@@ -252,12 +255,14 @@ public class UserVO extends CommonVO {
         return roles;
     }
 
+    @Access(AccessType.PROPERTY)
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     public Set<ReviewVO> getReviews() {
         return reviews;
     }
 
 
+    @Access(AccessType.PROPERTY)
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "SUBSCRIBERS", joinColumns = @JoinColumn(name = "R_USER_ID"), inverseJoinColumns = @JoinColumn(name = "SUBSCRIBER_ID"))
@@ -265,6 +270,7 @@ public class UserVO extends CommonVO {
         return subscribers;
     }
 
+    @Access(AccessType.PROPERTY)
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "SUBSCRIPTIONS", joinColumns = @JoinColumn(name = "SUBSCRIPTION_ID"), inverseJoinColumns = @JoinColumn(name = "R_USER_ID"))
@@ -272,9 +278,11 @@ public class UserVO extends CommonVO {
         return subscriptions;
     }
 
+    @Access(AccessType.PROPERTY)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     public Set<CommunicationVO> getCommunications() {   return communications;   }
 
+    @Access(AccessType.PROPERTY)
     @ManyToMany(mappedBy = "users",cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonBackReference
     public Set<NotificationVO> getNotifications() {

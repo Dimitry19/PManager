@@ -150,7 +150,6 @@ public class AnnounceVO extends CommonVO {
     @Enumerated(EnumType.STRING)
     @Column(name = "TRANSPORT", nullable = false)
     public TransportEnum getTransport() {
-        setDescriptionTransport("");
         return transport;
     }
 
@@ -200,7 +199,7 @@ public class AnnounceVO extends CommonVO {
         return status;
     }
 
-    @Basic(optional = false)
+   // @Basic(optional = false)
     @Access(AccessType.PROPERTY)
     @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.MERGE}, mappedBy = "announce", fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -211,6 +210,7 @@ public class AnnounceVO extends CommonVO {
     }
 
 
+    @Access(AccessType.PROPERTY)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "R_USER_ID", updatable = false)
     @JsonBackReference
@@ -226,6 +226,7 @@ public class AnnounceVO extends CommonVO {
         return description;
     }
 
+    @Access(AccessType.PROPERTY)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "ANNOUNCE_CATEGORY", joinColumns = @JoinColumn(name = "ANNOUNCE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
     @JsonProperty
@@ -233,6 +234,7 @@ public class AnnounceVO extends CommonVO {
         return categories;
     }
 
+    @Access(AccessType.PROPERTY)
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public ImageVO getImage() {
         return image;
@@ -243,18 +245,13 @@ public class AnnounceVO extends CommonVO {
     }
 
     @Transient
-    public UserInfo getUserInfo() {
-        return userInfo;
-    }
+    public UserInfo getUserInfo() {   return userInfo;  }
 
     @Transient
-    @Formula(value = "select count(id) from RESERVATION r where  r.r_announce_id = id and r.cancelled is false")
+    @Formula(value = "select coalesce(count(id),0) as counter from RESERVATION r where  r.r_announce_id = id and r.cancelled is false")
     public Integer getCountReservation() {
         return countReservation;
     }
-
-    @Transient
-    public String getDescriptionTransport() { return descriptionTransport; }
 
 
     public void setId(Long id) {
