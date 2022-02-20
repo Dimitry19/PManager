@@ -1,17 +1,15 @@
-package cm.packagemanager.pmanager.common.ent.vo;
+package cm.packagemanager.pmanager.image.ent.vo;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.utils.ImageUtils;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
 
 @Entity
 @Table(name = "IMAGE")

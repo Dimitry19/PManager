@@ -7,7 +7,7 @@ package cm.packagemanager.pmanager.announce.ent.vo;
 
 
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
-import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
+import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.*;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;

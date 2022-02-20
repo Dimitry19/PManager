@@ -474,11 +474,17 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
-    public T  checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException {
+    public  T checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException,ClassCastException {
 
-        if(clazz== null) return null;
+        if(clazz== null || id==null) return null;
 
-        return findById(clazz , id);
+        Object o = findById(clazz , id);
+
+        try {
+            return (T) o;
+        } catch(ClassCastException e) {
+            return null;
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
-package cm.packagemanager.pmanager.common.ent.dao;
+package cm.packagemanager.pmanager.image.ent.dao;
 
-import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
+import cm.packagemanager.pmanager.common.ent.dao.CommonGenericDAO;
+import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -2,7 +2,7 @@ package cm.packagemanager.pmanager.user.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
-import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
+import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;

@@ -743,14 +743,5 @@ public class UserController extends CommonController {
         return new ResponseEntity<>(pmResponse, HttpStatus.OK);
     }
 
-    private ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, List<UserVO> users) {
-        if (CollectionsUtils.isEmpty(users)) {
-            headers.add(HEADER_TOTAL, Long.toString(0));
-        } else {
-            paginateResponse.setCount(users.size());
-            paginateResponse.setResults(users);
-            headers.add(HEADER_TOTAL, Long.toString(users.size()));
-        }
-        return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
-    }
+
 }

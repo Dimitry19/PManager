@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.common.utils;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
@@ -37,15 +38,12 @@ public class FileUtils {
     }
     public String generateFilename(String  filename) throws Exception {
 
-        String randomString=randomString(filename.length());
+        String randomString=randomString(5);
         return  randomString+filename;
     }
 
-    public void checkType(MultipartFile file) throws Exception {
-
-        if (!StringUtils.equals(file.getContentType(),ImageUtils.IMG_JPEG) &&  !StringUtils.equals(file.getContentType(),ImageUtils.IMG_PNG)) {
-            throw new Exception("Please select a picture in .png/jpg format");
-        }
+    public static String getExtensionByApacheCommonLib(String filename) {
+        return FilenameUtils.getExtension(filename);
     }
 
     public void saveFileToFileSystem(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {

@@ -26,6 +26,8 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+    protected static final int DEFAULT_ERROR=-1;
+
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<Object> handlerAnyException(Exception ex, WebRequest request) {
         return new ResponseEntity<>(new ErrorResponse(ex), new HttpHeaders(), HttpStatus.BAD_REQUEST);
@@ -33,7 +35,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = ValidationException.class)
     public ResponseEntity<Object> handlerValidationException(ValidationException ex, WebRequest request) {
-        return new ResponseEntity<>(new ErrorResponse(ex), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ErrorResponse(ex), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler({UserException.class})
@@ -43,7 +45,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String[] code = new String[1];
         code[0] = String.valueOf(HttpStatus.NOT_FOUND.value());
 
-        return new ResponseEntity<>(new ErrorResponse("user.error", details, code, -1), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new ErrorResponse("user.error", details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler({UserNotFoundException.class})
@@ -53,7 +55,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         details.add(ex.getMessage());
         String[] code = new String[1];
         code[0] = String.valueOf(HttpStatus.NOT_FOUND.value());
-        return new ResponseEntity<>(new ErrorResponse("user.notfound", details, code, -1), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ErrorResponse("user.notfound", details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -63,7 +65,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .stream().collect(Collectors.toList());
         String[] code = new String[1];
         code[0] = String.valueOf(HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity<>(new ErrorResponse("user.notfound", details, code, -1), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse("bad request", details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 
     }
 
@@ -75,7 +77,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         }
         String[] code = new String[1];
         code[0] = String.valueOf(HttpStatus.METHOD_NOT_ALLOWED.value());
-        ErrorResponse error = new ErrorResponse("Not supported Methods", details, code, -1);
+        ErrorResponse error = new ErrorResponse("Not supported Methods", details, code, DEFAULT_ERROR);
         return new ResponseEntity(error, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
@@ -87,7 +89,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         }
         String[] code = new String[1];
         code[0] = String.valueOf(HttpStatus.BAD_REQUEST.value());
-        ErrorResponse error = new ErrorResponse("Validation Failed", details, code, -1);
+        ErrorResponse error = new ErrorResponse("Validation Failed", details, code, DEFAULT_ERROR);
         return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
 }

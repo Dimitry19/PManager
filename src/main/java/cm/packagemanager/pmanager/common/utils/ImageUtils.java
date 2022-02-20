@@ -1,14 +1,17 @@
 package cm.packagemanager.pmanager.common.utils;
 
 import cm.packagemanager.pmanager.configuration.filters.AuthenticationFilter;
+import com.mchange.v1.lang.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
+import javax.validation.ValidationException;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -16,6 +19,8 @@ import java.util.Iterator;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+
+//https://blog.blebail.com/java/spring/2020/03/23/upload-resize-and-compress-images-with-spring-and-imgscalr.html
 public class ImageUtils {
 
     private static Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
@@ -182,7 +187,7 @@ public class ImageUtils {
         deflater.finish();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] tmp = new byte[4*1024];
+        byte[] tmp = new byte[1024];
         while (!deflater.finished()) {
             int size = deflater.deflate(tmp);
             outputStream.write(tmp, 0, size);
@@ -195,11 +200,42 @@ public class ImageUtils {
     }
 
 
-    public static boolean validateImageSize(InputStream is){
+    public static void validate(MultipartFile file) throws Exception {
+
+        checkType(file);
+        //validateImageSize(file.getInputStream());
+    }
+
+    private static void validateImageSize(InputStream is){
 
         Dimension dimension=getImageDimensionFromStream(is);
+        boolean isValid= dimension!=null && dimension.getHeight()<=limitHeight && dimension.getWidth()<=limitWidth;
 
-        return dimension!=null && dimension.getHeight()<=limitHeight && dimension.getWidth()<=limitHeight;
+        if(!isValid){
+            throw new ValidationException("Les dimensions de l'image ne sont pas valides");
+        }
+
+    }
+
+    private static void checkType(MultipartFile file) throws Exception {
+
+        if (!StringUtils.equals(file.getContentType(),ImageUtils.IMG_JPEG) &&  !StringUtils.equals(file.getContentType(),ImageUtils.IMG_PNG)) {
+            throw new Exception("Please select a picture in .png/jpg format");
+        }
+    }
+
+    public static String getExtension(MultipartFile file) throws Exception {
+
+        switch (file.getContentType()){
+
+            case "image/jpeg":
+                 return "jpeg";
+
+            case "image/png":
+                return  "png";
+            default:
+                throw new IllegalStateException("Unexpected value: " + file.getContentType());
+        }
 
     }
 
@@ -211,7 +247,7 @@ public class ImageUtils {
             case "image/jpeg":
                 extension ="jpeg";
                 break;
-            case "mage/png":
+            case "image/png":
                 extension ="png";
                 break;
             default:
@@ -229,5 +265,25 @@ public class ImageUtils {
         }
 
        return null;
+    }
+
+    public static byte[] getBytes(InputStream is) throws IOException {
+
+        int len;
+        int size = 1024;
+        byte[] buf;
+
+        if (is instanceof ByteArrayInputStream) {
+            size = is.available();
+            buf = new byte[size];
+            len = is.read(buf, 0, size);
+        } else {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            buf = new byte[size];
+            while ((len = is.read(buf, 0, size)) != -1)
+                bos.write(buf, 0, len);
+            buf = bos.toByteArray();
+        }
+        return buf;
     }
 }

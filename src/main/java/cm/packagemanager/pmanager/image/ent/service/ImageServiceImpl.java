@@ -1,14 +1,16 @@
-package cm.packagemanager.pmanager.common.ent.service;
+package cm.packagemanager.pmanager.image.ent.service;
 
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
-import cm.packagemanager.pmanager.common.ent.dao.ImageDAO;
-import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
+import cm.packagemanager.pmanager.image.ent.bo.ImageCompressBO;
+import cm.packagemanager.pmanager.image.ent.bo.ImageMultipart;
+import cm.packagemanager.pmanager.image.ent.dao.ImageDAO;
+import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.enums.UploadImageType;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.common.utils.ImageUtils;
-import cm.packagemanager.pmanager.common.utils.StringUtils;
+import cm.packagemanager.pmanager.image.utils.ImageFormat;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.apache.commons.logging.Log;
@@ -20,8 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.InputStream;
-import java.util.UUID;
+import java.io.FileOutputStream;
 
 import static cm.packagemanager.pmanager.common.Constants.ANNOUNCE_TYPE_IMG_UPLOAD;
 import static cm.packagemanager.pmanager.common.Constants.USER_TYPE_IMG_UPLOAD;
@@ -37,8 +38,14 @@ public class ImageServiceImpl implements ImageService {
     @Value("${profile.announce.img.folder}")
     private String imageAnnounce;
 
+    @Value("${file.storage.upload.folder}")
+    private String FILE_DIRECTORY;
+
     @Autowired
     ImageDAO imageDAO;
+
+    @Autowired
+    ImageCompressBO imageCompressBO;
 
     @Autowired
     UserDAO userDAO;
@@ -74,20 +81,18 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageVO save(MultipartFile file, Long id, UploadImageType type) throws Exception {
 
-        fileUtils.checkType(file);
-
-        if(ImageUtils.validateImageSize(file.getInputStream())){
-            InputStream is=ImageUtils.resizeImage(file.getInputStream(),file.getContentType());
-
-        }
+        ImageUtils.validate(file);
 
         ImageVO image = null;
         switch (type.name()) {
             case USER_TYPE_IMG_UPLOAD:
                 logger.info("save user image");
-                UserVO user = userDAO.findById(id);
-                if (user == null)
+                UserVO user = (UserVO) userDAO.checkAndResolve(UserVO.class,id);
+
+                if (user == null){
                     throw new UserNotFoundException();
+                }
+
 
                if (user.getImage() != null) {
                     image = user.getImage();
@@ -96,6 +101,8 @@ public class ImageServiceImpl implements ImageService {
                     image = new ImageVO();
                     image.setName(fileUtils.generateFilename(file.getOriginalFilename()));
                 }
+
+                ImageFormat imgFmt=compress(new ImageMultipart(file),file.getOriginalFilename(),imageUser);
                 image.setType(USER_TYPE_IMG_UPLOAD);
                 image.setOrigin(file.getContentType());
                 image.setPicByte(file.getBytes());
@@ -121,6 +128,7 @@ public class ImageServiceImpl implements ImageService {
                     image.setName(fileUtils.generateFilename(file.getOriginalFilename()));
                 }
 
+                compress(new ImageMultipart(file),file.getOriginalFilename(),imageAnnounce);
                 image.setName(fileUtils.generateFilename(file.getOriginalFilename()));
                 image.setOrigin(file.getContentType());
                 image.setPicByte(file.getBytes());
@@ -132,5 +140,46 @@ public class ImageServiceImpl implements ImageService {
                 break;
         }
         return imageDAO.findByName(image.getName());
+    }
+
+    @Override
+    public boolean uploadFile(MultipartFile file, Long id, UploadImageType type) throws Exception {
+
+
+        switch (type.name()) {
+            case USER_TYPE_IMG_UPLOAD:
+                return uploadFile(file, imageUser);
+
+            case ANNOUNCE_TYPE_IMG_UPLOAD:
+                return uploadFile(file, imageAnnounce);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean uploadFile(MultipartFile file) throws Exception {
+
+        return uploadFile(file, FILE_DIRECTORY);
+    }
+
+    @Override
+    public ImageFormat compress(ImageMultipart im, String name, String path) {
+        return imageCompressBO.compress(im,name,path);
+    }
+
+    @Override
+    public void compress(ImageMultipart im, String name) {
+        imageCompressBO.compress(im,name);
+    }
+
+
+    private boolean uploadFile(MultipartFile file, String path) throws Exception {
+
+        File convertFile = new File(path + file.getOriginalFilename());
+        convertFile.createNewFile();
+        FileOutputStream fout = new FileOutputStream(convertFile);
+        fout.write(file.getBytes());
+        fout.close();
+        return true;
     }
 }

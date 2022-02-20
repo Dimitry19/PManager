@@ -83,8 +83,8 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     T get(Class<T> clazz, ID naturalId) throws BusinessResourceException;
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
-     T checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException;
+    @Transactional(propagation = Propagation.REQUIRED)
+    T checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException,ClassCastException;
 
     void pageBy(org.hibernate.query.Query query, PageBy pageBy);
 
