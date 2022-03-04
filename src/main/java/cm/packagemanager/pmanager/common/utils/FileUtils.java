@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.*;
+import java.net.FileNameMap;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,6 +29,9 @@ import java.util.zip.Inflater;
 public class FileUtils {
     protected final Log logger = LogFactory.getLog(FileUtils.class);
 
+    private static final FileNameMap MIMETYPES = URLConnection.getFileNameMap();
+
+
     static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     static SecureRandom rnd = new SecureRandom();
 
@@ -36,6 +41,7 @@ public class FileUtils {
             sb.append(AB.charAt(rnd.nextInt(AB.length())));
         return sb.toString();
     }
+
     public String generateFilename(String  filename) throws Exception {
 
         String randomString=randomString(5);
@@ -58,6 +64,19 @@ public class FileUtils {
         } catch (IOException ioe) {
             throw new IOException("Could not save image file: " + fileName, ioe);
         }
+    }
+
+    /**
+     * Get a file mime type based on its file path extension.
+     *
+     * Uses URLConnection.getFileNameMap().
+     *
+     * @param filename
+     *            file path.
+     * @return String mime type.
+     */
+    public static String getContentType(final String filename) {
+        return MIMETYPES.getContentTypeFor(filename);
     }
 
     public void saveFileToFileSystem(String uploadDir, String fileName, String data) throws IOException {

@@ -1,11 +1,11 @@
 package cm.packagemanager.pmanager.configuration.filters;
 
-import org.springframework.stereotype.Component;
+
+
 import javax.servlet.*;
 import java.io.IOException;
 
 public class CommonFilter extends AFilter{
-
 
 
     @Override

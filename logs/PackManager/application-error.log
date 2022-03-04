@@ -1,2 +1,56 @@
 2022-03-03T20:16:26.370+0100 ERROR Schema "VIEWS" not found; SQL statement:
 select reservatio0_.ID as id1_20_, reservatio0_.R_ANNOUNCE_ID as r_annou12_20_, reservatio0_.DESCRIPTION as descript2_20_, reservatio0_.EMAIL as email3_20_, reservatio0_.FIRST_NAME as first_na4_20_, reservatio0_.GENDER as gender5_20_, reservatio0_.LAST_NAME as last_nam6_20_, reservatio0_.PHONE as phone7_20_, reservatio0_.R_USER_ID as r_user_i8_20_, reservatio0_.USERNAME as username9_20_, reservatio0_.VALIDATE as validat10_20_, reservatio0_.WEIGTH as weigth11_20_ from VIEWS.VALID_RESERVATION_CREATED reservatio0_ where reservatio0_.R_USER_ID=? limit ? [90079-200]
+2022-03-04T22:29:13.723+0100 ERROR Application run failed
+java.lang.IllegalStateException: Cannot load configuration class: cm.packagemanager.pmanager.ws.controller.rest.mail.MailController
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.enhanceConfigurationClasses(ConfigurationClassPostProcessor.java:393) ~[spring-context-5.2.6.RELEASE.jar:5.2.6.RELEASE]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanFactory(ConfigurationClassPostProcessor.java:257) ~[spring-context-5.2.6.RELEASE.jar:5.2.6.RELEASE]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:291) ~[spring-context-5.2.6.RELEASE.jar:5.2.6.RELEASE]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:131) ~[spring-context-5.2.6.RELEASE.jar:5.2.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:706) ~[spring-context-5.2.6.RELEASE.jar:5.2.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:532) ~[spring-context-5.2.6.RELEASE.jar:5.2.6.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-2.3.0.RELEASE.jar:2.3.0.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758) ~[spring-boot-2.3.0.RELEASE.jar:2.3.0.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750) [spring-boot-2.3.0.RELEASE.jar:2.3.0.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397) [spring-boot-2.3.0.RELEASE.jar:2.3.0.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315) [spring-boot-2.3.0.RELEASE.jar:2.3.0.RELEASE]
+	at cm.packagemanager.pmanager.PackageApplication.main(PackageApplication.java:38) [classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_281]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_281]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_281]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_281]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.3.0.RELEASE.jar:2.3.0.RELEASE]
+Caused by: java.lang.ClassNotFoundException: cm.packagemanager.pmanager.ws.controller.rest.mail.MailController
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382) ~[?:1.8.0_281]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418) ~[?:1.8.0_281]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:355) ~[?:1.8.0_281]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_281]
+	at java.lang.Class.forName0(Native Method) ~[?:1.8.0_281]
+	at java.lang.Class.forName(Class.java:348) ~[?:1.8.0_281]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:144) ~[spring-boot-devtools-2.3.0.RELEASE.jar:2.3.0.RELEASE]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_281]
+	at java.lang.Class.forName0(Native Method) ~[?:1.8.0_281]
+	at java.lang.Class.forName(Class.java:348) ~[?:1.8.0_281]
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:285) ~[spring-core-5.2.6.RELEASE.jar:5.2.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanDefinition.resolveBeanClass(AbstractBeanDefinition.java:469) ~[spring-beans-5.2.6.RELEASE.jar:5.2.6.RELEASE]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.enhanceConfigurationClasses(ConfigurationClassPostProcessor.java:389) ~[spring-context-5.2.6.RELEASE.jar:5.2.6.RELEASE]
+	... 16 more
+2022-03-04T22:35:42.855+0100 ERROR NULL not allowed for column "RECEIVER"; SQL statement:
+insert into PUBLIC.CONTACT_US (ID, content, receiver, sender, subject, PSEUDO_SENDER) values (null, ?, ?, ?, ?, ?) [23502-200]
+2022-03-04T22:57:04.813+0100 ERROR 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mailService in cm.packagemanager.pmanager.ws.controller.rest.CommonController required a bean of type 'cm.packagemanager.pmanager.common.mail.ent.service.MailService' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'cm.packagemanager.pmanager.common.mail.ent.service.MailService' in your configuration.
+
