@@ -1,8 +1,8 @@
 -- we don't know how to generate database MANAGER (class Database) :(
+drop table ADMINISTRATOR;
 create table ADMINISTRATOR
 (
-    ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_EF0266FA_C342_4493_9809_8666A956CE0C) auto_increment
-        primary key,
+    ID BIGINT auto_increment primary key,
     DATECREATED TIMESTAMP(26,6),
     LASTUPDATED TIMESTAMP(26,6),
     EMAIL VARCHAR(255) not null,
@@ -11,6 +11,7 @@ create table ADMINISTRATOR
     CANCELLED BOOLEAN not null
 );
 
+drop table AIRLINE;
 create table AIRLINE
 (
     CODE VARCHAR(255) not null,
@@ -22,9 +23,10 @@ create table AIRLINE
     primary key (CODE, TOKEN)
 );
 
+drop table BATCH_JOB_INSTANCE;
 create table BATCH_JOB_INSTANCE
 (
-    JOB_INSTANCE_ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_AC69676B_0698_4323_ABC9_936E8C7DB810) auto_increment
+    JOB_INSTANCE_ID BIGINT   auto_increment
         primary key,
     VERSION BIGINT,
     JOB_NAME VARCHAR(100) not null,
@@ -32,9 +34,10 @@ create table BATCH_JOB_INSTANCE
     unique (JOB_NAME, JOB_KEY)
 );
 
+drop table BATCH_JOB_EXECUTION;
 create table BATCH_JOB_EXECUTION
 (
-    JOB_EXECUTION_ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_D84D3E64_780B_4D4F_BCB0_93C81C64C8E9) auto_increment
+    JOB_EXECUTION_ID BIGINT   auto_increment
         primary key,
     VERSION BIGINT,
     JOB_INSTANCE_ID BIGINT not null,
@@ -50,6 +53,7 @@ create table BATCH_JOB_EXECUTION
         foreign key (JOB_INSTANCE_ID) references BATCH_JOB_INSTANCE
 );
 
+drop table BATCH_JOB_EXECUTION_CONTEXT;
 create table BATCH_JOB_EXECUTION_CONTEXT
 (
     JOB_EXECUTION_ID BIGINT not null
@@ -60,6 +64,7 @@ create table BATCH_JOB_EXECUTION_CONTEXT
         foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION
 );
 
+drop table BATCH_JOB_EXECUTION_PARAMS;
 create table BATCH_JOB_EXECUTION_PARAMS
 (
     JOB_EXECUTION_ID BIGINT not null,
@@ -74,9 +79,10 @@ create table BATCH_JOB_EXECUTION_PARAMS
         foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION
 );
 
+drop table BATCH_STEP_EXECUTION;
 create table BATCH_STEP_EXECUTION
 (
-    STEP_EXECUTION_ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_E2573F64_A9FD_4164_9E05_10633EEDCB8F) auto_increment
+    STEP_EXECUTION_ID BIGINT   auto_increment
         primary key,
     VERSION BIGINT not null,
     STEP_NAME VARCHAR(100) not null,
@@ -99,6 +105,7 @@ create table BATCH_STEP_EXECUTION
         foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION
 );
 
+drop table BATCH_STEP_EXECUTION_CONTEXT;
 create table BATCH_STEP_EXECUTION_CONTEXT
 (
     STEP_EXECUTION_ID BIGINT not null
@@ -109,6 +116,7 @@ create table BATCH_STEP_EXECUTION_CONTEXT
         foreign key (STEP_EXECUTION_ID) references BATCH_STEP_EXECUTION
 );
 
+drop table CATEGORY;
 create table CATEGORY
 (
     CODE VARCHAR(15) not null
@@ -116,9 +124,10 @@ create table CATEGORY
     DESCRIPTION VARCHAR(255) not null
 );
 
+drop table COMMUNICATION;
 create table COMMUNICATION
 (
-    ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_3C5998A7_49D7_4521_A10A_BA2B27FD6116) auto_increment
+    ID BIGINT  auto_increment
         primary key,
     DATECREATED TIMESTAMP(26,6),
     LASTUPDATED TIMESTAMP(26,6),
@@ -130,9 +139,10 @@ create table COMMUNICATION
         foreign key (R_ADMIN_ID) references ADMINISTRATOR
 );
 
+drop table CONTACT_US;
 create table CONTACT_US
 (
-    ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_19C5997B_704A_4947_B860_D4C38AA08087) auto_increment
+    ID BIGINT auto_increment
         primary key,
     DATECREATED TIMESTAMP(26,6),
     LASTUPDATED TIMESTAMP(26,6),
@@ -143,9 +153,10 @@ create table CONTACT_US
     PSEUDO_SENDER VARCHAR(255)
 );
 
+drop table IMAGE;
 create table IMAGE
 (
-    ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_05F5A143_E1BE_4B09_89E7_B653C9B9DC16) auto_increment
+    ID BIGINT   auto_increment
         primary key,
     DATECREATED TIMESTAMP(26,6),
     LASTUPDATED TIMESTAMP(26,6),
@@ -156,9 +167,10 @@ create table IMAGE
     PIC_BYTE binary
 );
 
+drop table NOTIFICATION;
 create table NOTIFICATION
 (
-    ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_4C0C169B_FD14_40FE_87B7_31A8A97D07B3) auto_increment
+    ID BIGINT   auto_increment
         primary key,
     CANCELLED BOOLEAN not null,
     DATECREATED TIMESTAMP(26,6),
@@ -173,16 +185,18 @@ create table NOTIFICATION
     USER_ID BIGINT not null
 );
 
+drop table ROLE;
 create table ROLE
 (
-    ID INTEGER default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_1FED53EF_8B5F_4E3B_8284_362944C442BD) auto_increment
+    ID INTEGER   auto_increment
         primary key,
     DESCRIPTION VARCHAR(255) not null
 );
 
+drop table USER;
 create table USER
 (
-    ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_E4F4FA1D_134C_496F_B2C3_918226591F6C) auto_increment
+    ID BIGINT   auto_increment
         primary key,
     DATECREATED TIMESTAMP(26,6),
     LASTUPDATED TIMESTAMP(26,6),
@@ -208,9 +222,10 @@ create table USER
         foreign key (IMAGE_ID) references IMAGE
 );
 
+drop table ANNOUNCE;
 create table ANNOUNCE
 (
-    ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_91928703_951F_4D3A_AE18_11A34EF0B7CF) auto_increment
+    ID BIGINT  auto_increment
         primary key,
     DATECREATED TIMESTAMP(26,6),
     LASTUPDATED TIMESTAMP(26,6),
@@ -241,6 +256,7 @@ create table ANNOUNCE
 create unique index PRIMARY_KEY_B9
     on ANNOUNCE (ID);
 
+drop table ANNOUNCE_CATEGORY;
 create table ANNOUNCE_CATEGORY
 (
     ANNOUNCE_ID BIGINT not null,
@@ -252,6 +268,7 @@ create table ANNOUNCE_CATEGORY
         foreign key (CATEGORIES_CODE) references CATEGORY
 );
 
+drop table MESSAGE;
 create table MESSAGE
 (
     ID BIGINT not null,
@@ -270,9 +287,10 @@ create table MESSAGE
         foreign key (R_USER_ID) references USER
 );
 
+drop table RESERVATION;
 create table RESERVATION
 (
-    ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_E6583612_CCF1_41BF_91A5_2676CB0DFADA) auto_increment
+    ID BIGINT   auto_increment
         primary key,
     DATECREATED TIMESTAMP(26,6),
     LASTUPDATED TIMESTAMP(26,6),
@@ -289,6 +307,7 @@ create table RESERVATION
         foreign key (R_USER_ID) references USER
 );
 
+drop table RESERVATION_CATEGORY;
 create table RESERVATION_CATEGORY
 (
     RESERVATION_ID BIGINT not null,
@@ -300,9 +319,10 @@ create table RESERVATION_CATEGORY
         foreign key (CATEGORIES_CODE) references CATEGORY
 );
 
+drop table REVIEW;
 create table REVIEW
 (
-    ID BIGINT default (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_DD8360C7_BF3E_4529_809B_C1286E35FFEE) auto_increment,
+    ID BIGINT   auto_increment,
     DATECREATED TIMESTAMP(26,6),
     LASTUPDATED TIMESTAMP(26,6),
     TOKEN VARCHAR(5) not null,
@@ -317,6 +337,7 @@ create table REVIEW
         foreign key (R_USER_ID) references USER
 );
 
+drop table SUBSCRIBERS;
 create table SUBSCRIBERS
 (
     R_USER_ID BIGINT not null,
@@ -328,6 +349,7 @@ create table SUBSCRIBERS
         foreign key (SUBSCRIBER_ID) references USER
 );
 
+drop table SUBSCRIPTIONS;
 create table SUBSCRIPTIONS
 (
     SUBSCRIPTION_ID BIGINT not null,
@@ -342,6 +364,7 @@ create table SUBSCRIPTIONS
 create unique index PRIMARY_KEY_273
     on USER (ID);
 
+drop table USER_COMMUNICATION;
 create table USER_COMMUNICATION
 (
     USERS_ID BIGINT not null,
@@ -353,6 +376,7 @@ create table USER_COMMUNICATION
         foreign key (COMMUNICATIONS_ID) references COMMUNICATION
 );
 
+drop table USER_NOTIFICATION;
 create table USER_NOTIFICATION
 (
     USERS_ID BIGINT not null,
@@ -364,6 +388,7 @@ create table USER_NOTIFICATION
         foreign key (USERS_ID) references USER
 );
 
+drop table USER_ROLE;
 create table USER_ROLE
 (
     R_USER BIGINT not null,

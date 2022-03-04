@@ -247,6 +247,9 @@ public class AnnounceVO extends CommonVO {
     public UserInfo getUserInfo() {   return userInfo;  }
 
     @Transient
+    public String getDescriptionTransport() {   return descriptionTransport;  }
+
+    @Transient
     @Formula(value = "select coalesce(count(id),0) as counter from RESERVATION r where  r.r_announce_id = id and r.cancelled is false")
     public Integer getCountReservation() {
         return countReservation;
