@@ -34,10 +34,10 @@ public class AuthenticationFilter extends CommonFilter {
 
         logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
 
- /*       if(!authorized(servletRequest,  servletResponse)){
+      if(!authorized(servletRequest,  servletResponse)){
             return;
         }
-*/
+
         //call next filter in the filter chain
         filterChain.doFilter(request, response);
 

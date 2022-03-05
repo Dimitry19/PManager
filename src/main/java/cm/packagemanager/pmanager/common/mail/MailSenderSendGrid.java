@@ -199,7 +199,7 @@ public class MailSenderSendGrid {
     }
 
 
-    public Mail buildMailContactUs(ContactUSVO contactUS, boolean repyToEnabled) throws MailException {
+    public Response  sendContactUs(ContactUSVO contactUS, boolean replyToEnabled) throws Exception {
         Mail mail = new Mail();
         try {
 
@@ -215,7 +215,7 @@ public class MailSenderSendGrid {
             content.setValue(contactUS.getContent());
             mail.addContent(content);
 
-            if (repyToEnabled) {
+            if (replyToEnabled) {
                 Email replyTo = new Email();
                 replyTo.setName(contactUS.getPseudo());
                 replyTo.setEmail(contactUS.getSender());
@@ -225,9 +225,10 @@ public class MailSenderSendGrid {
         } catch (Exception e) {
             logger.info(e.getMessage());
             e.printStackTrace();
-            throw e;
         }
-        return mail;
+
+        return send(mail);
+
     }
 
     private void genericPersonalizzation(String messageSubject, String from,String pseudo, String username, Mail mail, List<String> emailSendTo, List<String> emailSendCC, List<String> emailSendBCC) {
@@ -327,7 +328,9 @@ public class MailSenderSendGrid {
         }
     }
 
-    protected Response send(final Mail mail) throws IOException {
+    protected Response send(final Mail mail) throws Exception {
+
+        if (mail == null) return null;
 
         final SendGrid sg = new SendGrid(SENDGRID_API_KEY);
         final Request request = new Request();

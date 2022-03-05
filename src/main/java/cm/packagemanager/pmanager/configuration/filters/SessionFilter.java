@@ -3,17 +3,31 @@ package cm.packagemanager.pmanager.configuration.filters;
 
 
 import cm.packagemanager.pmanager.common.utils.StringUtils;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+
+import io.jsonwebtoken.Jwts;
+
 
 import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
@@ -22,6 +36,10 @@ import static cm.packagemanager.pmanager.constant.WSConstants.*;
 public class SessionFilter extends CommonFilter{
 
     private static Logger logger = LoggerFactory.getLogger(SessionFilter.class);
+
+    @Value("${jwt.expirationDateInMs}")
+    private int jwtExpirationInMs;
+
 
 
     @Override
@@ -101,5 +119,38 @@ public class SessionFilter extends CommonFilter{
             }
         }
         return Boolean.TRUE;
+    }
+
+
+    //https://www.javainuse.com/webseries/spring-security-jwt/chap7
+
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+
+        Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
+
+        if (roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            claims.put("isAdmin", true);
+        }
+        if (roles.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            claims.put("isUser", true);
+        }
+
+        return doGenerateToken(claims, userDetails.getUsername());
+    }
+
+
+    public String getUsernameFromToken(String token) {
+        Claims claims = Jwts.parser().setSigningKey(token).parseClaimsJws(token).getBody();
+        return claims.getSubject();
+
+    }
+
+    private String doGenerateToken(Map<String, Object> claims, String subject) {
+
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
+                .signWith(SignatureAlgorithm.HS512, token).compact();
+
     }
 }

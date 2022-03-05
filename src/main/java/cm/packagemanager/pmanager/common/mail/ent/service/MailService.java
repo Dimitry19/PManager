@@ -12,7 +12,7 @@ public interface MailService {
 
     void sendEmail(UserVO user) throws MailException;
 
-    Response contactUS(ContactUSDTO contactUS) throws MailException, IOException;
+    Response contactUS(ContactUSDTO contactUS) throws Exception;
 
 
 }

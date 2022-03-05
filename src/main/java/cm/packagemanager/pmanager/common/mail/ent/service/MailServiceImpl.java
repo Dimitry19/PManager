@@ -5,7 +5,6 @@ import cm.packagemanager.pmanager.common.mail.ent.dao.ContactUSDAO;
 import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.mail.ContactUSDTO;
-import com.sendgrid.Mail;
 import com.sendgrid.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -19,7 +18,8 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
-import java.io.IOException;
+
+
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -35,7 +35,7 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public Response contactUS(ContactUSDTO contactus) throws MailException, IOException {
+    public Response contactUS(ContactUSDTO contactus) throws Exception {
 
         ContactUSVO contactUS = new ContactUSVO();
         contactUS.setPseudo(contactus.getPseudo());
@@ -44,9 +44,7 @@ public class MailServiceImpl implements MailService {
         contactUS.setContent(contactus.getContent());
         contactUS.setSubject(contactus.getSubject());
 
-        final Mail mail = mailSenderSendGrid.buildMailContactUs(contactUS, true);
-        if (mail == null) return null;
-        final Response response = mailSenderSendGrid.send(mail);
+        final Response response  = mailSenderSendGrid.sendContactUs(contactUS, true);
 
         if (mailSenderSendGrid.manageResponse(response)) {
             contactUSDAO.saves(contactUS);
