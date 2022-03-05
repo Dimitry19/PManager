@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface AirlineDAO {
 
-    AirlineVO findByCode(String code) throws BusinessResourceException;
+    AirlineVO findByCode(String code) throws Exception;
 
-    List<AirlineVO> all() throws BusinessResourceException;
+    List<AirlineVO> all() throws Exception;
 
 }

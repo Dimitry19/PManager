@@ -29,3 +29,380 @@
 2022-02-12T05:00:28.403+0100 DEBUG select roles0_.R_USER as r_user1_19_0_, roles0_.ROLE_ID as role_id2_19_0_, rolevo1_.ID as id1_13_1_, rolevo1_.DESCRIPTION as descript2_13_1_ from PUBLIC.USER_ROLE roles0_ inner join PUBLIC.ROLE rolevo1_ on roles0_.ROLE_ID=rolevo1_.ID where roles0_.R_USER=?
 2022-02-12T05:00:28.416+0100 DEBUG select users0_.NOTIFICATIONS_ID as notifica1_18_0_, users0_.USERS_ID as users_id2_18_0_, uservo1_.ID as id1_16_1_, uservo1_.CANCELLED as cancelle2_16_1_, uservo1_.dateCreated as datecrea3_16_1_, uservo1_.lastUpdated as lastupda4_16_1_, uservo1_.ACTIVE as active5_16_1_, uservo1_.CONFIRM_TOKEN as confirm_6_16_1_, uservo1_.EMAIL as email7_16_1_, uservo1_.ENABLE_NOTIF as enable_n8_16_1_, uservo1_.FACEBOOK_ID as facebook9_16_1_, uservo1_.FIRST_NAME as first_n10_16_1_, uservo1_.GENDER as gender11_16_1_, uservo1_.GOOGLE_ID as google_12_16_1_, uservo1_.image_ID as image_i17_16_1_, uservo1_.LAST_NAME as last_na13_16_1_, uservo1_.PASSWORD as passwor14_16_1_, uservo1_.PHONE as phone15_16_1_, uservo1_.USERNAME as usernam16_16_1_, imagevo2_.ID as id1_7_2_, imagevo2_.NAME as name2_7_2_, imagevo2_.origin as origin3_7_2_, imagevo2_.PIC_BYTE as pic_byte4_7_2_, imagevo2_.TYPE as type5_7_2_, announcevo3_.ID as id1_2_3_, announcevo3_.CANCELLED as cancelle2_2_3_, announcevo3_.dateCreated as datecrea3_2_3_, announcevo3_.lastUpdated as lastupda4_2_3_, announcevo3_.token as token5_2_3_, announcevo3_.ANNOUNCE_TYPE as announce6_2_3_, announcevo3_.ARRIVAL as arrival7_2_3_, announcevo3_.DEPARTURE as departur8_2_3_, announcevo3_.DESCRIPTION as descript9_2_3_, announcevo3_.END_DATE as end_dat10_2_3_, announcevo3_.GOLD_PRICE as gold_pr11_2_3_, announcevo3_.image_ID as image_i19_2_3_, announcevo3_.PRENIUM_PRICE as prenium12_2_3_, announcevo3_.PRICE as price13_2_3_, announcevo3_.REMAIN_WEIGHT as remain_14_2_3_, announcevo3_.START_DATE as start_d15_2_3_, announcevo3_.STATUS as status16_2_3_, announcevo3_.TRANSPORT as transpo17_2_3_, announcevo3_.R_USER_ID as r_user_20_2_3_, announcevo3_.WEIGHT as weight18_2_3_, select count(announcevo3_.id) from RESERVATION r where  r.r_announce_id = announcevo3_.id and r.cancelled is 0 as formula1_3_ from PUBLIC.USER_NOTIFICATION users0_ inner join PUBLIC.USER uservo1_ on users0_.USERS_ID=uservo1_.ID and ( exists (select uservo1_.id from user where uservo1_.cancelled = 0)) left outer join PUBLIC.IMAGE imagevo2_ on uservo1_.image_ID=imagevo2_.ID left outer join PUBLIC.ANNOUNCE announcevo3_ on imagevo2_.ID=announcevo3_.image_ID and ( exists (select announcevo3_.id from announce where announcevo3_.cancelled = 0 and announcevo3_.status<> 'COMPLETED'))  where users0_.NOTIFICATIONS_ID=?
 2022-02-12T05:00:28.489+0100 DEBUG select roles0_.R_USER as r_user1_19_0_, roles0_.ROLE_ID as role_id2_19_0_, rolevo1_.ID as id1_13_1_, rolevo1_.DESCRIPTION as descript2_13_1_ from PUBLIC.USER_ROLE roles0_ inner join PUBLIC.ROLE rolevo1_ on roles0_.ROLE_ID=rolevo1_.ID where roles0_.R_USER=?
+2022-03-04T23:53:59.739+0100 ERROR 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   airlineDAOImpl (field protected cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl.notificatorServiceImpl)
+┌─────┐
+|  notificator (field cm.packagemanager.pmanager.notification.ent.dao.NotificationDAO cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl.notificationDAO)
+↑     ↓
+|  notificationDAOImpl (field protected cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl.notificatorServiceImpl)
+└─────┘
+
+
+Action:
+
+Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.
+
+2022-03-04T23:56:31.514+0100 ERROR Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356) ~[spring-context-5.3.16.jar:5.3.16]
+	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:1.8.0_281]
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) [spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) [spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) [spring-boot-2.6.4.jar:2.6.4]
+	at cm.packagemanager.pmanager.PackageApplication.main(PackageApplication.java:38) [classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_281]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_281]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_281]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_281]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.6.4.jar:2.6.4]
+Caused by: java.lang.NullPointerException
+	at springfox.documentation.spring.web.WebMvcPatternsRequestConditionWrapper.getPatterns(WebMvcPatternsRequestConditionWrapper.java:56) ~[springfox-spring-webmvc-3.0.0.jar:3.0.0]
+	at springfox.documentation.RequestHandler.sortedPaths(RequestHandler.java:113) ~[springfox-core-3.0.0.jar:3.0.0]
+	at springfox.documentation.spi.service.contexts.Orderings.lambda$byPatternsCondition$3(Orderings.java:89) ~[springfox-spi-3.0.0.jar:3.0.0]
+	at java.util.Comparator.lambda$comparing$77a9974f$1(Comparator.java:469) ~[?:1.8.0_281]
+	at java.util.TimSort.countRunAndMakeAscending(TimSort.java:355) ~[?:1.8.0_281]
+	at java.util.TimSort.sort(TimSort.java:234) ~[?:1.8.0_281]
+	at java.util.Arrays.sort(Arrays.java:1512) ~[?:1.8.0_281]
+	at java.util.ArrayList.sort(ArrayList.java:1464) ~[?:1.8.0_281]
+	at java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:387) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:483) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472) ~[?:1.8.0_281]
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_281]
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499) ~[?:1.8.0_281]
+	at springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider.requestHandlers(WebMvcRequestHandlerProvider.java:81) ~[springfox-spring-webmvc-3.0.0.jar:3.0.0]
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193) ~[?:1.8.0_281]
+	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1384) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472) ~[?:1.8.0_281]
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_281]
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499) ~[?:1.8.0_281]
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.withDefaults(AbstractDocumentationPluginsBootstrapper.java:107) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.buildContext(AbstractDocumentationPluginsBootstrapper.java:91) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.bootstrapDocumentationPlugins(AbstractDocumentationPluginsBootstrapper.java:82) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper.start(DocumentationPluginsBootstrapper.java:100) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178) ~[spring-context-5.3.16.jar:5.3.16]
+	... 17 more
+2022-03-04T23:57:54.348+0100 ERROR 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   airlineDAOImpl (field protected cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl.notificatorServiceImpl)
+┌─────┐
+|  notificator (field cm.packagemanager.pmanager.notification.ent.dao.NotificationDAO cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl.notificationDAO)
+↑     ↓
+|  notificationDAOImpl (field protected cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl.notificatorServiceImpl)
+└─────┘
+
+
+Action:
+
+Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.
+
+2022-03-05T00:12:50.798+0100 ERROR 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   airlineDAOImpl (field protected cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl.notificatorServiceImpl)
+┌─────┐
+|  notificator (field cm.packagemanager.pmanager.notification.ent.dao.NotificationDAO cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl.notificationDAO)
+↑     ↓
+|  notificationDAOImpl (field protected cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl.notificatorServiceImpl)
+└─────┘
+
+
+Action:
+
+Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.
+
+2022-03-05T00:15:37.915+0100 ERROR Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356) ~[spring-context-5.3.16.jar:5.3.16]
+	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:1.8.0_281]
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) [spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) [spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) [spring-boot-2.6.4.jar:2.6.4]
+	at cm.packagemanager.pmanager.PackageApplication.main(PackageApplication.java:38) [classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_281]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_281]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_281]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_281]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.6.4.jar:2.6.4]
+Caused by: java.lang.NullPointerException
+	at springfox.documentation.spring.web.WebMvcPatternsRequestConditionWrapper.getPatterns(WebMvcPatternsRequestConditionWrapper.java:56) ~[springfox-spring-webmvc-3.0.0.jar:3.0.0]
+	at springfox.documentation.RequestHandler.sortedPaths(RequestHandler.java:113) ~[springfox-core-3.0.0.jar:3.0.0]
+	at springfox.documentation.spi.service.contexts.Orderings.lambda$byPatternsCondition$3(Orderings.java:89) ~[springfox-spi-3.0.0.jar:3.0.0]
+	at java.util.Comparator.lambda$comparing$77a9974f$1(Comparator.java:469) ~[?:1.8.0_281]
+	at java.util.TimSort.countRunAndMakeAscending(TimSort.java:355) ~[?:1.8.0_281]
+	at java.util.TimSort.sort(TimSort.java:234) ~[?:1.8.0_281]
+	at java.util.Arrays.sort(Arrays.java:1512) ~[?:1.8.0_281]
+	at java.util.ArrayList.sort(ArrayList.java:1464) ~[?:1.8.0_281]
+	at java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:387) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:483) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472) ~[?:1.8.0_281]
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_281]
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499) ~[?:1.8.0_281]
+	at springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider.requestHandlers(WebMvcRequestHandlerProvider.java:81) ~[springfox-spring-webmvc-3.0.0.jar:3.0.0]
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193) ~[?:1.8.0_281]
+	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1384) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472) ~[?:1.8.0_281]
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_281]
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499) ~[?:1.8.0_281]
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.withDefaults(AbstractDocumentationPluginsBootstrapper.java:107) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.buildContext(AbstractDocumentationPluginsBootstrapper.java:91) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.bootstrapDocumentationPlugins(AbstractDocumentationPluginsBootstrapper.java:82) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper.start(DocumentationPluginsBootstrapper.java:100) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178) ~[spring-context-5.3.16.jar:5.3.16]
+	... 17 more
+2022-03-05T00:19:24.135+0100 ERROR 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   airlineDAOImpl (field protected cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl.notificatorServiceImpl)
+┌─────┐
+|  notificator (field cm.packagemanager.pmanager.notification.ent.dao.NotificationDAO cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl.notificationDAO)
+↑     ↓
+|  notificationDAOImpl (field protected cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl.notificatorServiceImpl)
+└─────┘
+
+
+Action:
+
+Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.
+
+2022-03-05T00:21:30.179+0100 ERROR 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   airlineDAOImpl (field protected cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl.notificatorServiceImpl)
+┌─────┐
+|  notificator
+↑     ↓
+|  notificationDao (field protected cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl.notificatorServiceImpl)
+└─────┘
+
+
+Action:
+
+Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.
+
+2022-03-05T00:26:31.139+0100 ERROR Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356) ~[spring-context-5.3.16.jar:5.3.16]
+	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:1.8.0_281]
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) [spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) [spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) [spring-boot-2.6.4.jar:2.6.4]
+	at cm.packagemanager.pmanager.PackageApplication.main(PackageApplication.java:38) [classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_281]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_281]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_281]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_281]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.6.4.jar:2.6.4]
+Caused by: java.lang.NullPointerException
+	at springfox.documentation.spring.web.WebMvcPatternsRequestConditionWrapper.getPatterns(WebMvcPatternsRequestConditionWrapper.java:56) ~[springfox-spring-webmvc-3.0.0.jar:3.0.0]
+	at springfox.documentation.RequestHandler.sortedPaths(RequestHandler.java:113) ~[springfox-core-3.0.0.jar:3.0.0]
+	at springfox.documentation.spi.service.contexts.Orderings.lambda$byPatternsCondition$3(Orderings.java:89) ~[springfox-spi-3.0.0.jar:3.0.0]
+	at java.util.Comparator.lambda$comparing$77a9974f$1(Comparator.java:469) ~[?:1.8.0_281]
+	at java.util.TimSort.countRunAndMakeAscending(TimSort.java:355) ~[?:1.8.0_281]
+	at java.util.TimSort.sort(TimSort.java:234) ~[?:1.8.0_281]
+	at java.util.Arrays.sort(Arrays.java:1512) ~[?:1.8.0_281]
+	at java.util.ArrayList.sort(ArrayList.java:1464) ~[?:1.8.0_281]
+	at java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:387) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.Sink$ChainedReference.end(Sink.java:258) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:483) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472) ~[?:1.8.0_281]
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_281]
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499) ~[?:1.8.0_281]
+	at springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider.requestHandlers(WebMvcRequestHandlerProvider.java:81) ~[springfox-spring-webmvc-3.0.0.jar:3.0.0]
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193) ~[?:1.8.0_281]
+	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1384) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472) ~[?:1.8.0_281]
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708) ~[?:1.8.0_281]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_281]
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499) ~[?:1.8.0_281]
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.withDefaults(AbstractDocumentationPluginsBootstrapper.java:107) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.buildContext(AbstractDocumentationPluginsBootstrapper.java:91) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.bootstrapDocumentationPlugins(AbstractDocumentationPluginsBootstrapper.java:82) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper.start(DocumentationPluginsBootstrapper.java:100) ~[springfox-spring-web-3.0.0.jar:3.0.0]
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178) ~[spring-context-5.3.16.jar:5.3.16]
+	... 17 more
+2022-03-05T01:16:32.562+0100 ERROR Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'springSecurityFilterChain' defined in class path resource [org/springframework/security/config/annotation/web/configuration/WebSecurityConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.servlet.Filter]: Factory method 'springSecurityFilterChain' threw exception; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'corsFilter' is expected to be of type 'org.springframework.web.filter.CorsFilter' but was actually of type 'cm.packagemanager.pmanager.component.CrossDomainFilter'
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:658) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:486) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:953) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) [spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) [spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) [spring-boot-2.6.4.jar:2.6.4]
+	at cm.packagemanager.pmanager.PackageApplication.main(PackageApplication.java:38) [classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_281]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_281]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_281]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_281]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.6.4.jar:2.6.4]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.servlet.Filter]: Factory method 'springSecurityFilterChain' threw exception; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'corsFilter' is expected to be of type 'org.springframework.web.filter.CorsFilter' but was actually of type 'cm.packagemanager.pmanager.component.CrossDomainFilter'
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-5.3.16.jar:5.3.16]
+	... 24 more
+Caused by: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'corsFilter' is expected to be of type 'org.springframework.web.filter.CorsFilter' but was actually of type 'cm.packagemanager.pmanager.component.CrossDomainFilter'
+	at org.springframework.beans.factory.support.AbstractBeanFactory.adaptBeanInstance(AbstractBeanFactory.java:417) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:398) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1160) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.security.config.annotation.web.configurers.CorsConfigurer.getCorsFilter(CorsConfigurer.java:79) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.web.configurers.CorsConfigurer.configure(CorsConfigurer.java:67) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.web.configurers.CorsConfigurer.configure(CorsConfigurer.java:41) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.AbstractConfiguredSecurityBuilder.configure(AbstractConfiguredSecurityBuilder.java:349) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.AbstractConfiguredSecurityBuilder.doBuild(AbstractConfiguredSecurityBuilder.java:303) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.AbstractSecurityBuilder.build(AbstractSecurityBuilder.java:38) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.web.builders.WebSecurity.performBuild(WebSecurity.java:302) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.web.builders.WebSecurity.performBuild(WebSecurity.java:90) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.AbstractConfiguredSecurityBuilder.doBuild(AbstractConfiguredSecurityBuilder.java:305) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.AbstractSecurityBuilder.build(AbstractSecurityBuilder.java:38) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration.springSecurityFilterChain(WebSecurityConfiguration.java:127) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_281]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_281]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_281]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_281]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-5.3.16.jar:5.3.16]
+	... 24 more
+2022-03-05T01:17:48.270+0100 ERROR Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'springSecurityFilterChain' defined in class path resource [org/springframework/security/config/annotation/web/configuration/WebSecurityConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.servlet.Filter]: Factory method 'springSecurityFilterChain' threw exception; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'corsFilter' is expected to be of type 'org.springframework.web.filter.CorsFilter' but was actually of type 'cm.packagemanager.pmanager.component.CrossDomainFilter'
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:658) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:486) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:953) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) [spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) [spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) [spring-boot-2.6.4.jar:2.6.4]
+	at cm.packagemanager.pmanager.PackageApplication.main(PackageApplication.java:38) [classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_281]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_281]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_281]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_281]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.6.4.jar:2.6.4]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.servlet.Filter]: Factory method 'springSecurityFilterChain' threw exception; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'corsFilter' is expected to be of type 'org.springframework.web.filter.CorsFilter' but was actually of type 'cm.packagemanager.pmanager.component.CrossDomainFilter'
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-5.3.16.jar:5.3.16]
+	... 24 more
+Caused by: org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'corsFilter' is expected to be of type 'org.springframework.web.filter.CorsFilter' but was actually of type 'cm.packagemanager.pmanager.component.CrossDomainFilter'
+	at org.springframework.beans.factory.support.AbstractBeanFactory.adaptBeanInstance(AbstractBeanFactory.java:417) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:398) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1160) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.security.config.annotation.web.configurers.CorsConfigurer.getCorsFilter(CorsConfigurer.java:79) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.web.configurers.CorsConfigurer.configure(CorsConfigurer.java:67) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.web.configurers.CorsConfigurer.configure(CorsConfigurer.java:41) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.AbstractConfiguredSecurityBuilder.configure(AbstractConfiguredSecurityBuilder.java:349) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.AbstractConfiguredSecurityBuilder.doBuild(AbstractConfiguredSecurityBuilder.java:303) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.AbstractSecurityBuilder.build(AbstractSecurityBuilder.java:38) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.web.builders.WebSecurity.performBuild(WebSecurity.java:302) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.web.builders.WebSecurity.performBuild(WebSecurity.java:90) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.AbstractConfiguredSecurityBuilder.doBuild(AbstractConfiguredSecurityBuilder.java:305) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.AbstractSecurityBuilder.build(AbstractSecurityBuilder.java:38) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration.springSecurityFilterChain(WebSecurityConfiguration.java:127) ~[spring-security-config-5.6.2.jar:5.6.2]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_281]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_281]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_281]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_281]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-5.3.16.jar:5.3.16]
+	... 24 more

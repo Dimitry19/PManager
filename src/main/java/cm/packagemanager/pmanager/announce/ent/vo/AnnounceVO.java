@@ -149,6 +149,7 @@ public class AnnounceVO extends CommonVO {
     @Enumerated(EnumType.STRING)
     @Column(name = "TRANSPORT", nullable = false)
     public TransportEnum getTransport() {
+        setDescriptionTransport(this.transport.toValue());
         return transport;
     }
 
@@ -243,6 +244,11 @@ public class AnnounceVO extends CommonVO {
         return announceId;
     }
 
+
+    @Transient
+    public String getDescriptionTransport(){
+        return descriptionTransport;
+    }
     @Transient
     public UserInfo getUserInfo() {   return userInfo;  }
 
@@ -341,7 +347,7 @@ public class AnnounceVO extends CommonVO {
 
     public void setDescriptionTransport(String descriptionTransport) {
 
-        this.descriptionTransport = this.transport.toValue();
+        this.descriptionTransport =descriptionTransport;
     }
 
     public void setCountReservation(Integer countReservation) {

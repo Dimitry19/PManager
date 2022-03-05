@@ -4,6 +4,7 @@ import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
 import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,28 +23,21 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
 
 
     @Override
-    public AirlineVO findByCode(String code) throws BusinessResourceException {
+    public AirlineVO findByCode(String code) throws Exception {
 
         logger.info(AirlineDAOImpl.class.getName() + " find by code ");
 
-        Session session = this.sessionFactory.getCurrentSession();
-        session.enableFilter(FilterConstants.CANCELLED);
+        filters= new String[1];
 
-        Query query = session.getNamedQuery(AirlineVO.FINDBYCODE);
-        query.setParameter("code", code);
-        List<AirlineVO> airlines = query.list();
+        filters[0]=FilterConstants.CANCELLED;
 
-        if (airlines != null && airlines.size() > 0) {
-            return airlines.get(0);
 
-        }
-        return null;
+        return (AirlineVO)findByUniqueResult(AirlineVO.FINDBYCODE,AirlineVO.class, code,"code",null,filters);
     }
 
     @Override
-    public List<AirlineVO> all() throws BusinessResourceException {
-        Session session = this.sessionFactory.getCurrentSession();
-        session.enableFilter(FilterConstants.CANCELLED);
+    public List<AirlineVO> all() throws Exception {
+        all(AirlineVO.class);
 
         return null;
     }

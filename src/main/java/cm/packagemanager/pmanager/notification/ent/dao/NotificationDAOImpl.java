@@ -25,7 +25,7 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
     }
 
     @Override
-    public void persist(NotificationVO notification) throws Exception {
+    public void persistNotification(NotificationVO notification) throws Exception {
         persist(notification);
     }
 
@@ -36,7 +36,6 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
          if(notification==null){
              return null;
          }
-
          notification.setStatus(StatusEnum.COMPLETED);
          update(notification);
         return notification;
