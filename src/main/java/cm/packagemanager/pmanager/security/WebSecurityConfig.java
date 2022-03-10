@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -30,6 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthenticationEntryPoint authEntryPoint;
+
+    @Autowired
+    private SessionFilter sessionFilter;
 
     private static final String[] AUTH_LIST = {
             "/v2/api-docs",
@@ -54,7 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(AUTH_LIST)
                 .permitAll()
                 .and().httpBasic()
-                .and().cors().and().csrf().disable();
+                .and().cors().and().csrf().disable().addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class);
+        ;
 
     }
 

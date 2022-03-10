@@ -102,7 +102,7 @@ public class ImageServiceImpl implements ImageService {
                     image.setName(fileUtils.generateFilename(file.getOriginalFilename()));
                 }
 
-                ImageFormat imgFmt=compress(new ImageMultipart(file),file.getOriginalFilename(),imageUser);
+                //ImageFormat imgFmt=compress(new ImageMultipart(file),file.getOriginalFilename(),imageUser);
                 image.setType(USER_TYPE_IMG_UPLOAD);
                 image.setOrigin(file.getContentType());
                 image.setPicByte(file.getBytes());

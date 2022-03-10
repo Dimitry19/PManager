@@ -45,4 +45,10 @@ public class CollectionsUtils {
         return isEmpty(elements) ? 0 : elements.size();
 
     }
+
+    public static boolean isUnique(Collection<?> elements) {
+
+        return size(elements)== 0;
+
+    }
 }

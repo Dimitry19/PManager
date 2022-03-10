@@ -37,9 +37,8 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
 
     @Override
     public List<AirlineVO> all() throws Exception {
-        all(AirlineVO.class);
 
-        return null;
+        return all(AirlineVO.class);
     }
 
     @Override
