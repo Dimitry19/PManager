@@ -1,7 +1,9 @@
 package cm.packagemanager.pmanager.common.exception;
 
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -60,6 +62,24 @@ public class ErrorResponse {
         if (ex instanceof UnexpectedTypeException) {
             setDefaultCodes();
             UnexpectedTypeException ob = (UnexpectedTypeException) ex;
+            stringBuilder.append(ob.getMessage());
+        }
+
+        if (ex instanceof NullPointerException) {
+            setDefaultCodes("null.pointer.exception");
+            NullPointerException ob = (NullPointerException) ex;
+            stringBuilder.append(ob.getMessage());
+        }
+
+        if (ex instanceof ExpiredJwtException) {
+            setDefaultCodes("401");
+            ExpiredJwtException ob = (ExpiredJwtException) ex;
+            stringBuilder.append(ob.getMessage());
+        }
+
+        if (ex instanceof BadCredentialsException) {
+            setDefaultCodes("401");
+            BadCredentialsException ob = (BadCredentialsException) ex;
             stringBuilder.append(ob.getMessage());
         }
 

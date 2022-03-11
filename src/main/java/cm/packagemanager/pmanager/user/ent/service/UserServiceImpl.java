@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserVO update(UserVO user) throws UserException {
-        return (UserVO) userDAO.update(user);
+        return (UserVO) userDAO.merge(user);
     }
 
     public boolean delete(UserVO user) throws UserException {

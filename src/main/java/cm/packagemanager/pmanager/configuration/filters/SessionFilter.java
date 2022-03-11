@@ -81,24 +81,26 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
             // get  only the Token
             logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
 
-            if(!validate(request,  response)){
+            if(!validate(request)){
                 error(response);
-
+            }else{
+                filterChain.doFilter(request, response);
             }
         }catch(ExpiredJwtException ex)
         {
             request.setAttribute("exception", ex);
-            throw ex;
+            error(response);
+            //throw ex;
         }
         catch(BadCredentialsException ex){
             request.setAttribute("exception", ex);
-            throw ex;
+            error(response);
+            //throw ex;
 
         } catch (Exception e) {
             e.printStackTrace();
 
         }
-        filterChain.doFilter(request, response);
 
     }
 
@@ -106,7 +108,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
     public void error(HttpServletResponse response) throws IOException {
 
         String[] codes=new String[1];
-        codes[0]= "400";
+        codes[0]= "401";
         ErrorResponse errorResponse = new ErrorResponse();
         List<String> details= new ArrayList();
         errorResponse.setCode(codes);
@@ -115,7 +117,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
         byte[] responseToSend = restResponseBytes(errorResponse);
         response.setHeader("Content-Type", "application/json");
-        response.setStatus(400);
+        response.setStatus(401);
         response.getOutputStream().write(responseToSend);
     }
 
@@ -124,7 +126,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
         return serialized.getBytes();
     }
 
-    private boolean validate(HttpServletRequest request,HttpServletResponse response) throws Exception {
+    private boolean validate(HttpServletRequest request) throws Exception {
 
         String uri=request.getRequestURI();
 
@@ -218,7 +220,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
 
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
-            throw new BadCredentialsException("REFAIRE LE LOGIN", ex);
+            throw new BadCredentialsException("Controler les credentials", ex);
         } catch (ExpiredJwtException ex) {
             throw ex;
         }
@@ -246,10 +248,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
             roles = Arrays.asList(new SimpleGrantedAuthority(ROLE_USER));
         }
         return roles;
-
     }
-
-
 
     public List getRolesAuthoritiesUser(UserVO user){
 
@@ -262,6 +261,5 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
         user.getRoles().stream().forEach(r->roles.add(new SimpleGrantedAuthority(CommonUtils.decodeRole(r))));
 
         return roles;
-
     }
 }

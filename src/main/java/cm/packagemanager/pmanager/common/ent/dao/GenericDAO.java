@@ -57,7 +57,7 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     boolean updateDelete(Class<T> clazz, ID id, boolean enableFlushSession) throws BusinessResourceException;
 
-    void save(T t) throws Exception;
+    T save(T t) throws Exception;
 
     void persist(T t) throws Exception;
 
@@ -72,7 +72,7 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
-    T update(T t) throws BusinessResourceException;
+     void update(T t) throws BusinessResourceException;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     void remove(T t) throws BusinessResourceException;
@@ -81,7 +81,10 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     T merge(T t) throws BusinessResourceException;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
-    T get(Class<T> clazz, ID naturalId) throws BusinessResourceException;
+    T get(Class<T> clazz, ID id) throws BusinessResourceException;
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    T load(Class<T> clazz, ID id) throws BusinessResourceException;
 
     @Transactional(propagation = Propagation.REQUIRED)
     T checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException,ClassCastException;

@@ -73,8 +73,10 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
             throw new Exception("Announce non trouve");
         }
         List userAnnounces = announceDAO.announcesByUser(user);
+
         checkUserReservation(announce, userAnnounces);
         checkRemainWeight(announce, reservationDTO.getWeight());
+
         List<ReservationVO> reservations = findByUser(ReservationVO.class, user.getId(), null);
         if (CollectionsUtils.isNotEmpty(reservations)) {
 
@@ -84,16 +86,20 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
                     .collect(Collectors.toList())).get();
 
             if (CollectionsUtils.isNotEmpty(anReservations)) {
+
                 ReservationVO rsv = (ReservationVO) CollectionsUtils.getFirst(anReservations);
                 rsv.getAnnounce().setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));
                 rsv.setWeight(rsv.getWeight().add(reservationDTO.getWeight()));
+
                 handleCategories(rsv, reservationDTO.getCategories());
+
                 StringBuilder noteBuilder = new StringBuilder();
                 noteBuilder.append(StringUtils.isNotEmpty(rsv.getDescription()) ? rsv.getDescription() + "\n" : "")
                         .append(StringUtils.isNotEmpty(reservationDTO.getDescription()) ? reservationDTO.getDescription() + "\n" : "");
+
                 rsv.setDescription(noteBuilder.toString());
-                update(rsv);
-                return rsv;
+
+                return (ReservationVO)merge(rsv);
             }
         }
 

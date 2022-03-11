@@ -29,7 +29,7 @@ public class RoleDAOImpl extends CommonGenericDAO implements RoleDAO {
     public RoleVO addRole(RoleVO role) {
         logger.info("Add role");
         if (role != null) {
-            save(role);
+            persist(role);
         }
         return role;
     }
@@ -42,10 +42,6 @@ public class RoleDAOImpl extends CommonGenericDAO implements RoleDAO {
         return IteratorUtils.toList(roles.iterator());
     }
 
-	/*@Override
-	public Stream<RoleVO> getAllRolesStream() {
-		return this.getAllRolesStream();
-	}*/
 
     @Override
     @Transactional
@@ -59,7 +55,6 @@ public class RoleDAOImpl extends CommonGenericDAO implements RoleDAO {
     public RoleVO find(Long id) {
 
         return (RoleVO) findById(RoleVO.class, id);
-
     }
 
     @Override

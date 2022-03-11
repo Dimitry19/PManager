@@ -235,7 +235,7 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController - Manage notification");
             UserVO user = userService.manageNotification(userId, enable);
-            return new ResponseEntity<UserVO>(user, HttpStatus.OK);
+            return new ResponseEntity<>(user, HttpStatus.OK);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'upload de l'image", e);

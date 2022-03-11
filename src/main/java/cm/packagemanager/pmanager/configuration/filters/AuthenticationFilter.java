@@ -37,7 +37,6 @@ public class AuthenticationFilter extends CommonFilter {
       if(!authorized(servletRequest,  servletResponse)){
             return;
         }
-
         //call next filter in the filter chain
         filterChain.doFilter(request, response);
 
