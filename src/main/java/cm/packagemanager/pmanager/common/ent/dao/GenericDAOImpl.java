@@ -142,9 +142,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
             throw new IllegalArgumentException("ID cannot be null");
         }
 
-        Session session = sessionFactory.getCurrentSession();
-
-        return session.get(clazz, id);
+        return get(clazz, id);
     }
 
     @Override
@@ -413,30 +411,27 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void save(T t) {
+    public T save(T t) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(t);
-        //session.flush();
+        return (T)session.save(t);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void persist(T t) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(t);
-        //session.flush();
+        session.persist(t); // on rend l'instance t persistent
+        //session.flush(); // Permet de vider la session le flush fait la synchronisation entre l'entité et la session hibernate
+
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
-    public T update(T t) throws BusinessResourceException {
+    public  void update(T t) throws BusinessResourceException {
         logger.info("Generic update");
         Session session = this.sessionFactory.getCurrentSession();
-        if (t != null) {
-            session.update(t);
-            return t;
-        }
-        return null;
+        session.update(t);
+
     }
 
     @Override
@@ -446,7 +441,6 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         Session session = this.sessionFactory.getCurrentSession();
         if (t != null) {
             session.remove(t);
-
         }
     }
 
@@ -456,8 +450,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         logger.info("Generic merge");
         Session session = this.sessionFactory.getCurrentSession();
         if (t != null) {
-            session.merge(t);
-            return t;
+             return (T)session.merge(t);
         }
         return null;
     }
@@ -474,11 +467,26 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
-    public T  checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException {
+    public T load(Class<T> clazz, ID id) throws BusinessResourceException {
 
-        if(clazz== null) return null;
+        Session session = this.sessionFactory.getCurrentSession();
 
-        return findById(clazz , id);
+        return session.load(clazz , id);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    public  T checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException,ClassCastException {
+
+        if(clazz== null || id==null) return null;
+
+        Object o = findById(clazz , id);
+
+        try {
+            return (T) o;
+        } catch(ClassCastException e) {
+            return null;
+        }
     }
 
     @Override
@@ -530,7 +538,6 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         event.setUserId((Long) props.get(PROP_USR_ID));
         event.setUsers((Set<UserVO>) props.get(PROP_SUBSCRIBERS));
         notificatorServiceImpl.addEvent(event);
-
 
     }
 

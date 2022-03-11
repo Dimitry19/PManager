@@ -25,7 +25,7 @@ public class RoleController extends CommonController {
             logger.info("add  role  request in");
             createOpentracingSpan("RoleController -add");
             RoleVO roleCreated = roleService.add(role);
-            return new ResponseEntity<RoleVO>(roleCreated, HttpStatus.CREATED);
+            return new ResponseEntity<>(roleCreated, HttpStatus.CREATED);
         } catch (Exception e) {
             throw e;
         } finally {

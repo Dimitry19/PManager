@@ -23,24 +23,21 @@ public class CategoryVO implements Serializable {
     private static final long serialVersionUID = -6108078165603686675L;
 
 
-    @Id
-    @Basic(optional = false)
-    @Column(name = "CODE", nullable = false, length = FieldConstants.AUTH_USER_LEN)
+
     private String code;
 
-    @Basic(optional = false)
-    @Column(name = "DESCRIPTION")
     private String description;
 
     public CategoryVO() {
     }
 
-    public String getCode() {
-        return code;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "CODE", nullable = false, length = FieldConstants.AUTH_USER_LEN)
+    public String getCode() {  return code;  }
 
-    }
-
-
+    @Basic(optional = false)
+    @Column(name = "DESCRIPTION")
     public String getDescription() {
         return description;
     }

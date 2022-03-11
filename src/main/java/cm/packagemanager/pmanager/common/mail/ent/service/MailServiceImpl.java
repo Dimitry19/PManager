@@ -4,7 +4,7 @@ import cm.packagemanager.pmanager.common.mail.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.mail.ent.dao.ContactUSDAO;
 import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import com.sendgrid.Mail;
+import cm.packagemanager.pmanager.ws.requests.mail.ContactUSDTO;
 import com.sendgrid.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -18,7 +18,8 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
-import java.io.IOException;
+
+
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -34,13 +35,23 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public Response contactUS(ContactUSVO contactUS) throws MailException, IOException {
-        contactUSDAO.saves(contactUS);
-        final Mail mail = mailSenderSendGrid.buildMail(contactUS, true);
-        if (mail == null) return null;
-        final Response response = mailSenderSendGrid.send(mail);
+    public Response contactUS(ContactUSDTO contactus) throws Exception {
+
+        ContactUSVO contactUS = new ContactUSVO();
+        contactUS.setPseudo(contactus.getPseudo());
+        contactUS.setSender(contactus.getSender());
+        contactUS.setReceiver(contactus.getReceiver());
+        contactUS.setContent(contactus.getContent());
+        contactUS.setSubject(contactus.getSubject());
+
+        final Response response  = mailSenderSendGrid.sendContactUs(contactUS, true);
+
+        if (mailSenderSendGrid.manageResponse(response)) {
+            contactUSDAO.saves(contactUS);
+        }
         return response;
     }
+
 
     /**
      * This function is used to send mail that contains a attachment.

@@ -2,15 +2,18 @@ package cm.packagemanager.pmanager.ws.controller.rest;
 
 import cm.packagemanager.pmanager.announce.ent.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.ent.service.ReservationService;
-import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
+import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.mail.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.mail.ent.service.MailService;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.message.ent.service.MessageService;
 import cm.packagemanager.pmanager.notification.ent.service.NotificationService;
 import cm.packagemanager.pmanager.notification.ent.service.PushNotificationService;
 import cm.packagemanager.pmanager.user.ent.service.RoleService;
 import cm.packagemanager.pmanager.user.ent.service.UserService;
+import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import io.opentracing.util.GlobalTracer;
@@ -19,12 +22,16 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * L'annotation @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600) permet de favoriser une communication distante entre le client et le serveur,
@@ -118,5 +125,17 @@ public class CommonController  {
     }
     protected boolean imageCheck(ImageVO image){
         return (image!=null && image.getPicByte()!=null);
+
+    }
+
+    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, List<UserVO> users) {
+        if (CollectionsUtils.isEmpty(users)) {
+            headers.add(HEADER_TOTAL, Long.toString(0));
+        } else {
+            paginateResponse.setCount(users.size());
+            paginateResponse.setResults(users);
+            headers.add(HEADER_TOTAL, Long.toString(users.size()));
+        }
+        return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
     }
 }

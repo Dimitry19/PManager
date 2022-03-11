@@ -1,6 +1,5 @@
 package cm.packagemanager.pmanager.component;
 
-import cm.packagemanager.pmanager.PackageApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

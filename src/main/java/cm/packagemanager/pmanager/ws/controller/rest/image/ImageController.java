@@ -1,7 +1,8 @@
 package cm.packagemanager.pmanager.ws.controller.rest.image;
 
-import cm.packagemanager.pmanager.common.ent.service.ImageService;
-import cm.packagemanager.pmanager.common.ent.vo.ImageVO;
+import cm.packagemanager.pmanager.image.ent.bo.ImageMultipart;
+import cm.packagemanager.pmanager.image.ent.service.ImageService;
+import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.enums.UploadImageType;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
@@ -18,13 +19,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.MessageFormat;
-import java.util.UUID;
 
 import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
@@ -37,6 +42,8 @@ public class ImageController extends CommonController {
 
     @Autowired
     ImageService imageService;
+
+
 
     @ApiOperation(value = "Upload user or announce image ", response = ResponseEntity.class)
     @ApiResponses(value = {
@@ -136,5 +143,38 @@ public class ImageController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
+    }
+
+
+
+    @PostMapping("/uploadFile")
+    public ResponseEntity<Object> uploadFile(@RequestParam("File") MultipartFile file) throws IOException {
+
+        return new ResponseEntity<Object>("The File Uploaded Successfully.", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "image/upload/file/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public void uploadJpgImageFile(
+            @PathVariable("name") String name,
+            @RequestPart(value = "file") MultipartFile multipartFile) {
+        imageService.compress(new ImageMultipart(multipartFile), name,"jpeg");
+    }
+
+    @PostMapping(value = "image/upload/url/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public void uploadJpgImageUrl(
+            @PathVariable("name") String name,
+            @RequestBody String urlAsString) {
+        URL url;
+
+        try {
+            url = new URL(urlAsString);
+            url.toURI();
+        } catch (MalformedURLException | URISyntaxException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        //imageService.compress(new ImageUrl(url), name,"jpeg");
     }
 }

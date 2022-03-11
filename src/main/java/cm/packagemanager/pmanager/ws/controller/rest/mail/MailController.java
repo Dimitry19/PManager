@@ -41,21 +41,15 @@ public class MailController extends CommonController {
             @ApiResponse(code = 200, message = "Mail envoyé correctement",
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(CONTACT_US_MAIL_WS)
-    public Response contactUS(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ContactUSDTO contactus) {
+    public Response contactUS(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ContactUSDTO contactusDTO) {
         logger.info("contact us - request");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
         Response pmResponse = new Response();
         try {
             createOpentracingSpan("MailController - contact us");
-            ContactUSVO contactUS = new ContactUSVO();
-            contactUS.setPseudo(contactus.getPseudo());
-            contactUS.setSender(contactus.getSender());
-            contactUS.setReceiver(contactus.getReceiver());
-            contactUS.setContent(contactus.getContent());
-            contactUS.setSubject(contactus.getSubject());
 
-            com.sendgrid.Response sent = mailService.contactUS(contactUS);
+            com.sendgrid.Response sent = mailService.contactUS(contactusDTO);
             if (mailSenderSendGrid.manageResponse(sent)) {
 
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);

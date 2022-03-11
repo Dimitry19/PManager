@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.common.utils;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
@@ -10,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.*;
+import java.net.FileNameMap;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,6 +29,9 @@ import java.util.zip.Inflater;
 public class FileUtils {
     protected final Log logger = LogFactory.getLog(FileUtils.class);
 
+    private static final FileNameMap MIMETYPES = URLConnection.getFileNameMap();
+
+
     static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     static SecureRandom rnd = new SecureRandom();
 
@@ -35,17 +41,15 @@ public class FileUtils {
             sb.append(AB.charAt(rnd.nextInt(AB.length())));
         return sb.toString();
     }
+
     public String generateFilename(String  filename) throws Exception {
 
-        String randomString=randomString(filename.length());
+        String randomString=randomString(5);
         return  randomString+filename;
     }
 
-    public void checkType(MultipartFile file) throws Exception {
-
-        if (!StringUtils.equals(file.getContentType(),"image/png") &&  !StringUtils.equals(file.getContentType(),"image/jpeg")) {
-            throw new Exception("Please select a picture in .png/jpg format");
-        }
+    public static String getExtensionByApacheCommonLib(String filename) {
+        return FilenameUtils.getExtension(filename);
     }
 
     public void saveFileToFileSystem(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
@@ -60,6 +64,19 @@ public class FileUtils {
         } catch (IOException ioe) {
             throw new IOException("Could not save image file: " + fileName, ioe);
         }
+    }
+
+    /**
+     * Get a file mime type based on its file path extension.
+     *
+     * Uses URLConnection.getFileNameMap().
+     *
+     * @param filename
+     *            file path.
+     * @return String mime type.
+     */
+    public static String getContentType(final String filename) {
+        return MIMETYPES.getContentTypeFor(filename);
     }
 
     public void saveFileToFileSystem(String uploadDir, String fileName, String data) throws IOException {
@@ -90,47 +107,5 @@ public class FileUtils {
 
         ClassPathResource imageFile = new ClassPathResource(StringUtils.concatenate(uploadDir,fileName));
         return StreamUtils.copyToByteArray(imageFile.getInputStream());
-    }
-
-
-    public  static byte[] decompressImage(byte[] data) {
-
-        if (data== null) return null;
-        Inflater inflater = new Inflater();
-        inflater.setInput(data);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] tmp = new byte[4*1024];
-        try {
-            while (!inflater.finished()) {
-                int count = inflater.inflate(tmp);
-                outputStream.write(tmp, 0, count);
-            }
-            outputStream.close();
-        } catch (Exception exception) {
-        }
-        return outputStream.toByteArray();
-    }
-
-    public static  byte[] compressImage(byte[] data) {
-
-        if (data== null) return null;
-
-
-        Deflater deflater = new Deflater();
-        deflater.setLevel(Deflater.BEST_COMPRESSION);
-        deflater.setInput(data);
-        deflater.finish();
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] tmp = new byte[4*1024];
-        while (!deflater.finished()) {
-            int size = deflater.deflate(tmp);
-            outputStream.write(tmp, 0, size);
-        }
-        try {
-            outputStream.close();
-        } catch (Exception e) {
-        }
-        return outputStream.toByteArray();
     }
 }

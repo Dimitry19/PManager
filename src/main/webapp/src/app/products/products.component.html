@@ -1,0 +1,175 @@
+<!--<app-head [connected]="connected" [username]="username"></app-head>-->
+<!-- module annonces visiteurs avec filtre -->
+<main>
+    <!-- Banner -->
+    <section id="banner">
+        <div class="inner">
+            <ul class="search_list">
+                <li class="space">
+                    <div class="ng-autocomplete">
+                        <ng-autocomplete [data]="villes" [searchKeyword]="keyword" (selected)='selectEvent($event)' [(ngModel)]="lieux_depart" placeholder="lieux de depart" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.name"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                </li>
+                <li class="spaceRight">
+                    <div class="ng-autocomplete">
+                        <ng-autocomplete [data]="villes" [searchKeyword]="keyword" (selected)='selectEventA($event)' [(ngModel)]="lieux_arrivee" placeholder="lieux d'arrivee" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.name"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                </li>
+                <li class="div_input_date">
+                    <form class="form-inline">
+                        <div class="form-group hidden">
+                            <div class="input-group">
+                                <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker" [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" [startDate]="fromDate!">
+                                <ng-template #t let-date let-focused="focused">
+                                    <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)" [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+												{{ date.day }}
+											</span>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input #dpFromDate class="form-control ajuste" placeholder="date de depart" name="dpFromDate" [value]="formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+                                <span class="searchclear fa fa-times" (click)="clear()"></span>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">📅</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ml-2">
+                            <div class="input-group">
+                                <input #dpToDate class="form-control ajuste" placeholder="date d'arrivee" name="dpToDate" [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)">
+                                <span class="searchclear fa fa-times" (click)="clear1()"></span>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">📅</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+            <br><br>
+            <ul class="search_list_1">
+                <li class="div_input">
+                    <select id="immersive_dropdown" data-placeholder="Mode de transport...">
+								<option *ngFor="let c of Transports; let i=index; trackBy:tracbByFn" [value]="c.value" [innerHTML]="c.description"></option>
+							</select>
+                </li>
+
+                <li class="div_input1">
+                    <select id="immersive_dropdown1" data-placeholder="Categorie">
+								<option *ngFor="let c of Categories; let i=index; trackBy:tracbByFn" [value]="c.value" [innerHTML]="c.description"></option>
+
+							</select>
+                </li>
+                <li class="div_input">
+                    <form class="range-field">
+                        <div class="form-group prix_kg">
+                            <label for="formControlRange">Prix du Kg(&euro;)</label>
+                            <span class="price">
+										 <span id="myValue" [innerHTML]="prix1.value">&euro;</span>
+                            </span>
+                            <input id="formControlRange" type="text" data-slider-min="0" data-slider-max="50" data-slider-step="1" #prix1/>
+                        </div>
+                    </form>
+                </li>
+                <li *ngIf="false" class="userInput">
+                    <input type="text" name="" value="" placeholder="annonceur...">
+                </li>
+            </ul>
+            <!-- <div class="fill" >
+						<img src="../../assets/images/loupe.png" alt="Recherche" class="search float-right" (click)="search()">
+					</div> -->
+        </div>
+        <div class="fill">
+            <button type="button" name="button" class="btn btn-info waves-effect ml-auto btn-rounded my-3" (click)="search()">Rechercher</button>
+        </div>
+        <br>
+        <div class="inner">
+            <ul class="">
+                <li class="nav-item avatar dropup">
+                    <button class="nav-link dropdown-toggle" id="filtre" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<b class="">Filtres </b>
+								<i class="fa fa-filter" aria-hidden="true"></i>
+						</button>
+                    <div id="options" class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="filtre">
+                        <a *ngFor="let item of itemFiltres; let i = index; trackBy: tracbByFn" class="dropdown-item customcolor" [innerHTML]="item.name.toUpperCase()" (click)="filter(item)"></a>
+                    </div>
+                </li>
+                <li *ngIf="tag" class="float-right tag">
+                    <strong [innerHTML]="'#'+tag"></strong>
+                </li>
+            </ul>
+            <div class="container">
+
+                <ul class="style_featured">
+                    <li *ngFor="let annonce of products; let i = index; trackBy: tracbByFn" (click)="detail(annonce.id)" [class]="annonce.announceType=='SELLER'?'annonces seller':'annonces buyer'">
+                        <div class="">
+                            <div class="row task-detail">
+                                <div class="div1">
+                                    <img *ngIf="annonce.userInfo?.origin == null || annonce.userInfo?.picByte == null" class="btn-rounded output" src="assets/images/profile.jpg" alt="photo">
+                                    <img *ngIf="annonce.userInfo?.origin != null && annonce.userInfo?.picByte != null" class="btn-rounded output" [src]="'data:'+annonce.userInfo.origin+';base64,'+annonce.userInfo.picByte" alt="photo"><br>
+                                </div>
+
+                                <div class="div2 aligne">
+                                    <label for="lieux_depart">De</label>: <span [innerHTML]="annonce.departure"></span><br>
+                                    <label for="date_depart">Du</label>: <span [innerHTML]="annonce.startDate"></span><br>
+                                    <label for="transport">En</label>: <span [innerHTML]="annonce.descriptionTransport"></span><br>
+                                    <!-- <label for="prixClassiq">Prix Classique(&euro;)</label>: <span class="value" [innerHTML]="annonce.price  == 0 ? '-':annonce.price"></span><br> -->
+                                    <!-- <label for="prixGold">Prix Ultra Rapide(&euro;)</label>: <span class="value" [innerHTML]="annonce.goldPrice == 0 ? '-':annonce.goldPrice"></span><br> -->
+                                </div>
+                                <div class="div3">
+                                    <label for="lieux_arrivee">À</label>: <span [innerHTML]="annonce.arrival"></span><br>
+                                    <label for="date_arrivee">Au</label>: <span [innerHTML]="annonce.endDate"></span><br>
+                                    <label for="poids">Kilos</label>: <span [innerHTML]="annonce.weight + 'Kg'"></span><br>
+                                    <!-- <label for="prixPremiun">Prix Rapide(&euro;)</label>: <span class="value" [innerHTML]="annonce.preniumPrice == 0 ? '-':annonce.preniumPrice"></span><br> -->
+                                </div>
+
+                            </div>
+                            <div class="task-detail-bas">
+                                <h4><span class="float-left" [innerHTML]="annonce.userInfo.username"></span><span [class]="annonce.remainWeight  > 5 ? 'messagesOK':'messages'" [innerHTML]="annonce.remainWeight  == 0 ? 'plus de kilos':annonce.remainWeight +'Kg restant(s)'"></span></h4><br><br>
+                                <h4><span class="float-left">Avis</span><span class="float-right value" [innerHTML]="annonce.price  == 0 ? ' ':annonce.price +'&euro;/Kg'"></span></h4>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+                <!-- <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls> -->
+                <nav id="pagination" aria-label="Page navigation example" class="float-left pos">
+                    <ul *ngIf="lists" class="pagination justify-content-center" data-toggle="tab">
+                        <li id="prev" class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" (click)=previous()>Previous</a>
+                        </li>
+                        <li *ngFor="let item of lists; let i = index; trackBy: tracbByFn">
+                            <a class="page-link" [innerHTML]="1 + i" [id]="'id' + i" (click)=pages(i+1)></a>
+                        </li>
+
+                        <li id="next" class="page-item">
+                            <a class="page-link" href="#" (click)=next()>Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</main>

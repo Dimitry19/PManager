@@ -9,6 +9,7 @@ package cm.packagemanager.pmanager.notification.ent.service;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.event.Event;
 import cm.packagemanager.pmanager.common.session.SessionManager;
+import cm.packagemanager.pmanager.common.session.SessionNotificationManager;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.notification.ent.dao.NotificationDAO;
@@ -20,6 +21,7 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessageType;
@@ -36,7 +38,7 @@ import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.
 
 @Service("notificator")
 @EnableScheduling
-public class NotificatorServiceImpl extends SessionManager implements NotificationSocketService  {
+public class NotificatorServiceImpl implements NotificationSocketService  {
 
     private static Logger logger = LoggerFactory.getLogger(NotificatorServiceImpl.class);
 
@@ -46,6 +48,9 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
 
     @Autowired
     NotificationDAO notificationDAO;
+
+    @Autowired
+    SessionNotificationManager sessionManager;
 
 
 
@@ -92,7 +97,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
 
         Map map= new HashMap();
 
-           switch (notificationVO.getType()) {
+           switch (notification.getType()) {
                 case RESERVATION:
                 case ANNOUNCE:
                 case COMMENT:
@@ -115,15 +120,14 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
                 headerAccessor.setSessionId(sessionId);
 
                 notification.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
-                alreadySent= (List) getFromSession(l);
+                alreadySent= (List) sessionManager.getFromSession(l);
 
                 if(CollectionsUtils.isEmpty(alreadySent) ||(CollectionsUtils.isNotEmpty(alreadySent) && !alreadySent.contains(notification))){
 
                     messagingTemplate.convertAndSendToUser(sessionId,notification.getTopic(), notification, headerAccessor.getMessageHeaders());
                     alreadySent.add(notification);
-                    removeToSession(l);
-                    addToSession(l,alreadySent);
-
+                    sessionManager.removeToSession(l);
+                    sessionManager.addToSession(l,alreadySent);
                 }
             });
 
@@ -131,7 +135,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
     }
 
     @Async
-    @Scheduled(fixedRate = 100000)
+   // @Scheduled(fixedRate = 100000)
     public void doNotify() throws Exception {
         logger.info(" doNotify");
 
@@ -238,7 +242,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
     public void addConnectedUser(String userId, String sessionId) {
         connectedUsers.put(userId, sessionId);
         sessionUserMap.put(sessionId, userId);
-        addToSession(userId, new ArrayList());
+        sessionManager.addToSession(userId, new ArrayList());
     }
 
     public String getConnectedUser(String sessionId) {
@@ -248,7 +252,7 @@ public class NotificatorServiceImpl extends SessionManager implements Notificati
 
     public void removeConnectedUser(String sessionId) {
         String userId = (String) sessionUserMap.get(sessionId);
-        removeToSession(userId);
+        sessionManager.removeToSession(userId);
 
         if(StringUtils.isEmpty(userId)) return;
 

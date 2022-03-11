@@ -101,7 +101,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
 
         Long id = queryUtils.calcolateId(MessageVO.GET_ID_SQL);
 
-        MessageIdVO messageId = new MessageIdVO(id, announce.getAnnounceId().getToken());
+        MessageIdVO messageId = new MessageIdVO(id, Constants.DEFAULT_TOKEN);
         MessageVO comment = new MessageVO();
         setMessage(announce, user, comment, mdto);
         comment.setId(messageId);

@@ -212,11 +212,11 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setLastName(register.getLastName());
             user.setPhone(register.getPhone());
             user.setActive(0);
-            user.setEnableNotification(Boolean.FALSE);
+            user.setEnableNotification(Boolean.TRUE);
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
 
-            save(user);
+            user=(UserVO)save(user);
             setRole(user, register.getRole());
             return user;
 
@@ -231,7 +231,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public UserVO updateUser(UpdateUserDTO userDTO) throws Exception {
         logger.info("User: update");
-        Session session = this.sessionFactory.getCurrentSession();
 
         UserVO user = findById(userDTO.getId());
 
@@ -246,8 +245,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setLastName(userDTO.getLastName());
             //setRole(user, userDTO.getRole());
             calcolateAverage(user);
-            session.update(user);
-            return user;
+            UserVO u=(UserVO) merge(user);
+            return u;
 
         } else throw new UserException("Aucun utilisateur trouvé");
 
@@ -257,9 +256,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateUser(UserVO user) {
-
-        Session session = this.sessionFactory.getCurrentSession();
-        session.update(user);
+            update(user);
     }
 
     @Override
@@ -399,7 +396,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         if (user != null && role != null) {
             user.addRole(role);
-            return (update(user) != null);
+
+            return (merge(user)!=null);
         } else {
             return false;
         }

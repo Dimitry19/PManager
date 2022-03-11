@@ -1,0 +1,70 @@
+<div class="flex">
+
+    <div class="cat">
+        <!--<span class="fa fa-car fa-2x"></span>-->
+        <img class="transports" src="assets/images/auto.gif" alt="routier">
+        <ul *ngIf="list_V && list_V.length > 0" class="lists">
+            <li *ngFor="let item of list_V; trackBy: tracbByFn" class="annonces" (click)="detail(item.id)">
+                <div [class]="item.announceType=='SELLER'? 'row task-detail  ' : 'row task-detail '">
+                    <p class="col-md-6">
+                        <label for="lieux_depart">De</label>: <span [innerHTML]="item.departure"></span><br>
+                        <label for="date_depart">Du</label>: <span [innerHTML]="item.startDate"></span><br>
+                        <label for="prixClassiq">Prix</label>: <span [innerHTML]="item.price  == 0 ? '-':item.price +'&euro;/Kg'"></span>
+                    </p>
+                    <p class="col-md-6">
+                        <label for="lieux_arrivee">À</label>: <span [innerHTML]="item.arrival"></span><br>
+                        <label for="date_arrivee">Au</label>: <span [innerHTML]="item.endDate"></span><br>
+                        <label for="poids">Kilos</label>: <span [innerHTML]="item.weight + 'Kg'"></span><br>
+                    </p>
+                    <h4 class="title">Publié par <span [innerHTML]="item.userInfo.username"></span></h4>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="cat">
+        <!--<span class="fa fa-plane fa-2x"></span>-->
+        <img class="transports" src="assets/images/avion.gif" alt="aerien">
+        <ul *ngIf="list_A && list_A.length > 0" class="lists">
+            <li *ngFor="let item of list_A; trackBy: tracbByFn" class="annonces" (click)="detail(item.id)">
+                <div [class]="item.announceType=='SELLER'? 'row task-detail seller' : 'row task-detail buyer'">
+                    <p class="col-md-6 ">
+                        <label for="lieux_depart">De</label>: <span [innerHTML]="item.departure"></span><br>
+                        <label for="date_depart">Du</label>: <span [innerHTML]="item.startDate"></span><br>
+                        <label for="prixClassiq">Prix</label>:<span [innerHTML]="item.price  == 0 ? '-':item.price +'&euro;/Kg'"></span>
+                    </p>
+                    <p class="col-md-6">
+                        <label for="lieux_arrivee">À</label>: <span [innerHTML]="item.arrival"></span><br>
+                        <label for="date_arrivee">Au</label>: <span [innerHTML]="item.endDate"></span><br>
+                        <label for="poids">Kilos</label>: <span [innerHTML]="item.weight + 'Kg'"></span><br>
+                    </p>
+                    <h4 class="title">Publié par <span [innerHTML]="item.userInfo.username"></span></h4>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="cat">
+        <!--<span class="fa fa-ship fa-2x"></span>-->
+        <img class="transports" src="assets/images/cargo.gif" alt="maritime">
+        <ul *ngIf="list_B && list_B.length > 0" class="lists">
+            <li *ngFor="let item of list_B; trackBy: tracbByFn" class="annonces" (click)="detail(item.id)">
+                <div [class]="item.announceType=='SELLER' ? 'row task-detail seller' : 'row task-detail buyer'">
+                    <p class="col-md-6">
+                        <label for="lieux_depart">De</label>: <span [innerHTML]="item.departure"></span><br>
+                        <label for="date_depart">Du</label>: <span [innerHTML]="item.startDate"></span><br>
+                        <label for="prixClassiq">Prix</label>:<span [innerHTML]="item.price  == 0 ? '-':item.price +'&euro;/Kg'"></span>
+                    </p>
+                    <p class="col-md-6">
+                        <label for="lieux_arrivee">À</label>: <span [innerHTML]="item.arrival"></span><br>
+                        <label for="date_arrivee">Au</label>: <span [innerHTML]="item.endDate"></span><br>
+                        <label for="poids">Kilos</label>: <span [innerHTML]="item.weight + 'Kg'"></span><br>
+                    </p>
+                    <h4 class="title">Publié par <span [innerHTML]="item.userInfo.username"></span></h4>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+
+</div>

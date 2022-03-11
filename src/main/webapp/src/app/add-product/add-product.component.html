@@ -1,0 +1,642 @@
+<!--<app-head [connected]="true" [username]="username"></app-head>-->
+<!-- module annonces visiteurs avec filtre -->
+<main>
+    <!-- Banner -->
+    <section id="banner">
+        <!-- process steps -->
+        <div class="inner">
+            <div class="container">
+                <div class="progress">
+                    <div *ngIf="type == 'acheteur'" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" style="width: 20%;">
+                        <!-- Step 1 of 5 -->
+                        20%</div>
+                    <div *ngIf="type == 'vendeur'" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" style="width: 15%;">
+                        <!-- Step 1 of 6 -->
+                        15%</div>
+                </div>
+                <div class="navbar">
+
+                    <div class="navbar-inner" style="width:100%">
+
+                        <ul class="nav nav-tabs flex-nowrap" role="tablist">
+                            <li role="presentation" class="nav-item step">
+                                <a href="#step1" class="nav-link active" data-toggle="tab" aria-controls="step1" role="tab" title="Transports" data-step="1"> Transports </a> </li>
+
+                            <li role="presentation" class="nav-item step">
+                                <a href="#step2" class="nav-link disabled" data-toggle="tab" aria-controls="step2" role="tab" title="Dates" data-step="2"> Dates </a> </li>
+
+                            <li role="presentation" class="nav-item step">
+                                <a href="#step3" class="nav-link disabled" data-toggle="tab" aria-controls="step3" role="tab" title="Lieux" data-step="3"> Lieux </a></li>
+                            <li role="presentation" class="nav-item step">
+                                <a href="#step4" class="nav-link disabled" data-toggle="tab" aria-controls="complete" role="tab" title="Categories" data-step="4"> Categories </a></li>
+
+                            <li *ngIf="type == 'vendeur'" role="presentation" class="nav-item step">
+                                <a href="#step5" class="nav-link disabled" data-toggle="tab" aria-controls="complete" role="tab" title="Prix" data-step="4"> Prix </a></li>
+
+                            <li role="presentation" class="nav-item step">
+                                <a href="#step6" class="nav-link disabled" data-toggle="tab" aria-controls="complete" role="tab" title="Resume" data-step="5"> Resume </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="step1">
+
+                        <div class="well">
+
+                            <div class="col-md-12">
+                                <h2>Mode de Transports: <span class="valeur">{{transport|uppercase}}</span></h2>
+                            </div>
+
+                            <div class="row" id="contRow">
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4 text-center">
+
+                                    <ul class="faicons">
+
+                                        <li class="faspot_1"><span (click)="mode('avion')"><i class="fa fa-plane fa-3x"></i></span></li>
+
+                                        <li class="faspot_3"><span (click)="mode('voiture')"><i class="fa fa-car fa-2x"></i></span></li>
+
+                                        <li class="faspot_5"><span (click)="mode('bateau')"><i class="fa fa-ship fa-2x"></i></span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="margin-bottom: 0rem">
+                        <ul class="">
+
+                            <li class="list-inline-item float-right">
+                                <button type="button" class="btn btn-primary next" [disabled]="!transport">Sauver et continuer</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-pane" id="step2">
+
+                        <div class="well">
+
+                            <div class="col-md-12">
+
+                                <h2>Du <span class="valeur">{{dateValue|date:'dd/MM/yyyy'}}</span> Au <span class="valeur">{{dateValue_e|date:'dd/MM/yyyy'}}</span></h2>
+                            </div>
+
+                            <div class="container width_container">
+                                Date de Depart:
+                                <ejs-datetimepicker id='startDate' placeholder='Choisis une date' [(value)]='dateValue' [max]='dateValue_e' [min]='minDate_e' format='dd/MM/yyyy' (change)="depart()"></ejs-datetimepicker>
+                                Date d'Arrivee:
+                                <ejs-datetimepicker id='endDate' placeholder='Choisis une date' [(value)]='dateValue_e' [min]='dateValue' format='dd/MM/yyyy' (change)="arrivee()"></ejs-datetimepicker>
+                            </div>
+                        </div>
+
+                        <hr style="margin-bottom: 0rem">
+                        <ul style="padding-left:0px">
+                            <li class="list-inline-item float-left">
+                                <button type="button" class="btn btn-outline-info waves-effect ml-auto prev-step "><i class="fa fa-arrow-left"></i></button>
+                            </li>
+                            <li class="list-inline-item float-right">
+                                <button type="button" class="btn btn-primary next" [disabled]="!(dateValue && dateValue_e)">Sauver et continuer</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-pane" id="step3">
+
+                        <div class="well">
+
+                            <div class="col-md-12">
+                                <h2>De <span class="valeur" [innerHTML]="Depart"></span> À <span class="valeur" [innerHTML]="Arrive"></span></h2>
+                            </div>
+
+                            <ul class="search_list_1">
+
+                                <li class="div_input_lieux">
+
+                                    <div class="ng-autocomplete">
+
+                                        <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEvent($event)' placeHolder="lieux de depart" [(ngModel)]="lieuxDepart" (click)="state()" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+                                            [notFoundTemplate]="notFoundTemplate"> </ng-autocomplete>
+
+                                        <ng-template #itemTemplate let-item>
+                                            <a [innerHTML]="item.name"></a>
+                                        </ng-template>
+
+                                        <ng-template #notFoundTemplate let-notFound>
+                                            <div [innerHTML]="notFound"></div>
+                                        </ng-template>
+                                    </div>
+                                </li>
+
+                                <li class="div_input_lieux">
+                                    <div class="ng-autocomplete">
+                                        <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEventA($event)' placeHolder="lieux d'arrivee" [(ngModel)]="lieuxArrive" (click)="state1()" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"></ng-autocomplete>
+                                        <ng-template #itemTemplate let-item>
+                                            <a [innerHTML]="item.name"></a>
+                                        </ng-template>
+                                        <ng-template #notFoundTemplate let-notFound>
+                                            <div [innerHTML]="notFound"></div>
+                                        </ng-template>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr style="margin-bottom: 0rem">
+                        <ul style="padding-left:0px">
+                            <li class="list-inline-item float-left">
+                                <button type="button" class="btn btn-outline-info waves-effect ml-auto prev-step "><i class="fa fa-arrow-left"></i></button>
+                            </li>
+                            <!-- <li class="list-inline-item">
+                                <button type="button" class="btn btn-outline-primary next-step">Skip</button>
+                            </li> -->
+                            <li class="list-inline-item float-right">
+                                <button type="button" class="btn btn-primary btn-info-full next" [disabled]="!(lieuxDepart && lieuxArrive && lieuxDepart != lieuxArrive)">Sauver et continuer</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-pane" id="step4">
+
+                        <div class="well">
+
+                            <div class="col-md-12">
+                                <h2>Selectioner les Categories du colis: <span *ngFor="let c of cat; let i=index; trackBy:tracbByFn" class="valeur" [innerHTML]="'&nbsp;&nbsp;'+ c"></span></h2>
+                            </div>
+                            <br>
+                            <div class="categories">
+                                <!-- <div class="row">
+										    <div class="choices">
+										      <ul class="nav nav-tabs" id="nav-vertical-tab-bg" role="tablist" aria-orientation="vertical">
+											        <li class="categorie"><button class="nav-link active choix" id="nav-vertical-tab-bg1-tab" data-toggle="tab" href="#nav-vertical-tab-bg1" role="tab" aria-controls="nav-vertical-tab-bg1" aria-selected="true" value="Bijoux" (click)="categorie(bijoux.value)" #bijoux>BIJOUX</button></li>
+											        <li class="categorie"><button class="nav-link choix" id="nav-vertical-tab-bg2-tab" data-toggle="tab" href="#nav-vertical-tab-bg2" role="tab" aria-controls="nav-vertical-tab-bg2" aria-selected="false" value="Vetements" (click)="categorie(Vetements.value)" #Vetements>VETEMENT</button></li>
+179											        <li class="categorie"><button class="nav-link choix" id="nav-vertical-tab-bg3-tab" data-toggle="tab" href="#nav-vertical-tab-bg3" role="tab" aria-controls="nav-vertical-tab-bg3" aria-selected="false" value="Electronique" (click)="categorie(Electronique.value)" #Electronique>ELECTRO</button></li>
+180															<li class="categorie"><button class="nav-link choix" id="nav-vertical-tab-bg4-tab" data-toggle="tab" href="#nav-vertical-tab-bg4" role="tab" aria-controls="nav-vertical-tab-bg4" aria-selected="false" value="Documents" (click)="categorie(Documents.value)" #Documents>DOCUMENTS</button></li>
+181															<li class="categorie"><button class="nav-link choix" id="nav-vertical-tab-bg5-tab" data-toggle="tab" href="#nav-vertical-tab-bg5" role="tab" aria-controls="nav-vertical-tab-bg5" aria-selected="false">Autres</button></li>
+182											      </ul>
+183											    </div>
+184													<div class="col-1 col-md-1">
+185														&nbsp;
+186													</div>
+187											    <div class="col-6 col-md-6 displaychoix">
+188											      <div class="tab-content" id="nav-vertical-tab-bgContent">
+189											        <div class="tab-pane p-3 fade show active" id="nav-vertical-tab-bg1" role="tabpanel" aria-labelledby="nav-vertical-tab-bg1-tab">
+190	
+191																<ul>
+192																	<li class="float-left">
+193																		<div class="radio ajuster">
+194																				<label class="taille">Montres</label>
+195										                    <label class="taille">
+196										                        <input type="radio" name="A" value="Montres"/>
+197										                        <span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+198										                    </label>
+199										                	</div>
+200																	</li>
+201																	<li class="float-left">
+202																		<div class="radio ajuster">
+203																			<label class="taille">Bracelets</label>
+204										                    <label class="taille">
+205										                        <input type="radio" name="A" value="Bracelets"/>
+206										                        <span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+207										                    </label>
+208										                	</div>
+209																	</li>
+210																	<li class="float-left">
+211																		<div class="radio ajuster">
+212																			<label class="taille">Coliers</label>
+213																				<label class="taille">
+214																						<input type="radio" name="A" value="Coliers"/>
+215																						<span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+216																				</label>
+217																			</div>
+218																	</li>
+219																	<li class="float-left">
+220																		<div class="radio ajuster">
+221																			<label class="taille">Bagues</label>
+222										                    <label class="taille">
+223										                        <input type="radio" name="A" value="Bagues" />
+224										                        <span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+225										                    </label>
+226										                	</div>
+227																	</li>
+228																</ul>
+229	
+230																</div>
+231											        <div class="tab-pane p-3 fade" id="nav-vertical-tab-bg2" role="tabpanel" aria-labelledby="nav-vertical-tab-bg2-tab">
+232																<ul>
+233																	<li class="float-left">
+234																		<div class="radio ajuster">
+235																				<label class="taille">Chemises</label>
+236																				<label class="taille">
+237																						<input type="radio" name="A" value="Chemises"/>
+238																						<span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+239																				</label>
+240																			</div>
+241																	</li>
+242																	<li class="float-left">
+243																		<div class="radio ajuster">
+244																			<label class="taille">T-shirt/Polo</label>
+245																				<label class="taille">
+246																						<input type="radio" name="A" value="T-shirt/Polo"/>
+247																						<span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+248																				</label>
+249																			</div>
+250																	</li>
+251																	<li class="float-left">
+252																		<div class="radio ajuster">
+253																			<label class="taille">Pantalons</label>
+254																				<label class="taille">
+255																						<input type="radio" name="A" value="Pantalons"/>
+256																						<span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+257																				</label>
+258																			</div>
+259																	</li>
+260																	<li class="float-left">
+261																		<div class="radio ajuster">
+262																			<label class="taille">Culottes</label>
+263																				<label class="taille">
+264																						<input type="radio" name="A" value="Culottes"/>
+265																						<span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+266																				</label>
+267																			</div>
+268																	</li>
+269																</ul>
+270															</div>
+271											        <div class="tab-pane p-3 fade" id="nav-vertical-tab-bg3" role="tabpanel" aria-labelledby="nav-vertical-tab-bg3-tab">
+272																<ul>
+273																	<li class="float-left">
+274																		<div class="radio ajuster">
+275																				<label class="taille">Informatique</label>
+276										                    <label class="taille">
+277										                        <input type="radio" name="A" value="Informatique"/>
+278										                        <span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+279										                    </label>
+280										                	</div>
+281																	</li>
+282																	<li class="float-left">
+283																		<div class="radio ajuster">
+284																			<label class="taille">Console et Jeux Video</label>
+285										                    <label class="taille">
+286										                        <input type="radio" name="A" value="Console et Jeux Video"/>
+287										                        <span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+288										                    </label>
+289										                	</div>
+290																	</li>
+291																	<li class="float-left">
+292																		<div class="radio ajuster">
+293																			<label class="taille">Telephone mobile</label>
+294										                    <label class="taille">
+295										                        <input type="radio" name="A" value="Telephone mobile"/>
+296										                        <span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+297										                    </label>
+298										                	</div>
+299																	</li>
+300																	<li class="float-left">
+301																		<div class="radio ajuster">
+302																			<label class="taille">Photografie</label>
+303										                    <label class="taille">
+304										                        <input type="radio" name="A" value="Photografie"/>
+305										                        <span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+306										                    </label>
+307										                	</div>
+308																	</li>
+309																</ul>
+310															</div>
+311															<div class="tab-pane p-3 fade" id="nav-vertical-tab-bg4" role="tabpanel" aria-labelledby="nav-vertical-tab-bg4-tab">
+312																<ul>
+313																	<li class="float-left">
+314																		<div class="radio ajuster">
+315																				<label class="taille">Lettres</label>
+316										                    <label class="taille">
+317										                        <input type="radio" name="A" value="Lettres" />
+318										                        <span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+319										                    </label>
+320										                	</div>
+321																	</li>
+322																	<li class="float-left">
+323																		<div class="radio ajuster">
+324																			<label class="taille">Documents d'Identités</label>
+325										                    <label class="taille">
+326										                        <input type="radio" name="A" value="Documents d'Identités" />
+327										                        <span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+328										                    </label>
+329										                	</div>
+330																	</li>
+331																	<li class="float-left">
+332																		<div class="radio ajuster">
+333																			<label class="taille">Diplômes</label>
+334										                    <label class="taille">
+335										                        <input type="radio" name="A" value="Diplômes" />
+336										                        <span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+337										                    </label>
+338										                	</div>
+339																	</li>
+340																	<li class="float-left">
+341																		<div class="radio ajuster">
+342																			<label class="taille">Documents Administratifs</label>
+343										                    <label class="taille">
+344										                        <input type="radio" name="A" value="Documents Administratifs"/>
+345										                        <span class="cr"><i class="cr-icon fa fa-check-circle"></i></span>
+346										                    </label>
+347										                	</div>
+348																	</li>
+349																</ul>
+350															</div>
+351															<div class="tab-pane p-3 fade" id="nav-vertical-tab-bg5" role="tabpanel" aria-labelledby="nav-vertical-tab-bg5-tab">
+352																<label for="autre"><h3 class="label">Inserer votre categorie</h3></label><br>
+353																<input type="text" placeHolder="Inserer une categorie" [(ngModel)]="categ_choisi" style="width:40%"/>
+354															</div>
+355											      </div>
+356											    </div>
+357											  </div> -->
+
+                                <div class="row">
+
+                                    <ul class="categori">
+
+                                        <li *ngFor="let ca of categories; let i=index; trackBy:tracbByFn" class="float-left">
+
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox" [id]="'Checkbox'+i" class="form-check-input" [value]="ca" [checked]="cat[i] != ''" /><label class="form-check-label" (click)="checked(ca,i)" [innerHTML]="ca"></label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <br>
+                            <div *ngIf="type == 'acheteur'" class="col-md-12">
+                                <label for="kilo"><h3 class="label">Nombre de Kilogramme</h3></label><br>
+                                <input class="input_value" type="text" min="1" max="23" step="1" placeHolder="Inserer un nombre" [(ngModel)]="kilo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                            </div>
+                            <br>
+                        </div>
+
+                        <hr>
+                        <ul style="padding-left:0px">
+
+                            <li class="list-inline-item float-left">
+                                <button type="button" class="btn btn-outline-info waves-effect ml-auto prev-step "><i class="fa fa-arrow-left"></i></button>
+                            </li>
+
+                            <li class="list-inline-item float-right">
+                                <button *ngIf="type == 'acheteur'" type="button" class="btn btn-primary next" [disabled]="!((cat[0]||cat[1]||cat[2]||cat[3]||cat[4]) && kilo)">Sauver et continuer</button>
+                                <button *ngIf="type != 'acheteur'" type="button" class="btn btn-primary next" [disabled]="!(cat[0]||cat[1]||cat[2]||cat[3]||cat[4])">Sauver et continuer</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div *ngIf="type == 'vendeur'" class="tab-pane" id="step5">
+
+                        <div class="well">
+                            <br><br>
+                            <div class="col-md-12" data-toggle="tooltip" data-placement="left" title="la valeur doit etre au moins 1">
+                                <label for="kilo"><h3 class="label">Nombre de Kilogramme à Vendre</h3></label><br>
+                                <input class="input_value" type="text" min="1" step="1" placeHolder="Inserer un nombre" [(ngModel)]="kilo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                            </div>
+                            <br>
+                            <div class="container">
+
+                                <div class="row">
+
+                                    <div style="width:12%">&nbsp;</div>
+
+                                    <div class="col-md-3">
+
+                                        <div class="panel panel-success">
+
+                                            <div class="panel-heading classique">
+
+                                                <h4 class="text-center">Classique</h4>
+                                            </div>
+
+                                            <div id="kilo" class="panel-body text-center" data-toggle="tooltip" data-placement="top" title="la valeur doit etre au moins 1">
+                                                <input class="input_value" type="text" min="1" step="1" placeHolder="Inserer un prix" style="width:100%" #prix [(ngModel)]="prix_kg" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                                            </div>
+                                            <app-options></app-options>
+                                            <!--<ul class="list-group list-group-flush text-center" contenteditable="true" spellcheck="true">
+
+                                                <li class="list-group-item" disabled="true">
+                                                    Récuperation a domicile<span class="fa fa-ok pull-right"></span>
+                                               </li>
+
+                                                <li class="list-group-item" disabled="true">
+                                                    Retrait a domicile<span class="fa fa-remove pull-right"></span>
+                                                </li>
+
+                                                <li class="list-group-item" disabled="true">
+                                                    Depot 3 jours avant<span class="fa fa-remove pull-right"></span>
+                                                </li>
+
+                                                <li class="list-group-item" disabled="true">
+                                                    Retrait 3 jours après<span class="fa fa-remove pull-right"></span>
+                                                </li>
+                                            </ul>-->
+
+                                            <div class="panel-footer">
+                                                <button class="btn btn-lg btn-block btn-primary btn-info-full"><strong><span [innerHTML] = "prix.value"></span>&euro; / Kg</strong></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+
+                                        <div class="panel panel-info">
+
+                                            <div class="panel-heading rapide">
+
+                                                <h4 class="text-center">Rapide</h4>
+                                            </div>
+
+                                            <div class="panel-body text-center" data-toggle="tooltip" data-placement="top" title="la valeur doit etre au moins 1">
+                                                <input class="input_value" type="text" min="1" step="1" placeHolder="Inserer un prix" style="width:100%" #prix1 [(ngModel)]="prix1_kg" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                                            </div>
+                                            <app-options></app-options>
+                                            <!--<ul class="list-group list-group-flush text-center" contenteditable="true" spellcheck="true">
+
+                                                <li class="list-group-item">
+                                                    Recuperation a domicile<span class="fa fa-ok pull-right"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Retrait a domicile<span class="fa fa-remove pull-right"></span>
+                                                </li>
+
+                                                <li class="list-group-item">
+                                                    Depot 2 jours avant <span class="fa fa-remove pull-right"></span>
+                                                </li>
+
+                                                <li class="list-group-item">
+                                                    Retrait 2 jours apres <span class="fa fa-remove pull-right"></span>
+                                                </li>
+                                            </ul>-->
+
+                                            <div class="panel-footer">
+                                                <button class="btn btn-lg btn-block btn-primary btn-info-full"><strong><span [innerHTML] = "prix1.value"></span>&euro; / Kg</strong></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+
+                                        <div class="panel panel-primary">
+
+                                            <div class="panel-heading ultrarapide">
+
+                                                <h4 class="text-center">Ultra Rapide</h4>
+                                            </div>
+
+                                            <div class="panel-body text-center" data-toggle="tooltip" data-placement="top" title="la valeur doit etre au moins 1">
+                                                <input class="input_value" type="text" min="1" max="20" step="1" placeHolder="Inserer un prix" style="width:100%" #prix2 [(ngModel)]="prix2_kg" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                                            </div>
+                                            <app-options></app-options>
+                                            <!--<ul class="list-group list-group-flush text-center" contenteditable="true" spellcheck="true">
+
+                                                <li class="list-group-item">
+                                                    Recuperation a domicile <span class="fa fa-ok pull-right"></span>
+                                                </li>
+
+                                                <li class="list-group-item">
+                                                    Retrait a domicile<span class="fa fa-remove pull-right"></span>
+                                                </li>
+
+                                                <li class="list-group-item">
+                                                    Depot 1 jours avant 494 <span class="fa fa-remove pull-right"></span>
+                                                </li>
+
+                                                <li class="list-group-item">
+                                                    Retrait 1 jours apres<span class="fa fa-remove pull-right"></span>
+                                                </li>
+                                            </ul>-->
+                                            <div class="panel-footer">
+                                                <button class="btn btn-lg btn-block btn-primary btn-info-full"><strong><span [innerHTML] = "prix2.value"></span>&euro; / Kg</strong></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <ul style="padding-left:0px">
+
+                            <li class="list-inline-item float-left">
+                                <button type="button" class="btn btn-outline-info waves-effect ml-auto prev-step "><i class="fa fa-arrow-left"></i></button>
+                            </li>
+                            <li class="list-inline-item float-right">
+                                <button type="button" class="btn btn-primary next" [disabled]="!(kilo && prix_kg && prix1_kg && prix2_kg)">Sauver et continuer</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-pane" id="step6">
+
+                        <div class="well">
+                            <br><br>
+                            <div class="col-md-12">
+                                <h2>Resumé de l'Annonce</h2>
+                            </div>
+                            <div class="container">
+
+                                <table class="table table-hover table_resume">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Depart</th>
+                                            <td class="float-right">{{Depart}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Arrivee</th>
+                                            <td class="float-right">{{Arrive}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Date de Depart</th>
+                                            <td class="float-right">{{dateD}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Date d'Arrivee</th>
+                                            <td class="float-right">{{dateA}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Mode de Transport</th>
+                                            <td class="float-right">{{transport|uppercase}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Compagnie</th>
+                                            <td class="float-right">non definie</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Categorie</th>
+                                            <td class="float-right">
+                                                <span *ngFor="let c of cat; let i=index; trackBy:tracbByFn" [innerHTML]="c != '' ? '&nbsp;&nbsp;'+ c:''"></span>
+                                                <!-- <span [innerHTML]="cat[1] != '' ? '&nbsp;&nbsp;'+cat[1]:''"></span>
+557																	<span [innerHTML]="cat[2] != '' ? '&nbsp;&nbsp;'+cat[2]:''"></span>
+558																	<span  [innerHTML]="cat[3] != '' ? '&nbsp;&nbsp;'+cat[3]:''"></span>
+559																	<span  [innerHTML]="cat[4] != '' ? '&nbsp;&nbsp;'+cat[4]:''"></span>
+560																	<span  [innerHTML]="cat[5] != '' ? '&nbsp;&nbsp;'+cat[5]:''"></span> -->
+
+                                                <!-- {{cat1|uppercase}} / {{cat2|uppercase}} / {{cat3|uppercase}} /{{cat4|uppercase}}</td> -->
+                                        </tr>
+                                        <tr *ngIf="type == 'vendeur'">
+                                            <th scope="row">Prix du Kilo</th>
+                                            <td class="float-right">{{prix_kg}}&euro; / {{prix1_kg}}&euro; / {{prix2_kg}}&euro; (<span class="text-success">Classique </span>/<span class="text-danger">  Rapide </span>/<span class="text-primary"> Ultra Rapide</span>)</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Nombre de Kilo</th>
+                                            <td class="float-right">{{kilo}} KG</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="">
+                                    <textarea id="description" name="desc_ann" rows="8" cols="40" placeholder="Decrivez votre annonce..." [(ngModel)]="desc_ann" (ngModelChange)="description($event)"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="margin-bottom: 0rem">
+                        <ul style="padding-left:0px">
+                            <li class="list-inline-item float-left">
+                                <button type="button" class="btn btn-outline-info waves-effect ml-auto prev-step "><i class="fa fa-arrow-left"></i></button>
+                            </li>
+                            <li class="list-inline-item float-right">
+                                <button class="btn btn-primary btn-info-full" (click)="addAnnonce()" [disabled]="!desc_ann">Soumettre votre annonce</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="action">
+591	              <button class="btn btn-secondary float-left">Fermer</button>
+592	              <button class="btn btn-primary float-right">Sauver</button>
+593	            </div> -->
+        </div>
+        <!-- process step -->
+    </section>
+
+</main>
+
+<!-- modal compagnie -->
+
+<div class="modal fade" id="myCompagnie" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabelLogout">Sectioner une Compagnie</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select name="compagnie" id="comp" data-placeholder="Choisir une compagnie..." #com>
+				   <option value="volvo">Volvo</option>
+				   <option value="saab">Saab</option>
+				   <option value="mercedes">Mercedes</option>
+			   <option value="audi">Audi</option>
+				 </select>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary btn-info-full" (click)="comp(com.value)" data-dismiss="modal" [disabled]="!com.value">Sauver</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal compagnie -->

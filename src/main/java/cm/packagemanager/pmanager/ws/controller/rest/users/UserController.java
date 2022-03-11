@@ -32,6 +32,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
@@ -234,7 +235,7 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController - Manage notification");
             UserVO user = userService.manageNotification(userId, enable);
-            return new ResponseEntity<UserVO>(user, HttpStatus.OK);
+            return new ResponseEntity<>(user, HttpStatus.OK);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'upload de l'image", e);
@@ -730,7 +731,11 @@ public class UserController extends CommonController {
                 response.addCookie(cookie);
             }
         }
+        HttpSession sessionObj = request.getSession(false);
 
+        if (sessionObj != null) {
+            sessionObj.invalidate();
+        }
 
         Response pmResponse = new Response();
         pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -738,14 +743,5 @@ public class UserController extends CommonController {
         return new ResponseEntity<>(pmResponse, HttpStatus.OK);
     }
 
-    private ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, List<UserVO> users) {
-        if (CollectionsUtils.isEmpty(users)) {
-            headers.add(HEADER_TOTAL, Long.toString(0));
-        } else {
-            paginateResponse.setCount(users.size());
-            paginateResponse.setResults(users);
-            headers.add(HEADER_TOTAL, Long.toString(users.size()));
-        }
-        return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
-    }
+
 }

@@ -11,22 +11,22 @@ import java.util.Objects;
 @Access(AccessType.PROPERTY)
 public class ReservationUserIdVO implements Serializable {
 
-    @Column(name = "ID")
     private Long id;
 
-    @Column(name = "R_USER_ID")
     private Long userId;
 
+    @Column(name = "ID")
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    @Column(name = "R_USER_ID")
     public Long getUserId() {
         return userId;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setUserId(Long userId) {

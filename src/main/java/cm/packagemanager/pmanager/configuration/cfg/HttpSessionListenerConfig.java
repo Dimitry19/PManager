@@ -13,38 +13,27 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-
 
 @Configuration
 public class HttpSessionListenerConfig {
 
+    private static Logger logger = LoggerFactory.getLogger(HttpSessionListenerConfig.class);
+    Map sessions=new HashMap();
 
-    private  Logger logger = LoggerFactory.getLogger(HttpSessionListenerConfig.class);
-
-    private Map sessions;
-
-    private final AtomicInteger activeSessions;
-
-
-    public HttpSessionListenerConfig() {
-        super();
-        sessions = new HashMap();
-        activeSessions = new AtomicInteger();
-    }
-
-
-    // bean for http session listener
     @Bean
     public HttpSessionListener httpSessionListener() {
         return new HttpSessionListener() {
             @Override
             public void sessionCreated(HttpSessionEvent se) {
-                System.out.println("Session Created with session id+" + se.getSession().getId());
+                logger.info("Session Created with session id {}" , se.getSession().getId());
+
+                sessions.put(se.getSession().getAttribute("session-user"),se.getSession().getId());
+
             }
             @Override
             public void sessionDestroyed(HttpSessionEvent se) {
-                System.out.println("Session Destroyed, Session id:" + se.getSession().getId());
+                logger.info("Session Destroyed, Session id {}" , se.getSession().getId());
+                sessions.remove(se.getSession().getAttribute("session-user"));
             }
         };
     }

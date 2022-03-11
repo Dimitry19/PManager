@@ -51,4 +51,17 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
             throw new RuntimeException("Erreur, veuillez verifier le path valorisé", th);
         }
     }
+
+    private static Object invokeMethod(String pathAndclassName,String methodName,Class paramsClass[],Object[] params) throws Exception{
+
+
+        Class clazz = Class.forName(pathAndclassName);
+        Object iClass = clazz.newInstance();
+        Method m = clazz.getDeclaredMethod(methodName, paramsClass);
+
+        Object ret = m.invoke(iClass,params);
+
+        return ret;
+
+    }
 }

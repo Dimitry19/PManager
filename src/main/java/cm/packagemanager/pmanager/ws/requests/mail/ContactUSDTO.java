@@ -13,7 +13,7 @@ public class ContactUSDTO {
     @NotNull(message = "Valoriser l'expediteur")
     private String sender;
 
-    @ApiModelProperty(notes = "Email receiver", required = true)
+    //@ApiModelProperty(notes = "Email receiver", required = true)
     //@Email(message = "Email : format non valide")
     //@NotNull(message = "Valoriser le destinataire")
     @Value("${mail.admin.email}")
@@ -50,10 +50,10 @@ public class ContactUSDTO {
         return receiver;
     }
 
-    public void setReceiver(String receiver) {
+  /*  public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
-
+*/
     public String getSubject() {
         return subject;
     }

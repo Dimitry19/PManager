@@ -83,8 +83,7 @@ public class ReviewDAOImpl extends Generic implements ReviewDAO {
             ReviewVO review = (ReviewVO) findByIdViaSession(ReviewVO.class, id).get();
             if (review != null) {
                 review.setCancelled(true);
-                merge(review);
-                review = (ReviewVO) findById(ReviewVO.class, id);
+                review = (ReviewVO) merge(review);
                 result = (review != null) && (review.isCancelled());
             }
         } catch (Exception e) {

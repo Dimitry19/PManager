@@ -20,11 +20,11 @@ public class NotificationServiceImpl implements NotificationService {
     private static Logger logger = LoggerFactory.getLogger(NotificationServiceImpl.class);
 
     @Autowired
-    private NotificationDAO notificationDAO;
+    private NotificationDAO dao;
 
 
     @Override
     public NotificationVO read(Long id) throws Exception {
-        return notificationDAO.read(id);
+        return dao.read(id);
     }
 }

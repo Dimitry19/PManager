@@ -42,9 +42,9 @@ public class ReviewController extends CommonController {
             if (review != null) {
                 review.setRetCode(WebServiceResponseCode.OK_CODE);
                 review.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "L'avis"));
-                return new ResponseEntity<ReviewVO>(review, HttpStatus.CREATED);
+                return new ResponseEntity<>(review, HttpStatus.CREATED);
             }
-            return new ResponseEntity<ReviewVO>(review, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(review, HttpStatus.EXPECTATION_FAILED);
         } catch (Exception e) {
             logger.error("add  review  error ", e);
             throw e;

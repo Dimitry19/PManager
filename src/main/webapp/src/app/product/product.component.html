@@ -1,0 +1,846 @@
+<!--<app-head [connected]="true" [username]="username"></app-head>-->
+<!-- Page Content -->
+<main>
+    <div class="container top">
+
+        <div class="row">
+            <!-- sur ce cote je pourrais inserer y ajouter une liste d'annonces pour faciliter l'accès aux annonces similaires... -->
+            <!-- je vais y mettre les infos de l'annonceur juste au-dessus -->
+            <div class="col-lg-4">
+                <div class="card mt-4">
+                    <div class="card-body noPadding">
+                        <div class="intro">
+                            <img *ngIf="annonce?.userInfo.picByte == null || annonce?.userInfo.origin == null" class="profile-img" src="assets/images/user-account.png" alt="profile">
+                            <img *ngIf="annonce?.userInfo.picByte != null && annonce?.userInfo.origin != null" class="profile-img" [src]="foto" alt="profile">
+                            <h2 class="name"><b class="profil_user text-center" [innerHTML]="annonce?.userInfo.username | uppercase"></b></h2>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="perso col-md-4 col-lg-4">
+                                        <h4><label class="float-right">Téléphone</label></h4>
+                                        <h2><b class="float-right information" [innerHTML]="annonce?.userInfo.phone"></b></h2>
+                                    </div>
+                                    <div class="col-md-1 col-lg-1">
+
+                                    </div>
+                                    <div class="perso col-md-6 col-lg-6">
+                                        <h4><label class="float-left">Email</label></h4>
+                                        <h2><b class="float-left information" [innerHTML]="annonce?.userInfo.email"></b></h2>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="perso1 col-md-4 col-lg-12">
+                                        <h4><label class="float-left">Annonces publiées</label></h4>
+                                        <span><b class="float-left information" [innerHTML]="annonce?.userInfo.count"></b></span>
+                                    </div>
+                                    <div class="perso1 col-md-4 col-lg-12">
+                                        <h4><label class="float-left">Notes</label></h4>
+                                        <span [style.width.px]="stars * 15" class="crop">
+                                            <b class="float-left information" style="width: 75px;">
+                                                <i  class="fa fa-star"></i>
+                                                <i  class="fa fa-star"></i>
+                                                <i  class="fa fa-star"></i>
+                                                <i  class="fa fa-star"></i>
+                                                <i  class="fa fa-star"></i>                                                
+                                            </b>
+                                        </span>
+                                    </div>
+                                    <div class="perso1 col-md-4 col-lg-12">
+                                        <h4><label class="float-left">Membre depuis: </label></h4>
+                                        <span><b class="float-left information" [innerHTML]="annonce?.userInfo.dateCreated"></b></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="perso1 col-md-4 col-lg-12" *ngIf="annonce?.userInfo.id !== loggedUser?.id && !follows">
+                                        <button class="rounded-pill buttonFollow" (click)="follow()">Suivre {{annonce?.userInfo.username}}</button>
+                                    </div>
+                                    <div class="perso1 col-md-4 col-lg-12" *ngIf="annonce?.userInfo.id !== loggedUser?.id && follows">
+                                        <button class="rounded-pill buttonFollow" (click)="unFollow()">Ne plus suivre {{annonce?.userInfo.username}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- intro -->
+                        <!-- <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt=""> -->
+                    </div>
+                </div>
+                <!-- <h1 class="my-4">Shop Name</h1>
+        <div class="list-group">
+          <a href="#" class="list-group-item active">Category 1</a>
+          <a href="#" class="list-group-item">Category 2</a>
+          <a href="#" class="list-group-item">Category 3</a>
+        </div> -->
+            </div>
+            <!-- /.col-lg-4 -->
+
+            <div *ngIf="annonce" class="col-lg-8">
+                <div [class]="readOnly == true ?'card detail mt-4':'card mt-4'">
+                    <div class="card-body noPadding">
+                        <div *ngIf="readOnly" class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li class="displays">
+                                        <i class="fa fa-map-pin depart" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonce.departure"></span>
+                                    </li>
+                                    <li class="displays">
+                                        <i class="fa fa-map-pin arrival" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonce.arrival"></span>
+                                    </li>
+                                    <li class="displays">
+                                        <i [class]="annonce.descriptionTransport == 'Voiture' ?'fa fa-car': annonce.descriptionTransport == 'Avion' ?'fa fa-plane':'fa fa-ship'" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonce.descriptionTransport"></span>
+                                    </li>
+                                    <li class="displays">
+                                        <i class="fa fa-info-circle depart" aria-hidden="true"></i><span [innerHTML]="annonce.description == null ? ' ':'&nbsp;'+annonce.description"></span>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                    <li class="displays">
+                                        <i class="fa fa-calendar-check-o" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonce.startDate"></span>
+                                    </li>
+                                    <li class="displays">
+                                        <i class="fa fa-calendar-check-o" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonce.endDate"></span>
+                                    </li>
+                                    <li class="displays">
+                                        <i class="fa fa-shopping-bag" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonce.weight+' kg'"></span>
+                                    </li>
+                                    <li class="displays">
+                                        <i class="fa fa-shopping-bag" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonce.remainWeight+' kg restant(s)'"></span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <ul *ngIf="annonce.price > 0">
+                                <li>
+                                    <div class="card mb-3" style="max-width: 12rem;">
+                                        <div class="panel-heading classique text-center">Classique</div>
+                                        <div class="card-body text-primary">
+                                            <!-- <h5 class="card-title">Primary card title</h5> -->
+                                            <ul class="list-group list-group-flush text-center">
+                                                <li class="list-group-item">
+                                                    Récuperation a domicile
+                                                    <span class="glyphicon glyphicon-ok pull-right"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Retrait a domicile
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Depot 3 jours avant
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Retrait 3 jours apres
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button class="btn btn-lg btn-block btn-info-full"><strong><span [innerHTML] = "annonce.price"></span>&euro; / Kg</strong></button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="card mb-3" style="max-width: 12rem;">
+                                        <div class="panel-heading rapide text-center">Rapide</div>
+                                        <div class="card-body text-primary">
+                                            <!-- <h5 class="card-title">Primary card title</h5> -->
+                                            <ul class="list-group list-group-flush text-center">
+                                                <li class="list-group-item">
+                                                    Recuperation a domicile
+                                                    <span class="glyphicon glyphicon-ok pull-right"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Retrait a domicile
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Depot 2 jours avant
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Retrait 2 jours apres
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button class="btn btn-lg btn-block btn-info-full"><strong><span [innerHTML] = "annonce.preniumPrice"></span>&euro; / Kg</strong></button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="card mb-3" style="max-width: 12rem;">
+                                        <div class="panel-heading ultrarapide text-center">Ultra Rapide</div>
+                                        <div class="card-body text-primary">
+                                            <!-- <h5 class="card-title">Primary card title</h5> -->
+                                            <ul class="list-group list-group-flush text-center">
+                                                <li class="list-group-item">
+                                                    Recuperation a domicile
+                                                    <span class="glyphicon glyphicon-ok pull-right"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Retrait a domicile
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Depot 1 jours avant
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Retrait 1 jours apres
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button class="btn btn-lg btn-block btn-info-full"><strong><span [innerHTML] = "annonce.goldPrice"></span>&euro; / Kg</strong></button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <div *ngIf="!readOnly" class="row">
+                            <div class="col-md-6 task-detail">
+                                <label for="lieux_depart">Ville de Départ</label><br>
+                                <input *ngIf="readOnlyOwner || noModify" type="text" class="form-control value" [(ngModel)]="annonce.departure" [disabled]="readOnlyOwner||noModify">
+                                <div *ngIf="!readOnlyOwner && !noModify" class="ng-autocomplete text-center">
+                                    <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEvent($event)' [(ngModel)]="annonce.departure" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                                    </ng-autocomplete>
+
+                                    <ng-template #itemTemplate let-item>
+                                        <a [innerHTML]="item.name"></a>
+                                    </ng-template>
+
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                </div>
+                                <div *ngIf="!annonce.departure">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Ville de départ non valide!!!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="date_depart">Date de Départ</label><br>
+                                <input *ngIf="readOnlyOwner || noModify" type="text" class="form-control value" [(ngModel)]="annonce.startDate" [disabled]="readOnlyOwner || noModify">
+                                <ejs-datetimepicker *ngIf="!readOnlyOwner && !noModify" id='startDate' [class.is-invalid]="!annonce.startDate" class="form-control" placeholder='Date de Départ' [(ngModel)]="annonce.startDate" [max]='annonce.endDate' format='dd/MM/yyyy'></ejs-datetimepicker>
+                                <div *ngIf="!annonce.startDate">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Date de départ non valide!!!</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="transport">Mode de Transport</label><br>
+                                <input *ngIf="readOnlyOwner || noModify" class="form-control value" [(ngModel)]="annonce.descriptionTransport" [disabled]="readOnlyOwner || noModify">
+                                <div *ngIf="!readOnlyOwner && !noModify" class="ng-autocomplete text-center">
+                                    <ng-autocomplete [data]="dataT" [searchKeyword]="keyword" (selected)='selectEventT($event)' [(ngModel)]="annonce.descriptionTransport" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                                    </ng-autocomplete>
+
+                                    <ng-template #itemTemplate let-item>
+                                        <a [innerHTML]="item.name"></a>
+                                    </ng-template>
+
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                </div>
+                                <div *ngIf="!annonce.descriptionTransport">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Mode de transport non valide!!!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="prixClassiq">Prix Classique(&euro;)</label><br>
+                                <input class="form-control value" [class.is-invalid]="(annonce.price == '-' || !annonce.price) && annonce.price > 0" [(ngModel)]="annonce.price  == 0 ? '-':annonce.price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                    [disabled]="(readOnlyOwner || annonce.price  == 0 || noModify)">
+                                <div *ngIf="annonce.price < 0 && !readOnly">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Prix non valide!!!</p><br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="prixGold">Prix Ultra Rapide(&euro;)</label><br>
+                                <input class="form-control value" [class.is-invalid]="(annonce.goldPrice == '-' || !annonce.goldPrice) && annonce.goldPrice >0" [(ngModel)]="annonce.goldPrice == 0 ? '-':annonce.goldPrice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                    [disabled]="(readOnlyOwner || annonce.goldPrice == 0 || noModify) ">
+                                <div *ngIf="!readOnly && annonce.goldPrice < 0">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Prix non valide!!!</p><br>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="transport">Categories</label><br>
+                                <input *ngIf="readOnlyOwner || noModify" class="form-control value" [value]="valueCat" [disabled]="readOnlyOwner || noModify">
+                                <ejs-multiselect *ngIf="!readOnlyOwner && !noModify" id='localData1' #local1 [dataSource]='categories' [fields]='localFields' (selected)='selectEventC($event)' [(ngModel)]='valueCat' [placeholder]='localWaterMark' ngModel></ejs-multiselect>
+                                <div *ngIf="!annonce.categories">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Categorie non valide!!!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="col-md-6 task-detail">
+                                <label for="lieux_arrivee">Ville d'Arrivée</label><br>
+                                <input *ngIf="readOnlyOwner || noModify" type="text" class="form-control value" [(ngModel)]="annonce.arrival" [disabled]="readOnlyOwner || noModify">
+                                <div *ngIf="!readOnlyOwner && !noModify" class="ng-autocomplete text-center">
+                                    <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEventA($event)' [(ngModel)]="annonce.arrival" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                                    </ng-autocomplete>
+
+                                    <ng-template #itemTemplate let-item>
+                                        <a [innerHTML]="item.name"></a>
+                                    </ng-template>
+
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                </div>
+                                <div *ngIf="!annonce.arrival">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Ville d'arrivée non valide!!!</p><br>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="date_arrivee">Date d'Arrivée</label><br>
+                                <input *ngIf="readOnlyOwner || noModify" class="form-control value" [(ngModel)]="annonce.endDate" [disabled]="readOnlyOwner || noModify">
+                                <ejs-datetimepicker *ngIf="!readOnlyOwner && !noModify" id='endDate' [class.is-invalid]="!annonce.endDate" class="form-control" placeholder="Date d'Arrivée" [(ngModel)]="annonce.endDate" [min]='annonce.startDate' format='dd/MM/yyyy'></ejs-datetimepicker>
+                                <div *ngIf="!annonce.endDate">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Date d'arrivée non valide!!!</p><br>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="poids">Nombre de Kilo(Kg)</label><br>
+                                <input class="form-control value" [class.is-invalid]="!annonce.weight || annonce.weight == 0" [(ngModel)]="annonce.weight" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" [disabled]="readOnlyOwner">
+                                <div *ngIf="!annonce.weight && !readOnly">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Nombre de Kilo non valide!!!</p><br>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="poids">Nombre de Kilo(Kg) restant(s)</label><br>
+                                <input class="form-control value" [(ngModel)]="annonce.remainWeight" disabled>
+                                <div *ngIf="!annonce.weight && !readOnly">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Nombre de Kilo non valide!!!</p><br>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="prixPremiun">Prix Rapide(&euro;)</label><br>
+                                <input class="form-control value" [class.is-invalid]="(annonce.preniumPrice == '-' || !annonce.preniumPrice) && annonce.preniumPrice > 0" [(ngModel)]="annonce.preniumPrice == 0 ? '-':annonce.preniumPrice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                    [disabled]="(readOnlyOwner || annonce.preniumPrice == 0 || noModify)">
+                                <div *ngIf="!readOnly && annonce.preniumPrice < 0">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Prix non valide!!!</p><br>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="prixPremiun">Description de l'annonce</label><br>
+                                <textarea class="form-control value" [class.is-invalid]="!annonce.description || annonce.description.trim().length < 15" [(ngModel)]="annonce.description == null ? '-':annonce.description" [disabled]="readOnlyOwner || noModify"></textarea>
+                                <div *ngIf="!annonce.description && annonce.description.trim().length">
+                                    <div class="dialogbox">
+                                        <div class="content">
+                                            <span class="tip tip-up"></span>
+                                            <div class="message">
+                                                <p>Description non valide!!!</p><br>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+
+                        <!-- </div> -->
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.col-lg-8 -->
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div *ngIf="!show && hasreserve && annonce.price > 0">
+                    <br>
+                    <div class="card mb-3" style="max-width: 12rem;">
+                        <div class="card-header value">RESERVATION
+                            <a *ngIf="status == 'INSERTED'" class="dropdown-toggle addon-btn float-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" role="tooltip">
+                                <i class="fa fa-bars depart" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left">
+                                <a *ngIf="annonce.remainWeight > 0" class="dropdown-item" href="#!" data-toggle="modal" data-target="#modalDeleteUpd"><i class="fa fa-edit"></i> Modifier</a>
+                                <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#modalDeleteRes"><i class="fa fa-trash-o"></i> Supprimer</a>
+                            </div>
+                        </div>
+                        <div class="card-body posi">
+                            <h5 class="card-title"></h5>
+                            <span>
+              Vous avez reservé <span class="value" [innerHTML]="userResRead"></span>kg!!!.
+                            </span>
+                            <span *ngIf="status == 'ACCEPTED'" class="text-success">
+              Votre reservation a été confirmée !!!.
+            </span>
+                            <span *ngIf="status == 'REFUSED'" class="text-danger">
+              Votre reservation a été refusée !!!.
+            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div *ngIf="!show && !hasreserve && annonce?.remainWeight == 0 && annonce.price > 0">
+                    <br><br>
+                    <h5><span class="messages">Plus de kilos disponible!!!</span></h5>
+                </div>
+                <div *ngIf="show && annonce.price > 0">
+                    &nbsp;
+                    <ul class="listRes">
+                        <li *ngFor="let res of reservations; let i = index; trackBy: tracbByFn" class="reservations">
+                            <span style="display: flex;"><i *ngIf="reservations.length > 0" class="fa fa-thumb-tack" aria-hidden="true"></i></span>
+                            <div class="card" style="max-width: 12rem;">
+                                <div class="card-header posi border-primary">
+                                    <h4>RESERVATION <span [innerHTML]="i+1"></span></h4>
+                                </div>
+                                <div class="card-body posi">
+                                    <!-- <h5 class="card-title">Primary card title</h5> -->
+                                    <ul class="list-group text-center">
+                                        <li class="">
+                                            Nombre de Kilos: <br><span class="text-primary" [innerHTML]="'&nbsp;'+res.weight+'Kg'"></span>
+                                        </li>
+                                        <li class="">
+                                            Date de reservation: <span class="text-primary" [innerHTML]="'&nbsp;'+res.lastUpdated"></span>
+                                        </li>
+                                        <li class="">
+                                            Categorie du colis: <span *ngFor="let cat of res.categories;" class="text-primary" [innerHTML]="'&nbsp;'+cat.description+' '"></span>
+                                        </li>
+                                        <li class="">
+                                            <br>Reservé par: <span class="text-primary" [innerHTML]="'&nbsp;'+res.userInfo.username"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-footer noPadding">
+                                <button *ngIf="res.validate == 'INSERTED'" type="button" name="button" class="btn btn-danger refus" (click)="refus(res.id)">Refuser</button>
+                                <!-- <button *ngIf="res.validate == 'REFUSED'" type="button" name="button" class="btn btn-danger refus" (click)="refus(res.id)">Refuser</button> -->
+                                <span *ngIf="res.validate == 'REFUSED'" class="badge badge-danger refus1 badge-pill">Refusée</span>
+                                <button *ngIf="res.validate == 'INSERTED'" type="button" name="button" class="btn btn-success valide" (click)="valide(res.id)">Accepter</button>
+                                <!-- <button  type="button" name="button" class="btn btn-success valide" (click)="valide(res.id)">Accepter</button> -->
+                                <span *ngIf="res.validate == 'ACCEPTED'" class="badge badge-success valide1 badge-pill">Acceptée</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div *ngIf="show" class="controls">
+                    <nav>
+                        <ul class="float-right">
+                            <li *ngIf="readOnlyOwner" class="action">
+                                <button type="button" name="button" class="btn btn-outline-danger btn-rounded my-3" data-toggle="modal" data-target="#modalDelete">
+                  <i class="fa fa-trash-o"></i> Supprimer
+                </button>
+                            </li>
+                            <li *ngIf="!readOnlyOwner" class="action">
+                                <button type="button" name="button" class="btn btn-outline-danger btn-rounded my-3" data-toggle="modal" data-target="#modalAnnul">
+                  <i class="fa fa-ban"></i> Annuler
+                </button>
+                            </li>
+                            <li *ngIf="readOnlyOwner" class="action">
+                                <button type="button" name="button" class="btn btn-outline-info waves-effect ml-auto btn-rounded my-3" (click)="modify()">
+                  <i class="fa fa-pencil-square-o"></i> Modifier
+                </button>
+                            </li>
+                            <li *ngIf="!readOnlyOwner" class="action">
+                                <button type="button" name="button" class="btn btn-outline-info waves-effect ml-auto btn-rounded my-3" (click)="save()">
+                  <i class="fa fa-floppy-o"></i> Sauvegarder
+                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div *ngIf="!show && annonce?.remainWeight > 0 && annonce.price > 0 && status != 'INSERTED'" class="controls">
+                    <button id="idreservation" type="button" name="button" class="float-right btn btn-outline-info waves-effect ml-auto btn-rounded my-3" data-toggle="collapse" data-target="#reserve" aria-expanded="false" aria-controls="reserve">
+                        <i class="fa fa-gift" aria-hidden="true"></i> Reserver vos kilos
+                    </button>
+                    <br><br><br>
+                    <div class="float-right reserve collapse" id="reserve">
+                        <div class="container contain">
+                            <div class="row">
+                                <div class="category">
+                                    <label for="category">Categorie</label><br>
+                                    <div *ngFor="let cats of annonce.categories; let i=index; trackBy: tracbByFn" class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" [id]="'Checkbox'+i" [value]="cats.code">
+                                        <label class="form-check-label" [for]="'inlineCheckbox'+i">
+                            <i [class]="cats.code == 'ELECTRONIQUE' ? 'fa fa-desktop': cats.code == 'BIJOUX' ?'fa fa-diamond':'fa fa-shopping-bag'" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+cats.description"></span>
+                          </label>
+                                    </div>
+                                </div>
+                                <div class="kilos">
+                                    <label for="kilos">Kilos</label><br>
+                                    <div class="form-check form-check-inline">
+                                        <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-number" (click)="minus()" [disabled]="userRes < 2">
+                                  <i class="fa fa-minus" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                                        <input type="text" name="count" class="form-control input-number" min="1" max="100" [(ngModel)]="userRes" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" ngModel disabled>
+                                        <span class="input-group-btn">
+                                <button type="button" class="btn btn-success btn-number" (click)="plus()" [disabled]="remainWeight - 1 == 0">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="containNote">
+                            <textarea name="name" class="note" rows="4" cols="40" placeholder="Inseré une note" [(ngModel)]="note"></textarea>
+                        </div>
+
+                        <br><br>
+                        <button type="button" name="button" class="submit" (click)="reservation()"><span>Reserver</span></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <section>
+        <!-- /.card -->
+
+        <div class="card card-outline-secondary my-4">
+            <div class="card-header text-center">
+                Commentaires
+            </div>
+            <div class="container top">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <!-- <div class="card mt-4">
+
+              <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+
+           </div> -->
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="row comment-box-main p-3 rounded-bottom">
+                            <div class="">
+                                <input *ngIf="!modifyC" class="comment-box" type="text" placeholder="Ajouter un commentaire ...." [(ngModel)]="comment" (ngModelChange)="commentaire($event)" #review ngModel/>
+                                <input *ngIf="modifyC" autofocus class="comment-box comment-box-upd" type="text" [(ngModel)]="newcomment" (ngModelChange)="commentaire($event)" #review1 ngModel contenteditable="true" spellcheck="true" />
+                                <!-- <button *ngIf="review.value"><i class="fa fa-paper-plane review" (click)="addReview(review.value)" aria-hidden="true" ></i></button> -->
+                                <button *ngIf="!modifyC && send" class="addReview"><i class="fa fa-paper-plane review" (click)="addReview(comment)" aria-hidden="true" ></i></button>
+
+                            </div>
+                            <!-- <div class="review text-center">
+                  <button class="btn btn-info " [disabled] = "!comment" (click)="addReview(review.value)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                </div> -->
+                        </div>
+                        <div *ngIf="annonce?.messages" class="card-body annonceMessage">
+                            <ul>
+                                <li *ngFor="let msg of annonce.messages; let i = index; trackBy: tracbByFn" class="commentaire">
+                                    <p [innerHTML]="msg.content"></p>
+                                    <!-- <input *ngIf="modifyC" class="comment-box" type="text" placeholder="Ajouter un commentaire ...."  [(ngModel)]="comment" (ngModelChange)="commentaire($event)" #review ngModel/> -->
+                                    <small class="text-muted" [innerHTML]="'Commenté par <strong>' + msg.username + '</strong> le ' + msg.dateCreated"> </small><br>
+                                    <button *ngIf="!modifyC && msg.username == username" type="button" name="button" class="btn btn-outline-info waves-effect ml-auto btn-rounded my-3 float-right" (click)="updateComment(annonce.messages[i].id,i)">
+                                        <i class="fa fa-pencil-square-o"></i></button>
+                                    <button *ngIf="modifyC && msg.username == username && send && i == display" [id]="id+i" type="button" name="button" class="btn btn-outline-info waves-effect ml-auto btn-rounded my-3 float-right" (click)="saveComment(annonce.messages[i].id, newcomment)">
+                                        <i class="fa fa-check"></i></button>
+                                    <button *ngIf="modifyC && msg.username == username && i == display" type="button" name="button" class="btn btn-outline-danger btn-rounded my-3 float-right" (click)="cancelComment()">
+                                        <i class="fa fa-ban"></i></button>
+                                    <button *ngIf="msg.username == username" type="button" name="button" class="btn btn-outline-danger btn-rounded my-3 float-right" (click)="deleteComment(annonce.messages[i].id)">
+                                        <i class="fa fa-trash-o"></i></button>
+                                    <hr>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <!-- <div class="card mt-4">
+
+              <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+
+           </div> -->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.card -->
+    </section>
+</main>
+
+
+<!-- Modal: supprimer -->
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center" id="myModalLabelLogout">Supprimer l'annonce</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body text-center">
+                Confirmez-vous la suppression de l'annonce ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-danger waves-effect ml-auto" (click)="delete()" data-dismiss="modal">OUI</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal: supprimer -->
+<!-- Modal: Annuler -->
+<div class="modal fade" id="modalAnnul" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center" id="myModalLabelAnnul">Annulation des modifications</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body text-center">
+                Vos modifications ne seront pas sauvergader
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-danger waves-effect ml-auto" (click)="annul()" data-dismiss="modal">OUI</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal: Annuler -->
+
+<!-- Modal: Erreurs -->
+<div class="modal fade" id="modalErreur" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center" id="myModalLabelErreur">Erreurs</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body text-center">
+                <div *ngFor="let erreur of erreurs; let i = index">
+                    <p class="error" [innerHTML]="erreur"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+                <!-- <button type="button" class="btn btn-danger waves-effect ml-auto" (click)="annul()" data-dismiss="modal">OUI</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal: Erreurs -->
+
+<!-- votes des annonces -->
+
+<div class="modal fade" id="admodal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header centre">
+                <h5 class="modal-title text-center">Notez l'annonce</h5>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <ul class="voteList">
+                        <li><button type="button" class="btn-danger" name="button" (click)="votes('TERRIBLE')" data-dismiss="modal">1</button></li>
+                        <li><button type="button" class="btn-warning" name="button" (click)="votes('POOR')" data-dismiss="modal">2</button></li>
+                        <li><button type="button" class="btn-secondary" name="button" (click)="votes('AVERAGE')" data-dismiss="modal">3</button></li>
+                        <li><button type="button" class="btn-info" name="button" (click)="votes('GOOD')" data-dismiss="modal">4</button></li>
+                        <li><button type="button" class="btn-success" name="button" (click)="votes('EXCELLENT')" data-dismiss="modal">5</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- votes des annonces -->
+
+<!-- Modal: modifications reservation-->
+<div class="modal fade" id="modalDeleteUpd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content plusWidth">
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center" id="myModalLabelLogout">Modifier la reservation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="">
+                    <div class="container contain">
+                        <div class="row" *ngIf="annonce">
+                            <div class="category">
+                                <label for="category">Categorie</label><br>
+                                <ng-container *ngIf="annonce.categories?.length == catRes?.length">
+                                    <div *ngFor="let cats of annonce.categories; let i=index; trackBy: tracbByFn" class="form-check form-check-inline">
+                                        <ng-container *ngIf="catRes?.length==0">
+                                            <input class="form-check-input" type="checkbox" [id]="'Checkbox'+i+'u'" [value]="cats.code">
+                                            <label class="form-check-label" [for]="'inlineCheckbox'+i+'u'">
+                              <i [class]="cats.code == 'ELECTRONIQUE' ? 'fa fa-desktop': cats.code == 'BIJOUX' ?'fa fa-diamond':cats.code == 'DOCUMENTS' ?'fa fa-file-text':'fa fa-shopping-bag'" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+cats.description"></span>
+                            </label>
+                                        </ng-container>
+                                        <ng-container *ngIf="catRes?.length > 0">
+                                            <input class="form-check-input" type="checkbox" [id]="'Checkbox'+i+'u'" [value]="cats.code" checked>
+                                            <label class="form-check-label" [for]="'inlineCheckbox'+i+'u'">
+                              <i [class]="cats.code == 'ELECTRONIQUE' ? 'fa fa-desktop': cats.code == 'BIJOUX' ?'fa fa-diamond':cats.code == 'DOCUMENTS' ?'fa fa-file-text':'fa fa-shopping-bag'" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+cats.description"></span>
+                            </label>
+                                        </ng-container>
+
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="annonce.categories?.length != catRes?.length">
+                                    <div *ngFor="let cats of annonce.categories; let i=index; trackBy: tracbByFn" class="form-check form-check-inline">
+                                        <ng-container *ngIf="catRes?.length==0">
+                                            <input class="form-check-input" type="checkbox" [id]="'Checkbox'+i+'u'" [value]="cats.code">
+                                            <label class="form-check-label" [for]="'inlineCheckbox'+i+'u'">
+                              <i [class]="cats.code == 'ELECTRONIQUE' ? 'fa fa-desktop': cats.code == 'BIJOUX' ?'fa fa-diamond':cats.code == 'DOCUMENTS' ?'fa fa-file-text':'fa fa-shopping-bag'" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+cats.description"></span>
+                            </label>
+                                        </ng-container>
+                                        <ng-container *ngIf="catRes?.length > 0">
+                                            <ng-container *ngFor="let c of catRes; let y=index; trackBy: tracbByFn">
+                                                <input class="form-check-input" type="checkbox" [id]="'Checkbox'+i+'u'" [value]="cats.code" [checked]="cats.code === c.code">
+                                                <label class="form-check-label" [for]="'inlineCheckbox'+i+'u'">
+                              <i [class]="cats.code == 'ELECTRONIQUE' ? 'fa fa-desktop': cats.code == 'BIJOUX' ?'fa fa-diamond':cats.code == 'DOCUMENTS' ?'fa fa-file-text':'fa fa-shopping-bag'" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+cats.description"></span>
+                            </label>
+                                            </ng-container>
+                                        </ng-container>
+
+                                    </div>
+                                </ng-container>
+
+                            </div>
+                            <div class="kilos">
+                                <label for="kilos">Kilos</label><br>
+                                <div class="form-check form-check-inline">
+                                    <span class="input-group-btn">
+                          <button type="button" class="btn btn-danger btn-number" (click)="minus()" [disabled]="userRes < 2">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                      </span>
+                                    <input type="text" name="count" class="form-control input-number" min="1" max="100" [(ngModel)]="userRes" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" ngModel disabled>
+                                    <span class="input-group-btn">
+                          <button type="button" class="btn btn-success btn-number" (click)="plus()" [disabled]="remainWeight - 1== 0">
+                              <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                      </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <textarea name="name" class="note" rows="4" cols="40" placeholder="Inseré une note" [(ngModel)]="userNote"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+
+                <button type="button" class="btn btn-info waves-effect ml-auto" (click)="updateRes()" data-dismiss="modal">Reserver</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: supprimer reservation-->
+<div class="modal fade" id="modalDeleteRes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center" id="myModalLabelLogout">Supprimer la reservation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body text-center">
+                Confirmez-vous l'annullation de votre reservation ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-danger waves-effect ml-auto" (click)="deleteRes()" data-dismiss="modal">OUI</button>
+            </div>
+        </div>
+    </div>
+</div>
