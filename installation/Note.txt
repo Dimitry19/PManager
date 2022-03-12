@@ -1,0 +1,3 @@
+1-Modifier le lien(adresse IP de la base de données)
+2-Generer les packages
+3-Prendre les fichiers ddl ajournés

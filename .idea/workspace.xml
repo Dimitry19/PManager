@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="BetaVersion202203 Branch">
+      <change afterPath="$PROJECT_DIR$/installation/Note.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT_20210305.sql" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -55,27 +58,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/PackageApplication.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="795">
-              <caret line="53" selection-start-line="53" selection-end-line="53" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/seller/ent/vo/SellerVO.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
@@ -111,11 +93,41 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
+            <state relative-caret-position="2280">
               <caret line="191" selection-start-line="191" selection-end-line="191" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="51" selection-start-line="6" selection-start-column="51" selection-end-line="6" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console_2.sql">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ddl/pm-202201.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-4155" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/installation/Note.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -123,7 +135,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.2.6.RELEASE/spring-web-5.2.6.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
+            <state relative-caret-position="1245">
               <caret line="101" selection-start-line="101" selection-end-line="101" />
             </state>
           </provider>
@@ -204,7 +216,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Documentations/examples.txt" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/WSCommonResponseVO.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/FileUtils.java" />
         <option value="$PROJECT_DIR$/Documentations/KB" />
@@ -252,9 +263,10 @@
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/api/SwaggerConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/api/SwaggerApiConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/installation/Note.txt" />
       </list>
     </option>
   </component>
@@ -284,7 +296,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="CatdeaLogs" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -292,12 +304,17 @@
               <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
               <item name="PManager" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManager" type="462c0819:PsiDirectoryNode" />
+              <item name="installation" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
+      <pane id="CatdeaLogs" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -444,13 +461,7 @@
       <workItem from="1643697395687" duration="18638000" />
       <workItem from="1643784418484" duration="21181000" />
       <workItem from="1643885501628" duration="2470000" />
-    </task>
-    <task id="LOCAL-00012" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
-      <created>1616874178995</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1616874178995</updated>
+      <workItem from="1647115377746" duration="4419000" />
     </task>
     <task id="LOCAL-00013" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
       <created>1616874463246</created>
@@ -788,11 +799,18 @@
       <option name="project" value="LOCAL" />
       <updated>1644628512628</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="BetaVersion202203 Branch">
+      <created>1646959335397</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1646959335397</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="456874000" />
+    <option name="totallyTimeSpent" value="461363000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -804,9 +822,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="13" y="23" width="1440" height="852" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.84154177" visible="true" weight="0.17381974" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.84386617" visible="true" weight="0.35193133" />
       <window_info id="Structure" order="1" sideWeight="0.15845825" side_tool="true" weight="0.17381974" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -819,7 +837,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32428765" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5965665" weight="0.46540028" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6888412" visible="true" weight="0.4213135" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6888412" visible="true" weight="0.42062417" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
@@ -967,7 +985,8 @@
     <MESSAGE value="new features foto" />
     <MESSAGE value="image users" />
     <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
+    <MESSAGE value="BetaVersion202203 Branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="BetaVersion202203 Branch" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1203,37 +1222,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="51" column="12" selection-start-line="51" selection-start-column="12" selection-end-line="51" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/vo/CommunicationVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#54#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/service/CommunicationService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="66" column="31" selection-start-line="66" selection-start-column="31" selection-end-line="66" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -1509,13 +1497,6 @@
     <entry file="file://$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.corrupted.20220124-110326.reason.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="345" column="38" selection-start-line="345" selection-start-column="38" selection-end-line="345" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1650">
@@ -1529,13 +1510,6 @@
     <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/seller/ent/vo/SellerVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/service/UserServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4725">
@@ -1543,13 +1517,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/bo/ReviewsSummaryBO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="53" selection-start-line="7" selection-end-line="8" />
         </state>
       </provider>
     </entry>
@@ -1574,23 +1541,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/PackageApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1697,6 +1647,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/PackageApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="53" selection-start-line="53" selection-end-line="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/seller/ent/vo/SellerVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/bo/ReviewsSummaryBO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="53" selection-start-line="7" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="das://5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/USER">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1713,15 +1694,42 @@
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.2.6.RELEASE/spring-web-5.2.6.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
+        <state relative-caret-position="1245">
           <caret line="101" selection-start-line="101" selection-end-line="101" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
+        <state relative-caret-position="2280">
           <caret line="191" selection-start-line="191" selection-end-line="191" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="51" selection-start-line="6" selection-start-column="51" selection-end-line="6" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console_2.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT_20210305.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-599" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddl/pm-202201.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4155" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/installation/Note.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
         </state>
       </provider>
     </entry>
