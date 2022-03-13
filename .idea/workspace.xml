@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="BetaVersion202203 Branch">
-      <change afterPath="$PROJECT_DIR$/installation/Note.txt" afterDir="false" />
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="BetaVersion202203 Branch : Note d'installation modifée">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT_20210305.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/installation/Note.txt" beforeDir="false" afterPath="$PROJECT_DIR$/installation/Note.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -127,7 +124,7 @@
         <entry file="file://$PROJECT_DIR$/installation/Note.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
-              <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+              <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -461,21 +458,7 @@
       <workItem from="1643697395687" duration="18638000" />
       <workItem from="1643784418484" duration="21181000" />
       <workItem from="1643885501628" duration="2470000" />
-      <workItem from="1647115377746" duration="4419000" />
-    </task>
-    <task id="LOCAL-00013" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
-      <created>1616874463246</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1616874463246</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
-      <created>1616874558842</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1616874558842</updated>
+      <workItem from="1647115377746" duration="5196000" />
     </task>
     <task id="LOCAL-00015" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;PManager.iml">
       <created>1616874684494</created>
@@ -806,11 +789,25 @@
       <option name="project" value="LOCAL" />
       <updated>1646959335397</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="BetaVersion202203 Branch : Note d'installation">
+      <created>1647124231267</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1647124231269</updated>
+    </task>
+    <task id="LOCAL-00063" summary="BetaVersion202203 Branch : Note d'installation modifée">
+      <created>1647126160200</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1647126160200</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="461363000" />
+    <option name="totallyTimeSpent" value="462140000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -824,7 +821,7 @@
   <component name="ToolWindowManager">
     <frame x="13" y="23" width="1440" height="852" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.84386617" visible="true" weight="0.35193133" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.84386617" visible="true" weight="0.35193133" />
       <window_info id="Structure" order="1" sideWeight="0.15845825" side_tool="true" weight="0.17381974" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -837,7 +834,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32428765" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5965665" weight="0.46540028" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6888412" visible="true" weight="0.42062417" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6888412" weight="0.42062417" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
@@ -847,7 +844,7 @@
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.48211733" weight="0.37856174" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.6251788" weight="0.36092266" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="13" sideWeight="0.6251788" visible="true" weight="0.36092266" />
       <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49785408" weight="0.46633416" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
       <window_info anchor="bottom" id="Inspection Results" order="16" weight="0.32917705" />
@@ -962,7 +959,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="Ajout de la categorie de l'annonce" />
     <MESSAGE value="commit file de .idea (contraint)" />
     <MESSAGE value="log execution time" />
     <MESSAGE value="raccourci maven" />
@@ -986,7 +982,9 @@
     <MESSAGE value="image users" />
     <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <MESSAGE value="BetaVersion202203 Branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="BetaVersion202203 Branch" />
+    <MESSAGE value="BetaVersion202203 Branch : Note d'installation" />
+    <MESSAGE value="BetaVersion202203 Branch : Note d'installation modifée" />
+    <option name="LAST_COMMIT_MESSAGE" value="BetaVersion202203 Branch : Note d'installation modifée" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1729,7 +1727,7 @@
     <entry file="file://$PROJECT_DIR$/installation/Note.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
         </state>
       </provider>
     </entry>
