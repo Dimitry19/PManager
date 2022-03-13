@@ -139,6 +139,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
         boolean isLogout=uri.contains(USER_WS_LOGOUT);
         boolean isLogin=uri.contains(USER_WS_LOGIN);
         boolean isRegister=uri.contains(USER_WS_REGISTRATION);
+        boolean isFind=uri.contains(FIND);
 
         boolean isServiceLogin=isService && isLogin;
         boolean isServiceLogout=isService && isLogout;
@@ -170,7 +171,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
             return Boolean.TRUE;
         }
 
-        if(isService && !isRegister && !isServiceLogin && !isServiceLogout){
+        if(isService && !isRegister && !isServiceLogin && !isServiceLogout && !isFind){
 
             if(user==null) return Boolean.FALSE;
 

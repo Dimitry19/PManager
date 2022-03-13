@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>cm.packagermanager</groupId>
 	<artifactId>pmanager</artifactId>
-	<version>1.0.0-beta</version>
+	<version>1.0.0-beta-ssl</version>
 	<packaging>jar</packaging>
 	<name>packagemanager</name>
 	<description>Package Manager</description>

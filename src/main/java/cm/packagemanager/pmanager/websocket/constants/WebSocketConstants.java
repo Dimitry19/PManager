@@ -20,5 +20,6 @@ public class WebSocketConstants {
     //public static final String ORIGINS="http://localhost:4200", "http://127.0.0.1:4200";
     public static final String ORIGIN_ALL = "*";
     public static final String URL = "http://localhost:8080/pmanager/notifications";
+    public static final String URL_SSL = "https://localhost:8443/pmanager/notifications";
 
 }
