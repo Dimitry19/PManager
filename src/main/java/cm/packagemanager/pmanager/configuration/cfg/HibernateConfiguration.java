@@ -85,7 +85,7 @@ public class HibernateConfiguration {
         hibernateProperties.put("hibernate.show_sql", SHOW_SQL);
         hibernateProperties.put("hibernate.hbm2ddl.auto", HBM2DDL_AUTO);
         // Ajouer par moi
-        hibernateProperties.put("hibernate.default_schema", SCHEMA);
+        //hibernateProperties.put("hibernate.default_schema", SCHEMA);
         hibernateProperties.put("hibernate.enable_lazy_load_no_trans", ENABLE_LAZY_TRANS);
         hibernateProperties.put("connection.pool_size", POOL_SIZE);
         hibernateProperties.put("transaction.factory_class", TRANSACTION_FACTORY_CLASS);

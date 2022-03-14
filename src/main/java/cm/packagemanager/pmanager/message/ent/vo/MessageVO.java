@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 
 @Entity(name = "MessageVO")
-@Table(name = "MESSAGE", schema = "PUBLIC")
+@Table(name = "MESSAGE")
 @NamedQueries({
         @NamedQuery(name = MessageVO.FINDALL, query = "select m from MessageVO m "),
         @NamedQuery(name = MessageVO.GET_ID_SQL, query = "select max(m.id.id) from MessageVO m ")

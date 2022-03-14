@@ -3,7 +3,7 @@ package cm.packagemanager.pmanager.common.mail.ent.vo;
 import javax.persistence.*;
 
 @Entity(name = "ContactUSVO")
-@Table(name = "CONTACT_US", schema = "PUBLIC")
+@Table(name = "CONTACT_US")
 public class ContactUSVO extends EmailVO {
 
 

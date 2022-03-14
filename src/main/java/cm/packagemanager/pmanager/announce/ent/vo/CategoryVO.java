@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "CATEGORY", schema = "PUBLIC")
+@Table(name = "CATEGORY")
 @NamedQueries({
         @NamedQuery(name = CategoryVO.FIND_BY_CODE, query = "select pc from CategoryVO pc where pc.code =:code"),
 })

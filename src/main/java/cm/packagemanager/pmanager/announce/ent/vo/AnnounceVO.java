@@ -38,7 +38,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "ANNOUNCE", schema = "PUBLIC")
+@Table(name = "ANNOUNCE")
 @NamedQueries({
         @NamedQuery(name = AnnounceVO.FINDBYUSER, query = "select a from AnnounceVO a where a.user.id =:userId order by a.startDate desc"),
         @NamedQuery(name = AnnounceVO.FINDBYTYPE, query = "select a from AnnounceVO a where a.announceType =:type order by a.startDate desc"),

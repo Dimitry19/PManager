@@ -1,23 +1,23 @@
 -- we don't know how to generate database MANAGER (class Database) :(
-drop table IF EXISTS  IF EXISTS ADMINISTRATOR;
+drop table IF EXISTS   ADMINISTRATOR;
 create table ADMINISTRATOR
 (
     ID BIGINT auto_increment primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
     EMAIL VARCHAR(255) not null,
     NAME VARCHAR(255) not null,
     USERNAME VARCHAR(255) not null,
     CANCELLED BOOLEAN not null
 );
 
-drop table IF EXISTS  IF EXISTS  AIRLINE;
+drop table IF EXISTS   AIRLINE;
 create table AIRLINE
 (
     CODE VARCHAR(255) not null,
     TOKEN VARCHAR(255) not null,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
     CANCELLED BOOLEAN not null,
     DESCRIPTION VARCHAR(255),
     primary key (CODE, TOKEN)
@@ -34,6 +34,7 @@ create table BATCH_JOB_INSTANCE
     unique (JOB_NAME, JOB_KEY)
 );
 
+
 drop table IF EXISTS  BATCH_JOB_EXECUTION;
 create table BATCH_JOB_EXECUTION
 (
@@ -41,16 +42,15 @@ create table BATCH_JOB_EXECUTION
         primary key,
     VERSION BIGINT,
     JOB_INSTANCE_ID BIGINT not null,
-    CREATE_TIME TIMESTAMP(26,6) not null,
-    START_TIME TIMESTAMP(26,6) default NULL,
-    END_TIME TIMESTAMP(26,6) default NULL,
+    CREATE_TIME TIMESTAMP not null,
+    START_TIME TIMESTAMP default NULL,
+    END_TIME TIMESTAMP default NULL,
     STATUS VARCHAR(10),
     EXIT_CODE VARCHAR(2500),
     EXIT_MESSAGE VARCHAR(2500),
-    LAST_UPDATED TIMESTAMP(26,6),
+    LAST_UPDATED TIMESTAMP,
     JOB_CONFIGURATION_LOCATION VARCHAR(2500),
-    constraint JOB_INST_EXEC_FK
-        foreign key (JOB_INSTANCE_ID) references BATCH_JOB_INSTANCE
+    foreign key (JOB_INSTANCE_ID) references BATCH_JOB_INSTANCE(JOB_INSTANCE_ID)
 );
 
 drop table IF EXISTS  BATCH_JOB_EXECUTION_CONTEXT;
@@ -59,9 +59,9 @@ create table BATCH_JOB_EXECUTION_CONTEXT
     JOB_EXECUTION_ID BIGINT not null
         primary key,
     SHORT_CONTEXT VARCHAR(2500) not null,
-    SERIALIZED_CONTEXT VARCHAR,
+    SERIALIZED_CONTEXT VARCHAR(2500),
     constraint JOB_EXEC_CTX_FK
-        foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION
+        foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION(JOB_EXECUTION_ID)
 );
 
 drop table IF EXISTS  BATCH_JOB_EXECUTION_PARAMS;
@@ -71,12 +71,11 @@ create table BATCH_JOB_EXECUTION_PARAMS
     TYPE_CD VARCHAR(6) not null,
     KEY_NAME VARCHAR(100) not null,
     STRING_VAL VARCHAR(250),
-    DATE_VAL TIMESTAMP(26,6) default NULL,
+    DATE_VAL TIMESTAMP  default NULL,
     LONG_VAL BIGINT,
     DOUBLE_VAL DOUBLE,
     IDENTIFYING CHAR(1) not null,
-    constraint JOB_EXEC_PARAMS_FK
-        foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION
+    foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION(JOB_EXECUTION_ID)
 );
 
 drop table IF EXISTS  BATCH_STEP_EXECUTION;
@@ -87,8 +86,8 @@ create table BATCH_STEP_EXECUTION
     VERSION BIGINT not null,
     STEP_NAME VARCHAR(100) not null,
     JOB_EXECUTION_ID BIGINT not null,
-    START_TIME TIMESTAMP(26,6) not null,
-    END_TIME TIMESTAMP(26,6) default NULL,
+    START_TIME TIMESTAMP not null,
+    END_TIME TIMESTAMP  default NULL,
     STATUS VARCHAR(10),
     COMMIT_COUNT BIGINT,
     READ_COUNT BIGINT,
@@ -100,9 +99,8 @@ create table BATCH_STEP_EXECUTION
     ROLLBACK_COUNT BIGINT,
     EXIT_CODE VARCHAR(2500),
     EXIT_MESSAGE VARCHAR(2500),
-    LAST_UPDATED TIMESTAMP(26,6),
-    constraint JOB_EXEC_STEP_FK
-        foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION
+    LAST_UPDATED TIMESTAMP,
+    foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION(JOB_EXECUTION_ID)
 );
 
 drop table IF EXISTS  BATCH_STEP_EXECUTION_CONTEXT;
@@ -111,10 +109,10 @@ create table BATCH_STEP_EXECUTION_CONTEXT
     STEP_EXECUTION_ID BIGINT not null
         primary key,
     SHORT_CONTEXT VARCHAR(2500) not null,
-    SERIALIZED_CONTEXT VARCHAR,
-    constraint STEP_EXEC_CTX_FK
-        foreign key (STEP_EXECUTION_ID) references BATCH_STEP_EXECUTION
+    SERIALIZED_CONTEXT VARCHAR(2500),
+    foreign key (STEP_EXECUTION_ID) references BATCH_STEP_EXECUTION(STEP_EXECUTION_ID)
 );
+
 
 drop table IF EXISTS  CATEGORY;
 create table CATEGORY
@@ -129,14 +127,13 @@ create table COMMUNICATION
 (
     ID BIGINT  auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
     CONTENT VARCHAR(255) not null,
     TYPE VARCHAR(255) not null,
     R_ADMIN_ID BIGINT,
     CANCELLED BOOLEAN not null,
-    constraint FKH9HRBGRAKSHF04DBAUJ1IYWEL
-        foreign key (R_ADMIN_ID) references ADMINISTRATOR
+    foreign key (R_ADMIN_ID) references ADMINISTRATOR(ID)
 );
 
 drop table IF EXISTS  CONTACT_US;
@@ -144,8 +141,8 @@ create table CONTACT_US
 (
     ID BIGINT auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
     CONTENT VARCHAR(500) not null,
     RECEIVER VARCHAR(255) not null,
     SENDER VARCHAR(255) not null,
@@ -158,8 +155,8 @@ create table IMAGE
 (
     ID BIGINT   auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
     NAME VARCHAR(255) not null
         unique,
     TYPE VARCHAR(255),
@@ -173,8 +170,8 @@ create table NOTIFICATION
     ID BIGINT   auto_increment
         primary key,
     CANCELLED BOOLEAN not null,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
     R_ANNOUNCE_ID BIGINT,
     MESSAGE VARCHAR(255) not null,
     R_USER_ID BIGINT,
@@ -193,18 +190,18 @@ create table ROLE
     DESCRIPTION VARCHAR(255) not null
 );
 
-drop table IF EXISTS  USER;
-create table USER
+
+drop table IF EXISTS  USERS;
+create table USERS
 (
     ID BIGINT   auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
     ACTIVE INTEGER not null,
     CANCELLED BOOLEAN not null,
     CONFIRM_TOKEN VARCHAR(255),
-    EMAIL VARCHAR(255) not null
-        unique,
+    EMAIL VARCHAR(255) not null unique,
     FACEBOOK_ID VARCHAR(255),
     FIRST_NAME VARCHAR(255) not null,
     GENDER VARCHAR(10),
@@ -212,14 +209,13 @@ create table USER
     LAST_NAME VARCHAR(255) not null,
     PASSWORD VARCHAR(255) not null,
     PHONE VARCHAR(35) not null,
-    USERNAME VARCHAR(15) not null
-        unique,
+    USERNAME VARCHAR(15) not null unique,
     IMAGE_ID BIGINT,
     ENABLE_NOTIF BOOLEAN not null ,
     ERROR VARCHAR(255),
     unique (EMAIL, USERNAME),
-    constraint FKPKUUKDHP1VI4PQWEMNYGTNO1T
-        foreign key (IMAGE_ID) references IMAGE
+    FOREIGN KEY (IMAGE_ID)
+    REFERENCES IMAGE(ID)
 );
 
 drop table IF EXISTS  ANNOUNCE;
@@ -227,19 +223,19 @@ create table ANNOUNCE
 (
     ID BIGINT  auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
     TOKEN VARCHAR(255) not null,
     ANNOUNCE_TYPE VARCHAR(10),
     ARRIVAL VARCHAR(255) not null,
     CANCELLED BOOLEAN not null,
     DEPARTURE VARCHAR(255) not null,
     DESCRIPTION VARCHAR(255) not null,
-    END_DATE TIMESTAMP(26,6) not null,
+    END_DATE TIMESTAMP not null,
     GOLD_PRICE DECIMAL(19,2) not null,
     PRENIUM_PRICE DECIMAL(19,2) not null,
     PRICE DECIMAL(19,2) not null,
-    START_DATE TIMESTAMP(26,6) not null,
+    START_DATE TIMESTAMP not null,
     STATUS VARCHAR(10),
     TRANSPORT VARCHAR(255) not null,
     WEIGHT DECIMAL(19,2) not null,
@@ -247,10 +243,8 @@ create table ANNOUNCE
     REMAIN_WEIGHT DECIMAL(19,2),
     IMAGE_ID BIGINT,
     COUNTRESERVATION INTEGER,
-    constraint FKFW0TKPEM5N1S5HA75UD6QJMQ
-        foreign key (R_USER_ID) references USER,
-    constraint FKP72D81HLBK413NI11Y1D57RHQ
-        foreign key (IMAGE_ID) references IMAGE
+    foreign key (R_USER_ID) references USERS(ID),
+    foreign key (IMAGE_ID) references IMAGE(ID)
 );
 
 create unique index PRIMARY_KEY_B9
@@ -262,10 +256,8 @@ create table ANNOUNCE_CATEGORY
     ANNOUNCE_ID BIGINT not null,
     CATEGORIES_CODE VARCHAR(15) not null,
     primary key (ANNOUNCE_ID, CATEGORIES_CODE),
-    constraint FKDLW4JG18D18NXMEQB8AHFXRWF
-        foreign key (ANNOUNCE_ID) references ANNOUNCE,
-    constraint FKQ084C7R4NIQ9HTWTJS3XQSQFF
-        foreign key (CATEGORIES_CODE) references CATEGORY
+    foreign key (ANNOUNCE_ID) references ANNOUNCE(ID),
+    foreign key (CATEGORIES_CODE) references CATEGORY(CODE)
 );
 
 drop table IF EXISTS  MESSAGE;
@@ -273,18 +265,16 @@ create table MESSAGE
 (
     ID BIGINT not null,
     TOKEN VARCHAR(255) not null,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
     CANCELLED BOOLEAN not null,
     CONTENT VARCHAR(255),
     R_ANNOUNCE BIGINT,
     R_USER_ID BIGINT,
     USERNAME VARCHAR(255),
     primary key (ID, TOKEN),
-    constraint FKE39G9PLVG5K7X0GDURX5IIDLK
-        foreign key (R_ANNOUNCE) references ANNOUNCE,
-    constraint FKOGVI3LF5JH16WQIAXRRPJSXMA
-        foreign key (R_USER_ID) references USER
+    foreign key (R_ANNOUNCE) references ANNOUNCE(ID),
+    foreign key (R_USER_ID) references USERS(ID)
 );
 
 drop table IF EXISTS  RESERVATION;
@@ -292,8 +282,8 @@ create table RESERVATION
 (
     ID BIGINT   auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
     WEIGTH DECIMAL(19,2) not null,
     R_ANNOUNCE_ID BIGINT,
     R_USER_ID BIGINT,
@@ -301,10 +291,8 @@ create table RESERVATION
     CANCELLED BOOLEAN not null,
     VALIDATE VARCHAR(10) default 'INSERTED',
     STATUS VARCHAR(10),
-    constraint FK3H0SO8JJDQDGNN9PY00I83OFU
-        foreign key (R_ANNOUNCE_ID) references ANNOUNCE,
-    constraint FKTCN6F6DKS6UF7KRCMVV2KHAU0
-        foreign key (R_USER_ID) references USER
+    foreign key (R_ANNOUNCE_ID) references ANNOUNCE(ID),
+    foreign key (R_USER_ID) references USERS(ID)
 );
 
 drop table IF EXISTS  RESERVATION_CATEGORY;
@@ -313,18 +301,16 @@ create table RESERVATION_CATEGORY
     RESERVATION_ID BIGINT not null,
     CATEGORIES_CODE VARCHAR(15) not null,
     primary key (RESERVATION_ID, CATEGORIES_CODE),
-    constraint FKGCK7KFDQS1IFHMYB24PP251JL
-        foreign key (RESERVATION_ID) references RESERVATION,
-    constraint FKHI8HYAJ537D5OQOK2XA9UAIN1
-        foreign key (CATEGORIES_CODE) references CATEGORY
+    foreign key (RESERVATION_ID) references RESERVATION(ID),
+    foreign key (CATEGORIES_CODE) references CATEGORY(CODE)
 );
 
 drop table IF EXISTS  REVIEW;
 create table REVIEW
 (
     ID BIGINT   auto_increment,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
     TOKEN VARCHAR(5) not null,
     DETAILS VARCHAR(5000) not null,
     TITLE VARCHAR(35) not null,
@@ -333,8 +319,8 @@ create table REVIEW
     INDEXES INTEGER not null,
     R_USER_ID BIGINT not null,
     RATING_USER_ID BIGINT,
-    constraint FKMN7YQ16MASQJ4ODIT0TOHL3XS
-        foreign key (R_USER_ID) references USER
+    PRIMARY KEY (ID),
+    foreign key (R_USER_ID) references USERS(ID)
 );
 
 drop table IF EXISTS  SUBSCRIBERS;
@@ -343,10 +329,8 @@ create table SUBSCRIBERS
     R_USER_ID BIGINT not null,
     SUBSCRIBER_ID BIGINT not null,
     primary key (R_USER_ID, SUBSCRIBER_ID),
-    constraint FK1NVJXHQAUIACV41MVBPO4R6IU
-        foreign key (R_USER_ID) references USER,
-    constraint FKOGEX3X8F6IE4WW40KGOI8O98U
-        foreign key (SUBSCRIBER_ID) references USER
+    foreign key (R_USER_ID) references USERS(ID),
+    foreign key (SUBSCRIBER_ID) references USERS(ID)
 );
 
 drop table IF EXISTS  SUBSCRIPTIONS;
@@ -355,14 +339,12 @@ create table SUBSCRIPTIONS
     SUBSCRIPTION_ID BIGINT not null,
     R_USER_ID BIGINT not null,
     primary key (SUBSCRIPTION_ID, R_USER_ID),
-    constraint FK5MGUIDOAT1GBMLUK1NV9VHJKD
-        foreign key (R_USER_ID) references USER,
-    constraint FKG9EHR2OF3WIDR0N9R03M5U6SA
-        foreign key (SUBSCRIPTION_ID) references USER
+    foreign key (R_USER_ID) references USERS(ID),
+    foreign key (SUBSCRIPTION_ID) references USERS(ID)
 );
 
 create unique index PRIMARY_KEY_273
-    on USER (ID);
+    on USERS (ID);
 
 drop table IF EXISTS  USER_COMMUNICATION;
 create table USER_COMMUNICATION
@@ -370,10 +352,8 @@ create table USER_COMMUNICATION
     USERS_ID BIGINT not null,
     COMMUNICATIONS_ID BIGINT not null,
     primary key (USERS_ID, COMMUNICATIONS_ID),
-    constraint FKAACENEGVR45D01M491GVVB7XE
-        foreign key (USERS_ID) references USER,
-    constraint FKPPG2OD2BISCSJQOY2F9EU0YHP
-        foreign key (COMMUNICATIONS_ID) references COMMUNICATION
+    foreign key (USERS_ID) references USERS(ID),
+    foreign key (COMMUNICATIONS_ID) references COMMUNICATION(ID)
 );
 
 drop table IF EXISTS  USER_NOTIFICATION;
@@ -382,10 +362,8 @@ create table USER_NOTIFICATION
     USERS_ID BIGINT not null,
     NOTIFICATIONS_ID BIGINT not null,
     primary key (USERS_ID, NOTIFICATIONS_ID),
-    constraint FK8HR3CBMBTB3NDL456F6BASWMN
-        foreign key (NOTIFICATIONS_ID) references NOTIFICATION,
-    constraint FKO1QX6Y02V6L3UXNG68RXJD9GR
-        foreign key (USERS_ID) references USER
+    foreign key (NOTIFICATIONS_ID) references NOTIFICATION(ID),
+    foreign key (USERS_ID) references USERS(ID)
 );
 
 drop table IF EXISTS  USER_ROLE;
@@ -394,9 +372,6 @@ create table USER_ROLE
     R_USER BIGINT not null,
     ROLE_ID INTEGER not null,
     primary key (R_USER, ROLE_ID),
-    constraint FKH3WNT7IJXYT7F1JS45H8W3FOH
-        foreign key (R_USER) references USER,
-    constraint FKN1RN9QODD3U4LE8UF3KL33QE3
-        foreign key (ROLE_ID) references ROLE
+    foreign key (R_USER) references USERS(ID),
+    foreign key (ROLE_ID) references ROLE(ID)
 );
-

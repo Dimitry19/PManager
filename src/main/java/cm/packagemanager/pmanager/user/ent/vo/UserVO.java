@@ -37,7 +37,7 @@ import static org.hibernate.annotations.FetchMode.SELECT;
  */
 
 @Entity(name = "UserVO")
-@Table(name = "USER", schema = "PUBLIC")
+@Table(name = "USERS",schema = "cl6j8lyroz9fs4ut")
 @NamedQueries({
         @NamedQuery(name = UserVO.Q_AC_ITEM, query = "select u from UserVO u where (upper(u.lastName) like :searchFilter) or(upper(u.firstName) like :" +
                 "searchFilter ) or(u.username like :searchFilter) or( u.email like :searchFilter)  order by u.firstName"),

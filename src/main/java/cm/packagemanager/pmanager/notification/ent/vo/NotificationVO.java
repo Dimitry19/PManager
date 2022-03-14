@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "NOTIFICATION", schema = "PUBLIC")
+@Table(name = "NOTIFICATION")
 
 @Where(clause = FilterConstants.FILTER_NOTIFICATION_CANC_COMPLETED)
 public class NotificationVO extends CommonVO {

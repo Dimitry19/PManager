@@ -223,7 +223,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
-            throw new UserException("Erreur durant l'inscriptions de l'utilisateur");
+            throw new UserException("Erreur durant l'inscription de l'utilisateur");
         }
     }
 
