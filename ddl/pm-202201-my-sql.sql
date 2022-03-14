@@ -191,8 +191,8 @@ create table ROLE
 );
 
 
-drop table IF EXISTS  USERS;
-create table USERS
+drop table IF EXISTS  TP_USER;
+create table TP_USER
 (
     ID BIGINT   auto_increment
         primary key,
@@ -243,7 +243,7 @@ create table ANNOUNCE
     REMAIN_WEIGHT DECIMAL(19,2),
     IMAGE_ID BIGINT,
     COUNTRESERVATION INTEGER,
-    foreign key (R_USER_ID) references USERS(ID),
+    foreign key (R_USER_ID) references TP_USER(ID),
     foreign key (IMAGE_ID) references IMAGE(ID)
 );
 
@@ -274,7 +274,7 @@ create table MESSAGE
     USERNAME VARCHAR(255),
     primary key (ID, TOKEN),
     foreign key (R_ANNOUNCE) references ANNOUNCE(ID),
-    foreign key (R_USER_ID) references USERS(ID)
+    foreign key (R_USER_ID) references TP_USER(ID)
 );
 
 drop table IF EXISTS  RESERVATION;
@@ -292,7 +292,7 @@ create table RESERVATION
     VALIDATE VARCHAR(10) default 'INSERTED',
     STATUS VARCHAR(10),
     foreign key (R_ANNOUNCE_ID) references ANNOUNCE(ID),
-    foreign key (R_USER_ID) references USERS(ID)
+    foreign key (R_USER_ID) references TP_USER(ID)
 );
 
 drop table IF EXISTS  RESERVATION_CATEGORY;
@@ -320,7 +320,7 @@ create table REVIEW
     R_USER_ID BIGINT not null,
     RATING_USER_ID BIGINT,
     PRIMARY KEY (ID),
-    foreign key (R_USER_ID) references USERS(ID)
+    foreign key (R_USER_ID) references TP_USER(ID)
 );
 
 drop table IF EXISTS  SUBSCRIBERS;
@@ -329,8 +329,8 @@ create table SUBSCRIBERS
     R_USER_ID BIGINT not null,
     SUBSCRIBER_ID BIGINT not null,
     primary key (R_USER_ID, SUBSCRIBER_ID),
-    foreign key (R_USER_ID) references USERS(ID),
-    foreign key (SUBSCRIBER_ID) references USERS(ID)
+    foreign key (R_USER_ID) references TP_USER(ID),
+    foreign key (SUBSCRIBER_ID) references TP_USER(ID)
 );
 
 drop table IF EXISTS  SUBSCRIPTIONS;
@@ -339,20 +339,20 @@ create table SUBSCRIPTIONS
     SUBSCRIPTION_ID BIGINT not null,
     R_USER_ID BIGINT not null,
     primary key (SUBSCRIPTION_ID, R_USER_ID),
-    foreign key (R_USER_ID) references USERS(ID),
-    foreign key (SUBSCRIPTION_ID) references USERS(ID)
+    foreign key (R_USER_ID) references TP_USER(ID),
+    foreign key (SUBSCRIPTION_ID) references TP_USER(ID)
 );
 
 create unique index PRIMARY_KEY_273
-    on USERS (ID);
+    on TP_USER (ID);
 
-drop table IF EXISTS  USER_COMMUNICATION;
+drop table IF EXISTS  TP_USER_COMMUNICATION;
 create table USER_COMMUNICATION
 (
     USERS_ID BIGINT not null,
     COMMUNICATIONS_ID BIGINT not null,
     primary key (USERS_ID, COMMUNICATIONS_ID),
-    foreign key (USERS_ID) references USERS(ID),
+    foreign key (USERS_ID) references TP_USER(ID),
     foreign key (COMMUNICATIONS_ID) references COMMUNICATION(ID)
 );
 
@@ -363,7 +363,7 @@ create table USER_NOTIFICATION
     NOTIFICATIONS_ID BIGINT not null,
     primary key (USERS_ID, NOTIFICATIONS_ID),
     foreign key (NOTIFICATIONS_ID) references NOTIFICATION(ID),
-    foreign key (USERS_ID) references USERS(ID)
+    foreign key (USERS_ID) references TP_USER(ID)
 );
 
 drop table IF EXISTS  USER_ROLE;
@@ -372,6 +372,6 @@ create table USER_ROLE
     R_USER BIGINT not null,
     ROLE_ID INTEGER not null,
     primary key (R_USER, ROLE_ID),
-    foreign key (R_USER) references USERS(ID),
+    foreign key (R_USER) references TP_USER(ID),
     foreign key (ROLE_ID) references ROLE(ID)
 );

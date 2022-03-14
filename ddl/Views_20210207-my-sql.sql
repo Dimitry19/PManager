@@ -28,7 +28,7 @@ SELECT R.ID,
 FROM RESERVATION R
          INNER JOIN ANNOUNCE A
                     ON R.R_ANNOUNCE_ID = A.ID
-         INNER JOIN USERS U
+         INNER JOIN TP_USER U
                     ON R.R_USER_ID = U.ID
 WHERE ((R.R_USER_ID = U.ID)
     AND (A.ID = R.R_ANNOUNCE_ID))
@@ -59,7 +59,7 @@ SELECT R.ID,
 FROM RESERVATION R
          INNER JOIN ANNOUNCE A
                     ON R.R_ANNOUNCE_ID = A.ID
-         INNER JOIN USERS U
+         INNER JOIN TP_USER U
                     ON R.R_USER_ID = U.ID
 WHERE ((A.R_USER_ID = U.ID)
     AND (A.ID = R.R_ANNOUNCE_ID))
@@ -96,7 +96,7 @@ SELECT R.ID,
 FROM RESERVATION R
          INNER JOIN ANNOUNCE A
                     ON R.R_ANNOUNCE_ID = A.ID
-         INNER JOIN USERS U
+         INNER JOIN TP_USER U
                     ON R.R_USER_ID = U.ID
 WHERE (R.R_USER_ID = U.ID)
   AND (A.ID = R.R_ANNOUNCE_ID);
@@ -123,7 +123,7 @@ SELECT R.ID,
 FROM RESERVATION R
          INNER JOIN ANNOUNCE A
                     ON R.R_ANNOUNCE_ID = A.ID
-         INNER JOIN USERS U
+         INNER JOIN TP_USER U
                     ON R.R_USER_ID = U.ID
 WHERE (A.R_USER_ID = U.ID)
   AND (A.ID = R.R_ANNOUNCE_ID);
