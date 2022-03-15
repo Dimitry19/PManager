@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/_Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/security/WebSecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -482,13 +481,6 @@
       <workItem from="1647268671140" duration="6964000" />
       <workItem from="1647282650125" duration="11018000" />
     </task>
-    <task id="LOCAL-00027" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
-      <created>1619435053269</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1619435053269</updated>
-    </task>
     <task id="LOCAL-00028" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
       <created>1619435149615</created>
       <option name="number" value="00028" />
@@ -825,7 +817,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647350699757</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="BetaVersion202203 Branch : enable https and procfile">
+      <created>1647351141755</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1647351141755</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -967,7 +966,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log" />
     <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log" />
     <MESSAGE value="test" />
     <MESSAGE value="integration Angular" />
@@ -992,7 +990,8 @@
     <MESSAGE value="BetaVersion202203 Branch :  modification de la WebSecurityConfig.java" />
     <MESSAGE value="BetaVersion202203 Branch : disable procfile" />
     <MESSAGE value="BetaVersion202203 Branch : disable https" />
-    <option name="LAST_COMMIT_MESSAGE" value="BetaVersion202203 Branch : disable https" />
+    <MESSAGE value="BetaVersion202203 Branch : enable https and procfile" />
+    <option name="LAST_COMMIT_MESSAGE" value="BetaVersion202203 Branch : enable https and procfile" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

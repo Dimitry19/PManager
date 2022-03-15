@@ -48,20 +48,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        http.requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
 
        logger.info("into configure");
 //        http.csrf().disable();
 //        http.httpBasic().disable();
 
-        http.authorizeRequests()
+       /* http.authorizeRequests()
                 .antMatchers(AUTH_LIST)
                 .permitAll()
                 .and().httpBasic()
                 .and().cors().and().csrf().disable()
                 .addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class)
                 .requiresChannel().requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-                .requiresSecure();
+                .requiresSecure();*/
     }
 
     @Bean
