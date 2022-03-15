@@ -111,7 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return registrationBean;
     }
 
-    @Bean
+    //@Bean
     public FilterRegistrationBean  httpsEnforcerBean() {
         FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
         HttpsEnforcer httpsEnforcer = new HttpsEnforcer();

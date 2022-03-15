@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Configuration
-@Order(Ordered.HIGHEST_PRECEDENCE)
+//@Configuration
+//@Order(Ordered.HIGHEST_PRECEDENCE)
 public class HttpsEnforcer extends CommonFilter {
 	public static final String X_FORWARDED_PROTO = "X-Forwarded-Proto";
 
