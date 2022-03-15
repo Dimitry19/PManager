@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="Database">
   <database-model serializer="dbm" dbms="H2" family-id="H2" format-version="4.23">
-    <root id="1">
-      <ServerVersion>1.4.200</ServerVersion>
-    </root>
+    <root id="1"/>
     <database id="2" parent="1" name="MANAGER">
       <Current>1</Current>
     </database>

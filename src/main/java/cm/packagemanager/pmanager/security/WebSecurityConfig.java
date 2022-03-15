@@ -58,9 +58,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(AUTH_LIST)
                 .permitAll()
                 .and().httpBasic()
-                .and().cors().and().csrf().disable().addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class);
-        ;
-
+                .and().cors().and().csrf().disable()
+                .addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class)
+                .requiresChannel().requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
     }
 
     @Bean
