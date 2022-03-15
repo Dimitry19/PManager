@@ -1,8 +1,0 @@
-//Hibernate.initialize(user.getMessages()); // on l'utilise quand la fetch avec message est lazy
-
-
-To ignore file in git
-
-echo [file | folder ] >> .gitignore
-git add .gitignore
-git commit -m 'message'

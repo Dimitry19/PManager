@@ -1,3 +1,0 @@
-https://howtodoinjava.com/spring-batch/batch-quartz-java-config-example/#batch-jobs
-
-https://www.freeformatter.com/cron-expression-generator-quartz.html

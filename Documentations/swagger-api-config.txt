@@ -1,4 +1,0 @@
-La classe configurée est Swaggerconfig
-/* https://springfox.github.io/springfox/docs/current/#springfox-spring-mvc-and-spring-boot*/
-
-http://localhost:8080/pmanager/swagger-ui/index.html#/
