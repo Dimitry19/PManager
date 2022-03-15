@@ -30,9 +30,10 @@ public class HttpsEnforcer extends CommonFilter {
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 
 		if (request.getHeader(X_FORWARDED_PROTO) != null) {
+
 			if (request.getHeader(X_FORWARDED_PROTO).indexOf("https") != 0) {
-				String pathInfo = (request.getPathInfo() != null) ? request.getPathInfo() : "";
-				response.sendRedirect("https://" + request.getServerName() + pathInfo);
+				String pathInfo = (request.getPathInfo() != null) ? request.getPathInfo() : "/pmanager";
+				response.sendRedirect("https://" + request.getServerName() + ":"+request.getServerPort() + pathInfo);
 				return;
 			}
 		}
