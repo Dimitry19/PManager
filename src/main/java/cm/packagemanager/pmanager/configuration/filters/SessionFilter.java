@@ -48,6 +48,9 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
     private static Logger logger = LoggerFactory.getLogger(SessionFilter.class);
 
+    @Value("${custom.user.guest}")
+    private String guest;
+
     @Value("${custom.api.auth.http.tokenValue}")
     protected String token;
 
@@ -143,6 +146,14 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
         boolean isServiceLogin=isService && isLogin;
         boolean isServiceLogout=isService && isLogout;
+
+        if(StringUtils.isEmpty(username)){
+            username="Guest";
+        }
+
+        if(StringUtils.equals(username,guest)){
+            return Boolean.TRUE;
+        }
 
         UserVO user = (UserVO)sessionManager.getFromSession(username+apiKey);
 

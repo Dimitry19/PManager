@@ -216,7 +216,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
 
-            user=(UserVO)save(user);
+            Long id=(Long)save(user);
+            user=findById(id);
             setRole(user, register.getRole());
             return user;
 
