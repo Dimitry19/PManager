@@ -5,6 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/HttpsEnforcer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PackManager/application-error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PackManager/application.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/PackageApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/PackageApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/security/WebSecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -300,7 +308,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="H2" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ddl" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -312,13 +320,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\DevJava\ws\PManager" />
       <recent name="F:\DevJava\ws\PManager\ddl" />
       <recent name="$PROJECT_DIR$/src/main/resources/static" />
       <recent name="$PROJECT_DIR$/ddl" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static/assets/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\DevJava\ws\PManager\src\main\resources" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/resources/templates" />
@@ -480,13 +489,6 @@
       <workItem from="1647258079520" duration="10202000" />
       <workItem from="1647268671140" duration="6964000" />
       <workItem from="1647282650125" duration="11018000" />
-    </task>
-    <task id="LOCAL-00028" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
-      <created>1619435149615</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1619435149615</updated>
     </task>
     <task id="LOCAL-00029" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log">
       <created>1621952378433</created>
@@ -824,7 +826,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647351141755</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="BetaVersion202203 Branch : enable https and procfile">
+      <created>1647351467434</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1647351467434</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1130,6 +1139,21 @@
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
           <line>169</line>
           <option name="timeStamp" value="154" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/HttpsEnforcer.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="156" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="157" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/SessionFilter.java</url>
+          <line>81</line>
+          <option name="timeStamp" value="158" />
         </line-breakpoint>
         <line-breakpoint type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/ImageVO.java</url>

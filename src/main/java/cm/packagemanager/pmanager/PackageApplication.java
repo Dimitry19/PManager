@@ -30,8 +30,6 @@ public class PackageApplication extends SpringBootServletInitializer {
 
     private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);
 
-
-
     public static void main(String[] args) {
 
         SpringApplication application = new SpringApplication(PackageApplication.class);
