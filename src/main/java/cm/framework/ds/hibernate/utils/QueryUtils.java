@@ -372,7 +372,13 @@ public class QueryUtils {
 
 	public static enum OperatorEnum {
 		AND,
-		OR;
+		OR,
+		NI,
+		IN,
+		EQ,
+		NEQ,
+		GTR,
+		LSS;
 
 		private OperatorEnum() {
 		}

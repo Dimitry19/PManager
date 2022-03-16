@@ -14,7 +14,9 @@ import java.util.Map;
 import java.util.Stack;
 import cm.framework.ds.hibernate.utils.QueryUtils.OperatorEnum;
 
+
 public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
+
 	private static final Logger log = LoggerFactory.getLogger(QueryBuilder.class);
 	private String namedQuery;
 	private String litteralQuery;
@@ -26,11 +28,10 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 	private Map<String, Object> parameters = new LinkedHashMap();
 	private boolean useCriteria = false;
 	private boolean useCache = false;
-	private String queryCacheRegionName;
-	private Object example = null;
+
 
 	//private PageBy pageBy;
-	private boolean excludeEmpty = false;
+
 
 	private CriteriaSpecification criteria;
 
@@ -66,10 +67,6 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 		return this;
 	}
 
-	public QueryBuilder setExcludeEmpty(boolean excludeEmpty) {
-		this.excludeEmpty = excludeEmpty;
-		return this;
-	}
 
 	public String getNamedQuery() {
 		return this.namedQuery;
@@ -187,13 +184,8 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 	}
 
 	public final QueryBuilder less(String alias, String propertyName, Object value, boolean equal) {
-		this.checkAppendOperator((OperatorEnum)null);
-		MutableObject<String> parameterName = new MutableObject();
-		this.appendProperty(this.where, alias, propertyName).append(equal ? "<=" : "<").append(this.appendParameter(propertyName, (Boolean)null, parameterName));
-		this.parameters.put(parameterName.getValue(), value);
-		if (log.isDebugEnabled()) {
-			log.debug(this.where.toString());
-		}
+
+		commonCompare(alias, propertyName, value,equal, OperatorEnum.LSS);
 
 		return this;
 	}
@@ -207,13 +199,8 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 	}
 
 	public final QueryBuilder greater(String alias, String propertyName, Object value, boolean equal) {
-		this.checkAppendOperator((OperatorEnum)null);
-		MutableObject<String> parameterName = new MutableObject();
-		this.appendProperty(this.where, alias, propertyName).append(equal ? ">=" : ">").append(this.appendParameter(propertyName, (Boolean)null, parameterName));
-		this.parameters.put(parameterName.getValue(), value);
-		if (log.isDebugEnabled()) {
-			log.debug(this.where.toString());
-		}
+
+		commonCompare(alias, propertyName, value,equal, OperatorEnum.GTR);
 
 		return this;
 	}
@@ -227,55 +214,35 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 	}
 
 	public final QueryBuilder equal(String alias, String propertyName, Object value) {
-		this.checkAppendOperator((OperatorEnum)null);
-		MutableObject<String> parameterName = new MutableObject();
-		this.appendProperty(this.where, alias, propertyName).append("=").append(this.appendParameter(propertyName, (Boolean)null, parameterName));
-		this.parameters.put(parameterName.getValue(), value);
-		if (log.isDebugEnabled()) {
-			log.debug(this.where.toString());
-		}
+
+		commonInEqual(alias, propertyName,value,OperatorEnum.NEQ);
 
 		return this;
 	}
 
 	public final QueryBuilder notEqual(String alias, String propertyName, Object value) {
-		this.checkAppendOperator((OperatorEnum)null);
-		MutableObject<String> parameterName = new MutableObject();
-		this.appendProperty(this.where, alias, propertyName).append("!=").append(this.appendParameter(propertyName, (Boolean)null, parameterName));
-		this.parameters.put(parameterName.getValue(), value);
-		if (log.isDebugEnabled()) {
-			log.debug(this.where.toString());
-		}
+
+		commonInEqual(alias, propertyName,value,OperatorEnum.EQ);
 
 		return this;
 	}
 
 	public final QueryBuilder in(String alias, String propertyName, Object value) {
-		this.checkAppendOperator((OperatorEnum)null);
-		MutableObject<String> parameterName = new MutableObject();
-		this.appendProperty(this.where, alias, propertyName).append(" in ").append(" ( ").append(this.appendParameter(propertyName, (Boolean)null, parameterName)).append(" ) ");
-		this.parameters.put(parameterName.getValue(), value);
-		if (log.isDebugEnabled()) {
-			log.debug(this.where.toString());
-		}
+
+		commonInEqual(alias, propertyName,value,OperatorEnum.IN);
 
 		return this;
 	}
 
 	public final QueryBuilder notIn(String alias, String propertyName, Object value) {
-		this.checkAppendOperator((OperatorEnum)null);
-		MutableObject<String> parameterName = new MutableObject();
-		this.appendProperty(this.where, alias, propertyName).append(" not in ").append(" ( ").append(this.appendParameter(propertyName, (Boolean)null, parameterName)).append(" ) ");
-		this.parameters.put(parameterName.getValue(), value);
-		if (log.isDebugEnabled()) {
-			log.debug(this.where.toString());
-		}
+
+		commonInEqual(alias, propertyName,value,OperatorEnum.NI);
 
 		return this;
 	}
 
 	public final QueryBuilder isNull(String alias, String propertyName) {
-		this.checkAppendOperator((QueryUtils.OperatorEnum)null);
+		this.checkAppendOperator((OperatorEnum)null);
 		this.appendProperty(this.where, alias, propertyName).append(" is null ");
 		if (log.isDebugEnabled()) {
 			log.debug(this.where.toString());
@@ -324,6 +291,78 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 			} else {
 				return this;
 			}
+		}
+	}
+
+
+	private void commonCompare(String alias, String propertyName, Object value, boolean equal, OperatorEnum operatorEnum){
+
+		this.checkAppendOperator((OperatorEnum)null);
+		MutableObject<String> parameterName = new MutableObject();
+
+		switch (operatorEnum){
+
+			case GTR:
+				this.appendProperty(this.where, alias, propertyName).append(equal ? ">=" : ">").append(this.appendParameter(propertyName, (Boolean)null, parameterName));
+			break;
+
+			case LSS:
+				this.appendProperty(this.where, alias, propertyName).append(equal ? "<=" : "<").append(this.appendParameter(propertyName, (Boolean)null, parameterName));
+
+				break;
+		}
+
+		this.parameters.put(parameterName.getValue(), value);
+		if (log.isDebugEnabled()) {
+			log.debug(this.where.toString());
+		}
+
+	}
+
+
+
+	private void  commonInEqual(String alias, String propertyName, Object value, OperatorEnum operatorEnum){
+
+		this.checkAppendOperator((OperatorEnum)null);
+
+		MutableObject<String> parameterName = new MutableObject();
+
+
+		switch (operatorEnum){
+
+			case NI:
+				this.appendProperty(this.where, alias, propertyName)
+						.append(" not in ")
+						.append(" ( ")
+						.append(this.appendParameter(propertyName, (Boolean)null, parameterName))
+						.append(" ) ");
+
+				break;
+
+			case IN:
+				this.appendProperty(this.where, alias, propertyName).append(" in ")
+						.append(" ( ").append(this.appendParameter(propertyName, (Boolean)null, parameterName))
+						.append(" ) ");
+				break;
+
+			case EQ:
+
+				this.appendProperty(this.where, alias, propertyName).append("=")
+						.append(this.appendParameter(propertyName, (Boolean)null, parameterName));
+
+				break;
+
+			case NEQ:
+				this.appendProperty(this.where, alias, propertyName).append("!=")
+						.append(this.appendParameter(propertyName, (Boolean)null, parameterName));
+
+				break;
+
+		}
+
+		this.parameters.put(parameterName.getValue(), value);
+		if (log.isDebugEnabled()) {
+			log.debug(this.where.toString());
 		}
 	}
 
@@ -450,10 +489,6 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 		return this;
 	}
 
-	public QueryBuilder setQueryCacheRegionName(String queryCacheRegionName) {
-		this.queryCacheRegionName = queryCacheRegionName;
-		return this;
-	}
 
 	public String getLitteralQuery() {
 		return this.litteralQuery;
