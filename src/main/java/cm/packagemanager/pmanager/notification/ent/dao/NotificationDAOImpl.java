@@ -5,7 +5,7 @@
 
 package cm.packagemanager.pmanager.notification.ent.dao;
 
-import cm.packagemanager.pmanager.common.ent.dao.Generic;
+import cm.framework.ds.hibernate.dao.Generic;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;

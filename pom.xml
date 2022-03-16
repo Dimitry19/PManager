@@ -40,6 +40,7 @@
 		<!--<java.version>11</java.version>-->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!--<hibernate.version>4.1.0.Final</hibernate.version>-->
 		<!--remplace la version embarquée de Tomcat &ndash;&gt;-->
 <!--
 		<tomcat.version>8.0.46</tomcat.version>
@@ -271,7 +272,6 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>r05</version>
 		</dependency>
 
 		<!-- NOTIFICATION FIREBASE-->
@@ -357,9 +357,6 @@
 		<!-- Thanks for using https://jar-download.com -->
 
 		<!-- GESTION TOKEN POUR LES REQUETES WS END-->
-
-
-
 		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>

@@ -5,7 +5,7 @@
 
 package cm.packagemanager.pmanager.notification.ent.dao;
 
-import cm.packagemanager.pmanager.common.ent.dao.CommonDAO;
+import cm.framework.ds.hibernate.dao.CommonDAO;
 import cm.packagemanager.pmanager.notification.ent.vo.NotificationVO;
 
 import java.util.List;

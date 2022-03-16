@@ -6,13 +6,13 @@ package cm.packagemanager.pmanager.announce.ent.dao;
  * et aussi eviter HibernateException: Found two representations of same collection
  */
 
+import cm.framework.ds.hibernate.dao.Generic;
 import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceIdVO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.CategoryVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.Constants;
-import cm.packagemanager.pmanager.common.ent.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
@@ -75,7 +75,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             Session session = this.sessionFactory.getCurrentSession();
             session.enableFilter(FilterConstants.CANCELLED);
             String where = composeQuery(announceSearch, "a");
-            Query query = session.createQuery("from AnnounceVO  as a join a.categories as c " + where);
+            Query query = session.createQuery("select  distinct  a from AnnounceVO  as a join a.categories as c " + where);
             composeQueryParameters(announceSearch, query);
             List result=query.list();
             return CollectionsUtils.isNotEmpty(result) ? result.size() : 0;
@@ -211,7 +211,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         session.enableFilter(FilterConstants.CANCELLED);
 
         String where = composeQuery(announceSearchDTO, "a");
-        Query query = session.createQuery(" select a from AnnounceVO  as a join a.categories as c " + where);
+        Query query = session.createQuery(" select distinct a from AnnounceVO  as a join a.categories as c " + where);
         composeQueryParameters(announceSearchDTO, query);
         pageBy(query, pageBy);
         List<AnnounceVO> result= query.list();
@@ -428,7 +428,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         boolean joinCategory=StringUtils.isNotEmpty(announceSearch.getCategory());
 
-        hql.append(" where ");
+        hql.append(where);
 
 
         try {
@@ -503,6 +503,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             if (!addCondition) {
                 hql = new StringBuilder();
             }
+            hql.append(" group by " + alias + ".id ");
             hql.append(" order by " + alias + ".startDate desc");
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -578,8 +579,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 
     private boolean addCondition(String val){
-        return  StringUtils.isNotEmpty(val) && !StringUtils.equals(val, " where ");
-
+        return  StringUtils.isNotEmpty(val) && !StringUtils.equals(val,  where);
     }
 
     private void handleCategories(AnnounceVO announce, List<String> categories) throws Exception {

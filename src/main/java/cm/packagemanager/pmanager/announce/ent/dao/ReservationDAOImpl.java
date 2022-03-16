@@ -1,7 +1,7 @@
 package cm.packagemanager.pmanager.announce.ent.dao;
 
 import cm.packagemanager.pmanager.announce.ent.vo.*;
-import cm.packagemanager.pmanager.common.ent.dao.Generic;
+import cm.framework.ds.hibernate.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;

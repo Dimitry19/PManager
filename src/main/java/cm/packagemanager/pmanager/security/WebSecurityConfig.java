@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.security;
 
 
 import cm.packagemanager.pmanager.configuration.filters.AuthenticationFilter;
+import cm.packagemanager.pmanager.configuration.filters.HttpsEnforcer;
 import cm.packagemanager.pmanager.configuration.filters.SessionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,19 +49,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        http.csrf().disable();
+        http.httpBasic().disable().requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
 
        logger.info("into configure");
 //        http.csrf().disable();
 //        http.httpBasic().disable();
 
-        http.authorizeRequests()
+        /*http.authorizeRequests()
                 .antMatchers(AUTH_LIST)
                 .permitAll()
                 .and().httpBasic()
-                .and().cors().and().csrf().disable().addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class);
-        ;
-
+                .and().cors().and().csrf().disable()
+                .addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class);*/
     }
 
     @Bean
@@ -105,6 +108,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         registrationBean.setFilter(sessionFilter);
         registrationBean.addUrlPatterns("/user/*");
         registrationBean.setOrder(2);
+        return registrationBean;
+    }
+
+    //@Bean
+    public FilterRegistrationBean  httpsEnforcerBean() {
+        FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
+        HttpsEnforcer httpsEnforcer = new HttpsEnforcer();
+
+        registrationBean.setFilter(httpsEnforcer);
+       // registrationBean.addUrlPatterns("/user/*");
+        registrationBean.setOrder(2); //set precedence
         return registrationBean;
     }
 }

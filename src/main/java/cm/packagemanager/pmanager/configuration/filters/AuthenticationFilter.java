@@ -68,7 +68,4 @@ public class AuthenticationFilter extends CommonFilter {
 
         return true;
     }
-
-
-
 }

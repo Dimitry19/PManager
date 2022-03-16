@@ -1,7 +1,7 @@
 package cm.packagemanager.pmanager.airline.ent.dao;
 
 import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
-import cm.packagemanager.pmanager.common.ent.dao.Generic;
+import cm.framework.ds.hibernate.dao.Generic;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;

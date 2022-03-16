@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 @Entity
-@Table(name = "RESERVATION", schema = "PUBLIC")
+@Table(name = "RESERVATION")
 @NamedQueries({
         @NamedQuery(name = ReservationVO.FINDBYANNOUNCE, query = " select r from  ReservationVO as r where r.announce.id =: announceId"),
         @NamedQuery(name = ReservationVO.FINDBYUSER, query = " select r from  ReservationVO as r where r.user.id =: userId"),

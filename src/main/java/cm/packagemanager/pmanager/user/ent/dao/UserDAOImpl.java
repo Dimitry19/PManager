@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
-import cm.packagemanager.pmanager.common.ent.dao.Generic;
+import cm.framework.ds.hibernate.dao.Generic;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
@@ -216,14 +216,15 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
 
-            user=(UserVO)save(user);
+            Long id=(Long)save(user);
+            user=findById(id);
             setRole(user, register.getRole());
             return user;
 
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
-            throw new UserException("Erreur durant l'inscriptions de l'utilisateur");
+            throw new UserException("Erreur durant l'inscription de l'utilisateur");
         }
     }
 
