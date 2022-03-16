@@ -4,50 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/HQLBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/HQLUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/IQueryBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/SQLUtils.java" afterDir="false" />
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="BetaVersion202203 Branch : enable https and config">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es2015.c0deec84a96b7de7dc6f.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es5.c0deec84a96b7de7dc6f.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PackManager/application-error.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/PackManager/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PackManager/application.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/CommonDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/CommonGenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonGenericDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/Generic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/dao/ImageDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/dao/ImageDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/dao/ImageDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/dao/ImageDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/dao/NotificationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/dao/NotificationDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/dao/NotificationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/dao/NotificationDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/RoleDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/RoleDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/RoleDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/RoleDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.d30ea87124dc4fee4927.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.d30ea87124dc4fee4927.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,19 +50,6 @@
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="DB MYSQL" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="cl6j8lyroz9fs4ut: schema" type="76f4a085:MysqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="DB MYSQL" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="cl6j8lyroz9fs4ut: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="Hbernate" type="feb32156:DbDataSourceImpl" />
       </path>
       <path>
@@ -117,15 +64,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="das://32dd2d4f-ab58-49b7-85d8-9c9fa515f192/schema/cl6j8lyroz9fs4ut/table/tp_user">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/IQueryBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -151,10 +89,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="768">
+            <state relative-caret-position="2572">
               <caret line="592" column="30" selection-start-line="592" selection-start-column="30" selection-end-line="592" selection-end-column="30" />
               <folding>
                 <element signature="e#0#77#1" expanded="true" />
@@ -169,15 +107,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="511">
               <caret line="379" column="9" lean-forward="true" selection-start-line="379" selection-start-column="9" selection-end-line="379" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="76" selection-start-line="76" selection-end-line="76" />
             </state>
           </provider>
         </entry>
@@ -215,8 +144,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2805">
-              <caret line="187" selection-start-line="187" selection-end-line="187" selection-end-column="23" />
+            <state relative-caret-position="105">
+              <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -362,12 +300,12 @@
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/security/WebSecurityConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/HttpsEnforcer.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
-        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/SessionFilter.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
         <option value="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryBuilder.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
       </list>
     </option>
   </component>
@@ -731,20 +669,6 @@
       <workItem from="1647268671140" duration="6964000" />
       <workItem from="1647282650125" duration="11018000" />
     </task>
-    <task id="LOCAL-00040" summary="new implementation for socket">
-      <created>1640162934024</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1640162934024</updated>
-    </task>
-    <task id="LOCAL-00041" summary="new implementation for socket">
-      <created>1640186764968</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1640186764968</updated>
-    </task>
     <task id="LOCAL-00042" summary="new implementation for socket">
       <created>1640201771684</created>
       <option name="number" value="00042" />
@@ -1074,11 +998,25 @@
       <option name="project" value="LOCAL" />
       <updated>1647431928886</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="BetaVersion202203 Branch : enable https and config">
+      <created>1647463086511</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1647463086512</updated>
+    </task>
+    <task id="LOCAL-00090" summary="BetaVersion202203 Branch : enable https and config">
+      <created>1647463457834</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1647463457835</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="492102000" />
+    <option name="totallyTimeSpent" value="492815000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1222,7 +1160,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="integration Angular" />
     <MESSAGE value="Amelioration du logging" />
     <MESSAGE value="Bug fixing recherhe annonces" />
     <MESSAGE value="features" />
@@ -1247,7 +1184,8 @@
     <MESSAGE value="BetaVersion202203 Branch : enable https and cleaner" />
     <MESSAGE value="BetaVersion202203 Branch : enable https and guest" />
     <MESSAGE value="BetaVersion202203 Branch : enable https and procfile" />
-    <option name="LAST_COMMIT_MESSAGE" value="BetaVersion202203 Branch : enable https and procfile" />
+    <MESSAGE value="BetaVersion202203 Branch : enable https and config" />
+    <option name="LAST_COMMIT_MESSAGE" value="BetaVersion202203 Branch : enable https and config" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1477,7 +1415,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="das://5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/IMAGE" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console_2.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1736,13 +1673,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="208" selection-start-line="208" selection-end-line="208" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1149">
@@ -1798,13 +1728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2805">
-          <caret line="187" selection-start-line="187" selection-end-line="187" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/IQueryBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-206">
@@ -1835,12 +1758,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="768">
+        <state relative-caret-position="2572">
           <caret line="592" column="30" selection-start-line="592" selection-start-column="30" selection-end-line="592" selection-end-column="30" />
           <folding>
             <element signature="e#0#77#1" expanded="true" />
             <element signature="e#1#76#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
         </state>
       </provider>
     </entry>
