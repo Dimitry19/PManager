@@ -1,15 +1,17 @@
 package cm.packagemanager.pmanager.websocket.client.handler;
 
 import cm.packagemanager.pmanager.notification.ent.vo.Notification;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.messaging.simp.stomp.*;
-
 import java.lang.reflect.Type;
 
 public class MyStompFrameHandler extends StompSessionHandlerAdapter implements StompFrameHandler {
 
-    private Logger logger = LogManager.getLogger(MyStompSessionHandler.class);
+   // private Logger logger = LogManager.getLogger(MyStompSessionHandler.class);
+
+   private Logger logger = LoggerFactory.getLogger(MyStompSessionHandler.class);
+
 
     @Override
     public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
