@@ -90,16 +90,19 @@ public class AnnounceVO extends CommonVO {
 
     private String description;
 
-    private String descriptionTransport;
-
     private Set<CategoryVO> categories = new HashSet<>();
 
     private Set<MessageVO> messages = new HashSet<>();
 
+    @Embedded
     private AnnounceIdVO announceId;
 
+    private String descriptionTransport;
+
+    @Transient
     private UserInfo userInfo;
 
+    @Transient
     private Integer countReservation;
 
     public AnnounceVO() {
@@ -251,8 +254,7 @@ public class AnnounceVO extends CommonVO {
     @Transient
     public String getDescriptionTransport() {   return descriptionTransport;  }
 
-    @Transient
-    @Formula(value = "select coalesce(count(id),0) as counter from RESERVATION r where  r.r_announce_id = id and r.cancelled is false")
+    @Formula(value = "(select coalesce(count(r.r_announce_id),0)  from RESERVATION r where  r.r_announce_id = id and r.cancelled ='0')")
     public Integer getCountReservation() {
         return countReservation;
     }

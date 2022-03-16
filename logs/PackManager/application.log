@@ -2307,3 +2307,4 @@ cm.packagemanager.pmanager.common.exception.UserException: Erreur durant l'inscr
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [?:1.8.0_281]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.35.jar:9.0.35]
 	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_281]
+2022-03-16T16:13:42.893+0100 ERROR You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select coalesce(count(announcevo0_.id),0) as announcevo0_.counter from RESERVATI' at line 1

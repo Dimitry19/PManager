@@ -1,4 +1,4 @@
-package cm.packagemanager.pmanager.common.ent.dao;
+package cm.framework.ds.hibernate.dao;
 
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.event.IEvent;
@@ -13,7 +13,7 @@ import java.util.Set;
 
 public abstract class Generic<T, ID extends Serializable> extends CommonGenericDAO {
 
-
+    public static String where=" where ";
     public String notificationMessagePattern = "{0} {1} {2}";
     public abstract boolean updateDelete(Long id) throws BusinessResourceException, UserException;
 

@@ -1,7 +1,7 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
 
-import cm.packagemanager.pmanager.common.ent.dao.CommonDAO;
+import cm.framework.ds.hibernate.dao.CommonDAO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;

@@ -1,4 +1,4 @@
-package cm.packagemanager.pmanager.common.ent.dao;
+package cm.framework.ds.hibernate.dao;
 
 
 public interface CommonDAO extends GenericDAO {

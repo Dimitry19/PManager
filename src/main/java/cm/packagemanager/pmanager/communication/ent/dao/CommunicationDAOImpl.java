@@ -5,8 +5,7 @@
 
 package cm.packagemanager.pmanager.communication.ent.dao;
 
-
-import cm.packagemanager.pmanager.common.ent.dao.CommonGenericDAO;
+import cm.framework.ds.hibernate.dao.CommonGenericDAO;
 import org.springframework.stereotype.Repository;
 
 

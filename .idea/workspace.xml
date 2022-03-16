@@ -4,11 +4,45 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="BetaVersion202203 Branch : enable https and procfile">
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/HQLBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/HQLUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/IQueryBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/SQLUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.14b340abbcd148f9ef5d.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.14b340abbcd148f9ef5d.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PackManager/application-error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/PackManager/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/PackManager/application.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/CommonDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/CommonGenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonGenericDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/Generic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/dao/ImageDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/dao/ImageDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/dao/ImageDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/dao/ImageDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/dao/NotificationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/dao/NotificationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/dao/NotificationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/dao/NotificationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/RoleDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/RoleDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/RoleDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/RoleDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -356,7 +390,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="H2" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/cm/framework/hibernate/dao" />
     <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -368,11 +402,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\framework\hibernate\dao" />
       <recent name="F:\DevJava\ws\PManager" />
       <recent name="F:\DevJava\ws\PManager\ddl" />
       <recent name="$PROJECT_DIR$/src/main/resources/static" />
       <recent name="$PROJECT_DIR$/ddl" />
-      <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\DevJava\ws\PManager\src\main\resources" />
@@ -386,7 +420,7 @@
       <recent name="cm.packagemanager.pmanager.communication.ent.service" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.package">
+  <component name="RunManager" selected="Spring Boot.PM">
     <configuration name="clean" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -537,13 +571,6 @@
       <workItem from="1647258079520" duration="10202000" />
       <workItem from="1647268671140" duration="6964000" />
       <workItem from="1647282650125" duration="11018000" />
-    </task>
-    <task id="LOCAL-00039" summary="Bug fixing recherhe annonces">
-      <created>1639418850099</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1639418850099</updated>
     </task>
     <task id="LOCAL-00040" summary="new implementation for socket">
       <created>1640162934024</created>
@@ -881,7 +908,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647386189401</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="BetaVersion202203 Branch : enable https and procfile">
+      <created>1647431928886</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1647431928886</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1045,10 +1079,10 @@
     <MESSAGE value="BetaVersion202203 Branch :  modification de la WebSecurityConfig.java" />
     <MESSAGE value="BetaVersion202203 Branch : disable procfile" />
     <MESSAGE value="BetaVersion202203 Branch : disable https" />
-    <MESSAGE value="BetaVersion202203 Branch : enable https and procfile" />
     <MESSAGE value="BetaVersion202203 Branch : enable https and cleaner" />
     <MESSAGE value="BetaVersion202203 Branch : enable https and guest" />
-    <option name="LAST_COMMIT_MESSAGE" value="BetaVersion202203 Branch : enable https and guest" />
+    <MESSAGE value="BetaVersion202203 Branch : enable https and procfile" />
+    <option name="LAST_COMMIT_MESSAGE" value="BetaVersion202203 Branch : enable https and procfile" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1060,17 +1094,12 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>173</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>567</line>
+          <line>568</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>564</line>
+          <line>565</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -1165,7 +1194,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAOImpl.java</url>
-          <line>39</line>
+          <line>36</line>
           <option name="timeStamp" value="145" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1194,14 +1223,14 @@
           <option name="timeStamp" value="156" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="157" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java</url>
           <line>74</line>
           <option name="timeStamp" value="159" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>183</line>
+          <option name="timeStamp" value="162" />
         </line-breakpoint>
         <line-breakpoint type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/ImageVO.java</url>

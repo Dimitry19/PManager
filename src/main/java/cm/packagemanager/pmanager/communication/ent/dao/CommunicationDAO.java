@@ -5,7 +5,7 @@
 
 package cm.packagemanager.pmanager.communication.ent.dao;
 
-import cm.packagemanager.pmanager.common.ent.dao.CommonDAO;
+import cm.framework.ds.hibernate.dao.CommonDAO;
 
 
 

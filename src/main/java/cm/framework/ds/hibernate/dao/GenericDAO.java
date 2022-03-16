@@ -1,4 +1,4 @@
-package cm.packagemanager.pmanager.common.ent.dao;
+package cm.framework.ds.hibernate.dao;
 
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.event.IEvent;

@@ -1,7 +1,7 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
 
-import cm.packagemanager.pmanager.common.ent.dao.CommonGenericDAO;
+import cm.framework.ds.hibernate.dao.CommonGenericDAO;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;

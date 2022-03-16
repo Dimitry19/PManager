@@ -2,7 +2,7 @@ package cm.packagemanager.pmanager.announce.ent.dao;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
-import cm.packagemanager.pmanager.common.ent.dao.CommonDAO;
+import cm.framework.ds.hibernate.dao.CommonDAO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.ReservationType;
