@@ -9,7 +9,6 @@ import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.message.ent.service.MessageService;
 import cm.packagemanager.pmanager.notification.ent.service.NotificationService;
-import cm.packagemanager.pmanager.notification.ent.service.PushNotificationService;
 import cm.packagemanager.pmanager.user.ent.service.RoleService;
 import cm.packagemanager.pmanager.user.ent.service.UserService;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -72,10 +71,6 @@ public class CommonController  {
 
     @Autowired
     public MessageService messageService;
-
-
-    @Autowired
-    public PushNotificationService pushNotificationService;
 
 
     @Autowired

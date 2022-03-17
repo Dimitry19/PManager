@@ -85,7 +85,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jersey</artifactId>
 			<version>2.3.0.RELEASE</version>
-<!--			<version>2.3.0.RELEASE</version>-->
 		</dependency>
 
 		<dependency>
@@ -121,6 +120,10 @@
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-security</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-validator</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -258,25 +261,6 @@
 		</dependency>
 
 		<!-- OPENTRACING END-->
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-		</dependency>
-
-		<!-- NOTIFICATION FIREBASE-->
-		<dependency>
-			<groupId>com.google.firebase</groupId>
-			<artifactId>firebase-admin</artifactId>
-			<version>7.1.0</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>18.0</version>
-		</dependency>
-		<!-- NOTIFICATION FIREBASE END-->
 
 
 		<!--<dependency>
@@ -347,40 +331,15 @@
 		<!-- Thanks for using https://jar-download.com -->
 
 		<!-- GESTION TOKEN POUR LES REQUETES WS END-->
-		<!--<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>-->
 
 	</dependencies>
 
 	<build>
 		<plugins>
-		<!--	<plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>-->
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.0.0</version>
-				<executions>
-					<execution>
-						<id>clean-jar-artifacts</id>
-						<phase>install</phase>
-						<goals><goal>clean</goal></goals>
-						<configuration>
-
-							<excludeDefaultDirectories>true</excludeDefaultDirectories>
-							<filesets>
-								<fileset>
-									<directory>target/*.jar</directory>
-								</fileset>
-							</filesets>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
-			
 			<!-- Ceci permet de gerer le probleme ( lazy initialization exception )de chargement des données chargées en Fetch LAZY par Jackson (utilisé pour renvoyer les données du WS)-->
 			<plugin> 
   				<groupId>org.hibernate.orm.tooling</groupId> 
