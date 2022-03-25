@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="clean pom">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es2015.0dd560556d7dcd3650dc.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es5.0dd560556d7dcd3650dc.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/styles.52a1e1cdace3aaf63752.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.b495bb643bf7576bc0ee.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.b495bb643bf7576bc0ee.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.3301df7479ebe77d8ddc.css" beforeDir="false" />
-    </list>
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -577,13 +568,6 @@
       <workItem from="1648082061574" duration="87000" />
       <workItem from="1648082205787" duration="366000" />
     </task>
-    <task id="LOCAL-00057" summary="image users">
-      <created>1643833443963</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1643833443963</updated>
-    </task>
     <task id="LOCAL-00058" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
       <created>1644521022224</created>
       <option name="number" value="00058" />
@@ -920,7 +904,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648082408566</updated>
     </task>
-    <option name="localTasksCounter" value="106" />
+    <task id="LOCAL-00106" summary="Modifications partie FE">
+      <created>1648197184159</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1648197184159</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1026,7 +1017,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="new commit for notification and datatables" />
     <MESSAGE value="local commit" />
     <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application-error.log&#10;#&#9;logs/PackManager/application.log" />
     <MESSAGE value="new implementation for socket" />
@@ -1051,7 +1041,8 @@
     <MESSAGE value="BetaVersion202203 Branch : enable https and config" />
     <MESSAGE value="clean pom" />
     <MESSAGE value="Correction de la methode de recuperation des infos de l'utilisateur" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correction de la methode de recuperation des infos de l'utilisateur" />
+    <MESSAGE value="Modifications partie FE" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifications partie FE" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
