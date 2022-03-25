@@ -55,6 +55,9 @@ public class MessageVO extends CommonVO {
     @Transient
     private String username;
 
+    @Transient
+    private Long userId;
+
     @EmbeddedId
     MessageIdVO id;
 
@@ -81,6 +84,7 @@ public class MessageVO extends CommonVO {
     public void setUser(UserVO user) {
         this.user = user;
         setUsername(user.getUsername());
+        setUserId(user.getId());
     }
 
     public void setAnnounce(AnnounceVO announce) {
@@ -99,6 +103,16 @@ public class MessageVO extends CommonVO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+
+    @JsonProperty
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
