@@ -74,7 +74,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
                 ," a modifié son commentaire sur l'annonce "+comment.getAnnounce().getDeparture() +"/"+comment.getAnnounce().getArrival(),
                 " pour la date " + DateUtils.getDateStandard(comment.getAnnounce().getStartDate())
                         + " et retour le "+ DateUtils.getDateStandard(comment.getAnnounce().getEndDate()),
-                ":'"+ comment +"'");
+                ":'"+ mdto.getContent() +"'");
 
         generateEvent(comment,message);
         return comment;
@@ -113,7 +113,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
                 ," a commenté l'annonce "+announce.getDeparture() +"/"+announce.getArrival(),
                  " pour la date " + DateUtils.getDateStandard(announce.getStartDate())
                          + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()),
-                ":'"+ comment +"'");
+                ":'"+ mdto.getContent() +"'");
 
         generateEvent(comment,message);
         return comment;
