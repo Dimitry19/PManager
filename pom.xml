@@ -370,7 +370,7 @@
 							<excludeDefaultDirectories>true</excludeDefaultDirectories>
 							<filesets>
 								<fileset>
-									<directory>target/dependency/*.jar</directory>
+									<directory>target/*.jar</directory>
 								</fileset>
 							</filesets>
 						</configuration>
