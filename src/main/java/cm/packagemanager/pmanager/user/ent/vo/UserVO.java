@@ -233,6 +233,7 @@ public class UserVO extends CommonVO {
         return enableNotification;
     }
 
+
     @Access(AccessType.PROPERTY)
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy(clause = "id.id DESC")
@@ -321,7 +322,7 @@ public class UserVO extends CommonVO {
         this.googleId = googleId;
     }
 
-    public void setEnableNotification(Boolean enableNotification) { this.enableNotification = enableNotification;  }
+    public void setEnableNotification(boolean enableNotification) { this.enableNotification = enableNotification;  }
 
     public void setCommunications(Set<CommunicationVO> communications) {
         this.communications = communications;
