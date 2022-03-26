@@ -37,8 +37,8 @@ import static org.hibernate.annotations.FetchMode.SELECT;
  */
 
 @Entity(name = "UserVO")
-//@Table(name = "TP_USER")
-@Table(name = "USER")
+@Table(name = "TP_USER")
+//@Table(name = "USER")
 @NamedQueries({
         @NamedQuery(name = UserVO.Q_AC_ITEM, query = "select u from UserVO u where (upper(u.lastName) like :searchFilter) or(upper(u.firstName) like :" +
                 "searchFilter ) or(u.username like :searchFilter) or( u.email like :searchFilter)  order by u.firstName"),
@@ -56,8 +56,8 @@ import static org.hibernate.annotations.FetchMode.SELECT;
         @Filter(name = FilterConstants.CANCELLED),
         @Filter(name = FilterConstants.ACTIVE_MBR)
 })
-@Where(clause = FilterConstants.FILTER_WHERE_USER_CANCELLED)
-//@Where(clause = FilterConstants.FILTER_WHERE_USER_CANCELLED_MYSQL)
+//@Where(clause = FilterConstants.FILTER_WHERE_USER_CANCELLED)
+@Where(clause = FilterConstants.FILTER_WHERE_USER_CANCELLED_MYSQL)
 public class UserVO extends CommonVO {
 
 

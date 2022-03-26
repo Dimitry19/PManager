@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -25,7 +26,7 @@ import java.util.Objects;
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
 })
-//@Where(clause= FilterConstants.FILTER_WHERE_MESSAGE_CANCELLED)
+@Where(clause= FilterConstants.FILTER_WHERE_MESSAGE_CANCELLED)
 public class MessageVO extends CommonVO {
 
     public static final String FINDALL = "cm.packagemanager.pmanager.message.ent.vo.MessageVO.findAll";
@@ -55,6 +56,9 @@ public class MessageVO extends CommonVO {
     @Transient
     private String username;
 
+    @Transient
+    private Long userId;
+
     @EmbeddedId
     MessageIdVO id;
 
@@ -81,6 +85,7 @@ public class MessageVO extends CommonVO {
     public void setUser(UserVO user) {
         this.user = user;
         setUsername(user.getUsername());
+        setUserId(user.getId());
     }
 
     public void setAnnounce(AnnounceVO announce) {
@@ -99,6 +104,16 @@ public class MessageVO extends CommonVO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+
+    @JsonProperty
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override

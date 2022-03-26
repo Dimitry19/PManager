@@ -55,7 +55,6 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
 
     final List<Event> events = new ArrayList();
-    List alreadySent = new ArrayList();
     Map finalMap = new HashMap();
 
 
@@ -120,22 +119,22 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
                 headerAccessor.setSessionId(sessionId);
 
                 notification.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
-                alreadySent= (List) sessionManager.getFromSession(l);
+                List alreadySentForUser= (List)sessionManager.getFromSession(l);
 
-                if(CollectionsUtils.isEmpty(alreadySent) ||(CollectionsUtils.isNotEmpty(alreadySent) && !alreadySent.contains(notification))){
-
+                if(CollectionsUtils.isEmpty(alreadySentForUser) ||
+                        (CollectionsUtils.isNotEmpty(alreadySentForUser) && !alreadySentForUser.contains(notification))){
                     messagingTemplate.convertAndSendToUser(sessionId,notification.getTopic(), notification, headerAccessor.getMessageHeaders());
-                    alreadySent.add(notification);
+                    alreadySentForUser.add(notification);
                     sessionManager.removeToSession(l);
-                    sessionManager.addToSession(l,alreadySent);
+                    sessionManager.addToSession(l,alreadySentForUser);
                 }
             });
 
-        notifications.remove(notification);
+        removeNotification(notification);
     }
 
     @Async
-   // @Scheduled(fixedRate = 100000)
+    @Scheduled(fixedRate = 100000)
     public void doNotify() throws Exception {
         logger.info(" doNotify");
 
@@ -267,6 +266,16 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
         commentListeners.remove(userId);
         announceListeners.remove(userId);
         userListeners.remove(userId);
+    }
+
+    private void removeNotification(Notification notification){
+
+        if(CollectionsUtils.isNotEmpty(notifications)){
+
+            notifications.removeIf(n->((NotificationVO) n).getId().equals(notification.getId()));
+
+        }
+
     }
 
 }

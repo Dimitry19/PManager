@@ -38,7 +38,7 @@ public class ReservationVO extends CommonVO {
     private Long id;
 
     //@JsonIgnore
-    @Access(AccessType.PROPERTY)
+    //@Access(AccessType.PROPERTY)
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "R_USER_ID", updatable = false)
     @JsonBackReference
@@ -127,7 +127,7 @@ public class ReservationVO extends CommonVO {
 
     public void setUser(UserVO user) {
         this.user = user;
-        userInfo = new UserInfo(user);
+        this.userInfo = new UserInfo(user);
     }
 
     public AnnounceVO getAnnounce() {

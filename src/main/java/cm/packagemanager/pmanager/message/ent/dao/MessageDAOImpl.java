@@ -70,10 +70,11 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         comment.setContent(mdto.getContent());
         update(comment);
 
-        String message= MessageFormat.format(notificationMessagePattern,user.getUsername()
+        String message= MessageFormat.format(notificationMessageCommentPattern,user.getUsername()
                 ," a modifié son commentaire sur l'annonce "+comment.getAnnounce().getDeparture() +"/"+comment.getAnnounce().getArrival(),
                 " pour la date " + DateUtils.getDateStandard(comment.getAnnounce().getStartDate())
-                        + " et retour le "+ DateUtils.getDateStandard(comment.getAnnounce().getEndDate()));
+                        + " et retour le "+ DateUtils.getDateStandard(comment.getAnnounce().getEndDate()),
+                ":'"+ comment +"'");
 
         generateEvent(comment,message);
         return comment;
@@ -108,10 +109,11 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         announce.addMessage(comment);
         save(comment);
 
-        String message= MessageFormat.format(notificationMessagePattern,user.getUsername()
+        String message= MessageFormat.format(notificationMessageCommentPattern,user.getUsername()
                 ," a commenté l'annonce "+announce.getDeparture() +"/"+announce.getArrival(),
                  " pour la date " + DateUtils.getDateStandard(announce.getStartDate())
-                         + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()));
+                         + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()),
+                ":'"+ comment +"'");
 
         generateEvent(comment,message);
         return comment;

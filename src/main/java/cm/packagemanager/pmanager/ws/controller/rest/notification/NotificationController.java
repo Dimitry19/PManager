@@ -33,31 +33,6 @@ public class NotificationController extends CommonController {
 
     protected final Log logger = LogFactory.getLog(NotificationController.class);
 
-
-    @PostMapping("/notification/topic")
-    public ResponseEntity sendNotification(@RequestBody Notification request) {
-        pushNotificationService.sendPushNotificationWithoutData(request);
-        return new ResponseEntity<>(new NotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
-    }
-
-    @PostMapping("/notification/token")
-    public ResponseEntity sendTokenNotification(@RequestBody Notification request) {
-        pushNotificationService.sendPushNotificationToToken(request);
-        return new ResponseEntity<>(new NotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
-    }
-
-    @PostMapping("/notification/data")
-    public ResponseEntity sendDataNotification(@RequestBody Notification request) {
-        pushNotificationService.sendPushNotification(request);
-        return new ResponseEntity<>(new NotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
-    }
-
-    @GetMapping("/notification/sample")
-    public ResponseEntity sendSampleNotification() {
-        pushNotificationService.sendSamplePushNotification();
-        return new ResponseEntity<>(new NotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
-    }
-
     @ApiOperation(value = "Retrieve an notification with an ID", response = AnnounceVO.class)
     @GetMapping(value = NOTIFICATIION_WS_BY_ID, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<Object> read(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
