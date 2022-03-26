@@ -89,13 +89,11 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
             }else{
                 filterChain.doFilter(request, response);
             }
-        }catch(ExpiredJwtException ex)
-        {
+        }catch(ExpiredJwtException ex) {
             request.setAttribute("exception", ex);
             error(response);
             //throw ex;
-        }
-        catch(BadCredentialsException ex){
+        }catch(BadCredentialsException ex){
             request.setAttribute("exception", ex);
             error(response);
             //throw ex;

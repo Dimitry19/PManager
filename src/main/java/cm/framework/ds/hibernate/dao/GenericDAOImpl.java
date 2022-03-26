@@ -2,6 +2,7 @@ package cm.framework.ds.hibernate.dao;
 
 
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
+import cm.packagemanager.pmanager.common.event.AEvent;
 import cm.packagemanager.pmanager.common.event.Event;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
@@ -32,7 +33,7 @@ import java.math.RoundingMode;
 import java.util.*;
 
 
-public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable> implements GenericDAO<T, ID, NID> {
+public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable> extends AEvent<T> implements GenericDAO<T, ID, NID> {
 
 
     private static Logger logger = LoggerFactory.getLogger(GenericDAOImpl.class);
@@ -189,11 +190,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
         Session session = this.sessionFactory.getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
-        Query query = session.createQuery(FROM + clazz.getName() + " as elt where elt.user.id =:userId", clazz);
-        query.setParameter(USER_PARAM, userId);
-        pageBy(query, pageBy);
-
-        return query.getResultList();
+        return commonFinByUser(clazz,userId,pageBy,session);
     }
 
     @Override
@@ -201,11 +198,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     public List<T> findByUserId(Class<T> clazz, Long userId, PageBy pageBy) throws Exception {
 
         Session session = this.sessionFactory.getCurrentSession();
-        Query query = session.createQuery(FROM + clazz.getName() + " as elt where elt.userId =:userId", clazz);
-        query.setParameter(USER_PARAM, userId);
-        pageBy(query, pageBy);
-
-        return query.getResultList();
+        return commonFinByUser(clazz,userId,pageBy,session);
     }
 
     @Override
@@ -541,8 +534,12 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     }
 
-    public void generateEvent(Object obj, String message) throws Exception{
+    private List<T> commonFinByUser(Class<T> clazz, Long userId, PageBy pageBy,Session session){
+        Query query = session.createQuery(FROM + clazz.getName() + " as elt where elt.userId =:userId", clazz);
+        query.setParameter(USER_PARAM, userId);
+        pageBy(query, pageBy);
 
+        return query.getResultList();
     }
 
 }

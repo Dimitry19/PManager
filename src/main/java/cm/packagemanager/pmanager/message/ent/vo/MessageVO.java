@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -25,7 +26,7 @@ import java.util.Objects;
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
 })
-//@Where(clause= FilterConstants.FILTER_WHERE_MESSAGE_CANCELLED)
+@Where(clause= FilterConstants.FILTER_WHERE_MESSAGE_CANCELLED)
 public class MessageVO extends CommonVO {
 
     public static final String FINDALL = "cm.packagemanager.pmanager.message.ent.vo.MessageVO.findAll";
