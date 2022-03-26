@@ -321,7 +321,7 @@ public class UserVO extends CommonVO {
         this.googleId = googleId;
     }
 
-    public void setEnableNotification(Boolean enableNotification) { this.enableNotification = enableNotification;  }
+    public void setEnableNotification(boolean enableNotification) { this.enableNotification = enableNotification;  }
 
     public void setCommunications(Set<CommunicationVO> communications) {
         this.communications = communications;
