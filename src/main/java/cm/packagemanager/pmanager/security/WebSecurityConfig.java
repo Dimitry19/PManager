@@ -4,6 +4,7 @@ package cm.packagemanager.pmanager.security;
 import cm.packagemanager.pmanager.configuration.filters.AuthenticationFilter;
 import cm.packagemanager.pmanager.configuration.filters.HttpsEnforcer;
 import cm.packagemanager.pmanager.configuration.filters.SessionFilter;
+import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,27 +44,56 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/configuration/security",
             "/swagger-ui.html",
             "/ws/**",
-            "/webjars/**"
+            "/webjars/**",
+            WebSocketConstants.END_POINT
     };
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+       /* http.csrf().disable();
         http.httpBasic().disable().requiresChannel()
                 .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-                .requiresSecure();
+                .requiresSecure();*/
 
        logger.info("into configure");
 //        http.csrf().disable();
 //        http.httpBasic().disable();
 
-        /*http.authorizeRequests()
-                .antMatchers(AUTH_LIST)
+        http
+        .authorizeRequests()
+        .antMatchers(AUTH_LIST)
                 .permitAll()
-                .and().httpBasic()
-                .and().cors().and().csrf().disable()
-                .addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class);*/
+                .and()
+                .httpBasic()
+                .and()
+                .cors()
+                .and()
+                .headers()
+                .frameOptions()
+                //.sameOrigin()
+                .disable()
+                .and()
+                .csrf()
+                .disable()
+                .requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
+                //.addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class);
+
+
+
+            /* http
+                .cors()
+                .and()
+                .headers()
+                .frameOptions().disable()
+                .and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/stomp").permitAll() // On autorise l'appel handshake entre le client et le serveur
+                .anyRequest()
+                .authenticated();*/
     }
 
     @Bean

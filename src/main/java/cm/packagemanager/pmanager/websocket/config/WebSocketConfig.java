@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.websocket.config;
 
+import cm.packagemanager.pmanager.common.interceptor.HttpHandshakeInterceptor;
 import cm.packagemanager.pmanager.component.CrossDomainFilter;
 import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
 import org.springframework.context.annotation.Bean;
@@ -35,12 +36,21 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.setApplicationDestinationPrefixes(WebSocketConstants.PREFIX_DESTINATION_APP);
     }
 
-    @Override
+    //Version OK en HTTTP
+  /*  @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint(WebSocketConstants.END_POINT)
                 //.setAllowedOrigins("http://localhost:4200", "http://127.0.0.1:4200")
                 .setAllowedOrigins("*")
                 .withSockJS();
+    }*/
+
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint(WebSocketConstants.END_POINT)
+                .addInterceptors(new HttpHandshakeInterceptor())
+                //.setAllowedOrigins("http://localhost:4200", "http://127.0.0.1:4200")
+                .setAllowedOrigins("*");
     }
 
     /***
