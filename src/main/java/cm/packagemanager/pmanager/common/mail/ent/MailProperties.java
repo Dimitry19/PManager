@@ -1,47 +1,17 @@
 package cm.packagemanager.pmanager.common.mail.ent;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Properties;
-
-
-
-
-
-// [START simple_includes]
-import java.io.IOException;
-import java.util.Properties;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-// [END simple_includes]
-
-// [START multipart_includes]
-import java.io.InputStream;
-import java.io.ByteArrayInputStream;
-import java.io.UnsupportedEncodingException;
-import javax.activation.DataHandler;
-import javax.mail.Multipart;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMultipart;
-// [END multipart_includes]
-
 
 
 @Configuration("mailProperties")
@@ -84,8 +54,15 @@ public class MailProperties {
 	@Value("${mail.email.from}")
 	protected String travelPostPseudo;
 
+	@Value("${mail.admin.username}")
+	protected String defaultContactUs;
+
 	private JavaMailSenderImpl jms;
 
+
+	public String getDefaultContactUs() {
+		return defaultContactUs;
+	}
 
 	private void setJms(JavaMailSenderImpl jms) {
 		this.jms = jms;
@@ -159,73 +136,4 @@ public class MailProperties {
 		jms.send(msg);
 
 	}
-
-	public void sendSimpleMail() {
-		// [START simple_example]
-		Properties props = new Properties();
-		Session session = Session.getDefaultInstance(props, null);
-
-		try {
-			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress("admin@example.com", "Example.com Admin"));
-			msg.addRecipient(Message.RecipientType.TO,	new InternetAddress("dimipasc@yahoo.fr", "Mr. User"));
-			msg.addRecipient(Message.RecipientType.CC,	new InternetAddress("user@example.com", "Mr. User"));
-			msg.setSubject("Your Example.com account has been activated");
-			msg.setText("This is a test");
-			Transport.send(msg);
-		} catch (AddressException e) {
-
-		} catch (MessagingException e) {
-
-		} catch (UnsupportedEncodingException e) {
-
-		}
-		// [END simple_example]
-	}
-
-
-	private void sendMultipartMail() {
-		Properties props = new Properties();
-		Session session = Session.getDefaultInstance(props, null);
-
-		String msgBody = "...";
-
-		try {
-			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress("admin@example.com", "Example.com Admin"));
-			msg.addRecipient(Message.RecipientType.TO,
-					new InternetAddress("user@example.com", "Mr. User"));
-			msg.setSubject("Your Example.com account has been activated");
-			msg.setText(msgBody);
-
-			// [START multipart_example]
-			String htmlBody = "";          // ...
-			byte[] attachmentData = null;  // ...
-			Multipart mp = new MimeMultipart();
-
-			MimeBodyPart htmlPart = new MimeBodyPart();
-			htmlPart.setContent(htmlBody, "text/html");
-			mp.addBodyPart(htmlPart);
-
-			MimeBodyPart attachment = new MimeBodyPart();
-			InputStream attachmentDataStream = new ByteArrayInputStream(attachmentData);
-			attachment.setFileName("manual.pdf");
-			attachment.setContent(attachmentDataStream, "application/pdf");
-			mp.addBodyPart(attachment);
-
-			msg.setContent(mp);
-			// [END multipart_example]
-
-			Transport.send(msg);
-
-		} catch (AddressException e) {
-			// ...
-		} catch (MessagingException e) {
-			// ...
-		} catch (UnsupportedEncodingException e) {
-			// ...
-		}
-	}
-
-
 }

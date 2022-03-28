@@ -49,8 +49,16 @@ public class MailController extends CommonController {
         try {
             createOpentracingSpan("MailController - contact us");
 
-            com.sendgrid.Response sent = mailService.contactUS(contactusDTO);
-            if (mailSenderSendGrid.manageResponse(sent)) {
+            //com.sendgrid.Response sent =
+
+            mailService.contactUS(contactusDTO);
+
+            pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
+            response.setStatus(200);
+
+            return pmResponse;
+         /*   if (mailSenderSendGrid.manageResponse(sent)) {
 
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                 pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
@@ -61,9 +69,9 @@ public class MailController extends CommonController {
                 pmResponse.setRetCode(sent.getStatusCode());
                 pmResponse.setRetDescription(sent.getBody());
                 response.setStatus(sent.getStatusCode());
-            }
+            }*/
         } catch (Exception e) {
-
+                new Exception("Une erreur est survenue durant l'envoi du mail , Veuillez reessayer plutard");
         } finally {
             finishOpentracingSpan();
         }

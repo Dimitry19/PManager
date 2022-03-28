@@ -123,8 +123,8 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
                 if(CollectionsUtils.isEmpty(alreadySentForUser) ||
                         (CollectionsUtils.isNotEmpty(alreadySentForUser) && !alreadySentForUser.contains(notification))){
-                    //messagingTemplate.convertAndSendToUser(sessionId,notification.getTopic(), notification, headerAccessor.getMessageHeaders()); OK HTTP
-                    messagingTemplate.convertAndSendToUser(sessionId,notification.getTopic(), notification);
+                    messagingTemplate.convertAndSendToUser(sessionId,notification.getTopic(), notification, headerAccessor.getMessageHeaders());
+                    //messagingTemplate.convertAndSendToUser(sessionId,notification.getTopic(), notification);
                     alreadySentForUser.add(notification);
                     sessionManager.removeToSession(l);
                     sessionManager.addToSession(l,alreadySentForUser);

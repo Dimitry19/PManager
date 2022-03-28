@@ -47,7 +47,7 @@ public class PackageApplicationDemo   implements CommandLineRunner {
 
         System.out.println("Sending Email...");
 
-        iGoogleMailSenderService.sendMail();
+        //iGoogleMailSenderService.sendMail();
         //sendEmailWithAttachment();
 
         System.out.println("Done");

@@ -4,7 +4,6 @@ package cm.packagemanager.pmanager.common.mail;
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.mail.ent.MailProperties;
 import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
-import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.common.utils.MailUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.common.utils.Utility;
@@ -14,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,10 +27,15 @@ import java.util.*;
 /*https://github.com/sendgrid/sendgrid-java/*/
 
 @Service
-public class MailSenderSendGrid  {
+public class MailSenderSendGrid{
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(MailSenderSendGrid.class);
 
+    String EmailSendAddresses = null;
+
+    String EmailSendAddressesCC = null;
+
+    String EmailSendAddressesBCC = null;
 
     @Autowired
     MailProperties mailProperties;
@@ -54,15 +58,6 @@ public class MailSenderSendGrid  {
 
     @Value("${sendgrid.api.key}")
     private String SENDGRID_API_KEY;
-
-
-    String EmailSendAddresses;
-
-    String EmailSendAddressesCC;
-
-    String EmailSendAddressesBCC;
-
-
 
 
     public MailSenderSendGrid() {
@@ -96,7 +91,7 @@ public class MailSenderSendGrid  {
 
     public Response sendMailMessageAttachments(String messageSubject, List<String> emailSendTo, List<String> emailSendCC, List<String> emailSendBCC, String from, String username, String message, String filePath,boolean repyToEnabled) {
         try {
-            final Mail mail = buildMailToSend(messageSubject, emailSendTo, emailSendCC, emailSendBCC, from, username, message, repyToEnabled);
+            final Mail mail = buildMailToSend(messageSubject, emailSendTo, emailSendCC, emailSendBCC, from, username, message);
 
             attachments(mail,filePath);
 
@@ -109,9 +104,9 @@ public class MailSenderSendGrid  {
         return null;
     }
 
-    public Response sendMailMessage(String messageSubject, List<String> emailSendTo, List<String> emailSendCC, List<String> emailSendBCC, String from, String username, String message, boolean repyToEnabled) {
+    public Response sendMailMessage(String messageSubject, List<String> emailSendTo, List<String> emailSendCC, List<String> emailSendBCC, String from, String username, String message) {
         try {
-            final Mail mail = buildMailToSend(messageSubject, emailSendTo, emailSendCC, emailSendBCC, from, username, message, repyToEnabled);
+            final Mail mail = buildMailToSend(messageSubject, emailSendTo, emailSendCC, emailSendBCC, from, username, message);
             final Response response = send(mail);
             return response;
         } catch (Exception e) {
@@ -122,7 +117,7 @@ public class MailSenderSendGrid  {
     }
 
 
-    public Mail buildMailToSend(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC, List<String> emailSendBCC, String from, String username, String message, boolean repyToEnabled) throws IOException {
+    public Mail buildMailToSend(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> emailSendTo, List<String> emailSendCC, List<String> emailSendBCC, String from, String username, String message, boolean replyToEnabled) throws IOException {
         Mail mail = new Mail();
         try {
 
@@ -155,8 +150,8 @@ public class MailSenderSendGrid  {
             }
             mail.addContent(content);
 
-            repyToEnabled = true;
-            if (repyToEnabled) {
+
+            if (replyToEnabled) {
                 Email replyTo = new Email();
                 replyTo.setName(mailProperties.getTravelPostPseudo());
                 replyTo.setEmail(adminEmail);
@@ -168,10 +163,11 @@ public class MailSenderSendGrid  {
             e.printStackTrace();
         }
 
-        return mail;
+        return  (Mail)mail;
     }
 
-    public Mail buildMailToSend(String messageSubject, List<String> emailSendTo, List<String> emailSendCC, List<String> emailSendBCC, String from, String username, String message, boolean repyToEnabled) throws IOException {
+
+    public Mail buildMailToSend(String messageSubject, List<String> emailSendTo, List<String> emailSendCC, List<String> emailSendBCC, String from, String username, String message) throws IOException {
         Mail mail = new Mail();
         try {
 
@@ -347,6 +343,8 @@ public class MailSenderSendGrid  {
         System.out.println(response.getBody());
         System.out.println(response.getHeaders());
     }
+
+
 
   /*  private Response testSend() throws IOException {
 

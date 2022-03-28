@@ -53,7 +53,6 @@ Le fait d’avoir des singletons a un impact en environnement multi-threadé
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    public static final String USER_WS = "/ws/user";
 
     @Autowired
     UserDAO userDAO;
@@ -257,46 +256,6 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public UserVO findByToken(String token) throws Exception {
         return userDAO.findByToken(token);
-    }
-
-
-    public Response sendMail(MailDTO mr, boolean active) throws Exception {
-
-        UserVO user = findByEmail(mr.getFrom());
-
-        if (user != null) {
-
-            List<String> labels = new ArrayList<String>();
-
-            labels.add(MailType.BODY_KEY);
-
-            return mailSenderSendGrid.sendMailMessage(MailType.SEND_MAIL_TEMPLATE, mr.getSubject(), MailUtils.replace(user, labels, mr.getBody(), null), mr.getTo(), mr.getCc(), mr.getBcc(), mr.getFrom(), user.getUsername(), null, true);
-        }
-        return null;
-    }
-
-    @Transactional(rollbackFor = UserException.class)
-    public Response buildAndSendMail(HttpServletRequest request, UserVO user) throws UserException {
-
-        String appUrl = HTMLEntities.buildUrl(request, USER_WS);
-        StringBuilder sblink = new StringBuilder("<a href=");
-        sblink.append(appUrl);
-        sblink.append("/confirm?token=");
-        sblink.append(user.getConfirmationToken());
-        sblink.append(">Confirmation</a>");
-
-        String body = MailType.CONFIRM_TEMPLATE_BODY + sblink.toString();
-        List<String> labels = new ArrayList<String>();
-        List<String> emails = new ArrayList<String>();
-
-        labels.add(MailType.BODY_KEY);
-
-        emails.add(user.getEmail());
-
-        Response sent = mailSenderSendGrid.sendMailMessage(MailType.CONFIRM_TEMPLATE, MailType.CONFIRM_TEMPLATE_TITLE, MailUtils.replace(user, labels, body, null),
-                emails, null, null, null, user.getUsername(), null, false);
-
-        return sent;
     }
 
 

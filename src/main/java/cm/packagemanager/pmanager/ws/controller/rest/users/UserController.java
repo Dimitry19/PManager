@@ -91,9 +91,13 @@ public class UserController extends CommonController {
                     return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
                 }
 
-                com.sendgrid.Response sent = userService.buildAndSendMail(request, usr);
+                mailService.buildAndSendMail(request, usr);
+                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
+                response.setStatus(200);
+                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 
-                if (mailSenderSendGrid.manageResponse(sent)) {
+                /*if (mailSenderSendGrid.manageResponse(sent)) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
                     response.setStatus(200);
@@ -105,7 +109,7 @@ public class UserController extends CommonController {
                     response.setStatus(sent.getStatusCode());
                     userService.remove(usr);
                     return new ResponseEntity<>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-                }
+                }*/
             }
         } catch (Exception e) {
             logger.error("Errore eseguendo register: ", e);
@@ -492,7 +496,7 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController -sendMail");
             if (mail != null) {
-                if (mailSenderSendGrid.manageResponse(userService.sendMail(mail, true))) {
+                if (mailSenderSendGrid.manageResponse(mailService.sendMail(mail, true))) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
                 } else {
@@ -730,11 +734,6 @@ public class UserController extends CommonController {
                 cookie.setPath(request.getContextPath());
                 response.addCookie(cookie);
             }
-        }
-        HttpSession sessionObj = request.getSession(false);
-
-        if (sessionObj != null) {
-            sessionObj.invalidate();
         }
 
         Response pmResponse = new Response();

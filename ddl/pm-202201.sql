@@ -1,5 +1,5 @@
 -- we don't know how to generate database MANAGER (class Database) :(
-drop table IF EXISTS  IF EXISTS ADMINISTRATOR;
+drop table IF EXISTS  ADMINISTRATOR;
 create table ADMINISTRATOR
 (
     ID BIGINT auto_increment primary key,
@@ -11,7 +11,7 @@ create table ADMINISTRATOR
     CANCELLED BOOLEAN not null
 );
 
-drop table IF EXISTS  IF EXISTS  AIRLINE;
+drop table IF EXISTS   AIRLINE;
 create table AIRLINE
 (
     CODE VARCHAR(255) not null,
@@ -193,8 +193,8 @@ create table ROLE
     DESCRIPTION VARCHAR(255) not null
 );
 
-drop table IF EXISTS  USER;
-create table USER
+drop table IF EXISTS  TP_USER;
+create table TP_USER
 (
     ID BIGINT   auto_increment
         primary key,
@@ -248,7 +248,7 @@ create table ANNOUNCE
     IMAGE_ID BIGINT,
     COUNTRESERVATION INTEGER,
     constraint FKFW0TKPEM5N1S5HA75UD6QJMQ
-        foreign key (R_USER_ID) references USER,
+        foreign key (R_USER_ID) references TP_USER,
     constraint FKP72D81HLBK413NI11Y1D57RHQ
         foreign key (IMAGE_ID) references IMAGE
 );
@@ -284,7 +284,7 @@ create table MESSAGE
     constraint FKE39G9PLVG5K7X0GDURX5IIDLK
         foreign key (R_ANNOUNCE) references ANNOUNCE,
     constraint FKOGVI3LF5JH16WQIAXRRPJSXMA
-        foreign key (R_USER_ID) references USER
+        foreign key (R_USER_ID) references TP_USER
 );
 
 drop table IF EXISTS  RESERVATION;
@@ -304,7 +304,7 @@ create table RESERVATION
     constraint FK3H0SO8JJDQDGNN9PY00I83OFU
         foreign key (R_ANNOUNCE_ID) references ANNOUNCE,
     constraint FKTCN6F6DKS6UF7KRCMVV2KHAU0
-        foreign key (R_USER_ID) references USER
+        foreign key (R_USER_ID) references TP_USER
 );
 
 drop table IF EXISTS  RESERVATION_CATEGORY;
@@ -334,7 +334,7 @@ create table REVIEW
     R_USER_ID BIGINT not null,
     RATING_USER_ID BIGINT,
     constraint FKMN7YQ16MASQJ4ODIT0TOHL3XS
-        foreign key (R_USER_ID) references USER
+        foreign key (R_USER_ID) references TP_USER
 );
 
 drop table IF EXISTS  SUBSCRIBERS;
@@ -344,9 +344,9 @@ create table SUBSCRIBERS
     SUBSCRIBER_ID BIGINT not null,
     primary key (R_USER_ID, SUBSCRIBER_ID),
     constraint FK1NVJXHQAUIACV41MVBPO4R6IU
-        foreign key (R_USER_ID) references USER,
+        foreign key (R_USER_ID) references TP_USER,
     constraint FKOGEX3X8F6IE4WW40KGOI8O98U
-        foreign key (SUBSCRIBER_ID) references USER
+        foreign key (SUBSCRIBER_ID) references TP_USER
 );
 
 drop table IF EXISTS  SUBSCRIPTIONS;
@@ -356,22 +356,22 @@ create table SUBSCRIPTIONS
     R_USER_ID BIGINT not null,
     primary key (SUBSCRIPTION_ID, R_USER_ID),
     constraint FK5MGUIDOAT1GBMLUK1NV9VHJKD
-        foreign key (R_USER_ID) references USER,
+        foreign key (R_USER_ID) references TP_USER,
     constraint FKG9EHR2OF3WIDR0N9R03M5U6SA
-        foreign key (SUBSCRIPTION_ID) references USER
+        foreign key (SUBSCRIPTION_ID) references TP_USER
 );
 
 create unique index PRIMARY_KEY_273
-    on USER (ID);
+    on TP_USER (ID);
 
-drop table IF EXISTS  USER_COMMUNICATION;
-create table USER_COMMUNICATION
+drop table IF EXISTS  TP_USER_COMMUNICATION;
+create table TP_USER_COMMUNICATION
 (
     USERS_ID BIGINT not null,
     COMMUNICATIONS_ID BIGINT not null,
     primary key (USERS_ID, COMMUNICATIONS_ID),
     constraint FKAACENEGVR45D01M491GVVB7XE
-        foreign key (USERS_ID) references USER,
+        foreign key (USERS_ID) references TP_USER,
     constraint FKPPG2OD2BISCSJQOY2F9EU0YHP
         foreign key (COMMUNICATIONS_ID) references COMMUNICATION
 );
@@ -385,7 +385,7 @@ create table USER_NOTIFICATION
     constraint FK8HR3CBMBTB3NDL456F6BASWMN
         foreign key (NOTIFICATIONS_ID) references NOTIFICATION,
     constraint FKO1QX6Y02V6L3UXNG68RXJD9GR
-        foreign key (USERS_ID) references USER
+        foreign key (USERS_ID) references TP_USER
 );
 
 drop table IF EXISTS  USER_ROLE;
@@ -395,7 +395,7 @@ create table USER_ROLE
     ROLE_ID INTEGER not null,
     primary key (R_USER, ROLE_ID),
     constraint FKH3WNT7IJXYT7F1JS45H8W3FOH
-        foreign key (R_USER) references USER,
+        foreign key (R_USER) references TP_USER,
     constraint FKN1RN9QODD3U4LE8UF3KL33QE3
         foreign key (ROLE_ID) references ROLE
 );
