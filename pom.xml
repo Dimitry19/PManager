@@ -332,6 +332,13 @@
 
 		<!-- GESTION TOKEN POUR LES REQUETES WS END-->
 
+
+		<!-- send email -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

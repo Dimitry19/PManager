@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.common.mail;
 
 
 import cm.packagemanager.pmanager.common.Constants;
+import cm.packagemanager.pmanager.common.mail.ent.MailProperties;
 import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
 import cm.packagemanager.pmanager.common.utils.MailUtils;
@@ -9,6 +10,7 @@ import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.common.utils.Utility;
 import com.sendgrid.*;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -26,42 +28,29 @@ import java.util.*;
 /*https://github.com/sendgrid/sendgrid-java/*/
 
 @Service
-public class MailSenderSendGrid {
+public class MailSenderSendGrid  {
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(MailSenderSendGrid.class);
 
 
-    private static final String TEXT_PLAIN = "text/plain";
-    @Value("${mail.smtp.port}")
-    private String PORT;
+    @Autowired
+    MailProperties mailProperties;
 
-    @Value("${mail.smtp.host}")
-    private String HOST;
-
-    @Value("${mail.smtp.starttls.enable}")
-    private boolean TLS;
-
-    @Value("${mail.smtp.auth}")
-    private boolean AUTH;
 
     @Value("${sendgrid.mail.sender.user}")
-    private String sender;
+    protected String sender;
 
     @Value("${sendgrid.mail.sender.password}")
-    private String adminPassword;
+    protected String adminPassword;
 
     @Value("${sendgrid.admin.email}")
-    private String adminEmail;
+    protected String adminEmail;
 
     @Value("${sendgrid.mail.email.bcc}")
-    private String emailbcc;
+    protected String emailbcc;
 
     @Value("${sendgrid.mail.email.cc}")
-    private String emailcc;
-
-    @Value("${mail.email.from}")
-    private String travelPostPseudo;
-
+    protected String emailcc;
 
     @Value("${sendgrid.api.key}")
     private String SENDGRID_API_KEY;
@@ -72,6 +61,8 @@ public class MailSenderSendGrid {
     String EmailSendAddressesCC;
 
     String EmailSendAddressesBCC;
+
+
 
 
     public MailSenderSendGrid() {
@@ -146,7 +137,7 @@ public class MailSenderSendGrid {
                 from = sender;
             }
 
-            genericPersonalizzation(messageSubject, from, travelPostPseudo, username, mail, emailSendTo, emailSendCC, emailSendBCC);
+            genericPersonalizzation(messageSubject, from, mailProperties.getTravelPostPseudo(), username, mail, emailSendTo, emailSendCC, emailSendBCC);
             Content content = new Content();
 
             if (variableLabel != null && StringUtils.isEmpty(message)) {
@@ -159,7 +150,7 @@ public class MailSenderSendGrid {
                 content.setType("text/html");
                 content.setValue(emailTemplateString);
             } else {
-                content.setType(TEXT_PLAIN);
+                content.setType(mailProperties.TEXT_PLAIN);
                 content.setValue(message);
             }
             mail.addContent(content);
@@ -167,7 +158,7 @@ public class MailSenderSendGrid {
             repyToEnabled = true;
             if (repyToEnabled) {
                 Email replyTo = new Email();
-                replyTo.setName(travelPostPseudo);
+                replyTo.setName(mailProperties.getTravelPostPseudo());
                 replyTo.setEmail(adminEmail);
                 mail.setReplyTo(replyTo);
             }
@@ -184,9 +175,9 @@ public class MailSenderSendGrid {
         Mail mail = new Mail();
         try {
 
-            genericPersonalizzation(messageSubject, from, travelPostPseudo, username, mail, emailSendTo, emailSendCC, emailSendBCC);
+            genericPersonalizzation(messageSubject, from, mailProperties.getTravelPostPseudo(), username, mail, emailSendTo, emailSendCC, emailSendBCC);
             Content content = new Content();
-            content.setType(TEXT_PLAIN);
+            content.setType(mailProperties.TEXT_PLAIN);
             content.setValue(message);
             mail.addContent(content);
 
@@ -209,9 +200,9 @@ public class MailSenderSendGrid {
 
             List<String> emailSendCC = new ArrayList<>();
             emailSendCC.add(contactUS.getSender());
-            genericPersonalizzation(contactUS.getSubject(), sender, contactUS.getPseudo(),travelPostPseudo, mail, emailSendTo, emailSendCC, null);
+            genericPersonalizzation(contactUS.getSubject(), sender, contactUS.getPseudo(),mailProperties.getTravelPostPseudo(), mail, emailSendTo, emailSendCC, null);
             Content content = new Content();
-            content.setType(TEXT_PLAIN);
+            content.setType(mailProperties.TEXT_PLAIN);
             content.setValue(contactUS.getContent());
             mail.addContent(content);
 
