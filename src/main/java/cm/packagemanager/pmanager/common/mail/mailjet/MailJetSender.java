@@ -146,9 +146,12 @@ public class MailJetSender {
 			joAll.put(Emailv31.Message.BCC,jaTos);
 		}
 
-		/*if(replyTo){
-			joAll.put(Emailv31.Message.REPLYTO,emailFrom);
-		}*/
+		if(replyTo){
+			JSONObject joReplyTo= new JSONObject();
+			joReplyTo.put(Emailv31.Message.REPLYTO,emailFrom);
+			joAll.put(Emailv31.Message.HEADERS,joReplyTo);
+		}
+
 		joAll.put(Emailv31.Message.FROM,joFrom);
 		joAll.put(Emailv31.Message.TO,jaTos);
 		joAll.put(Emailv31.Message.SUBJECT, subject);
@@ -192,9 +195,13 @@ public class MailJetSender {
 		joAll.put(Emailv31.Message.CC,jaCcs);
 		joAll.put(Emailv31.Message.BCC,jaBCcs);
 
+
+
 		checkAndFillAttributes(content, template, generateCustomerId(), joAll);
 		if(replyTo){
-			joAll.put(Emailv31.Message.REPLYTO,emailFrom);
+			JSONObject joReplyTo= new JSONObject();
+			joReplyTo.put(Emailv31.Message.REPLYTO,emailFrom);
+			joAll.put(Emailv31.Message.HEADERS,joReplyTo);
 		}
 
 
