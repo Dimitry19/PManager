@@ -1,24 +1,42 @@
-package cm.packagemanager.pmanager.common.mail.ent;
+package cm.packagemanager.pmanager.common.mail;
 
+import cm.packagemanager.pmanager.common.mail.mailjet.MailJetSender;
+import com.mailjet.client.ClientOptions;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.resource.Emailv31;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
-import java.io.IOException;
 import java.util.Properties;
 import javax.mail.MessagingException;
 
 
-@Configuration("mailProperties")
-public class MailProperties {
+@Component("personalMailSender")
+public class PersonalMailSender {
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public static final String TEXT_PLAIN = "text/plain";
+
+
+
 
 
 	@Value("${mail.smtp.host}")
@@ -59,6 +77,11 @@ public class MailProperties {
 
 	private JavaMailSenderImpl jms;
 
+	@Autowired
+	private MailJetSender mailJetSender;
+
+
+
 
 	public String getDefaultContactUs() {
 		return defaultContactUs;
@@ -68,7 +91,7 @@ public class MailProperties {
 		this.jms = jms;
 	}
 
-	public MailProperties(){
+	public PersonalMailSender(){
 
 	}
 
@@ -78,13 +101,12 @@ public class MailProperties {
 
 	@PostConstruct
 	public void init() {
-
-		System.out.println("Mail service starts....");
-		mailProperties();
+		System.out.println("Personal Mail service starts....");
+		loadProperties();
 	}
 
-	public MailProperties mailProperties() {
-		MailProperties mailProperties = new MailProperties();
+	protected void loadProperties() {
+		//PersonalMailSender personalMailSender = new PersonalMailSender();
 
 		JavaMailSenderImpl jms = new JavaMailSenderImpl();
 		Properties  mailProp = jms.getJavaMailProperties();
@@ -103,15 +125,15 @@ public class MailProperties {
 		jms.setJavaMailProperties(mailProp);
 
 		setJms(jms);
-		return mailProperties;
+
 	}
 
-	public void send(SimpleMailMessage mail){
 
+	public void send(SimpleMailMessage mail){
 		jms.send(mail);
 	}
 
-	public void sendEmailWithAttachment() throws MessagingException, IOException {
+	public void sendEmailWithAttachment() throws MessagingException {
 
 		MimeMessage msg = jms.createMimeMessage();
 
@@ -136,4 +158,12 @@ public class MailProperties {
 		jms.send(msg);
 
 	}
+
+	public boolean send(String emailFrom,String nameFrom, String emailTo, String nameTo, String emailCc,String nameCc, String emailBCc, String nameBCc,
+						  String subject, String content,String template, boolean replyTo) throws MailjetSocketTimeoutException, MailjetException {
+
+
+		return mailJetSender.send(emailFrom, nameFrom,  emailTo,  nameTo, emailCc,  nameCc,  emailBCc,  nameBCc, subject,  content, template,replyTo);
+	}
+
 }

@@ -1,27 +1,21 @@
 package cm.packagemanager.pmanager.common.mail.ent.service;
 
 import cm.packagemanager.pmanager.common.Constants;
-import cm.packagemanager.pmanager.common.mail.ent.MailProperties;
+import cm.packagemanager.pmanager.common.mail.PersonalMailSender;
 import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
 import cm.packagemanager.pmanager.common.mail.ent.wrapper.MailWrapper;
-import cm.packagemanager.pmanager.common.utils.DateUtils;
-import cm.packagemanager.pmanager.common.utils.MailUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.common.utils.Utility;
-import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
-import com.sendgrid.Email;
-import com.sendgrid.Mail;
-import com.sendgrid.Personalization;
-import com.sendgrid.Response;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.apache.commons.lang3.BooleanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,8 +24,8 @@ import java.util.Map;
 @Service
 public class IGoogleMailSenderServiceImpl implements IGoogleMailSenderService {
 
-	@Resource(name = "mailProperties")
-	private MailProperties mailProperties ;
+	@Autowired
+	private PersonalMailSender personalMailSender;
 
 	@Override
 	public void sendMail() {
@@ -39,9 +33,15 @@ public class IGoogleMailSenderServiceImpl implements IGoogleMailSenderService {
 	}
 
 	@Override
-	public void contactUs(ContactUSVO contactUS, boolean replyToEnabled) {
+	public void contactUs(ContactUSVO contactUS, boolean replyToEnabled) throws MailjetSocketTimeoutException, MailjetException {
+		contactUs(contactUS);
+	}
 
-		contactUS.setReceiver(mailProperties.getDefaultContactUs());
+
+	@Override
+	public boolean contactUs(ContactUSVO contactUS) throws MailjetSocketTimeoutException, MailjetException {
+
+		contactUS.setReceiver(personalMailSender.getDefaultContactUs());
 		List<String> emailSendTo = new ArrayList<>();
 		emailSendTo.add(contactUS.getReceiver());
 
@@ -50,8 +50,10 @@ public class IGoogleMailSenderServiceImpl implements IGoogleMailSenderService {
 
 		SimpleMailMessage mail = new SimpleMailMessage();
 		common(mail,contactUS.getSubject(), contactUS.getSender(),contactUS.getContent(), emailSendTo, emailSendCC, null,true);
-		mailProperties.send(mail);
+		//personalMailSender.send(mail);
 
+		return personalMailSender.send(contactUS.getSender(), contactUS.getPseudo(),contactUS.getReceiver(), personalMailSender.getTravelPostPseudo(),null, null,
+				null,null,contactUS.getSubject(),contactUS.getContent(), null,true);
 
 	}
 
@@ -59,7 +61,7 @@ public class IGoogleMailSenderServiceImpl implements IGoogleMailSenderService {
 	public void sendMail(String templateName, String messageSubject, Map<String, String> variableLabel, List<String> to, List<String> cc, List<String> bcc, String from, String username, String message, boolean replyToEnabled) throws IOException {
 
 		SimpleMailMessage smm =mailToSend(templateName,messageSubject,variableLabel,to,cc,bcc,from,from,message,replyToEnabled);
-		mailProperties.send(smm);
+		personalMailSender.send(smm);
 	}
 
 

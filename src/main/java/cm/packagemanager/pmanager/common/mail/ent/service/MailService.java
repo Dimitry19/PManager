@@ -14,7 +14,7 @@ public interface MailService {
 
     void sendEmail(UserVO user) throws MailException;
 
-    void contactUS(ContactUSDTO contactUS) throws Exception;
+    boolean contactUS(ContactUSDTO contactUS) throws Exception;
 
     void buildAndSendMail(HttpServletRequest request, UserVO user) throws UserException, IOException;
 

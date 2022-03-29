@@ -1,31 +1,29 @@
 package cm.packagemanager.pmanager;
 
 
-import cm.packagemanager.pmanager.common.mail.ent.service.IGoogleMailSenderServiceImpl;
-import com.sendgrid.*;
+import cm.packagemanager.pmanager.common.mail.PersonalMailSender;
+import cm.packagemanager.pmanager.common.mail.mailjet.MailJetSender;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import java.io.IOException;
-import java.util.Properties;
+import javax.annotation.Resource;
+
 
 //@SpringBootApplication
 public class PackageApplicationDemo   implements CommandLineRunner {
 
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    private IGoogleMailSenderServiceImpl iGoogleMailSenderService;
 
-    public static void main(String[] args) {
 
+    public  static void main(String[] args) throws MailjetSocketTimeoutException, MailjetException {
+       // runMail();
         //Response res=testSend();
         //System.out.println(res.getStatusCode());
         SpringApplication.run(PackageApplicationDemo.class, args);
@@ -42,80 +40,43 @@ public class PackageApplicationDemo   implements CommandLineRunner {
     }
 */
 
+
+    public  static void runMail() throws MailjetSocketTimeoutException, MailjetException {
+
+    String template="<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!";
+         MailJetSender mailJetSender = new MailJetSender();
+        mailJetSender.send("unkutnation@gmail.com","Claude","unkutnation@gmail.com","Lion Dx",
+                null,null,null,null,"Confirmation","Greetings from Travel Post.",template, true);
+
+      /*  MailjetClient client;
+        MailjetRequest request;
+        MailjetResponse response;
+        client = new MailjetClient("59ba0f382c4873d8c019dab9ec913d95", "21457bfe15c24588d5c7a67c8928c432",
+                new ClientOptions("v3.1"));
+        request = new MailjetRequest(Emailv31.resource)
+                .property(Emailv31.MESSAGES, new JSONArray()
+                        .put(new JSONObject()
+                                .put(Emailv31.Message.FROM, new JSONObject()
+                                        .put("Email", "unkutnation@gmail.com")
+                                        .put("Name", "Claude"))
+                                .put(Emailv31.Message.TO, new JSONArray()
+                                        .put(new JSONObject()
+                                                .put("Email", "unkutnation@gmail.com")
+                                                .put("Name", "Claude")))
+                                .put(Emailv31.Message.SUBJECT, "Greetings from Mailjet.")
+                                .put(Emailv31.Message.TEXTPART, "My first Mailjet email")
+                                .put(Emailv31.Message.HTMLPART, template)
+                                .put(Emailv31.Message.CUSTOMID, "AppGettingStartedTest")
+                        ));
+        response = client.post(request);
+        System.out.println(response.getStatus());
+        System.out.println(response.getData());*/
+
+    }
+
+
     @Override
-    public void run(String... args) {
-
-        System.out.println("Sending Email...");
-
-        //iGoogleMailSenderService.sendMail();
-        //sendEmailWithAttachment();
-
-        System.out.println("Done");
-
+    public void run(String... args) throws Exception {
+        runMail();
     }
-
-    public void sendEmail() throws MailException {
-
-
-
-
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(465);
-
-        mailSender.setUsername("packagemanager2020@gmail.com");
-        mailSender.setPassword("pmanager2020");
-
-        //from email id and password
-        //System.out.println("Username is : " + String.valueOf(resourceList.get(0)).split("@")[0]);
-        //System.out.println("Password is : " + String.valueOf(resourceList.get(1)));
-
-        Properties mailProp = mailSender.getJavaMailProperties();
-        mailProp.put("mail.transport.protocol", "smtp");
-        mailProp.put("mail.smtp.auth", "true");
-        mailProp.put("mail.smtp.starttls.enable", "true");
-        mailProp.put("mail.smtp.starttls.required", "true");
-        mailProp.put("mail.debug", "true");
-        mailProp.put("mail.smtp.ssl.enable", "true");
-
-        /*
-         * This JavaMailSender Interface is used to send Mail in Spring Boot. This
-         * JavaMailSender extends the MailSender Interface which contains send()
-         * function. SimpleMailMessage Object is required because send() function uses
-         * object of SimpleMailMessage as a Parameter
-         */
-
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo("dimipasc@yahoo.fr");
-        mail.setSubject("Testing Mail API");
-        mail.setText("Hurray ! You have done that dude...");
-
-        /*
-         * This send() contains an Object of SimpleMailMessage as an Parameter
-         */
-        mailSender.send(mail);
-    }
-    private static Response testSend() {
-
-        Email from = new Email("dimipasc@hotmail.com");
-        String subject = "Sending with SendGrid is Fun";
-        Email to = new Email("packagemanager2020@gmail.com");
-        Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
-        Mail mail = new Mail(from, subject, to, content);
-
-        SendGrid sg = new SendGrid("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");
-        Request request = new Request();
-        try {
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-            return sg.api(request);
-
-        } catch (IOException ex) {
-
-        }
-        return  null;
-
-    }
-
 }

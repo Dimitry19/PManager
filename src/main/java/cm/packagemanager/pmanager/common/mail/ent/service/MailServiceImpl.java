@@ -1,7 +1,7 @@
 package cm.packagemanager.pmanager.common.mail.ent.service;
 
 import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.common.mail.MailSenderSendGrid;
+import cm.packagemanager.pmanager.common.mail.sendgrid.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.mail.MailType;
 import cm.packagemanager.pmanager.common.mail.ent.dao.ContactUSDAO;
 import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
@@ -51,7 +51,7 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public void contactUS(ContactUSDTO contactus) throws Exception {
+    public boolean contactUS(ContactUSDTO contactus) throws Exception {
 
         ContactUSVO contactUS = new ContactUSVO();
         contactUS.setPseudo(contactus.getPseudo());
@@ -60,7 +60,7 @@ public class MailServiceImpl implements MailService {
         contactUS.setContent(contactus.getContent());
         contactUS.setSubject(contactus.getSubject());
 
-        googleMailSenderService.contactUs(contactUS,true);
+        return googleMailSenderService.contactUs(contactUS);
 
        /* final Response response  = mailSenderSendGrid.sendContactUs(contactUS, true);
 

@@ -3,7 +3,7 @@ package cm.packagemanager.pmanager.ws.controller.rest;
 import cm.packagemanager.pmanager.announce.ent.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.ent.service.ReservationService;
 import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
-import cm.packagemanager.pmanager.common.mail.MailSenderSendGrid;
+import cm.packagemanager.pmanager.common.mail.sendgrid.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.mail.ent.service.MailService;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.FileUtils;

@@ -51,13 +51,15 @@ public class MailController extends CommonController {
 
             //com.sendgrid.Response sent =
 
-            mailService.contactUS(contactusDTO);
+            if(mailService.contactUS(contactusDTO)){
+                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
+                response.setStatus(200);
 
-            pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-            pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
-            response.setStatus(200);
+                return pmResponse;
+            }
 
-            return pmResponse;
+
          /*   if (mailSenderSendGrid.manageResponse(sent)) {
 
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);

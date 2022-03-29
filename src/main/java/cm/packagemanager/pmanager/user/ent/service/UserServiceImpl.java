@@ -4,9 +4,8 @@ import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.common.mail.MailSenderSendGrid;
+import cm.packagemanager.pmanager.common.mail.sendgrid.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.mail.MailType;
-import cm.packagemanager.pmanager.common.utils.HTMLEntities;
 import cm.packagemanager.pmanager.common.utils.MailUtils;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.rating.enums.Rating;
@@ -18,7 +17,6 @@ import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
 import cm.packagemanager.pmanager.security.PasswordGenerator;
 import cm.packagemanager.pmanager.user.ent.dao.UserDAO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.review.ReviewDTO;
 import cm.packagemanager.pmanager.ws.requests.review.UpdateReviewDTO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
@@ -32,15 +30,12 @@ import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static cm.packagemanager.pmanager.common.event.IEvent.*;
 
 
 /*

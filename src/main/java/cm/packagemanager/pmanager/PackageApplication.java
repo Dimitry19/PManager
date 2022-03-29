@@ -25,7 +25,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 //@EnableAutoConfiguration
-@EnableJpaRepositories(basePackages = "cm.packagemanager.pmanager")
+@EnableJpaRepositories(basePackages = {"cm.packagemanager.pmanager","cm.framework.ds"})
 public class PackageApplication extends SpringBootServletInitializer {
 
     private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);
