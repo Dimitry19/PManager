@@ -46,6 +46,15 @@ public class CommonController  {
     public static final String DEFAULT_PAGE = "0";
     public static final String HEADER_TOTAL = "x-total-count";
 
+    @Value("${redirect.page}")
+    protected String redirectPage;
+
+    @Value("${redirect.confirm.ok.page}")
+    protected String redirectConfirmPage;
+
+     @Value("${redirect.confirm.error.page}")
+    protected String redirectConfirmErrorPage;
+
 
     @Autowired
     public UserService userService;

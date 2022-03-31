@@ -1,6 +1,5 @@
 package cm.packagemanager.pmanager.ws.controller.rest.mail;
 
-import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.mail.ContactUSDTO;
 import cm.packagemanager.pmanager.ws.responses.Response;
@@ -49,16 +48,18 @@ public class MailController extends CommonController {
         try {
             createOpentracingSpan("MailController - contact us");
 
-            //com.sendgrid.Response sent =
 
             if(mailService.contactUS(contactusDTO)){
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                 pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
                 response.setStatus(200);
 
-                return pmResponse;
+            }else{
+                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                pmResponse.setRetDescription(WebServiceResponseCode.ERROR_CONTACT_US_LABEL);
+                response.setStatus(401);
             }
-
+            return pmResponse;
 
          /*   if (mailSenderSendGrid.manageResponse(sent)) {
 

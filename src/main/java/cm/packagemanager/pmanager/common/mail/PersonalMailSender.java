@@ -1,20 +1,12 @@
 package cm.packagemanager.pmanager.common.mail;
 
 import cm.packagemanager.pmanager.common.mail.mailjet.MailJetSender;
-import com.mailjet.client.ClientOptions;
-import com.mailjet.client.MailjetClient;
-import com.mailjet.client.MailjetRequest;
-import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
-import com.mailjet.client.resource.Emailv31;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -22,14 +14,15 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Properties;
 
 
 @Component("personalMailSender")
-public class PersonalMailSender {
+public class PersonalMailSender extends CommonMailSenderService{
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -159,11 +152,59 @@ public class PersonalMailSender {
 
 	}
 
+	public boolean contactUs(String emailFrom,String nameFrom, String emailTo, String nameTo, String emailCc,String nameCc, String emailBCc, String nameBCc,
+						String subject, String content,String template, boolean replyTo) throws MailjetSocketTimeoutException, MailjetException {
+
+		return send(emailFrom, nameFrom,  emailTo,  nameTo, emailCc,  nameCc,  emailBCc,  nameBCc, subject,  content, template,replyTo);
+	}
+
+	/**
+	 * Send mail
+	 * @param emailFrom
+	 * @param nameFrom
+	 * @param emailTo
+	 * @param nameTo
+	 * @param emailCc
+	 * @param nameCc
+	 * @param emailBCc
+	 * @param nameBCc
+	 * @param subject
+	 * @param content
+	 * @param template
+	 * @param replyTo
+	 * @return
+	 * @throws MailjetSocketTimeoutException
+	 * @throws MailjetException
+	 */
 	public boolean send(String emailFrom,String nameFrom, String emailTo, String nameTo, String emailCc,String nameCc, String emailBCc, String nameBCc,
 						  String subject, String content,String template, boolean replyTo) throws MailjetSocketTimeoutException, MailjetException {
 
-
 		return mailJetSender.send(emailFrom, nameFrom,  emailTo,  nameTo, emailCc,  nameCc,  emailBCc,  nameBCc, subject,  content, template,replyTo);
+	}
+
+	/**
+	 * Send Mail With attachment as last parameter
+	 * @param templateName
+	 * @param messageSubject
+	 * @param variableLabel
+	 * @param emailTo
+	 * @param emailCc
+	 * @param emailBCc
+	 * @param from
+	 * @param message
+	 * @param replyTo
+	 * @param attachment
+	 * @return
+	 * @throws MailjetSocketTimeoutException
+	 * @throws MailjetException
+	 * @throws IOException
+	 */
+	public boolean  send(String templateName, String messageSubject, Map<String, String> variableLabel, Map<String,String> emailTo, Map<String,String> emailCc, Map<String,String>emailBCc, String from, String message, boolean replyTo, Object attachment) throws MailjetSocketTimeoutException, MailjetException, IOException {
+
+
+		String emailTemplateString = buildTemplateMail(templateName,messageSubject,message,variableLabel);
+		return mailJetSender.send(from, null,  emailTo,   emailCc,  emailBCc, messageSubject,  null, emailTemplateString,replyTo,attachment);
+
 	}
 
 }

@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.ws.controller;
 
+import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,16 +13,14 @@ import java.io.IOException;
 
 
 @Controller
-public class DefaultController {
+public class DefaultController extends CommonController {
 	private static final Logger logger = LoggerFactory.getLogger(DefaultController.class);
 
 
-	@Value("${redirect.page}")
-	private String redirectPage;
 
    @RequestMapping (value = "/", method = RequestMethod.GET)
 	public void ping(HttpServletResponse response) throws IOException {
-		logger.info("Démarrage des services OK .....");
+		System.out.println("Démarrage des services OK .....");
 
 	    response.sendRedirect(redirectPage);
 	}

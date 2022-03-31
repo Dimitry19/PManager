@@ -91,11 +91,18 @@ public class UserController extends CommonController {
                     return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
                 }
 
-                mailService.buildAndSendMail(request, usr);
-                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
-                response.setStatus(200);
-                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                if(mailService.buildAndSendMail(request, usr)){
+                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
+                    response.setStatus(200);
+                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                }else {
+                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_CONTACT_US_LABEL);
+                    response.setStatus(401);
+                    return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
+                }
+
 
                 /*if (mailSenderSendGrid.manageResponse(sent)) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -134,7 +141,8 @@ public class UserController extends CommonController {
     //@RequestMapping(value=USER_WS_CONFIRMATION, method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
     @GetMapping(path = USER_WS_CONFIRMATION, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
-    ResponseEntity<Response> confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
+    //ResponseEntity<Response>
+    void confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
 
         Response pmResponse = new Response();
 
@@ -150,17 +158,20 @@ public class UserController extends CommonController {
             if (user == null) {
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 pmResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
+                response.sendRedirect(redirectConfirmErrorPage);
             } else {
 
                 if (user.getActive() == 1) {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
+                    response.sendRedirect(redirectConfirmErrorPage);
                 }
 
                 user.setActive(1);
                 if (userService.update(user) != null) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
+                    response.sendRedirect(redirectConfirmPage);
                 }
             }
 
@@ -170,7 +181,8 @@ public class UserController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+
+        //return new ResponseEntity<>(pmResponse, HttpStatus.OK);
     }
 
     @ApiOperation(value = " Login user ", response = UserVO.class)

@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.common.mail.mailjet;
 
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.utils.SecRandom;
 import com.mailjet.client.ClientOptions;
@@ -15,21 +16,14 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 
 @Service
@@ -100,10 +94,10 @@ public class MailJetSender {
 	}
 
 	public boolean send(String emailFrom, String nameFrom, Map emailsTo, Map emailsCc,Map emailsBcc,
-						String subject, String content, String template, boolean replyTo) throws MailjetSocketTimeoutException, MailjetException {
+						String subject, String content, String template, boolean replyTo,Object attachment) throws MailjetSocketTimeoutException, MailjetException, IOException {
 
 		MailjetRequest mjRequest= new MailjetRequest(Emailv31.resource);
-		buildMjMail(mjRequest, emailFrom, nameFrom, emailsTo,emailsCc,emailsBcc, subject,content,template,replyTo);
+		buildMjMail(mjRequest, emailFrom, nameFrom, emailsTo,emailsCc,emailsBcc, subject,content,template,replyTo,attachment);
 		return send(mjRequest);
 	}
 
@@ -116,6 +110,7 @@ public class MailJetSender {
 	private void buildMjMail(@NotNull MailjetRequest mjRequest, String emailFrom, String nameFrom, String emailTo, String nameTo,
 							 String emailCc, String nameCc, String emailBCc, String nameBCc,
 							 String subject, String content, String template,boolean replyTo){
+
 		JSONArray jaMessage=new JSONArray();
 		JSONObject joFrom= new JSONObject();
 		JSONObject joTo= new JSONObject();
@@ -147,9 +142,7 @@ public class MailJetSender {
 		}
 
 		if(replyTo){
-			JSONObject joReplyTo= new JSONObject();
-			joReplyTo.put(Emailv31.Message.REPLYTO,emailFrom);
-			joAll.put(Emailv31.Message.HEADERS,joReplyTo);
+			//replyTo(emailFrom, nameFrom,joAll);
 		}
 
 		joAll.put(Emailv31.Message.FROM,joFrom);
@@ -176,14 +169,14 @@ public class MailJetSender {
 
 
 	private void buildMjMail(MailjetRequest mjRequest,String emailFrom,String nameFrom,  Map<String,String> emailsTo, Map emailsCc,Map emailsBcc,
-							 String subject, String content,String template,boolean replyTo){
+							 String subject, String content,String template,boolean replyTo,Object o) throws IOException {
 
 		JSONArray jaMessage=new JSONArray();
 		JSONObject joFrom= new JSONObject();
 		JSONObject joAll= new JSONObject();
 
 		joFrom.put(Emailv31.Message.EMAIL,mailJetApiSender)
-				.put(Emailv31.Message.NAME,nameFrom);
+				.put(Emailv31.Message.NAME,StringUtils.isEmpty(nameFrom)?travelPostPseudo:nameFrom);
 
 		JSONArray jaTos =fillDestinations(emailsTo);
 		JSONArray jaCcs=fillDestinations(emailsCc);
@@ -196,22 +189,30 @@ public class MailJetSender {
 		joAll.put(Emailv31.Message.BCC,jaBCcs);
 
 
-
 		checkAndFillAttributes(content, template, generateCustomerId(), joAll);
+
 		if(replyTo){
-			JSONObject joReplyTo= new JSONObject();
-			joReplyTo.put(Emailv31.Message.REPLYTO,emailFrom);
-			joAll.put(Emailv31.Message.HEADERS,joReplyTo);
+			//replyTo(emailFrom, nameFrom,joAll);
 		}
 
 
-		JSONObject joAttachment= new JSONObject();
-		joAttachment.put("ContentType","text/plain")
-						.put("Filename","test.txt")
-								.put("Base64Content", "VGhpcyBpcyB5b3VyIGF0dGFjaGVkIGZpbGUhISEK");
-		JSONArray jaAttachment=new JSONArray();
-		jaAttachment.put(joAttachment);
-		joAll.put(Emailv31.Message.ATTACHMENTS,jaAttachment);
+		if(o!=null  && o instanceof MultipartFile){
+			MultipartFile attachment=(MultipartFile)o;
+
+			JSONObject joAttachment= new JSONObject();
+			joAttachment.put("ContentType",attachment.getContentType())
+					.put("Filename",attachment.getOriginalFilename())
+					.put("Base64Content",attachment.getBytes());
+
+			/*joAttachment.put("ContentType","text/plain")
+					.put("Filename","test.txt")
+					.put("Base64Content", "VGhpcyBpcyB5b3VyIGF0dGFjaGVkIGZpbGUhISEK");*/
+			JSONArray jaAttachment=new JSONArray();
+			jaAttachment.put(joAttachment);
+
+			joAll.put(Emailv31.Message.INLINEDATTACHMENTS,jaAttachment);
+
+		}
 
 
 		jaMessage.put(joAll);
@@ -219,18 +220,14 @@ public class MailJetSender {
 
 	}
 
-	private void buildMjMailWithAttachment(MailjetRequest mjRequest,String emailFrom,String nameFrom,  Map<String,String> emailsTo, Map emailsCc,Map emailsBcc,
-							 String subject, String content,String template,boolean replyTo, Object o){
+	private void replyTo(String emailFrom, String nameFrom,JSONObject joAll){
+		JSONObject joReplyTo= new JSONObject();
 
-
-		if(o instanceof File){
-			File attachment=(File)o;
-
-		}
-		buildMjMail(mjRequest, emailFrom, nameFrom, emailsTo,emailsCc,emailsBcc, subject,content,template,replyTo);
+		joReplyTo.put(Emailv31.Message.EMAIL,emailFrom)
+				.put(Emailv31.Message.NAME,nameFrom);
+		joAll.put(Emailv31.Message.REPLYTO,joReplyTo);
 
 	}
-
 
 	private JSONArray fillDestinations(Map<String, String> emails){
 
@@ -238,14 +235,29 @@ public class MailJetSender {
 		if(emails!=null){
 			emails.entrySet().forEach(e->{
 				JSONObject joTo= new JSONObject();
-				joTo.put(Emailv31.Message.EMAIL,e.getKey())
-						.put(Emailv31.Message.NAME,e.getValue());
+				joTo.put(Emailv31.Message.EMAIL,e.getValue())
+						.put(Emailv31.Message.NAME,e.getKey());
 				jaTos.put(joTo);
 
 			});
 		}
 		return jaTos;
 	}
+
+	private JSONArray fillDestinations(List<String> emails){
+
+		JSONArray jaTos = new JSONArray();
+		if(CollectionsUtils.isNotEmpty(emails)){
+			emails.stream().forEach(e->{
+				JSONObject joTo= new JSONObject();
+				joTo.put(Emailv31.Message.EMAIL,e);
+				jaTos.put(joTo);
+
+			});
+		}
+		return jaTos;
+	}
+
 	private String generateCustomerId(){
 		return SecRandom.randomString(8);
 	}
