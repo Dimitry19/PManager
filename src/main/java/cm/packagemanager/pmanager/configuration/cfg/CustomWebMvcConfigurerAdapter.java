@@ -15,13 +15,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CustomWebMvcConfigurerAdapter implements WebMvcConfigurer {
 
 
-
+    /**
+     * Redirige les routes notFound et error sur la page index.html
+     *
+     * @param registry
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/notFound").setViewName("forward:/index.html");
         registry.addViewController("/error").setViewName("forward:/index.html");
     }
 
+    /**
+     * Ici on configure le container de tomcat afin qu'il redirige les erreurs not_found
+     * et bad request vers les routes notFound et error
+     *
+     * @return
+     */
 
     @Bean
     public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {

@@ -2,9 +2,6 @@ package cm.packagemanager.pmanager.configuration.filters;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +32,7 @@ public class HttpsEnforcer extends CommonFilter {
 				String pathInfo = (request.getPathInfo() != null) ? request.getPathInfo() : "/pmanager";
 				logger.info("redirect" ,"https://" + request.getServerName() + ":"+request.getServerPort() + pathInfo);
 				System.out.println("redirect:" +"https://" + request.getServerName() + ":"+request.getServerPort() + pathInfo);
-				response.sendRedirect("https://" + request.getServerName() + ":"+request.getServerPort() + pathInfo);
+				//response.sendRedirect("https://" + request.getServerName() + ":"+request.getServerPort() + pathInfo);
 				return;
 			}
 		}
