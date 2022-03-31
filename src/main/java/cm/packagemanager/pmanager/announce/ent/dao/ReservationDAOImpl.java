@@ -77,7 +77,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         checkUserReservation(announce, userAnnounces);
         checkRemainWeight(announce, reservationDTO.getWeight());
 
-        List<ReservationVO> reservations = findByUser(ReservationVO.class, user.getId(), null);
+        List<ReservationVO> reservations = findByUserNameQuery(ReservationVO.SQL_FIND_BY_USER, ReservationVO.class, user.getId(),null);
         if (CollectionsUtils.isNotEmpty(reservations)) {
 
             List<ReservationVO> anReservations = Optional.ofNullable(reservations

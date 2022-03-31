@@ -18,8 +18,7 @@
         <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
     </encoder>
 
-    <rollingPolicy
-            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
         <!-- rollover daily and when the file reaches 10 MegaBytes -->
         <fileNamePattern>${LOGS}/archived/tp-application-%d{yyyy-MM-dd}.%i.log
         </fileNamePattern>
@@ -30,19 +29,36 @@
     </rollingPolicy>
 </appender>
 
+<appender name="HibernateRollingFile"     class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOGS}/tp-application-hbn.log</file>
+    <encoder
+            class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <!-- rollover daily and when the file reaches 10 MegaBytes -->
+        <fileNamePattern>${LOGS}/archived/tp-application-hbn-%d{yyyy-MM-dd}.%i.log
+        </fileNamePattern>
+        <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <maxFileSize>10MB</maxFileSize>
+        </timeBasedFileNamingAndTriggeringPolicy>
+    </rollingPolicy>
+</appender>
+
 <!-- LOG everything at INFO level -->
-<root level="none">
+<root level="error">
     <appender-ref ref="Console" />
 </root>
 
-<!-- LOG at TRACE level -->
+<!-- LOG at D level -->
 <logger name="cm.packagemanager.pmanager" level="trace" additivity="false">
     <appender-ref ref="RollingFile" />
     <appender-ref ref="Console" />
 </logger>
 
-<logger name="org.hibernate.stat" level="error" additivity="false">
-    <appender-ref ref="RollingFile" />
+<logger name="org.hibernate" level="trace" additivity="false">
+    <appender-ref ref="HibernateRollingFile" />
 </logger>
 
 </configuration>
