@@ -5,7 +5,6 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
-import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -32,7 +31,6 @@ import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
@@ -122,7 +120,7 @@ public class UserController extends CommonController {
             logger.error("Errore eseguendo register: ", e);
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
             pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
-            return new ResponseEntity<>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
         } finally {
             finishOpentracingSpan();
         }
@@ -182,6 +180,10 @@ public class UserController extends CommonController {
             finishOpentracingSpan();
         }
 
+
+       /* String externalUrl = "https://some-domain.com/path/to/somewhere";
+        response.setStatus(302);
+        response.setHeader("Location", externalUrl);*/
         //return new ResponseEntity<>(pmResponse, HttpStatus.OK);
     }
 

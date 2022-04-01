@@ -64,7 +64,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
     @PostConstruct
     public void postApplicationStarted() {
-        System.out.println("Started after Spring boot application !");
+        logger.info("Started after Spring boot application !");
         applicationStarted = true;
     }
 
@@ -215,7 +215,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
             try {
                 notificationDAO.save(notification);
             } catch (Exception e) {
-                logger.error(" Erreur duranrt la sauvegarde de la notification {}",notification.getMessage());
+                logger.error(" Erreur durant la sauvegarde de la notification {}",notification.getMessage());
                e.printStackTrace();
             }
         });
