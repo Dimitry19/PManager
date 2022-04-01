@@ -54,6 +54,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Autowired
     protected UserDAO userDAO;
 
+    //@Autowired
+   // protected ReservationDAO reservationDAO;
+
     @Autowired
     protected CategoryDAO categoryDAO;
 
@@ -103,7 +106,14 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     }
 
-
+    /**
+     * Retourne les annonces d'un utilisateur dont on a passé en parametre l'id
+     *
+     * @param userId id de l'user
+     * @param pageBy optionnel si on veut un resultat paginé
+     * @return
+     * @throws Exception
+     */
     @Override
     @Transactional(readOnly = true)
     public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws Exception {
@@ -117,6 +127,14 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     }
 
+    /**
+     * Retourne les annonces ayant un certain type (BUYER,SELLER)dont on a passé en parametre l'id
+     *
+     * @param type type de l'annonce
+     *  @param pageBy optionnel si on veut un resultat paginé
+     * @return
+     * @throws Exception
+     */
     @Override
     @Transactional(readOnly = true)
     public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws Exception {
@@ -136,6 +154,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         return announce;
     }
 
+    /**
+     * Cette methode permet de creer une annonce
+     * @param adto  ddonnees de l'annonce à creer
+     * @return AnnonceVO
+     * @throws Exception
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public AnnounceVO create(AnnounceDTO adto) throws Exception {
@@ -170,28 +194,33 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         return null;
     }
 
-
+    /**
+     * Cette methode permet d'ajourner une annonce
+     * @param udto  ddonnees de l'annonce à ajourner
+     * @return AnnonceVO
+     * @throws Exception
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public AnnounceVO update(UpdateAnnounceDTO adto) throws Exception {
+    public AnnounceVO update(UpdateAnnounceDTO udto) throws Exception {
 
-        UserVO user = userDAO.findById(adto.getUserId());
+        UserVO user = userDAO.findById(udto.getUserId());
 
         if (user == null) {
             throw new RecordNotFoundException("Aucun utilisateur trouvé");
         }
 
-        AnnounceVO announce = announce(adto.getId());
+        AnnounceVO announce = announce(udto.getId());
         if (announce == null) {
             throw new RecordNotFoundException("Aucune annonce  trouvée");
         }
-        if (CollectionsUtils.isEmpty(adto.getCategories())) {
-            adto.setCategories(new ArrayList<>());
-            adto.getCategories().add(constants.DEFAULT_CATEGORIE);
+        if (CollectionsUtils.isEmpty(udto.getCategories())) {
+            udto.setCategories(new ArrayList<>());
+            udto.getCategories().add(constants.DEFAULT_CATEGORIE);
         }
         double rating = calcolateAverage(user);
         announce.getUserInfo().setRating(rating);
-        setAnnounce(announce, user, adto);
+        setAnnounce(announce, user, udto);
         update(announce);
 
         String message= MessageFormat.format(notificationMessagePattern,user.getUsername(),
@@ -203,6 +232,14 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     }
 
+    /**
+     * Recherche annonces
+     *
+     * @param announceSearchDTO
+     * @param pageBy
+     * @return
+     * @throws Exception
+     */
 
     @Override
     @Transactional(readOnly = true)
@@ -310,10 +347,20 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         BigDecimal oldWeight = announce.getWeight();
         BigDecimal diffWeight = oldWeight!=null ? weight.subtract(oldWeight): weight;
 
-        if (BigDecimalUtils.lessThan(weight, oldRemainWeight)) {
-            throw new UnsupportedOperationException("La quantité de Kg ne peut etre inférieure à celle réservée");
-        }
+        // Il y a deja des reservations faites sur l'annonce
+        if(announce.getCountReservation()!=null){
+            //Je verifie que les reservations ne sont pas annullées
+            BigDecimal sumQtyRes=BigDecimal.ZERO;
+            List<ReservationVO> reservations= findReservations(announce.getId());//reservationDAO.reservationByAnnounce(announce.getId(), null);
 
+            if(CollectionsUtils.isNotEmpty(reservations)){
+                reservations.stream().map(ReservationVO::getWeight).forEach(w->{sumQtyRes.add(w);});
+                if (sumQtyRes.compareTo(BigDecimal.ZERO)>0 && BigDecimalUtils.lessThan(weight, oldRemainWeight)) {
+                    throw new UnsupportedOperationException("La quantité de Kg ne peut etre inférieure à celle réservée");
+                }
+            }
+
+        }
 
         announce.setPrice(price);
         announce.setPreniumPrice(preniumPrice);

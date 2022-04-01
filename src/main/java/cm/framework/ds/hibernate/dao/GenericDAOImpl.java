@@ -32,7 +32,16 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.*;
 
-
+/**
+ * States of Entity Instances:
+ * Any entity instance in our application appears in one of the three main states in relation to the Session persistence context:
+ *  - transient — This instance isn't, and never was, attached to a Session. This instance has no corresponding rows in the database; it's usually just a new object that we created to save to the database.
+ *  - persistent — This instance is associated with a unique Session object. Upon flushing the Session to the database, this entity is guaranteed to have a corresponding consistent record in the database.
+ *  - detached — This instance was once attached to a Session (in a persistent state), but now it’s not. An instance enters this state if we evict it from the context, clear or close the Session, or put the instance through serialization/deserialization process.
+ * @param <T>
+ * @param <ID>
+ * @param <NID>
+ */
 public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable> extends AEvent<T> implements GenericDAO<T, ID, NID> {
 
 
@@ -402,6 +411,23 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         return result;
     }
 
+    /**
+     * Son but est de maniere basique le meme que persist, mais avec des details dans leurs implementations.
+     * La fonction save() retourne la clé primaire de l'entité sauvée.
+     *  Si on applique cette methode sur une entité est détachée du context persistent (session.evict(entite)),
+     *  un nouveau record se creera dans la base de données.
+     *
+     * Exemple:
+     *          Person person = new Person();
+     *          person.setName("John");
+     *          Long id1 = (Long) session.save(person);
+     *
+     *           session.evict(person);
+     *          Long id2 = (Long) session.save(person);
+     * @param t
+     * @return
+     */
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public T save(T t) {
@@ -409,6 +435,27 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         return (T)session.save(t);
     }
 
+    /**
+     * he persist() method is used to create or save a new entity in the database.
+     * if we try to update an existing record using persist() method it will throw EntityExistsException.
+     * if an instance is detached, we'll get an exception
+     *
+     * Que se passe -t-il après que la methode persist est appellée?
+     * L'entité est passé de l'etat TRANSIENT è PERSISTENT, elle est maintenant dans le context persistent, mais pas encore
+     * dans la base de données.
+     * L'insertion dans la base de données (la INSERT proprement dite ) advient quand : on commit la transaction, on fait la
+     * flush (session.flush()) ou ferme (session.close()) de la session.
+     *
+     * Exemple:
+     * Person person = new Person();
+     * person.setName("John");
+     * session.persist(person);
+     *
+     * session.evict(person); // On detache l'entité Person du context persistent
+     *
+     * session.persist(person); // PersistenceException!
+     * @param t
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void persist(T t) {
@@ -418,6 +465,27 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     }
 
+    /**
+     * A la difference de merge() la methode update() ne retourne pas de valeur
+     * l'entité passe de detached -> persistent
+     *
+     * Exemple:
+     *      Person person = new Person();
+     *      person.setName("John");
+     *      session.save(person);
+     *      session.evict(person);
+     *      person.setName("Mary");
+     *      session.update(person);
+     *
+     * transient -> persistent  leve une execption PersistenceException
+     * Exemple:
+     *          Person person = new Person();
+     *          person.setName("John");
+     *          session.update(person); // PersistenceException!
+     *
+     * @param t
+     * @throws BusinessResourceException
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     public  void update(T t) throws BusinessResourceException {
@@ -427,6 +495,11 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     }
 
+    /**
+     *
+     * @param t
+     * @throws BusinessResourceException
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     public void remove(T t) throws BusinessResourceException {
@@ -436,6 +509,37 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
             session.remove(t);
         }
     }
+
+    /**
+     * Using merge() method we can create/save a new record as well as we can update an existing record.
+     * Here, entity can be an unmanaged or persistent entity instance.
+     * This method returns the managed instance that the state was merged to.
+     * After the merge operation executed successfully:
+     * a new row would be inserted, or an existing one would be updated.
+     * the returned object is different than the passed object.
+     * if the passed object is unmanaged, it says unmanaged.
+     * the entity manager tracks changes of the returned, managed object within transaction boundary.
+     *
+     *      Exemple:
+     *              Person person = new Person();
+     *              person.setName("John");
+     *              session.save(person);
+     *
+     *              session.evict(person);
+     *              person.setName("Mary");
+     *
+     *              Person mergedPerson = (Person) session.merge(person);
+     *              mergedPerson is different of person
+     *
+     *          Merge fonctionne comme suit:
+     *             - Si l'entité est detachée, elle se copie sur une entité persistante existante
+     *             - Si l'entité est transient, elle se copie sur une entité persistante nouvellement créée.
+     *                          cette opération cascade pour toutes les relations avec le mappage cascade=MERGE ou cascade=ALL.
+     *             - Si l'entité est persistent, alors cet appel de méthode n'a pas d'effet sur elle (mais la cascade a toujours lieu).
+     * @param t
+     * @return
+     * @throws BusinessResourceException
+     */
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
