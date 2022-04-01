@@ -354,8 +354,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             List<ReservationVO> reservations= findReservations(announce.getId());//reservationDAO.reservationByAnnounce(announce.getId(), null);
 
             if(CollectionsUtils.isNotEmpty(reservations)){
-                reservations.stream().map(ReservationVO::getWeight).forEach(w->{sumQtyRes.add(w);});
-                if (sumQtyRes.compareTo(BigDecimal.ZERO)>0 && BigDecimalUtils.lessThan(weight, oldRemainWeight)) {
+                reservations.stream().map(ReservationVO::getWeight).forEach(sumQtyRes::add);
+                if (sumQtyRes.compareTo(BigDecimal.ZERO)==0 && BigDecimalUtils.lessThan(weight, oldRemainWeight)) {
                     throw new UnsupportedOperationException("La quantité de Kg ne peut etre inférieure à celle réservée");
                 }
             }
