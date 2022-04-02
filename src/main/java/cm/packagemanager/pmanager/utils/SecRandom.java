@@ -18,6 +18,10 @@ public class SecRandom {
 		return sb.toString();
 	}
 
+	public static Long  randomLong(){
+		return rnd.nextLong();
+	}
+
 	public static String randomStringJava8(final int maxLength) {
 		final int length = rnd.nextInt(maxLength + 1);
 		return rnd.ints(length, startChar, endChar + 1)

@@ -1,5 +1,7 @@
 package cm.packagemanager.pmanager.common.utils;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Timestamp;
@@ -36,6 +38,14 @@ public class DateUtils {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    public static Date currentDate() {
+        try {
+            return new Date();
+        } catch (Exception e) {
+        }
+        return null;
     }
 
     public static Date milliSecondToDateCalendar(long currentDateTime) {
@@ -103,11 +113,16 @@ public class DateUtils {
     }
 
     public static Date stringToDate(String dateStr) {
+        return getDate(dateStr, STD_PATTERN_HMS);
+    }
+
+    @Nullable
+    private static Date getDate(String dateStr, String stdPatternHms) {
         Date date = null;
         try {
             if (dateStr != null && dateStr.length() > 0) {
                 DateFormat formatter;
-                formatter = new SimpleDateFormat(STD_PATTERN_HMS);
+                formatter = new SimpleDateFormat(stdPatternHms);
                 date = formatter.parse(dateStr);
             }
         } catch (Exception e) {
@@ -117,37 +132,23 @@ public class DateUtils {
     }
 
     public static Date stringToDate(String dateStr, String format) {
-        Date date = null;
-        try {
-            if (dateStr != null && dateStr.length() > 0) {
-                DateFormat formatter;
-                formatter = new SimpleDateFormat(format);
-                date = formatter.parse(dateStr);
-            }
-        } catch (Exception e) {
-            logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
-        }
-        return date;
+        return getDate(dateStr, format);
     }
 
     public static String dateToString(Date date) {
-        String dateStr = "";
-        try {
-            if (date != null) {
-                SimpleDateFormat formatter = new SimpleDateFormat(STD_PATTERN);
-                dateStr = formatter.format(date);
-            }
-        } catch (Exception e) {
-            logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
-        }
-        return dateStr;
+        return getString(date, STD_PATTERN);
     }
 
     public static String dateTimeToString(Date date) {
+        return getString(date, STD_PATTERN_HMS);
+    }
+
+    @NotNull
+    private static String getString(Date date, String stdPatternHms) {
         String dateStr = "";
         try {
             if (date != null) {
-                SimpleDateFormat formatter = new SimpleDateFormat(STD_PATTERN_HMS);
+                SimpleDateFormat formatter = new SimpleDateFormat(stdPatternHms);
                 dateStr = formatter.format(date);
             }
         } catch (Exception e) {
@@ -177,5 +178,10 @@ public class DateUtils {
             return compareDateOne.before(compareDateTwo);
         }
         return false;
+    }
+
+    public static boolean isSame(Date compareDateOne, Date compareDateTwo) {
+
+        return !isAfter(compareDateOne,compareDateTwo) && !isBefore(compareDateOne,compareDateTwo);
     }
 }

@@ -26,20 +26,22 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 //@EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = {"cm.packagemanager.pmanager","cm.framework.ds"})
-public class PackageApplication extends SpringBootServletInitializer {
+public class TravelPostApplication extends SpringBootServletInitializer {
 
-    private static Logger logger = LoggerFactory.getLogger(PackageApplication.class);
+    private static Logger logger = LoggerFactory.getLogger(TravelPostApplication.class);
 
     public static void main(String[] args) {
 
-        SpringApplication application = new SpringApplication(PackageApplication.class);
+        SpringApplication application = new SpringApplication(TravelPostApplication.class);
+
+        //application.setAllowBeanDefinitionOverriding(true);
+
         application.run(args);
     }
 
     // Pour deployer dans tomcat externe
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(PackageApplication.class);
+        return application.sources(TravelPostApplication.class);
     }
-
 }

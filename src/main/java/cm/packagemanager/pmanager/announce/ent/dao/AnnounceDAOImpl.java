@@ -17,6 +17,7 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
+import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
@@ -54,8 +55,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Autowired
     protected UserDAO userDAO;
 
-    //@Autowired
-   // protected ReservationDAO reservationDAO;
 
     @Autowired
     protected CategoryDAO categoryDAO;
@@ -262,18 +261,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     public void announcesStatus() throws Exception {
         List<AnnounceVO> announces = Optional.ofNullable(allAndOrderBy(AnnounceVO.class, "startDate", true, null)).orElseGet(Collections::emptyList);
         if (CollectionsUtils.isNotEmpty(announces)) {
-            announces.stream().filter(ann -> !ann.isCancelled() && DateUtils.isBefore(ann.getEndDate(), new Date()))
+            announces.stream().filter(ann -> !ann.isCancelled() && DateUtils.isBefore(ann.getEndDate(), DateUtils.currentDate()))
                     .forEach(a -> {
                         a.setStatus(StatusEnum.COMPLETED);
                         update(a);
                         try {
                             List<ReservationVO> reservations = findReservations(a.getId());
-                            if (CollectionsUtils.isNotEmpty(reservations)) {
-                                reservations.stream().forEach(r -> {
-                                    r.setStatus(StatusEnum.COMPLETED);
-                                    update(r);
-                                });
-                            }
+                            updateReservationsStatus(reservations, StatusEnum.COMPLETED);
                         } catch (Exception e) {
                             logger.error("Erreur durant l''execution du Batch d''ajournement de status de l'annonce");
                             e.printStackTrace();
@@ -347,26 +341,34 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         BigDecimal oldWeight = announce.getWeight();
         BigDecimal diffWeight = oldWeight!=null ? weight.subtract(oldWeight): weight;
 
+        BigDecimal sumQtyRes=BigDecimal.ZERO;
+        List<ReservationVO> reservations= findReservations(announce.getId());
+
         // Il y a deja des reservations faites sur l'annonce
-        if(announce.getCountReservation()!=null){
-            //Je verifie que les reservations ne sont pas annullées
-            BigDecimal sumQtyRes=BigDecimal.ZERO;
-            List<ReservationVO> reservations= findReservations(announce.getId());//reservationDAO.reservationByAnnounce(announce.getId(), null);
+        if(announce.getCountReservation()!=null && CollectionsUtils.isNotEmpty(reservations)){
+            //Je somme les quantités de toutes les reservations acceptées
+            sumQtyRes=reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED))
+                    .map(ReservationVO::getWeight).reduce(BigDecimal.ZERO,BigDecimal::add);
 
-            if(CollectionsUtils.isNotEmpty(reservations)){
-                reservations.stream().map(ReservationVO::getWeight).forEach(sumQtyRes::add);
-                if (sumQtyRes.compareTo(BigDecimal.ZERO)==0 && BigDecimalUtils.lessThan(weight, oldRemainWeight)) {
-                    throw new UnsupportedOperationException("La quantité de Kg ne peut etre inférieure à celle réservée");
-                }
+            if (sumQtyRes.compareTo(BigDecimal.ZERO)>0 && BigDecimalUtils.lessThan(weight, sumQtyRes)) {
+                throw new UnsupportedOperationException("Impossible de reduire la quantité , car il existe des resevations pour une quantité "+sumQtyRes+" Kg");
             }
-
         }
 
+        boolean closeDate= DateUtils.isBefore(DateUtils.milliSecondToDate(adto.getEndDate()), DateUtils.currentDate()) ||
+                                    DateUtils.isSame(DateUtils.milliSecondToDate(adto.getEndDate()), DateUtils.currentDate());
+
+        //Si la modification se fait à la date courante et que tous les kg ont été reservés -> Completed
+        if(weight.compareTo(sumQtyRes)==0 && closeDate){
+            announce.setStatus(StatusEnum.COMPLETED);
+            updateReservationsStatus(reservations, StatusEnum.COMPLETED);
+        }
         announce.setPrice(price);
         announce.setPreniumPrice(preniumPrice);
         announce.setGoldPrice(goldenPrice);
         announce.setWeight(weight);
-        announce.setRemainWeight(oldRemainWeight.add(diffWeight));
+        announce.setRemainWeight(weight.subtract(sumQtyRes));
+        //announce.setRemainWeight(oldRemainWeight.add(diffWeight));
         announce.setUser(user);
         announce.setStartDate(startDate);
         announce.setEndDate(endDate);
@@ -650,6 +652,16 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 }
             });
         }
+    }
+    private void updateReservationsStatus(List<ReservationVO> reservations,StatusEnum status){
+
+        if(CollectionsUtils.isNotEmpty(reservations)){
+            reservations.stream().forEach(r -> {
+                r.setStatus(status);
+                update(r);
+            });
+        }
+
     }
 
     @Override

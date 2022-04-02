@@ -56,8 +56,7 @@ import static org.hibernate.annotations.FetchMode.SELECT;
         @Filter(name = FilterConstants.CANCELLED),
         @Filter(name = FilterConstants.ACTIVE_MBR)
 })
-//@Where(clause = FilterConstants.FILTER_WHERE_USER_CANCELLED)
-@Where(clause = FilterConstants.FILTER_WHERE_USER_CANCELLED_MYSQL)
+@Where(clause = FilterConstants.FILTER_WHERE_USER_CANCELLED)
 public class UserVO extends CommonVO {
 
 

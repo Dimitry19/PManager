@@ -1,7 +1,6 @@
 package cm.packagemanager.pmanager;
 
 
-import cm.packagemanager.pmanager.common.mail.PersonalMailSender;
 import cm.packagemanager.pmanager.common.mail.mailjet.MailJetSender;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
@@ -9,13 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import javax.annotation.Resource;
 
 
 //@SpringBootApplication
-public class PackageApplicationDemo   implements CommandLineRunner {
+public class TravelPostApplicationDemo implements CommandLineRunner {
 
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -26,7 +22,7 @@ public class PackageApplicationDemo   implements CommandLineRunner {
        // runMail();
         //Response res=testSend();
         //System.out.println(res.getStatusCode());
-        SpringApplication.run(PackageApplicationDemo.class, args);
+        SpringApplication.run(TravelPostApplicationDemo.class, args);
     }
 
 /*

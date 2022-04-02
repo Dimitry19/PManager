@@ -17,24 +17,24 @@ public class Notification {
     private String topic;
     private String token;
     private NotificationType type;
-    private Long  elementId;
+    private Long  random;
 
     public Notification() {
     }
 
-    public Notification(Long id,String title, String messageBody, NotificationType type, Long  elementId) {
+    public Notification(Long id,String title, String messageBody, NotificationType type, Long  random) {
         this.title = title;
         this.message = messageBody;
         this.type = type;
-        this.elementId = elementId;
+        this.random = random;
         this.id=id;
     }
 
-    public Notification(String title, String messageBody, String topic, Long elementId) {
+    public Notification(String title, String messageBody, String topic, Long random) {
         this.title = title;
         this.message = messageBody;
         this.topic = topic;
-        this.elementId = elementId;
+        this.random = random;
     }
 
     public String getTitle() {
@@ -65,9 +65,10 @@ public class Notification {
 
     public void setType(NotificationType type) {  this.type = type;  }
 
-    public Long getElementId() {  return elementId;  }
+    public Long getRandom() {  return random; }
 
-    public void setElementId(Long elementId) {  this.elementId = elementId;  }
+    public void setRandom(Long random) {   this.random = random; }
+
 
     public Long getId() {
         return id;

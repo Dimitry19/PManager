@@ -21,8 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,8 +70,7 @@ public class MailServiceImpl extends CommonMailSenderService implements MailServ
 
         boolean sent = personalMailSender.contactUs(contactUS.getSender(), contactUS.getPseudo(), contactUS.getReceiver(),
                 personalMailSender.getTravelPostPseudo(), null, null,
-                null, null, contactUS.getSubject(), contactUS.getContent(),
-                template(contactus.getSender(),false), true);
+                null, null, contactUS.getSubject(), contactUS.getContent()+template(contactus.getSender(),true), null,true);
 
         googleMailSenderService.contactUs(contactUS);
         return sent;
@@ -78,16 +79,23 @@ public class MailServiceImpl extends CommonMailSenderService implements MailServ
 
 
 
-    public boolean buildAndSendMail(HttpServletRequest request, UserVO user) throws UserException, IOException, MailjetSocketTimeoutException, MailjetException {
+    public boolean buildAndSendMail(HttpServletRequest request, UserVO user) throws UserException, IOException, MailjetSocketTimeoutException, MailjetException, MessagingException {
 
         String appUrl = HTMLEntities.buildUrl(request, USER_WS);
-        StringBuilder sblink = new StringBuilder("<a href=");
+        StringBuilder sblink = new StringBuilder();
+        StringBuilder sblinkNoTemplate = new StringBuilder();
+
+        sblink.append("<a href=");
         sblink.append(appUrl);
+        sblinkNoTemplate.append(appUrl);
         sblink.append("/confirm?token=");
+        sblinkNoTemplate.append("/confirm?token=");
         sblink.append(user.getConfirmationToken());
+        sblinkNoTemplate.append(user.getConfirmationToken());
         sblink.append(">Activer votre compte</a>");
 
         String body = MailType.CONFIRM_TEMPLATE_BODY + sblink.toString();
+        String bodyNoTemplate = MailType.CONFIRM_TEMPLATE_BODY + sblinkNoTemplate.toString();
         List<String> labels = new ArrayList();
         List<String> emails = new ArrayList();
 
@@ -98,10 +106,14 @@ public class MailServiceImpl extends CommonMailSenderService implements MailServ
         Map<String,String> emailTo= new HashMap();
         emailTo.put(user.getUsername(),user.getEmail());
 
+        String title=MessageFormat.format(MailType.CONFIRM_TEMPLATE_TITLE,travelPostPseudo);
 
-        googleMailSenderService.sendMail(MailType.CONFIRM_TEMPLATE, MailType.CONFIRM_TEMPLATE_TITLE, MailUtils.replace(user, labels, body, null),
-          emails, null, null, null, user.getUsername(), null, false);
-        return personalMailSender.send(MailType.CONFIRM_TEMPLATE, MailType.CONFIRM_TEMPLATE_TITLE, MailUtils.replace(user, labels, body, null),
+       /* googleMailSenderService.sendMail(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, body, null),
+          emails, null, null, null, user.getUsername(), null, false);*/
+
+
+        googleMailSenderService.sendMail(title,emails,null,null,null,user.getUsername(),bodyNoTemplate,false);
+        return personalMailSender.send(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, body, null),
                 emailTo, null,null,null,null,false,null);
     }
 

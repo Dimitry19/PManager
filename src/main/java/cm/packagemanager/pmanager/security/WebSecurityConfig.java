@@ -2,7 +2,6 @@ package cm.packagemanager.pmanager.security;
 
 
 import cm.packagemanager.pmanager.configuration.filters.AuthenticationFilter;
-import cm.packagemanager.pmanager.configuration.filters.HttpsEnforcer;
 import cm.packagemanager.pmanager.configuration.filters.SessionFilter;
 import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
 import org.slf4j.Logger;
@@ -16,8 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -29,13 +26,6 @@ import java.util.Collections;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
-
-
-    @Autowired
-    private AuthenticationEntryPoint authEntryPoint;
-
-    @Autowired
-    private SessionFilter sessionFilter;
 
     private static final String[] AUTH_LIST = {
             "/v2/api-docs",
@@ -141,14 +131,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return registrationBean;
     }
 
-    //@Bean
-    public FilterRegistrationBean  httpsEnforcerBean() {
-        FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
-        HttpsEnforcer httpsEnforcer = new HttpsEnforcer();
-
-        registrationBean.setFilter(httpsEnforcer);
-       // registrationBean.addUrlPatterns("/user/*");
-        registrationBean.setOrder(2); //set precedence
-        return registrationBean;
-    }
 }

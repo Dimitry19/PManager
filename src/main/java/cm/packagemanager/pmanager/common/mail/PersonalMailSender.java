@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
+import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Map;
@@ -24,12 +25,9 @@ import java.util.Properties;
 @Component("personalMailSender")
 public class PersonalMailSender extends CommonMailSenderService{
 
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private Logger logger = LoggerFactory.getLogger(PersonalMailSender.class);
 
 	public static final String TEXT_PLAIN = "text/plain";
-
-
-
 
 
 	@Value("${mail.smtp.host}")
@@ -62,16 +60,14 @@ public class PersonalMailSender extends CommonMailSenderService{
 	@Value("${mail.admin.password}")
 	protected String ADMIN_PASS;
 
-	@Value("${mail.email.from}")
-	protected String travelPostPseudo;
 
-	@Value("${mail.admin.username}")
-	protected String defaultContactUs;
-
-	private JavaMailSenderImpl jms;
 
 	@Autowired
 	private MailJetSender mailJetSender;
+
+	private Session session;
+
+	private JavaMailSenderImpl jms;
 
 
 
@@ -103,6 +99,7 @@ public class PersonalMailSender extends CommonMailSenderService{
 
 		JavaMailSenderImpl jms = new JavaMailSenderImpl();
 		Properties  mailProp = jms.getJavaMailProperties();
+		//session = Session.getDefaultInstance(mailProp, new MailUtils.SMTPAuthenticator(ADMIN_USERNAME,ADMIN_PASS));
 
 		jms.setHost(HOST);
 		jms.setPort(PORT);
@@ -121,6 +118,9 @@ public class PersonalMailSender extends CommonMailSenderService{
 
 	}
 
+	public Session getSession() {
+		return session;
+	}
 
 	public void send(SimpleMailMessage mail){
 		jms.send(mail);

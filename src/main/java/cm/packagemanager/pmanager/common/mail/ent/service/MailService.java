@@ -9,6 +9,7 @@ import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.sendgrid.Response;
 import org.springframework.mail.MailException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -18,7 +19,7 @@ public interface MailService {
 
     boolean contactUS(ContactUSDTO contactUS) throws Exception;
 
-    boolean buildAndSendMail(HttpServletRequest request, UserVO user) throws UserException, IOException, MailjetSocketTimeoutException, MailjetException;
+    boolean buildAndSendMail(HttpServletRequest request, UserVO user) throws UserException, IOException, MailjetSocketTimeoutException, MailjetException, MessagingException;
 
     Response sendMail(MailDTO mr, boolean active) throws Exception;
 

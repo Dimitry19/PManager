@@ -29,7 +29,7 @@ public class MailUtils {
 
     }
 
-    class SMTPAuthenticator extends javax.mail.Authenticator {
+    public static class SMTPAuthenticator extends javax.mail.Authenticator {
         String username;
         String password;
 

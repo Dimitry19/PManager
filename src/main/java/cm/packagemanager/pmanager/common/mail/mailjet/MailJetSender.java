@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.common.mail.mailjet;
 
+import cm.packagemanager.pmanager.common.mail.CommonMailSenderService;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.utils.SecRandom;
@@ -16,7 +17,6 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,18 +27,10 @@ import java.util.Map;
 
 
 @Service
-public class MailJetSender {
+public class MailJetSender extends CommonMailSenderService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
-	@Value("${mail.email.from}")
-	protected String travelPostPseudo;
-
-	@Value("${mail.admin.username}")
-	protected String defaultContactUs;
-
-	private JavaMailSenderImpl jms;
 
 	@Value("${mail.jet.api.key}")
 	protected String mailJetApiKey;
@@ -59,10 +51,6 @@ public class MailJetSender {
 
 	public String getDefaultContactUs() {
 		return defaultContactUs;
-	}
-
-	private void setJms(JavaMailSenderImpl jms) {
-		this.jms = jms;
 	}
 
 	public MailJetSender(){
@@ -132,13 +120,13 @@ public class MailJetSender {
 			joCc.put(Emailv31.Message.EMAIL,emailCc)
 					.put(Emailv31.Message.NAME,nameCc);
 			jaCcs.put(joCc);
-			joAll.put(Emailv31.Message.CC,jaTos);
+			joAll.put(Emailv31.Message.CC,jaCcs);
 		}
 		if(StringUtils.isNotEmpty(emailBCc) && StringUtils.isNotEmpty(nameBCc)){
 			joBcc.put(Emailv31.Message.EMAIL,emailBCc)
 					.put(Emailv31.Message.NAME,nameBCc);
 			jaBccs.put(joBcc);
-			joAll.put(Emailv31.Message.BCC,jaTos);
+			joAll.put(Emailv31.Message.BCC,jaBccs);
 		}
 
 		if(replyTo){
@@ -156,7 +144,7 @@ public class MailJetSender {
 
 	private void checkAndFillAttributes(String content, String template, String customerId, JSONObject joAll) {
 		if(StringUtils.isNotEmpty(content)){
-			joAll.put(Emailv31.Message.TEXTPART, content);
+			joAll.put(Emailv31.Message.TEXTPART, content+"\n\n\n");
 		}
 
 		if(StringUtils.isNotEmpty(template)){

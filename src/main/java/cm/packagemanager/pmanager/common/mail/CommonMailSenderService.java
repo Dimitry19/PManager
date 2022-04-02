@@ -3,18 +3,29 @@ package cm.packagemanager.pmanager.common.mail;
 import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.common.utils.Utility;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 
+import javax.annotation.ManagedBean;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
+@ManagedBean
 public class CommonMailSenderService {
 
 
-    protected String template(String sender,boolean isGoogle){
+    @Value("${mail.email.from}")
+    protected String travelPostPseudo;
+
+    @Value("${mail.admin.username}")
+    protected String defaultContactUs;
+
+
+
+    protected String template(String sender,boolean isNotHtml){
         StringBuilder sb = new StringBuilder("\n");
-        if(isGoogle){
+        if(isNotHtml){
             sb.append("\n");
             sb.append("\n");
             sb.append("\n");
@@ -23,9 +34,9 @@ public class CommonMailSenderService {
             sb.append("\n");
 
         }
-        sb.append(!isGoogle?"<h3>Veuillez repondre à cette adresse :":"Veuillez repondre à cette adresse :");
+        sb.append(!isNotHtml?"<h3>Veuillez repondre à cette adresse : ":"Veuillez repondre à cette adresse : ");
         sb.append(sender);
-        sb.append(!isGoogle?"</h3>":"");
+        sb.append(!isNotHtml?"</h3>":"");
 
         return sb.toString();
     }

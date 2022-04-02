@@ -1,7 +1,7 @@
 package cm.packagemanager.pmanager.announce.ent.dao;
 
-import cm.packagemanager.pmanager.announce.ent.vo.*;
 import cm.framework.ds.hibernate.dao.Generic;
+import cm.packagemanager.pmanager.announce.ent.vo.*;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
@@ -58,6 +58,13 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         return countByNameQuery(queryname, ReservationVO.class, id, paramName, pageBy);
     }
 
+    /**
+     * Ajoute une reservation a une annonce
+     * @param reservationDTO
+     * @return
+     * @throws Exception
+     */
+
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = {Exception.class, UserNotFoundException.class})
     public ReservationVO addReservation(ReservationDTO reservationDTO) throws Exception {
@@ -65,7 +72,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
 
         UserVO user = userDAO.findById(reservationDTO.getUserId());
         if (user == null)
-            throw new UserNotFoundException("Utilisateur non trouve");
+            throw new UserNotFoundException("Utilisateur de la reservation non trouve");
 
         AnnounceVO announce = announceDAO.announce(reservationDTO.getAnnounceId());
         if (announce == null) {
@@ -74,7 +81,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         }
         List userAnnounces = announceDAO.announcesByUser(user);
 
-        checkUserReservation(announce, userAnnounces);
+        //checkUserReservation(announce, userAnnounces);
         checkRemainWeight(announce, reservationDTO.getWeight());
 
         List<ReservationVO> reservations = findByUserNameQuery(ReservationVO.SQL_FIND_BY_USER, ReservationVO.class, user.getId(),null);
@@ -121,6 +128,12 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         return reservation;
     }
 
+    /**
+     *  Ajourne une reservation
+     * @param reservationDTO
+     * @return
+     * @throws Exception
+     */
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
@@ -157,6 +170,12 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         return reservation;
     }
 
+    /**
+     * Supprime une reservation
+     * @param id id de la reservation
+     * @return
+     * @throws Exception
+     */
     @Override
     @Transactional
     public boolean deleteReservation(Long id) throws Exception {
@@ -183,9 +202,17 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
 
     }
 
+    /**
+     *  Valide une reservation
+     *
+     * @param reservationDTO données de la reservation à valider
+     * @return
+     * @throws Exception
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public ReservationVO validate(ValidateReservationDTO reservationDTO) throws Exception {
+
         ReservationVO reservation = (ReservationVO) findById(ReservationVO.class, reservationDTO.getId());
         if (reservation == null) {
             throw new Exception("Reservation non trouvee");
@@ -198,11 +225,11 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         reservation.setValidate(reservationDTO.isValidate() ? ValidateEnum.ACCEPTED : ValidateEnum.REFUSED);
         update(reservation);
 
-        String validate= reservationDTO.isValidate() ?  " accepté ":" refusé ";
+        String validate= reservationDTO.isValidate() ?  ValidateEnum.ACCEPTED.toValue():ValidateEnum.REFUSED.toValue();
 
         String message= MessageFormat.format(notificationMessagePattern,
                 reservation.getAnnounce().getUser().getUsername(),
-                " a " +validate +" votre reservation sur l' annonce "+ reservation.getAnnounce().getDeparture() +"/"+reservation.getAnnounce().getArrival(),
+                " a " +validate +" votre reservation  de [" +reservation.getWeight() +" kg ] sur l' annonce "+ reservation.getAnnounce().getDeparture() +"/"+reservation.getAnnounce().getArrival(),
                 " de la date du " + DateUtils.getDateStandard(reservation.getAnnounce().getStartDate())
                         + " et retour le "+ DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()));
         generateEvent(reservation,message);
@@ -339,7 +366,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
     }
 
     /**
-     * Permet de controler dans le cas d'une reservation sur une annoncce du type BUYER
+     * Permet de controler dans le cas d'une reservation sur une annonce du type BUYER
      * si l'utilisateur qui fait la reservation a une annonce de voyage de la destination souhaitée
      *
      * @param announce

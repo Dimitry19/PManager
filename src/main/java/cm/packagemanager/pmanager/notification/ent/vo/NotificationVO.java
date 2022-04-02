@@ -24,6 +24,7 @@ import java.util.Set;
 public class NotificationVO extends CommonVO {
 
     private static final long serialVersionUID = 6473029882566244786L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false, unique = true)
@@ -48,6 +49,10 @@ public class NotificationVO extends CommonVO {
     @Basic(optional = false)
     @Column(name = "USER_ID", nullable = false)
     private Long userId;
+
+    @Basic(optional = false)
+    @Column(name = "R_USER_ID", nullable = false)
+    private Long random;
 
 
 
@@ -142,4 +147,8 @@ public class NotificationVO extends CommonVO {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public Long getRandom() { return random; }
+
+    public void setRandom(Long random) { this.random = random; }
 }

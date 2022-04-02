@@ -16,6 +16,7 @@ import cm.packagemanager.pmanager.notification.ent.vo.Notification;
 import cm.packagemanager.pmanager.notification.ent.vo.NotificationVO;
 import cm.packagemanager.pmanager.notification.enums.NotificationType;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import cm.packagemanager.pmanager.utils.SecRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +98,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
         headerAccessor.setLeaveMutable(true);
 
-        Notification notification = new Notification(notificationVO.getId(),notificationVO.getTitle(), notificationVO.getMessage(), notificationVO.getType(), notificationVO.getId());
+        Notification notification = new Notification(notificationVO.getId(),notificationVO.getTitle(), notificationVO.getMessage(), notificationVO.getType(), notificationVO.getRandom());
 
         Map map= new HashMap();
 
@@ -129,7 +130,6 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
                 if(CollectionsUtils.isEmpty(alreadySentForUser) ||
                         (CollectionsUtils.isNotEmpty(alreadySentForUser) && !alreadySentForUser.contains(notification))){
                     messagingTemplate.convertAndSendToUser(sessionId,notification.getTopic(), notification, headerAccessor.getMessageHeaders());
-                    //messagingTemplate.convertAndSendToUser(sessionId,notification.getTopic(), notification);
                     alreadySentForUser.add(notification);
                     sessionManager.removeToSession(l);
                     sessionManager.addToSession(l,alreadySentForUser);
@@ -242,6 +242,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
             notification.getUsers().addAll(event.getUsers());
             notification.setStatus(StatusEnum.VALID);
             notification.setType(event.getType());
+            notification.setRandom(SecRandom.randomLong());
 
             notifications.add(notification);
     }
@@ -281,7 +282,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
         if(CollectionsUtils.isNotEmpty(notifications)){
 
-            notifications.removeIf(n->((NotificationVO) n).getId().equals(notification.getId()));
+            notifications.removeIf(n->((NotificationVO) n).getRandom().equals(notification.getRandom()));
 
         }
 

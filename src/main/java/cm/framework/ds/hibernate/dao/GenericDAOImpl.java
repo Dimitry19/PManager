@@ -511,7 +511,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
     /**
-     * Using merge() method we can create/save a new record as well as we can update an existing record.
+     * Using <code>merge()</code> method we can create/save a new record as well as we can update an existing record.
      * Here, entity can be an unmanaged or persistent entity instance.
      * This method returns the managed instance that the state was merged to.
      * After the merge operation executed successfully:

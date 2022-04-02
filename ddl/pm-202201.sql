@@ -181,7 +181,7 @@ create table NOTIFICATION
     SESSION_ID VARCHAR(255),
     STATUS VARCHAR(10) not null,
     TITLE VARCHAR(60) not null,
-    TYPE VARCHAR(10) not null,
+    TYPE VARCHAR(15) not null,
     USER_ID BIGINT not null
 );
 
