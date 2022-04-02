@@ -172,7 +172,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             }
 
             AnnounceVO announce = new AnnounceVO();
-            setAnnounce(announce, user, adto);
+            setAnnounce(announce, user, adto,true);
 
             announce.setStatus(StatusEnum.VALID);
             announce.setAnnounceId(new AnnounceIdVO(Constants.DEFAULT_TOKEN));
@@ -219,7 +219,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
         double rating = calcolateAverage(user);
         announce.getUserInfo().setRating(rating);
-        setAnnounce(announce, user, udto);
+        setAnnounce(announce, user, udto,false);
         update(announce);
 
         String message= MessageFormat.format(notificationMessagePattern,user.getUsername(),
@@ -315,7 +315,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
 
-    private void setAnnounce(AnnounceVO announce, UserVO user, AnnounceDTO adto) throws Exception {
+    private void setAnnounce(AnnounceVO announce, UserVO user, AnnounceDTO adto,boolean isCreate) throws Exception {
 
         BigDecimal price = adto.getPrice();
         BigDecimal preniumPrice = adto.getPreniumPrice();
@@ -342,27 +342,31 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         BigDecimal diffWeight = oldWeight!=null ? weight.subtract(oldWeight): weight;
 
         BigDecimal sumQtyRes=BigDecimal.ZERO;
-        List<ReservationVO> reservations= findReservations(announce.getId());
 
-        // Il y a deja des reservations faites sur l'annonce
-        if(announce.getCountReservation()!=null && CollectionsUtils.isNotEmpty(reservations)){
-            //Je somme les quantités de toutes les reservations acceptées
-            sumQtyRes=reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED))
-                    .map(ReservationVO::getWeight).reduce(BigDecimal.ZERO,BigDecimal::add);
+        if (!isCreate){
+            List<ReservationVO> reservations= findReservations(announce.getId());
 
-            if (sumQtyRes.compareTo(BigDecimal.ZERO)>0 && BigDecimalUtils.lessThan(weight, sumQtyRes)) {
-                throw new UnsupportedOperationException("Impossible de reduire la quantité , car il existe des resevations pour une quantité "+sumQtyRes+" Kg");
+            // Il y a deja des reservations faites sur l'annonce
+            if(announce.getCountReservation()!=null && CollectionsUtils.isNotEmpty(reservations)){
+                //Je somme les quantités de toutes les reservations acceptées
+                sumQtyRes=reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED))
+                        .map(ReservationVO::getWeight).reduce(BigDecimal.ZERO,BigDecimal::add);
+
+                if (sumQtyRes.compareTo(BigDecimal.ZERO)>0 && BigDecimalUtils.lessThan(weight, sumQtyRes)) {
+                    throw new UnsupportedOperationException("Impossible de reduire la quantité , car il existe des resevations pour une quantité "+sumQtyRes+" Kg");
+                }
             }
+            boolean closeDate= DateUtils.isBefore(DateUtils.milliSecondToDate(adto.getEndDate()), DateUtils.currentDate()) ||
+                    DateUtils.isSame(DateUtils.milliSecondToDate(adto.getEndDate()), DateUtils.currentDate());
+
+            //Si la modification se fait à la date courante et que tous les kg ont été reservés -> Completed
+            if(weight.compareTo(sumQtyRes)==0 && closeDate){
+                announce.setStatus(StatusEnum.COMPLETED);
+                updateReservationsStatus(reservations, StatusEnum.COMPLETED);
+            }
+
         }
 
-        boolean closeDate= DateUtils.isBefore(DateUtils.milliSecondToDate(adto.getEndDate()), DateUtils.currentDate()) ||
-                                    DateUtils.isSame(DateUtils.milliSecondToDate(adto.getEndDate()), DateUtils.currentDate());
-
-        //Si la modification se fait à la date courante et que tous les kg ont été reservés -> Completed
-        if(weight.compareTo(sumQtyRes)==0 && closeDate){
-            announce.setStatus(StatusEnum.COMPLETED);
-            updateReservationsStatus(reservations, StatusEnum.COMPLETED);
-        }
         announce.setPrice(price);
         announce.setPreniumPrice(preniumPrice);
         announce.setGoldPrice(goldenPrice);
