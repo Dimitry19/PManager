@@ -1,10 +1,12 @@
 package cm.packagemanager.pmanager.administrator.exception;
 
 
+import cm.packagemanager.pmanager.common.exception.AnnounceException;
 import cm.packagemanager.pmanager.common.exception.ErrorResponse;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,13 +55,25 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({UserNotFoundException.class})
     public ResponseEntity<Object> handleNotFoundExceptions(UserNotFoundException ex) {
 
+        return getObjectResponseEntity(ex.getMessage(), "user.notfound");
+    }
+
+    @ExceptionHandler({AnnounceException.class})
+    public ResponseEntity<Object> handleAnnounceExceptions(AnnounceException ex) {
+
+        return getObjectResponseEntity(ex.getMessage(), "announce.error");
+    }
+
+    @NotNull
+    private ResponseEntity<Object> getObjectResponseEntity(String message, String s) {
         List<String> details = new ArrayList<>();
-        details.add(ex.getMessage());
+        details.add(message);
         String[] code = new String[2];
         code[0] = String.valueOf(HttpStatus.NOT_FOUND.value());
-        code[1] = "user.notfound";
+        code[1] = s;
         return new ResponseEntity<>(new ErrorResponse((String) CollectionsUtils.getFirst(details), details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)

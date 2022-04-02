@@ -1,7 +1,6 @@
 package cm.packagemanager.pmanager.common.exception;
 
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
-import cm.packagemanager.pmanager.ws.controller.rest.users.UserController;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -91,6 +90,12 @@ public class ErrorResponse {
         if (ex instanceof NullPointerException) {
             setDefaultCodes("null.pointer.exception");
             NullPointerException ob = (NullPointerException) ex;
+            stringBuilder.append(ob.getMessage());
+        }
+
+        if (ex instanceof AnnounceException) {
+            setDefaultCodes("announce.exception");
+            AnnounceException ob = (AnnounceException) ex;
             stringBuilder.append(ob.getMessage());
         }
         stringBuilder.append(ex.getMessage());

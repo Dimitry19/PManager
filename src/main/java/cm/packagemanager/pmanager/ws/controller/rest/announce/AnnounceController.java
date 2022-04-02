@@ -5,7 +5,7 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
-import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.common.exception.AnnounceException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
@@ -64,7 +64,7 @@ public class AnnounceController extends CommonController {
     @PostMapping(value = CREATE, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<Object> create(HttpServletResponse response, HttpServletRequest request,
-                                      @RequestBody @Valid AnnounceDTO ar) throws Exception {
+                                  @RequestBody @Valid AnnounceDTO ar) throws AnnounceException {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         AnnounceVO announce = null;
@@ -84,22 +84,20 @@ public class AnnounceController extends CommonController {
                         //manageImage(response,announce.getImage().getName(),announce.getImage().getPicByte());
                     }
                     return new ResponseEntity<>(announce, HttpStatus.CREATED);
-                } else {
-                    WSCommonResponseVO  commonResponse= new WSCommonResponseVO();
-                    commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "L'annonce"));
-                    return new ResponseEntity<>(commonResponse, HttpStatus.NOT_ACCEPTABLE);
                 }
             }
-        } catch (Exception e) {
+        } catch (AnnounceException e) {
             logger.error("Errore eseguendo add announce: ", e);
-            response.setStatus(500);
-            response.getWriter().write(e.getMessage());
             throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             finishOpentracingSpan();
         }
-        return null;
+        WSCommonResponseVO  commonResponse= new WSCommonResponseVO();
+        commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+        commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "L'annonce"));
+        return new ResponseEntity<>(commonResponse, HttpStatus.NOT_ACCEPTABLE);
     }
 
     @ApiOperation(value = "Update an announce ", response = AnnounceVO.class)
@@ -112,7 +110,7 @@ public class AnnounceController extends CommonController {
                     response = AnnounceVO.class, responseContainer = "Object")})
     @PutMapping(value = UPDATE_ID, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
     ResponseEntity<Object> update(HttpServletResponse response, HttpServletRequest request, @PathVariable("id") @Valid long id,
-                                      @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
+                                  @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         try {
@@ -222,15 +220,15 @@ public class AnnounceController extends CommonController {
     public ResponseEntity<PaginateResponse> announcesByUser(HttpServletResponse response, HttpServletRequest request,
                                                             @RequestParam @Valid Long userId,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
-                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
+                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws AnnounceException, Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
-        logger.info("find announce by user request in");
         PageBy pageBy = new PageBy(page, size);
-
         List<AnnounceVO> announces = null;
+        logger.info("find announce by user request in");
+
 
         try {
             createOpentracingSpan("AnnounceController -announcesByUser");
@@ -251,7 +249,7 @@ public class AnnounceController extends CommonController {
                         break;
                 }
             } else response.getWriter().write("Utilisateur non existant");
-        } catch (Exception e) {
+        } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
             throw e;
         } finally {
@@ -284,7 +282,7 @@ public class AnnounceController extends CommonController {
     public ResponseEntity<PaginateResponse> announcesByType(HttpServletResponse response, HttpServletRequest request,
                                                             @RequestParam @Valid AnnounceType type,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
-                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
+                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws AnnounceException,Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         HttpHeaders headers = new HttpHeaders();
@@ -329,7 +327,7 @@ public class AnnounceController extends CommonController {
      */
     @ApiOperation(value = "Delete an announce with an ID", response = Response.class)
     @DeleteMapping(value = DELETE, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") @Valid Long id) throws Exception {
+    public ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") @Valid Long id) throws AnnounceException {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         Response pmResponse = new Response();
@@ -352,17 +350,20 @@ public class AnnounceController extends CommonController {
                 }
             }
             return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
+        } catch (AnnounceException e) {
             logger.error("Erreur durant l'elimination de l'annonce {}", e);
             throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             finishOpentracingSpan();
         }
+        return null;
     }
 
     @ApiOperation(value = "Retrieve an announce with an ID", response = AnnounceVO.class)
     @GetMapping(value = ANNOUNCE_WS_BY_ID, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
+    public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws AnnounceException {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -384,16 +385,15 @@ public class AnnounceController extends CommonController {
                 }
             }
             return new ResponseEntity<>(announce, HttpStatus.OK);
-        } catch (UserException e) {
+        } catch (AnnounceException e) {
             logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
             throw e;
         } catch (Exception e) {
-            logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
-            throw e;
-
+            e.printStackTrace();
         } finally {
             finishOpentracingSpan();
         }
+        return null;
     }
 
     /**
@@ -415,7 +415,7 @@ public class AnnounceController extends CommonController {
     @GetMapping(value = ANNOUNCES_WS, produces = MediaType.APPLICATION_JSON, headers = HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announces(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                       @RequestParam(required = false, defaultValue = DEFAULT_SIZE)
-                                                      @Valid @Positive(message = "Page size should be a positive number") int size) throws Exception {
+                                                      @Valid @Positive(message = "Page size should be a positive number") int size) throws AnnounceException,Exception {
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
@@ -436,7 +436,7 @@ public class AnnounceController extends CommonController {
                 headers.add(HEADER_TOTAL, Long.toString(announces.size()));
             }
             return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (AnnounceException e) {
             logger.info(" AnnounceController -announces:Exception occurred while fetching the response from the database.", e);
             throw e;
         } finally {

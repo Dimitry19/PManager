@@ -23,14 +23,9 @@ public class DateUtils {
     public static final String TIMESTAMP_PATTERN = "yy/MM/dd, hh:mm:ss";
     public static final String STD_PATTERN = "dd/MM/yyyy";
     public static final String STD_PATTERN_HMS = "dd/MM/yyyy, HH:mm:ss";
+    public static final String STD_PATTERN_YMD = "yyyyMMdd";
 
-    public static String getDateStandardFormatted(Date date) {
-        try {
-            return new SimpleDateFormat(FORMAT_STD_PATTERN).format(date);
-        } catch (Exception e) {
-            return "";
-        }
-    }
+
 
     public static String getDateStandard(Date date) {
         try {
@@ -42,44 +37,38 @@ public class DateUtils {
 
     public static Date currentDate() {
         try {
-            return new Date();
+            Calendar calendar = Calendar.getInstance();
+
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            return calendar.getTime();
         } catch (Exception e) {
         }
         return null;
     }
 
-    public static Date milliSecondToDateCalendar(long currentDateTime) {
 
-
+    public static String getDateStandardFormatted(Date date) {
         try {
-            DateFormat df = new SimpleDateFormat(FORMAT_STD_PATTERN_4);
-            //Converting milliseconds to Date using Calendar
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(currentDateTime);
-            System.out.println("Milliseconds to Date using Calendar:" + df.format(cal.getTime()));
-
-            //copying one Date's value into another Date in Java
-		/*Date now = new Date();
-		Date copiedDate = new Date(now.getTime());
-
-		System.out.println("original Date: " + df.format(now));
-		System.out.println("copied Date: " + df.format(copiedDate));*/
-            return cal.getTime();
-
+            return new SimpleDateFormat(FORMAT_STD_PATTERN).format(date);
         } catch (Exception e) {
-
+            return "";
         }
-        return null;
     }
 
-    public static Date milliSecondToDate(long currentDateTime) {
+
+    public static Date milliSecondToDate(long dateTime) {
 
         //Converting milliseconds to Date using java.util.Date
         //current time in milliseconds
         //long currentDateTime = System.currentTimeMillis();
 
+        System.out.println("To convert Date: " + dateTime);
         //creating Date from millisecond
-        Date currentDate = new Date(currentDateTime);
+        Date currentDate = dateWithoutTime(new Date(dateTime));
+        System.out.println("converted Date: " + dateWithoutTime(new Date(dateTime)));
 
 	/*	//printing value of Date
 		System.out.println("current Date: " + currentDate);
@@ -93,28 +82,7 @@ public class DateUtils {
 
     }
 
-    public static String getDateFormatted(Format formatter, Date date) {
-        return formatter.format(date);
-    }
 
-    public static Timestamp stringToTimestamp(String dateStr) {
-        Timestamp timestamp = null;
-        try {
-            if (dateStr != null && dateStr.length() > 0) {
-                DateFormat formatter;
-                formatter = new SimpleDateFormat(TIMESTAMP_PATTERN);
-                Date date = formatter.parse(dateStr);
-                timestamp = new Timestamp(date.getTime());
-            }
-        } catch (Exception e) {
-            logger.trace("Impossibile representer la date " + dateStr + ". Exception :" + e);
-        }
-        return timestamp;
-    }
-
-    public static Date stringToDate(String dateStr) {
-        return getDate(dateStr, STD_PATTERN_HMS);
-    }
 
     @Nullable
     private static Date getDate(String dateStr, String stdPatternHms) {
@@ -131,17 +99,6 @@ public class DateUtils {
         return date;
     }
 
-    public static Date stringToDate(String dateStr, String format) {
-        return getDate(dateStr, format);
-    }
-
-    public static String dateToString(Date date) {
-        return getString(date, STD_PATTERN);
-    }
-
-    public static String dateTimeToString(Date date) {
-        return getString(date, STD_PATTERN_HMS);
-    }
 
     @NotNull
     private static String getString(Date date, String stdPatternHms) {
@@ -168,6 +125,7 @@ public class DateUtils {
 
     public static boolean isAfter(Date compareDateOne, Date compareDateTwo) {
         if (compareDateOne != null && compareDateTwo != null) {
+
             return compareDateOne.after(compareDateTwo);
         }
         return false;
@@ -175,6 +133,7 @@ public class DateUtils {
 
     public static boolean isBefore(Date compareDateOne, Date compareDateTwo) {
         if (compareDateOne != null && compareDateTwo != null) {
+
             return compareDateOne.before(compareDateTwo);
         }
         return false;
@@ -182,6 +141,95 @@ public class DateUtils {
 
     public static boolean isSame(Date compareDateOne, Date compareDateTwo) {
 
-        return !isAfter(compareDateOne,compareDateTwo) && !isBefore(compareDateOne,compareDateTwo);
+        if (compareDateOne != null && compareDateTwo != null) {
+            return !isAfter(compareDateOne,compareDateTwo) && !isBefore(compareDateOne,compareDateTwo);
+        }
+        return false;
+    }
+
+
+    public static Date dateWithoutTime(Date date) {
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime( date);
+        calendar.add(Calendar.MONTH, -1);
+        calendar.set(Calendar.DAY_OF_MONTH, date.getDay());
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();
+
+    }
+
+    public  static  boolean validLongValue(long l){
+        return l>0;
+    }
+
+
+    public static Date stringToDate(String dateStr, String format) {
+        return getDate(dateStr, format);
+    }
+
+    public static String dateToString(Date date) {
+        return getString(date, STD_PATTERN);
+    }
+
+    public static String dateTimeToString(Date date) {
+        return getString(date, STD_PATTERN_HMS);
+    }
+
+    public static String getDateFormatted(Format formatter, Date date) {
+        return formatter.format(date);
+    }
+
+    public static Timestamp stringToTimestamp(String dateStr) {
+        Timestamp timestamp = null;
+        try {
+            if (dateStr != null && dateStr.length() > 0) {
+                DateFormat formatter;
+                formatter = new SimpleDateFormat(TIMESTAMP_PATTERN);
+                Date date = formatter.parse(dateStr);
+                timestamp = new Timestamp(date.getTime());
+            }
+        } catch (Exception e) {
+            logger.trace("Impossibile representer la date " + dateStr + ". Exception :" + e);
+        }
+        return timestamp;
+    }
+
+    public static Date stringToDate(String dateStr) {
+        return getDate(dateStr, STD_PATTERN_HMS);
+    }
+
+    public static Date milliSecondToDateCalendar(long currentDateTime) {
+
+
+        try {
+            DateFormat df = new SimpleDateFormat(FORMAT_STD_PATTERN_4);
+            //Converting milliseconds to Date using Calendar
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(currentDateTime);
+            System.out.println("Milliseconds to Date using Calendar:" + df.format(cal.getTime()));
+
+            //copying one Date's value into another Date in Java
+		/*Date now = new Date();
+		Date copiedDate = new Date(now.getTime());
+
+		System.out.println("original Date: " + df.format(now));
+		System.out.println("copied Date: " + df.format(copiedDate));*/
+            return cal.getTime();
+
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    static void printDate(Date date){
+
+        System.out.println("converted Date: " + dateWithoutTime(date));
+
     }
 }

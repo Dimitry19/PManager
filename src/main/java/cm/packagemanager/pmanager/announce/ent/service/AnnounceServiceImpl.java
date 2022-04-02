@@ -5,6 +5,7 @@ import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
+import cm.packagemanager.pmanager.common.exception.AnnounceException;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
@@ -34,55 +35,55 @@ public class AnnounceServiceImpl implements AnnounceService {
 		System.out.println("Announce service starts...." );
 	}
 	*/
-    public AnnounceVO create(AnnounceDTO announceDTO) throws Exception {
+    public AnnounceVO create(AnnounceDTO announceDTO) throws AnnounceException,Exception {
 
         return dao.create(announceDTO);
     }
 
-    public List<AnnounceVO> find(AnnounceSearchDTO asdto, PageBy pageBy) throws Exception {
+    public List<AnnounceVO> find(AnnounceSearchDTO asdto, PageBy pageBy) throws AnnounceException,Exception {
         return dao.find(asdto, pageBy);
     }
 
-    public AnnounceVO update(UpdateAnnounceDTO announce) throws Exception {
+    public AnnounceVO update(UpdateAnnounceDTO announce) throws AnnounceException,Exception {
         return dao.update(announce);
     }
 
-    public AnnounceVO update(Integer id) throws Exception {
+    public AnnounceVO update(Integer id) throws AnnounceException,AnnounceException {
         return dao.update(id);
     }
 
-    public AnnounceVO announce(Long id) throws Exception {
+    public AnnounceVO announce(Long id) throws AnnounceException,Exception {
         return dao.announce(id);
     }
 
-    public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws Exception {
+    public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws AnnounceException,Exception {
 
         return dao.announcesByUser(userId, pageBy);
     }
 
-    public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws Exception {
+    public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws AnnounceException,Exception {
 
         return dao.announcesByType(type, pageBy);
     }
 
-    public boolean delete(Long id) throws Exception {
+    public boolean delete(Long id) throws AnnounceException {
         return dao.delete(id);
     }
 
-    public List<AnnounceVO> announces(PageBy pageBy) throws Exception {
+    public List<AnnounceVO> announces(PageBy pageBy) throws AnnounceException,Exception {
         return dao.announces(pageBy);
     }
 
 
-    public Page announces(Pageable pageable) throws Exception {
+    public Page announces(Pageable pageable) throws AnnounceException,Exception {
         return (Page) dao.announces(pageable.getPageNumber(), pageable.getPageSize());
     }
 
-    public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws Exception {
+    public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws AnnounceException,Exception {
         return dao.count(announceSearch, pageBy);
     }
 
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws AnnounceException {
         System.out.println("Init method after properties are set : ");
     }
 

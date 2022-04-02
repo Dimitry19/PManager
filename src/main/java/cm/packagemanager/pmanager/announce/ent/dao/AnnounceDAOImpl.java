@@ -18,6 +18,7 @@ import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
+import cm.packagemanager.pmanager.common.exception.AnnounceException;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.exception.UserException;
@@ -316,30 +317,39 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
 
-    private void setAnnounce(AnnounceVO announce, UserVO user, AnnounceDTO adto,boolean isCreate) throws Exception {
+    private void setAnnounce(AnnounceVO announce, UserVO user, AnnounceDTO adto,boolean isCreate) throws AnnounceException, Exception {
 
         BigDecimal price = adto.getPrice();
         BigDecimal preniumPrice = adto.getPreniumPrice();
         BigDecimal goldenPrice = adto.getGoldPrice();
         BigDecimal weight = adto.getWeight();
+
+
+
+        if(!DateUtils.validLongValue(adto.getStartDate()) || !DateUtils.validLongValue(adto.getEndDate())){
+
+            throw new AnnounceException("Une des dates n'est pas valide");
+
+        }
+
         Date startDate = DateUtils.milliSecondToDate(adto.getStartDate());
         Date endDate = DateUtils.milliSecondToDate(adto.getEndDate());
 
         if (weight == null ) {
-            throw new Exception("Quantité n'est pas valide, elle doit etre superieure a zero");
+            throw new AnnounceException("Quantité n'est pas valide, elle doit etre superieure a zero");
         }
 
         if (startDate == null || endDate == null) {
-            throw new Exception("Une des dates n'est pas valide");
+            throw new AnnounceException("Une des dates n'est pas valide");
         }
 
         if (DateUtils.isBefore(startDate, DateUtils.currentDate())) {
-            throw new Exception("La date de depart n'est pas valide, elle doit etre minimum la date courante");
+            throw new AnnounceException("La date de depart n'est pas valide, elle doit etre minimum la date courante");
         }
 
 
         if (DateUtils.isAfter(startDate, endDate)) {
-            throw new Exception("La date de depart ne peut pas etre superieure à celle de retour");
+            throw new AnnounceException("La date de depart ne peut pas etre superieure à celle de retour");
         }
 
         BigDecimal oldRemainWeight = announce.getRemainWeight()==null ? BigDecimal.ZERO:announce.getRemainWeight();
@@ -365,8 +375,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             boolean closeDate= DateUtils.isBefore(DateUtils.milliSecondToDate(adto.getEndDate()), DateUtils.currentDate()) ||
                     DateUtils.isSame(DateUtils.milliSecondToDate(adto.getEndDate()), DateUtils.currentDate());
 
-            //Si la modification se fait à la date courante et que tous les kg ont été reservés -> Completed
-            if(weight.compareTo(sumQtyRes)==0 && closeDate){
+            //Si la modification se fait à la date courante ou bien si  tous les kg ont été reservés -> Completed
+            if((weight.compareTo(sumQtyRes)==0 || closeDate) || (weight.compareTo(sumQtyRes)==0 && closeDate)){
                 announce.setStatus(StatusEnum.COMPLETED);
                 updateReservationsStatus(reservations, StatusEnum.COMPLETED);
             }
