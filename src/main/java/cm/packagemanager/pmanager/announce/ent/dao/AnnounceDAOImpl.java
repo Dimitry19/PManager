@@ -29,6 +29,7 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
+import org.apache.commons.lang3.BooleanUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -324,18 +325,22 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         Date startDate = DateUtils.milliSecondToDate(adto.getStartDate());
         Date endDate = DateUtils.milliSecondToDate(adto.getEndDate());
 
-        if (startDate == null || endDate == null) {
-            throw new Exception("Une des dates n'est pas valide");
-        }
-
         if (weight == null ) {
             throw new Exception("Quantité n'est pas valide, elle doit etre superieure a zero");
         }
 
-        if (DateUtils.isAfter(startDate, endDate)) {
-            throw new Exception("La date de depart ne peut pas etre superierure à celle de retour");
+        if (startDate == null || endDate == null) {
+            throw new Exception("Une des dates n'est pas valide");
         }
 
+        if (DateUtils.isBefore(startDate, DateUtils.currentDate())) {
+            throw new Exception("La date de depart n'est pas valide, elle doit etre minimum la date courante");
+        }
+
+
+        if (DateUtils.isAfter(startDate, endDate)) {
+            throw new Exception("La date de depart ne peut pas etre superieure à celle de retour");
+        }
 
         BigDecimal oldRemainWeight = announce.getRemainWeight()==null ? BigDecimal.ZERO:announce.getRemainWeight();
         BigDecimal oldWeight = announce.getWeight();
@@ -343,7 +348,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         BigDecimal sumQtyRes=BigDecimal.ZERO;
 
-        if (!isCreate){
+        if (BooleanUtils.isFalse(isCreate)){
+
             List<ReservationVO> reservations= findReservations(announce.getId());
 
             // Il y a deja des reservations faites sur l'annonce
