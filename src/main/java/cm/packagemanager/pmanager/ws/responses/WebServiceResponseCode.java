@@ -16,6 +16,10 @@ public class WebServiceResponseCode {
     public static final String USER_REGISTER_ACTIVE_LABEL = "Votre compte a ete active.. effectuez le login";
 
 
+    public static final String UPDATE_LABEL = "Données ajournées avec succès";
+
+
+
     public static final String CREATE_LABEL = "{0} cree(e) correctement";
     public static final String CANCELLED_LABEL = "{0} a ete elimine correctement";
     public static final String UPDATED_LABEL = "{0}  a ete ajourne correctement";
@@ -39,6 +43,8 @@ public class WebServiceResponseCode {
     public static final String ERROR_INVALID_TOKEN_REGISTER_LABEL = "Token invalide , peut etre le lien a deja expire";
     public static final String ERROR_USED_TOKEN_REGISTER_LABEL = "Le compte a deje ete active";
     public static final String ERROR_LOGIN_LABEL = "Verifier les donn?es d'accès";
+
+    public static final String ERROR_UPDATE_USER_LABEL = "Erreur durant l'ajournement des données";
 
     public static final String ERROR_UPD_EMAIL_LABEL = "Email non valide ou deja utilise";
 

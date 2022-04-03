@@ -289,9 +289,12 @@ public class UserController extends CommonController {
                 if (user == null) {
                     WSCommonResponseVO commonResponse = new WSCommonResponseVO();
                     commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    commonResponse.setRetDescription(WebServiceResponseCode.ERROR_UPD_EMAIL_LABEL);
+                    commonResponse.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_USER_LABEL);
                     throw new UserNotFoundException("Utilisateur non trouv&egrave;");
                 }
+
+                user.setRetCode(WebServiceResponseCode.OK_CODE);
+                user.setRetDescription(WebServiceResponseCode.UPDATE_LABEL);
                 return new ResponseEntity<UserVO>(user, HttpStatus.OK);
             }
         } catch (UserException e) {

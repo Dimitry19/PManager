@@ -38,8 +38,10 @@ public class CommonVO extends WSCommonResponseVO implements Auditable, Serializa
         this.cancelled = cancelled;
     }
 
+
     @Override
     @JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
+    @JsonIgnore
     public Timestamp getDateCreated() {
         return dateCreated;
     }
@@ -51,6 +53,7 @@ public class CommonVO extends WSCommonResponseVO implements Auditable, Serializa
 
     @Override
     @JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
+    @JsonIgnore
     public Timestamp getLastUpdated() {
         return lastUpdated;
     }

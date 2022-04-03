@@ -72,7 +72,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws AnnounceException,Exception {
+    public int count(AnnounceSearchDTO announceSearch, Long userId, AnnounceType type,PageBy pageBy) throws AnnounceException,Exception {
 
         logger.info(" Announce - count");
         if (announceSearch != null) {
@@ -83,9 +83,14 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             composeQueryParameters(announceSearch, query);
             List result=query.list();
             return CollectionsUtils.isNotEmpty(result) ? result.size() : 0;
-        } else {
-            return count(AnnounceVO.class, pageBy);
         }
+        if(userId!=null) {
+            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,"userId",pageBy);
+        }
+        if(type!=null) {
+            return countByNameQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class,type,"type",pageBy);
+        }
+        return count(AnnounceVO.class, pageBy);
 
     }
 

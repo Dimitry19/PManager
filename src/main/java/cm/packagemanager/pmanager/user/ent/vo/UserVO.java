@@ -231,7 +231,7 @@ public class UserVO extends CommonVO {
         return enableNotification;
     }
 
-
+    @JsonIgnore
     @Access(AccessType.PROPERTY)
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy(clause = "id.id DESC")
@@ -240,6 +240,7 @@ public class UserVO extends CommonVO {
         return messages;
     }
 
+    @JsonIgnore
     @Access(AccessType.PROPERTY)
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference

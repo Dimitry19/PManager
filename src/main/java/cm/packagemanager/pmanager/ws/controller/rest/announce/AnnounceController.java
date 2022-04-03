@@ -180,7 +180,7 @@ public class AnnounceController extends CommonController {
             createOpentracingSpan("AnnounceController -find");
 
             if (asdto != null) {
-                int count = announceService.count(asdto, pageBy);
+                int count = announceService.count(asdto,null, null, pageBy);
                 if (count == 0) {
                     headers.add(HEADER_TOTAL, Long.toString(count));
                 } else {
@@ -236,7 +236,7 @@ public class AnnounceController extends CommonController {
             createOpentracingSpan("AnnounceController -announcesByUser");
 
             if (userId != null) {
-                int count = announceService.count(null, pageBy);
+                int count = announceService.count(null, userId,null,pageBy);
                 switch (count) {
                     case 0:
                         headers.add(HEADER_TOTAL, Long.toString(count));
@@ -289,16 +289,17 @@ public class AnnounceController extends CommonController {
         response.setHeader("Access-Control-Allow-Origin", "*");
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
-        logger.info("find announce by type request in");
+
         PageBy pageBy = new PageBy(page, size);
 
         List<AnnounceVO> announces = null;
+        logger.info("find announce by type request in");
 
 
         try {
             createOpentracingSpan("AnnounceController - announcesByType");
 
-            int count = announceService.count(null, pageBy);
+            int count = announceService.count(null,null, type, pageBy);
             if (count == 0) {
                 headers.add(HEADER_TOTAL, Long.toString(count));
             } else {
@@ -428,7 +429,7 @@ public class AnnounceController extends CommonController {
 
             createOpentracingSpan("AnnounceController -announces");
 
-            int count = announceService.count(null, pageBy);
+            int count = announceService.count(null,null, null, pageBy);
             if (count == 0) {
                 headers.add(HEADER_TOTAL, Long.toString(count));
             } else {

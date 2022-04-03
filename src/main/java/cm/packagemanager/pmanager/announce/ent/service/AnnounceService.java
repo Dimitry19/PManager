@@ -36,7 +36,7 @@ public interface AnnounceService extends InitializingBean {
     Page announces(Pageable pageable) throws AnnounceException,Exception;
 
 
-    int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws AnnounceException,Exception;
+    int count(AnnounceSearchDTO announceSearch, Long userid, AnnounceType type,PageBy pageBy) throws AnnounceException,Exception;
 
     void afterPropertiesSet() throws Exception;
 

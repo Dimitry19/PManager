@@ -79,8 +79,8 @@ public class AnnounceServiceImpl implements AnnounceService {
         return (Page) dao.announces(pageable.getPageNumber(), pageable.getPageSize());
     }
 
-    public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws AnnounceException,Exception {
-        return dao.count(announceSearch, pageBy);
+    public int count(AnnounceSearchDTO announceSearch,Long userid, AnnounceType type, PageBy pageBy) throws AnnounceException,Exception {
+        return dao.count(announceSearch,  userid,   type, pageBy);
     }
 
     public void afterPropertiesSet() throws AnnounceException {
