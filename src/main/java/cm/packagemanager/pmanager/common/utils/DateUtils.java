@@ -60,12 +60,11 @@ public class DateUtils {
 
     public static Date milliSecondToDate(long dateTime) {
 
-
         System.out.println("To convert Date: " + dateTime);
         //creating Date from millisecond
         Date currentDate = dateWithoutTime(new Date(dateTime));
         System.out.println("converted Date: " + currentDate);
-        return currentDate;
+        return calendar(dateTime);
 
     }
 
@@ -157,6 +156,19 @@ public class DateUtils {
         return false;
     }
 
+
+    public static Date calendar(long milliseconds){
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(TimeZone.getDefault());
+
+        cal.setTimeInMillis(milliseconds);
+        cal.set(Calendar.HOUR,0);
+        cal.set(Calendar.MINUTE,0);
+        cal.set(Calendar.SECOND,0);
+        cal.set(Calendar.MILLISECOND,0);
+        return cal.getTime();
+    }
 
     public static Date dateWithoutTime(Date date) {
 

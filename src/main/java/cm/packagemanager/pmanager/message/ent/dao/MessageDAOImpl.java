@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.message.ent.dao;
 
+import cm.framework.ds.hibernate.enums.FindByType;
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.Constants;
@@ -123,16 +124,23 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
     @Override
     public List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws Exception {
 
+        logger.info("Message: user message");
         if (user == null) return null;
-        return messagesByUser(user.getId(), pageBy);
+        return messagesBy(user.getId(), FindByType.USER,pageBy);
     }
 
     @Override
-    public List<MessageVO> messagesByUser(Long id, PageBy pageBy) throws Exception {
-        logger.info("Message: user message");
+    public List<MessageVO> messagesBy(Long id, FindByType fbType,PageBy pageBy) throws Exception {
 
         if (id == null) return null;
-        return findByUser(MessageVO.class, id, pageBy);
+
+        switch (fbType){
+            case USER:
+                return findByUser(MessageVO.class, id, pageBy);
+            case ANNOUNCE:
+                return findBy(MessageVO.FIND_BY_ANNOUNCE, MessageVO.class, id, ANNOUNCE_PARAM, pageBy);
+        }
+        return null;
     }
 
     @Override

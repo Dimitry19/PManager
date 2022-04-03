@@ -21,6 +21,7 @@ import java.util.Objects;
 @Table(name = "MESSAGE")
 @NamedQueries({
         @NamedQuery(name = MessageVO.FINDALL, query = "select m from MessageVO m "),
+        @NamedQuery(name = MessageVO.FIND_BY_ANNOUNCE, query = "select m from MessageVO m where m.announce.id =: announceId order by m.dateCreated asc"),
         @NamedQuery(name = MessageVO.GET_ID_SQL, query = "select max(m.id.id) from MessageVO m ")
 })
 @Filters({
@@ -30,6 +31,8 @@ import java.util.Objects;
 public class MessageVO extends CommonVO {
 
     public static final String FINDALL = "cm.packagemanager.pmanager.message.ent.vo.MessageVO.findAll";
+
+    public static final String FIND_BY_ANNOUNCE = "cm.packagemanager.pmanager.message.ent.vo.MessageVO.findByAnnounce";
 
     public final static String GET_ID_SQL = "cm.packagemanager.pmanager.message.ent.vo.MessageVO.getId";
 

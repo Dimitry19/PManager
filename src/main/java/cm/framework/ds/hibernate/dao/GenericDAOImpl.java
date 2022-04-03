@@ -50,11 +50,12 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     private static final MathContext MATH_CONTEXT = new MathContext(2, RoundingMode.HALF_UP);
 
 
-    private static final String FROM = " FROM ";
-    private static final String DESC = " desc ";
-    private static final String ASC = " asc ";
-    private static final String USER_PARAM = "userId";
-    private static final String ALIAS_ORDER = " as t order by t. ";
+    protected static final String FROM = " FROM ";
+    protected static final String DESC = " desc ";
+    protected static final String ASC = " asc ";
+    protected static final String USER_PARAM = "userId";
+    protected static final String ANNOUNCE_PARAM = "announceId";
+    protected static final String ALIAS_ORDER = " as t order by t. ";
 
     @Autowired
     protected SessionFactory sessionFactory;
@@ -199,7 +200,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
         Session session = this.sessionFactory.getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
-        return commonFinByUser(clazz,userId,pageBy,session);
+        return commonFindByUser(clazz,userId,pageBy,session);
     }
 
     @Override
@@ -207,7 +208,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     public List<T> findByUserId(Class<T> clazz, Long userId, PageBy pageBy) throws Exception {
 
         Session session = this.sessionFactory.getCurrentSession();
-        return commonFinByUser(clazz,userId,pageBy,session);
+        return commonFindByUser(clazz,userId,pageBy,session);
     }
 
     @Override
@@ -589,6 +590,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Override
     public void pageBy(Query query, PageBy pageBy) {
         if (pageBy != null) {
+
             query.setFirstResult(pageBy.getPage());
             query.setMaxResults(pageBy.getSize());
         }
@@ -638,7 +640,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     }
 
-    private List<T> commonFinByUser(Class<T> clazz, Long userId, PageBy pageBy,Session session){
+    private List<T> commonFindByUser(Class<T> clazz, Long userId, PageBy pageBy, Session session){
         Query query = session.createQuery(FROM + clazz.getName() + " as elt where elt.userId =:userId", clazz);
         query.setParameter(USER_PARAM, userId);
         pageBy(query, pageBy);

@@ -17,10 +17,7 @@ import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserInfo;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.*;
 
@@ -209,6 +206,7 @@ public class AnnounceVO extends CommonVO {
     @JsonManagedReference
     @OrderBy(clause = "id.id ASC")
     @Where(clause = "cancelled=false")
+    @JsonIgnore
     public Set<MessageVO> getMessages() {
         return messages;
     }

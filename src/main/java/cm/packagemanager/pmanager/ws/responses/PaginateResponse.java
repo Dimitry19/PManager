@@ -1,9 +1,11 @@
 package cm.packagemanager.pmanager.ws.responses;
 
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaginateResponse {
+public class PaginateResponse extends WSCommonResponseVO {
 
     List results;
     int count;

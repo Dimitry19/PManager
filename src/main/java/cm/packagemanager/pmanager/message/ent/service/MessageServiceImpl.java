@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.message.ent.service;
 
+import cm.framework.ds.hibernate.enums.FindByType;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
@@ -24,8 +25,11 @@ import java.util.List;
 public class MessageServiceImpl implements MessageService {
     private static Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
 
+
+
     @Autowired
     MessageDAO messageDAO;
+
 
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, RecordNotFoundException.class, BusinessResourceException.class})
@@ -46,8 +50,8 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MessageVO> messagesByUser(Long id, PageBy pageBy) throws Exception {
-        return messageDAO.messagesByUser(id, pageBy);
+    public List<MessageVO> messagesBy(Long id, FindByType fbType,PageBy pageBy) throws Exception {
+        return messageDAO.messagesBy(id, fbType,pageBy);
     }
 
     @Override

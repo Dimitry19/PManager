@@ -2,6 +2,10 @@ package cm.packagemanager.pmanager.constant;
 
 public class WSConstants {
 
+
+    public static final String DEFAULT_SIZE = "12";
+    public static final String DEFAULT_PAGE = "0";
+
     public static final String HEADER_ACCEPT = "Accept=application/json";
 
 
@@ -14,6 +18,7 @@ public class WSConstants {
     public static final String UPDATE = "/update";
     public static final String DELETE = "/delete";
     public static final String BY_USER = "/user";
+    public static final String BY_ANNOUNCE = "/announce";
     public static final String FIND = "/find";
     public static final String VALIDATE = "/validate";
     public static final String IMAGE = "/{imageName}";

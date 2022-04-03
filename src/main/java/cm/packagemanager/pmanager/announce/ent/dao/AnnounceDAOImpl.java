@@ -85,12 +85,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             return CollectionsUtils.isNotEmpty(result) ? result.size() : 0;
         }
         if(userId!=null) {
-            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,"userId",pageBy);
+            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,"userId",null);
         }
         if(type!=null) {
-            return countByNameQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class,type,"type",pageBy);
+            return countByNameQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class,type,"type",null);
         }
-        return count(AnnounceVO.class, pageBy);
+        return count(AnnounceVO.class, null);
 
     }
 

@@ -15,8 +15,10 @@ public class WebServiceResponseCode {
     public static final String USER_REGISTER_LABEL = "Enregistrement complete, consultez votre email pour confirmer votre enregistrement"+MAIL_SPAM;
     public static final String USER_REGISTER_ACTIVE_LABEL = "Votre compte a ete active.. effectuez le login";
 
+    public static final String UPDATE_LABEL = "Données ajournées correctement";
+    public static final String PAGINATE_RESPONSE_LABEL = "Données recupérées correctement";
+    public static final String PAGINATE_EMPTY_RESPONSE_LABEL = "Aucun resultat trouvé";
 
-    public static final String UPDATE_LABEL = "Données ajournées avec succès";
 
 
 
@@ -34,9 +36,10 @@ public class WebServiceResponseCode {
 
 
     // NOK LABEL
+    public static final String ERROR_PAGINATE_RESPONSE_LABEL = "Une erreur est survenue durant la recuperation des données";
     public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre elimine car inexistant";
     public static final String ERROR_MAIL_SENT_LABEL = "Le mail n'a pas pu etre envoye";
-    public static final String ERROR_RETRIVEVE_PASSWORD_LABEL = "Le mot de posse n'a pas ete envoye ";
+    public static final String ERROR_RETRIEVE_PASSWORD_LABEL = "Le mot de posse n'a pas ete envoye ";
     public static final String ERROR_EMAIL_REGISTER_LABEL = "Cette adresse email a deja ete utilise";
     public static final String ERROR_USERNAME_REGISTER_LABEL = "Nom utilisateur non disponible";
     public static final String ERROR_USER_REGISTER_LABEL = "Enregistrement non complete";
