@@ -4,6 +4,7 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.ReservationType;
+import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
@@ -197,18 +197,18 @@ public class ReservationController extends CommonController {
             @ApiResponse(code = 200, message = "Successful validate",
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(value = VALIDATE, produces = MediaType.APPLICATION_JSON)
-    ResponseEntity<ReservationVO> validate(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid ValidateReservationDTO urr) throws Exception {
+    ResponseEntity<ReservationVO> validate(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid ValidateReservationDTO vr) throws Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         try {
             createOpentracingSpan("ReservationController - validate");
             Response pmResponse = new Response();
-            if (urr == null) return null;
+            if (vr == null) return null;
 
-            ReservationVO reservation = reservationService.validate(urr);
+            ReservationVO reservation = reservationService.validate(vr);
             if (reservation != null) {
                 response.setStatus(200);
-                String mes = (urr.isValidate()) ? " acceptée" : " refusée";
+                String mes = (vr.isValidate()) ? ValidateEnum.ACCEPTED.toValue() : ValidateEnum.REFUSED.toValue();
                 reservation.setRetCode(WebServiceResponseCode.OK_CODE);
                 reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_RESERV_LABEL, mes));
                 return new ResponseEntity<>(reservation, HttpStatus.OK);

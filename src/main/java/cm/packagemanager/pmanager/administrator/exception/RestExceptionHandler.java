@@ -1,9 +1,12 @@
 package cm.packagemanager.pmanager.administrator.exception;
 
 
+import cm.packagemanager.pmanager.common.exception.AnnounceException;
 import cm.packagemanager.pmanager.common.exception.ErrorResponse;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,30 +45,45 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleUserErrorExceptions(UserException ex) {
         List<String> details = new ArrayList<>();
         details.add(ex.getMessage());
-        String[] code = new String[1];
+        String[] code = new String[2];
         code[0] = String.valueOf(HttpStatus.NOT_FOUND.value());
+        code[1] = "user.unauthorized";
 
-        return new ResponseEntity<>(new ErrorResponse("user.error", details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new ErrorResponse((String) CollectionsUtils.getFirst(details), details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler({UserNotFoundException.class})
     public ResponseEntity<Object> handleNotFoundExceptions(UserNotFoundException ex) {
 
-        List<String> details = new ArrayList<>();
-        details.add(ex.getMessage());
-        String[] code = new String[1];
-        code[0] = String.valueOf(HttpStatus.NOT_FOUND.value());
-        return new ResponseEntity<>(new ErrorResponse("user.notfound", details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        return getObjectResponseEntity(ex.getMessage(), "user.notfound");
     }
+
+    @ExceptionHandler({AnnounceException.class})
+    public ResponseEntity<Object> handleAnnounceExceptions(AnnounceException ex) {
+
+        return getObjectResponseEntity(ex.getMessage(), "announce.error");
+    }
+
+    @NotNull
+    private ResponseEntity<Object> getObjectResponseEntity(String message, String s) {
+        List<String> details = new ArrayList<>();
+        details.add(message);
+        String[] code = new String[2];
+        code[0] = String.valueOf(HttpStatus.NOT_FOUND.value());
+        code[1] = s;
+        return new ResponseEntity<>(new ErrorResponse((String) CollectionsUtils.getFirst(details), details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.NOT_FOUND);
+    }
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleValidationExceptions(ConstraintViolationException ex) {
         List<ConstraintViolation> details = ex.getConstraintViolations()
                 .stream().collect(Collectors.toList());
-        String[] code = new String[1];
+        String[] code = new String[2];
         code[0] = String.valueOf(HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity<>(new ErrorResponse("bad request", details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        code[1] = "bad request";
+        return new ResponseEntity<>(new ErrorResponse("Bad Request", details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 
     }
 

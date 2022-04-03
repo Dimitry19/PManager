@@ -5,7 +5,6 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
-import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
@@ -32,7 +31,6 @@ import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
@@ -91,9 +89,20 @@ public class UserController extends CommonController {
                     return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
                 }
 
-                com.sendgrid.Response sent = userService.buildAndSendMail(request, usr);
+                if(mailService.buildAndSendMail(request, usr)){
+                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
+                    response.setStatus(200);
+                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                }else {
+                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_CONTACT_US_LABEL);
+                    response.setStatus(401);
+                    return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
+                }
 
-                if (mailSenderSendGrid.manageResponse(sent)) {
+
+                /*if (mailSenderSendGrid.manageResponse(sent)) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
                     response.setStatus(200);
@@ -105,13 +114,13 @@ public class UserController extends CommonController {
                     response.setStatus(sent.getStatusCode());
                     userService.remove(usr);
                     return new ResponseEntity<>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-                }
+                }*/
             }
         } catch (Exception e) {
             logger.error("Errore eseguendo register: ", e);
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
             pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
-            return new ResponseEntity<>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
         } finally {
             finishOpentracingSpan();
         }
@@ -130,7 +139,8 @@ public class UserController extends CommonController {
     //@RequestMapping(value=USER_WS_CONFIRMATION, method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
     @GetMapping(path = USER_WS_CONFIRMATION, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
-    ResponseEntity<Response> confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
+    //ResponseEntity<Response>
+    void confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
 
         Response pmResponse = new Response();
 
@@ -146,17 +156,20 @@ public class UserController extends CommonController {
             if (user == null) {
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 pmResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
+                response.sendRedirect(redirectConfirmErrorPage);
             } else {
 
                 if (user.getActive() == 1) {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
+                    response.sendRedirect(redirectConfirmErrorPage);
                 }
 
                 user.setActive(1);
                 if (userService.update(user) != null) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
+                    response.sendRedirect(redirectConfirmPage);
                 }
             }
 
@@ -166,7 +179,12 @@ public class UserController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+
+
+       /* String externalUrl = "https://some-domain.com/path/to/somewhere";
+        response.setStatus(302);
+        response.setHeader("Location", externalUrl);*/
+        //return new ResponseEntity<>(pmResponse, HttpStatus.OK);
     }
 
     @ApiOperation(value = " Login user ", response = UserVO.class)
@@ -492,7 +510,7 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController -sendMail");
             if (mail != null) {
-                if (mailSenderSendGrid.manageResponse(userService.sendMail(mail, true))) {
+                if (mailSenderSendGrid.manageResponse(mailService.sendMail(mail, true))) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
                 } else {
@@ -730,11 +748,6 @@ public class UserController extends CommonController {
                 cookie.setPath(request.getContextPath());
                 response.addCookie(cookie);
             }
-        }
-        HttpSession sessionObj = request.getSession(false);
-
-        if (sessionObj != null) {
-            sessionObj.invalidate();
         }
 
         Response pmResponse = new Response();

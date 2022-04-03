@@ -25,8 +25,6 @@ public class WebSocketEventListener  {
     @Autowired
     NotificatorServiceImpl notificationService;
 
-    @Autowired
-    private SimpMessageSendingOperations messagingTemplate;
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {

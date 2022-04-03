@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-@Slf4j
 @Component
 @DisallowConcurrentExecution
 public class UserManagerJob implements Job {
@@ -29,10 +28,10 @@ public class UserManagerJob implements Job {
 
         try {
             for (UserVO userVO : userDAO.getAllUsersToConfirm()) {
-                System.out.println("USERNAME:" + userVO.getUsername());
+                //System.out.println("USERNAME:" + userVO.getUsername());
                 userVO.setActive(1);
                 userDAO.updateUser(userVO);
-                System.out.println("UPDATED USER:" + userVO.getUsername());
+               // System.out.println("UPDATED USER:" + userVO.getUsername());
 
             }
         } catch (Exception e) {

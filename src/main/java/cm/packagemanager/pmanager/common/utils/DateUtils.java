@@ -1,13 +1,20 @@
 package cm.packagemanager.pmanager.common.utils;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DateUtils {
 
@@ -21,6 +28,26 @@ public class DateUtils {
     public static final String TIMESTAMP_PATTERN = "yy/MM/dd, hh:mm:ss";
     public static final String STD_PATTERN = "dd/MM/yyyy";
     public static final String STD_PATTERN_HMS = "dd/MM/yyyy, HH:mm:ss";
+    public static final String STD_PATTERN_YMD = "yyyyMMdd";
+
+
+
+    public static String getDateStandard(Date date) {
+        try {
+            return new SimpleDateFormat(STD_PATTERN).format(date);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public static Date currentDate() {
+        try {
+            return  dateWithoutTime( new Date());
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
 
     public static String getDateStandardFormatted(Date date) {
         try {
@@ -30,12 +57,160 @@ public class DateUtils {
         }
     }
 
-    public static String getDateStandard(Date date) {
+
+    public static Date milliSecondToDate(long dateTime) {
+
+
+        System.out.println("To convert Date: " + dateTime);
+        //creating Date from millisecond
+        Date currentDate = dateWithoutTime(new Date(dateTime));
+        System.out.println("converted Date: " + currentDate);
+        return currentDate;
+
+    }
+
+
+
+    @Nullable
+    private static Date getDate(String dateStr, String stdPatternHms) {
+        Date date = null;
         try {
-            return new SimpleDateFormat(STD_PATTERN).format(date);
+            if (dateStr != null && dateStr.length() > 0) {
+                DateFormat formatter;
+                formatter = new SimpleDateFormat(stdPatternHms);
+                date = formatter.parse(dateStr);
+            }
         } catch (Exception e) {
-            return "";
+            logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
         }
+        return date;
+    }
+
+
+    @NotNull
+    private static String getString(Date date, String stdPatternHms) {
+        String dateStr = "";
+        try {
+            if (date != null) {
+                SimpleDateFormat formatter = new SimpleDateFormat(stdPatternHms);
+                dateStr = formatter.format(date);
+            }
+        } catch (Exception e) {
+            logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
+        }
+        return dateStr;
+    }
+
+    public static java.sql.Date DateToSQLDate(Date inputDate) {
+        java.sql.Date sqlDate = null;
+        if (inputDate != null) {
+            sqlDate = new java.sql.Date(inputDate.getTime());
+        }
+        return sqlDate;
+    }
+
+    //JAVA 8---------------------------------
+    public static Date convertToDateViaSqlDate(LocalDate dateToConvert) {
+        return java.sql.Date.valueOf(dateToConvert);
+    }
+
+    public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert) {
+        return convertToLocalDateTimeViaMilisecond(dateToConvert.getTime());
+    }
+
+    public static LocalDateTime convertToLocalDateTimeViaMilisecond(long milliseconds) {
+        return Instant.ofEpochMilli(milliseconds)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+
+    public static LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
+        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
+    }
+
+    public static LocalDate convertToLocalDateMillisecondsViaSqlDate(long millisecond) {
+        return new java.sql.Date( millisecond).toLocalDate();
+    }
+    //--------------------------------------
+
+    public static boolean isAfter(Date compareDateOne, Date compareDateTwo) {
+        if (compareDateOne != null && compareDateTwo != null) {
+
+            return compareDateOne.after(compareDateTwo);
+        }
+        return false;
+    }
+
+    public static boolean isBefore(Date compareDateOne, Date compareDateTwo) {
+        if (compareDateOne != null && compareDateTwo != null) {
+
+            return compareDateOne.before(compareDateTwo);
+        }
+        return false;
+    }
+
+    public static boolean isSame(Date compareDateOne, Date compareDateTwo) {
+
+        if (compareDateOne != null && compareDateTwo != null) {
+            return !isAfter(compareDateOne,compareDateTwo) && !isBefore(compareDateOne,compareDateTwo);
+        }
+        return false;
+    }
+
+
+    public static Date dateWithoutTime(Date date) {
+
+        Calendar calendar = Calendar.getInstance();
+        TimeZone tz = TimeZone.getDefault();
+        calendar.setTimeZone(tz);
+        calendar.setTime( date);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();
+
+    }
+
+    public  static  boolean validLongValue(long l){
+        return l>0;
+    }
+
+
+    public static Date stringToDate(String dateStr, String format) {
+        return getDate(dateStr, format);
+    }
+
+    public static String dateToString(Date date) {
+        return getString(date, STD_PATTERN);
+    }
+
+    public static String dateTimeToString(Date date) {
+        return getString(date, STD_PATTERN_HMS);
+    }
+
+    public static String getDateFormatted(Format formatter, Date date) {
+        return formatter.format(date);
+    }
+
+    public static Timestamp stringToTimestamp(String dateStr) {
+        Timestamp timestamp = null;
+        try {
+            if (dateStr != null && dateStr.length() > 0) {
+                DateFormat formatter;
+                formatter = new SimpleDateFormat(TIMESTAMP_PATTERN);
+                Date date = formatter.parse(dateStr);
+                timestamp = new Timestamp(date.getTime());
+            }
+        } catch (Exception e) {
+            logger.trace("Impossibile representer la date " + dateStr + ". Exception :" + e);
+        }
+        return timestamp;
+    }
+
+    public static Date stringToDate(String dateStr) {
+        return getDate(dateStr, STD_PATTERN_HMS);
     }
 
     public static Date milliSecondToDateCalendar(long currentDateTime) {
@@ -62,120 +237,9 @@ public class DateUtils {
         return null;
     }
 
-    public static Date milliSecondToDate(long currentDateTime) {
+    static void printDate(Date date){
 
-        //Converting milliseconds to Date using java.util.Date
-        //current time in milliseconds
-        //long currentDateTime = System.currentTimeMillis();
+        System.out.println("converted Date: " + dateWithoutTime(date));
 
-        //creating Date from millisecond
-        Date currentDate = new Date(currentDateTime);
-
-	/*	//printing value of Date
-		System.out.println("current Date: " + currentDate);
-
-		//DateFormat df = new SimpleDateFormat("ddMM:yy:HH:mm:ss");
-		DateFormat df = new SimpleDateFormat(FORMAT_STD_PATTERN_4);
-
-		//formatted value of current Date
-		System.out.println("Milliseconds to Date: " + df.format(currentDate));*/
-        return currentDate;
-
-    }
-
-    public static String getDateFormatted(Format formatter, Date date) {
-        return formatter.format(date);
-    }
-
-    public static Timestamp stringToTimestamp(String dateStr) {
-        Timestamp timestamp = null;
-        try {
-            if (dateStr != null && dateStr.length() > 0) {
-                DateFormat formatter;
-                formatter = new SimpleDateFormat(TIMESTAMP_PATTERN);
-                Date date = formatter.parse(dateStr);
-                timestamp = new Timestamp(date.getTime());
-            }
-        } catch (Exception e) {
-            logger.trace("Impossibile representer la date " + dateStr + ". Exception :" + e);
-        }
-        return timestamp;
-    }
-
-    public static Date stringToDate(String dateStr) {
-        Date date = null;
-        try {
-            if (dateStr != null && dateStr.length() > 0) {
-                DateFormat formatter;
-                formatter = new SimpleDateFormat(STD_PATTERN_HMS);
-                date = formatter.parse(dateStr);
-            }
-        } catch (Exception e) {
-            logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
-        }
-        return date;
-    }
-
-    public static Date stringToDate(String dateStr, String format) {
-        Date date = null;
-        try {
-            if (dateStr != null && dateStr.length() > 0) {
-                DateFormat formatter;
-                formatter = new SimpleDateFormat(format);
-                date = formatter.parse(dateStr);
-            }
-        } catch (Exception e) {
-            logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
-        }
-        return date;
-    }
-
-    public static String dateToString(Date date) {
-        String dateStr = "";
-        try {
-            if (date != null) {
-                SimpleDateFormat formatter = new SimpleDateFormat(STD_PATTERN);
-                dateStr = formatter.format(date);
-            }
-        } catch (Exception e) {
-            logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
-        }
-        return dateStr;
-    }
-
-    public static String dateTimeToString(Date date) {
-        String dateStr = "";
-        try {
-            if (date != null) {
-                SimpleDateFormat formatter = new SimpleDateFormat(STD_PATTERN_HMS);
-                dateStr = formatter.format(date);
-            }
-        } catch (Exception e) {
-            logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
-        }
-        return dateStr;
-    }
-
-    public static java.sql.Date DateToSQLDate(Date inputDate) {
-        java.sql.Date sqlDate = null;
-        if (inputDate != null) {
-            sqlDate = new java.sql.Date(inputDate.getTime());
-        }
-        return sqlDate;
-    }
-
-
-    public static boolean isAfter(Date compareDateOne, Date compareDateTwo) {
-        if (compareDateOne != null && compareDateTwo != null) {
-            return compareDateOne.after(compareDateTwo);
-        }
-        return false;
-    }
-
-    public static boolean isBefore(Date compareDateOne, Date compareDateTwo) {
-        if (compareDateOne != null && compareDateTwo != null) {
-            return compareDateOne.before(compareDateTwo);
-        }
-        return false;
     }
 }

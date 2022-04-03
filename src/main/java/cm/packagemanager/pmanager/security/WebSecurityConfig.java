@@ -2,8 +2,8 @@ package cm.packagemanager.pmanager.security;
 
 
 import cm.packagemanager.pmanager.configuration.filters.AuthenticationFilter;
-import cm.packagemanager.pmanager.configuration.filters.HttpsEnforcer;
 import cm.packagemanager.pmanager.configuration.filters.SessionFilter;
+import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -29,13 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
-
-    @Autowired
-    private AuthenticationEntryPoint authEntryPoint;
-
-    @Autowired
-    private SessionFilter sessionFilter;
-
     private static final String[] AUTH_LIST = {
             "/v2/api-docs",
             "/configuration/ui",
@@ -43,27 +34,56 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/configuration/security",
             "/swagger-ui.html",
             "/ws/**",
-            "/webjars/**"
+            "/webjars/**",
+            WebSocketConstants.END_POINT
     };
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+       /* http.csrf().disable();
         http.httpBasic().disable().requiresChannel()
                 .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-                .requiresSecure();
+                .requiresSecure();*/
 
        logger.info("into configure");
 //        http.csrf().disable();
 //        http.httpBasic().disable();
 
-        /*http.authorizeRequests()
-                .antMatchers(AUTH_LIST)
+        http
+        .authorizeRequests()
+        .antMatchers(AUTH_LIST)
                 .permitAll()
-                .and().httpBasic()
-                .and().cors().and().csrf().disable()
-                .addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class);*/
+                .and()
+                .httpBasic()
+                .and()
+                .cors()
+                .and()
+                .headers()
+                .frameOptions()
+                //.sameOrigin()
+                .disable()
+                .and()
+                .csrf()
+                .disable()
+                .requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
+                //.addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class);
+
+
+
+            /* http
+                .cors()
+                .and()
+                .headers()
+                .frameOptions().disable()
+                .and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/stomp").permitAll() // On autorise l'appel handshake entre le client et le serveur
+                .anyRequest()
+                .authenticated();*/
     }
 
     @Bean
@@ -111,14 +131,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return registrationBean;
     }
 
-    //@Bean
-    public FilterRegistrationBean  httpsEnforcerBean() {
-        FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
-        HttpsEnforcer httpsEnforcer = new HttpsEnforcer();
-
-        registrationBean.setFilter(httpsEnforcer);
-       // registrationBean.addUrlPatterns("/user/*");
-        registrationBean.setOrder(2); //set precedence
-        return registrationBean;
-    }
 }

@@ -1,7 +1,10 @@
 package cm.packagemanager.pmanager.common.exception;
 
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import cm.packagemanager.pmanager.ws.controller.rest.users.UserController;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.ObjectError;
@@ -12,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ErrorResponse {
+
+    protected final Log logger = LogFactory.getLog(ErrorResponse.class);
 
     private String message;
     private List details = new ArrayList();
@@ -39,7 +44,7 @@ public class ErrorResponse {
     }
 
     public ErrorResponse(Exception ex) {
-        //logger.error(ApiError.class +" {}" ,ex);
+        logger.error(ErrorResponse.class +" {}" ,ex);
         StringBuilder stringBuilder = new StringBuilder();
         HttpMessageNotReadableException is;
         if (ex instanceof MethodArgumentNotValidException) {
@@ -86,6 +91,12 @@ public class ErrorResponse {
         if (ex instanceof NullPointerException) {
             setDefaultCodes("null.pointer.exception");
             NullPointerException ob = (NullPointerException) ex;
+            stringBuilder.append(ob.getMessage());
+        }
+
+        if (ex instanceof AnnounceException) {
+            setDefaultCodes("announce.exception");
+            AnnounceException ob = (AnnounceException) ex;
             stringBuilder.append(ob.getMessage());
         }
         stringBuilder.append(ex.getMessage());

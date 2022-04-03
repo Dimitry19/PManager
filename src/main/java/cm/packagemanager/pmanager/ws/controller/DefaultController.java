@@ -1,30 +1,54 @@
 package cm.packagemanager.pmanager.ws.controller;
 
+import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 
 @Controller
-public class DefaultController {
+public class DefaultController extends CommonController {
 	private static final Logger logger = LoggerFactory.getLogger(DefaultController.class);
 
+	/**
+	 *  Ceci permet de rediriger la context route sur la page index.html
+	 * @param response
+	 * @throws IOException
+	 */
 
-	@Value("${redirect.page}")
-	private String redirectPage;
-
-   @RequestMapping (value = "/", method = RequestMethod.GET)
+    @RequestMapping (value = "/", method = RequestMethod.GET)
 	public void ping(HttpServletResponse response) throws IOException {
-		logger.info("Démarrage des services OK .....");
+		System.out.println("Démarrage des services OK .....");
 
 	    response.sendRedirect(redirectPage);
 	}
 
+	@RequestMapping (value = "/error", method = RequestMethod.GET)
+	public void error(HttpServletResponse response) throws IOException {
+		System.out.println("Démarrage des services OK .....");
+
+		response.sendRedirect(redirectPage);
+	}
+
+
+	@RequestMapping(value = "/external-redirect", method = RequestMethod.GET)
+	public ResponseEntity<Object> method() throws URISyntaxException {
+
+		URI externalUri = new URI("https://some-domain.com/path/to/somewhere");
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setLocation(externalUri);
+
+		return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
+	}
 
 }

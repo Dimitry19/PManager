@@ -1,6 +1,5 @@
 package cm.packagemanager.pmanager.ws.controller.rest.mail;
 
-import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.mail.ContactUSDTO;
 import cm.packagemanager.pmanager.ws.responses.Response;
@@ -49,8 +48,20 @@ public class MailController extends CommonController {
         try {
             createOpentracingSpan("MailController - contact us");
 
-            com.sendgrid.Response sent = mailService.contactUS(contactusDTO);
-            if (mailSenderSendGrid.manageResponse(sent)) {
+
+            if(mailService.contactUS(contactusDTO)){
+                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
+                response.setStatus(200);
+
+            }else{
+                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                pmResponse.setRetDescription(WebServiceResponseCode.ERROR_CONTACT_US_LABEL);
+                response.setStatus(401);
+            }
+            return pmResponse;
+
+         /*   if (mailSenderSendGrid.manageResponse(sent)) {
 
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                 pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
@@ -61,9 +72,9 @@ public class MailController extends CommonController {
                 pmResponse.setRetCode(sent.getStatusCode());
                 pmResponse.setRetDescription(sent.getBody());
                 response.setStatus(sent.getStatusCode());
-            }
+            }*/
         } catch (Exception e) {
-
+                new Exception("Une erreur est survenue durant l'envoi du mail , Veuillez reessayer plutard");
         } finally {
             finishOpentracingSpan();
         }

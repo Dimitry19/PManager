@@ -30,6 +30,7 @@ public class ReservationVO extends CommonVO {
     public static final String FINDBYANNOUNCE = "cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounce";
     public static final String FINDBYUSER = "cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByUser";
     public static final String FIND_ANNOUNCE_USER = "cm.packagemanager.pmanager.announce.ent.vo.ReservationVO.findByAnnounceUser";
+    public static final String SQL_FIND_BY_USER = " FROM ReservationVO r where r.user.id =:userId";
 
 
     @Id

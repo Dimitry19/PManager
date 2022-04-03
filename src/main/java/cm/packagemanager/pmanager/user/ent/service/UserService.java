@@ -50,8 +50,6 @@ public interface UserService {
 
     Response managePassword(String email) throws Exception;
 
-    Response sendMail(MailDTO mr, boolean active) throws Exception;
-
     boolean deleteUser(Long id) throws UserException;
 
     UserVO findByEmail(String email) throws Exception;
@@ -61,8 +59,6 @@ public interface UserService {
     UserVO findByUsername(String username, boolean isReg) throws Exception;
 
     UserVO findByToken(String token) throws Exception;
-
-    Response buildAndSendMail(HttpServletRequest request, UserVO user) throws UserException;
 
     boolean checkLogin(LoginDTO lr) throws Exception;
 
