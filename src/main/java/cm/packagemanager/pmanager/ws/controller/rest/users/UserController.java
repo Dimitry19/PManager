@@ -138,9 +138,7 @@ public class UserController extends CommonController {
                     response = Response.class, responseContainer = "Object")})
     //@RequestMapping(value=USER_WS_CONFIRMATION, method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
     @GetMapping(path = USER_WS_CONFIRMATION, headers = WSConstants.HEADER_ACCEPT)
-    public @ResponseBody
-    //ResponseEntity<Response>
-    void confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
+    public @ResponseBody void confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
 
         Response pmResponse = new Response();
 
@@ -289,9 +287,12 @@ public class UserController extends CommonController {
                 if (user == null) {
                     WSCommonResponseVO commonResponse = new WSCommonResponseVO();
                     commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    commonResponse.setRetDescription(WebServiceResponseCode.ERROR_UPD_EMAIL_LABEL);
+                    commonResponse.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_USER_LABEL);
                     throw new UserNotFoundException("Utilisateur non trouv&egrave;");
                 }
+
+                user.setRetCode(WebServiceResponseCode.OK_CODE);
+                user.setRetDescription(WebServiceResponseCode.UPDATE_LABEL);
                 return new ResponseEntity<UserVO>(user, HttpStatus.OK);
             }
         } catch (UserException e) {
@@ -371,7 +372,7 @@ public class UserController extends CommonController {
                     pmResponse.setRetDescription(WebServiceResponseCode.RETRIVEVE_PASSWORD_LABEL + " " + password.getEmail());
                 } else {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_RETRIVEVE_PASSWORD_LABEL);
+                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_RETRIEVE_PASSWORD_LABEL);
                 }
             }
             return pmResponse;
@@ -552,14 +553,8 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController -users");
             int count = userService.count(pageBy);
-            if (count == 0) {
-                headers.add(HEADER_TOTAL, Long.toString(count));
-            } else {
-                List<UserVO> users = userService.getAllUsers(pageBy);
-                paginateResponse.setCount(count);
-                paginateResponse.setResults(users);
-                headers.add(HEADER_TOTAL, Long.toString(users.size()));
-            }
+            List<UserVO> users = userService.getAllUsers(pageBy);
+            return getPaginateResponseResponseEntity(headers, paginateResponse, users);
         } catch (Exception e) {
             response.getWriter().write(e.getMessage());
             logger.info(" UserController -users:Exception occurred while fetching the response from the database.", e);
@@ -567,7 +562,6 @@ public class UserController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
     }
 
     //@RequestMapping(USER_WS_USERS_PAGE_NO)
@@ -615,14 +609,15 @@ public class UserController extends CommonController {
 
             }
         } catch (UserException e) {
-            logger.error("Errore eseguendo subscribe: ", e);
+            logger.error("Erreur durant l'execution de  subscribe: ", e);
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
             pmResponse.setRetDescription(WebServiceResponseCode.ERROR_SUBSCRIBE_LABEL);
-            throw e;
+            return new ResponseEntity<Response>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 
         } finally {
             finishOpentracingSpan();
         }
+
         return null;
     }
 
@@ -663,10 +658,10 @@ public class UserController extends CommonController {
                 return new ResponseEntity<Response>(pmResponse, HttpStatus.OK);
             }
         } catch (Exception e) {
-            logger.error("Errore eseguendo unsubscribe: ", e);
+            logger.error("Erreur durant l'execution de  unsubscribe: ", e);
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
             pmResponse.setRetDescription(WebServiceResponseCode.ERROR_UNSUBSCRIBE_LABEL);
-            throw e;
+            return new ResponseEntity<Response>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
             finishOpentracingSpan();
         }
@@ -698,12 +693,15 @@ public class UserController extends CommonController {
             return getPaginateResponseResponseEntity(headers, paginateResponse, users);
 
         } catch (Exception e) {
-            logger.error("Errore eseguendo subscriptions: ", e);
-            response.getWriter().write(e.getMessage());
+            logger.error("Erreur durant l'execution de subscriptions: ", e);
+            response.setStatus(500);
+            paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+            return new ResponseEntity<>(paginateResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+
         } finally {
             finishOpentracingSpan();
         }
-        return null;
     }
 
     @ApiOperation(value = "User subscribers ", response = Response.class)
@@ -730,12 +728,14 @@ public class UserController extends CommonController {
             return getPaginateResponseResponseEntity(headers, paginateResponse, users);
 
         } catch (Exception e) {
-            logger.error("Errore eseguendo subscribers: ", e);
-            response.getWriter().write(e.getMessage());
+            logger.error("Erreur durant l'execution de subscribers: ", e);
+            response.setStatus(500);
+            paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+            return new ResponseEntity<>(paginateResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
             finishOpentracingSpan();
         }
-        return null;
     }
 
     @RequestMapping(value = USER_WS_LOGOUT, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)

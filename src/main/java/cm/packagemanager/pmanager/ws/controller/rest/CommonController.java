@@ -2,17 +2,18 @@ package cm.packagemanager.pmanager.ws.controller.rest;
 
 import cm.packagemanager.pmanager.announce.ent.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.ent.service.ReservationService;
-import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
-import cm.packagemanager.pmanager.common.mail.sendgrid.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.mail.ent.service.MailService;
+import cm.packagemanager.pmanager.common.mail.sendgrid.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.FileUtils;
+import cm.packagemanager.pmanager.constant.WSConstants;
+import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.message.ent.service.MessageService;
 import cm.packagemanager.pmanager.notification.ent.service.NotificationService;
 import cm.packagemanager.pmanager.user.ent.service.RoleService;
 import cm.packagemanager.pmanager.user.ent.service.UserService;
-import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
+import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import io.opentracing.util.GlobalTracer;
@@ -38,12 +39,11 @@ import java.util.List;
  */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Component
-public class CommonController  {
+public class CommonController  extends WSConstants {
 
 
     protected final Log logger = LogFactory.getLog(CommonController.class);
-    public static final String DEFAULT_SIZE = "12";
-    public static final String DEFAULT_PAGE = "0";
+
     public static final String HEADER_TOTAL = "x-total-count";
 
     @Value("${redirect.page}")
@@ -132,13 +132,44 @@ public class CommonController  {
 
     }
 
-    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, List<UserVO> users) {
-        if (CollectionsUtils.isEmpty(users)) {
+
+
+    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, int count,List results) {
+
+
+
+        switch (count) {
+            case 0:
+                headers.add(HEADER_TOTAL, Long.toString(count));
+                paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
+                break;
+            default:
+
+                if (CollectionsUtils.isNotEmpty(results)) {
+                    paginateResponse.setCount(count);
+                }
+                paginateResponse.setResults(results);
+                paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
+                headers.add(HEADER_TOTAL, Long.toString(results.size()));
+                break;
+        }
+        return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
+    }
+
+    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse,List results) {
+
+        if (CollectionsUtils.isEmpty(results)) {
             headers.add(HEADER_TOTAL, Long.toString(0));
+            paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
         } else {
-            paginateResponse.setCount(users.size());
-            paginateResponse.setResults(users);
-            headers.add(HEADER_TOTAL, Long.toString(users.size()));
+            paginateResponse.setCount(results.size());
+            paginateResponse.setResults(results);
+            paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
+            headers.add(HEADER_TOTAL, Long.toString(results.size()));
         }
         return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
     }

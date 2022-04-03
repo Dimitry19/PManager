@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.common.mail.ent.wrapper;
 
+
 import cm.packagemanager.pmanager.common.utils.MailUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 

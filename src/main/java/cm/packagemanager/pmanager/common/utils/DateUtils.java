@@ -8,8 +8,13 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DateUtils {
 
@@ -37,13 +42,7 @@ public class DateUtils {
 
     public static Date currentDate() {
         try {
-            Calendar calendar = Calendar.getInstance();
-
-            calendar.set(Calendar.HOUR_OF_DAY, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-            return calendar.getTime();
+            return  dateWithoutTime( new Date());
         } catch (Exception e) {
         }
         return null;
@@ -61,24 +60,11 @@ public class DateUtils {
 
     public static Date milliSecondToDate(long dateTime) {
 
-        //Converting milliseconds to Date using java.util.Date
-        //current time in milliseconds
-        //long currentDateTime = System.currentTimeMillis();
-
         System.out.println("To convert Date: " + dateTime);
         //creating Date from millisecond
         Date currentDate = dateWithoutTime(new Date(dateTime));
-        System.out.println("converted Date: " + dateWithoutTime(new Date(dateTime)));
-
-	/*	//printing value of Date
-		System.out.println("current Date: " + currentDate);
-
-		//DateFormat df = new SimpleDateFormat("ddMM:yy:HH:mm:ss");
-		DateFormat df = new SimpleDateFormat(FORMAT_STD_PATTERN_4);
-
-		//formatted value of current Date
-		System.out.println("Milliseconds to Date: " + df.format(currentDate));*/
-        return currentDate;
+        System.out.println("converted Date: " + currentDate);
+        return calendar(dateTime);
 
     }
 
@@ -122,6 +108,29 @@ public class DateUtils {
         return sqlDate;
     }
 
+    //JAVA 8---------------------------------
+    public static Date convertToDateViaSqlDate(LocalDate dateToConvert) {
+        return java.sql.Date.valueOf(dateToConvert);
+    }
+
+    public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert) {
+        return convertToLocalDateTimeViaMilisecond(dateToConvert.getTime());
+    }
+
+    public static LocalDateTime convertToLocalDateTimeViaMilisecond(long milliseconds) {
+        return Instant.ofEpochMilli(milliseconds)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+
+    public static LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
+        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
+    }
+
+    public static LocalDate convertToLocalDateMillisecondsViaSqlDate(long millisecond) {
+        return new java.sql.Date( millisecond).toLocalDate();
+    }
+    //--------------------------------------
 
     public static boolean isAfter(Date compareDateOne, Date compareDateTwo) {
         if (compareDateOne != null && compareDateTwo != null) {
@@ -148,13 +157,26 @@ public class DateUtils {
     }
 
 
+    public static Date calendar(long milliseconds){
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(TimeZone.getDefault());
+
+        cal.setTimeInMillis(milliseconds);
+        cal.set(Calendar.HOUR,0);
+        cal.set(Calendar.MINUTE,0);
+        cal.set(Calendar.SECOND,0);
+        cal.set(Calendar.MILLISECOND,0);
+        return cal.getTime();
+    }
+
     public static Date dateWithoutTime(Date date) {
 
         Calendar calendar = Calendar.getInstance();
-
+        TimeZone tz = TimeZone.getDefault();
+        calendar.setTimeZone(tz);
         calendar.setTime( date);
-        calendar.add(Calendar.MONTH, -1);
-        calendar.set(Calendar.DAY_OF_MONTH, date.getDay());
+        calendar.set(Calendar.HOUR, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);

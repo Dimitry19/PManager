@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.ws.controller.rest.message;
 
 
+import cm.framework.ds.hibernate.enums.FindByType;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
@@ -92,6 +93,47 @@ public class MessageController extends CommonController {
         return null;
     }
 
+    /**
+     * Cette methode recherche toutes les messages d'un utilisateur
+     *
+     * @param response
+     * @param request
+     * @param announceId
+     * @param page
+     * @param size
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = BY_ANNOUNCE, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+    public ResponseEntity<PaginateResponse> messagesByAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long announceId,
+                                                           @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre un nombre positif") int page,
+                                                           @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        logger.info("get all users request in");
+        HttpHeaders headers = new HttpHeaders();
+        PageBy pageBy = new PageBy(page, size);
+        PaginateResponse paginateResponse = new PaginateResponse();
+
+        try {
+            logger.info("find message by user request in");
+            createOpentracingSpan("MessageController -messagesByAnnounce");
+            if (announceId != null) {
+                int count = messageService.count(pageBy);
+                List<MessageVO> messages = messageService.messagesBy(announceId, FindByType.ANNOUNCE, pageBy);
+                return getPaginateResponseResponseEntity(headers,paginateResponse,count,messages);
+            }else{
+                paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+            }
+        } catch (Exception e) {
+            logger.error("MessageController- error {}", e);
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
+        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+    }
 
     /**
      * Cette methode recherche toutes les messages d'un utilisateur
@@ -120,14 +162,11 @@ public class MessageController extends CommonController {
             createOpentracingSpan("MessageController -messagesByUser");
             if (userId != null) {
                 int count = messageService.count(pageBy);
-                if (count == 0) {
-                    headers.add(HEADER_TOTAL, Long.toString(count));
-                } else {
-                    List<MessageVO> messages = messageService.messagesByUser(userId, pageBy);
-                    headers.add(HEADER_TOTAL, Long.toString(messages.size()));
-                    paginateResponse.setResults(messages);
-                }
-                paginateResponse.setCount(count);
+                List<MessageVO> messages = messageService.messagesBy(userId,FindByType.USER, pageBy);
+                return getPaginateResponseResponseEntity(headers,paginateResponse,count,messages);
+            }else{
+                paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
             }
         } catch (Exception e) {
             logger.error("MessageController- error {}", e);
@@ -197,15 +236,9 @@ public class MessageController extends CommonController {
         try {
             createOpentracingSpan("MessageController -messages");
             int count = messageService.count(pageBy);
-            if (count == 0) {
-                headers.add(HEADER_TOTAL, Long.toString(count));
-            } else {
-                List<MessageVO> messages = messageService.messages(pageBy);
-                paginateResponse.setCount(count);
-                paginateResponse.setResults(messages);
-                headers.add(HEADER_TOTAL, Long.toString(messages.size()));
-            }
-            return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+            List<MessageVO> messages = messageService.messages(pageBy);
+
+            return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  messages);
         } catch (Exception e) {
             throw e;
         } finally {

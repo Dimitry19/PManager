@@ -6,7 +6,6 @@ import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.exception.AnnounceException;
-import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
@@ -64,7 +63,7 @@ public class AnnounceController extends CommonController {
     @PostMapping(value = CREATE, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<Object> create(HttpServletResponse response, HttpServletRequest request,
-                                  @RequestBody @Valid AnnounceDTO ar) throws AnnounceException {
+                                      @RequestBody @Valid AnnounceDTO ar) throws AnnounceException {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         AnnounceVO announce = null;
@@ -87,7 +86,7 @@ public class AnnounceController extends CommonController {
                 }
             }
         } catch (AnnounceException e) {
-            logger.error("Errore eseguendo add announce: ", e);
+            logger.error("Erreur durant l'execution de  add announce: ", e);
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,7 +109,7 @@ public class AnnounceController extends CommonController {
                     response = AnnounceVO.class, responseContainer = "Object")})
     @PutMapping(value = UPDATE_ID, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
     ResponseEntity<Object> update(HttpServletResponse response, HttpServletRequest request, @PathVariable("id") @Valid long id,
-                                  @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
+                                      @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         try {
@@ -130,7 +129,7 @@ public class AnnounceController extends CommonController {
                 commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "L'annonce"));
                 return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
             }
-        } catch (Exception e) {
+        } catch (AnnounceException e) {
             logger.error("Erreur durant l'ajournement de l'announce " + uar.toString() + "{ }", e);
             throw e;
         } finally {
@@ -162,7 +161,7 @@ public class AnnounceController extends CommonController {
     public @ResponseBody
     ResponseEntity<PaginateResponse> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchDTO asdto,
                                           @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
-                                          @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
+                                          @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws Exception {
 
 
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -172,21 +171,14 @@ public class AnnounceController extends CommonController {
         logger.info("find  announces request in");
         PageBy pageBy = new PageBy(page, size);
 
-        List<AnnounceVO> announces = null;
 
         try {
             createOpentracingSpan("AnnounceController -find");
 
             if (asdto != null) {
-                int count = announceService.count(asdto, pageBy);
-                if (count == 0) {
-                    headers.add(HEADER_TOTAL, Long.toString(count));
-                } else {
-                    announces = announceService.find(asdto, pageBy);
-                    paginateResponse.setCount(count);
-                    paginateResponse.setResults(announces);
-                    headers.add(HEADER_TOTAL, Long.toString(announces.size()));
-                }
+                int count = announceService.count(asdto,null, null, pageBy);
+                List<AnnounceVO> announces = announceService.find(asdto, pageBy);
+                return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
             }
         } catch (Exception e) {
             logger.info(" AnnounceController -find:Exception occurred while fetching the response from the database.", e);
@@ -220,13 +212,13 @@ public class AnnounceController extends CommonController {
     public ResponseEntity<PaginateResponse> announcesByUser(HttpServletResponse response, HttpServletRequest request,
                                                             @RequestParam @Valid Long userId,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
-                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws AnnounceException, Exception {
+                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException, Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
         PageBy pageBy = new PageBy(page, size);
-        List<AnnounceVO> announces = null;
+
         logger.info("find announce by user request in");
 
 
@@ -234,21 +226,14 @@ public class AnnounceController extends CommonController {
             createOpentracingSpan("AnnounceController -announcesByUser");
 
             if (userId != null) {
-                int count = announceService.count(null, pageBy);
-                switch (count) {
-                    case 0:
-                        headers.add(HEADER_TOTAL, Long.toString(count));
-                        break;
-                    default:
-                        announces = announceService.announcesByUser(userId, pageBy);
-                        if (CollectionsUtils.isNotEmpty(announces)) {
-                            paginateResponse.setCount(count);
-                        }
-                        paginateResponse.setResults(announces);
-                        headers.add(HEADER_TOTAL, Long.toString(announces.size()));
-                        break;
-                }
-            } else response.getWriter().write("Utilisateur non existant");
+                int count = announceService.count(null, userId,null,pageBy);
+                List<AnnounceVO> announces = announceService.announcesByUser(userId, pageBy);
+                return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
+
+            } else {
+                paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+            }
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
             throw e;
@@ -282,38 +267,29 @@ public class AnnounceController extends CommonController {
     public ResponseEntity<PaginateResponse> announcesByType(HttpServletResponse response, HttpServletRequest request,
                                                             @RequestParam @Valid AnnounceType type,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
-                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws AnnounceException,Exception {
+                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException,Exception {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
-        logger.info("find announce by type request in");
-        PageBy pageBy = new PageBy(page, size);
 
-        List<AnnounceVO> announces = null;
+        PageBy pageBy = new PageBy(page, size);
+        logger.info("find announce by type request in");
 
 
         try {
             createOpentracingSpan("AnnounceController - announcesByType");
 
-            int count = announceService.count(null, pageBy);
-            if (count == 0) {
-                headers.add(HEADER_TOTAL, Long.toString(count));
-            } else {
-                announces = announceService.announcesByType(type, pageBy);
-                if (CollectionsUtils.isNotEmpty(announces)) {
-                    paginateResponse.setCount(count);
-                }
-                paginateResponse.setResults(announces);
-                headers.add(HEADER_TOTAL, Long.toString(announces.size()));
-            }
-        } catch (Exception e) {
+            int count = announceService.count(null,null, type, pageBy);
+            List<AnnounceVO> announces = announceService.announcesByType(type, pageBy);
+            return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
+
+        } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByType:Exception occurred while fetching the response from the database.", e);
             throw e;
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
     }
 
     /**
@@ -415,7 +391,7 @@ public class AnnounceController extends CommonController {
     @GetMapping(value = ANNOUNCES_WS, produces = MediaType.APPLICATION_JSON, headers = HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announces(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                       @RequestParam(required = false, defaultValue = DEFAULT_SIZE)
-                                                      @Valid @Positive(message = "Page size should be a positive number") int size) throws AnnounceException,Exception {
+                                                      @Valid @Positive(message = "Page size should be a positive number") Integer size) throws AnnounceException,Exception {
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
@@ -426,16 +402,9 @@ public class AnnounceController extends CommonController {
 
             createOpentracingSpan("AnnounceController -announces");
 
-            int count = announceService.count(null, pageBy);
-            if (count == 0) {
-                headers.add(HEADER_TOTAL, Long.toString(count));
-            } else {
-                List<AnnounceVO> announces = announceService.announces(pageBy);
-                paginateResponse.setCount(count);
-                paginateResponse.setResults(announces);
-                headers.add(HEADER_TOTAL, Long.toString(announces.size()));
-            }
-            return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+            int count = announceService.count(null,null, null, pageBy);
+            List<AnnounceVO> announces = announceService.announces(pageBy);
+            return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announces:Exception occurred while fetching the response from the database.", e);
             throw e;

@@ -2,11 +2,11 @@ package cm.packagemanager.pmanager.user.ent.vo;
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
-import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.communication.ent.vo.CommunicationVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
+import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
 import cm.packagemanager.pmanager.notification.ent.vo.NotificationVO;
 import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
@@ -28,8 +28,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import static org.hibernate.annotations.FetchMode.SELECT;
-
 /**
  * le @Fetch(value = SELECT) permet de corriger le probleme de chargement des elements (Set et List) meme
  * quand ils sont vides quand on utilise la methode find() de la session.
@@ -38,7 +36,6 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 
 @Entity(name = "UserVO")
 @Table(name = "TP_USER")
-//@Table(name = "USER")
 @NamedQueries({
         @NamedQuery(name = UserVO.Q_AC_ITEM, query = "select u from UserVO u where (upper(u.lastName) like :searchFilter) or(upper(u.firstName) like :" +
                 "searchFilter ) or(u.username like :searchFilter) or( u.email like :searchFilter)  order by u.firstName"),
@@ -232,11 +229,11 @@ public class UserVO extends CommonVO {
         return enableNotification;
     }
 
-
     @Access(AccessType.PROPERTY)
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy(clause = "id.id DESC")
     @Where(clause = "cancelled = false")
+    @JsonIgnore
     public Set<MessageVO> getMessages() {
         return messages;
     }
@@ -244,9 +241,10 @@ public class UserVO extends CommonVO {
     @Access(AccessType.PROPERTY)
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
-    @Fetch(value = SELECT)
+    //@Fetch(value = SELECT)
     @OrderBy(clause = "startDate DESC")
     @Where(clause = "cancelled = false")
+    @JsonIgnore
     public Set<AnnounceVO> getAnnounces() {
         return announces;
     }

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-@Slf4j
 @Component
 @DisallowConcurrentExecution
 public class UserManagerJob implements Job {

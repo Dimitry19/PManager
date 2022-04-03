@@ -60,7 +60,7 @@ public class AnnounceDTO extends CategoriesDTO {
 
 
     @NotNull(message = "La date de retour de l'annonce doit etre valorisé")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = DateUtils.FORMAT_STD_PATTERN_4)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = DateUtils.FORMAT_STD_PATTERN_4)
     @JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
     //@FutureOrPresent(message = "la date retour doit être une date dans le présent ou le futur")
     private long endDate;

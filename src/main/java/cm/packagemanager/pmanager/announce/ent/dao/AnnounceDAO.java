@@ -20,7 +20,7 @@ public interface AnnounceDAO extends CommonDAO {
 
     List<AnnounceVO> announces(PageBy pageBy) throws AnnounceException,Exception;
 
-    int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws AnnounceException, Exception;
+    int count(AnnounceSearchDTO announceSearch, Long userId, AnnounceType type,PageBy pageBy) throws AnnounceException, Exception;
 
     List<AnnounceVO> announcesByUser(UserVO user) throws AnnounceException,Exception;
 

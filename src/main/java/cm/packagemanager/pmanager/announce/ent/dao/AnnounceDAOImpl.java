@@ -72,7 +72,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public int count(AnnounceSearchDTO announceSearch, PageBy pageBy) throws Exception {
+    public int count(AnnounceSearchDTO announceSearch, Long userId, AnnounceType type,PageBy pageBy) throws AnnounceException,Exception {
 
         logger.info(" Announce - count");
         if (announceSearch != null) {
@@ -83,15 +83,20 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             composeQueryParameters(announceSearch, query);
             List result=query.list();
             return CollectionsUtils.isNotEmpty(result) ? result.size() : 0;
-        } else {
-            return count(AnnounceVO.class, pageBy);
         }
+        if(userId!=null) {
+            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,"userId",null);
+        }
+        if(type!=null) {
+            return countByNameQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class,type,"type",null);
+        }
+        return count(AnnounceVO.class, null);
 
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<AnnounceVO> announces(PageBy pageBy) throws Exception {
+    public List<AnnounceVO> announces(PageBy pageBy) throws AnnounceException,Exception {
 
         List<AnnounceVO> announces = allAndOrderBy(AnnounceVO.class, "startDate", true, pageBy);
         return announces;
@@ -99,7 +104,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AnnounceVO> announces(int page, int size) throws Exception {
+    public List<AnnounceVO> announces(int page, int size) throws AnnounceException,Exception {
 
         PageBy pageBy = new PageBy(page, size);
         List<AnnounceVO> announces = allAndOrderBy(AnnounceVO.class, "startDate", true, pageBy);
@@ -117,7 +122,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws Exception {
+    public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws AnnounceException,Exception {
 
         UserVO user = userDAO.findById(userId);
         if (user == null) {
@@ -138,7 +143,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws Exception {
+    public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws AnnounceException,Exception {
 
         List<AnnounceVO> announces = findBy(AnnounceVO.FINDBYTYPE, AnnounceVO.class, type, "type", pageBy);
         return announces;
@@ -162,15 +167,15 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
      * @throws Exception
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public AnnounceVO create(AnnounceDTO adto) throws Exception {
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
+    public AnnounceVO create(AnnounceDTO adto) throws AnnounceException,Exception {
 
         if (adto != null) {
 
             UserVO user = userDAO.findById(adto.getUserId());
 
             if (user == null) {
-                throw new Exception("Aucun utilisateur trouvé avec cet id " + adto.getUserId());
+                throw new UserException("Aucun utilisateur trouvé avec cet id " + adto.getUserId());
             }
 
             AnnounceVO announce = new AnnounceVO();
@@ -202,8 +207,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
      * @throws Exception
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public AnnounceVO update(UpdateAnnounceDTO udto) throws Exception {
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
+    public AnnounceVO update(UpdateAnnounceDTO udto) throws AnnounceException,Exception {
 
         UserVO user = userDAO.findById(udto.getUserId());
 
@@ -244,7 +249,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws Exception {
+    public List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws AnnounceException,Exception {
         Session session = sessionFactory.getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
 
@@ -259,8 +264,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void announcesStatus() throws Exception {
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
+    public void announcesStatus() throws AnnounceException,Exception {
         List<AnnounceVO> announces = Optional.ofNullable(allAndOrderBy(AnnounceVO.class, "startDate", true, null)).orElseGet(Collections::emptyList);
         if (CollectionsUtils.isNotEmpty(announces)) {
             announces.stream().filter(ann -> !ann.isCancelled() && DateUtils.isBefore(ann.getEndDate(), DateUtils.currentDate()))
@@ -279,7 +284,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class,BusinessResourceException.class,AnnounceException.class})
     public boolean delete(Long id) throws BusinessResourceException {
         logger.info("Announce: delete");
 
@@ -317,14 +322,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
 
-    private void setAnnounce(AnnounceVO announce, UserVO user, AnnounceDTO adto,boolean isCreate) throws AnnounceException, Exception {
+    private void setAnnounce(AnnounceVO announce, UserVO user, AnnounceDTO adto,boolean isCreate) throws AnnounceException,Exception {
 
         BigDecimal price = adto.getPrice();
         BigDecimal preniumPrice = adto.getPreniumPrice();
         BigDecimal goldenPrice = adto.getGoldPrice();
         BigDecimal weight = adto.getWeight();
-
-
 
         if(!DateUtils.validLongValue(adto.getStartDate()) || !DateUtils.validLongValue(adto.getEndDate())){
 
@@ -332,8 +335,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         }
 
-        Date startDate = DateUtils.milliSecondToDate(adto.getStartDate());
+        Date startDate=DateUtils.milliSecondToDate(adto.getStartDate());
         Date endDate = DateUtils.milliSecondToDate(adto.getEndDate());
+
 
         if (weight == null ) {
             throw new AnnounceException("Quantité n'est pas valide, elle doit etre superieure a zero");
@@ -372,8 +376,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                     throw new UnsupportedOperationException("Impossible de reduire la quantité , car il existe des resevations pour une quantité "+sumQtyRes+" Kg");
                 }
             }
-            boolean closeDate= DateUtils.isBefore(DateUtils.milliSecondToDate(adto.getEndDate()), DateUtils.currentDate()) ||
-                    DateUtils.isSame(DateUtils.milliSecondToDate(adto.getEndDate()), DateUtils.currentDate());
+            boolean closeDate= DateUtils.isBefore(endDate, DateUtils.currentDate()) ||
+                    DateUtils.isSame(endDate, DateUtils.currentDate());
 
             //Si la modification se fait à la date courante ou bien si  tous les kg ont été reservés -> Completed
             if((weight.compareTo(sumQtyRes)==0 || closeDate) || (weight.compareTo(sumQtyRes)==0 && closeDate)){
@@ -400,11 +404,11 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         announce.setTransport(adto.getTransport());
     }
 
-    public List<ReservationVO> findReservations(Long id) throws Exception {
+    public List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception {
 
         try {
             return findBy(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, id, "announceId", null);
-        } catch (Exception e) {
+        } catch (AnnounceException e) {
             logger.error("Erreur durant la recuperation des reservations liées à l'annonce id={}", id);
             throw e;
         }
@@ -651,7 +655,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         return  StringUtils.isNotEmpty(val) && !StringUtils.equals(val,  where);
     }
 
-    private void handleCategories(AnnounceVO announce, List<String> categories) throws Exception {
+    private void handleCategories(AnnounceVO announce, List<String> categories) throws AnnounceException {
 
         announce.getCategories().clear();
         if (CollectionsUtils.isNotEmpty(categories)) {
@@ -659,10 +663,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 try {
                     CategoryVO category = categoryDAO.findByCode(x);
                     if (category == null) {
-                        throw new Exception("Valoriser la categorie");
+                        throw new AnnounceException("Valoriser la categorie");
                     }
                     announce.addCategory(category);
-                } catch (Exception e) {
+                } catch (AnnounceException e) {
                     logger.error("Erreur durant la recuperation des categories", e);
                     try {
                         throw e;

@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.message.ent.service;
 
+import cm.framework.ds.hibernate.enums.FindByType;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface MessageService {
     List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws Exception;
 
-    List<MessageVO> messagesByUser(Long id, PageBy pageBy) throws Exception;
+    List<MessageVO> messagesBy(Long id, FindByType fbType,PageBy pageBy) throws Exception;
 
     int count(PageBy pageBy) throws Exception;
 

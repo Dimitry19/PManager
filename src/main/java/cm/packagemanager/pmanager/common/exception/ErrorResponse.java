@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.common.exception;
 
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
+import cm.packagemanager.pmanager.ws.controller.rest.users.UserController;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -20,6 +20,7 @@ import cm.packagemanager.pmanager.utils.SecRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessageType;
@@ -50,6 +51,9 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
     @Autowired
     SessionNotificationManager sessionManager;
+
+    @Value("${travel.post.notification.enable}")
+    private boolean enableNotification;
 
     private boolean applicationStarted=false;
 
@@ -146,6 +150,8 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
         if(!applicationStarted) return;
 
         logger.info(" doNotify");
+
+        if (!enableNotification) return;
 
         List<Event> deadEvents = new ArrayList<>();
         events.forEach(event -> {
