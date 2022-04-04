@@ -52,7 +52,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
     @Autowired
     SessionNotificationManager sessionManager;
 
-    @Value("${travel.post.notification.enable}")
+    @Value("${travel.post.stomp.notification.enable}")
     private boolean enableNotification;
 
     private boolean applicationStarted=false;

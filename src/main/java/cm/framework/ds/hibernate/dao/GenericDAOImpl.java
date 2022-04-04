@@ -437,7 +437,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
     /**
-     * he persist() method is used to create or save a new entity in the database.
+     * The persist() method is used to create or save a new entity in the database.
      * if we try to update an existing record using persist() method it will throw EntityExistsException.
      * if an instance is detached, we'll get an exception
      *
@@ -464,6 +464,20 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         session.persist(t); // on rend l'instance t persistent
         //session.flush(); // Permet de vider la session le flush fait la synchronisation entre l'entité et la session hibernate
 
+    }
+
+    @Override
+    public void evict(T t) throws Exception {
+
+        Session session = sessionFactory.getCurrentSession();
+        session.evict(t);
+    }
+
+    @Override
+    public void flush() throws Exception {
+
+        Session session = sessionFactory.getCurrentSession();
+        session.flush();
     }
 
     /**

@@ -23,6 +23,8 @@ public class WSConstants {
     public static final String VALIDATE = "/validate";
     public static final String IMAGE = "/{imageName}";
     public static final String UPLOAD = "/upload";
+    public static final String UPDATE_ID = "/update/{id}";
+
 
 
     /************ USER REQUEST*************/
@@ -55,6 +57,7 @@ public class WSConstants {
 
     /************ ADMIN REQUEST*************/
     public static final String COMMUNICATION_WS = "/ws/dashboard/communication/*";
+    public static final String AIRPLANE_WS = "/ws/dashboard/airplane/*";
 
 
     /************ ANNOUNCE REQUEST*************/
@@ -64,7 +67,6 @@ public class WSConstants {
     public static final String ANNOUNCE_WS_BY_ID = "/announce";
     public static final String ANNOUNCE_WS_BY_TYPE = "/type";
     public static final String ANNOUNCE_WS_ALL = "/all";
-    public static final String UPDATE_ID = "/update/{id}";
 
 
     /************ MESSAGE REQUEST*************/

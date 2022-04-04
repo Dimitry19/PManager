@@ -4,6 +4,7 @@ import cm.packagemanager.pmanager.common.ent.vo.CommonVO;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -20,8 +21,8 @@ import java.util.Objects;
 })
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
-        //@Filter(name=FilterConstants.ACTIVE_MBR)
 })
+@Where(clause = FilterConstants.FILTER_AIRLINE_CANC)
 public class AirlineVO extends CommonVO {
 
     public static final String FINDBYCODE = "cm.packagemanager.pmanager.airline.ent.vo.AirlineVO.findByCode";

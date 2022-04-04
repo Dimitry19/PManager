@@ -16,6 +16,7 @@ public abstract class Generic<T, ID extends Serializable> extends CommonGenericD
     public static String where=" where ";
     public String notificationMessagePattern = "{0} {1} {2}";
     public String notificationMessageCommentPattern = "{0} {1} {2} {3}";
+
     public abstract boolean updateDelete(Long id) throws BusinessResourceException, UserException;
 
     public abstract String composeQuery(Object o, String alias) throws Exception;

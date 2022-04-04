@@ -19,7 +19,7 @@ public interface AnnounceService extends InitializingBean {
 
     List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws AnnounceException,Exception;
 
-    AnnounceVO update(UpdateAnnounceDTO announce) throws AnnounceException,Exception;
+    AnnounceVO update(UpdateAnnounceDTO announceId) throws AnnounceException,Exception;
 
     AnnounceVO update(Integer id) throws AnnounceException,Exception;
 

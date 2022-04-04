@@ -3,11 +3,11 @@ drop table IF EXISTS  ADMINISTRATOR;
 create table ADMINISTRATOR
 (
     ID BIGINT auto_increment primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
-    EMAIL VARCHAR(255) not null,
     NAME VARCHAR(255) not null,
     USERNAME VARCHAR(255) not null,
+    EMAIL VARCHAR(255) not null,
+    DATECREATED TIMESTAMP(26,6),
+    LASTUPDATED TIMESTAMP(26,6),
     CANCELLED BOOLEAN not null
 );
 
@@ -16,10 +16,10 @@ create table AIRLINE
 (
     CODE VARCHAR(255) not null,
     TOKEN VARCHAR(255) not null,
+    DESCRIPTION VARCHAR(255),
     DATECREATED TIMESTAMP(26,6),
     LASTUPDATED TIMESTAMP(26,6),
     CANCELLED BOOLEAN not null,
-    DESCRIPTION VARCHAR(255),
     primary key (CODE, TOKEN)
 );
 
@@ -129,11 +129,11 @@ create table COMMUNICATION
 (
     ID BIGINT  auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
-    CONTENT VARCHAR(255) not null,
     TYPE VARCHAR(255) not null,
     R_ADMIN_ID BIGINT,
+    CONTENT VARCHAR(255) not null,
+    DATECREATED TIMESTAMP(26,6),
+    LASTUPDATED TIMESTAMP(26,6),
     CANCELLED BOOLEAN not null,
     constraint FKH9HRBGRAKSHF04DBAUJ1IYWEL
         foreign key (R_ADMIN_ID) references ADMINISTRATOR
@@ -144,13 +144,13 @@ create table CONTACT_US
 (
     ID BIGINT auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
-    CONTENT VARCHAR(500) not null,
-    RECEIVER VARCHAR(255) not null,
     SENDER VARCHAR(255) not null,
+    RECEIVER VARCHAR(255) not null,
     SUBJECT VARCHAR(255) not null,
-    PSEUDO_SENDER VARCHAR(255)
+    PSEUDO_SENDER VARCHAR(255),
+    CONTENT VARCHAR(500) not null,
+    DATECREATED TIMESTAMP(26,6),
+    LASTUPDATED TIMESTAMP(26,6)
 );
 
 drop table IF EXISTS  IMAGE;
@@ -158,13 +158,13 @@ create table IMAGE
 (
     ID BIGINT   auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
-    NAME VARCHAR(255) not null
         unique,
     TYPE VARCHAR(255),
     ORIGIN VARCHAR(255),
-    PIC_BYTE binary
+    NAME VARCHAR(255) not null,
+    PIC_BYTE binary,
+    DATECREATED TIMESTAMP(26,6),
+    LASTUPDATED TIMESTAMP(26,6)
 );
 
 drop table IF EXISTS  NOTIFICATION;
@@ -172,17 +172,17 @@ create table NOTIFICATION
 (
     ID BIGINT   auto_increment
         primary key,
-    CANCELLED BOOLEAN not null,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
-    R_ANNOUNCE_ID BIGINT,
+    TITLE VARCHAR(60) not null,
     MESSAGE VARCHAR(255) not null,
+    TYPE VARCHAR(15) not null,
+    STATUS VARCHAR(10) not null,
+    USER_ID BIGINT not null,
+    R_ANNOUNCE_ID BIGINT,
     R_USER_ID BIGINT,
     SESSION_ID VARCHAR(255),
-    STATUS VARCHAR(10) not null,
-    TITLE VARCHAR(60) not null,
-    TYPE VARCHAR(15) not null,
-    USER_ID BIGINT not null
+    CANCELLED BOOLEAN not null,
+    DATECREATED TIMESTAMP(26,6),
+    LASTUPDATED TIMESTAMP(26,6)
 );
 
 drop table IF EXISTS  ROLE;
@@ -198,25 +198,24 @@ create table TP_USER
 (
     ID BIGINT   auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
-    ACTIVE INTEGER not null,
-    CANCELLED BOOLEAN not null,
-    CONFIRM_TOKEN VARCHAR(255),
-    EMAIL VARCHAR(255) not null
-        unique,
-    FACEBOOK_ID VARCHAR(255),
+
+    LAST_NAME VARCHAR(255) not null,
     FIRST_NAME VARCHAR(255) not null,
     GENDER VARCHAR(10),
-    GOOGLE_ID VARCHAR(255),
-    LAST_NAME VARCHAR(255) not null,
-    PASSWORD VARCHAR(255) not null,
     PHONE VARCHAR(35) not null,
-    USERNAME VARCHAR(15) not null
-        unique,
-    IMAGE_ID BIGINT,
+    EMAIL VARCHAR(255) not null unique,
+    USERNAME VARCHAR(15) not null  unique,
+    PASSWORD VARCHAR(255) not null,
+    ACTIVE INTEGER not null,
     ENABLE_NOTIF BOOLEAN not null ,
+    CONFIRM_TOKEN VARCHAR(255),
+    FACEBOOK_ID VARCHAR(255),
+    GOOGLE_ID VARCHAR(255),
+    IMAGE_ID BIGINT,
+    CANCELLED BOOLEAN not null,
     ERROR VARCHAR(255),
+    DATECREATED TIMESTAMP(26,6),
+    LASTUPDATED TIMESTAMP(26,6),
     unique (EMAIL, USERNAME),
     constraint FKPKUUKDHP1VI4PQWEMNYGTNO1T
         foreign key (IMAGE_ID) references IMAGE
@@ -227,26 +226,26 @@ create table ANNOUNCE
 (
     ID BIGINT  auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
     TOKEN VARCHAR(255) not null,
-    ANNOUNCE_TYPE VARCHAR(10),
-    ARRIVAL VARCHAR(255) not null,
-    CANCELLED BOOLEAN not null,
     DEPARTURE VARCHAR(255) not null,
-    DESCRIPTION VARCHAR(255) not null,
+    ARRIVAL VARCHAR(255) not null,
+    START_DATE TIMESTAMP(26,6) not null,
     END_DATE TIMESTAMP(26,6) not null,
+    DESCRIPTION VARCHAR(255) not null,
+    TRANSPORT VARCHAR(255) not null,
+    ANNOUNCE_TYPE VARCHAR(10),
+    WEIGHT DECIMAL(19,2) not null,
+    REMAIN_WEIGHT DECIMAL(19,2),
+    PRICE DECIMAL(19,2) not null,
     GOLD_PRICE DECIMAL(19,2) not null,
     PRENIUM_PRICE DECIMAL(19,2) not null,
-    PRICE DECIMAL(19,2) not null,
-    START_DATE TIMESTAMP(26,6) not null,
     STATUS VARCHAR(10),
-    TRANSPORT VARCHAR(255) not null,
-    WEIGHT DECIMAL(19,2) not null,
+    --COUNTTER_RESERVATION INTEGER,
     R_USER_ID BIGINT,
-    REMAIN_WEIGHT DECIMAL(19,2),
     IMAGE_ID BIGINT,
-    COUNTRESERVATION INTEGER,
+    CANCELLED BOOLEAN not null,
+    DATECREATED TIMESTAMP(26,6),
+    LASTUPDATED TIMESTAMP(26,6),
     constraint FKFW0TKPEM5N1S5HA75UD6QJMQ
         foreign key (R_USER_ID) references TP_USER,
     constraint FKP72D81HLBK413NI11Y1D57RHQ
@@ -273,13 +272,13 @@ create table MESSAGE
 (
     ID BIGINT not null,
     TOKEN VARCHAR(255) not null,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
-    CANCELLED BOOLEAN not null,
+    USERNAME VARCHAR(255),
     CONTENT VARCHAR(255),
     R_ANNOUNCE BIGINT,
     R_USER_ID BIGINT,
-    USERNAME VARCHAR(255),
+    CANCELLED BOOLEAN not null,
+    DATECREATED TIMESTAMP(26,6),
+    LASTUPDATED TIMESTAMP(26,6),
     primary key (ID, TOKEN),
     constraint FKE39G9PLVG5K7X0GDURX5IIDLK
         foreign key (R_ANNOUNCE) references ANNOUNCE,
@@ -292,15 +291,15 @@ create table RESERVATION
 (
     ID BIGINT   auto_increment
         primary key,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
+    DESCRIPTION VARCHAR(255),
     WEIGTH DECIMAL(19,2) not null,
     R_ANNOUNCE_ID BIGINT,
     R_USER_ID BIGINT,
-    DESCRIPTION VARCHAR(255),
-    CANCELLED BOOLEAN not null,
     VALIDATE VARCHAR(10) default 'INSERTED',
     STATUS VARCHAR(10),
+    CANCELLED BOOLEAN not null,
+    DATECREATED TIMESTAMP(26,6),
+    LASTUPDATED TIMESTAMP(26,6),
     constraint FK3H0SO8JJDQDGNN9PY00I83OFU
         foreign key (R_ANNOUNCE_ID) references ANNOUNCE,
     constraint FKTCN6F6DKS6UF7KRCMVV2KHAU0
@@ -323,16 +322,16 @@ drop table IF EXISTS  REVIEW;
 create table REVIEW
 (
     ID BIGINT   auto_increment,
-    DATECREATED TIMESTAMP(26,6),
-    LASTUPDATED TIMESTAMP(26,6),
     TOKEN VARCHAR(5) not null,
-    DETAILS VARCHAR(5000) not null,
     TITLE VARCHAR(35) not null,
+    DETAILS VARCHAR(5000) not null,
     RATING INTEGER not null,
-    CANCELLED BOOLEAN not null,
     INDEXES INTEGER not null,
     R_USER_ID BIGINT not null,
     RATING_USER_ID BIGINT,
+    CANCELLED BOOLEAN not null,
+    DATECREATED TIMESTAMP(26,6),
+    LASTUPDATED TIMESTAMP(26,6),
     constraint FKMN7YQ16MASQJ4ODIT0TOHL3XS
         foreign key (R_USER_ID) references TP_USER
 );

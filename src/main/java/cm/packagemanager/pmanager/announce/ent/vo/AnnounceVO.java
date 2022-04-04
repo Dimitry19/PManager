@@ -206,7 +206,7 @@ public class AnnounceVO extends CommonVO {
     @JsonManagedReference
     @OrderBy(clause = "id.id ASC")
     @Where(clause = "cancelled=false")
-    @JsonIgnore
+    //@JsonIgnore
     public Set<MessageVO> getMessages() {
         return messages;
     }

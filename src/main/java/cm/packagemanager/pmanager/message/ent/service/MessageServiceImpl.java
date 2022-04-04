@@ -8,7 +8,6 @@ import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.message.ent.dao.MessageDAO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
-import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.messages.MessageDTO;
 import cm.packagemanager.pmanager.ws.requests.messages.UpdateMessageDTO;
 import org.slf4j.Logger;
@@ -42,11 +41,6 @@ public class MessageServiceImpl implements MessageService {
         return messageDAO.delete(id);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws Exception {
-        return messageDAO.messagesByUser(user, pageBy);
-    }
 
     @Override
     @Transactional(readOnly = true)
