@@ -94,7 +94,7 @@ public class MessageController extends CommonController {
     }
 
     /**
-     * Cette methode recherche toutes les messages d'un utilisateur
+     * Cette methode recherche toutes les messages d'une annonce
      *
      * @param response
      * @param request
