@@ -27,16 +27,20 @@ public class DefaultController extends CommonController {
 	 */
 
     @RequestMapping (value = "/", method = RequestMethod.GET)
-	public void ping(HttpServletResponse response) throws IOException {
-		System.out.println("Démarrage des services OK .....");
+	public void  ping(HttpServletResponse response) throws Exception {
+		System.out.println("/ -> index.html.....");
+		int totalUsers=userService.count(null);
 
-	    response.sendRedirect(redirectPage);
+		response.setIntHeader("totalUsers", totalUsers);
+		response.sendRedirect(redirectPage);
 	}
 
-	@RequestMapping (value = "/error", method = RequestMethod.GET)
-	public void error(HttpServletResponse response) throws IOException {
-		System.out.println("Démarrage des services OK .....");
+	@RequestMapping (value = "/index", method = RequestMethod.GET)
+	public void error(HttpServletResponse response) throws Exception {
+		System.out.println("index -> index.html.....");
+		int totalUsers=userService.count(null);
 
+		response.setIntHeader("totalUsers", totalUsers);
 		response.sendRedirect(redirectPage);
 	}
 
