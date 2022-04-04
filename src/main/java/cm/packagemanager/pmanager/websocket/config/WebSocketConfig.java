@@ -3,19 +3,15 @@ package cm.packagemanager.pmanager.websocket.config;
 import cm.packagemanager.pmanager.common.interceptor.HttpHandshakeInterceptor;
 import cm.packagemanager.pmanager.component.CrossDomainFilter;
 import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.messaging.support.GenericMessage;
 import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.web.socket.client.standard.WebSocketContainerFactoryBean;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -45,12 +41,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .withSockJS();
     }*/
 
+    //https://github.com/kkojot/spring-vue-websocket-stomp
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint(WebSocketConstants.END_POINT)
                 .addInterceptors(new HttpHandshakeInterceptor())
-                //.setAllowedOrigins("http://localhost:4200", "http://127.0.0.1:4200")
-                .setAllowedOrigins("*").withSockJS();
+                .setAllowedOrigins(LOCALHOST_ORIGIN, LOCALHOST_ORIGIN_127,LOCALHOST_ORIGIN_SSL,
+                        LOCALHOST_ORIGIN_SSL_127,HEROKU_ORIGIN,HEROKU_ORIGIN_SSL)
+                .withSockJS();
     }
 
     /***
