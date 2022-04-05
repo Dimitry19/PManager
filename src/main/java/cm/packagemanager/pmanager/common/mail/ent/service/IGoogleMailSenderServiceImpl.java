@@ -4,6 +4,7 @@ import cm.packagemanager.pmanager.common.mail.CommonMailSenderService;
 import cm.packagemanager.pmanager.common.mail.PersonalMailSender;
 import cm.packagemanager.pmanager.common.mail.ent.vo.ContactUSVO;
 import cm.packagemanager.pmanager.common.mail.ent.wrapper.MailWrapper;
+import com.sun.mail.smtp.SMTPSendFailedException;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -81,7 +82,7 @@ public class IGoogleMailSenderServiceImpl extends CommonMailSenderService implem
 	}
 
 	@Override
-	public void sendMail(String messageSubject, List<String> to, List<String> cc, List<String> bcc, String from, String username, String message, boolean replyToEnabled) throws IOException, MessagingException {
+	public void sendMail(String messageSubject, List<String> to, List<String> cc, List<String> bcc, String from, String username, String message, boolean replyToEnabled) throws IOException, MessagingException, SMTPSendFailedException {
 
 
 		SimpleMailMessage smm =mailToSend(message,messageSubject,to,cc,bcc,from,from,replyToEnabled);

@@ -14,24 +14,30 @@ import cm.packagemanager.pmanager.notification.ent.service.NotificationService;
 import cm.packagemanager.pmanager.user.ent.service.RoleService;
 import cm.packagemanager.pmanager.user.ent.service.UserService;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
+import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import com.sun.mail.smtp.SMTPSendFailedException;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import io.opentracing.util.GlobalTracer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.annotation.PostConstruct;
+import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -177,5 +183,16 @@ public class CommonController  extends WSConstants {
             headers.add(HEADER_TOTAL, Long.toString(results.size()));
         }
         return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
+    }
+
+    @NotNull
+    protected   ResponseEntity<Response> getResponseMailResponseEntity(Response pmResponse, Exception e) {
+        pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+        if(e instanceof MessagingException || e instanceof SMTPSendFailedException || e instanceof MailSendException){
+            pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,"Veuillez reessayez plutard , Merci!"));
+        }else{
+            pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
+        }
+        return new ResponseEntity<Response>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
     }
 }

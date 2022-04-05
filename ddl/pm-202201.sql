@@ -1,4 +1,3 @@
--- we don't know how to generate database MANAGER (class Database) :(
 drop table IF EXISTS  ADMINISTRATOR;
 create table ADMINISTRATOR
 (
@@ -156,12 +155,10 @@ create table CONTACT_US
 drop table IF EXISTS  IMAGE;
 create table IMAGE
 (
-    ID BIGINT   auto_increment
-        primary key,
-        unique,
+    ID BIGINT   auto_increment  primary key,
     TYPE VARCHAR(255),
     ORIGIN VARCHAR(255),
-    NAME VARCHAR(255) not null,
+    NAME VARCHAR(255) not null  unique,
     PIC_BYTE binary,
     DATECREATED TIMESTAMP(26,6),
     LASTUPDATED TIMESTAMP(26,6)

@@ -14,6 +14,7 @@ import cm.packagemanager.pmanager.ws.requests.users.*;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import com.sun.mail.smtp.SMTPSendFailedException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -25,6 +26,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSendException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -36,9 +38,10 @@ import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 
-import static cm.packagemanager.pmanager.constant.WSConstants.*;
+import static cm.packagemanager.pmanager.constant.WSConstants.USER_WS;
 
 
 @RestController
@@ -119,7 +122,11 @@ public class UserController extends CommonController {
         } catch (Exception e) {
             logger.error("Errore eseguendo register: ", e);
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
+            if(e instanceof MessagingException || e instanceof SMTPSendFailedException || e instanceof MailSendException){
+                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,"Votre compte sera activé d'ici 24h"));
+            }else{
+                pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
+            }
             return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
         } finally {
             finishOpentracingSpan();
@@ -502,31 +509,34 @@ public class UserController extends CommonController {
             @ApiResponse(code = 200, message = "Mail sent",
                     response = Response.class, responseContainer = "Object")})
     @RequestMapping(value = USER_WS_MAIL, method = RequestMethod.POST, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
-    public Response sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailDTO mail) throws MessagingException, IOException {
+    public ResponseEntity<Response> sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailDTO mail) throws MessagingException, IOException {
 
         logger.info("send mail request in");
         response.setHeader("Access-Control-Allow-Origin", "*");
         Response pmResponse = new Response();
 
         try {
-            createOpentracingSpan("UserController -sendMail");
+            createOpentracingSpan("UserController - sendMail");
             if (mail != null) {
                 if (mailSenderSendGrid.manageResponse(mailService.sendMail(mail, true))) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
+                    return new ResponseEntity<Response>(pmResponse, HttpStatus.OK);
                 } else {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_MAIL_SENT_LABEL);
+                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL, "Veuillez reessayez plutard , Merci!"));
+                    return new ResponseEntity<Response>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
                 }
+
             }
         } catch (Exception e) {
-            logger.error("Errore eseguendo send mail: ", e);
-            response.getWriter().write(e.getMessage());
+            logger.error("Erreur durant l'execution de l'envoi du mail: ", e);
+            //response.getWriter().write(e.getMessage());
+            return getResponseMailResponseEntity(pmResponse, e);
         } finally {
             finishOpentracingSpan();
         }
-
-        return pmResponse;
+        return null;
     }
 
 
@@ -755,6 +765,7 @@ public class UserController extends CommonController {
         pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
         return new ResponseEntity<>(pmResponse, HttpStatus.OK);
     }
+
 
 
 }
