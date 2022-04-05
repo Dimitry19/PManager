@@ -41,7 +41,7 @@ public class CommonVO extends WSCommonResponseVO implements Auditable, Serializa
 
     @Override
     @JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
-    @JsonIgnore
+    //@JsonIgnore
     public Timestamp getDateCreated() {
         return dateCreated;
     }

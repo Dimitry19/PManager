@@ -1,26 +1,22 @@
 package cm.packagemanager.pmanager.websocket.config;
 
+
 import cm.packagemanager.pmanager.common.interceptor.HttpHandshakeInterceptor;
-import cm.packagemanager.pmanager.component.CrossDomainFilter;
-import cm.packagemanager.pmanager.websocket.constants.WebSocketConstants;
-import org.springframework.context.annotation.Bean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.messaging.support.GenericMessage;
 import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.web.socket.client.standard.WebSocketContainerFactoryBean;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-
-import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.*;
 
 
 /*https://www.codesandnotes.be/2020/03/31/websocket-based-notification-system-using-spring/*/
@@ -30,47 +26,69 @@ import static cm.packagemanager.pmanager.websocket.constants.WebSocketConstants.
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+    private static Logger logger = LoggerFactory.getLogger(WebSocketConfig.class);
+
+    @Value("${travel.post.stomp.notification.origin}")
+    private String origin;
+
+    @Value("${travel.post.stomp.notification.origin.localhost}")
+    private String originLocalhost;
+
+    @Value("${travel.post.stomp.notification.origin.localhost.ssl}")
+    private String originLocalhostSsl;
+
+    @Value("${travel.post.stomp.notification.origin.localhost.127}")
+    private String originLocalhost127;
+
+    @Value("${travel.post.stomp.notification.origin.localhost.ssl.127}")
+    private String originLocalhostSsl127;
+
+    @Value("${travel.post.stomp.notification.origin.prod.ssl}")
+    private String originProdSsl;
+
+    @Value("${travel.post.stomp.notification.endpoint}")
+    private String endpoint;
+
+    @Value("${travel.post.stomp.notification.subscribe.item.send}")
+    private String subscribeItemSend;
+
+    @Value("${travel.post.stomp.notification.subscribe.user.send}")
+    private String subscribeUserSend;
+
+    @Value("${travel.post.stomp.notification.subscribe.comment.send}")
+    private String subscribeCommentSend;
+
+    @Value("${travel.post.stomp.notification.subscribe.announce.send}")
+    private String subscribeAnnounceSend;
+
+    @Value("${travel.post.stomp.notification.broker.notification}")
+    private String brokerNotification;
+
+    @Value("${travel.post.stomp.notification.broker.user}")
+    private String brokerUser;
+
+    @Value("${travel.post.stomp.notification.prefix.destination}")
+    private String prefixDestination;
+
+
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker(BROKER_NOTIF);
-        registry.setApplicationDestinationPrefixes(WebSocketConstants.PREFIX_DESTINATION_APP);
+        registry.enableSimpleBroker(brokerNotification);
+        registry.setApplicationDestinationPrefixes(prefixDestination);
     }
 
-    //Version OK en HTTTP
-  /*  @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint(WebSocketConstants.END_POINT)
-                //.setAllowedOrigins("http://localhost:4200", "http://127.0.0.1:4200")
-                .setAllowedOrigins("*")
-                .withSockJS();
-    }*/
 
+    //https://github.com/kkojot/spring-vue-websocket-stomp
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint(WebSocketConstants.END_POINT)
+        registry.addEndpoint(endpoint)
                 .addInterceptors(new HttpHandshakeInterceptor())
-                //.setAllowedOrigins("http://localhost:4200", "http://127.0.0.1:4200")
-                .setAllowedOrigins("*").withSockJS();
+                .setAllowedOrigins(originLocalhost,originLocalhost127,originLocalhostSsl,
+                        originLocalhostSsl127,originProdSsl)
+                .withSockJS();
     }
 
-    /***
-     * Permet de faire fonctionner la WSocket avec tomcat(Cas de Spring)
-     * http://host:port/{path-to-sockjs-endpoint}/{server-id}/{session-id}/{transport}
-     */
-
-   /* @Bean
-    public WebSocketContainerFactoryBean createWebSocketContainer() {
-        WebSocketContainerFactoryBean container = new WebSocketContainerFactoryBean();
-        container.setMaxTextMessageBufferSize(8192);
-        container.setMaxBinaryMessageBufferSize(8192);
-        return container;
-    }
-    */
-
-    //@Bean
-    public CrossDomainFilter corsFilter() throws Exception {
-        return new CrossDomainFilter();
-    }
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration){
@@ -80,13 +98,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
                 if(StompCommand.CONNECT.equals(accessor.getCommand())){
-                    //System.out.println("Connect ");
+                    logger.info("Connect ");
                 } else if(StompCommand.SUBSCRIBE.equals(accessor.getCommand())){
-                    //System.out.println("Subscribe to :"+message);
+                    logger.info("Subscribe to :"+message);
                 } else if(StompCommand.SEND.equals(accessor.getCommand())){
-                    //System.out.println("Send message " );
+                    logger.info("Send message!" );
                 } else if(StompCommand.DISCONNECT.equals(accessor.getCommand())){
-                    //System.out.println("Exit ");
+                    logger.info("Disconnect!");
                 } else {
                 }
                 return message;

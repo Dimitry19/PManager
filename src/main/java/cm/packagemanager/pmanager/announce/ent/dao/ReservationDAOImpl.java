@@ -81,7 +81,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         }
         List userAnnounces = announceDAO.announcesByUser(user);
 
-        //checkUserReservation(announce, userAnnounces);
+        checkUserReservation(announce, userAnnounces);
         checkRemainWeight(announce, reservationDTO.getWeight());
 
         List<ReservationVO> reservations = findByUserNameQuery(ReservationVO.SQL_FIND_BY_USER, ReservationVO.class, user.getId(),null);
@@ -120,8 +120,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         reservation.setValidate(ValidateEnum.INSERTED);
         reservation.setStatus(StatusEnum.VALID);
         save(reservation);
-        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername(),
-                " a fait une reservation sur votre annonce "+announce.getDeparture() +"/"+announce.getArrival(),
+        String message= MessageFormat.format(notificationMessagePattern,user.getUsername(),
+                " a fait une reservation de ["+reservation.getWeight()+" Kg ] sur votre annonce "+announce.getDeparture() +"/"+announce.getArrival(),
                 " du " + DateUtils.getDateStandard(announce.getStartDate())
                         + " au "+ DateUtils.getDateStandard(announce.getEndDate()));
         generateEvent(announce,message);
@@ -150,6 +150,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         }
         AnnounceVO announce = reservation.getAnnounce();
 
+        BigDecimal oldWeight=reservation.getWeight();
         if (BigDecimalUtils.lessThan(reservation.getWeight(), reservationDTO.getWeight())) {
             announce.setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight().subtract(reservation.getWeight())));
         } else {
@@ -165,7 +166,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         String message= MessageFormat.format(notificationMessagePattern,user.getUsername(),
                 " a modifié une reservation sur votre annonce "+announce.getDeparture() +"/"+announce.getArrival(),
                 " du " + DateUtils.getDateStandard(announce.getStartDate())
-                        + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()));
+                        + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate())+" la reservation est passée de ["+oldWeight+" Kg ] a ["+reservationDTO.getWeight()+" Kg ] ");
         generateEvent(announce,message);
         return reservation;
     }
@@ -186,7 +187,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         }
 
         if (!reservation.getValidate().equals(ValidateEnum.INSERTED)) {
-            throw new Exception("Impossible d'eliminer cette reservation car deja validée");
+            throw new Exception("Impossible d'eliminer cette reservation car déjà validée");
         }
 
         AnnounceVO announce = reservation.getAnnounce();
@@ -194,7 +195,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         update(announce);
         //delete(ReservationVO.class,id,true);
         String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername(),
-                " a supprimé une reservation sur votre annonce "+ announce.getDeparture() +"/"+announce.getArrival(),
+                " a supprimé une reservation de ["+reservation.getWeight() +" Kg ] sur votre annonce "+ announce.getDeparture() +"/"+announce.getArrival(),
                 " de la date du " + DateUtils.getDateStandard(announce.getStartDate())
                         + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()));
         generateEvent(announce,message);
@@ -228,7 +229,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         String validate= reservationDTO.isValidate() ?  ValidateEnum.ACCEPTED.toValue():ValidateEnum.REFUSED.toValue();
 
         String message= MessageFormat.format(notificationMessagePattern,
-                reservation.getAnnounce().getUser().getUsername(),
+                reservation.getUser().getUsername(),
                 " a " +validate +" votre reservation  de [" +reservation.getWeight() +" kg ] sur l' annonce "+ reservation.getAnnounce().getDeparture() +"/"+reservation.getAnnounce().getArrival(),
                 " de la date du " + DateUtils.getDateStandard(reservation.getAnnounce().getStartDate())
                         + " et retour le "+ DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()));

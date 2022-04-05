@@ -301,9 +301,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
         return updateDelete(id);
     }
 

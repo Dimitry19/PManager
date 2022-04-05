@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.ws.controller.rest;
 
+import cm.packagemanager.pmanager.airline.ent.service.AirlineService;
 import cm.packagemanager.pmanager.announce.ent.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.ent.service.ReservationService;
 import cm.packagemanager.pmanager.common.mail.ent.service.MailService;
@@ -52,38 +53,42 @@ public class CommonController  extends WSConstants {
     @Value("${redirect.confirm.ok.page}")
     protected String redirectConfirmPage;
 
-     @Value("${redirect.confirm.error.page}")
+    @Value("${redirect.confirm.error.page}")
     protected String redirectConfirmErrorPage;
 
 
     @Autowired
-    public UserService userService;
-
-    @Autowired
-    public NotificationService notificationService;
-
-    @Autowired
-    public MailSenderSendGrid mailSenderSendGrid;
-
-    @Autowired
-    public RoleService roleService;
-
-    @Autowired
-    public ReservationService reservationService;
-
-    @Autowired
-    public AnnounceService announceService;
+    protected AirlineService airplaneService;
 
 
     @Autowired
-    public MailService mailService;
+    protected UserService userService;
 
     @Autowired
-    public MessageService messageService;
+    protected NotificationService notificationService;
+
+    @Autowired
+    protected MailSenderSendGrid mailSenderSendGrid;
+
+    @Autowired
+    protected RoleService roleService;
+
+    @Autowired
+    protected ReservationService reservationService;
+
+    @Autowired
+    protected AnnounceService announceService;
 
 
     @Autowired
-    public ServletContext servletContext;
+    protected MailService mailService;
+
+    @Autowired
+    protected MessageService messageService;
+
+
+    @Autowired
+    protected ServletContext servletContext;
 
     @Qualifier("jaegerTracer")
     @Autowired
