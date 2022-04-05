@@ -27,7 +27,7 @@ import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
 import java.util.List;
 
-import static cm.packagemanager.pmanager.constant.WSConstants.*;
+import static cm.packagemanager.pmanager.constant.WSConstants.MESSAGE_WS;
 
 @RestController
 @RequestMapping(MESSAGE_WS)
@@ -35,34 +35,6 @@ import static cm.packagemanager.pmanager.constant.WSConstants.*;
 public class MessageController extends CommonController {
 
     protected final Log logger = LogFactory.getLog(MessageController.class);
-
-
-    @PutMapping(value = MESSAGE_WS_UPDATE, produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    MessageVO update(HttpServletResponse response, HttpServletRequest request, @PathVariable long id,
-                     @RequestBody @Valid UpdateMessageDTO umr) throws Exception {
-
-        logger.info("Update message requestin");
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        try {
-            createOpentracingSpan("MessageController -update");
-            umr.setId(id);
-            MessageVO message = messageService.update(umr);
-            if (message != null) {
-                message.setRetCode(WebServiceResponseCode.OK_CODE);
-                message.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "Le commentaire"));
-            } else {
-                message = new MessageVO();
-                message.setRetCode(WebServiceResponseCode.NOK_CODE);
-                message.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "Le commentaire"));
-            }
-            return message;
-        } catch (Exception e) {
-            logger.error(" Error {}", e);
-            throw e;
-        } finally {
-            finishOpentracingSpan();
-        }
-    }
 
 
     @PostMapping(value = ADD, produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -93,6 +65,32 @@ public class MessageController extends CommonController {
         return null;
     }
 
+    @PutMapping(value = MESSAGE_WS_UPDATE, produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    MessageVO update(HttpServletResponse response, HttpServletRequest request, @PathVariable long id,
+                     @RequestBody @Valid UpdateMessageDTO umr) throws Exception {
+
+        logger.info("Update message requestin");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        try {
+            createOpentracingSpan("MessageController -update");
+            umr.setId(id);
+            MessageVO message = messageService.update(umr);
+            if (message != null) {
+                message.setRetCode(WebServiceResponseCode.OK_CODE);
+                message.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "Le commentaire"));
+            } else {
+                message = new MessageVO();
+                message.setRetCode(WebServiceResponseCode.NOK_CODE);
+                message.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "Le commentaire"));
+            }
+            return message;
+        } catch (Exception e) {
+            logger.error(" Error {}", e);
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
+    }
     /**
      * Cette methode recherche toutes les messages d'une annonce
      *
