@@ -1,12 +1,16 @@
 package cm.packagemanager.pmanager.announce.ent.service;
 
+import cm.framework.ds.hibernate.dao.Generic;
 import cm.packagemanager.pmanager.announce.ent.dao.ReservationDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.ReservationType;
+import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +19,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ReservationServiceImpl implements ReservationService {
+public class ReservationServiceImpl extends Generic implements ReservationService {
 
     @Autowired
     ReservationDAO dao;
@@ -47,8 +51,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public int count(Long id, PageBy pageBy, boolean isUser) throws Exception {
-        return (isUser) ? dao.countByNameQuery(ReservationVO.FINDBYUSER, ReservationVO.class, id, "userId", pageBy) :
-                dao.countByNameQuery(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, id, "announceId", pageBy);
+        return (isUser) ? dao.countByNameQuery(ReservationVO.FINDBYUSER, ReservationVO.class, id, USER_PARAM, pageBy) :
+                dao.countByNameQuery(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, id, ANNOUNCE_PARAM, pageBy);
     }
 
     @Override
@@ -66,5 +70,20 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<ReservationVO> reservationsByAnnounce(Long announceId, PageBy pageBy) throws Exception {
         return dao.reservationByAnnounce(announceId, pageBy);
+    }
+
+    @Override
+    public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
+        return false;
+    }
+
+    @Override
+    public String composeQuery(Object o, String alias) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void composeQueryParameters(Object o, Query query) throws Exception {
+
     }
 }

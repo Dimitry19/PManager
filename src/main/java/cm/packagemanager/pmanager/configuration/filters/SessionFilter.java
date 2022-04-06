@@ -35,8 +35,7 @@ import java.io.IOException;
 import java.util.*;
 
 
-import static cm.packagemanager.pmanager.common.utils.CommonUtils.ROLE_ADMIN;
-import static cm.packagemanager.pmanager.common.utils.CommonUtils.ROLE_USER;
+import static cm.packagemanager.pmanager.common.utils.CommonUtils.*;
 import static cm.packagemanager.pmanager.constant.WSConstants.*;
 
 @Configuration
@@ -96,10 +95,8 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
             request.setAttribute("exception", ex);
             error(response);
             //throw ex;
-
         } catch (Exception e) {
             e.printStackTrace();
-
         }
 
     }
@@ -144,9 +141,9 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
         boolean isServiceLogin=isService && isLogin;
         boolean isServiceLogout=isService && isLogout;
 
-        if(StringUtils.isEmpty(username)){
-            username="Guest";
-        }
+//        if(StringUtils.isEmpty(username)){
+//            username="Guest";
+//        }
 
         if(StringUtils.equals(username,guest)){
             return Boolean.TRUE;
@@ -198,10 +195,10 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
         Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
 
         if (roles.contains(new SimpleGrantedAuthority(ROLE_ADMIN))) {
-            claims.put("isAdmin", true);
+            claims.put(claimsAdminKey, true);
         }
         if (roles.contains(new SimpleGrantedAuthority(ROLE_USER))) {
-            claims.put("isUser", true);
+            claims.put(claimsUserKey, true);
         }
 
         return doGenerateToken(claims, userDetails.getUsername());
@@ -229,7 +226,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
 
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
-            throw new BadCredentialsException("Controler les credentials", ex);
+            throw new BadCredentialsException("Controler les données d'accès {username , mot de passe}", ex);
         } catch (ExpiredJwtException ex) {
             throw ex;
         }

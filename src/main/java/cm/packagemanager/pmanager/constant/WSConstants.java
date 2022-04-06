@@ -66,6 +66,7 @@ public class WSConstants {
     public static final String ANNOUNCE_WS_USER_ID_PAGE_NO = "/announces/{pageno}";
     public static final String ANNOUNCE_WS_BY_ID = "/announce";
     public static final String ANNOUNCE_WS_BY_TYPE = "/type";
+    public static final String ANNOUNCE_WS_BY_TRANSPORT = "/transport";
     public static final String ANNOUNCE_WS_ALL = "/all";
 
 

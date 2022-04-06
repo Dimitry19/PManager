@@ -29,7 +29,7 @@ public class DefaultController extends CommonController {
     @RequestMapping (value = "/", method = RequestMethod.GET)
 	public void  ping(HttpServletResponse response) throws Exception {
 		System.out.println("/ -> index.html.....");
-		int totalUsers=userService.count(null);
+		int totalUsers=userService.count(null, null,null);
 
 		response.setIntHeader("totalUsers", totalUsers);
 		response.sendRedirect(redirectPage);
@@ -38,7 +38,7 @@ public class DefaultController extends CommonController {
 	@RequestMapping (value = "/index", method = RequestMethod.GET)
 	public void error(HttpServletResponse response) throws Exception {
 		System.out.println("index -> index.html.....");
-		int totalUsers=userService.count(null);
+		int totalUsers=userService.count(null, null,null);
 
 		response.setIntHeader("totalUsers", totalUsers);
 		response.sendRedirect(redirectPage);

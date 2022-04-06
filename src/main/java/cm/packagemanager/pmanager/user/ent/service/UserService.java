@@ -62,7 +62,7 @@ public interface UserService {
 
     boolean checkLogin(LoginDTO lr) throws Exception;
 
-    int count(PageBy pageBy) throws Exception;
+    int count(Object o,Long id,PageBy pageBy) throws Exception;
 
 
     void subscribe(SubscribeDTO subscribe) throws UserException;

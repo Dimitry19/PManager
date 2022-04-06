@@ -55,6 +55,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String ASC = " asc ";
     protected static final String USER_PARAM = "userId";
     protected static final String TYPE_PARAM = "type";
+    protected static final String TRANSPORT_PARAM = "transport";
     protected static final String ANNOUNCE_PARAM = "announceId";
     protected static final String START_DATE_PARAM = "startDate";
     protected static final String ALIAS_ORDER = " as t order by t. ";

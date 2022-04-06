@@ -4,7 +4,6 @@ package cm.packagemanager.pmanager.announce.ent.service;
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
-import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.exception.AnnounceException;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
@@ -61,9 +60,9 @@ public class AnnounceServiceImpl implements AnnounceService {
         return dao.announcesByUser(userId, pageBy);
     }
 
-    public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws AnnounceException,Exception {
+    public List<AnnounceVO> announcesBy(Object o ,  PageBy pageBy) throws AnnounceException,Exception {
 
-        return dao.announcesByType(type, pageBy);
+        return dao.announcesBy(o, pageBy);
     }
 
     public boolean delete(Long id) throws Exception {
@@ -79,8 +78,8 @@ public class AnnounceServiceImpl implements AnnounceService {
         return (Page) dao.announces(pageable.getPageNumber(), pageable.getPageSize());
     }
 
-    public int count(AnnounceSearchDTO announceSearch,Long userid, AnnounceType type, PageBy pageBy) throws AnnounceException,Exception {
-        return dao.count(announceSearch,  userid,   type, pageBy);
+    public int count( Object o, PageBy pageBy) throws AnnounceException,Exception {
+        return dao.count(o, pageBy);
     }
 
     public void afterPropertiesSet() throws AnnounceException {

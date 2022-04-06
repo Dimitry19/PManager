@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.user.ent.dao;
 
 import cm.framework.ds.hibernate.dao.Generic;
+import cm.framework.ds.hibernate.enums.CountBy;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
@@ -52,10 +53,24 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public int count(PageBy pageBy) throws BusinessResourceException {
+    public int count(Object o,Long id,PageBy pageBy) throws BusinessResourceException {
         logger.info("User - count ");
 
-        return count(UserVO.class, pageBy);
+        if (o ==null){
+            return count(UserVO.class, pageBy);
+        }
+
+        if(o instanceof CountBy && id!=null){
+            CountBy cb= (CountBy)o;
+            if(cb.equals(CountBy.SUBSCRIPTIONS)){
+                return CollectionsUtils.isNotEmpty(subscriptions(id))?subscriptions(id).size():0;
+            }
+            if(cb.equals(CountBy.SUBSCRIBERS)){
+                return CollectionsUtils.isNotEmpty(subscribers(id))?subscriptions(id).size():0;
+            }
+            return 0;
+        }
+      return 0;
     }
 
     @Override

@@ -266,10 +266,9 @@ public class ReservationController extends CommonController {
         try {
             createOpentracingSpan("ReservationController -reservationsByUser");
             PaginateResponse res = new PaginateResponse();
-            int count = 0;
+            int count = reservationService.count(userId, null, true);
             reservations = reservationService.reservationsByUser(userId, type, pageBy);
 
-            count = CollectionsUtils.size(reservations);
             if (CollectionsUtils.isNotEmpty(reservations)) {
                 res.setCount(count);
                 res.setResults(reservations);
@@ -319,7 +318,7 @@ public class ReservationController extends CommonController {
             createOpentracingSpan("ReservationController -reservations by announce");
 
             PageBy pageBy = new PageBy(page, size);
-            int count = reservationService.count(announceId, pageBy, false);
+            int count = reservationService.count(announceId, null, false);
             if (count == 0) {
                 headers.add(HEADER_TOTAL, Long.toString(count));
             } else {

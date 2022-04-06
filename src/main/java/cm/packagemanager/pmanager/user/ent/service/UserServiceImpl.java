@@ -55,19 +55,19 @@ public class UserServiceImpl implements UserService {
 
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Autowired
-    ReviewDAO reviewDAO;
+    private ReviewDAO reviewDAO;
 
     @Autowired
-    MailSenderSendGrid mailSenderSendGrid;
+    private MailSenderSendGrid mailSenderSendGrid;
 
     @Autowired
-    PersonalMailSender personalMailSender;
+    private PersonalMailSender personalMailSender;
 
     @Autowired
-    IGoogleMailSenderService googleMailSenderService;
+    private IGoogleMailSenderService googleMailSenderService;
 
 
     @PostConstruct
@@ -81,8 +81,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int count(PageBy pageBy) throws Exception {
-        return userDAO.count(pageBy);
+    public int count(Object o,Long id,PageBy pageBy) throws Exception {
+        return userDAO.count(o,id,pageBy);
     }
 
     @Override

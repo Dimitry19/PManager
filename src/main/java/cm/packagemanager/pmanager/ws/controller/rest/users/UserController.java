@@ -1,6 +1,7 @@
 package cm.packagemanager.pmanager.ws.controller.rest.users;
 
 
+import cm.framework.ds.hibernate.enums.CountBy;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.exception.UserException;
@@ -549,9 +550,9 @@ public class UserController extends CommonController {
 
         try {
             createOpentracingSpan("UserController -users");
-            int count = userService.count(pageBy);
+            int count = userService.count(null,null,pageBy);
             List<UserVO> users = userService.getAllUsers(pageBy);
-            return getPaginateResponseResponseEntity(headers, paginateResponse, users);
+            return getPaginateResponseResponseEntity(headers, paginateResponse,count, users);
         } catch (Exception e) {
             response.getWriter().write(e.getMessage());
             logger.info(" UserController -users:Exception occurred while fetching the response from the database.", e);
@@ -676,18 +677,22 @@ public class UserController extends CommonController {
             @ApiResponse(code = 200, message = "Successful Subscription list ",
                     response = ResponseEntity.class, responseContainer = "Object")})
     @RequestMapping(value = USER_SUBSCRIPTION_WS, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<PaginateResponse> subscriptions(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId) throws ValidationException, IOException {
+    public ResponseEntity<PaginateResponse> subscriptions(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId,
+                                                           @RequestParam(required = false, defaultValue = DEFAULT_PAGE) int page,
+                                                           @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws ValidationException, IOException {
 
         logger.info("subscriptions request in");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
+        PageBy pageBy = new PageBy(page, size);
 
         try {
             createOpentracingSpan("UserController - subscriptions");
+            int count = userService.count(CountBy.SUBSCRIPTIONS,userId,null);
             List<UserVO> users = userService.subscriptions(userId);
-            return getPaginateResponseResponseEntity(headers, paginateResponse, users);
+            return getPaginateResponseResponseEntity(headers, paginateResponse, count,users);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de subscriptions: ", e);
@@ -711,18 +716,23 @@ public class UserController extends CommonController {
             @ApiResponse(code = 200, message = "Successful Subscribers list ",
                     response = ResponseEntity.class, responseContainer = "Object")})
     @RequestMapping(value = USER_SUBSCRIBER_WS, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<PaginateResponse> subscribers(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId) throws ValidationException, IOException {
+    public ResponseEntity<PaginateResponse> subscribers(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId,
+                                                         @RequestParam(required = false, defaultValue = DEFAULT_PAGE) int page,
+                                                         @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws ValidationException, IOException {
 
         logger.info("subscribers request in");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
+        PageBy pageBy = new PageBy(page, size);
 
         try {
             createOpentracingSpan("UserController - subscribers");
+
+            int count= userService.count(CountBy.SUBSCRIBERS,userId,null);
             List<UserVO> users = userService.subscribers(userId);
-            return getPaginateResponseResponseEntity(headers, paginateResponse, users);
+            return getPaginateResponseResponseEntity(headers, paginateResponse,count, users);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de subscribers: ", e);

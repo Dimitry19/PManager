@@ -31,7 +31,6 @@ import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceSearchDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateAnnounceDTO;
 import org.apache.commons.lang3.BooleanUtils;
-import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +56,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Autowired
     protected UserDAO userDAO;
 
-
     @Autowired
     protected CategoryDAO categoryDAO;
 
@@ -68,30 +66,36 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     protected QueryUtils queryUtils;
 
 
-
-
     @Override
     @Transactional(readOnly = true)
-    public int count(AnnounceSearchDTO announceSearch, Long userId, AnnounceType type,PageBy pageBy) throws AnnounceException,Exception {
-
+    public int count(Object o,PageBy pageBy) throws AnnounceException,Exception {
         logger.info(" Announce - count");
-        if (announceSearch != null) {
 
-            filters= new String[1];
-            filters[0]=FilterConstants.CANCELLED;
-            String where = composeQuery(announceSearch, "a");
-            Query query = search("select  distinct  a from AnnounceVO  as a join a.categories as c " , where,filters);
-            composeQueryParameters(announceSearch, query);
-            List result=query.list();
+        if(o == null) {
+            return count(AnnounceVO.class, pageBy);
+        }
+
+        if (o instanceof Long) {
+
+            Long userId = (Long) o;
+            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,USER_PARAM,pageBy);
+        }
+
+        if (o instanceof AnnounceType){
+            AnnounceType type = (AnnounceType) o;
+            return countByNameQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class,type,TYPE_PARAM,pageBy);
+        }
+        if (o instanceof TransportEnum){
+            TransportEnum transport = (TransportEnum) o;
+            return countByNameQuery(AnnounceVO.FINDBYTRANSPORT,AnnounceVO.class,transport,TRANSPORT_PARAM,pageBy);
+        }
+
+        if(o instanceof AnnounceSearchDTO){
+            AnnounceSearchDTO announceSearch =(AnnounceSearchDTO) o;
+            List result=commonSearchAnnounce(announceSearch);
             return CollectionsUtils.isNotEmpty(result) ? result.size() : 0;
         }
-        if(userId!=null) {
-            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,USER_PARAM,null);
-        }
-        if(type!=null) {
-            return countByNameQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class,type,TYPE_PARAM,null);
-        }
-        return count(AnnounceVO.class, null);
+       return 0;
 
     }
 
@@ -99,7 +103,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Transactional(readOnly = true)
     public List<AnnounceVO> announces(PageBy pageBy) throws AnnounceException,Exception {
 
-        List<AnnounceVO> announces = allAndOrderBy(AnnounceVO.class, "startDate", true, pageBy);
+        List<AnnounceVO> announces = allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, pageBy);
         return announces;
     }
 
@@ -108,7 +112,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     public List<AnnounceVO> announces(int page, int size) throws AnnounceException,Exception {
 
         PageBy pageBy = new PageBy(page, size);
-        List<AnnounceVO> announces = allAndOrderBy(AnnounceVO.class, "startDate", true, pageBy);
+        List<AnnounceVO> announces = allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, pageBy);
         return announces;
 
     }
@@ -137,16 +141,28 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     /**
      * Retourne les annonces ayant un certain type (BUYER,SELLER)dont on a passé en parametre l'id
      *
-     * @param type type de l'annonce
+     * @param o objet qui definit le type de recherche à effectuer sur l'annonce
      *  @param pageBy optionnel si on veut un resultat paginé
      * @return
      * @throws Exception
      */
     @Override
     @Transactional(readOnly = true)
-    public List<AnnounceVO> announcesByType(AnnounceType type, PageBy pageBy) throws AnnounceException,Exception {
+    public List<AnnounceVO> announcesBy(Object o,  PageBy pageBy) throws AnnounceException,Exception {
 
-        List<AnnounceVO> announces = findBy(AnnounceVO.FINDBYTYPE, AnnounceVO.class, type, "type", pageBy);
+        List<AnnounceVO> announces = null;
+
+        if(o==null) return null;
+
+        if(o instanceof AnnounceType){
+
+            AnnounceType  type=(AnnounceType) o;
+            announces=findBy(AnnounceVO.FINDBYTYPE, AnnounceVO.class, type, TYPE_PARAM, pageBy);
+        }
+        if(o instanceof TransportEnum){
+            TransportEnum transport=(TransportEnum) o;
+            announces=findBy(AnnounceVO.FINDBYTRANSPORT, AnnounceVO.class, transport, TRANSPORT_PARAM, pageBy);
+        }
         return announces;
     }
 
@@ -250,19 +266,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws AnnounceException,Exception {
-        Session session = sessionFactory.getCurrentSession();
-        session.enableFilter(FilterConstants.CANCELLED);
+    public List<AnnounceVO> find(AnnounceSearchDTO announceSearch, PageBy pageBy) throws AnnounceException,Exception {
 
-        String where = composeQuery(announceSearchDTO, "a");
-        Query query = session.createQuery(" select distinct a from AnnounceVO  as a join a.categories as c " + where);
-        composeQueryParameters(announceSearchDTO, query);
-        pageBy(query, pageBy);
-        List<AnnounceVO> result= query.list();
-
-
-        return result;
+          return commonSearchAnnounce(announceSearch);
     }
+
+
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
@@ -366,9 +375,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 
 
-        BigDecimal sumQtyRes=checkQtyReservations(announce.getId(),true);
+        BigDecimal sumQtyRes=BigDecimal.ZERO;
 
         if (BooleanUtils.isFalse(isCreate)){
+            sumQtyRes=checkQtyReservations(announce.getId(),true);
             // Il y a deja des reservations faites sur l'annonce
             if(announce.getCountReservation()!=null && sumQtyRes.compareTo(BigDecimal.ZERO)>0){
 
@@ -515,6 +525,16 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
     }
 
+
+    private List commonSearchAnnounce(AnnounceSearchDTO announceSearch) throws Exception {
+        filters= new String[1];
+        filters[0]= FilterConstants.CANCELLED;
+        String where = composeQuery(announceSearch, "a");
+        Query query = search(AnnounceVO.ANNOUNCE_SEARCH , where,filters);
+        composeQueryParameters(announceSearch, query);
+        return query.list();
+    }
+
     @Override
     public String composeQuery(Object obj, String alias) throws Exception {
 
@@ -546,7 +566,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             if (ObjectUtils.isCallable(announceSearch, "price")) {
                 BigDecimal price = announceSearch.getPrice();
-                if (price.compareTo(BigDecimal.ZERO) >= 0) {
+                if (price.compareTo(BigDecimal.ZERO) > 0) {
                     buildAndOr(hql, addCondition, andOrOr);
                     hql.append(" ( " + alias + ".goldPrice<=:goldPrice or " + alias + ".price<=:price or " + alias + ".preniumPrice<=:preniumPrice) ");
                 }
@@ -630,7 +650,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
                 BigDecimal price = announceSearch.getPrice();
                 //AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
-                if (price.compareTo(BigDecimal.ZERO) >= 0) {
+                if (price.compareTo(BigDecimal.ZERO) > 0) {
                     query.setParameter("goldPrice", price);
                     query.setParameter("price", price);
                     query.setParameter("preniumPrice", price);

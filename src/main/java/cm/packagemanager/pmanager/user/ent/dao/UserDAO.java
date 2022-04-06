@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 public interface UserDAO extends CommonDAO {
 
@@ -31,7 +30,7 @@ public interface UserDAO extends CommonDAO {
 
     UserVO login(String username) throws UserException;
 
-    int count(PageBy pageBy) throws BusinessResourceException;
+    int count(Object o,Long id, PageBy pageBy) throws BusinessResourceException;
 
     UserVO login(String username, String password) throws Exception;
 

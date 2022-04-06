@@ -5,6 +5,7 @@ import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
+import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.exception.AnnounceException;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
@@ -33,7 +34,7 @@ import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
 import java.util.List;
 
-import static cm.packagemanager.pmanager.constant.WSConstants.*;
+import static cm.packagemanager.pmanager.constant.WSConstants.ANNOUNCE_WS;
 
 @RestController
 @RequestMapping(ANNOUNCE_WS)
@@ -176,7 +177,7 @@ public class AnnounceController extends CommonController {
             createOpentracingSpan("AnnounceController -find");
 
             if (asdto != null) {
-                int count = announceService.count(asdto,null, null, pageBy);
+                int count = announceService.count(asdto,pageBy);
                 List<AnnounceVO> announces = announceService.find(asdto, pageBy);
                 return getPaginateResponseResponseEntity(headers,paginateResponse,count,announces);
             }
@@ -226,7 +227,7 @@ public class AnnounceController extends CommonController {
             createOpentracingSpan("AnnounceController -announcesByUser");
 
             if (userId != null) {
-                int count = announceService.count(null, userId,null,pageBy);
+                int count = announceService.count( userId,pageBy);
                 List<AnnounceVO> announces = announceService.announcesByUser(userId, pageBy);
                 return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
 
@@ -280,8 +281,57 @@ public class AnnounceController extends CommonController {
         try {
             createOpentracingSpan("AnnounceController - announcesByType");
 
-            int count = announceService.count(null,null, type, pageBy);
-            List<AnnounceVO> announces = announceService.announcesByType(type, pageBy);
+            int count = announceService.count(type, null);
+            List<AnnounceVO> announces = announceService.announcesBy(type, pageBy);
+            return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
+
+        } catch (AnnounceException e) {
+            logger.info(" AnnounceController -announcesByType:Exception occurred while fetching the response from the database.", e);
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
+    }
+
+
+    /**
+     * Cette methode recherche toutes les annonces par type
+     *
+     * @param response
+     * @param request
+     * @param transport
+     * @param page
+     * @param size
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "Retrieve announces by Transport Mode", response = ResponseEntity.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful retrieval announces by transport",
+                    response = ResponseEntity.class, responseContainer = "List")})
+    @RequestMapping(value = ANNOUNCE_WS_BY_TRANSPORT, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+    public ResponseEntity<PaginateResponse> announcesByTransport(HttpServletResponse response, HttpServletRequest request,
+                                                            @RequestParam @Valid TransportEnum transport,
+                                                            @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
+                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException,Exception {
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        HttpHeaders headers = new HttpHeaders();
+        PaginateResponse paginateResponse = new PaginateResponse();
+
+        PageBy pageBy = new PageBy(page, size);
+        logger.info("find announce by transport request in");
+
+
+        try {
+            createOpentracingSpan("AnnounceController - announcesByTransport");
+
+            int count = announceService.count(transport, null);
+            List<AnnounceVO> announces = announceService.announcesBy(transport,  pageBy);
             return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
 
         } catch (AnnounceException e) {
@@ -402,7 +452,7 @@ public class AnnounceController extends CommonController {
 
             createOpentracingSpan("AnnounceController -announces");
 
-            int count = announceService.count(null,null, null, pageBy);
+            int count = announceService.count(null, pageBy);
             List<AnnounceVO> announces = announceService.announces(pageBy);
             return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
         } catch (AnnounceException e) {
