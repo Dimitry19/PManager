@@ -183,7 +183,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
             MessageIdVO messageId = new MessageIdVO(id, Constants.DEFAULT_TOKEN);
             MessageVO message = findById(messageId);
             if (message != null) {
-                message.setCancelled(true);
+                message.cancel();
                 message = (MessageVO) merge(message);
                 result = (message != null) && (message.isCancelled());
             }

@@ -194,7 +194,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
             user = findByEmail(register.getEmail());
             if (user != null) {
-                logger.error("User: email existe deja");
+                logger.error(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
                 user.setError(WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
                 return user;
             }
@@ -436,14 +436,12 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         try {
 
-            Session session = sessionFactory.getCurrentSession();
-
             UserVO user = findById(id);
             if (user != null) {
                 user.updateDeleteChildrens();
-                user.setCancelled(true);
-                session.merge(user);
-                user = session.get(UserVO.class, id);
+                user.cancel();
+                merge(user);
+                user = (UserVO) get(UserVO.class, id);
 
                 result = (user != null) && (user.isCancelled());
             }

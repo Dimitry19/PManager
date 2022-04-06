@@ -76,19 +76,20 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         logger.info(" Announce - count");
         if (announceSearch != null) {
-            Session session = this.sessionFactory.getCurrentSession();
-            session.enableFilter(FilterConstants.CANCELLED);
+
+            filters= new String[1];
+            filters[0]=FilterConstants.CANCELLED;
             String where = composeQuery(announceSearch, "a");
-            Query query = session.createQuery("select  distinct  a from AnnounceVO  as a join a.categories as c " + where);
+            Query query = search("select  distinct  a from AnnounceVO  as a join a.categories as c " , where,filters);
             composeQueryParameters(announceSearch, query);
             List result=query.list();
             return CollectionsUtils.isNotEmpty(result) ? result.size() : 0;
         }
         if(userId!=null) {
-            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,"userId",null);
+            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,USER_PARAM,null);
         }
         if(type!=null) {
-            return countByNameQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class,type,"type",null);
+            return countByNameQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class,type,TYPE_PARAM,null);
         }
         return count(AnnounceVO.class, null);
 
@@ -266,15 +267,14 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
     public void announcesStatus() throws AnnounceException,Exception {
-        List<AnnounceVO> announces = Optional.ofNullable(allAndOrderBy(AnnounceVO.class, "startDate", true, null)).orElseGet(Collections::emptyList);
+        List<AnnounceVO> announces = Optional.ofNullable(allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, null)).orElseGet(Collections::emptyList);
         if (CollectionsUtils.isNotEmpty(announces)) {
             announces.stream().filter(ann -> !ann.isCancelled() && DateUtils.isBefore(ann.getEndDate(), DateUtils.currentDate()))
                     .forEach(a -> {
                         a.setStatus(StatusEnum.COMPLETED);
                         update(a);
                         try {
-                            List<ReservationVO> reservations = findReservations(a.getId());
-                            updateReservationsStatus(reservations, StatusEnum.COMPLETED);
+                            updateReservationsStatus(a.getId(), StatusEnum.COMPLETED);
                         } catch (Exception e) {
                             logger.error("Erreur durant l''execution du Batch d''ajournement de status de l'annonce");
                             e.printStackTrace();
@@ -285,7 +285,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class,BusinessResourceException.class,AnnounceException.class})
-    public boolean delete(Long id) throws BusinessResourceException {
+    public boolean delete(Long id) throws Exception {
         logger.info("Announce: delete");
 
         //delete(AnnounceVO.class,id,true);
@@ -293,13 +293,20 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         try {
             AnnounceVO announce = announce(id);
 
+            BigDecimal sumQtyRes=checkQtyReservations(announce.getId(), false);
+
+            if (sumQtyRes.compareTo(BigDecimal.ZERO)>0) {
+                throw new AnnounceException("Impossible de supprimer cette annonce ," +
+                        " car il existe des résevations pour une quantité ["+sumQtyRes+"] Kg");
+            }
+
             String message= MessageFormat.format(notificationMessagePattern,announce.getUser().getUsername(),
                     " a supprimé l'annonce "+announce.getDeparture() +"/"+announce.getArrival(),
                     " du " + DateUtils.getDateStandard(announce.getStartDate())
                             + " au "+ DateUtils.getDateStandard(announce.getEndDate()));
             generateEvent(announce,message);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (AnnounceException e) {
+            throw e;
         }
         return updateDelete(id);
     }
@@ -353,24 +360,20 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             throw new AnnounceException("La date de depart ne peut pas etre superieure à celle de retour");
         }
 
-        BigDecimal oldRemainWeight = announce.getRemainWeight()==null ? BigDecimal.ZERO:announce.getRemainWeight();
         BigDecimal oldWeight = announce.getWeight();
+        BigDecimal oldRemainWeight = announce.getRemainWeight()==null ? BigDecimal.ZERO:announce.getRemainWeight();
         BigDecimal diffWeight = oldWeight!=null ? weight.subtract(oldWeight): weight;
 
-        BigDecimal sumQtyRes=BigDecimal.ZERO;
+
+
+        BigDecimal sumQtyRes=checkQtyReservations(announce.getId(),true);
 
         if (BooleanUtils.isFalse(isCreate)){
-
-            List<ReservationVO> reservations= findReservations(announce.getId());
-
             // Il y a deja des reservations faites sur l'annonce
-            if(announce.getCountReservation()!=null && CollectionsUtils.isNotEmpty(reservations)){
-                //Je somme les quantités de toutes les reservations acceptées
-                sumQtyRes=reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED))
-                        .map(ReservationVO::getWeight).reduce(BigDecimal.ZERO,BigDecimal::add);
+            if(announce.getCountReservation()!=null && sumQtyRes.compareTo(BigDecimal.ZERO)>0){
 
-                if (sumQtyRes.compareTo(BigDecimal.ZERO)>0 && BigDecimalUtils.lessThan(weight, sumQtyRes)) {
-                    throw new UnsupportedOperationException("Impossible de reduire la quantité , car il existe des resevations pour une quantité "+sumQtyRes+" Kg");
+                if (BigDecimalUtils.lessThan(weight, sumQtyRes)) {
+                    throw new AnnounceException("Impossible de reduire la quantité , car il existe des resevations pour une quantité "+sumQtyRes+" Kg");
                 }
             }
             boolean closeDate= DateUtils.isBefore(endDate, DateUtils.currentDate()) ||
@@ -379,7 +382,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             //Si la modification se fait à la date courante ou bien si  tous les kg ont été reservés -> Completed
             if((weight.compareTo(sumQtyRes)==0 || closeDate) || (weight.compareTo(sumQtyRes)==0 && closeDate)){
                 announce.setStatus(StatusEnum.COMPLETED);
-                updateReservationsStatus(reservations, StatusEnum.COMPLETED);
+                updateReservationsStatus(announce.getId(), StatusEnum.COMPLETED);
             }
 
         }
@@ -401,15 +404,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         announce.setTransport(adto.getTransport());
     }
 
-    public List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception {
-
-        try {
-            return findBy(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, id, "announceId", null);
-        } catch (AnnounceException e) {
-            logger.error("Erreur durant la recuperation des reservations liées à l'annonce id={}", id);
-            throw e;
-        }
-    }
 
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteReservations(Long id) throws Exception {
@@ -418,7 +412,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             List<ReservationVO> reservations = findReservations(id);
             for (ReservationVO reservation : reservations) {
-                reservation.setCancelled(true);
+                reservation.cancel();
                 update(reservation);
             }
         } catch (Exception e) {
@@ -452,13 +446,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         try {
 
-            Session session = sessionFactory.getCurrentSession();
             AnnounceVO announce = announce(id);
             if (announce != null) {
                 announce.updateDeleteChildrens();
-                announce.setCancelled(true);
+                announce.cancel();
                 merge(announce);
-                announce = session.get(AnnounceVO.class, id);
+                announce = (AnnounceVO) get(AnnounceVO.class, id);
                 result = (announce != null) && (announce.isCancelled()) && deleteReservations(id);
 
             }
@@ -488,6 +481,39 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         return null;
     }
 
+    public List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception {
+
+        try {
+            return findBy(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, id, ANNOUNCE_PARAM, null);
+        } catch (AnnounceException e) {
+            logger.error("Erreur durant la recuperation des reservations liées à l'annonce id={}", id);
+            throw e;
+        }
+    }
+
+    public BigDecimal checkQtyReservations(Long id,boolean onlyRefused) throws AnnounceException,Exception {
+
+        try {
+
+            List<ReservationVO> reservations=findReservations(id);
+            if(CollectionsUtils.isEmpty(reservations)){
+                return BigDecimal.ZERO;
+            }
+
+            if(onlyRefused){
+                return  reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED))
+                        .map(ReservationVO::getWeight).reduce(BigDecimal.ZERO,BigDecimal::add);
+
+            }
+           return reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED)
+                    &&!r.getValidate().equals(ValidateEnum.INSERTED))
+                    .map(ReservationVO::getWeight).reduce(BigDecimal.ZERO,BigDecimal::add);
+
+        } catch (AnnounceException e) {
+            logger.error("Erreur durant la recuperation des reservations liées à l'annonce id={}", id);
+            throw e;
+        }
+    }
 
     @Override
     public String composeQuery(Object obj, String alias) throws Exception {
@@ -520,7 +546,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             if (ObjectUtils.isCallable(announceSearch, "price")) {
                 BigDecimal price = announceSearch.getPrice();
-                //AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
                 if (price.compareTo(BigDecimal.ZERO) >= 0) {
                     buildAndOr(hql, addCondition, andOrOr);
                     hql.append(" ( " + alias + ".goldPrice<=:goldPrice or " + alias + ".price<=:price or " + alias + ".preniumPrice<=:preniumPrice) ");
@@ -674,15 +699,15 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             });
         }
     }
-    private void updateReservationsStatus(List<ReservationVO> reservations,StatusEnum status){
+    private void updateReservationsStatus(Long id,StatusEnum status) throws Exception {
 
+        List<ReservationVO> reservations = findReservations(id);
         if(CollectionsUtils.isNotEmpty(reservations)){
             reservations.stream().forEach(r -> {
                 r.setStatus(status);
                 update(r);
             });
         }
-
     }
 
     @Override

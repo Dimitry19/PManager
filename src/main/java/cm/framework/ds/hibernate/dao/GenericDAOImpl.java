@@ -54,7 +54,9 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String DESC = " desc ";
     protected static final String ASC = " asc ";
     protected static final String USER_PARAM = "userId";
+    protected static final String TYPE_PARAM = "type";
     protected static final String ANNOUNCE_PARAM = "announceId";
+    protected static final String START_DATE_PARAM = "startDate";
     protected static final String ALIAS_ORDER = " as t order by t. ";
 
     @Autowired
@@ -638,8 +640,16 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         Session session = sessionFactory.getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
         Query query = session.createNamedQuery(ReviewVO.RATING, RatingCountVO.class);
-        query.setParameter("userId", user);
+        query.setParameter(USER_PARAM, user);
         return query.getResultList();
+    }
+
+    @Override
+    public Query search(String sqlQuery, String where, String... filters) {
+
+        Session session = this.sessionFactory.getCurrentSession();
+        session.enableFilter(FilterConstants.CANCELLED);
+        return session.createQuery(sqlQuery+where);
     }
 
     @Override

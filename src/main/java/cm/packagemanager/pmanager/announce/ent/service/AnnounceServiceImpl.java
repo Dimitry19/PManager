@@ -66,7 +66,7 @@ public class AnnounceServiceImpl implements AnnounceService {
         return dao.announcesByType(type, pageBy);
     }
 
-    public boolean delete(Long id) throws AnnounceException {
+    public boolean delete(Long id) throws Exception {
         return dao.delete(id);
     }
 

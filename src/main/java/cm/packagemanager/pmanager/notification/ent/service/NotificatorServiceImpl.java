@@ -82,6 +82,8 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
            List<NotificationVO> notifications= notificationDAO.all(NotificationVO.class);
 
+           if(CollectionsUtils.isEmpty(notifications)) return;
+
             notifications.stream().filter(n->!n.getStatus().equals(StatusEnum.COMPLETED)).forEach(n -> {
                 elaborate(n);
             });

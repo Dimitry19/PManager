@@ -63,4 +63,9 @@ public class CommonVO extends WSCommonResponseVO implements Auditable, Serializa
         this.lastUpdated = lastUpdated;
     }
 
+
+    public void cancel(){
+        setCancelled(true);
+    }
+
 }

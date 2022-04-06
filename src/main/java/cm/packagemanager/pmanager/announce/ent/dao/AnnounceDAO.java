@@ -34,7 +34,7 @@ public interface AnnounceDAO extends CommonDAO {
 
     AnnounceVO delete(AnnounceVO announce) throws BusinessResourceException, RecordNotFoundException;
 
-    boolean delete(Long id) throws BusinessResourceException;
+    boolean delete(Long id) throws Exception;
 
     AnnounceVO update(UpdateAnnounceDTO announceDTO) throws AnnounceException, Exception;
 

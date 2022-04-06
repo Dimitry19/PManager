@@ -378,7 +378,7 @@ public class AnnounceVO extends CommonVO {
     public void updateDeleteChildrens() {
 
         this.messages.forEach(message -> {
-            message.setCancelled(true);
+            message.cancel();
         });
     }
 
