@@ -5,13 +5,13 @@
 
 package cm.packagemanager.pmanager.administrator.api;
 
+import cm.packagemanager.pmanager.common.properties.CommonProperties;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
@@ -27,7 +27,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 @EnableSwagger2
 @Configuration
-public class SwaggerApiConfig {
+public class SwaggerApiConfig  extends CommonProperties {
 
     @Value("${swagger.api.groupname.announce}")
     private String apiGroupNameAnnounce;
@@ -62,61 +62,62 @@ public class SwaggerApiConfig {
     @Value("${swagger.api.groupname.notification}")
     private String apiGroupNameNotification;
 
+
    @Bean
     public Docket announcesApi() {
-        return createDocket(apiGroupNameAnnounce, "/pmanager/ws/announce.*");
+        return createDocket(apiGroupNameAnnounce, contextRoot+"/ws/announce.*");
     }
 
     @Bean
     public Docket mailApi() {
-        return createDocket(apiGroupNameMail, "/pmanager/ws/mail.*");
+        return createDocket(apiGroupNameMail, contextRoot+"/ws/mail.*");
     }
 
     @Bean
     public Docket reviewApi() {
-        return createDocket(apiGroupNameReview, "/pmanager/ws/review.*");
+        return createDocket(apiGroupNameReview, contextRoot+"/ws/review.*");
     }
 
     @Bean
     public Docket userApi() {
-        return createDocket(apiGroupNameUser, "/pmanager/ws/user.*");
+        return createDocket(apiGroupNameUser, contextRoot+"/ws/user.*");
     }
 
 
     @Bean
     public Docket messageApi() {
-        return createDocket(apiGroupNameMessage, "/pmanager/ws/message.*");
+        return createDocket(apiGroupNameMessage, contextRoot+"/ws/message.*");
     }
 
 
     @Bean
     public Docket roleApi() {
-        return createDocket(apiGroupNameRole, "/pmanager/ws/role.*");
+        return createDocket(apiGroupNameRole, contextRoot+"/ws/role.*");
     }
 
     @Bean
     public Docket reservationApi() {
-        return createDocket(apiGroupNameReservation, "/pmanager/ws/reservation.*");
+        return createDocket(apiGroupNameReservation, contextRoot+"/ws/reservation.*");
     }
 
     @Bean
     public Docket imageApi() {
-        return createDocket(apiGroupNameImage, "/pmanager/ws/image.*");
+        return createDocket(apiGroupNameImage, contextRoot+"/ws/image.*");
     }
 
     @Bean
     public Docket websocketApi() {
-        return createDocket(apiGroupNameWebsocket, "/pmanager/ws/socket/notification.*");
+        return createDocket(apiGroupNameWebsocket, contextRoot+"/ws/socket/notification.*");
     }
 
     @Bean
     public Docket notificationApi() {
-        return createDocket(apiGroupNameNotification, "/pmanager/ws/notification.*");
+        return createDocket(apiGroupNameNotification, contextRoot+"/ws/notification.*");
     }
 
      @Bean
     public Docket dashBoardCommunicationApi() {
-        return createDocket(apiGroupNameCommunication, "/pmanager/ws/dashboard/communication.*");
+        return createDocket(apiGroupNameCommunication, contextRoot+"/ws/dashboard/communication.*");
     }
 
 

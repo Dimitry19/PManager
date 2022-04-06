@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.ws.controller.rest.announce;
 
 
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.announce.enums.Source;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
@@ -387,9 +388,9 @@ public class AnnounceController extends CommonController {
         return null;
     }
 
-    @ApiOperation(value = "Retrieve an announce with an ID", response = AnnounceVO.class)
-    @GetMapping(value = ANNOUNCE_WS_BY_ID, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws AnnounceException {
+    @ApiOperation(value = "Retrieve an announce with an ID and Source", response = AnnounceVO.class)
+    @GetMapping(value = ANNOUNCE_WS_BY_ID_AND_SOURCE, headers = WSConstants.HEADER_ACCEPT)
+    public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id , @RequestParam Source source) throws AnnounceException {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -413,6 +414,12 @@ public class AnnounceController extends CommonController {
             return new ResponseEntity<>(announce, HttpStatus.OK);
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
+            if(source.equals(Source.NOTIFICATION)){
+                WSCommonResponseVO wsResponse = new WSCommonResponseVO();
+                wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, "L'annonce"));
+                return new ResponseEntity<>((Object) wsResponse, HttpStatus.NOT_FOUND);
+            }
             throw e;
         } catch (Exception e) {
             e.printStackTrace();

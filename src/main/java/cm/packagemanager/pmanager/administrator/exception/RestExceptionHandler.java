@@ -1,10 +1,7 @@
 package cm.packagemanager.pmanager.administrator.exception;
 
 
-import cm.packagemanager.pmanager.common.exception.AnnounceException;
-import cm.packagemanager.pmanager.common.exception.ErrorResponse;
-import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
+import cm.packagemanager.pmanager.common.exception.*;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
@@ -62,6 +59,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleAnnounceExceptions(AnnounceException ex) {
 
         return getObjectResponseEntity(ex.getMessage(), "announce.error");
+    }
+
+    @ExceptionHandler({DashboardException.class})
+    public ResponseEntity<Object> handleDashboardExceptions(DashboardException ex) {
+
+        List<String> details = new ArrayList<>();
+        details.add(ex.getMessage());
+        String[] code = new String[1];
+        code[0] = ex.getCode();
+
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        return new ResponseEntity<>(new ErrorResponse((String) CollectionsUtils.getFirst(details), details, code, DEFAULT_ERROR), new HttpHeaders(), status);
     }
 
     @NotNull

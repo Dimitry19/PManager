@@ -154,20 +154,20 @@ public class UserController extends CommonController {
             if (user == null) {
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 pmResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
-                response.sendRedirect(redirectConfirmErrorPage);
+                response.sendRedirect(contextRoot+redirectConfirmErrorPage);
             } else {
 
                 if (user.getActive() == 1) {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
-                    response.sendRedirect(redirectConfirmErrorPage);
+                    response.sendRedirect(contextRoot+redirectConfirmErrorPage);
                 }
 
                 user.setActive(1);
                 if (userService.update(user) != null) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
-                    response.sendRedirect(redirectConfirmPage);
+                    response.sendRedirect(contextRoot+redirectConfirmPage);
                 }
             }
 
@@ -677,16 +677,14 @@ public class UserController extends CommonController {
             @ApiResponse(code = 200, message = "Successful Subscription list ",
                     response = ResponseEntity.class, responseContainer = "Object")})
     @RequestMapping(value = USER_SUBSCRIPTION_WS, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<PaginateResponse> subscriptions(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId,
-                                                           @RequestParam(required = false, defaultValue = DEFAULT_PAGE) int page,
-                                                           @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws ValidationException, IOException {
+    public ResponseEntity<PaginateResponse> subscriptions(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId) throws ValidationException, IOException {
 
         logger.info("subscriptions request in");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
-        PageBy pageBy = new PageBy(page, size);
+        //PageBy pageBy = new PageBy(page, size);
 
         try {
             createOpentracingSpan("UserController - subscriptions");
@@ -716,16 +714,14 @@ public class UserController extends CommonController {
             @ApiResponse(code = 200, message = "Successful Subscribers list ",
                     response = ResponseEntity.class, responseContainer = "Object")})
     @RequestMapping(value = USER_SUBSCRIBER_WS, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<PaginateResponse> subscribers(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId,
-                                                         @RequestParam(required = false, defaultValue = DEFAULT_PAGE) int page,
-                                                         @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws ValidationException, IOException {
+    public ResponseEntity<PaginateResponse> subscribers(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId) throws ValidationException, IOException {
 
         logger.info("subscribers request in");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
-        PageBy pageBy = new PageBy(page, size);
+        //PageBy pageBy = new PageBy(page, size);
 
         try {
             createOpentracingSpan("UserController - subscribers");

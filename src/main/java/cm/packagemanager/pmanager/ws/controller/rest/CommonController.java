@@ -53,6 +53,7 @@ public class CommonController  extends WSConstants {
 
     public static final String HEADER_TOTAL = "x-total-count";
 
+
     @Value("${redirect.page}")
     protected String redirectPage;
 

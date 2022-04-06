@@ -1,24 +1,22 @@
 package cm.packagemanager.pmanager.common;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-@Component
+import javax.annotation.ManagedBean;
+
+@ManagedBean
 public class Constants {
 
-    public static final String BUYER = "BUYER";
-    public static final String SELLER = "SELLER";
-    public static final String AP = "A";
-    public static final String AUT = "V";
-    public static final String NV = "N";
+    @Value("${constant.prod_cat_code}")
+    public String DEFAULT_CATEGORIE;
+
     public static final String SUBJECT = "SUBJECT";
     public static final String DEFAULT_TOKEN = "PM";
 
     public static final String AND = " and ";
     public static final String OR = " or ";
 
-    @Value("${constant.prod_cat_code}")
-    public String DEFAULT_CATEGORIE;
+
 
 
     public static final int CONTENT_LENGTH = 500;
