@@ -189,7 +189,7 @@ public class AnnounceController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.PRECONDITION_FAILED);
     }
 
     /**

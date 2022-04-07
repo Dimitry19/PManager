@@ -148,27 +148,25 @@ public class CommonController  extends WSConstants {
 
     protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, int count,List results) {
 
-        if(CollectionsUtils.isNotEmpty(results)){
-            switch (count) {
-                case 0:
-                    headers.add(HEADER_TOTAL, Long.toString(count));
-                    paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
-                    break;
-                default:
+        switch (count) {
+            case 0:
+                headers.add(HEADER_TOTAL, Long.toString(count));
+                paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
+            default:
 
-                    if (CollectionsUtils.isNotEmpty(results)) {
-                        paginateResponse.setCount(count);
-                    }
-                    paginateResponse.setResults(results);
-                    paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
-                    headers.add(HEADER_TOTAL, Long.toString(results.size()));
-                    break;
-            }
-            return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
+                if (CollectionsUtils.isNotEmpty(results)) {
+                    paginateResponse.setCount(count);
+                }
+                paginateResponse.setResults(results);
+                paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
+                headers.add(HEADER_TOTAL, Long.toString(results.size()));
+                break;
         }
-        return new ResponseEntity<>(paginateResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
+
+
     }
 
     protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse,List results) {
