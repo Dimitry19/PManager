@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.message.ent.dao;
 
-import cm.framework.ds.hibernate.enums.FindByType;
+import cm.framework.ds.hibernate.enums.FindBy;
 import cm.packagemanager.pmanager.announce.ent.dao.AnnounceDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.common.Constants;
@@ -126,11 +126,11 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
 
         logger.info("Message: user message");
         if (user == null) return null;
-        return messagesBy(user.getId(), FindByType.USER,pageBy);
+        return messagesBy(user.getId(), FindBy.USER,pageBy);
     }
 
     @Override
-    public List<MessageVO> messagesBy(Long id, FindByType fbType,PageBy pageBy) throws Exception {
+    public List<MessageVO> messagesBy(Long id, FindBy fbType, PageBy pageBy) throws Exception {
 
         if (id == null) return null;
 
@@ -183,7 +183,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
             MessageIdVO messageId = new MessageIdVO(id, Constants.DEFAULT_TOKEN);
             MessageVO message = findById(messageId);
             if (message != null) {
-                message.setCancelled(true);
+                message.cancel();
                 message = (MessageVO) merge(message);
                 result = (message != null) && (message.isCancelled());
             }

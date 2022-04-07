@@ -65,6 +65,8 @@ public class WebServiceResponseCode {
     public static final String ERROR_GET_RESERV_CODE_LABEL = "La reservation inexistante";
     public static final String ERROR_INEXIST_CODE_LABEL = "{0} inexistant(e)";
 
+    public static final String ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL = "Service envoi mail actuellement indisponible.{0} ";
+
     public static final String READ_CODE_LABEL = "{0} deja lu(e)";
 
 }

@@ -11,6 +11,7 @@ import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
+import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
@@ -39,6 +40,7 @@ import java.util.Set;
 @NamedQueries(value = {
         @NamedQuery(name = AnnounceVO.FINDBYUSER, query = "select a from AnnounceVO a where a.user.id =:userId order by a.startDate desc"),
         @NamedQuery(name = AnnounceVO.FINDBYTYPE, query = "select a from AnnounceVO a where a.announceType =:type order by a.startDate desc"),
+        @NamedQuery(name = AnnounceVO.FINDBYTRANSPORT, query = "select a from AnnounceVO a where a.transport =:transport order by a.startDate desc"),
 })
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
@@ -51,8 +53,9 @@ public class AnnounceVO extends CommonVO {
 
     public static final String FINDBYUSER = "cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByUser";
     public static final String FINDBYTYPE = "cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByType";
+    public static final String FINDBYTRANSPORT = "cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO.findByTransport";
     public static final String SQL_FIND_BY_USER = " FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
-    public static final String ANNOUNCE_STATUS = " FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
+    public static final String ANNOUNCE_SEARCH = "select  distinct  a from AnnounceVO  as a join a.categories as c ";
 
 
     private Long id;
@@ -378,7 +381,7 @@ public class AnnounceVO extends CommonVO {
     public void updateDeleteChildrens() {
 
         this.messages.forEach(message -> {
-            message.setCancelled(true);
+            message.cancel();
         });
     }
 
@@ -406,5 +409,13 @@ public class AnnounceVO extends CommonVO {
 			return other.user == null;
         } else return user.equals(other.user);
 	}
+
+	private String toUpperCase(String value){
+        if(StringUtils.isNotEmpty(value)){
+            return value.toUpperCase();
+        }
+        return value;
+
+    }
 
 }

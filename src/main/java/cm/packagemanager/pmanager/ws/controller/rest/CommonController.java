@@ -14,24 +14,30 @@ import cm.packagemanager.pmanager.notification.ent.service.NotificationService;
 import cm.packagemanager.pmanager.user.ent.service.RoleService;
 import cm.packagemanager.pmanager.user.ent.service.UserService;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
+import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
+import com.sun.mail.smtp.SMTPSendFailedException;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import io.opentracing.util.GlobalTracer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.annotation.PostConstruct;
+import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -46,6 +52,7 @@ public class CommonController  extends WSConstants {
     protected final Log logger = LogFactory.getLog(CommonController.class);
 
     public static final String HEADER_TOTAL = "x-total-count";
+
 
     @Value("${redirect.page}")
     protected String redirectPage;
@@ -141,26 +148,27 @@ public class CommonController  extends WSConstants {
 
     protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, int count,List results) {
 
+        if(CollectionsUtils.isNotEmpty(results)){
+            switch (count) {
+                case 0:
+                    headers.add(HEADER_TOTAL, Long.toString(count));
+                    paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
+                    break;
+                default:
 
-
-        switch (count) {
-            case 0:
-                headers.add(HEADER_TOTAL, Long.toString(count));
-                paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
-                break;
-            default:
-
-                if (CollectionsUtils.isNotEmpty(results)) {
-                    paginateResponse.setCount(count);
-                }
-                paginateResponse.setResults(results);
-                paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
-                headers.add(HEADER_TOTAL, Long.toString(results.size()));
-                break;
+                    if (CollectionsUtils.isNotEmpty(results)) {
+                        paginateResponse.setCount(count);
+                    }
+                    paginateResponse.setResults(results);
+                    paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
+                    headers.add(HEADER_TOTAL, Long.toString(results.size()));
+                    break;
+            }
+            return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
         }
-        return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
+        return new ResponseEntity<>(paginateResponse, HttpStatus.NOT_FOUND);
     }
 
     protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse,List results) {
@@ -177,5 +185,16 @@ public class CommonController  extends WSConstants {
             headers.add(HEADER_TOTAL, Long.toString(results.size()));
         }
         return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
+    }
+
+    @NotNull
+    protected   ResponseEntity<Response> getResponseMailResponseEntity(Response pmResponse, Exception e, String message) {
+        pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+        if(e instanceof MessagingException || e instanceof SMTPSendFailedException || e instanceof MailSendException){
+            pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,message));
+        }else{
+            pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
+        }
+        return new ResponseEntity<Response>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
     }
 }

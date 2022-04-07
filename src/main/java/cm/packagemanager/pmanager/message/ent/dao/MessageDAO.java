@@ -1,7 +1,7 @@
 package cm.packagemanager.pmanager.message.ent.dao;
 
 import cm.framework.ds.hibernate.dao.CommonDAO;
-import cm.framework.ds.hibernate.enums.FindByType;
+import cm.framework.ds.hibernate.enums.FindBy;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 
@@ -22,7 +22,7 @@ public interface MessageDAO extends CommonDAO {
 
     List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws Exception;
 
-    List<MessageVO> messagesBy(Long id, FindByType fbType,PageBy pageBy) throws Exception;
+    List<MessageVO> messagesBy(Long id, FindBy fbType, PageBy pageBy) throws Exception;
 
     List<MessageVO> messages(PageBy pageBy) throws Exception;
 

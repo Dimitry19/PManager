@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.websocket.config;
 
 
 import cm.packagemanager.pmanager.common.interceptor.HttpHandshakeInterceptor;
+import cm.packagemanager.pmanager.common.properties.CommonProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +25,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+public class WebSocketConfig extends CommonProperties implements WebSocketMessageBrokerConfigurer {
 
     private static Logger logger = LoggerFactory.getLogger(WebSocketConfig.class);
 

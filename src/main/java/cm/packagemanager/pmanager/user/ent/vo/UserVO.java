@@ -28,6 +28,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import static org.hibernate.annotations.FetchMode.SELECT;
+
 /**
  * le @Fetch(value = SELECT) permet de corriger le probleme de chargement des elements (Set et List) meme
  * quand ils sont vides quand on utilise la methode find() de la session.
@@ -52,6 +54,7 @@ import java.util.Set;
 @Filters({
         @Filter(name = FilterConstants.CANCELLED),
         @Filter(name = FilterConstants.ACTIVE_MBR)
+        //@Filter(name = FilterConstants.ACTIVE_MBR_WORK)
 })
 @Where(clause = FilterConstants.FILTER_WHERE_USER_CANCELLED)
 public class UserVO extends CommonVO {
@@ -256,6 +259,7 @@ public class UserVO extends CommonVO {
     }
 
     @Access(AccessType.PROPERTY)
+    @Fetch(value = SELECT)
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     public Set<ReviewVO> getReviews() {
         return reviews;
@@ -509,24 +513,24 @@ public class UserVO extends CommonVO {
 
     public void updateDeleteChildrens() {
 
-        Iterator<ReviewVO> itereview = this.reviews.iterator();
+        Iterator<ReviewVO> iteReview = this.reviews.iterator();
 
-        while (itereview.hasNext()) {
-            ReviewVO review = itereview.next();
-            review.setCancelled(true);
+        while (iteReview.hasNext()) {
+            ReviewVO review = iteReview.next();
+            review.cancel();
         }
 
-        Iterator<AnnounceVO> iterannounce = this.announces.iterator();
+        Iterator<AnnounceVO> iterAnnounce = this.announces.iterator();
 
-        while (iterannounce.hasNext()) {
-            AnnounceVO announce = iterannounce.next();
-            announce.setCancelled(true);
+        while (iterAnnounce.hasNext()) {
+            AnnounceVO announce = iterAnnounce.next();
+            announce.cancel();
         }
 
-        Iterator<MessageVO> itermessage = this.messages.iterator();
-        while (itermessage.hasNext()) {
-            MessageVO message = itermessage.next();
-            message.setCancelled(true);
+        Iterator<MessageVO> iterMessage = this.messages.iterator();
+        while (iterMessage.hasNext()) {
+            MessageVO message = iterMessage.next();
+            message.cancel();
         }
     }
 

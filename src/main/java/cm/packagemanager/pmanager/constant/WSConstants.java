@@ -1,6 +1,8 @@
 package cm.packagemanager.pmanager.constant;
 
-public class WSConstants {
+import cm.packagemanager.pmanager.common.properties.CommonProperties;
+
+public class WSConstants extends CommonProperties {
 
 
     public static final String DEFAULT_SIZE = "12";
@@ -55,17 +57,22 @@ public class WSConstants {
     public static final String USER_SUBSCRIPTION_WS = "/subscriptions/{userId}";
     public static final String USER_SUBSCRIBER_WS = "/subscribers/{userId}";
 
-    /************ ADMIN REQUEST*************/
+    /************ ADMIN DASHBOARD REQUEST*************/
+    public static final String DASHBOARD_WS = "/ws/dashboard/*";
     public static final String COMMUNICATION_WS = "/ws/dashboard/communication/*";
-    public static final String AIRPLANE_WS = "/ws/dashboard/airplane/*";
+
+    public static final String AIRLINE = "/airline/";
+    public static final String AIRLINE_ADD = AIRLINE+"/add";
+    public static final String AIRLINE_UPD = AIRLINE+"/update/{code}";
 
 
     /************ ANNOUNCE REQUEST*************/
     public static final String ANNOUNCE_WS = "/ws/announce/*";
     public static final String ANNOUNCES_WS = "/announces";
     public static final String ANNOUNCE_WS_USER_ID_PAGE_NO = "/announces/{pageno}";
-    public static final String ANNOUNCE_WS_BY_ID = "/announce";
+    public static final String ANNOUNCE_WS_BY_ID_AND_SOURCE = "/announce";
     public static final String ANNOUNCE_WS_BY_TYPE = "/type";
+    public static final String ANNOUNCE_WS_BY_TRANSPORT = "/transport";
     public static final String ANNOUNCE_WS_ALL = "/all";
 
 
