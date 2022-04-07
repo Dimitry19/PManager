@@ -1,0 +1,811 @@
+<!-- Module profile -->
+<main>
+    <section class="intro-section inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1 col-lg-2"></div>
+                <div class="col-md-10 col-lg-8">
+                    <div class="intro">
+                        <img class="profile-img" [src]="source" alt="profile">
+                        <input *ngIf="!disableEverything" type="file" name="fileToUpload" accept="image/*" (change)="onImageChange($event)" title="choissisez une photo">
+                        <div class="container">
+                            <div class="row">
+                                <div class="perso col-md-4 col-lg-4">
+                                    <h4><label class="float-left">Email</label></h4>
+                                    <h2><b class="float-left information">{{loggedUser?.email}}</b></h2>
+                                </div>
+                                <div class="col-md-4 col-lg-4 profil_user1">
+                                    <h2><b class="profil_user text-center">{{loggedUser?.firstName}}  {{loggedUser?.lastName}}</b></h2>
+                                </div>
+                                <div class="perso col-md-4 col-lg-4">
+                                    <h4><label class="float-right">Téléphone</label></h4>
+                                    <h2><b class="float-right information">{{loggedUser?.phone}}</b></h2>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- intro -->
+                </div>
+                <!-- col-sm-8 -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </section>
+    <!-- intro-section -->
+
+
+    <div class="tab-header card">
+        <ul class="nav  md-tabs tab-timeline" role="tablist" id="mytab">
+            <li class="nav-item">
+                <a [class]=" sectionToshow == 'personal' ? 'nav-link active' : 'nav-link'" data-toggle="tab" href="#personal" role="tab">Info Personelles</a>
+                <div class="slide"></div>
+            </li>
+            <li class="nav-item">
+                <a [class]=" sectionToshow == 'Ainfo' ? 'nav-link active' : 'nav-link'" data-toggle="tab" href="#Ainfo" role="tab">Annonces</a>
+                <div class="slide"></div>
+            </li>
+            <li *ngIf="!disableEverything" class="nav-item">
+                <a [class]=" sectionToshow == 'Rinfo' ? 'nav-link active' : 'nav-link'" data-toggle="tab" href="#Rinfo" role="tab">Reservations</a>
+                <div class="slide"></div>
+            </li>
+            <li class="nav-item">
+                <a [class]=" sectionToshow == 'contacts' ? 'nav-link active' : 'nav-link'" data-toggle="tab" href="#contacts" role="tab">Contacts</a>
+                <div class="slide"></div>
+            </li>
+            <li *ngIf="!disableEverything" class="nav-item">
+                <a [class]=" sectionToshow == 'review' ? 'nav-link active' : 'nav-link'" data-toggle="tab" href="#review" role="tab">Notifications</a>
+                <div class="slide"></div>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="tab-content">
+        <!-- personal -->
+        <div [class]=" sectionToshow == 'personal' ? 'tab-pane active' : 'tab-pane'" id="personal" role="tabpanel">
+
+            <div class="card">
+                <div class="card-header colonne">
+                    <h5 class="card-header-text">Mes informations personelles</h5>
+                    <!-- <button id="edit-btn" type="button" class="btn btn-sm  waves-effect waves-light f-right">
+					<i class="fa fa-edit"></i>
+					</button> -->
+                </div>
+                <div class="tab-pane">
+                    <div class="well">
+                        <div class="categories">
+                            <div class="row">
+                                <div class="choices">
+                                    <ul class="nav nav-tabs" id="nav-vertical-tab-bg" role="tablist" aria-orientation="vertical">
+                                        <li class="categorie"><button class="nav-link active choix" id="nav-vertical-tab-bg1-tab" data-toggle="tab" href="#nav-vertical-tab-bg1" role="tab" aria-controls="nav-vertical-tab-bg1" aria-selected="true">REGISTRE</button></li>
+                                        <li *ngIf="!disableEverything" class="categorie"><button class="nav-link choix" id="nav-vertical-tab-bg2-tab" data-toggle="tab" href="#nav-vertical-tab-bg2" role="tab" aria-controls="nav-vertical-tab-bg2" aria-selected="false">NOTIFICATIONS</button></li>
+                                        <li *ngIf="!disableEverything" class="categorie"><button class="nav-link choix" id="nav-vertical-tab-bg3-tab" data-toggle="tab" href="#nav-vertical-tab-bg3" role="tab" aria-controls="nav-vertical-tab-bg3" aria-selected="false">CHANGER LE MOT DE PASSE</button></li>
+                                        <!-- <li class="categorie"><button class="nav-link choix" id="nav-vertical-tab-bg4-tab" data-toggle="tab" href="#nav-vertical-tab-bg4" role="tab" aria-controls="nav-vertical-tab-bg4" aria-selected="false"  #Documents>DOCUMENTS</button></li> -->
+                                        <!-- <li class="categorie"><button class="nav-link choix" id="nav-vertical-tab-bg5-tab" data-toggle="tab" href="#nav-vertical-tab-bg5" role="tab" aria-controls="nav-vertical-tab-bg5" aria-selected="false">Autres</button></li> -->
+                                    </ul>
+                                </div>
+                                <div class="col-1 col-md-1">
+                                    &nbsp;
+                                </div>
+                                <div class="col-6 col-md-6 displaychoix">
+                                    <div class="tab-content" id="nav-vertical-tab-bgContent">
+                                        <div class="tab-pane p-3 fade show active" id="nav-vertical-tab-bg1" role="tabpanel" aria-labelledby="nav-vertical-tab-bg1-tab">
+                                            <!-- STEP 1 -->
+                                            <div *ngIf="readOnly" class="card-block">
+                                                <div class="edit-info">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <table class="table">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="input-group">
+                                                                                        <span class="input-group-addon"><i class="fa fa-user-circle-o fa-2x"></i></span>
+                                                                                        <input type="text" class="form-control value" [value]="loggedUser?.firstName" disabled>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="input-group">
+                                                                                        <span class="input-group-addon"><i class="fa fa-user-circle-o fa-2x"></i></span>
+                                                                                        <input type="text" class="form-control value" [value]="loggedUser?.lastName" disabled>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="form-radio">
+                                                                                        <div class="group-add-on">
+                                                                                            <div class="radio radiofill radio-inline">
+                                                                                                <label>
+																								<input type="radio" name="sexe" checked value="MALE" disabled><i class="helper"></i> Homme
+																								</label>
+                                                                                            </div>
+                                                                                            <div class="radio radiofill radio-inline">
+                                                                                                <label>
+																								<input type="radio" name="sexe" value="FEMALE" disabled><i class="helper"></i> Femme
+																								</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <table class="table">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="input-group">
+                                                                                        <span class="input-group-addon"><i class="fa fa-mobile-phone fa-2x"></i></span>
+                                                                                        <input type="text" class="form-control value" [value]="loggedUser?.phone" disabled>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="input-group">
+                                                                                        <span class="input-group-addon"><i class="fa fa-envelope fa-2x"></i></span>
+                                                                                        <input type="text" class="form-control value" [value]="loggedUser?.email" disabled>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="text-center">
+                                                                <button *ngIf="!disableEverything" class="btn btn-outline-info waves-effect btn-rounded my-3" (click)="Modifier()">
+																<i class="fa fa-edit"></i> Modifier
+															</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div *ngIf="!readOnly" class="card-block">
+                                                <div class="edit-info">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+
+                                                            <form class="general-info" [formGroup]="updateUser" (ngSubmit)="Sauver()">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6">
+                                                                        <table class="table">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="input-group">
+                                                                                            <span class="input-group-addon"><i class="fa fa-user-circle-o fa-2x"></i></span>
+                                                                                            <input type="text" class="form-control value" formControlName="firstName" name="firstName" placeholder="firstname">
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="input-group">
+                                                                                            <span class="input-group-addon"><i class="fa fa-user-circle-o fa-2x"></i></span>
+                                                                                            <input type="text" class="form-control value" placeholder="lastname" formControlName="lastName" name="lastName">
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="form-radio">
+                                                                                            <div class="group-add-on">
+                                                                                                <div class="radio radiofill radio-inline">
+                                                                                                    <label>
+																									<input type="radio" name="sexe" checked value="MALE"  #sexe (click)="mySexe(sexe.value)"><i class="helper"></i> Homme
+																									</label>
+                                                                                                </div>
+                                                                                                <div class="radio radiofill radio-inline">
+                                                                                                    <label>
+																									<input type="radio" name="sexe" value="FEMALE" #sexe1 (click)="mySexe(sexe1.value)"><i class="helper"></i> Femme
+																									</label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <table class="table">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="input-group">
+                                                                                            <span class="input-group-addon"><i class="fa fa-mobile-phone fa-2x"></i></span>
+                                                                                            <input type="text" class="form-control value" formControlName="phone" [(ngModel)]="loggedUser.phone" [value]="loggedUser?.phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="10">
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="text-center">
+                                                                    <button class="btn btn-outline-info waves-effect btn-rounded my-3" type="submit" [disabled]="updateUser.invalid">
+																	<i class="fa fa-floppy-o"></i> Sauvegader
+																</button>
+
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <!-- </div> -->
+                                        </div>
+                                        <div class="tab-pane p-3 fade" id="nav-vertical-tab-bg2" role="tabpanel" aria-labelledby="nav-vertical-tab-bg2-tab">
+                                            <!-- STEP 2 -->
+                                            <div class="card-block">
+                                                <div class="edit-info">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+
+                                                            <div class="general-info">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6">
+                                                                        <table class="table">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="input-group">
+                                                                                            <label class="switch_small">
+																								<input type="checkbox" id="autoSizingCheck" (click)="checked($event)" [checked]="check">
+																								<span class="slider_small round_small"></span>
+																							</label>Notifications
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <button class="btn btn-outline-info waves-effect btn-rounded my-3" (click)="notif()">
+																	<i class="fa fa-floppy-o"></i> Sauvegader
+																</button>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane p-3 fade" id="nav-vertical-tab-bg3" role="tabpanel" aria-labelledby="nav-vertical-tab-bg3-tab">
+                                            <!-- STEP3 -->
+                                            <div class="card-block">
+                                                <div class="edit-info">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <form *ngIf="true" class="general-info" [formGroup]="updateUserMDP" (ngSubmit)="SauverMDP()">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6">
+                                                                        <table class="table">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="input-group">
+                                                                                            <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                                                                            <input type="password" id="oldpwd" class="form-control form-control-md displaystyle" placeholder="Inserer votre mot de passe actuel" name="password" formControlName="password" required>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
+                                                                    <div class="col-lg-6">
+                                                                        <table class="table">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="input-group">
+                                                                                            <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                                                                            <input [class.is-invalid]="updateUserMDP.get('password1').invalid && updateUserMDP.get('password1').touched" type="password" id="newpwd" class="form-control form-control-md displaystyle" placeholder="Votre nouveau mot de passe" name="password1" formControlName="password1"
+                                                                                                required>
+                                                                                            <div *ngIf="(updateUserMDP.get('password1').invalid && updateUserMDP.get('password1').touched) || updateUserMDP.get('password1').dirty">
+                                                                                                <small *ngIf="updateUserMDP.get('password1').errors?.required" class="text-danger">Le mot de passe est requis</small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="input-group">
+                                                                                            <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                                                                            <input [class.is-invalid]="updateUserMDP.get('password2').invalid && updateUserMDP.get('password2').touched " type="password" id="confirm" class="form-control form-control-md displaystyle" placeholder="Confirmer votre mot de passe" name="password2" formControlName="password2"
+                                                                                                required>
+                                                                                            <div *ngIf="(updateUserMDP.get('password2').invalid && updateUserMDP.get('password2').touched) || updateUserMDP.get('password2').dirty">
+                                                                                                <small *ngIf="updateUserMDP.get('password2').errors?.required" class="text-danger">Le mot de passe est requis</small><br>
+                                                                                                <small *ngIf="updateUserMDP.get(['password1']).value != updateUserMDP.get(['password2']).value && updateUserMDP.get(['password2']).value != null" class="text-danger">Le mot password ne correspond pas</small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="text-center">
+                                                                    <button class="btn btn-outline-info waves-effect btn-rounded my-3" type="submit" [disabled]="updateUserMDP.invalid">
+																	<i class="fa fa-floppy-o"></i> Sauvegader
+																</button>
+
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- annonces user -->
+        <div [class]=" sectionToshow == 'Ainfo' ? 'tab-pane active' : 'tab-pane'" id="Ainfo" role="tabpanel">
+
+            <div class="card">
+                <div class="card-header colonne">
+                    <a class="float-left" (click)="toggleView(view)" #view>Tableau</a>
+                    <h5 class="card-header-text">Mes annonces</h5>
+                </div>
+                <!-- card view -->
+                <div *ngIf="!viewTable" class="card-block p-4">
+                    <div class="row">
+                        <ul class="style_featured">
+                            <li *ngFor="let annonce of annonces; let i = index;trackBy:tracbByFn" class="" (click)="detail(annonce.id)">
+                                <div [class]="annonce.announceType == 'SELLER' ? 'card b-l-success business-info services m-b-20 seller' : 'card b-l-success business-info services m-b-20 buyer'">
+                                    <div class="card-header">
+                                        <span class="float-left" [innerHTML]="annonce.category == null ? 'AUTRES':annonce.category.description"></span>
+                                        <div class="title_annonce">
+                                            <h5 class="card-header-text">Annonce <span [innerHTML]="i+1"></span></h5>
+                                        </div>
+                                        <span class="float-right messages" [innerHTML]="annonce.reservations > 0 ?annonce.reservations+'&nbsp;reservation(s)':' '"></span>
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-md-6 task-detail">
+                                                <label for="lieux_depart">Ville de Départ:&nbsp; </label> <span class="value" [innerHTML]=" annonce.departure"></span><br>
+                                                <label for="date_depart">Date de Départ:&nbsp; </label> <span class="value" [innerHTML]=" annonce.startDate"></span><br>
+                                                <label for="transport">Mode de Transport:&nbsp; </label> <span class="value" [innerHTML]=" annonce.descriptionTransport"></span><br>
+                                                <label for="prixClassiq">Prix Classique(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.price  == 0 ? '-':annonce.price"></span><br>
+                                                <label for="prixGold">Prix Ultra Rapide(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.goldPrice == 0 ? '-':annonce.goldPrice"></span><br>
+                                            </div>
+                                            <div class="col-md-6 task-detail">
+                                                <label for="lieux_arrivee">Ville d'Arrivée:&nbsp; </label> <span class="value" [innerHTML]=" annonce.arrival"></span><br>
+                                                <label for="date_arrivee">Date d'Arrivée:&nbsp; </label> <span class="value" [innerHTML]=" annonce.endDate"></span><br>
+                                                <label for="poids">Nombre de Kilo(Kg):&nbsp; </label> <span class="value" [innerHTML]=" annonce.weight"></span><br>
+                                                <label for="prixPremiun">Prix Rapide(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.preniumPrice == 0 ? '-':annonce.preniumPrice"></span><br>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- table view -->
+                <div class="table-details">
+                    <table *ngIf="viewTable" datatable [dtOptions]="dtOptions" class="table hover datatable" id="simpletable">
+                        <thead>
+                            <tr>
+                                <th>Ville de Départ</th>
+                                <th>Ville d'Arrivée</th>
+                                <th>Date de Départ</th>
+                                <th>Date d'Arrivée</th>
+                                <th>Nombre de Kilo(s) </th>
+                                <th>Categories</th>
+                                <th>Mode de Transport</th>
+                                <th>Prix Classique(&euro;)</th>
+                                <th>Prix Rapide(&euro;)</th>
+                                <th>Prix Ultra Rapide(&euro;)</th>
+                                <th>Reservations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let annonce of annonces; let i = index; trackBy:tracbByFn" [class]="annonce.announceType == 'SELLER' ? 'seller' : 'buyer'" (click)="detail(annonce.id)">
+                                <td><span class="value" [innerHTML]=" annonce.departure"></span></td>
+                                <td><span class="value" [innerHTML]=" annonce.arrival"></span></td>
+                                <td><span class="value" [innerHTML]=" annonce.startDate"></span></td>
+                                <td><span class="value" [innerHTML]=" annonce.endDate"></span></td>
+                                <td><span class="value" [innerHTML]=" annonce.weight"></span></td>
+                                <td>
+                                    <span *ngIf="annonce.categories.length == 0" class="value" innerHTML="AUTRES"></span>
+                                    <span *ngIf="annonce.categories.length > 0" class="value">
+							 <span *ngFor="let cat of annonce.categories" [innerHTML]="cat.description+'&nbsp;'"></span>
+                                    </span>
+                                </td>
+                                <td><span class="value" [innerHTML]=" annonce.descriptionTransport"></span></td>
+                                <td><span class="value" [innerHTML]=" annonce.price  == 0 ? '-':annonce.price"></span></td>
+                                <td><span class="value" [innerHTML]=" annonce.preniumPrice == 0 ? '-':annonce.preniumPrice"></span></td>
+                                <td><span class="value" [innerHTML]=" annonce.goldPrice == 0 ? '-':annonce.goldPrice"></span></td>
+                                <td><span class="value messages" [innerHTML]=" annonce.reservations > 0 ?annonce.reservations+'&nbsp;reservation(s)':' '"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- reservations user -->
+        <div [class]=" sectionToshow == 'Rinfo' ? 'tab-pane active' : 'tab-pane'" id="Rinfo" role="tabpanel">
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="card">
+                        <div class="card-block groups-contact">
+                            <div class="list-group list-contacts">
+                                <button class="list-group-item list-group-item-action" id="mesRes" data-toggle="tab" href="#mesRes-tab" role="tab" aria-controls="mesRes-tab" aria-selected="true">Mes Reservations
+                                    <span class="badge badge-primary badge-pill" [innerHTML]=" myReservations ? myReservations.count : 0 "></span>
+                                </button>
+                                <button class="list-group-item list-group-item-action" id="leurRes" data-toggle="tab" href="#leurRes-tab" role="tab" aria-controls="leurRes-tab" aria-selected="false">Reservations reçues
+                                    <span class="badge badge-success badge-pill" [innerHTML]="countAnnWithRes"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xl-9">
+                    <div class="tab-content" id="nav-vertical-tab-bgContent_1">
+                        <div class="card tab-pane fade show active" id="mesRes-tab" role="tabpanel" aria-labelledby="mesRes">
+                            <div class="card-header colonne">
+                                <h5 class="card-header-text">Mes reservations</h5>
+                            </div>
+                            <div class="card-block table-details">
+                                <table *ngIf="myReservations" datatable [dtOptions]="dtOptions" class="table hover" id="">
+                                    <thead>
+                                        <tr>
+                                            <th>Ville de Départ</th>
+                                            <th>Ville d'Arrivée</th>
+                                            <th>Date de Départ</th>
+                                            <th>Date d'Arrivée</th>
+                                            <th>Kilo(s) Reservé(s)</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let res of myReservations?.results; let i = index; trackBy:tracbByFn" [class]="res.announceInfo.price > 0 ? 'seller' : 'buyer'">
+                                            <td><span class="value" [innerHTML]=" res.announceInfo.departure"></span></td>
+                                            <td><span class="value" [innerHTML]=" res.announceInfo.arrival"></span></td>
+                                            <td><span class="value" [innerHTML]=" res.announceInfo.startDate"></span></td>
+                                            <td><span class="value" [innerHTML]=" res.announceInfo.endDate"></span></td>
+                                            <td><span class="value" [innerHTML]=" res.weight"></span></td>
+
+                                            <td><span [class]="res.validate == 'INSERTED' ?'badge value badge-info badge-pill':res.validate == 'ACCEPTED' ?'badge value badge-success badge-pill':'badge value badge-danger badge-pill'" [innerHTML]="res.validate == 'INSERTED' ?'En attente':res.validate == 'ACCEPTED' ?'Confirmée':'Refusée'"></span></td>
+                                            <td class="">
+                                                <ul class="actionRes">
+                                                    <li *ngIf="res.validate == 'INSERTED'" class="actions"><a (click)="editRes(res,false)"><i class="fa fa-edit text-primary"></i></a></li>
+                                                    <li *ngIf="res.validate == 'INSERTED'" class="actions"><a (click)="delRes(res)"><i class="fa fa-trash text-danger"></i></a></li>
+                                                    <li class="actions"><a (click)="editRes(res,true)"><i class="fa fa-eye text-info"></i></a></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card tab-pane fade" id="leurRes-tab" role="tabpanel" aria-labelledby="leurRes">
+                            <div class="card-header  colonne">
+                                <h5 class="card-header-text">Mes reservations reçues</h5>
+                            </div>
+                            <div class="card-block table-details">
+                                <table *ngIf="annonceWithRes[0]" datatable [dtOptions]="dtOptions" class="table hover" id="">
+                                    <thead>
+                                        <tr>
+                                            <th>Ville de Départ</th>
+                                            <th>Ville d'Arrivée</th>
+                                            <th>Date de Départ</th>
+                                            <th>Date d'Arrivée</th>
+                                            <th>Kilo(s) Reservé(s)</th>
+                                            <th>Proprietaire de la reservation</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="annonceWithRes.length > 0">
+                                        <!-- <ng-container *ngFor="let reserve of annonceWithRes; let i = index; trackBy:tracbByFn"> -->
+                                        <tr *ngFor="let res of annonceWithRes[0]; let y = index; trackBy:tracbByFn" [class]="res.announceInfo.price > 0 ? 'seller' : 'buyer'">
+                                            <td><span class="value" [innerHTML]=" res.announceInfo.departure"></span></td>
+                                            <td><span class="value" [innerHTML]=" res.announceInfo.arrival"></span></td>
+                                            <td><span class="value" [innerHTML]=" res.announceInfo.startDate"></span></td>
+                                            <td><span class="value" [innerHTML]=" res.announceInfo.endDate"></span></td>
+                                            <td><span class="value" [innerHTML]=" res.weight"></span></td>
+                                            <td><span class="value" [innerHTML]=" res.userInfo?.username"></span></td>
+                                            <td class="">
+                                                <ul class="actionRes">
+                                                    <li *ngIf="res.validate == 'INSERTED'" class="actions"><a (click)="valide(res.id)"><i class="fa fa-check text-success"></i></a></li>
+                                                    <li *ngIf="res.validate == 'ACCEPTED'" class="actions"><span class="badge badge-success badge-pill">Acceptée</span></li>
+                                                    <li class="actions"><a (click)="editRes(res,true)"><i class="fa fa-eye text-info"></i></a></li>
+                                                    <li *ngIf="res.validate == 'INSERTED'" class="actions"><a (click)="refus(res.id)"><i class="fa fa-times text-danger"></i></a></li>
+                                                    <li *ngIf="res.validate == 'REFUSED'" class="actions"><span class="badge badge-danger badge-pill">Refusée</span></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- contact users -->
+        <div [class]=" sectionToshow == 'contacts' ? 'tab-pane active' : 'tab-pane'" id="contacts" role="tabpanel">
+            <div class="row">
+                <div class="col-xl-3 mb-2">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="list-group list-contacts">
+                                <button class="list-group-item list-group-item-action active" id="abonnes-tab" data-toggle="tab" href="#abonnes" role="tab" aria-controls="abonnes" aria-selected="true">Abonnés</button>
+                                <button class="list-group-item list-group-item-action" id="abonnement-tab" data-toggle="tab" href="#abonnement" role="tab" aria-controls="abonnement" aria-selected="false">Abonement</button>
+                                <!--<li class="list-group-item"><a href="#">Favourite Contacts</a></li>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9">
+                    <div class="tab-content">
+
+                        <!--ABONNES-->
+                        <div class="card tab-pane fade show active" id="abonnes" role="tabpanel" aria-labelledby="abonnes-tab">
+                            <div class="cartes" *ngFor="let user of mesAbonnes; let i=index; trackBy: tracbByFn">
+                                <div class="card cardS">
+                                    <img *ngIf="!sharedService.checkImage(user)" class="profile-img" src="assets/images/user-account.png" alt="photo" (click)="refreshPageProfile(user.id)">
+                                    <img *ngIf="sharedService.checkImage(user)" class="profile-img" [src]="'data:'+user.image.origin+';base64,'+user.image.picByte" alt="photo" (click)="refreshPageProfile(user.id)">
+                                    <div class="card-body">
+                                        <h5 [innerText]="user.username"></h5>
+                                        <h5 [innerText]="user.email"></h5>
+                                    </div>
+                                    <ng-container *ngIf="!disableEverything">
+                                        <button *ngIf="!find(i)" class="rounded-pill buttonS" (click)="follow(i)">Suivre</button>
+                                        <button *ngIf="find(i)" class="rounded-pill buttonS" (click)="unFollow(i)">Ne plus suivre</button>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--ABONNMENT-->
+                        <div class="card tab-pane fade tab-pane fade" id="abonnement" role="tabpanel" aria-labelledby="abonnement-tab">
+                            <div class="cartes" *ngFor="let user of mesAbonnements; let i=index; trackBy: tracbByFn">
+                                <div class="card cardS">
+                                    <img *ngIf="!sharedService.checkImage(user)" class="profile-img" src="assets/images/user-account.png" alt="photo" (click)="refreshPageProfile(user.id)">
+                                    <img *ngIf="sharedService.checkImage(user)" class="profile-img" [src]="'data:'+user.image.origin+';base64,'+user.image.picByte" alt="photo" (click)="refreshPageProfile(user.id)">
+                                    <div class="card-body">
+                                        <h5 [innerText]="user.username"></h5>
+                                        <h5 [innerText]="user.email"></h5>
+                                    </div>
+                                    <ng-container *ngIf="!disableEverything">
+                                        <button class="rounded-pill buttonS" (click)="unFollow(i)">Ne plus suivre</button>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- REVIEW-->
+        <div [class]=" sectionToshow == 'review' ? 'tab-pane active' : 'tab-pane'" id="review" role="tabpanel">
+            <div class="card">
+                <div class="card-header  colonne">
+                    <h5 class="card-header-text">Mes notifications
+                        <span class="badge badge-success badge-pill" [innerHTML]=" notificationsList ? notificationsList.length : 0 "></span>
+                    </h5>
+                </div>
+                <div *ngIf="notificationsList" class="card-block">
+                    <div class="row">
+                        <div class="col-xl-3">
+                            <div class="card lista">
+                                <div class="card-block groups-contact">
+                                    <div class="list-group">
+                                        <button *ngFor="let notif of notificationsList; trackBy: tracbByFn ; let i=index" class="list-group-item list-group-item-action justify-content-between" data-toggle="tab" href="#mesNotif-tab" role="tab" aria-controls="mesNotif-tab" aria-selected="true"
+                                            [innerText]="notif.message" (click)="msg(i)">
+                                            <!--<a class="nav-link" id="mesNotif" ></a>-->
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-9">
+                            <div class="tab-content" id="nav-vertical-tab-bgContent_1">
+                                <div class="card tab-pane fade" id="mesNotif-tab" role="tabpanel" aria-labelledby="mesNotif">
+                                    <div class="card-block table-details">
+                                        <h3 [innerHTML]="notification"></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+
+<!-- Modal: modifications reservation-->
+<div class="modal fade" id="modalUpdRes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center" id="myModalLabelLogout" [innerHTML]="titleModal"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div *ngIf="annonceRes" class="modal-body text-center">
+                <div class="">
+                    <div class="container contain">
+                        <div class="" *ngIf="annonceRes">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <ul>
+                                        <li class="d-flex">
+                                            <i class="fa fa-map-pin depart" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonceRes.announceInfo?.departure"></span>
+                                        </li>
+                                        <li class="d-flex">
+                                            <i class="fa fa-map-pin arrival" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonceRes.announceInfo?.arrival"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-5">
+                                    <ul>
+                                        <li class="d-flex">
+                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonceRes.announceInfo?.startDate"></span>
+                                        </li>
+                                        <li class="d-flex">
+                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonceRes.announceInfo?.endDate"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div *ngIf="!views" class=" row categorys">
+                                <label for="category">Categorie</label><br>
+                                <ng-container *ngIf="annonceRes.categories.length == catRes.length">
+                                    <div *ngFor="let cats of annonceRes?.categories; let i=index; trackBy: tracbByFn" class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" [id]="'Checkbox'+i+'u'" [value]="cats.code" [disabled]="views" checked>
+                                        <label class="form-check-label" [for]="'inlineCheckbox'+i+'u'">
+															<i [class]="cats.code == 'ELECTRONIQUE' ? 'fa fa-desktop': cats.code == 'BIJOUX' ?'fa fa-diamond':cats.code == 'DOCUMENTS' ?'fa fa-file-text':'fa fa-shopping-bag'" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+cats.description"></span>
+														</label>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="annonceRes.categories.length != catRes.length">
+                                    <div *ngFor="let cats of annonceRes?.categories; let i=index; trackBy: tracbByFn" class="form-check form-check-inline">
+                                        <ng-container *ngFor="let c of catRes; let y=index; trackBy: tracbByFn">
+                                            <input class="form-check-input" type="checkbox" [id]="'Checkbox'+i+'u'" [value]="cats.code" [disabled]="views" [checked]="cats.code === c.code">
+                                            <label class="form-check-label" [for]="'inlineCheckbox'+i+'u'">
+			                      	<i [class]="cats.code == 'ELECTRONIQUE' ? 'fa fa-desktop': cats.code == 'BIJOUX' ?'fa fa-diamond':cats.code == 'DOCUMENTS' ?'fa fa-file-text':'fa fa-shopping-bag'" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+cats.description"></span>
+			                    	</label>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div *ngIf="views" class=" row categorys">
+                                <label for="category">Categorie</label><br>
+                                <ng-container *ngIf="annonceRes.categories.length == catRes.length">
+                                    <div *ngFor="let cats of annonceRes?.categories; let i=index; trackBy: tracbByFn" class="form-check form-check-inline">
+                                        <label class="form-check-label" [for]="'inlineCheckbox'+i+'u'">
+			                      	<i [class]="cats.code == 'ELECTRONIQUE' ? 'fa fa-desktop': cats.code == 'BIJOUX' ?'fa fa-diamond':cats.code == 'DOCUMENTS' ?'fa fa-file-text':'fa fa-shopping-bag'" aria-hidden="true"></i>
+															<span class="text-primary" [innerHTML]="'&nbsp;'+cats.description"></span>
+			                    	</label>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="annonceRes.categories.length != catRes.length">
+                                    <div *ngFor="let cats of annonceRes?.categories; let i=index; trackBy: tracbByFn" class="form-check form-check-inline">
+                                        <ng-container *ngFor="let c of catRes; let y=index; trackBy: tracbByFn">
+                                            <label class="form-check-label" [for]="'inlineCheckbox'+i+'u'">
+			                      	<i [class]="cats.code == 'ELECTRONIQUE' ? 'fa fa-desktop': cats.code == 'BIJOUX' ?'fa fa-diamond':cats.code == 'DOCUMENTS' ?'fa fa-file-text':'fa fa-shopping-bag'" aria-hidden="true"></i>
+															<span [class]="cats.code === c.code ? 'text-primary':'value'" [innerHTML]="'&nbsp;'+cats.description"></span>
+			                    	</label>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div *ngIf="!views" class="row kilox">
+                                <label for="kilos">Kilos</label><br>
+                                <div class="form-check form-check-inline">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-danger btn-number" (click)="minus()" [disabled]="annonceRes.weight < 2">
+                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                        </button>
+                                    </span>
+                                    <input type="text" name="count" class="form-control input-number" min="1" max="100" [(ngModel)]="annonceRes.weight" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" ngModel disabled>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-success btn-number" (click)="plus()" [disabled]="annonceRes.announceInfo.remainWeight==0">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div *ngIf="views" class=" row kilos">
+                                <i class="fa fa-shopping-bag" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+annonceRes.weight+' kg reservé(s)'"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="!views">
+                        <textarea name="name" class="note" rows="4" cols="30" placeholder="Inseré une note" [(ngModel)]="noteRes" spellcheck="true"></textarea>
+                    </ng-container>
+                    <ng-container *ngIf="views">
+                        <div class="categorys">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i><span [innerHTML]="'&nbsp;'+noteRes"></span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div *ngIf="views" class="modal-footer">
+                <span class="pr-4" [innerHTML]="annonceRes.userInfo?.username"></span>
+                <span [class]="annonceRes.validate == 'INSERTED' ?'badge value badge-info badge-pill':annonceRes.validate == 'ACCEPTED' ?'badge value badge-success badge-pill':'badge value badge-danger badge-pill'" [innerHTML]="annonceRes.validate == 'INSERTED' ?'En attente':annonceRes.validate == 'ACCEPTED' ?'Confirmée':'Refusée'"></span>
+            </div>
+            <div *ngIf="!views" class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+
+                <button type="button" class="btn btn-info waves-effect ml-auto" (click)="updateRes()" data-dismiss="modal">Reserver</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: supprimer reservation-->
+<div class="modal fade" id="modalDeleteRes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center" id="myModalLabelLogout">Supprimer la reservation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body text-center">
+                Confirmez-vous l'annullation de votre reservation ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-danger waves-effect ml-auto" (click)="deleteRes()" data-dismiss="modal">OUI</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,17 +2,57 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/pmanager.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/enums/FindByType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/styles.82bc524c5a56a2795862.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/message/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/message/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/.npmignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/.npmignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/HELP-US-OUT.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/HELP-US-OUT.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/FontAwesome.otf" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/FontAwesome.otf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.eot" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.woff" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/animated.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/animated.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/bordered-pulled.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/bordered-pulled.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/core.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/core.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/fixed-width.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/fixed-width.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/font-awesome.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/font-awesome.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/icons.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/icons.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/larger.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/larger.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/list.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/list.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/mixins.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/mixins.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/path.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/path.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/rotated-flipped.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/rotated-flipped.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/screen-reader.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/screen-reader.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/stacked.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/stacked.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/variables.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/variables.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_animated.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_animated.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_bordered-pulled.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_bordered-pulled.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_core.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_core.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_fixed-width.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_fixed-width.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_icons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_icons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_larger.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_larger.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_list.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_list.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_mixins.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_path.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_path.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_rotated-flipped.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_rotated-flipped.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_screen-reader.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_screen-reader.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_stacked.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_stacked.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/font-awesome.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/font-awesome.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/profile.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/images/profile.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.8c6fb6933c6893a30ebd.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.ea5287157188ae358424.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.8c6fb6933c6893a30ebd.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.ea5287157188ae358424.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,7 +83,8 @@
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="Hibernate" type="feb32156:DbDataSourceImpl" />
+        <item name="Database" type="feb32156:DbDataSourceImpl" />
+        <item name="MANAGER: database" type="c8e2528e:H2ImplModel$Database" />
       </path>
     </expand>
     <select />
@@ -53,92 +94,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CustomMailJetResponse.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/mailjet/CustomMailJetResponse.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PersonalMailSender.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/PersonalMailSender.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="26" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="39" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FindByType.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/enums/FindByType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="7" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MessageDAOImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="110" column="22" selection-start-line="110" selection-start-column="22" selection-end-line="110" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MessageController.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/message/MessageController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="37" selection-start-line="37" selection-end-line="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MailJetSender.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/mailjet/MailJetSender.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application-dev.properties" pinned="false" current-in-tab="false">
+      <file leaf-file-name="application-dev.properties" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="69" selection-start-line="31" selection-start-column="62" selection-end-line="31" selection-end-column="69" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserDAOImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="65" selection-start-line="65" selection-end-line="65" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserVO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1170">
-              <caret line="104" column="22" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="22" />
+            <state relative-caret-position="199">
+              <caret line="73" column="14" selection-start-line="73" selection-start-column="14" selection-end-line="73" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -154,8 +114,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cou</find>
-      <find>find</find>
       <find>announce/</find>
       <find>vali</find>
       <find>mo</find>
@@ -184,6 +142,8 @@
       <find>update</find>
       <find>ANNOUNCES</find>
       <find>url</find>
+      <find>por</find>
+      <find>8080</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -258,7 +218,6 @@
         <option value="$PROJECT_DIR$/src/main/webapp/_src/app/constancesURL.ts" />
         <option value="$PROJECT_DIR$/src/main/resources/static/main-es5.56ada8cb12357c190c1d.js" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/client/WebSocketSocketClient.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/enums/FindByType.java" />
@@ -268,6 +227,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/_logback-spring.xml" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/message/MessageController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
       </list>
     </option>
   </component>
@@ -294,9 +254,11 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
       <path value="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" />
+      <path value="$PROJECT_DIR$/src/main/webapp/package.json" />
+      <path value="$PROJECT_DIR$/src/main/webapp/src/assets/css/font-awesome/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -470,7 +432,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
       <pane id="PackagesPane">
         <subPane>
           <expand>
@@ -483,11 +444,25 @@
               <item name="PManager" type="616d4139:PackageViewModuleNode" />
               <item name="cm" type="1f31426a:PackageElementNode" />
             </path>
+            <path>
+              <item name="PManager" type="58d84e3e:PackageViewProjectNode" />
+              <item name="PManager" type="616d4139:PackageViewModuleNode" />
+              <item name="cm" type="1f31426a:PackageElementNode" />
+              <item name="packagemanager.pmanager" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="PManager" type="58d84e3e:PackageViewProjectNode" />
+              <item name="PManager" type="616d4139:PackageViewModuleNode" />
+              <item name="cm" type="1f31426a:PackageElementNode" />
+              <item name="packagemanager.pmanager" type="1f31426a:PackageElementNode" />
+              <item name="airline.ent" type="1f31426a:PackageElementNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="CatdeaLogs" />
     </panes>
   </component>
@@ -749,21 +724,8 @@
       <workItem from="1647465738273" duration="1443000" />
       <workItem from="1648256455541" duration="1237000" />
       <workItem from="1649056060451" duration="1588000" />
-      <workItem from="1649064466406" duration="7830000" />
-    </task>
-    <task id="LOCAL-00022" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
-      <created>1618484437476</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1618484437476</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
-      <created>1618515560924</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1618515560924</updated>
+      <workItem from="1649064466406" duration="8855000" />
+      <workItem from="1649138359350" duration="15863000" />
     </task>
     <task id="LOCAL-00024" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
       <created>1618951678037</created>
@@ -1094,11 +1056,25 @@
       <option name="project" value="LOCAL" />
       <updated>1648256525670</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;logs/PackManager/application-error.log&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/resources/static/index.html&#10;#&#9;src/main/resources/static/main-es2015.7557f5db7a52293925b1.js&#10;#&#9;src/main/resources/static/main-es5.7557f5db7a52293925b1.js&#10;#&#9;src/main/resources/static/main-es5.786f2f808114e259c7bf.js&#10;#&#9;src/main/resources/static/main-es5.b9309e3c175942f10fd2.js&#10;#&#9;src/main/webapp/src/app/add-product/add-product.component.css&#10;#&#9;src/main/webapp/src/app/add-product/add-product.component.html&#10;#&#9;src/main/webapp/src/app/add-product/add-product.component.ts&#10;#&#9;src/main/webapp/src/app/admin/admin.guard.ts&#10;#&#9;src/main/webapp/src/app/alert.service.ts&#10;#&#9;src/main/webapp/src/app/app-routing.module.ts&#10;#&#9;src/main/webapp/src/app/app.component.css&#10;#&#9;src/main/webapp/src/app/app.component.spec.ts&#10;#&#9;src/main/webapp/src/app/app.component.ts&#10;#&#9;src/main/webapp/src/app/app.module.ts&#10;#&#9;src/main/webapp/src/app/constancesURL.ts&#10;#&#9;src/main/webapp/src/app/footer/footer.component.css&#10;#&#9;src/main/webapp/src/app/footer/footer.component.html&#10;#&#9;src/main/webapp/src/app/footer/footer.component.ts&#10;#&#9;src/main/webapp/src/app/head/head.component.css&#10;#&#9;src/main/webapp/src/app/head/head.component.html&#10;#&#9;src/main/webapp/src/app/head/head.component.ts&#10;#&#9;src/main/webapp/src/app/header/header.component.css&#10;#&#9;src/main/webapp/src/app/header/header.component.html&#10;#&#9;src/main/webapp/src/app/home/home.component.css&#10;#&#9;src/main/webapp/src/app/home/home.component.html&#10;#&#9;src/main/webapp/src/app/home/home.component.ts&#10;#&#9;src/main/webapp/src/app/nofound/nofound.component.css&#10;#&#9;src/main/webapp/src/app/nofound/nofound.component.html&#10;#&#9;src/main/webapp/src/app/nofound/nofound.component.ts&#10;#&#9;src/main/webapp/src/app/options/options.component.html&#10;#&#9;src/main/webapp/src/app/product/product.component.css&#10;#&#9;src/main/webapp/src/app/product/product.component.html&#10;#&#9;src/main/webapp/src/app/product/product.component.ts&#10;#&#9;src/main/webapp/src/app/products/products.component.css&#10;#&#9;src/main/webapp/src/app/products/products.component.html&#10;#&#9;src/main/webapp/src/app/products/products.component.ts&#10;#&#9;src/main/webapp/src/app/profile/profile.component.css&#10;#&#9;src/main/webapp/src/app/profile/profile.component.html&#10;#&#9;src/main/webapp/src/app/profile/profile.component.ts&#10;#&#9;src/main/webapp/src/app/search-all/search-all.component.css&#10;#&#9;src/main/webapp/src/app/search-all/search-all.component.html&#10;#&#9;src/main/webapp/src/app/serviceRequest.ts&#10;#&#9;src/main/webapp/src/app/sharedConstants.ts&#10;#&#9;src/main/webapp/src/app/typed-product/typed-product.component.css&#10;#&#9;src/main/webapp/src/app/typed-product/typed-product.component.html&#10;#&#9;src/main/webapp/src/app/typed-product/typed-product.component.ts&#10;#&#9;src/main/webapp/src/assets/css/awselect.css&#10;#&#9;src/main/webapp/src/awselect.css&#10;#&#9;src/main/webapp/src/styles.css">
+      <created>1649109275715</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1649109275718</updated>
+    </task>
+    <task id="LOCAL-00072" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;logs/PackManager/application-error.log&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/resources/static/index.html&#10;#&#9;src/main/resources/static/main-es2015.7557f5db7a52293925b1.js&#10;#&#9;src/main/resources/static/main-es5.7557f5db7a52293925b1.js&#10;#&#9;src/main/resources/static/main-es5.786f2f808114e259c7bf.js&#10;#&#9;src/main/resources/static/main-es5.b9309e3c175942f10fd2.js&#10;#&#9;src/main/webapp/src/app/add-product/add-product.component.css&#10;#&#9;src/main/webapp/src/app/add-product/add-product.component.html&#10;#&#9;src/main/webapp/src/app/add-product/add-product.component.ts&#10;#&#9;src/main/webapp/src/app/admin/admin.guard.ts&#10;#&#9;src/main/webapp/src/app/alert.service.ts&#10;#&#9;src/main/webapp/src/app/app-routing.module.ts&#10;#&#9;src/main/webapp/src/app/app.component.css&#10;#&#9;src/main/webapp/src/app/app.component.spec.ts&#10;#&#9;src/main/webapp/src/app/app.component.ts&#10;#&#9;src/main/webapp/src/app/app.module.ts&#10;#&#9;src/main/webapp/src/app/constancesURL.ts&#10;#&#9;src/main/webapp/src/app/footer/footer.component.css&#10;#&#9;src/main/webapp/src/app/footer/footer.component.html&#10;#&#9;src/main/webapp/src/app/footer/footer.component.ts&#10;#&#9;src/main/webapp/src/app/head/head.component.css&#10;#&#9;src/main/webapp/src/app/head/head.component.html&#10;#&#9;src/main/webapp/src/app/head/head.component.ts&#10;#&#9;src/main/webapp/src/app/header/header.component.css&#10;#&#9;src/main/webapp/src/app/header/header.component.html&#10;#&#9;src/main/webapp/src/app/home/home.component.css&#10;#&#9;src/main/webapp/src/app/home/home.component.html&#10;#&#9;src/main/webapp/src/app/home/home.component.ts&#10;#&#9;src/main/webapp/src/app/nofound/nofound.component.css&#10;#&#9;src/main/webapp/src/app/nofound/nofound.component.html&#10;#&#9;src/main/webapp/src/app/nofound/nofound.component.ts&#10;#&#9;src/main/webapp/src/app/options/options.component.html&#10;#&#9;src/main/webapp/src/app/product/product.component.css&#10;#&#9;src/main/webapp/src/app/product/product.component.html&#10;#&#9;src/main/webapp/src/app/product/product.component.ts&#10;#&#9;src/main/webapp/src/app/products/products.component.css&#10;#&#9;src/main/webapp/src/app/products/products.component.html&#10;#&#9;src/main/webapp/src/app/products/products.component.ts&#10;#&#9;src/main/webapp/src/app/profile/profile.component.css&#10;#&#9;src/main/webapp/src/app/profile/profile.component.html&#10;#&#9;src/main/webapp/src/app/profile/profile.component.ts&#10;#&#9;src/main/webapp/src/app/search-all/search-all.component.css&#10;#&#9;src/main/webapp/src/app/search-all/search-all.component.html&#10;#&#9;src/main/webapp/src/app/serviceRequest.ts&#10;#&#9;src/main/webapp/src/app/sharedConstants.ts&#10;#&#9;src/main/webapp/src/app/typed-product/typed-product.component.css&#10;#&#9;src/main/webapp/src/app/typed-product/typed-product.component.html&#10;#&#9;src/main/webapp/src/app/typed-product/typed-product.component.ts&#10;#&#9;src/main/webapp/src/assets/css/awselect.css&#10;#&#9;src/main/webapp/src/awselect.css&#10;#&#9;src/main/webapp/src/styles.css">
+      <created>1649109406851</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1649109406851</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="483884000" />
+    <option name="totallyTimeSpent" value="500772000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1113,30 +1089,29 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.42060086" side_tool="true" visible="true" weight="0.34912717" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="9" sideWeight="0.42203146" side_tool="true" visible="true" weight="0.34912717" />
       <window_info anchor="right" id="Maven Projects" order="5" weight="0.3297568" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info id="Capture Tool" order="7" />
       <window_info id="Designer" order="2" />
-      <window_info anchor="right" id="Database" order="6" sideWeight="0.49810606" weight="0.16738197" />
+      <window_info anchor="right" id="Database" order="6" sideWeight="0.49810606" visible="true" weight="0.16738197" />
       <window_info id="Structure" order="1" sideWeight="0.5019305" side_tool="true" weight="0.24964234" />
       <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49810606" weight="0.24964234" />
       <window_info id="UI Designer" order="4" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6258941" weight="0.38154614" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.5393419" weight="0.37905237" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.5386266" weight="0.37905237" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.6051502" weight="0.36159602" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.57939917" visible="true" weight="0.34912717" />
+      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.6037196" weight="0.36159602" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.57796854" visible="true" weight="0.34912717" />
       <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
       <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.32689655" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.12875536" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.13018598" />
       <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49810606" weight="0.3297568" />
       <window_info id="Web" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4985694" weight="0.32668328" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info id="Persistence" order="8" side_tool="true" />
@@ -1150,6 +1125,7 @@
       <window_info anchor="right" id="Maven" order="11" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4985694" weight="0.32668328" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
     </layout>
@@ -1246,13 +1222,13 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>568</line>
+          <line>565</line>
           <properties />
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>565</line>
+          <line>562</line>
           <properties />
           <option name="timeStamp" value="36" />
         </line-breakpoint>
@@ -1294,7 +1270,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>310</line>
+          <line>311</line>
           <properties />
           <option name="timeStamp" value="68" />
         </line-breakpoint>
@@ -1475,14 +1451,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="49" selection-start-line="49" selection-end-line="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/PackageApplication.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/seller/ent/vo/SellerVO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -1724,13 +1692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="69" selection-start-line="31" selection-start-column="62" selection-end-line="31" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
@@ -1761,15 +1722,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
+        <state relative-caret-position="1230">
           <caret line="110" column="22" selection-start-line="110" selection-start-column="22" selection-end-line="110" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/message/MessageController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
+        <state relative-caret-position="27">
           <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="43" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="73" column="14" selection-start-line="73" selection-start-column="14" selection-end-line="73" selection-end-column="14" />
         </state>
       </provider>
     </entry>

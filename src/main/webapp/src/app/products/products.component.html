@@ -1,0 +1,79 @@
+<!-- module annonces visiteurs avec filtre -->
+<main>
+    <!-- Banner -->
+    <section id="banner">
+        <div class="inner">
+            <app-filter-products></app-filter-products>
+        </div>
+        <!-- <div class="fill">
+            <button type="button" name="button" class="btn btn-info waves-effect ml-auto btn-rounded my-3" (click)="search()">Rechercher</button>
+        </div> -->
+        <br>
+        <div class="inner">
+            <ul class="">
+                <li class="nav-item avatar dropup">
+                    <button class="nav-link dropdown-toggle" id="filtre" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<b class="">Filtres </b>
+								<i class="fa fa-filter" aria-hidden="true"></i>
+						</button>
+                    <div id="options" class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="filtre">
+                        <a *ngFor="let item of itemFiltres; let i = index; trackBy: tracbByFn" class="dropdown-item customcolor" [innerHTML]="item.name.toUpperCase()" (click)="filter(item)"></a>
+                    </div>
+                </li>
+                <li *ngIf="tag" class="float-right tag">
+                    <strong [innerHTML]="' '+tag"></strong>
+                </li>
+            </ul>
+            <div class="container">
+
+                <ul class="style_featured">
+                    <li *ngFor="let annonce of products; let i = index; trackBy: tracbByFn" (click)="detail(annonce.id)" [class]="annonce.announceType=='SELLER'?'annonces seller':'annonces buyer'">
+                        <div class="">
+                            <div class="row task-detail">
+                                <div class="div1">
+                                    <img *ngIf="!sharedService.checkImage(annonce.userInfo,true)" class="btn-rounded output" src="assets/images/user-account.png" alt="photo">
+                                    <img *ngIf="sharedService.checkImage(annonce.userInfo,true)" class="btn-rounded output" [src]="'data:'+annonce.userInfo.origin+';base64,'+annonce.userInfo.picByte" alt="photo"><br>
+                                </div>
+
+                                <div class="div2 aligne">
+                                    <label for="lieux_depart">De</label>: <span [innerHTML]="annonce.departure"></span><br>
+                                    <label for="date_depart">Du</label>: <span [innerHTML]="annonce.startDate"></span><br>
+                                    <label for="transport">En</label>: <span [innerHTML]="annonce.descriptionTransport"></span><br>
+                                    <!-- <label for="prixClassiq">Prix Classique(&euro;)</label>: <span class="value" [innerHTML]="annonce.price  == 0 ? '-':annonce.price"></span><br> -->
+                                    <!-- <label for="prixGold">Prix Ultra Rapide(&euro;)</label>: <span class="value" [innerHTML]="annonce.goldPrice == 0 ? '-':annonce.goldPrice"></span><br> -->
+                                </div>
+                                <div class="div3">
+                                    <label for="lieux_arrivee">À</label>: <span [innerHTML]="annonce.arrival"></span><br>
+                                    <label for="date_arrivee">Au</label>: <span [innerHTML]="annonce.endDate"></span><br>
+                                    <label for="poids">Kilos</label>: <span [innerHTML]="annonce.weight + 'Kg'"></span><br>
+                                    <!-- <label for="prixPremiun">Prix Rapide(&euro;)</label>: <span class="value" [innerHTML]="annonce.preniumPrice == 0 ? '-':annonce.preniumPrice"></span><br> -->
+                                </div>
+
+                            </div>
+                            <div class="task-detail-bas">
+                                <h4><span class="float-left" [innerHTML]="annonce.userInfo.username"></span><span [class]="annonce.remainWeight  > 5 ? 'messagesOK':'messages'" [innerHTML]="annonce.remainWeight  == 0 ? 'plus de kilos':annonce.remainWeight +'Kg restant(s)'"></span></h4><br><br>
+                                <h4><span class="float-left">Avis</span><span class="value" [innerHTML]="annonce.price  == 0 ? ' ':annonce.price +'&euro;/Kg'"></span></h4>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+                <!-- <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls> -->
+                <nav id="pagination" aria-label="Page navigation example" class="float-left pos">
+                    <ul *ngIf="lists" class="pagination justify-content-center" data-toggle="tab">
+                        <li id="prev" class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" (click)=previous()>Previous</a>
+                        </li>
+                        <li *ngFor="let item of lists; let i = index; trackBy: tracbByFn">
+                            <a class="page-link" [innerHTML]="1 + i" [id]="'id' + i" (click)=pages(i+1)></a>
+                        </li>
+
+                        <li id="next" class="page-item">
+                            <a class="page-link" href="#" (click)=next()>Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</main>
