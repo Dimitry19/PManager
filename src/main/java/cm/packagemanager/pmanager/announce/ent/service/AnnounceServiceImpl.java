@@ -39,8 +39,8 @@ public class AnnounceServiceImpl implements AnnounceService {
         return dao.create(announceDTO);
     }
 
-    public List<AnnounceVO> find(AnnounceSearchDTO asdto, PageBy pageBy) throws AnnounceException,Exception {
-        return dao.find(asdto, pageBy);
+    public List<AnnounceVO> search(AnnounceSearchDTO asdto, PageBy pageBy) throws AnnounceException,Exception {
+        return dao.search(asdto, pageBy);
     }
 
     public AnnounceVO update(UpdateAnnounceDTO announce) throws AnnounceException,Exception {

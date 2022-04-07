@@ -3,13 +3,11 @@ package cm.packagemanager.pmanager.announce.ent.vo;
 import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
-import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Immutable;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,7 +19,6 @@ import java.util.Set;
 @Entity
 @Table(name = "VALID_RESERVATION_RECEIVED", schema = "VIEWS")
 @Immutable
-@Where(clause = FilterConstants.FILTER_WHERE_RESERVATION_CANC_COMPLETED)
 public class ReservationReceivedUserVO implements Serializable {
 
 

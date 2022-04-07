@@ -39,7 +39,7 @@ public interface AnnounceDAO extends CommonDAO {
 
     AnnounceVO update(Integer id) throws BusinessResourceException;
 
-    List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws Exception;
+    List<AnnounceVO> search(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws Exception;
 
     void announcesStatus() throws AnnounceException, Exception;
 

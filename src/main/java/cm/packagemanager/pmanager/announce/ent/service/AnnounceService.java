@@ -16,7 +16,7 @@ public interface AnnounceService extends InitializingBean {
 
     AnnounceVO create(AnnounceDTO announceDTO) throws AnnounceException,Exception;
 
-    List<AnnounceVO> find(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws AnnounceException,Exception;
+    List<AnnounceVO> search(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws AnnounceException,Exception;
 
     AnnounceVO update(UpdateAnnounceDTO announceId) throws AnnounceException,Exception;
 

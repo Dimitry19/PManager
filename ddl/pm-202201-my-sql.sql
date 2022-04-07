@@ -23,6 +23,14 @@ create table AIRLINE
     primary key(CODE, TOKEN)
 );
 
+create table CITY
+(
+    ID   VARCHAR not null
+        primary key,
+    NAME VARCHAR not null
+);
+
+
 drop table IF EXISTS  BATCH_JOB_INSTANCE;
 create table BATCH_JOB_INSTANCE
 (

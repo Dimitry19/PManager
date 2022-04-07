@@ -92,7 +92,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         if(o instanceof AnnounceSearchDTO){
             AnnounceSearchDTO announceSearch =(AnnounceSearchDTO) o;
-            List result=commonSearchAnnounce(announceSearch);
+            List result=commonSearchAnnounce(announceSearch,null);
             return CollectionsUtils.isNotEmpty(result) ? result.size() : 0;
         }
        return 0;
@@ -258,7 +258,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     /**
      * Recherche annonces
      *
-     * @param announceSearchDTO
+     * @param announceSearch
      * @param pageBy
      * @return
      * @throws Exception
@@ -266,9 +266,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AnnounceVO> find(AnnounceSearchDTO announceSearch, PageBy pageBy) throws AnnounceException,Exception {
+    public List<AnnounceVO> search(AnnounceSearchDTO announceSearch, PageBy pageBy) throws AnnounceException,Exception {
 
-          return commonSearchAnnounce(announceSearch);
+          return commonSearchAnnounce(announceSearch,pageBy);
     }
 
 
@@ -526,12 +526,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
 
-    private List commonSearchAnnounce(AnnounceSearchDTO announceSearch) throws Exception {
+    private List commonSearchAnnounce(AnnounceSearchDTO announceSearch,PageBy pageBy) throws Exception {
         filters= new String[1];
         filters[0]= FilterConstants.CANCELLED;
         String where = composeQuery(announceSearch, "a");
         Query query = search(AnnounceVO.ANNOUNCE_SEARCH , where,filters);
         composeQueryParameters(announceSearch, query);
+        pageBy(query,pageBy);
         return query.list();
     }
 
@@ -589,13 +590,16 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             if (StringUtils.isNotEmpty(announceSearch.getDeparture())) {
                 buildAndOr(hql, addCondition, andOrOr);
-                hql.append(alias + ".departure like:departure ");
+
+               // hql.append(alias + ".departure like:departure ");
+                hql.append("("+alias + ".departure like:departure or "+ alias +".departure like:DEPARTURE)");
             }
             addCondition = addCondition(hql.toString());
 
             if (StringUtils.isNotEmpty(announceSearch.getArrival())) {
                 buildAndOr(hql, addCondition, andOrOr);
-                hql.append(alias + ".arrival like:arrival ");
+                //hql.append(alias + ".arrival like:arrival ");
+                hql.append("("+alias + ".arrival like:arrival or "+ alias +".arrival like:ARRIVAL)");
             }
 
 
@@ -667,11 +671,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             }
 
             if (StringUtils.isNotEmpty(announceSearch.getDeparture())) {
-                query.setParameter("departure", "%" + announceSearch.getDeparture().trim().toUpperCase() + "%");
+                query.setParameter("departure", "%" + announceSearch.getDeparture() + "%");
+                query.setParameter("DEPARTURE", "%" + announceSearch.getDeparture().toUpperCase() + "%");
             }
 
             if (StringUtils.isNotEmpty(announceSearch.getArrival())) {
-                query.setParameter("arrival", "%" + announceSearch.getArrival().trim().toUpperCase() + "%");
+                query.setParameter("arrival", "%" + announceSearch.getArrival() + "%");
+                query.setParameter("ARRIVAL", "%" + announceSearch.getArrival().trim().toUpperCase() + "%");
             }
 
             if (StringUtils.isNotEmpty(announceSearch.getCategory())) {

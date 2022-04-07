@@ -11,6 +11,7 @@ import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.StatusEnum;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.utils.DateUtils;
+import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import cm.packagemanager.pmanager.image.ent.vo.ImageVO;
@@ -408,5 +409,13 @@ public class AnnounceVO extends CommonVO {
 			return other.user == null;
         } else return user.equals(other.user);
 	}
+
+	private String toUpperCase(String value){
+        if(StringUtils.isNotEmpty(value)){
+            return value.toUpperCase();
+        }
+        return value;
+
+    }
 
 }

@@ -161,7 +161,7 @@ public class AnnounceController extends CommonController {
                     response = ResponseEntity.class, responseContainer = "List")})
     @PostMapping(value = FIND, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
-    ResponseEntity<PaginateResponse> find(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchDTO asdto,
+    ResponseEntity<PaginateResponse> search(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchDTO asdto,
                                           @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
                                           @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws Exception {
 
@@ -171,15 +171,16 @@ public class AnnounceController extends CommonController {
         PaginateResponse paginateResponse = new PaginateResponse();
 
         logger.info("find  announces request in");
-        PageBy pageBy = new PageBy(page, size);
-
 
         try {
             createOpentracingSpan("AnnounceController -find");
 
             if (asdto != null) {
+
+                PageBy pageBy =new PageBy(asdto.getPage()!=null ? asdto.getPage():page, size);
+
                 int count = announceService.count(asdto,pageBy);
-                List<AnnounceVO> announces = announceService.find(asdto, pageBy);
+                List<AnnounceVO> announces = announceService.search(asdto, pageBy);
                 return getPaginateResponseResponseEntity(headers,paginateResponse,count,announces);
             }
         } catch (Exception e) {
@@ -418,7 +419,7 @@ public class AnnounceController extends CommonController {
                 WSCommonResponseVO wsResponse = new WSCommonResponseVO();
                 wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, "L'annonce"));
-                return new ResponseEntity<>((Object) wsResponse, HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
             }
             throw e;
         } catch (Exception e) {
@@ -433,7 +434,7 @@ public class AnnounceController extends CommonController {
      * Cette methode permet de recuperer toutes les annonces avec pagination
      *
      * @param page
-     * @param size
+     * @param
      * @return
      * @throws Exception
      */
@@ -446,20 +447,18 @@ public class AnnounceController extends CommonController {
             @ApiResponse(code = 200, message = "Successful retrieval",
                     response = ResponseEntity.class, responseContainer = "List")})
     @GetMapping(value = ANNOUNCES_WS, produces = MediaType.APPLICATION_JSON, headers = HEADER_ACCEPT)
-    public ResponseEntity<PaginateResponse> announces(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page,
-                                                      @RequestParam(required = false, defaultValue = DEFAULT_SIZE)
-                                                      @Valid @Positive(message = "Page size should be a positive number") Integer size) throws AnnounceException,Exception {
+    public ResponseEntity<PaginateResponse> announces(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page) throws AnnounceException,Exception {
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
         logger.info("retrieve  announces request in");
-        PageBy pageBy = new PageBy(page, size);
+        PageBy pageBy = new PageBy(page, Integer.valueOf(DEFAULT_SIZE));
 
         try {
 
             createOpentracingSpan("AnnounceController -announces");
 
-            int count = announceService.count(null, pageBy);
+            int count = announceService.count(null, null);
             List<AnnounceVO> announces = announceService.announces(pageBy);
             return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
         } catch (AnnounceException e) {
