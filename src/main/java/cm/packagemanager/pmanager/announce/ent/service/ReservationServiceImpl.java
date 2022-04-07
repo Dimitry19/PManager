@@ -73,7 +73,7 @@ public class ReservationServiceImpl extends Generic implements ReservationServic
     }
 
     @Override
-    public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object id) throws BusinessResourceException, UserException {
         return false;
     }
 

@@ -22,7 +22,6 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
-import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -301,12 +300,10 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
     public boolean updateDelete(ReservationVO reservation) throws BusinessResourceException, UserException {
         boolean result = false;
         try {
-
-            Session session = sessionFactory.getCurrentSession();
             if (reservation != null) {
-                reservation.setCancelled(true);
-                session.merge(reservation);
-                reservation = session.get(ReservationVO.class, reservation.getId());
+                reservation.cancel();
+                merge(reservation);
+                reservation = (ReservationVO) get(ReservationVO.class, reservation.getId());
                 result = (reservation != null) && (reservation.isCancelled());
 
             }
@@ -318,7 +315,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
 
 
     @Override
-    public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
         return false;
     }
 

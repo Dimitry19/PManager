@@ -1,6 +1,7 @@
 package cm.framework.ds.hibernate.dao;
 
 
+import cm.framework.ds.hibernate.utils.SQLUtils;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.event.AEvent;
 import cm.packagemanager.pmanager.common.event.Event;
@@ -58,6 +59,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String TRANSPORT_PARAM = "transport";
     protected static final String ANNOUNCE_PARAM = "announceId";
     protected static final String START_DATE_PARAM = "startDate";
+    protected static final String SEARCH_PARAM = "search";
     protected static final String ALIAS_ORDER = " as t order by t. ";
 
     @Autowired
@@ -72,6 +74,16 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Autowired
     protected NotificatorServiceImpl notificatorServiceImpl;
 
+
+    @Override
+    public List autocomplete(String namedQuery, ID search, boolean caseInsensitive) {
+        return
+                sessionFactory.getCurrentSession()
+                .getNamedQuery(namedQuery)
+                .setParameter(SEARCH_PARAM, SQLUtils.forLike((String) search,caseInsensitive,true,true))
+                .getResultList();
+
+    }
 
     @Override
     @Transactional
@@ -150,12 +162,22 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     @Transactional
+    public <T> T findByIdForCheckAndResolve(Class<T> clazz, ID id) {
+
+        if (id == null) {
+            this.logger.error("Errore esecuzione findByIdForCheckAndResolve:{}-{}", clazz, null);
+            throw new IllegalArgumentException("ID cannot be null");
+        }
+        return getForCheckAndResolve(clazz, id);
+    }
+    @Override
+    @Transactional
     public T findById(Class<T> clazz, ID id) {
 
         if (id == null) {
+            this.logger.error("Errore esecuzione findById:{}-{}", clazz, null);
             throw new IllegalArgumentException("ID cannot be null");
         }
-
         return get(clazz, id);
     }
 
@@ -249,8 +271,10 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         queryBuilder.append(clazz.getName());
 
         Session session = this.sessionFactory.getCurrentSession();
-        for (String filter : filters) {
-            session.enableFilter(filter);
+        if (filters!=null){
+            for (String filter : filters) {
+                session.enableFilter(filter);
+            }
         }
 
         Query query = session.createQuery(queryBuilder.toString(), clazz);
@@ -267,13 +291,15 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         Session session = this.sessionFactory.getCurrentSession();
         StringBuilder queryBuilder = new StringBuilder(FROM);
         queryBuilder.append(clazz.getName());
-        queryBuilder.append(ALIAS_ORDER);
-        queryBuilder.append(field);
+        if(StringUtils.isNotEmpty(field)){
+            queryBuilder.append(ALIAS_ORDER);
+            queryBuilder.append(field);
 
-        if (desc) {
-            queryBuilder.append(DESC);
-        } else {
-            queryBuilder.append(ASC);
+            if (desc) {
+                queryBuilder.append(DESC);
+            } else {
+                queryBuilder.append(ASC);
+            }
         }
 
         session.enableFilter(FilterConstants.CANCELLED);
@@ -582,6 +608,15 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    public <T> T getForCheckAndResolve(Class<T> clazz, ID id) throws BusinessResourceException {
+
+        Session session = this.sessionFactory.getCurrentSession();
+
+        return session.get(clazz , id);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     public T load(Class<T> clazz, ID id) throws BusinessResourceException {
 
         Session session = this.sessionFactory.getCurrentSession();
@@ -595,13 +630,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
         if(clazz== null || id==null) return null;
 
-        Object o = findById(clazz , id);
-
-        try {
-            return (T) o;
-        } catch(ClassCastException e) {
-            return null;
-        }
+        return  findByIdForCheckAndResolve(clazz , id);
     }
 
     @Override

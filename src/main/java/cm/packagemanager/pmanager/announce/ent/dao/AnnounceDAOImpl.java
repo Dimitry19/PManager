@@ -451,11 +451,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    public boolean updateDelete(Long id) throws BusinessResourceException {
+    public boolean updateDelete(Object o) throws BusinessResourceException {
         boolean result = false;
 
         try {
 
+            Long id=(Long)o;
             AnnounceVO announce = announce(id);
             if (announce != null) {
                 announce.updateDeleteChildrens();

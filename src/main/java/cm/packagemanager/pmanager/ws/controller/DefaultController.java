@@ -32,7 +32,7 @@ public class DefaultController extends CommonController {
 		int totalUsers=userService.count(null, null,null);
 
 		response.setIntHeader("totalUsers", totalUsers);
-		response.sendRedirect(contextRoot+redirectPage);
+		response.sendRedirect(getRedirectPage(RedirectType.INDEX));
 	}
 
 	@RequestMapping (value = "/index", method = RequestMethod.GET)
@@ -41,7 +41,7 @@ public class DefaultController extends CommonController {
 		int totalUsers=userService.count(null, null,null);
 
 		response.setIntHeader("totalUsers", totalUsers);
-		response.sendRedirect(contextRoot+redirectPage);
+		response.sendRedirect(getRedirectPage(RedirectType.INDEX));
 	}
 
 

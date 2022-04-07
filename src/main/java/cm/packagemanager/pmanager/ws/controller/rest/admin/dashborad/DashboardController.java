@@ -50,7 +50,7 @@ public class DashboardController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful Added Company Airline",
 					response = AirlineVO.class, responseContainer = "Object")})
-	@PostMapping(value = AIRLINE_ADD, consumes = MediaType.APPLICATION_JSON,produces = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+	@PostMapping(value = AIRLINE_CREATE, consumes = MediaType.APPLICATION_JSON,produces = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	ResponseEntity<Object> addCompany(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AirlineDTO ac) throws DashboardException,Exception{
 
@@ -58,11 +58,11 @@ public class DashboardController extends CommonController {
 
 
 		try {
-			createOpentracingSpan("AirplaneController - Add");
+			createOpentracingSpan("DashboardController - AddCompany");
 
 			logger.info("Add Company ");
 			if (ac != null) {
-				AirlineVO airline  = airplaneService.add(ac.getCode(), ac.getDescription());
+				AirlineVO airline  = airplaneService.add(ac.getCode(), ac.getName());
 
 				if (airline != null) {
 					airline.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "La compagnie aerienne"));
@@ -161,7 +161,6 @@ public class DashboardController extends CommonController {
 		} finally {
 			finishOpentracingSpan();
 		}
-
 	}
 
 }

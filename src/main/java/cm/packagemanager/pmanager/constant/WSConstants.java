@@ -61,9 +61,15 @@ public class WSConstants extends CommonProperties {
     public static final String DASHBOARD_WS = "/ws/dashboard/*";
     public static final String COMMUNICATION_WS = "/ws/dashboard/communication/*";
 
-    public static final String AIRLINE = "/airline/";
-    public static final String AIRLINE_ADD = AIRLINE+"/add";
+    public static final String AIRLINE = "/airline";
+    public static final String AIRLINE_CREATE = AIRLINE+CREATE;
     public static final String AIRLINE_UPD = AIRLINE+"/update/{code}";
+    public static final String AIRLINE_DEL = AIRLINE+"/delete/{code}";
+
+    public static final String CITY = "/city/";
+    public static final String CITY_CREATE = CITY+CREATE;
+    public static final String CITY_UPD = CITY+"/update/{code}";
+    public static final String CITY_DEL = CITY+"/delete/{code}";
 
 
     /************ ANNOUNCE REQUEST*************/

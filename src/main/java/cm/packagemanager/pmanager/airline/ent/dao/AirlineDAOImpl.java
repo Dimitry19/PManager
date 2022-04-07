@@ -29,7 +29,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
         if(StringUtils.isNotEmpty(code) && StringUtils.isNotEmpty(description)){
 
             AirlineIdVO airlineId = new AirlineIdVO(code, Constants.DEFAULT_TOKEN);
-            AirlineVO airline=(AirlineVO) checkAndResolve(AirlineVO.class,airlineId);
+            AirlineVO airline= (AirlineVO) checkAndResolve(AirlineVO.class,airlineId);
 
             if(airline!=null)
                 throw new Exception(" Compagnie aerienne ["+code+"] existe deja");
@@ -55,7 +55,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
             throw new RecordNotFoundException("Aucune compagnie  trouvéé avec le code :"+updAirline.getCode());
         }
         AirlineVO airline=(AirlineVO) checkAndResolve(AirlineVO.class,airlineId);
-        airline.setDescription(updAirline.getDescription());
+        airline.setDescription(updAirline.getName());
 
         update(airline);
         return airline;
@@ -114,7 +114,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
 
 
     @Override
-    public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
         return false;
     }
 
