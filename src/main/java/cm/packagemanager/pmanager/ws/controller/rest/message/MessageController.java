@@ -1,7 +1,7 @@
 package cm.packagemanager.pmanager.ws.controller.rest.message;
 
 
-import cm.framework.ds.hibernate.enums.FindByType;
+import cm.framework.ds.hibernate.enums.FindBy;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.message.ent.vo.MessageVO;
@@ -118,7 +118,7 @@ public class MessageController extends CommonController {
             createOpentracingSpan("MessageController -messagesByAnnounce");
             if (announceId != null) {
                 int count = messageService.count(pageBy);
-                List<MessageVO> messages = messageService.messagesBy(announceId, FindByType.ANNOUNCE, pageBy);
+                List<MessageVO> messages = messageService.messagesBy(announceId, FindBy.ANNOUNCE, pageBy);
                 return getPaginateResponseResponseEntity(headers,paginateResponse,count,messages);
             }else{
                 paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
@@ -160,7 +160,7 @@ public class MessageController extends CommonController {
             createOpentracingSpan("MessageController -messagesByUser");
             if (userId != null) {
                 int count = messageService.count(pageBy);
-                List<MessageVO> messages = messageService.messagesBy(userId,FindByType.USER, pageBy);
+                List<MessageVO> messages = messageService.messagesBy(userId, FindBy.USER, pageBy);
                 return getPaginateResponseResponseEntity(headers,paginateResponse,count,messages);
             }else{
                 paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);

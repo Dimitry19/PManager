@@ -4,8 +4,10 @@ import cm.packagemanager.pmanager.common.Constants;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
 import cm.packagemanager.pmanager.common.exception.UserException;
-import cm.packagemanager.pmanager.common.mail.sendgrid.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.mail.MailType;
+import cm.packagemanager.pmanager.common.mail.PersonalMailSender;
+import cm.packagemanager.pmanager.common.mail.ent.service.IGoogleMailSenderService;
+import cm.packagemanager.pmanager.common.mail.sendgrid.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.utils.MailUtils;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.rating.enums.Rating;
@@ -20,7 +22,8 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.review.ReviewDTO;
 import cm.packagemanager.pmanager.ws.requests.review.UpdateReviewDTO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
-import com.sendgrid.Response;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +33,9 @@ import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import javax.mail.MessagingException;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,13 +55,19 @@ public class UserServiceImpl implements UserService {
 
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Autowired
-    ReviewDAO reviewDAO;
+    private ReviewDAO reviewDAO;
 
     @Autowired
-    MailSenderSendGrid mailSenderSendGrid;
+    private MailSenderSendGrid mailSenderSendGrid;
+
+    @Autowired
+    private PersonalMailSender personalMailSender;
+
+    @Autowired
+    private IGoogleMailSenderService googleMailSenderService;
 
 
     @PostConstruct
@@ -70,8 +81,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int count(PageBy pageBy) throws Exception {
-        return userDAO.count(pageBy);
+    public int count(Object o,Long id,PageBy pageBy) throws Exception {
+        return userDAO.count(o,id,pageBy);
     }
 
     @Override
@@ -207,7 +218,7 @@ public class UserServiceImpl implements UserService {
         return userDAO.updateImage(userId, multipartFile);
     }
 
-    public Response managePassword(String email) throws Exception {
+    public boolean managePassword(String email) throws Exception , UserException, MailjetSocketTimeoutException, MailjetException, MessagingException {
         UserVO user = findByEmail(email);
 
 
@@ -223,9 +234,19 @@ public class UserServiceImpl implements UserService {
         labels.add(MailType.USERNAME_KEY);
 
         emails.add(email);
+        Map<String,String> emailTo= new HashMap();
+        emailTo.put(user.getUsername(),user.getEmail());
 
-        return mailSenderSendGrid.sendMailMessage(MailType.PASSWORD_TEMPLATE, MailType.PASSWORD_TEMPLATE_TITLE, MailUtils.replace(user, labels, null, decrypt),
-                emails, null, null, null, user.getUsername(), null, false);
+        String title= MessageFormat.format(MailType.PASSWORD_TEMPLATE,MailType.PASSWORD_TEMPLATE_TITLE);
+
+         googleMailSenderService.sendMail(title,emails,null,null,personalMailSender.getTravelPostPseudo(),user.getUsername(),decrypt,false);
+
+         return personalMailSender.send(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, null, decrypt),
+                emailTo, null,null,personalMailSender.getTravelPostPseudo(),null,false,null);
+
+
+//        return mailSenderSendGrid.sendMailMessage(MailType.PASSWORD_TEMPLATE, MailType.PASSWORD_TEMPLATE_TITLE, MailUtils.replace(user, labels, null, decrypt),
+//                emails, null, null, null, user.getUsername(), null, false);
     }
 
     @Transactional(rollbackFor = UserException.class)

@@ -6,6 +6,7 @@ import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,4 +100,6 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     @Transactional
     List<RatingCountVO> findRatingCounts(UserVO user);
+
+    Query search(String sqlQuery, String where,String... filters);
 }

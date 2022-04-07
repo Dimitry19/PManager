@@ -1,6 +1,6 @@
 package cm.packagemanager.pmanager.message.ent.service;
 
-import cm.framework.ds.hibernate.enums.FindByType;
+import cm.framework.ds.hibernate.enums.FindBy;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.message.ent.vo.MessageIdVO;
@@ -22,7 +22,7 @@ public interface MessageService {
 
     MessageVO findById(MessageIdVO id) throws BusinessResourceException;
 
-    List<MessageVO> messagesBy(Long id, FindByType fbType,PageBy pageBy) throws Exception;
+    List<MessageVO> messagesBy(Long id, FindBy fbType, PageBy pageBy) throws Exception;
 
     List<MessageVO> messages(PageBy pageBy) throws Exception;
 

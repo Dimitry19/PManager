@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.text.MessageFormat;
 
-import static cm.packagemanager.pmanager.constant.WSConstants.CONTACT_US_MAIL_WS;
 import static cm.packagemanager.pmanager.constant.WSConstants.MAIL_WS;
 
 @RestController
@@ -40,7 +42,7 @@ public class MailController extends CommonController {
             @ApiResponse(code = 200, message = "Mail envoyé correctement",
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(CONTACT_US_MAIL_WS)
-    public Response contactUS(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ContactUSDTO contactusDTO) {
+    public ResponseEntity<Response> contactUS(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ContactUSDTO contactusDTO) {
         logger.info("contact us - request");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -53,13 +55,15 @@ public class MailController extends CommonController {
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                 pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
                 response.setStatus(200);
+                return new ResponseEntity<Response>(pmResponse, HttpStatus.OK);
 
             }else{
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setRetDescription(WebServiceResponseCode.ERROR_CONTACT_US_LABEL);
-                response.setStatus(401);
+                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,"Veuillez reessayez plutard , Merci!"));
+                response.setStatus(503);
+                return new ResponseEntity<Response>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
             }
-            return pmResponse;
+
 
          /*   if (mailSenderSendGrid.manageResponse(sent)) {
 
@@ -74,10 +78,9 @@ public class MailController extends CommonController {
                 response.setStatus(sent.getStatusCode());
             }*/
         } catch (Exception e) {
-                new Exception("Une erreur est survenue durant l'envoi du mail , Veuillez reessayer plutard");
+            return getResponseMailResponseEntity(pmResponse, e,"Veuillez reessayez plutard , Merci!");
         } finally {
             finishOpentracingSpan();
         }
-        return null;
     }
 }

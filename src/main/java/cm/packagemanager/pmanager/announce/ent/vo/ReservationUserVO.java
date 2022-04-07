@@ -2,14 +2,17 @@ package cm.packagemanager.pmanager.announce.ent.vo;
 
 import cm.packagemanager.pmanager.common.enums.Gender;
 import cm.packagemanager.pmanager.common.enums.ValidateEnum;
+import cm.packagemanager.pmanager.common.utils.DateUtils;
 import cm.packagemanager.pmanager.constant.FieldConstants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -69,6 +72,22 @@ public class ReservationUserVO implements Serializable {
 
     @Column(name = "DESCRIPTION", length = FieldConstants.DESC)
     private String description;
+
+
+    @JsonFormat(pattern = DateUtils.FORMAT_STD_PATTERN_4)
+    @JsonProperty
+    @Column(name = "DATECREATED")
+    private Timestamp dateCreated;
+
+
+
+    public Timestamp getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Timestamp dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
     @Transient
     @JsonProperty
