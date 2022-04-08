@@ -337,9 +337,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     private void setAnnounce(AnnounceVO announce, UserVO user, AnnounceDTO adto,boolean isCreate) throws AnnounceException,Exception {
 
-        BigDecimal price = adto.getPrice();
-        BigDecimal preniumPrice = adto.getPreniumPrice();
-        BigDecimal goldenPrice = adto.getGoldPrice();
+        BigDecimal price = priceByAnnounceType(adto.getAnnounceType(),adto.getPrice());
+        BigDecimal preniumPrice = priceByAnnounceType(adto.getAnnounceType(),adto.getPreniumPrice());
+        BigDecimal goldenPrice = priceByAnnounceType(adto.getAnnounceType(),adto.getGoldPrice());
         BigDecimal weight = adto.getWeight();
 
         if(!DateUtils.validLongValue(adto.getStartDate()) || !DateUtils.validLongValue(adto.getEndDate())){
@@ -735,6 +735,18 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 update(r);
             });
         }
+    }
+
+    BigDecimal priceByAnnounceType(AnnounceType type, BigDecimal price){
+
+        switch (type){
+            case BUYER:
+                return BigDecimal.ZERO;
+            case SELLER:
+                return price;
+        }
+        return BigDecimal.ZERO;
+
     }
 
     @Override

@@ -8,8 +8,7 @@ import cm.packagemanager.pmanager.common.exception.AnnounceException;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
-import cm.packagemanager.pmanager.ws.requests.city.CityDTO;
-import cm.packagemanager.pmanager.ws.requests.city.UpdateCityDTO;
+import cm.packagemanager.pmanager.ws.requests.CommonDTO;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +83,7 @@ public class CityDAOImpl extends Generic implements CityDAO {
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
-    public CityVO create(CityDTO dto) throws Exception {
+    public CityVO create(CommonDTO dto) throws Exception {
 
         if (dto != null) {
             CityVO city =   (CityVO)checkAndResolve(CityVO.class, dto.getCode());
@@ -109,7 +108,7 @@ public class CityDAOImpl extends Generic implements CityDAO {
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    public CityVO update(UpdateCityDTO unto) throws Exception {
+    public CityVO update(CommonDTO unto) throws Exception {
            return update(unto.getCode(),unto.getName());
     }
 

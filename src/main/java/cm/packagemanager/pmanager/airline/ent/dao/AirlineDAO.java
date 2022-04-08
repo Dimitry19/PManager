@@ -4,7 +4,7 @@ import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
 import cm.packagemanager.pmanager.common.exception.AnnounceException;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.DashboardException;
-import cm.packagemanager.pmanager.ws.requests.airplane.UpdateAirlineDTO;
+import cm.packagemanager.pmanager.ws.requests.CommonDTO;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +14,7 @@ public interface AirlineDAO {
 
     AirlineVO add(String code, String description) throws DashboardException,Exception;
 
-    AirlineVO update(UpdateAirlineDTO id) throws DashboardException,Exception;
+    AirlineVO update(CommonDTO id) throws DashboardException,Exception;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class,BusinessResourceException.class, AnnounceException.class})
     boolean delete(String code) throws DashboardException;

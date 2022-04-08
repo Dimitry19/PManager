@@ -1,13 +1,13 @@
 package cm.packagemanager.pmanager.ws.controller.rest.admin.dashborad;
 
+import cm.packagemanager.pmanager.administrator.ent.enums.DashBoardObjectType;
 import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
-import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
+import cm.packagemanager.pmanager.city.ent.vo.CityVO;
 import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.exception.DashboardException;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
-import cm.packagemanager.pmanager.ws.requests.airplane.AirlineDTO;
-import cm.packagemanager.pmanager.ws.requests.airplane.UpdateAirlineDTO;
+import cm.packagemanager.pmanager.ws.requests.CommonDTO;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
 import io.swagger.annotations.Api;
@@ -34,45 +34,55 @@ public class DashboardController extends CommonController {
 
 
 	/**
-	 * Cette methode cree une compagnie aerienne
+	 * Cette methode cree une compagnie aerienne ou une ville
 	 *
 	 * @param response
 	 * @param request
-	 * @param ac
+	 * @param dto
 	 * @return
 	 * @throws Exception
 	 */
-	@ApiOperation(value = "Add a company airlines ", response = AnnounceVO.class)
+	@ApiOperation(value = "Add a company airlines or city ", response = Object.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-			@ApiResponse(code = 200, message = "Successful Added Company Airline",
-					response = AirlineVO.class, responseContainer = "Object")})
-	@PostMapping(value = AIRLINE_CREATE, consumes = MediaType.APPLICATION_JSON,produces = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+			@ApiResponse(code = 200, message = "Successful Added Company Airline/ City",
+					response = Object.class, responseContainer = "Object")})
+	@PostMapping(value = CREATE, consumes = MediaType.APPLICATION_JSON,produces = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	ResponseEntity<Object> addCompany(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AirlineDTO ac) throws DashboardException,Exception{
+	ResponseEntity<Object> createCompanyOrCity(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid CommonDTO dto) throws DashboardException,Exception{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 
 
 		try {
-			createOpentracingSpan("DashboardController - AddCompany");
+			createOpentracingSpan("DashboardController - createCompanyOrCity");
 
-			logger.info("Add Company ");
-			if (ac != null) {
-				AirlineVO airline  = airplaneService.add(ac.getCode(), ac.getName());
+			logger.info("createCompanyOrCity Operation ");
 
-				if (airline != null) {
-					airline.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "La compagnie aerienne"));
-					airline.setRetCode(WebServiceResponseCode.OK_CODE);
+			Object  object = null;
 
-					return  new ResponseEntity<>(airline, HttpStatus.CREATED);
+			if (dto != null) {
+
+				switch (dto.getObjectType()){
+					case AIRLINE:
+						 object  = airplaneService.add(dto.getCode(), dto.getName());
+
+					case CITY:
+						object  = cityService.create(dto);
+
+				}
+				if (object != null) {
+					WSCommonResponseVO wsr = new WSCommonResponseVO();
+					wsr.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "La compagnie aerienne"));
+					wsr.setRetCode(WebServiceResponseCode.OK_CODE);
+					return  new ResponseEntity<>(wsr, HttpStatus.CREATED);
 				}
 			}
 		} catch (DashboardException e) {
-			logger.error("Erreur durant l'execution de  add Company: ", e);
+			logger.error("Erreur durant l'execution de  createCompanyOrCity: ", e);
 			throw e;
 		}  finally {
 			finishOpentracingSpan();
@@ -83,38 +93,57 @@ public class DashboardController extends CommonController {
 		return new ResponseEntity<>(commonResponse, HttpStatus.NOT_ACCEPTABLE);
 	}
 
-	@ApiOperation(value = "Update an airline ", response = AnnounceVO.class)
+	@ApiOperation(value = "Update an airline / city ", response = Object.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-			@ApiResponse(code = 200, message = "Successful Update Airline",
-					response = AirlineVO.class, responseContainer = "Object")})
-	@PutMapping(value = AIRLINE_UPD, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
-	ResponseEntity<Object> update(HttpServletResponse response, HttpServletRequest request, @PathVariable("code") @Valid String code,
-								  @RequestBody @Valid UpdateAirlineDTO ua) throws Exception {
+			@ApiResponse(code = 200, message = "Successful Update Object",
+					response = Object.class, responseContainer = "Object")})
+	@PutMapping(value = UPDATE, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
+	ResponseEntity<Object> updateCompanyOrCity(HttpServletResponse response, HttpServletRequest request, @PathVariable("code") @Valid String code,
+								  @RequestBody @Valid CommonDTO dto) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		try {
-			createOpentracingSpan("AirlineController - update");
+			createOpentracingSpan("DashboardController - updateCompanyOrCity");
 
-			if (ua == null) return null;
-			ua.setCode(code);
+			logger.info("Update Operation ");
+			if (dto == null) {
+				return null;
+			}
+			dto.setCode(code);
 
-			AirlineVO airline = airplaneService.update(ua);
+			AirlineVO airline=null;
+			CityVO city=null;
+
+			switch (dto.getObjectType()){
+				case AIRLINE:
+					airline  =  airplaneService.update(dto);
+				case CITY:
+					city = cityService.update(dto);
+
+			}
+
 			if (airline != null) {
 				airline.setRetCode(WebServiceResponseCode.OK_CODE);
 				airline.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "La compagnie aerienne"));
 				return new ResponseEntity<>(airline, HttpStatus.OK);
-			} else {
+			}
+
+			if (city != null) {
+				city.setRetCode(WebServiceResponseCode.OK_CODE);
+				city.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "La ville"));
+				return new ResponseEntity<>(city, HttpStatus.OK);
+			}else {
 				WSCommonResponseVO  commonResponse = new WSCommonResponseVO();
 				commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-				commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "La compagnie aerienne"));
+				commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, getMessage(dto.getObjectType())));
 				return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
 			}
 		} catch (DashboardException e) {
-			logger.error("Erreur durant l'ajournement de la compagnie " + ua.toString() + "{ }", e);
+			logger.error("Erreur durant updateCompanyOrCity " + dto.toString() + "{ }", e);
 			throw e;
 		} finally {
 			finishOpentracingSpan();
@@ -122,45 +151,58 @@ public class DashboardController extends CommonController {
 	}
 
 	/**
-	 * Cette methode elimine une compagnie dont on a son Id
+	 * Cette methode elimine une objet dont on a son Id
 	 *
 	 * @param response
 	 * @param request
-	 * @param id
+	 * @param o
 	 * @return
 	 * @throws Exception
 	 */
-	@ApiOperation(value = "Delete a company with an ID", response = Response.class)
+	@ApiOperation(value = "Delete a company or city that we get  with an ID", response = Response.class)
 	@DeleteMapping(value = DELETE, headers = WSConstants.HEADER_ACCEPT)
-	public ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") @Valid Long id) throws Exception {
+	public ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") @Valid Object o) throws Exception {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Response pmResponse = new Response();
 
 		try {
-			logger.info("delete request in");
-			createOpentracingSpan("AirlineController - delete");
+			createOpentracingSpan("DashboardController - delete");
 
-			if (id != null) {
+			logger.info("delete Operation ");
+
+			if(o instanceof Long){
+
+				Long id = (Long)o;
+
 				if (airplaneService.delete(id)) {
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La compagnie aerienne"));
-
 					return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 
-				} else {
-					pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, "La compagnie aerienne"));
+				}
 
+			}
+
+			if(o instanceof String){
+				String id = (String) o;
+				if (cityService.delete(id)) {
+					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La ville"));
+					return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 				}
 			}
-			return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
+			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+			pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, (String)o));
+			return new ResponseEntity<>(pmResponse, HttpStatus.METHOD_NOT_ALLOWED);
 		} catch (Exception e) {
-			logger.error("Erreur durant l'elimination de l'annonce {}", e);
+			logger.error("Erreur durant l'elimination de l'element avec id" +o+"", e);
 			throw e;
 		} finally {
 			finishOpentracingSpan();
 		}
 	}
-
+	private String getMessage(DashBoardObjectType objectType){
+		return (objectType == DashBoardObjectType.AIRLINE)?"La compagnie aerienne":"La ville";
+	}
 }

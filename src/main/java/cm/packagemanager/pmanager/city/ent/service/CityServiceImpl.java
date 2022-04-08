@@ -5,6 +5,7 @@ import cm.packagemanager.pmanager.city.ent.dao.CityDAO;
 import cm.packagemanager.pmanager.city.ent.vo.CityVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.exception.AnnounceException;
+import cm.packagemanager.pmanager.ws.requests.CommonDTO;
 import cm.packagemanager.pmanager.ws.requests.city.CityDTO;
 import cm.packagemanager.pmanager.ws.requests.city.UpdateCityDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class CityServiceImpl implements CityService {
 		System.out.println("Announce service starts...." );
 	}
 	*/
-    public CityVO create(CityDTO cityDTO) throws Exception {
+    public CityVO create(CommonDTO cityDTO) throws Exception {
 
         return dao.create(cityDTO);
     }
@@ -43,7 +44,7 @@ public class CityServiceImpl implements CityService {
         return dao.autocomplete(search, caseInsensitive);
     }
 
-    public CityVO update(UpdateCityDTO city) throws AnnounceException,Exception {
+    public CityVO update(CommonDTO city) throws AnnounceException,Exception {
         return dao.update(city);
     }
 

@@ -2,8 +2,7 @@ package cm.packagemanager.pmanager.city.ent.service;
 
 import cm.packagemanager.pmanager.city.ent.vo.CityVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
-import cm.packagemanager.pmanager.ws.requests.city.CityDTO;
-import cm.packagemanager.pmanager.ws.requests.city.UpdateCityDTO;
+import cm.packagemanager.pmanager.ws.requests.CommonDTO;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,11 +11,11 @@ import java.util.List;
 
 public interface CityService extends InitializingBean {
 
-    CityVO create(CityDTO cityDTO) throws Exception;
+    CityVO create(CommonDTO cityDTO) throws Exception;
 
     List<CityVO> autoComplete(String search, boolean caseInsensitive) throws Exception;
 
-    CityVO update(UpdateCityDTO announceId) throws Exception;
+    CityVO update(CommonDTO announceId) throws Exception;
 
     CityVO update(String id, String name) throws Exception;
 

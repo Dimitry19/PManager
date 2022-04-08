@@ -247,14 +247,14 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public List<ReservationVO> otherReservations(long id, PageBy pageBy) throws Exception {
-        List<ReservationVO> reservations = findBy(ReservationVO.FIND_ANNOUNCE_USER, ReservationVO.class, id, "userId", pageBy);
+        List<ReservationVO> reservations = findBy(ReservationVO.FIND_ANNOUNCE_USER, ReservationVO.class, id, USER_PARAM, pageBy);
         handleReservationInfos(reservations);
         return reservations;
     }
 
     @Override
     public List<ReservationVO> reservationByAnnounce(Long announceId, PageBy pageBy) throws Exception {
-        List<ReservationVO> reservations = findBy(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, announceId, "announceId", pageBy);
+        List<ReservationVO> reservations = findBy(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, announceId, ANNOUNCE_PARAM, pageBy);
         handleReservationInfos(reservations);
         return reservations;
 
@@ -376,8 +376,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         switch (announce.getAnnounceType()) {
             case BUYER:
                 if (CollectionsUtils.isEmpty(userAnnounces)) {
-                    throw new Exception("Impossible pour cet utilisateur de faire " +
-                            "une reservation car ne propose pas de voyage");
+                    throw new Exception("Impossible pour  de faire " +
+                            "une reservation car cet utilisateur  ne propose pas de voyage");
                 }
                 List check = Optional.ofNullable(userAnnounces.stream().filter(ua -> ua.getStatus() != StatusEnum.COMPLETED
                         && !ua.isCancelled() &&
@@ -388,8 +388,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
                         .orElseGet(Collections::emptyList);
 
                 if (CollectionsUtils.isEmpty(check)) {
-                    throw new Exception("Impossible pour cet utilisateur de faire " +
-                            "une reservation car ne propose pas de voyage");
+                    throw new Exception("Impossible pde faire " +
+                            "une reservation car cet utilisateur  ne propose pas de voyage");
                 }
                 break;
             case SELLER:

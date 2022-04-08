@@ -55,7 +55,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String DESC = " desc ";
     protected static final String ASC = " asc ";
     protected static final String USER_PARAM = "userId";
-    protected static final String TYPE_PARAM = "type";
+    protected static final String TYPE_PARAM = "announceType";
     protected static final String TRANSPORT_PARAM = "transport";
     protected static final String ANNOUNCE_PARAM = "announceId";
     protected static final String START_DATE_PARAM = "startDate";
@@ -403,7 +403,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         query.setParameter(paramName, id);
         pageBy(query, pageBy);
         List results = query.list();
-        return CollectionsUtils.isNotEmpty(results) ? results.size() : 0;
+        return CollectionsUtils.size(results);
     }
 
     @Override

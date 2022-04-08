@@ -5,6 +5,8 @@
 
 package cm.packagemanager.pmanager.city.ent.vo;
 
+import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -18,7 +20,7 @@ import java.io.Serializable;
 
 })
 
-public class CityVO implements Serializable {
+public class CityVO extends WSCommonResponseVO implements Serializable {
 
     private static final long serialVersionUID = -6128390864869421614L;
     public static final String AUTOCOMPLETE = "cm.packagemanager.pmanager.city.ent.vo.CityVO.autoComplete";

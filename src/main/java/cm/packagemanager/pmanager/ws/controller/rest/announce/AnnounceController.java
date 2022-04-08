@@ -8,6 +8,7 @@ import cm.packagemanager.pmanager.common.ent.vo.WSCommonResponseVO;
 import cm.packagemanager.pmanager.common.enums.AnnounceType;
 import cm.packagemanager.pmanager.common.enums.TransportEnum;
 import cm.packagemanager.pmanager.common.exception.AnnounceException;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.announces.AnnounceDTO;
@@ -33,6 +34,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static cm.packagemanager.pmanager.constant.WSConstants.ANNOUNCE_WS;
@@ -144,7 +147,7 @@ public class AnnounceController extends CommonController {
      *
      * @param response
      * @param request
-     * @param asdto
+     * @param dto
      * @param page
      * @param size
      * @return
@@ -161,7 +164,7 @@ public class AnnounceController extends CommonController {
                     response = ResponseEntity.class, responseContainer = "List")})
     @PostMapping(value = FIND, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
-    ResponseEntity<PaginateResponse> search(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchDTO asdto,
+    ResponseEntity<PaginateResponse> search(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid AnnounceSearchDTO dto,
                                           @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
                                           @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws Exception {
 
@@ -175,12 +178,12 @@ public class AnnounceController extends CommonController {
         try {
             createOpentracingSpan("AnnounceController -find");
 
-            if (asdto != null) {
+            if (dto != null) {
 
-                PageBy pageBy =new PageBy(asdto.getPage()!=null ? asdto.getPage():page, size);
+                PageBy pageBy =new PageBy(dto.getPage()!=null ? dto.getPage():page, size);
 
-                int count = announceService.count(asdto,pageBy);
-                List<AnnounceVO> announces = announceService.search(asdto, pageBy);
+                int count = announceService.count(dto,pageBy);
+                List<AnnounceVO> announces = announceService.search(dto, pageBy);
                 return getPaginateResponseResponseEntity(headers,paginateResponse,count,announces);
             }
         } catch (Exception e) {
@@ -189,7 +192,7 @@ public class AnnounceController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.PRECONDITION_FAILED);
     }
 
     /**
@@ -447,7 +450,9 @@ public class AnnounceController extends CommonController {
             @ApiResponse(code = 200, message = "Successful retrieval",
                     response = ResponseEntity.class, responseContainer = "List")})
     @GetMapping(value = ANNOUNCES_WS, produces = MediaType.APPLICATION_JSON, headers = HEADER_ACCEPT)
-    public ResponseEntity<PaginateResponse> announces(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page) throws AnnounceException,Exception {
+    public ResponseEntity<PaginateResponse> announces(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page
+                                            //            ,@RequestParam  Source source
+                                            ) throws AnnounceException,Exception {
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
@@ -457,9 +462,27 @@ public class AnnounceController extends CommonController {
         try {
 
             createOpentracingSpan("AnnounceController -announces");
+            List<AnnounceVO> announces = new ArrayList();
+            int count = 0;
 
-            int count = announceService.count(null, null);
-            List<AnnounceVO> announces = announceService.announces(pageBy);
+            Source source = Source.OTHER;
+            if(source == null){
+                source = Source.OTHER;
+            }
+
+            if(source== Source.HOME){
+
+                for (TransportEnum t : Arrays.asList(TransportEnum.values())) {
+                    add(announces, announceService.announcesBy(t, new PageBy(0, 4)));
+                }
+                count = CollectionsUtils.size(announces);
+
+            }else{
+                count = announceService.count(null, null);
+                announces = announceService.announces(pageBy);
+            }
+
+
             return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announces:Exception occurred while fetching the response from the database.", e);
@@ -467,6 +490,14 @@ public class AnnounceController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
+    }
+
+    private void add(List announces, List announce){
+
+        if(CollectionsUtils.isNotEmpty(announce)){
+            announces.addAll(announce);
+        }
+
     }
 
 }

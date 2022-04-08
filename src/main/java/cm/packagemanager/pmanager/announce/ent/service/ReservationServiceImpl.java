@@ -1,12 +1,14 @@
 package cm.packagemanager.pmanager.announce.ent.service;
 
 import cm.framework.ds.hibernate.dao.Generic;
+import cm.framework.ds.hibernate.enums.FindBy;
 import cm.packagemanager.pmanager.announce.ent.dao.ReservationDAO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.ReservationType;
 import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
 import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
@@ -50,9 +52,18 @@ public class ReservationServiceImpl extends Generic implements ReservationServic
     }
 
     @Override
-    public int count(Long id, PageBy pageBy, boolean isUser) throws Exception {
-        return (isUser) ? dao.countByNameQuery(ReservationVO.FINDBYUSER, ReservationVO.class, id, USER_PARAM, pageBy) :
-                dao.countByNameQuery(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, id, ANNOUNCE_PARAM, pageBy);
+    public int count(Long id, PageBy pageBy, FindBy findBy, ReservationType type) throws Exception {
+
+        switch (findBy){
+            case ANNOUNCE:
+                return dao.countByNameQuery(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, id, ANNOUNCE_PARAM, pageBy);
+            case USER:
+                if(type == null || type == ReservationType.CREATED ){
+                    return dao.countByNameQuery(ReservationVO.FINDBYUSER, ReservationVO.class, id, USER_PARAM, pageBy) ;
+                }
+                return CollectionsUtils.size(reservationsByUser(id,type,pageBy));
+        }
+        return 0;
     }
 
     @Override
