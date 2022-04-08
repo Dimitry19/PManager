@@ -3,6 +3,7 @@ package cm.packagemanager.pmanager.ws.controller.rest;
 import cm.packagemanager.pmanager.airline.ent.service.AirlineService;
 import cm.packagemanager.pmanager.announce.ent.service.AnnounceService;
 import cm.packagemanager.pmanager.announce.ent.service.ReservationService;
+import cm.packagemanager.pmanager.city.ent.service.CityService;
 import cm.packagemanager.pmanager.common.mail.ent.service.MailService;
 import cm.packagemanager.pmanager.common.mail.sendgrid.MailSenderSendGrid;
 import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
@@ -13,6 +14,7 @@ import cm.packagemanager.pmanager.message.ent.service.MessageService;
 import cm.packagemanager.pmanager.notification.ent.service.NotificationService;
 import cm.packagemanager.pmanager.user.ent.service.RoleService;
 import cm.packagemanager.pmanager.user.ent.service.UserService;
+import cm.packagemanager.pmanager.ws.controller.RedirectType;
 import cm.packagemanager.pmanager.ws.responses.PaginateResponse;
 import cm.packagemanager.pmanager.ws.responses.Response;
 import cm.packagemanager.pmanager.ws.responses.WebServiceResponseCode;
@@ -57,6 +59,9 @@ public class CommonController  extends WSConstants {
     @Value("${redirect.page}")
     protected String redirectPage;
 
+    @Value("${redirect.page.error}")
+    protected String redirectPageError;
+
     @Value("${redirect.confirm.ok.page}")
     protected String redirectConfirmPage;
 
@@ -64,8 +69,13 @@ public class CommonController  extends WSConstants {
     protected String redirectConfirmErrorPage;
 
 
+
+
     @Autowired
     protected AirlineService airplaneService;
+
+    @Autowired
+    protected CityService cityService;
 
 
     @Autowired
@@ -148,27 +158,23 @@ public class CommonController  extends WSConstants {
 
     protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, int count,List results) {
 
-        if(CollectionsUtils.isNotEmpty(results)){
-            switch (count) {
-                case 0:
-                    headers.add(HEADER_TOTAL, Long.toString(count));
-                    paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
-                    break;
-                default:
+        switch (count) {
+            case 0:
+                headers.add(HEADER_TOTAL, Long.toString(count));
+                paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
+            default:
 
-                    if (CollectionsUtils.isNotEmpty(results)) {
-                        paginateResponse.setCount(count);
-                    }
-                    paginateResponse.setResults(results);
-                    paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
-                    headers.add(HEADER_TOTAL, Long.toString(results.size()));
-                    break;
-            }
-            return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
+                if (CollectionsUtils.isNotEmpty(results)) {
+                    paginateResponse.setCount(count);
+                }
+                paginateResponse.setResults(results);
+                paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
+                headers.add(HEADER_TOTAL, Long.toString(results.size()));
+                break;
         }
-        return new ResponseEntity<>(paginateResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
     }
 
     protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse,List results) {
@@ -196,5 +202,21 @@ public class CommonController  extends WSConstants {
             pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
         }
         return new ResponseEntity<Response>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    public String getRedirectPage(RedirectType type) {
+
+        StringBuilder redirectSb = new StringBuilder(contextRoot);
+        switch (type){
+            case INDEX:
+                redirectSb.append(redirectPage);
+            case CONFIRMATION:
+                redirectSb.append(redirectConfirmPage);
+            case CONFIRMATION_ERROR:
+                redirectSb.append(redirectConfirmErrorPage);
+            case ERROR:
+                redirectSb.append(redirectPageError);
+        }
+        return redirectSb.toString();
     }
 }

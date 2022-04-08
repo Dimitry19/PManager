@@ -42,7 +42,7 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
     }
 
     @Override
-    public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object id) throws BusinessResourceException, UserException {
         return false;
     }
 

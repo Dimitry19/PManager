@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.ws.controller.rest.reservation;
 
+import cm.framework.ds.hibernate.enums.FindBy;
 import cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
@@ -215,7 +216,7 @@ public class ReservationController extends CommonController {
 
             } else {
                 reservation = new ReservationVO();
-                response.setStatus(404);
+                response.setStatus(org.apache.http.HttpStatus.SC_NOT_FOUND);
                 reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
                 reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "La reservation"));
 
@@ -266,7 +267,7 @@ public class ReservationController extends CommonController {
         try {
             createOpentracingSpan("ReservationController -reservationsByUser");
             PaginateResponse res = new PaginateResponse();
-            int count = reservationService.count(userId, null, true);
+            int count = reservationService.count(userId, null, FindBy.USER,type);
             reservations = reservationService.reservationsByUser(userId, type, pageBy);
 
             if (CollectionsUtils.isNotEmpty(reservations)) {
@@ -318,7 +319,7 @@ public class ReservationController extends CommonController {
             createOpentracingSpan("ReservationController -reservations by announce");
 
             PageBy pageBy = new PageBy(page, size);
-            int count = reservationService.count(announceId, null, false);
+            int count = reservationService.count(announceId, null, FindBy.ANNOUNCE, null);
             if (count == 0) {
                 headers.add(HEADER_TOTAL, Long.toString(count));
             } else {

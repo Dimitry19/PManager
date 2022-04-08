@@ -4,10 +4,13 @@ import cm.framework.ds.hibernate.dao.Generic;
 import cm.packagemanager.pmanager.airline.ent.vo.AirlineIdVO;
 import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
 import cm.packagemanager.pmanager.common.Constants;
-import cm.packagemanager.pmanager.common.exception.*;
+import cm.packagemanager.pmanager.common.exception.AnnounceException;
+import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
+import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
+import cm.packagemanager.pmanager.common.exception.UserException;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
-import cm.packagemanager.pmanager.ws.requests.airplane.UpdateAirlineDTO;
+import cm.packagemanager.pmanager.ws.requests.CommonDTO;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +32,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
         if(StringUtils.isNotEmpty(code) && StringUtils.isNotEmpty(description)){
 
             AirlineIdVO airlineId = new AirlineIdVO(code, Constants.DEFAULT_TOKEN);
-            AirlineVO airline=(AirlineVO) checkAndResolve(AirlineVO.class,airlineId);
+            AirlineVO airline= (AirlineVO) checkAndResolve(AirlineVO.class,airlineId);
 
             if(airline!=null)
                 throw new Exception(" Compagnie aerienne ["+code+"] existe deja");
@@ -46,7 +49,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    public AirlineVO update(UpdateAirlineDTO updAirline) throws Exception {
+    public AirlineVO update(CommonDTO updAirline) throws Exception {
 
 
         AirlineIdVO airlineId = new AirlineIdVO(updAirline.getCode(), Constants.DEFAULT_TOKEN);
@@ -55,7 +58,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
             throw new RecordNotFoundException("Aucune compagnie  trouvéé avec le code :"+updAirline.getCode());
         }
         AirlineVO airline=(AirlineVO) checkAndResolve(AirlineVO.class,airlineId);
-        airline.setDescription(updAirline.getDescription());
+        airline.setDescription(updAirline.getName());
 
         update(airline);
         return airline;
@@ -114,7 +117,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
 
 
     @Override
-    public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
         return false;
     }
 

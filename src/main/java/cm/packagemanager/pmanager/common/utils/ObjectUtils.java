@@ -6,9 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
     private static final Logger log = LoggerFactory.getLogger(ObjectUtils.class);
+
+    public static final String CLASS_TO_INVOKE_BLOCK_LABEL = "BlockTagLabel";
+    private static final String PREPARA_ETICHETTE_X_BLOCCHETTI_METHOD="preparaEtichetteBlocchetti";
 
     //if (ObjectUtils.isCallable(activityFindWrapper,"article.id.itemCode") || ObjectUtils.isCallable(activityFindWrapper,"articleFather.id.itemCode")) How to use
 
@@ -52,16 +58,30 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
         }
     }
 
-    private static Object invokeMethod(String pathAndclassName,String methodName,Class paramsClass[],Object[] params) throws Exception{
+
+    private static Object invokeMethod(String pathAndClassName, String methodName, Class paramsClass[], Object[] params) throws Exception {
 
 
-        Class clazz = Class.forName(pathAndclassName);
+        Class clazz = Class.forName(pathAndClassName);
         Object iClass = clazz.newInstance();
         Method m = clazz.getDeclaredMethod(methodName, paramsClass);
 
-        Object ret = m.invoke(iClass,params);
+        Object ret = m.invoke(iClass, params);
 
         return ret;
+
+    }
+    public  void preparaListaEtichette( List etichette, String tipoStampa,List errors) throws Exception{
+
+        Map etichetteStampare = new HashMap();
+
+        Object ret = null;
+
+
+        if(StringUtils.equals(tipoStampa, "TipoStampaLotti.BLOCCHETTI")){
+            Class []paramsClass = {List.class};
+            ret = invokeMethod(CLASS_TO_INVOKE_BLOCK_LABEL, PREPARA_ETICHETTE_X_BLOCCHETTI_METHOD, paramsClass, new Object[]{etichette});
+        }
 
     }
 }

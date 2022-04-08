@@ -22,7 +22,6 @@ import cm.packagemanager.pmanager.user.ent.vo.UserVO;
 import cm.packagemanager.pmanager.ws.requests.announces.ReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.UpdateReservationDTO;
 import cm.packagemanager.pmanager.ws.requests.announces.ValidateReservationDTO;
-import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -248,14 +247,14 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public List<ReservationVO> otherReservations(long id, PageBy pageBy) throws Exception {
-        List<ReservationVO> reservations = findBy(ReservationVO.FIND_ANNOUNCE_USER, ReservationVO.class, id, "userId", pageBy);
+        List<ReservationVO> reservations = findBy(ReservationVO.FIND_ANNOUNCE_USER, ReservationVO.class, id, USER_PARAM, pageBy);
         handleReservationInfos(reservations);
         return reservations;
     }
 
     @Override
     public List<ReservationVO> reservationByAnnounce(Long announceId, PageBy pageBy) throws Exception {
-        List<ReservationVO> reservations = findBy(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, announceId, "announceId", pageBy);
+        List<ReservationVO> reservations = findBy(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, announceId, ANNOUNCE_PARAM, pageBy);
         handleReservationInfos(reservations);
         return reservations;
 
@@ -301,12 +300,10 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
     public boolean updateDelete(ReservationVO reservation) throws BusinessResourceException, UserException {
         boolean result = false;
         try {
-
-            Session session = sessionFactory.getCurrentSession();
             if (reservation != null) {
-                reservation.setCancelled(true);
-                session.merge(reservation);
-                reservation = session.get(ReservationVO.class, reservation.getId());
+                reservation.cancel();
+                merge(reservation);
+                reservation = (ReservationVO) get(ReservationVO.class, reservation.getId());
                 result = (reservation != null) && (reservation.isCancelled());
 
             }
@@ -318,7 +315,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
 
 
     @Override
-    public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
         return false;
     }
 
@@ -379,8 +376,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         switch (announce.getAnnounceType()) {
             case BUYER:
                 if (CollectionsUtils.isEmpty(userAnnounces)) {
-                    throw new Exception("Impossible pour cet utilisateur de faire " +
-                            "une reservation car ne propose pas de voyage");
+                    throw new Exception("Impossible pour  de faire " +
+                            "une reservation car cet utilisateur  ne propose pas de voyage");
                 }
                 List check = Optional.ofNullable(userAnnounces.stream().filter(ua -> ua.getStatus() != StatusEnum.COMPLETED
                         && !ua.isCancelled() &&
@@ -391,8 +388,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
                         .orElseGet(Collections::emptyList);
 
                 if (CollectionsUtils.isEmpty(check)) {
-                    throw new Exception("Impossible pour cet utilisateur de faire " +
-                            "une reservation car ne propose pas de voyage");
+                    throw new Exception("Impossible pde faire " +
+                            "une reservation car cet utilisateur  ne propose pas de voyage");
                 }
                 break;
             case SELLER:

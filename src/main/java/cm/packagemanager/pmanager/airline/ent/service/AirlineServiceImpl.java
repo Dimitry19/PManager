@@ -4,6 +4,7 @@ package cm.packagemanager.pmanager.airline.ent.service;
 import cm.packagemanager.pmanager.airline.ent.dao.AirlineDAO;
 import cm.packagemanager.pmanager.airline.ent.vo.AirlineVO;
 import cm.packagemanager.pmanager.common.exception.DashboardException;
+import cm.packagemanager.pmanager.ws.requests.CommonDTO;
 import cm.packagemanager.pmanager.ws.requests.airplane.UpdateAirlineDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override
-    public AirlineVO update(UpdateAirlineDTO uar) throws DashboardException,Exception {
+    public AirlineVO update(CommonDTO uar) throws DashboardException,Exception {
         return airlineDAO.update(uar);
     }
 

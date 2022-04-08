@@ -72,11 +72,12 @@ public class ReviewDAOImpl extends Generic implements ReviewDAO {
 
 
     @Override
-    public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
         boolean result = false;
 
         try {
 
+            Long id = (Long)o;
             ReviewVO review = (ReviewVO) findByIdViaSession(ReviewVO.class, id).get();
             if (review != null) {
                 review.cancel();

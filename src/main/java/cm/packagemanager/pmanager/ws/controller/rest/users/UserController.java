@@ -9,6 +9,7 @@ import cm.packagemanager.pmanager.common.exception.UserNotFoundException;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.constant.WSConstants;
 import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import cm.packagemanager.pmanager.ws.controller.RedirectType;
 import cm.packagemanager.pmanager.ws.controller.rest.CommonController;
 import cm.packagemanager.pmanager.ws.requests.mail.MailDTO;
 import cm.packagemanager.pmanager.ws.requests.users.*;
@@ -154,20 +155,20 @@ public class UserController extends CommonController {
             if (user == null) {
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 pmResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
-                response.sendRedirect(contextRoot+redirectConfirmErrorPage);
+                response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
             } else {
 
                 if (user.getActive() == 1) {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
-                    response.sendRedirect(contextRoot+redirectConfirmErrorPage);
+                    response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
                 }
 
                 user.setActive(1);
                 if (userService.update(user) != null) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
-                    response.sendRedirect(contextRoot+redirectConfirmPage);
+                    response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION));
                 }
             }
 

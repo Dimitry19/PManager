@@ -446,11 +446,12 @@ public class UserDAOImpl extends Generic implements UserDAO {
     }
 
     @Override
-    public boolean updateDelete(Long id) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
         boolean result = false;
 
         try {
 
+            Long id=(Long)o;
             UserVO user = findById(id);
             if (user != null) {
                 user.updateDeleteChildrens();

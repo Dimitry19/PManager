@@ -17,6 +17,8 @@ import java.util.Optional;
 
 public interface GenericDAO<T, ID extends Serializable, NID extends Serializable>  extends  IEvent {
 
+    List autocomplete(String namedQuery,ID search,boolean caseInsensitive);
+
     Optional<T> find(Class<T> clazz, ID id);
 
     @Transactional
@@ -27,6 +29,9 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     int count(Class<T> clazz, PageBy pageBy);
 
     T findById(Class<T> clazz, ID id);
+
+
+    <T> T findByIdForCheckAndResolve(Class<T> clazz, ID id);
 
     @Transactional
     T findById(Class<T> clazz, ID id, String... filters);
@@ -50,7 +55,7 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception;
 
-    List<T> findBy(String queryname, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception;
+    List<T> findBy(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception;
 
     List<T> findByUserNameQuery(String queryName, Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
 
@@ -89,10 +94,13 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     T get(Class<T> clazz, ID id) throws BusinessResourceException;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
+    <T> T getForCheckAndResolve(Class<T> clazz, ID id) throws BusinessResourceException;
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     T load(Class<T> clazz, ID id) throws BusinessResourceException;
 
     @Transactional(propagation = Propagation.REQUIRED)
-    T checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException,ClassCastException;
+     T  checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException,ClassCastException;
 
     void pageBy(org.hibernate.query.Query query, PageBy pageBy);
 
