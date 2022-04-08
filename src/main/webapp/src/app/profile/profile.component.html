@@ -532,7 +532,7 @@
                                 <h5 class="card-header-text">Mes reservations reçues</h5>
                             </div>
                             <div class="card-block table-details">
-                                <table *ngIf="annonceWithRes[0]" datatable [dtOptions]="dtOptions" class="table hover" id="">
+                                <table *ngIf="annonceWithRes" datatable [dtOptions]="dtOptions" class="table hover" id="">
                                     <thead>
                                         <tr>
                                             <th>Ville de Départ</th>
@@ -546,7 +546,7 @@
                                     </thead>
                                     <tbody *ngIf="annonceWithRes.length > 0">
                                         <!-- <ng-container *ngFor="let reserve of annonceWithRes; let i = index; trackBy:tracbByFn"> -->
-                                        <tr *ngFor="let res of annonceWithRes[0]; let y = index; trackBy:tracbByFn" [class]="res.announceInfo.price > 0 ? 'seller' : 'buyer'">
+                                        <tr *ngFor="let res of annonceWithRes; let y = index; trackBy:tracbByFn" [class]="res.announceInfo.price > 0 ? 'seller' : 'buyer'">
                                             <td><span class="value" [innerHTML]=" res.announceInfo.departure"></span></td>
                                             <td><span class="value" [innerHTML]=" res.announceInfo.arrival"></span></td>
                                             <td><span class="value" [innerHTML]=" res.announceInfo.startDate"></span></td>

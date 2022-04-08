@@ -41,7 +41,7 @@ export class TooltipDirective {
     this.elToolTip = this.renderer.createElement('span');
     const text = this.renderer.createText(this.toolTip);
     this.renderer.appendChild(this.elToolTip, text);
-    console.log(this.elementRef.nativeElement);
+    // console.log(this.elementRef.nativeElement);
     this.renderer.appendChild(this.elementRef.nativeElement, this.elToolTip);
     this.renderer.addClass(this.elToolTip, 'tooltip');
     

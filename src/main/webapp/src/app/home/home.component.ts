@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { ServiceRequest } from '../serviceRequest';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { SharedConstants } from '.././SharedConstants';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 import * as _ from 'underscore';
+import { AlertService } from '../alert.service';
 declare var $: any;
 
 
@@ -17,22 +15,11 @@ declare var $: any;
 export class HomeComponent implements OnInit {
 
   loggedUser;
-  valueCategorie
-  keyword = 'name';
-  data = SharedConstants.Villes;
-  // itemFiltres = ["transport","category","price","startDate","endDate","departure","arrival","weigth"];
-  lieux_depart;
-  lieux_arrivee;
-  Categories = SharedConstants.Categories;
-  // public minDate = new DatePipe('en-US');
-  hoveredDate: NgbDate | null = null;
-  fromDate: NgbDate | null;
-  toDate: NgbDate | null;
-  topics: any = null;
+  announceToClasse;
   @ViewChild(ToastContainerDirective, { static: true })
   toastContainer: ToastContainerDirective;
 
-  constructor(private startup : ServiceRequest, private toastrService: ToastrService,) {
+  constructor(private startup : ServiceRequest, private toastrService: ToastrService,  private notifyService : AlertService) {
 
     $('.modal-backdrop').remove();
   }
@@ -55,5 +42,18 @@ export class HomeComponent implements OnInit {
       x.innerHTML = "Affiner la recherche";
     }
   }
+  filterAnnonces(filtres){
+    let self = this;
+    self.startup.announceFiltred(filtres).toPromise().then(response =>{
+      if(response.count == undefined){
+        self.notifyService.showError(response.message,"");
+      }
+      else{
+        self.announceToClasse = response;
+      }
+      });
+    // this.router.navigate(["/annonces/0"],{queryParams:{filterString:filtres}});
+  }
+ 
 
 }

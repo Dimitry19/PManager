@@ -1,11 +1,9 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { SharedConstants } from '../SharedConstants';
-import { ServiceRequest } from '../serviceRequest';
 import * as _ from 'underscore';
-import { AlertService } from '../alert.service';
 declare var $: any;
 
 @Component({
@@ -15,11 +13,6 @@ declare var $: any;
 })
 export class FilterProductsComponent implements OnInit {
 
-  username;
-  loggedUser;
-  email;
-  phone;
-  valueCategorie
   keyword = 'name';
   villes = SharedConstants.Villes;
   Transports = SharedConstants.Transports;
@@ -32,9 +25,10 @@ export class FilterProductsComponent implements OnInit {
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
   topics: any = null;
+  @Output() filters = new EventEmitter<any>();
 
-  constructor(private startup: ServiceRequest, private router: Router, public formatter: NgbDateParserFormatter,
-    private calendar: NgbCalendar,private notifyService : AlertService) {
+  constructor(public formatter: NgbDateParserFormatter, private calendar: NgbCalendar,private route: ActivatedRoute,) {
+       
     $(document).ready(function(){
       $("#formControlRange").slider();
       $('select').awselect();
@@ -114,9 +108,9 @@ clear1(){
 
 search(){
   let self = this;
-    // var t = $("#immersive_dropdown").val();
-    var c = this.valueCategorie;
-    var p = $("#formControlRange").val()
+    var t = $("#immersive_dropdown").val();
+    var c = $("#immersive_dropdown1").val();
+    var p = $("#formControlRange").val();
 
   var date1 = 0, date2 = 0, dep= "",arr= "";
 
@@ -140,7 +134,7 @@ search(){
     var filter = {
       "announceType": "",
       "description":"",
-      "transport": "",
+      "transport": t,
       "category": c,
       "price": p,
       "startDate": date1,
@@ -151,26 +145,15 @@ search(){
     "userId":"",
       "and":true
     };
-
-    var filterString = JSON.stringify(filter);
-    if(this.router.url.indexOf("home") != -1){
-      this.router.navigate(["/annonces/0"],{queryParams:{filterString:filterString}});
-    }else{
-      this.searchOnPage(filterString);
-    }
+    
+    this.filters.emit(filter);
     
   }
 
 
-tracbByFn(index){
-  return index;
-}
-searchOnPage(filterString) {
-  let self = this;
-  //using absolute path,etrangement qu'importe ce que je mets comme url ça fonctionne tjrs, prqw ?
-  self.router.navigateByUrl('', { skipLocationChange: false }).then(() => {
-    this.router.navigate(["/annonces/0"],{queryParams:{filterString:filterString}});
-  });
-}
+  tracbByFn(index){
+    return index;
+  }
+
 
 }

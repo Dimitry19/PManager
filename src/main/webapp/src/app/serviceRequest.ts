@@ -94,7 +94,7 @@ isLoggedIn(data){
 }
 
 Registration(data){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.post(Urlconstances.BASEURL + 'ws/user/register', JSON.stringify(data),options).pipe(map((res: any)=> res),
@@ -104,7 +104,7 @@ Registration(data){
 }
 
 forgotPwd(data){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.post(Urlconstances.BASEURL + 'ws/user/password', JSON.stringify(data),options).pipe(map((res: any)=> res),
@@ -114,7 +114,7 @@ forgotPwd(data){
 }
 
 annonceAdd(data){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.post(Urlconstances.BASEURL + 'ws/announce/create', JSON.stringify(data),options).pipe(map((res: any)=> res),
@@ -124,7 +124,7 @@ annonceAdd(data){
 }
 
 annonceDel(id){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.delete(Urlconstances.BASEURL + 'ws/announce/delete?id='+id,options).pipe(map((res: any)=> res),
@@ -134,7 +134,7 @@ annonceDel(id){
 }
 
 annonceUpd(data){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.put(Urlconstances.BASEURL + 'ws/announce/update/'+data.id, JSON.stringify(data),options).pipe(map((res: any)=> res),
@@ -143,11 +143,11 @@ annonceUpd(data){
       }));
 }
 
-annoncesList(numPage){
-  // console.log(JSON.stringify(data));
+annoncesList(numPage,source){
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
-  return this.httpClient.get(Urlconstances.BASEURL + 'ws/announce/announces?page='+numPage,options).pipe(map((res: any)=> res),
+  return this.httpClient.get(Urlconstances.BASEURL + 'ws/announce/announces?page='+numPage+'&source='+source,options).pipe(map((res: any)=> res),
   catchError((this.handleError)),finalize(() => {
         this.spinner.hide();
       }));
@@ -155,7 +155,7 @@ annoncesList(numPage){
 
 
 userInfo(idUser){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.get(Urlconstances.BASEURL + 'ws/user/info/'+idUser,options).pipe(map((res: any)=> res),
@@ -166,7 +166,7 @@ userInfo(idUser){
 
 annonceId(idAnnonce,source){
   // source = "NOTIFICATION o OTHER"
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.get(Urlconstances.BASEURL + 'ws/announce/announce?id='+idAnnonce+'&source='+source,options).pipe(map((res: any)=> res),
@@ -176,7 +176,7 @@ annonceId(idAnnonce,source){
 }
 
 commentByAnnounce(idAnnonce){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.get(Urlconstances.BASEURL + 'ws/message/announce?announceId='+idAnnonce+'&page=0&size=12',options).pipe(map((res: any)=> res),
@@ -186,7 +186,7 @@ commentByAnnounce(idAnnonce){
 }
 
 annonceUserId(idUser){
-  // console.log(JSON.stringify(data));
+  
   
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
@@ -197,7 +197,7 @@ annonceUserId(idUser){
 }
 
 addComment(data){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.post(Urlconstances.BASEURL + 'ws/message/add', JSON.stringify(data),options).pipe(map((res: any)=> res),
@@ -206,7 +206,7 @@ addComment(data){
       }));
 }
 deleteComment(idcomment){
-    // console.log(JSON.stringify(data));
+    
     var options = this.setOptions();
     // var timestamp = new Date().getTime();
   return this.httpClient.delete(Urlconstances.BASEURL + 'ws/message/delete?id='+idcomment,options).pipe(map((res: any)=> res),
@@ -215,7 +215,7 @@ deleteComment(idcomment){
         }));
 }
 updateComment(idcomment,data){
-    // console.log(JSON.stringify(data));
+    
     var options = this.setOptions();
     // var timestamp = new Date().getTime();
   return this.httpClient.put(Urlconstances.BASEURL + 'ws/message/update/'+idcomment.id, JSON.stringify(data),options).pipe(map((res: any)=> res),
@@ -223,8 +223,8 @@ updateComment(idcomment,data){
           this.spinner.hide();
         }));
 }
-filter(filter){
-  // console.log(JSON.stringify(data));
+announceFiltred(filter){
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.post(Urlconstances.BASEURL + 'ws/announce/find', JSON.stringify(filter),options).pipe(map((res: any)=> res),
@@ -234,7 +234,7 @@ filter(filter){
 }
 
 userNotifications(bool,idUser){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.get(Urlconstances.BASEURL + 'ws/user/notification?enable='+bool+'&userId='+idUser,options).pipe(map((res: any)=> res),
@@ -243,7 +243,7 @@ userNotifications(bool,idUser){
       }));
 }
 userUpd(idUser){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.put(Urlconstances.BASEURL + 'ws/user/update/'+idUser.id,JSON.stringify(idUser), options).pipe(map((res: any)=> res),
@@ -273,7 +273,7 @@ usrImg(id,type,file){
 }
 
   getUsrImg(imgName){
-    // console.log(JSON.stringify(data));
+    
     var options = this.setOptions();
     // var timestamp = new Date().getTime();
     return this.httpClient.get(Urlconstances.BASEURL + 'ws/image/'+imgName,options).pipe(map((res: any)=> res),
@@ -284,7 +284,7 @@ usrImg(id,type,file){
 
 
 addReserve(data){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.post(Urlconstances.BASEURL + 'ws/reservation/add', JSON.stringify(data),options).pipe(map((res: any)=> res),
@@ -294,7 +294,7 @@ addReserve(data){
 }
 
 updateReserve(idres,data){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.put(Urlconstances.BASEURL + 'ws/reservation/update/'+idres, JSON.stringify(data),options).pipe(map((res: any)=> res),
@@ -305,7 +305,7 @@ updateReserve(idres,data){
 
 
 deleteReserve(idres){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.delete(Urlconstances.BASEURL + 'ws/reservation/delete?id='+idres,options).pipe(map((res: any)=> res),
@@ -315,7 +315,7 @@ deleteReserve(idres){
   }
 
 validReserve(data){
-    // console.log(JSON.stringify(data));
+    
     var options = this.setOptions();
     // var timestamp = new Date().getTime();
     return this.httpClient.post(Urlconstances.BASEURL + 'ws/reservation/validate', JSON.stringify(data),options).pipe(map((res: any)=> res),
@@ -325,7 +325,7 @@ validReserve(data){
   }
 
 getReserveUser(idUser){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.get(Urlconstances.BASEURL + 'ws/reservation/user?page=0&size=12&userId='+idUser+'&type=CREATED',options).pipe(map((res: any)=> res),
@@ -335,7 +335,7 @@ getReserveUser(idUser){
       }));
 }
 getReserveFromUsers(idUser){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.get(Urlconstances.BASEURL + 'ws/reservation/user?page=0&size=12&userId='+idUser+'&type=RECEIVED',options).pipe(map((res: any)=> res),
@@ -345,7 +345,7 @@ getReserveFromUsers(idUser){
       }));
 }
 getReserveAnn(idAnnonce){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.get(Urlconstances.BASEURL + 'ws/reservation/announce?announceId='+idAnnonce+'&page=0&size=12',options).pipe(map((res: any)=> res),
@@ -355,7 +355,7 @@ getReserveAnn(idAnnonce){
   }
 
 notificationId(idnotification){
-    // console.log(JSON.stringify(data));
+    
     var options = this.setOptions();
     // var timestamp = new Date().getTime();
   return this.httpClient.get(Urlconstances.BASEURL + 'ws/notification/notification?id='+idnotification,options).pipe(map((res: any)=> res),
@@ -365,7 +365,7 @@ notificationId(idnotification){
    }
 
 addRatingAnnounce(rating){
-   // console.log(JSON.stringify(data));
+   
    var options = this.setOptions();
    // var timestamp = new Date().getTime();
    return this.httpClient.post(Urlconstances.BASEURL + 'ws/review/add', JSON.stringify(rating),options).pipe(map((res: any)=> res),
@@ -375,7 +375,7 @@ addRatingAnnounce(rating){
   }
 
 contactUs(data){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.post(Urlconstances.BASEURL + 'ws/mail/contactus', JSON.stringify(data),options).pipe(map((res: any)=> res),
@@ -384,7 +384,7 @@ contactUs(data){
       }));
 }
 followUser(idUser){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.post(Urlconstances.BASEURL + 'ws/user/subscribers/add', JSON.stringify(idUser),options).pipe(map((res: any)=> res),
@@ -393,7 +393,7 @@ followUser(idUser){
       }));
 }
 unFollowUser(subscription){
-  // console.log(JSON.stringify(data));
+  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.post(Urlconstances.BASEURL + 'ws/user/unsubscribe', JSON.stringify(subscription),options).pipe(map((res: any)=> res),
@@ -434,7 +434,7 @@ getAllUsers(){
     // }
   //method logout without social network/pmanager
   islogout(username) {
-      // console.log(JSON.stringify(data));
+      
       var options = this.setOptions();
       // var timestamp = new Date().getTime();
       return this.httpClient.get(Urlconstances.BASEURL + 'ws/user/logout?username='+username,options).pipe(map((res: any)=> res),

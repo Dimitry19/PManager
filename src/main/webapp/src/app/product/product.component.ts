@@ -129,7 +129,6 @@ public categories: { [key: string]: Object; }[] = [
   }
   reservation(){
     let category = [...Array(SharedConstants.Categories.length)];
-    console.log("category: ",category);
     
     for (let c in category){
       if($("#Checkbox"+c).prop("checked")){
@@ -411,7 +410,7 @@ public categories: { [key: string]: Object; }[] = [
 
     this.startup.annonceId(this.annonce.id,this.from).toPromise().then(response =>{
       this.annonceCopie = response;
-      // console.log(response);
+      
     })
   }
 
@@ -421,9 +420,8 @@ public categories: { [key: string]: Object; }[] = [
         var tab = date.toString().split('/');
         
         var dateFormat= tab[2]+"-"+tab[1]+"-"+tab[0];
-        console.log("date: ", dateFormat);
         date = new Date(tab[2],tab[1]-1,tab[0]);
-        console.log("date: ", date);
+        
         
         return new Date(date).getTime();
       }
@@ -439,7 +437,6 @@ public categories: { [key: string]: Object; }[] = [
     this.erreurs = [];
 
     var dateA = 0, dateD = 0;
-    // console.log(this.annonce);
 
     this.startDate = this.annonce.startDate;
     
@@ -526,7 +523,7 @@ public categories: { [key: string]: Object; }[] = [
         "weight": this.annonce.weight,
         "categories":this.valueCat
       };
-      // console.log(annonceUpd);
+      
 
       this.startup.annonceUpd(annonceUpd).toPromise().then(response =>{
         if(response.retCode == 0){
@@ -537,7 +534,7 @@ public categories: { [key: string]: Object; }[] = [
         else{
           this.notifyService.showError(response.message,"");
         }
-        // console.log(response);
+        
       });
     }
 
@@ -598,7 +595,7 @@ public categories: { [key: string]: Object; }[] = [
    }
 
    addReview(review){
-     // console.log(review);
+     
      if(review !== '' || review != undefined){
        var comm ={
          "announceId":this.annonce.id,
@@ -693,7 +690,7 @@ public categories: { [key: string]: Object; }[] = [
    }
 
   commentaire (event: any){
-      // console.log(event);
+      
     // trim() n'est pas supporté par les versions recentes de IE
     if(event == undefined|| event.trim().length <= 1){
    this.comment = '';
@@ -740,7 +737,7 @@ public categories: { [key: string]: Object; }[] = [
       "userId": this.loggedUser.id
     };   
     self.startup.addRatingAnnounce(ratingObj).subscribe(response =>{
-      console.log(response);
+      
       if(response.retCode > -1){
         self.notifyService.showSuccess("Merci pour votre vote", "Rating");  
       }
@@ -756,7 +753,7 @@ public categories: { [key: string]: Object; }[] = [
       "subscriptionId": self.annonce.userInfo.id
     };
     self.startup.unFollowUser(subscript).subscribe(response =>{
-      console.log("response: ", response);
+      
       if(response.retCode > -1){
         self.notifyService.showSuccess(response.retDescription,"");
         self.follows = false;
@@ -774,7 +771,7 @@ public categories: { [key: string]: Object; }[] = [
       "subscriptionId": self.annonce.userInfo.id
     };
     self.startup.followUser(subscript).subscribe(response =>{
-      console.log("response: ", response);
+      
       if(response.retCode > -1){
         self.follows = true;
         self.notifyService.showSuccess(response.retDescription,"");
@@ -787,7 +784,7 @@ public categories: { [key: string]: Object; }[] = [
  
   profileUser(id){
     let self = this;
-    console.log("id: ",id);
+    
     if(id && id != null){
       self.router.navigate(["/profile",id]);
     }

@@ -276,8 +276,8 @@
                                 </div>
                                 <br>
                                 <label for="prixClassiq">Prix Classique(&euro;)</label><br>
-                                <input class="form-control value" [class.is-invalid]="(annonce.price == 0 || !annonce.price)" [(ngModel)]="annonce.price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" [disabled]="(readOnlyOwner || noModify)">
-                                <div *ngIf="!annonce.price && !readOnly">
+                                <input class="form-control value" [class.is-invalid]="(annonce.price == 0 || !annonce.price) && annonce.announceType == 'SELLER'" [(ngModel)]="annonce.price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" [disabled]="(readOnlyOwner || noModify || annonce.announceType == 'BUYER')">
+                                <div *ngIf="!annonce.price && !readOnly && annonce.announceType == 'SELLER'">
                                     <div class="dialogbox">
                                         <div class="content">
                                             <span class="tip tip-up"></span>
@@ -289,8 +289,9 @@
                                 </div>
                                 <br>
                                 <label for="prixGold">Prix Ultra Rapide(&euro;)</label><br>
-                                <input class="form-control value" [class.is-invalid]="(annonce.goldPrice == 0 || !annonce.goldPrice)" [(ngModel)]="annonce.goldPrice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" [disabled]="(readOnlyOwner|| noModify) ">
-                                <div *ngIf="!readOnly && !annonce.goldPrice ">
+                                <input class="form-control value" [class.is-invalid]="(annonce.goldPrice == 0 || !annonce.goldPrice) && annonce.announceType == 'SELLER'" [(ngModel)]="annonce.goldPrice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                    [disabled]="(readOnlyOwner|| noModify || annonce.announceType == 'BUYER') ">
+                                <div *ngIf="!readOnly && !annonce.goldPrice && annonce.announceType == 'SELLER'">
                                     <div class="dialogbox">
                                         <div class="content">
                                             <span class="tip tip-up"></span>
@@ -394,8 +395,9 @@
                                 </div>
                                 <br>
                                 <label for="prixPremiun">Prix Rapide(&euro;)</label><br>
-                                <input class="form-control value" [class.is-invalid]="(annonce.preniumPrice == 0 || !annonce.preniumPrice) " [(ngModel)]="annonce.preniumPrice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" [disabled]="(readOnlyOwner || noModify)">
-                                <div *ngIf="!readOnly && !annonce.preniumPrice">
+                                <input class="form-control value" [class.is-invalid]="(annonce.preniumPrice == 0 || !annonce.preniumPrice) && annonce.announceType == 'SELLER'" [(ngModel)]="annonce.preniumPrice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                    [disabled]="(readOnlyOwner || noModify || annonce.announceType == 'BUYER')">
+                                <div *ngIf="!readOnly && !annonce.preniumPrice && annonce.announceType == 'SELLER'">
                                     <div class="dialogbox">
                                         <div class="content">
                                             <span class="tip tip-up"></span>

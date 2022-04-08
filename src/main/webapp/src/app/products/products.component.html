@@ -3,7 +3,7 @@
     <!-- Banner -->
     <section id="banner">
         <div class="inner">
-            <app-filter-products></app-filter-products>
+            <app-filter-products (filters)="filterAnnonces($event)"></app-filter-products>
         </div>
         <!-- <div class="fill">
             <button type="button" name="button" class="btn btn-info waves-effect ml-auto btn-rounded my-3" (click)="search()">Rechercher</button>

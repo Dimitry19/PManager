@@ -484,6 +484,8 @@ label.taille {
     margin: 0em 0em 0em 1.6em;
     background: #e9ecef;
     overflow-wrap: break-word;
+    position: relative;
+    top: 1em;
 }
 
 .input-number {

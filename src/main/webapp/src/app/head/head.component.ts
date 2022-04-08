@@ -269,14 +269,14 @@ closeCookies(){
   forgotPwd() {
 
   let email = {email: this.userFormF.value.email2};
-
+  
   this.startup.forgotPwd(email).toPromise().then(response =>{
     if(response.retCode == 0){
       this.notifyService.showSuccess("Veillez consulter votre mail","");
       this.userFormF.reset();
     }
     else{
-      this.notifyService.showError("Adresse mail introuvable","");
+      this.notifyService.showError(response.message,"");
     }
    
   });

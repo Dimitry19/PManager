@@ -10,10 +10,10 @@
 			</button>
             <div toastContainer></div>
             <div class="filter collapse" id="filtre">
-                <app-filter-products></app-filter-products>
+                <app-filter-products (filters)="filterAnnonces($event)"></app-filter-products>
             </div>
             <!-- fin filtre de recherche -->
-            <app-typed-product></app-typed-product>
+            <app-typed-product [announce]="announceToClasse"></app-typed-product>
         </div>
     </section>
 </main>

@@ -2,14 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ddl/Views_20210207.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ddl/Views_20210207.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.0167f77ac69f0b792360.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.cff5c17af9f7f6bb496a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.0167f77ac69f0b792360.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.cff5c17af9f7f6bb496a.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.82bc524c5a56a2795862.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/directive/tooltip.directive.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/directive/tooltip.directive.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/serviceRequest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/serviceRequest.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/sharedConstants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/sharedConstants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/styles.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -75,11 +88,65 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AirlineService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AirlineService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/service/AirlineService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
               <caret line="3" column="50" selection-start-line="3" selection-start-column="50" selection-end-line="3" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="console.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="46" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReservationController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/reservation/ReservationController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="63">
+              <caret line="260" column="23" selection-start-line="260" selection-start-column="23" selection-end-line="260" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReservationServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/ReservationServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="149">
+              <caret line="52" column="15" selection-start-line="52" selection-start-column="15" selection-end-line="52" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReservationDAOImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="89">
+              <caret line="276" selection-start-line="276" selection-end-line="276" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReservationReceivedUserVO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/ReservationReceivedUserVO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-51">
+              <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TP_USER" pinned="false" current-in-tab="false">
+        <entry file="das://5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/TP_USER">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
             </state>
           </provider>
         </entry>
@@ -158,7 +225,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/StringUtils.java" />
         <option value="$PROJECT_DIR$/ddl/pm-202201.sql" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" />
@@ -209,6 +275,7 @@
         <option value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/message/MessageController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console_5.sql" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console.sql" />
       </list>
     </option>
   </component>
@@ -436,7 +503,7 @@
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="MessageCon&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.message.MessageController&#10;UserCon&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java&#10;Anno&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.announce.AnnounceController&#10;UserC&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java&#10;user&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java&#10;app&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/resources/application-dev.properties&#10;AnnounceDAOI&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java&#10;AnnounceVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO&#10;announce/user&#9;null&#9;null&#10;messagev&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.message.ent.vo.MessageVO&#10;revi&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/review/ent/vo/ReviewVO.java&#10;userInfo&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserInfo.java&#10;infoU&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.users.UserController#infosUser&#10;appl&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/resources/application-dev.properties&#10;aut&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java&#10;auth&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java&#10;Authe&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java&#10;UserCont&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java&#10;Authen&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.configuration.filters.AuthenticationFilter&#10;imag&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java&#10;image&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java&#10;ima&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java&#10;ImageVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.ent.vo.ImageVO&#10;ratin&#9;null&#9;null&#10;ra&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/rating/ent/vo/RatingCountVO.java&#10;/reservation/user&#9;null&#9;null&#10;appli&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;doNoti&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl#doNotify&#10;doN&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl#doNotify&#10;ws/reservation/user&#9;null&#9;null&#10;jdk&#9;ACTION&#9;SwitchBootJdk&#10;ResourceHttpHa&#9;PSI&#9;JAVA://org.springframework.web.servlet.resource.ResourceHttpRequestHandler&#10;text/html&#9;FILE&#9;jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home/jre/lib/resources.jar!/javax/swing/text/html/parser/html32.bdtd&#10;content-t&#9;null&#9;null&#10;servl&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ServletInitializer&#10;applicationCont&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.AutowiringSpringBeanJobFactory#setApplicationContext&#10;applicationContext&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.QuartzCronConfiguration#applicationContext&#10;nosni&#9;PSI&#9;JAVA://org.glassfish.jersey.jackson.internal.jackson.jaxrs.cfg.JaxRSFeature#ADD_NO_SNIFF_HEADER&#10;nosniff&#9;PSI&#9;JAVA://org.springframework.security.web.server.header.ContentTypeOptionsServerHttpHeadersWriter#NOSNIFF&#10;Defau&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;pom&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;No&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java&#10;index&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/dist/index.html&#10;webCon&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;application.lo&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/logs/PackManager/application.log&#10;defa&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;application.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;weso&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;commonContro&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java&#10;webs&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java" />
+    <property name="SearchEverywhereHistoryKey" value="Reserva&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.reservation.ReservationController&#10;MessageCon&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.message.MessageController&#10;UserCon&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java&#10;Anno&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.announce.AnnounceController&#10;UserC&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java&#10;user&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java&#10;app&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/resources/application-dev.properties&#10;AnnounceDAOI&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java&#10;AnnounceVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.vo.AnnounceVO&#10;announce/user&#9;null&#9;null&#10;messagev&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.message.ent.vo.MessageVO&#10;revi&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/review/ent/vo/ReviewVO.java&#10;userInfo&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserInfo.java&#10;infoU&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.users.UserController#infosUser&#10;appl&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/resources/application-dev.properties&#10;aut&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java&#10;auth&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java&#10;Authe&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java&#10;UserCont&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java&#10;Authen&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.configuration.filters.AuthenticationFilter&#10;imag&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java&#10;image&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java&#10;ima&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java&#10;ImageVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.ent.vo.ImageVO&#10;ratin&#9;null&#9;null&#10;ra&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/rating/ent/vo/RatingCountVO.java&#10;/reservation/user&#9;null&#9;null&#10;appli&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;doNoti&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl#doNotify&#10;doN&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl#doNotify&#10;ws/reservation/user&#9;null&#9;null&#10;jdk&#9;ACTION&#9;SwitchBootJdk&#10;ResourceHttpHa&#9;PSI&#9;JAVA://org.springframework.web.servlet.resource.ResourceHttpRequestHandler&#10;text/html&#9;FILE&#9;jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home/jre/lib/resources.jar!/javax/swing/text/html/parser/html32.bdtd&#10;content-t&#9;null&#9;null&#10;servl&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ServletInitializer&#10;applicationCont&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.AutowiringSpringBeanJobFactory#setApplicationContext&#10;applicationContext&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.QuartzCronConfiguration#applicationContext&#10;nosni&#9;PSI&#9;JAVA://org.glassfish.jersey.jackson.internal.jackson.jaxrs.cfg.JaxRSFeature#ADD_NO_SNIFF_HEADER&#10;nosniff&#9;PSI&#9;JAVA://org.springframework.security.web.server.header.ContentTypeOptionsServerHttpHeadersWriter#NOSNIFF&#10;Defau&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;pom&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;No&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java&#10;index&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/dist/index.html&#10;webCon&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;application.lo&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/logs/PackManager/application.log&#10;defa&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;application.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;weso&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;commonContro&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="DDL Data Source&#10;H2" />
@@ -478,7 +545,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Maven.clean">
+  <component name="RunManager" selected="Spring Boot.TP">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method>
@@ -690,14 +757,7 @@
       <workItem from="1649064466406" duration="8855000" />
       <workItem from="1649138359350" duration="15863000" />
       <workItem from="1649367340980" duration="152000" />
-      <workItem from="1649367515711" duration="2064000" />
-    </task>
-    <task id="LOCAL-00025" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
-      <created>1618963559080</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1618963559080</updated>
+      <workItem from="1649367515711" duration="10760000" />
     </task>
     <task id="LOCAL-00026" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
       <created>1619188240525</created>
@@ -1035,11 +1095,18 @@
       <option name="project" value="LOCAL" />
       <updated>1649370023154</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="Merge branch 'BetaVersion202203' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into BetaVersion2022&#10;&#10;# Conflicts:&#10;#&#9;src/main/resources/static/index.html">
+      <created>1649370659355</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1649370659355</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="502988000" />
+    <option name="totallyTimeSpent" value="511684000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1054,7 +1121,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.46423462" side_tool="true" visible="true" weight="0.37905237" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.43633762" side_tool="true" weight="0.34912717" />
       <window_info anchor="right" id="Maven Projects" order="5" weight="0.3297568" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info id="Capture Tool" order="7" />
@@ -1063,18 +1130,18 @@
       <window_info id="Structure" order="1" sideWeight="0.5019305" side_tool="true" weight="0.24964234" />
       <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49810606" weight="0.24964234" />
       <window_info id="UI Designer" order="4" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6258941" weight="0.38154614" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8440629" weight="0.38154614" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
-      <window_info active="true" anchor="bottom" id="Messages" order="10" sideWeight="0.53576535" visible="true" weight="0.37905237" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.52360517" weight="0.37905237" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.6030043" weight="0.36159602" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5765379" weight="0.34912717" />
+      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.60228896" weight="0.36159602" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.56366235" visible="true" weight="0.34912717" />
       <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
       <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.32689655" />
-      <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49713877" weight="0.46633416" />
+      <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49642345" weight="0.46633416" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.13304721" />
       <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49810606" weight="0.3297568" />
       <window_info id="Web" order="5" side_tool="true" />
@@ -1353,6 +1420,23 @@
           <properties />
           <option name="timeStamp" value="147" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
+          <line>267</line>
+          <properties />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
+          <line>275</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
+          <line>281</line>
+          <properties />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
         <line-breakpoint type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/ImageVO.java</url>
           <line>26</line>
@@ -1360,6 +1444,7 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -1416,28 +1501,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.2.6.RELEASE/spring-web-5.2.6.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1245">
-          <caret line="101" selection-start-line="101" selection-end-line="101" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ddl/packagemanager-0.0.1-SNAPSHOT_20210305.sql" />
-    <entry file="file://$PROJECT_DIR$/installation/Note.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ddl/pm-202201.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4155" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/MailSenderSendGrid.java" />
-    <entry file="das://5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/IMAGE" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console_2.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1717,6 +1780,48 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="50" selection-start-line="3" selection-start-column="50" selection-end-line="3" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/PUBLIC/table/TP_USER">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/5bd01531-bd90-4f79-9ad4-e345b761356f/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="46" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/ReservationReceivedUserVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-51">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="89">
+          <caret line="276" selection-start-line="276" selection-end-line="276" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/ReservationServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="52" column="15" selection-start-line="52" selection-start-column="15" selection-end-line="52" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/reservation/ReservationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="260" column="23" selection-start-line="260" selection-start-column="23" selection-end-line="260" selection-end-column="23" />
         </state>
       </provider>
     </entry>

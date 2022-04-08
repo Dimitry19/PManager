@@ -82,23 +82,11 @@ export class ProductsComponent implements OnInit {
      private calendar: NgbCalendar, public formatter: NgbDateParserFormatter,
     private notifyService : AlertService) {
 
-       // this.fromDate = calendar.getToday();
-       // this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
        if(sessionStorage.loggedUser != undefined){
          this.loggedUser = JSON.parse(sessionStorage.loggedUser);
-       }
-
-       this.filtres = this.route.snapshot.queryParamMap.get('filterString');
-       // console.log(this.filtres);
-       if(this.filtres){
-         var filtres = JSON.parse(this.filtres);
-         // console.log(filtres);
-         this.filterAnnonces(filtres);
-       }else{
-         this.page = parseInt(this.route.snapshot.paramMap.get('page'));
-         // console.log(this.page);
-         this.allAnnonces(this.page);
-       }
+       }       
+       this.page = parseInt(this.route.snapshot.paramMap.get('page'));
+       this.allAnnonces(this.page);
 
   }
 
@@ -161,7 +149,7 @@ export class ProductsComponent implements OnInit {
     this.router.navigate(["/annonce",id,"OTHER"]);
   }
   filterAnnonces(filtres){
-    this.startup.filter(filtres).toPromise().then(response =>{
+    this.startup.announceFiltred(filtres).toPromise().then(response =>{
      if(response.count == undefined){
        this.notifyService.showError(response.message,"");
        this.router.navigate(["/"]);
@@ -172,8 +160,8 @@ export class ProductsComponent implements OnInit {
      });
   }
   allAnnonces(id){
-    this.startup.annoncesList(id).toPromise().then(response =>{
-      console.log("response: ", response);      
+    this.startup.annoncesList(id,"OTHER").toPromise().then(response =>{
+         
       if(response.count == undefined){
         this.notifyService.showError(response.message,"");
         this.router.navigate(["/"]);

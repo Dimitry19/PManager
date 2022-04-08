@@ -42,7 +42,7 @@ export class SharedConstants {
 
   public static Categories = [
      {
-       value: "Autres",
+       value: "AUTRES",
        description: "Autres"
      },
      {

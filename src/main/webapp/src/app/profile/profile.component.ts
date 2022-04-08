@@ -315,15 +315,13 @@ toggleView(x){
   self.startup.getReserveFromUsers(self.loggedUser.id).subscribe(response=>{
     if(response.retCode != -1){
       self.annonceWithRes = response.results;
+      self.countAnnWithRes = response.count;
     }else{
       self.notifyService.showError(response.details[0],"")
     }
     
   });
    
-   console.log("annonceWithRes: ",self.annonceWithRes);
-   
-   self.countAnnWithRes += response.count;
  }
 
  valide(id){
@@ -590,7 +588,7 @@ toggleView(x){
           self.startup.usrImg(self.loggedUser.id,'USER',self.file).toPromise().then(response =>{
             //response = btoa(unescape(encodeURIComponent(response.toString())));                    
             if(response.retCode != -1){
-              console.log('Image uploaded successfully');           
+              // console.log('Image uploaded successfully');           
              //self.sanitizeImageUrl('data:'+response.origin +';base64,'+ response.picByte).toString();
              self.source = 'data:'+response.origin +';base64,'+ response.picByte;           
              //next(self.source);
@@ -605,7 +603,7 @@ toggleView(x){
              
           }else{
             self.notifyService.showError(response.message,"");
-            console.log('Image not uploaded successfully');
+            // console.log('Image not uploaded successfully');
           }
         });
         

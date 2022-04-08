@@ -90,7 +90,7 @@ export class AddProductComponent implements OnInit {
          $(".next").click(function (e) {
 
              var $active = $('.nav-tabs li>.active');
-             //console.log($active);
+             
              $active.parent().css('background-color','#42C2FF');
 
              $active.parent().next().find('.nav-link').removeClass('disabled');
@@ -134,7 +134,7 @@ export class AddProductComponent implements OnInit {
             $(".next").click(function (e) {
 
                 var $active = $('.nav-tabs li>.active');
-                //console.log($active);
+                
                 $active.parent().css('background-color','#42C2FF');
 
                 $active.parent().next().find('.nav-link').removeClass('disabled');
@@ -312,8 +312,8 @@ export class AddProductComponent implements OnInit {
     }
     backOnPreview(){
       this.router.events.pipe(filter((evt: any) => evt instanceof RoutesRecognized), pairwise()).subscribe((events: RoutesRecognized[]) => {
-          console.log('previous url', events[0].urlAfterRedirects);
-          console.log('current url', events[1].urlAfterRedirects);
+          // console.log('previous url', events[0].urlAfterRedirects);
+          // console.log('current url', events[1].urlAfterRedirects);
           if(events[0].urlAfterRedirects.indexOf("index") > -1){
             this.router.navigate([events[0].urlAfterRedirects]);
           }
