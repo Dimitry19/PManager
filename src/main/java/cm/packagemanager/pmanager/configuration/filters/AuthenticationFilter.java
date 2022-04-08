@@ -2,6 +2,7 @@ package cm.packagemanager.pmanager.configuration.filters;
 
 
 import cm.packagemanager.pmanager.common.enums.RoleEnum;
+import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
 import cm.packagemanager.pmanager.common.utils.StringUtils;
 import cm.packagemanager.pmanager.user.ent.service.UserService;
 import cm.packagemanager.pmanager.user.ent.vo.RoleVO;
@@ -17,6 +18,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import static cm.packagemanager.pmanager.constant.WSConstants.DASHBOARD;
 import static cm.packagemanager.pmanager.constant.WSConstants.UPLOAD;
@@ -76,20 +78,18 @@ public class AuthenticationFilter extends CommonFilter {
         boolean isNotUpload=!uri.contains(UPLOAD);
         boolean isDashBoard=uri.contains(DASHBOARD);
         String username=request.getHeader(sessionHeader);
-        RoleEnum re =null;
+        int re =0;
 
         if(StringUtils.isNotEmpty(username)){
+            // Ici  je verifie si l'utilisateur a le role ADMIN pour pouvoir acceder à la dashboard
             UserVO user=userService.findByUsername(username, Boolean.FALSE);
-            re =user.getRoles()
+            re = CollectionsUtils.size(user.getRoles()
                     .stream()
                     .map(RoleVO::getDescription)
-                    .filter(r->r==RoleEnum.ADMIN)
-                    .findAny()
-                    .get();
-
+                    .filter(r->r==RoleEnum.ADMIN).collect(Collectors.toList()));
         }
 
-        if((!isConfirm && isService && isNotApiKey && isNotUpload ) ||(re== null && isDashBoard)){
+        if((!isConfirm && isService && isNotApiKey && isNotUpload ) ||(re== 0 && isDashBoard)){
             error(response,false);
             return false;
         }
