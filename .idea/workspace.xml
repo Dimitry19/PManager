@@ -4,21 +4,305 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="First Demo deployment-fix">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/AnnounceException.java" afterDir="false" />
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/bo/AirlineBO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/dao/ContactUSDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/bo/ReviewsSummaryBO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/service/ReviewService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/RoleService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserIdVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/airplane/AirlineDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/airplane/UpdateAirlineDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/city/CityDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/city/UpdateCityDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/review/UpdateReviewDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/exception/RestExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/exception/RestExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/AnnounceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/AnnounceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/AnnounceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/AnnounceServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/ErrorResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/ErrorResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/DateUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/DateUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ddl/Views_20210207-my-sql.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ddl/Views_20210207-my-sql.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ddl/Views_20210207.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ddl/Views_20210207.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ServletInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ServletInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/TravelPostApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/TravelPostApplicationDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/api/ApiError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/api/ApiError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/api/SwaggerApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerApiConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/api/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/ent/enums/DashBoardObjectType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/ent/enums/DashBoardObjectType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/ent/vo/AdminVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/ent/vo/AdminVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/exception/RestExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/exception/RestExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/tracing/OpenTracingConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/tracing/OpenTracingConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/bo/AirlineBO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/dao/AirlineDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/dao/AirlineDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/dao/AirlineDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/service/AirlineService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/service/AirlineService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/service/AirlineServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/service/AirlineServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/vo/AirlineIdVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/vo/AirlineIdVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/airline/ent/vo/AirlineVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/vo/AirlineVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/CategoryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/CategoryDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/CategoryDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/AnnounceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/AnnounceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/AnnounceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/AnnounceServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/CategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/ReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/ReservationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/ReservationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceIdVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceIdVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/CategoryIdVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/CategoryIdVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/CategoryVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/CategoryVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/ReservationReceivedUserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/ReservationReceivedUserVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/ReservationUserIdVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/ReservationUserIdVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/ReservationUserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/ReservationUserVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/ReservationVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/ReservationVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/enums/Source.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/enums/Source.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/event/AnnounceEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/event/AnnounceEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/BatchConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/config/BatchConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/QuartzNoCronConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/config/QuartzNoCronConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/cron/AutowiringSpringBeanJobFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/config/cron/AutowiringSpringBeanJobFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/cron/QuartzCronConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/config/cron/QuartzCronConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/CustomQuartzJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/CustomQuartzJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/cron/QuartzSubmitJobs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/QuartzSubmitJobs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/cron/announce/AnnounceManagerJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/announce/AnnounceManagerJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/cron/announce/AnnounceSubmitJobs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/announce/AnnounceSubmitJobs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/cron/user/UserManagerJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/user/UserManagerJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/jobs/cron/user/UserSubmitJobs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/user/UserSubmitJobs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/listerners/JobResultListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/listerners/JobResultListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/listerners/StepResultListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/listerners/StepResultListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/tasks/CommonTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/tasks/CommonTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/tasks/ConfirmUsersTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/tasks/ConfirmUsersTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/tasks/CopyOldAnnouncesTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/tasks/CopyOldAnnouncesTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/city/ent/dao/CityDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/city/ent/dao/CityDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/city/ent/dao/CityDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/city/ent/dao/CityDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/city/ent/dao/CityHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/city/ent/dao/CityHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/city/ent/service/CityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/city/ent/service/CityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/city/ent/service/CityServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/city/ent/service/CityServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/city/ent/vo/CityVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/city/ent/vo/CityVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/bo/Auditable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/ent/bo/Auditable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/bo/CollectionsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/ent/bo/CollectionsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dto/ResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/ent/dto/ResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/CommonIdVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/ent/vo/CommonIdVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/CommonVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/ent/vo/CommonVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/PageBy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/ent/vo/PageBy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/WSCommonResponseVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/ent/vo/WSCommonResponseVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/AnnounceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/AnnounceType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/CommunicationType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/CommunicationType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/Gender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/Gender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/ReservationType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/ReservationType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/RoleEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/RoleEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/RoleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/RoleType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/StatusEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/StatusEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/TransportEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/TransportEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/TransportType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/TransportType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/UploadImageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/UploadImageType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/enums/ValidateEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/ValidateEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/event/AEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/event/AEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/event/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/event/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/event/IEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/event/IEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/AnnounceException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/AnnounceException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/BusinessResourceException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/BusinessResourceException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/CustomExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/CustomExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/DashboardException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/DashboardException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/ErrorResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/ErrorResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/MissingHeaderInfoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/MissingHeaderInfoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/RecordNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/RecordNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/ResponseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/ResponseException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/UserException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/UserException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/UserNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/UserNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/interceptor/HttpHandshakeInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/interceptor/HttpHandshakeInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/listener/audit/TableListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/listener/audit/TableListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/CommonMailSenderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/CommonMailSenderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/MailType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/MailType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/PersonalMailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/PersonalMailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/dao/ContactUSDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/dao/ContactUSDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/IGoogleMailSenderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/IGoogleMailSenderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/IGoogleMailSenderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/IGoogleMailSenderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/MailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/MailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/MailServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/vo/ContactUSVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/vo/ContactUSVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/vo/EmailVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/vo/EmailVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/wrapper/MailWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/wrapper/MailWrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/mailjet/CustomMailJetResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/mailjet/CustomMailJetResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/mailjet/MailJetSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/mailjet/MailJetSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/sendgrid/MailSenderSendGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/sendgrid/MailSenderSendGrid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/pagination/PaginationVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/pagination/PaginationVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/properties/CommonProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/properties/CommonProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/session/ISessionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/session/ISessionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/session/SessionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/session/SessionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/session/SessionNotificationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/session/SessionNotificationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/BigDecimalUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/BigDecimalUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/CollectionsUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/CollectionsUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/CommonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/CommonUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/DateUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/DateUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/FileUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/HTMLEntities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/HTMLEntities.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/ImageUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/ImageUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/MailUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/MailUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/ObjectUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/ObjectUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/QueryUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/QueryUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/StringUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/StringUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/Utility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/communication/ent/dao/CommunicationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/communication/ent/dao/CommunicationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/dao/CommunicationHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/communication/ent/dao/CommunicationHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/service/CommunicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/communication/ent/service/CommunicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/service/CommunicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/communication/ent/service/CommunicationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/communication/ent/vo/CommunicationVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/communication/ent/vo/CommunicationVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/component/AuthenticationEntryPointImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/component/AuthenticationEntryPointImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/component/CrossDomainFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/component/CrossDomainFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/cfg/CommonAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/CommonAspect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/cfg/CustomWebMvcConfigurerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/CustomWebMvcConfigurerAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/cfg/HibernateConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/cfg/HttpSessionListenerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HttpSessionListenerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/AFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/CommonFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/CommonFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/FilterConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/HttpsEnforcer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/HttpsEnforcer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/IFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/IFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/SessionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/package-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/constant/FieldConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/FieldConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/constant/WSConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/bo/ImageCompressBO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/bo/ImageCompressBO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/bo/ImageCompressBOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/bo/ImageCompressBOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/bo/ImageFormatBO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/bo/ImageFormatBO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/bo/ImageMultipart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/bo/ImageMultipart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/bo/ImageSourceBO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/bo/ImageSourceBO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/bo/ImageUrl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/bo/ImageUrl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/bo/SquareCompressed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/bo/SquareCompressed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/dao/ImageDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/dao/ImageDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/dao/ImageDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/dao/ImageDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/service/ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/service/ImageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/service/ImageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/service/ImageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/ent/vo/ImageVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/ent/vo/ImageVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/image/utils/ImageFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/image/utils/ImageFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/dao/MessageDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/service/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/service/MessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/service/MessageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/service/MessageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/vo/MessageIdVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/vo/MessageIdVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/message/ent/vo/MessageVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/vo/MessageVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/dao/NotificationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/dao/NotificationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/service/FireBaseNotificationSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/FireBaseNotificationSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/service/FirebaseCloudMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/FirebaseCloudMessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/service/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/service/NotificationSocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificationSocketService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/service/NotificatorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificatorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/vo/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/vo/Notification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/vo/NotificationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/vo/NotificationResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/ent/vo/NotificationVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/vo/NotificationVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/enums/NotificationParameter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/enums/NotificationParameter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/enums/NotificationType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/enums/NotificationType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/rating/ent/vo/RatingCountVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/rating/ent/vo/RatingCountVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/rating/enums/Rating.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/rating/enums/Rating.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/bo/ReviewsSummaryBO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/dao/ReviewDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/dao/ReviewDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/service/ReviewService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/service/ReviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/service/ReviewServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/vo/ReviewDetailsVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/vo/ReviewDetailsVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/vo/ReviewIdVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/vo/ReviewIdVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/vo/ReviewVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/vo/ReviewVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/scheduler/tasklet/FileDeletingTasklet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/scheduler/tasklet/FileDeletingTasklet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/security/PasswordGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/security/PasswordGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/security/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/seller/ent/vo/SellerVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/seller/ent/vo/SellerVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/RoleDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/RoleDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/RoleDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/RoleDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/service/RoleService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/service/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/RoleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/RoleVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/RoleVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserIdVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/event/UserEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/event/UserEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/utils/PasswordEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/utils/PasswordEncoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/utils/SecRandom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/utils/SecRandom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/client/WebSocketSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/client/WebSocketSocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/client/handler/MyStompFrameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/client/handler/MyStompFrameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/client/handler/MyStompSessionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/client/handler/MyStompSessionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/client/listeners/SessionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/client/listeners/SessionListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/config/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/constants/WebSocketConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/constants/WebSocketConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/websocket/listeners/WebSocketEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/listeners/WebSocketEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/DefaultController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/ErrorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/ErrorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/RedirectType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/RedirectType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/admin/dashborad/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/admin/dashborad/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/city/CityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/city/CityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/image/ImageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/mail/MailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/mail/MailController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/message/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/message/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/notification/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/notification/WebSocketNotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/reservation/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/review/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/review/ReviewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/RoleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/CommonDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/CommonDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/CommonSearchDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/CommonSearchDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/airplane/AirlineDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/airplane/UpdateAirlineDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/AnnounceDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/AnnounceDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/AnnounceSearchDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/AnnounceSearchDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/CategoriesDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CategoriesDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/CommonReservationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CommonReservationDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/ReservationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/ReservationDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/UpdateAnnounceDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/UpdateAnnounceDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/UpdateReservationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/UpdateReservationDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/announces/ValidateReservationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/ValidateReservationDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/city/CityDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/city/UpdateCityDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/mail/ContactUSDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/mail/ContactUSDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/mail/MailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/mail/MailDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/messages/MessageDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/messages/MessageDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/messages/MessageSearchDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/messages/MessageSearchDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/messages/UpdateMessageDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/messages/UpdateMessageDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/review/ReviewDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/review/ReviewDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/review/UpdateReviewDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/users/LoginDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/LoginDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/users/ManagePasswordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/ManagePasswordDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/users/PasswordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/PasswordDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/users/RegisterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/RegisterDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/users/RoleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/RoleDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/users/RoleToUserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/RoleToUserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/users/SubscribeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/SubscribeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/users/UpdateUserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/UpdateUserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/requests/users/UserSeachDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/UserSeachDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/responses/PaginateResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/PaginateResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/responses/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/Response.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/responses/WebServiceResponseCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/WebServiceResponseCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/logback-spring.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.cff5c17af9f7f6bb496a.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/main-es2015.b4505d5618d37e50bdcb.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.cff5c17af9f7f6bb496a.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/main-es5.b4505d5618d37e50bdcb.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.82bc524c5a56a2795862.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/styles.5783361f83bdfd5a64fd.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cm/packagemanager/pmanager/user/ent/TestNotification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/cm/travelpost/tp/user/ent/TestNotification.java" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/out/" />
-    <ignored path="$PROJECT_DIR$/target/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,118 +364,12 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="425" lean-forward="true" selection-start-line="425" selection-end-line="425" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/administrator/exception/RestExceptionHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="85" column="43" lean-forward="true" selection-start-line="85" selection-start-column="43" selection-end-line="85" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/exception/ErrorResponse.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="730">
-              <caret line="150" selection-start-line="150" selection-end-line="150" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/AnnounceService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="44" selection-start-line="44" selection-end-line="44" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="330" column="30" selection-start-line="330" selection-start-column="30" selection-end-line="330" selection-end-column="30" />
-              <folding>
-                <element signature="e#0#77#1" expanded="true" />
-                <element signature="e#1#76#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/DateUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="730">
-              <caret line="235" selection-start-line="235" selection-end-line="235" />
-              <folding>
-                <element signature="e#5162#5163#0" expanded="true" />
-                <element signature="e#5188#5189#0" expanded="true" />
-                <element signature="e#6270#6271#0" expanded="true" />
-                <element signature="e#6326#6327#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1935">
-              <caret line="147" column="26" selection-start-line="147" selection-start-column="24" selection-end-line="147" selection-end-column="26" />
-              <folding>
-                <element signature="n#repositories#0;n#project#0;n#!!top" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Procfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="52" selection-start-column="42" selection-end-column="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="47" column="28" selection-start-line="47" selection-start-column="28" selection-end-line="47" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -349,7 +527,7 @@
     </option>
     <option name="myId2Visible">
       <map>
-        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
         <entry key="com.haulmont.jpb.jpaPalette" value="false" />
         <entry key="com.haulmont.jpb.jpaStructure" value="false" />
       </map>
@@ -372,7 +550,6 @@
     <option name="importingSettings">
       <MavenImportingSettings>
         <option name="downloadDocsAutomatically" value="true" />
-        <option name="importAutomatically" value="true" />
         <option name="vmOptionsForImporter" value="-Xmx768m" />
       </MavenImportingSettings>
     </option>
@@ -499,12 +676,13 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DatabaseDriversLRU" value="mysql&#10;h2" />
     <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunConfigurationTargetLRU" value="062e2f86-5e0d-42c8-a3ce-ed92b19a3203" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -514,7 +692,7 @@
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="H2" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/cm/framework/hibernate/dao" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/city" />
     <property name="node.js.detected.package.stylelint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.stylelint" value="project" />
@@ -533,16 +711,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\packagemanager\pmanager\city" />
       <recent name="F:\DevJava\ws\PManager\src\main\java\cm\framework\hibernate\dao" />
       <recent name="F:\DevJava\ws\PManager" />
       <recent name="F:\DevJava\ws\PManager\ddl" />
       <recent name="$PROJECT_DIR$/src/main/resources/static" />
-      <recent name="$PROJECT_DIR$/ddl" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="cm.packagemanager.pmanager.common.exception" />
-      <recent name="cm.packagemanager.pmanager.communication.ent.dao" />
-      <recent name="cm.packagemanager.pmanager.communication.ent.service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\DevJava\ws\PManager\src\main\resources" />
@@ -551,6 +724,12 @@
       <recent name="$PROJECT_DIR$/src/main/resources/templates" />
       <recent name="$PROJECT_DIR$/src/main/resources/dist" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cm.packagemanager.pmanager.city.ent.dao" />
+      <recent name="cm.packagemanager.pmanager.common.exception" />
+      <recent name="cm.packagemanager.pmanager.communication.ent.dao" />
+      <recent name="cm.packagemanager.pmanager.communication.ent.service" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
@@ -558,17 +737,6 @@
         <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-    <option name="contentProportion" value="0.08978102" />
   </component>
   <component name="RunManager" selected="Spring Boot.TP">
     <configuration name="clean" type="MavenRunConfiguration" factoryName="Maven">
@@ -621,10 +789,10 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
-    <configuration name="TP (Demo)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <configuration name="TP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <log_file alias="LOG" path="$PROJECT_DIR$/src/main/resources/log4j2.xml" />
       <module name="PManager" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="cm.packagemanager.pmanager.TravelPostApplicationDemo" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cm.travelpost.tp.TravelPostApplication" />
       <option name="ACTIVE_PROFILES" value="dev" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="ALTERNATIVE_JRE_PATH" value="1.8.0_281" />
@@ -639,10 +807,9 @@
       <item itemvalue="Maven.clean" />
       <item itemvalue="Maven.package" />
       <item itemvalue="Spring Boot.TP" />
-      <item itemvalue="Spring Boot.TP (Demo)" />
     </list>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -753,34 +920,12 @@
       <workItem from="1648912781062" duration="11348000" />
       <workItem from="1648942746651" duration="15000" />
       <workItem from="1648942896574" duration="324000" />
-    </task>
-    <task id="LOCAL-00075" summary="BetaVersion202203 Branch : disable https">
-      <created>1647350699757</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1647350699757</updated>
-    </task>
-    <task id="LOCAL-00076" summary="BetaVersion202203 Branch : enable https and procfile">
-      <created>1647351141755</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1647351141755</updated>
-    </task>
-    <task id="LOCAL-00077" summary="BetaVersion202203 Branch : enable https and procfile">
-      <created>1647351467434</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1647351467434</updated>
-    </task>
-    <task id="LOCAL-00078" summary="BetaVersion202203 Branch : enable https and procfile">
-      <created>1647355032637</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1647355032637</updated>
+      <workItem from="1649147380213" duration="9404000" />
+      <workItem from="1649167015269" duration="5516000" />
+      <workItem from="1649231501763" duration="24123000" />
+      <workItem from="1649331031619" duration="15420000" />
+      <workItem from="1649407863030" duration="15677000" />
+      <workItem from="1649437633252" duration="5258000" />
     </task>
     <task id="LOCAL-00079" summary="BetaVersion202203 Branch : enable https and procfile">
       <created>1647356335971</created>
@@ -1097,7 +1242,35 @@
       <option name="project" value="LOCAL" />
       <updated>1648927762675</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="Configuration intellij boulot + gestion erreur envoi mail">
+      <created>1649173808853</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1649173808853</updated>
+    </task>
+    <task id="LOCAL-00125" summary="Configuration intellij boulot + gestion recuperation des annonces selon le mode de transport">
+      <created>1649256848765</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1649256848766</updated>
+    </task>
+    <task id="LOCAL-00126" summary="Configuration intellij boulot + gestion recuperation des annonces selon le mode de transport">
+      <created>1649268243850</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1649268243850</updated>
+    </task>
+    <task id="LOCAL-00127" summary="Configuration intellij boulot + gestion ville">
+      <created>1649349177630</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1649349177630</updated>
+    </task>
+    <option name="localTasksCounter" value="128" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1162,15 +1335,16 @@
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.History.Properties">
-    <option name="COLUMN_ORDER">
+    <option name="COLUMN_ID_ORDER">
       <list>
-        <option value="0" />
-        <option value="2" />
-        <option value="3" />
-        <option value="1" />
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
       </list>
     </option>
   </component>
@@ -1179,14 +1353,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -1205,6 +1372,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -1212,9 +1380,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="BetaVersion202203 Branch : Note d'installation modifée." />
-    <MESSAGE value="BetaVersion202203 Branch : Configuration de production ajournée" />
-    <MESSAGE value="BetaVersion202203 Branch : pom beta" />
     <MESSAGE value="BetaVersion202203 Branch : database" />
     <MESSAGE value="BetaVersion202203 Branch :  modification de la WebSecurityConfig.java" />
     <MESSAGE value="BetaVersion202203 Branch : disable procfile" />
@@ -1237,7 +1402,10 @@
     <MESSAGE value="Correction bug ajournement annonce" />
     <MESSAGE value="First Demo deployment" />
     <MESSAGE value="First Demo deployment-fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="First Demo deployment-fix" />
+    <MESSAGE value="Configuration intellij boulot + gestion erreur envoi mail" />
+    <MESSAGE value="Configuration intellij boulot + gestion recuperation des annonces selon le mode de transport" />
+    <MESSAGE value="Configuration intellij boulot + gestion ville" />
+    <option name="LAST_COMMIT_MESSAGE" value="Configuration intellij boulot + gestion ville" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1245,284 +1413,267 @@
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java</url>
           <line>57</line>
-          <properties />
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/batch/config/cron/QuartzCronConfiguration.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/config/cron/QuartzCronConfiguration.java</url>
           <line>45</line>
-          <properties />
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/image/ImageController.java</url>
           <line>88</line>
-          <properties />
           <option name="timeStamp" value="114" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/utils/FileUtils.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/FileUtils.java</url>
           <line>49</line>
-          <properties />
           <option name="timeStamp" value="116" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/image/ImageController.java</url>
           <line>84</line>
-          <properties />
           <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.java</url>
           <line>95</line>
-          <properties />
           <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.java</url>
           <line>119</line>
-          <properties />
           <option name="timeStamp" value="121" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.java</url>
           <line>75</line>
-          <properties />
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/review/ReviewController.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/review/ReviewController.java</url>
           <line>37</line>
-          <properties />
           <option name="timeStamp" value="125" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/vo/UserVO.java</url>
-          <line>484</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java</url>
+          <line>488</line>
           <option name="timeStamp" value="131" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java</url>
           <line>508</line>
-          <properties />
           <option name="timeStamp" value="135" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/service/UserServiceImpl.java</url>
-          <line>281</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java</url>
+          <line>302</line>
           <option name="timeStamp" value="143" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/vo/ReviewVO.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/vo/ReviewVO.java</url>
           <line>146</line>
-          <properties />
           <option name="timeStamp" value="144" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/review/ent/dao/ReviewDAOImpl.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/dao/ReviewDAOImpl.java</url>
           <line>36</line>
-          <properties />
           <option name="timeStamp" value="145" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.java</url>
           <line>78</line>
-          <properties />
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/image/ImageController.java</url>
           <line>65</line>
-          <properties />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/configuration/filters/HttpsEnforcer.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/HttpsEnforcer.java</url>
           <line>28</line>
-          <properties />
           <option name="timeStamp" value="156" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/reservation/ReservationController.java</url>
-          <line>203</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java</url>
+          <line>204</line>
           <option name="timeStamp" value="163" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>215</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
+          <line>214</line>
           <option name="timeStamp" value="164" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/ReservationVO.java</url>
-          <line>129</line>
-          <properties />
-          <option name="timeStamp" value="166" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java</url>
-          <line>75</line>
-          <properties />
-          <option name="timeStamp" value="192" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java</url>
-          <line>584</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java</url>
+          <line>598</line>
           <option name="timeStamp" value="193" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/com/sun/mail/jakarta.mail/1.6.5/jakarta.mail-1.6.5.jar!/javax/mail/Transport.class</url>
           <line>24</line>
-          <properties />
           <option name="timeStamp" value="214" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/com/sun/mail/jakarta.mail/1.6.5/jakarta.mail-1.6.5.jar!/javax/mail/Transport.class</url>
           <line>44</line>
-          <properties />
           <option name="timeStamp" value="215" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/reservation/ReservationController.java</url>
-          <line>61</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java</url>
+          <line>62</line>
           <option name="timeStamp" value="233" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>377</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
+          <line>382</line>
           <option name="timeStamp" value="235" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>87</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
+          <line>86</line>
           <option name="timeStamp" value="236" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java</url>
-          <line>66</line>
-          <properties />
-          <option name="timeStamp" value="242" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAOImpl.java</url>
-          <line>179</line>
-          <properties />
-          <option name="timeStamp" value="243" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java</url>
-          <line>78</line>
-          <properties />
-          <option name="timeStamp" value="244" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/MailServiceImpl.java</url>
-          <line>83</line>
-          <properties />
-          <option name="timeStamp" value="245" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/mailjet/MailJetSender.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/mailjet/MailJetSender.java</url>
           <line>86</line>
-          <properties />
           <option name="timeStamp" value="249" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>207</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>224</line>
           <option name="timeStamp" value="252" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>345</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
+          <line>350</line>
           <option name="timeStamp" value="253" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>354</line>
-          <properties />
-          <option name="timeStamp" value="254" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>83</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
+          <line>82</line>
           <option name="timeStamp" value="255" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>321</line>
-          <properties />
-          <option name="timeStamp" value="256" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
-          <line>71</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
+          <line>72</line>
           <option name="timeStamp" value="259" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/MailServiceImpl.java</url>
-          <line>108</line>
-          <properties />
-          <option name="timeStamp" value="261" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
-          <line>86</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
+          <line>87</line>
           <option name="timeStamp" value="262" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
-          <line>104</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
+          <line>105</line>
           <option name="timeStamp" value="264" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
-          <line>52</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
+          <line>53</line>
           <option name="timeStamp" value="265" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
-          <line>45</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
+          <line>46</line>
           <option name="timeStamp" value="266" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/ent/service/MailServiceImpl.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/MailServiceImpl.java</url>
           <line>62</line>
-          <properties />
           <option name="timeStamp" value="267" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/mailjet/MailJetSender.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/mailjet/MailJetSender.java</url>
           <line>101</line>
-          <properties />
           <option name="timeStamp" value="269" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/mail/mailjet/MailJetSender.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/mailjet/MailJetSender.java</url>
           <line>145</line>
-          <properties />
           <option name="timeStamp" value="270" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>169</line>
-          <properties />
-          <option name="timeStamp" value="271" />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java</url>
+          <line>96</line>
+          <option name="timeStamp" value="275" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java</url>
+          <line>122</line>
+          <option name="timeStamp" value="279" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java</url>
+          <line>73</line>
+          <option name="timeStamp" value="282" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java</url>
+          <line>94</line>
+          <option name="timeStamp" value="283" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/AnnounceServiceImpl.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="284" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>189</line>
+          <option name="timeStamp" value="285" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>200</line>
+          <option name="timeStamp" value="287" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>377</line>
+          <option name="timeStamp" value="288" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>330</line>
+          <option name="timeStamp" value="294" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>401</line>
+          <option name="timeStamp" value="313" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="314" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/message/MessageController.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="315" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java</url>
+          <line>86</line>
+          <option name="timeStamp" value="316" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java</url>
+          <line>313</line>
+          <option name="timeStamp" value="326" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
+          <line>256</line>
+          <option name="timeStamp" value="327" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
+          <line>283</line>
+          <option name="timeStamp" value="328" />
         </line-breakpoint>
         <line-breakpoint type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/ImageVO.java</url>
@@ -1531,9 +1682,9 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/user/ent/dao/UserDAO.java</url>
-          <line>28</line>
-          <properties class="cm.packagemanager.pmanager.user.ent.dao.UserDAO" method="findById" />
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java</url>
+          <line>27</line>
+          <properties class="cm.travelpost.tp.user.ent.dao.UserDAO" method="findById" />
           <option name="timeStamp" value="238" />
         </line-breakpoint>
       </breakpoints>

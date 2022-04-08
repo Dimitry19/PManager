@@ -52,7 +52,7 @@
 </root>
 
 <!-- LOG at D level -->
-<logger name="cm.packagemanager.pmanager" level="trace" additivity="false">
+<logger name="cm.travelpost.tp" level="trace" additivity="false">
     <appender-ref ref="RollingFile" />
     <appender-ref ref="Console" />
 </logger>

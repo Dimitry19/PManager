@@ -2,20 +2,20 @@ package cm.framework.ds.hibernate.dao;
 
 
 import cm.framework.ds.hibernate.utils.SQLUtils;
-import cm.packagemanager.pmanager.common.ent.vo.PageBy;
-import cm.packagemanager.pmanager.common.event.AEvent;
-import cm.packagemanager.pmanager.common.event.Event;
-import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
-import cm.packagemanager.pmanager.common.utils.CollectionsUtils;
-import cm.packagemanager.pmanager.common.utils.DateUtils;
-import cm.packagemanager.pmanager.common.utils.FileUtils;
-import cm.packagemanager.pmanager.common.utils.StringUtils;
-import cm.packagemanager.pmanager.configuration.filters.FilterConstants;
-import cm.packagemanager.pmanager.notification.ent.service.NotificatorServiceImpl;
-import cm.packagemanager.pmanager.notification.enums.NotificationType;
-import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
-import cm.packagemanager.pmanager.review.ent.vo.ReviewVO;
-import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import cm.travelpost.tp.common.ent.vo.PageBy;
+import cm.travelpost.tp.common.event.AEvent;
+import cm.travelpost.tp.common.event.Event;
+import cm.travelpost.tp.common.exception.BusinessResourceException;
+import cm.travelpost.tp.common.utils.CollectionsUtils;
+import cm.travelpost.tp.common.utils.DateUtils;
+import cm.travelpost.tp.common.utils.FileUtils;
+import cm.travelpost.tp.common.utils.StringUtils;
+import cm.travelpost.tp.configuration.filters.FilterConstants;
+import cm.travelpost.tp.notification.ent.service.NotificatorServiceImpl;
+import cm.travelpost.tp.notification.enums.NotificationType;
+import cm.travelpost.tp.rating.ent.vo.RatingCountVO;
+import cm.travelpost.tp.review.ent.vo.ReviewVO;
+import cm.travelpost.tp.user.ent.vo.UserVO;
 import org.hibernate.NaturalIdLoadAccess;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -51,6 +51,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     private static final MathContext MATH_CONTEXT = new MathContext(2, RoundingMode.HALF_UP);
 
 
+    protected static final String SELECT  = " select elt  ";
     protected static final String FROM = " FROM ";
     protected static final String DESC = " desc ";
     protected static final String ASC = " asc ";
@@ -61,6 +62,9 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String START_DATE_PARAM = "startDate";
     protected static final String SEARCH_PARAM = "search";
     protected static final String ALIAS_ORDER = " as t order by t. ";
+    protected static final String ALIAS_BY_USER_ID = " as elt where elt.userId =:userId ";
+    protected static final String ALIAS_BY_JOIN_USER_ID = " as elt join elt.user as u where u.id =:userId";
+    protected static final String ALIAS_BY_JOIN_USER_RES_ID = " as elt join elt.userReservation as u where u.id =:userId";
 
     @Autowired
     protected SessionFactory sessionFactory;
@@ -225,7 +229,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
         Session session = this.sessionFactory.getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
-        return commonFindByUser(clazz,userId,pageBy,session);
+        return commonFindByUser(clazz,userId,ALIAS_BY_USER_ID,pageBy,session);
     }
 
     @Override
@@ -233,7 +237,15 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     public List<T> findByUserId(Class<T> clazz, Long userId, PageBy pageBy) throws Exception {
 
         Session session = this.sessionFactory.getCurrentSession();
-        return commonFindByUser(clazz,userId,pageBy,session);
+        return commonFindByUser(clazz,userId,ALIAS_BY_USER_ID,pageBy,session);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<T> findByJoinUserId(Class<T> clazz, Long userId, PageBy pageBy) throws Exception {
+
+        Session session = this.sessionFactory.getCurrentSession();
+        return commonFindByUser(clazz,userId,ALIAS_BY_JOIN_USER_ID,pageBy,session);
     }
 
     @Override
@@ -694,8 +706,8 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     }
 
-    private List<T> commonFindByUser(Class<T> clazz, Long userId, PageBy pageBy, Session session){
-        Query query = session.createQuery(FROM + clazz.getName() + " as elt where elt.userId =:userId", clazz);
+    private List<T> commonFindByUser(Class<T> clazz, Long userId, String alias,PageBy pageBy, Session session){
+        Query query = session.createQuery(SELECT+FROM + clazz.getName() +alias , clazz);
         query.setParameter(USER_PARAM, userId);
         pageBy(query, pageBy);
 
