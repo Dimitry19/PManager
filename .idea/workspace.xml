@@ -3,26 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ddl/Views_20210207.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ddl/Views_20210207.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.82bc524c5a56a2795862.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/directive/tooltip.directive.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/directive/tooltip.directive.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/serviceRequest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/serviceRequest.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/sharedConstants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/sharedConstants.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.b4505d5618d37e50bdcb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.b4505d5618d37e50bdcb.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,8 +56,8 @@
       <file leaf-file-name="application-dev.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="74" column="11" selection-start-line="74" selection-start-column="11" selection-end-line="74" selection-end-column="11" />
+            <state relative-caret-position="229">
+              <caret line="75" column="11" selection-start-line="75" selection-start-column="11" selection-end-line="75" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -109,8 +92,11 @@
       <file leaf-file-name="ReservationController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/reservation/ReservationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="260" column="23" selection-start-line="260" selection-start-column="23" selection-end-line="260" selection-end-column="23" />
+            <state relative-caret-position="75">
+              <caret line="256" column="38" selection-start-line="256" selection-start-column="38" selection-end-line="256" selection-end-column="38" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -118,8 +104,8 @@
       <file leaf-file-name="ReservationServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/ReservationServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="52" column="15" selection-start-line="52" selection-start-column="15" selection-end-line="52" selection-end-column="15" />
+            <state relative-caret-position="389">
+              <caret line="54" column="15" selection-start-line="54" selection-start-column="15" selection-end-line="54" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -127,8 +113,8 @@
       <file leaf-file-name="ReservationDAOImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="89">
-              <caret line="276" selection-start-line="276" selection-end-line="276" />
+            <state relative-caret-position="254">
+              <caret line="275" selection-start-line="275" selection-end-line="275" />
             </state>
           </provider>
         </entry>
@@ -757,14 +743,7 @@
       <workItem from="1649064466406" duration="8855000" />
       <workItem from="1649138359350" duration="15863000" />
       <workItem from="1649367340980" duration="152000" />
-      <workItem from="1649367515711" duration="10760000" />
-    </task>
-    <task id="LOCAL-00026" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
-      <created>1619188240525</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1619188240525</updated>
+      <workItem from="1649367515711" duration="12359000" />
     </task>
     <task id="LOCAL-00027" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
       <created>1619435053269</created>
@@ -1102,11 +1081,18 @@
       <option name="project" value="LOCAL" />
       <updated>1649370659355</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Merge branch 'BetaVersion202203' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into BetaVersion2022&#10;&#10;# Conflicts:&#10;#&#9;src/main/resources/static/index.html">
+      <created>1649417450658</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1649417450658</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="511684000" />
+    <option name="totallyTimeSpent" value="513283000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1119,9 +1105,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.43633762" side_tool="true" weight="0.34912717" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.43705294" side_tool="true" weight="0.34912717" />
       <window_info anchor="right" id="Maven Projects" order="5" weight="0.3297568" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info id="Capture Tool" order="7" />
@@ -1132,13 +1119,13 @@
       <window_info id="UI Designer" order="4" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8440629" weight="0.38154614" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.52360517" weight="0.37905237" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.52288985" weight="0.37905237" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.60228896" weight="0.36159602" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.56366235" visible="true" weight="0.34912717" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5629471" visible="true" weight="0.34912717" />
       <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
       <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.32689655" />
       <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49642345" weight="0.46633416" />
@@ -1254,19 +1241,19 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>565</line>
+          <line>566</line>
           <properties />
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>562</line>
+          <line>563</line>
           <properties />
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
-          <line>126</line>
+          <line>129</line>
           <properties />
           <option name="timeStamp" value="37" />
         </line-breakpoint>
@@ -1296,13 +1283,13 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java</url>
-          <line>191</line>
+          <line>194</line>
           <properties />
           <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>311</line>
+          <line>308</line>
           <properties />
           <option name="timeStamp" value="68" />
         </line-breakpoint>
@@ -1350,7 +1337,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java</url>
-          <line>582</line>
+          <line>583</line>
           <properties />
           <option name="timeStamp" value="129" />
         </line-breakpoint>
@@ -1368,7 +1355,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java</url>
-          <line>732</line>
+          <line>733</line>
           <properties />
           <option name="timeStamp" value="133" />
         </line-breakpoint>
@@ -1410,7 +1397,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/users/UserController.java</url>
-          <line>458</line>
+          <line>459</line>
           <properties />
           <option name="timeStamp" value="146" />
         </line-breakpoint>
@@ -1422,18 +1409,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>267</line>
+          <line>266</line>
           <properties />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>275</line>
+          <line>274</line>
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>281</line>
+          <line>280</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
@@ -1764,8 +1751,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="74" column="11" selection-start-line="74" selection-start-column="11" selection-end-line="74" selection-end-column="11" />
+        <state relative-caret-position="229">
+          <caret line="75" column="11" selection-start-line="75" selection-start-column="11" selection-end-line="75" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -1806,22 +1793,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/dao/ReservationDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="89">
-          <caret line="276" selection-start-line="276" selection-end-line="276" />
+        <state relative-caret-position="254">
+          <caret line="275" selection-start-line="275" selection-end-line="275" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/announce/ent/service/ReservationServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="52" column="15" selection-start-line="52" selection-start-column="15" selection-end-line="52" selection-end-column="15" />
+        <state relative-caret-position="389">
+          <caret line="54" column="15" selection-start-line="54" selection-start-column="15" selection-end-line="54" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/reservation/ReservationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="260" column="23" selection-start-line="260" selection-start-column="23" selection-end-line="260" selection-end-column="23" />
+        <state relative-caret-position="75">
+          <caret line="256" column="38" selection-start-line="256" selection-start-column="38" selection-end-line="256" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
