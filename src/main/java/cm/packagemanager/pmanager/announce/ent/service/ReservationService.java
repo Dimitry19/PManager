@@ -1,5 +1,6 @@
 package cm.packagemanager.pmanager.announce.ent.service;
 
+import cm.framework.ds.hibernate.enums.FindBy;
 import cm.packagemanager.pmanager.announce.ent.vo.ReservationVO;
 import cm.packagemanager.pmanager.common.ent.vo.PageBy;
 import cm.packagemanager.pmanager.common.enums.ReservationType;
@@ -21,7 +22,7 @@ public interface ReservationService {
 
     boolean deleteReservation(Long id) throws Exception;
 
-    int count(Long id, PageBy pageBy, boolean isUser) throws Exception;
+    int count(Long id, PageBy pageBy, FindBy findBy, ReservationType type) throws Exception;
 
     List<ReservationVO> reservationsByUser(Long userId, ReservationType type, PageBy pageBy) throws Exception;
 

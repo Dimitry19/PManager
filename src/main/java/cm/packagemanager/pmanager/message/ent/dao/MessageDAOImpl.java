@@ -174,12 +174,12 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
     }
 
     @Override
-    public boolean updateDelete(Long id) throws BusinessResourceException {
+    public boolean updateDelete(Object o) throws BusinessResourceException {
         boolean result = false;
 
         try {
 
-
+            Long id=(Long)o;
             MessageIdVO messageId = new MessageIdVO(id, Constants.DEFAULT_TOKEN);
             MessageVO message = findById(messageId);
             if (message != null) {

@@ -15,6 +15,7 @@ public class WSConstants extends CommonProperties {
     public static final String BASE_PATTERN= "/ws/*";
 
 
+    public static final String DASHBOARD = "/dashboard";
     public static final String CREATE = "/create";
     public static final String ADD = "/add";
     public static final String UPDATE = "/update";
@@ -26,6 +27,8 @@ public class WSConstants extends CommonProperties {
     public static final String IMAGE = "/{imageName}";
     public static final String UPLOAD = "/upload";
     public static final String UPDATE_ID = "/update/{id}";
+    public static final String AUTOCOMPLETE = "/autocomplete/{search}";
+
 
 
 
@@ -56,14 +59,6 @@ public class WSConstants extends CommonProperties {
 
     public static final String USER_SUBSCRIPTION_WS = "/subscriptions/{userId}";
     public static final String USER_SUBSCRIBER_WS = "/subscribers/{userId}";
-
-    /************ ADMIN DASHBOARD REQUEST*************/
-    public static final String DASHBOARD_WS = "/ws/dashboard/*";
-    public static final String COMMUNICATION_WS = "/ws/dashboard/communication/*";
-
-    public static final String AIRLINE = "/airline/";
-    public static final String AIRLINE_ADD = AIRLINE+"/add";
-    public static final String AIRLINE_UPD = AIRLINE+"/update/{code}";
 
 
     /************ ANNOUNCE REQUEST*************/
@@ -124,11 +119,19 @@ public class WSConstants extends CommonProperties {
     public static final String RESERVATION_WS_BY_ANNOUNCE = "/announce";
     public static final String RESERVATION_WS_UPDATE_ID = "/update/{id}";
     public static final String RESERVATION_WS_BY_ID = "/reservation";
-    public static final String RESERVATION_WS_CREATED = "/user/own";
-    public static final String RESERVATION_WS_RECEIVED = "/user/received";
+
 
 
     /******** IMG REQUEST ********/
     public static final String IMG_WS = "/ws/image/*";
+
+    /******** IMG REQUEST ********/
+    public static final String CITY_WS = "/ws/city/*";
+
+
+
+    /************ ADMIN DASHBOARD REQUEST*************/
+    public static final String DASHBOARD_WS = "/ws/" + DASHBOARD+"/*";
+    public static final String DASHBOARD_DELETE = "/delete/{code}";
 
 }

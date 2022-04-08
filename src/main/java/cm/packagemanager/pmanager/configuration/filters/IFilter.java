@@ -1,6 +1,5 @@
 package cm.packagemanager.pmanager.configuration.filters;
 
-import org.apache.http.HttpResponse;
 
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServletResponse;
