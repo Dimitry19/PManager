@@ -104,18 +104,23 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
         headerAccessor.setLeaveMutable(true);
 
-        Notification notification = new Notification(notificationVO.getId(),notificationVO.getTitle(), notificationVO.getMessage(), notificationVO.getType(), notificationVO.getRandom());
+        Notification notification = null;
 
         Map map= new HashMap();
 
-           switch (notification.getType()) {
+           switch (notificationVO.getType()) {
                case RESERVATION:
                case ANNOUNCE:
                case COMMENT:
+
+                   notification = new Notification(notificationVO.getId(),notificationVO.getAnnounceId(),notificationVO.getTitle(), notificationVO.getMessage(), notificationVO.getType(), notificationVO.getRandom());
+
                    map= announceListeners;
                    break;
 
                case USER:
+                    notification = new Notification(notificationVO.getId(),notificationVO.getUserId(),notificationVO.getTitle(), notificationVO.getMessage(), notificationVO.getType(), notificationVO.getRandom());
+
                    map= userListeners;
                    break;
             }
@@ -125,18 +130,20 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
             Set users = subscribers.stream().map(UserVO::getUsername).collect(Collectors.toSet());
 
             finalMap=map;
-            listeners.stream().filter(l->users.contains(l)).forEach(l->{
+            Notification finalNotification = notification;
+
+        listeners.stream().filter(l->users.contains(l)).forEach(l->{
 
                 String sessionId = (String) finalMap.get(l);
                 headerAccessor.setSessionId(sessionId);
 
-                notification.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
+                finalNotification.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
                 List alreadySentForUser= (List)sessionManager.getFromSession(l);
 
                 if(CollectionsUtils.isEmpty(alreadySentForUser) ||
-                        (CollectionsUtils.isNotEmpty(alreadySentForUser) && !alreadySentForUser.contains(notification))){
-                    messagingTemplate.convertAndSendToUser(sessionId,notification.getTopic(), notification, headerAccessor.getMessageHeaders());
-                    alreadySentForUser.add(notification);
+                        (CollectionsUtils.isNotEmpty(alreadySentForUser) && !alreadySentForUser.contains(finalNotification))){
+                    messagingTemplate.convertAndSendToUser(sessionId, finalNotification.getTopic(), finalNotification, headerAccessor.getMessageHeaders());
+                    alreadySentForUser.add(finalNotification);
                     sessionManager.removeToSession(l);
                     sessionManager.addToSession(l,alreadySentForUser);
                 }
@@ -241,7 +248,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
             NotificationVO notification = new NotificationVO();
 
-            notification.setTitle("Notification");
+            notification.setTitle(_title(event.getType()));
             notification.setAnnounceId(event.getId());
             notification.setUserId(event.getUserId());
             notification.setMessage(event.getMessage());
@@ -291,9 +298,13 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
         if(CollectionsUtils.isNotEmpty(notifications)){
 
             notifications.removeIf(n->((NotificationVO) n).getRandom().equals(notification.getRandom()));
-
         }
+    }
 
+    String _title(NotificationType type){
+        StringBuilder tb = new StringBuilder("Notification");
+        tb.append(type.toValue());
+        return tb.toString();
     }
 
 }

@@ -66,6 +66,24 @@ public class SwaggerApiConfig  extends CommonProperties {
     private String apiGroupNameCity;
 
 
+
+    @Value("${swagger.api.contact}")
+    private String apiContact;
+
+    @Value("${swagger.api.info.title}")
+    private String apiInfoTitle;
+
+    @Value("${swagger.api.info.description}")
+    private String apiInfoDescription;
+
+    @Value("${swagger.api.info.licence}")
+    private String apiInfoLicence;
+
+    @Value("${swagger.api.info.version}")
+    private String apiInfoVersion;
+
+
+
    @Bean
     public Docket announcesApi() {
         return createDocket(apiGroupNameAnnounce, contextRoot+"/ws/announce.*");
@@ -166,13 +184,13 @@ public class SwaggerApiConfig  extends CommonProperties {
     }
 
     private ApiInfo apiInfo() {
-        Contact contact = new Contact("Dimitri S. / Ludovic N.", "www.travelpost-services.info", "travelpostservices@gmail.com");
+        Contact contact = new Contact(apiContact, travelPostDomain, travelPostEmail);
 
-        return new ApiInfoBuilder().title("Tr@vel Post REST API")
-                .description("Tr@vel Post REST API reference for developers")
+        return new ApiInfoBuilder().title(apiInfoTitle)
+                .description(apiInfoDescription)
                 .termsOfServiceUrl("")
-                .contact(contact).license("Tr@vel Post License")
-                .licenseUrl("").version("1.0").build();
+                .contact(contact).license(apiInfoLicence)
+                .licenseUrl("").version(apiInfoVersion).build();
     }
 
     @Bean

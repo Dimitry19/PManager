@@ -9,4 +9,10 @@ public class CommonProperties {
 
 	@Value("${server.servlet.context-path}")
 	protected String contextRoot;
+
+	@Value("${tp.travelpost.app.domain}")
+	protected String travelPostDomain;
+
+	@Value("${tp.travelpost.app.email}")
+	protected String travelPostEmail;
 }

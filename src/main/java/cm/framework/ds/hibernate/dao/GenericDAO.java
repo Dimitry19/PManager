@@ -60,6 +60,8 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     List<T> findBy(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception;
 
+    List<T> findBy(String namedQuery, Class<T> clazz, Map params, PageBy pageBy,String... filters) throws Exception;
+
     List<T> findByUserNameQuery(String queryName, Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
 
     int countByNameQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception;

@@ -56,10 +56,10 @@ public class ReservationServiceImpl extends Generic implements ReservationServic
 
         switch (findBy){
             case ANNOUNCE:
-                return dao.countByNameQuery(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, id, ANNOUNCE_PARAM, pageBy);
+                return dao.countByNameQuery(ReservationVO.FIND_BY_ANNOUNCE, ReservationVO.class, id, ANNOUNCE_PARAM, pageBy);
             case USER:
                 if(type == null || type == ReservationType.CREATED ){
-                    return dao.countByNameQuery(ReservationVO.FINDBYUSER, ReservationVO.class, id, USER_PARAM, pageBy) ;
+                    return dao.countByNameQuery(ReservationVO.FIND_BY_USER, ReservationVO.class, id, USER_PARAM, pageBy) ;
                 }
                 return CollectionsUtils.size(reservationsByUser(id,type,pageBy));
         }

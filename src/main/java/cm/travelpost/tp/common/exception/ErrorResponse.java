@@ -20,7 +20,7 @@ public class ErrorResponse {
     private String message;
     private List details = new ArrayList();
     private String[] code;
-    private int retCode;
+    private int retCode=-1;
 
 
     public ErrorResponse() {

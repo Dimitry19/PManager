@@ -99,6 +99,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             update(subscription);
             String message= MessageFormat.format(notificationMessagePattern,subscriber.getUsername(),
                     " s'est abonné "," à votre profil");
+
             generateEvent(subscription,message);
         } else throw new UserException("Une erreur survenue pendant l'abonnement, veuillez reessayer");
     }
@@ -606,13 +607,11 @@ public class UserDAOImpl extends Generic implements UserDAO {
         if (CollectionsUtils.isNotEmpty(subscribers)){
             try {
                 fillProps(props,user.getId(),message, user.getId(),subscribers);
-                generateEvent( NotificationType.USER);
+                generateEvent(NotificationType.USER);
             } catch (Exception e) {
                 logger.error("Erreur durant la generation de l'event {}",e);
                 e.printStackTrace();
             }
-
         }
-
     }
 }

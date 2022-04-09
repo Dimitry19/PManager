@@ -495,7 +495,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     public List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception {
 
         try {
-            return findBy(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, id, ANNOUNCE_PARAM, null);
+            return findBy(ReservationVO.FIND_BY_ANNOUNCE, ReservationVO.class, id, ANNOUNCE_PARAM, null);
         } catch (AnnounceException e) {
             logger.error("Erreur durant la recuperation des reservations liées à l'annonce id={}", id);
             throw e;

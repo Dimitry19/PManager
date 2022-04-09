@@ -20,16 +20,18 @@ import java.util.Set;
 @Entity
 @Table(name = "RESERVATION")
 @NamedQueries({
-        @NamedQuery(name = ReservationVO.FINDBYANNOUNCE, query = " select r from  ReservationVO as r where r.announce.id =: announceId"),
-        @NamedQuery(name = ReservationVO.FINDBYUSER, query = " select r from  ReservationVO as r where r.user.id =: userId"),
+        @NamedQuery(name = ReservationVO.FIND_BY_ANNOUNCE, query = " select r from  ReservationVO as r where r.announce.id =: announceId"),
+        @NamedQuery(name = ReservationVO.FIND_BY_USER, query = " select r from  ReservationVO as r where r.user.id =: userId"),
         @NamedQuery(name = ReservationVO.FIND_ANNOUNCE_USER, query = " select r from  ReservationVO as r inner join r.announce a where a.user.id =: userId"),
+        @NamedQuery(name = ReservationVO.FIND_BY_ANNOUNCE_AND_USER_AND_VALIDATE, query = " select r from  ReservationVO as r where r.announce.id =:announceId  and r.user.id =: userId and r.validate =:validate"),
 })
-@Where(clause = FilterConstants.FILTER_WHERE_RESERVATION_CANC_COMPLETED)
+@Where(clause = FilterConstants.FILTER_WHERE_RESERVATION_CANC)
 public class ReservationVO extends CommonVO {
 
-    public static final String FINDBYANNOUNCE = "cm.travelpost.tp.announce.ent.vo.ReservationVO.findByAnnounce";
-    public static final String FINDBYUSER = "cm.travelpost.tp.announce.ent.vo.ReservationVO.findByUser";
+    public static final String FIND_BY_ANNOUNCE = "cm.travelpost.tp.announce.ent.vo.ReservationVO.findByAnnounce";
+    public static final String FIND_BY_USER = "cm.travelpost.tp.announce.ent.vo.ReservationVO.findByUser";
     public static final String FIND_ANNOUNCE_USER = "cm.travelpost.tp.announce.ent.vo.ReservationVO.findByAnnounceUser";
+    public static final String FIND_BY_ANNOUNCE_AND_USER_AND_VALIDATE = "cm.travelpost.tp.announce.ent.vo.ReservationVO.findByAnnounceAndUserValidate";
     public static final String SQL_FIND_BY_USER = " FROM ReservationVO r where r.user.id =:userId";
 
 

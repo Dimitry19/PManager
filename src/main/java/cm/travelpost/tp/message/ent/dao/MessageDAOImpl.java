@@ -221,7 +221,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
 
         if (CollectionsUtils.isNotEmpty(subscribers)){
             fillProps(props,comment.getId().getId(),message, user.getId(),subscribers);
-            generateEvent( NotificationType.COMMENT);
+            generateEvent( NotificationType.ANNOUNCE);
         }
     }
 }

@@ -9,10 +9,12 @@ import cm.travelpost.tp.common.utils.StringUtils;
 
 public enum NotificationType {
 
-    USER("Notification utilisateur"),
-    COMMENT("Notification commentaire"),
-    RESERVATION("Notification reservation"),
-    ANNOUNCE("Notification annonce");
+    USER("Utilisateur"),
+    COMMENT("Commentaire"),
+    RESERVATION("Reservation"),
+    SUBSCRIBE("Abonnement"),
+    UNSUBSCRIBE("Desabonnement"),
+    ANNOUNCE(" Annonce");
 
     String value;
 

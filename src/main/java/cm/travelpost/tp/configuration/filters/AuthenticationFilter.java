@@ -76,18 +76,18 @@ public class AuthenticationFilter extends CommonFilter {
         boolean isNotUpload=!uri.contains(WSConstants.UPLOAD);
         boolean isDashBoard=uri.contains(WSConstants.DASHBOARD);
         String username=request.getHeader(sessionHeader);
-        int re =0;
+        boolean isAdminRole=false;
 
         if(StringUtils.isNotEmpty(username)){
             // Ici  je verifie si l'utilisateur a le role ADMIN pour pouvoir acceder à la dashboard
             UserVO user=userService.findByUsername(username, Boolean.FALSE);
-            re = CollectionsUtils.size(user.getRoles()
+            isAdminRole = CollectionsUtils.size(user.getRoles()
                     .stream()
                     .map(RoleVO::getDescription)
-                    .filter(r->r==RoleEnum.ADMIN).collect(Collectors.toList()));
+                    .filter(r->r==RoleEnum.ADMIN).collect(Collectors.toList()))!=0;
         }
 
-        if((!isConfirm && isService && isNotApiKey && isNotUpload ) ||(re== 0 && isDashBoard)){
+        if((!isConfirm && isService && isNotApiKey && isNotUpload ) ||(!isAdminRole  && isDashBoard)){
             error(response,false);
             return false;
         }

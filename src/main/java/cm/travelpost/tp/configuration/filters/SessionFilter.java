@@ -102,13 +102,14 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
     @Override
     public void error(HttpServletResponse response) throws IOException {
 
+        ErrorResponse errorResponse = new ErrorResponse();
         String[] codes=new String[1];
         codes[0]= "401";
-        ErrorResponse errorResponse = new ErrorResponse();
         List<String> details= new ArrayList();
+        details.add("Token invalide , se connecter de nouveau");
         errorResponse.setCode(codes);
         errorResponse.setDetails(details);
-        errorResponse.setMessage("Token invalide , se connecter de nouveau");
+        errorResponse.setMessage(details.get(0));
 
         byte[] responseToSend = restResponseBytes(errorResponse);
         response.setHeader("Content-Type", "application/json");

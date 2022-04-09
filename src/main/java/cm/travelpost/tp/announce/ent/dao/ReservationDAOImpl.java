@@ -83,30 +83,27 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         checkUserReservation(announce, userAnnounces);
         checkRemainWeight(announce, reservationDTO.getWeight());
 
-        List<ReservationVO> reservations = findByUserNameQuery(ReservationVO.SQL_FIND_BY_USER, ReservationVO.class, user.getId(),null);
+        List<ReservationVO> reservations = reservationByAnnounceAndUser(user.getId(),announce.getId(), ValidateEnum.INSERTED,null);
         if (CollectionsUtils.isNotEmpty(reservations)) {
 
-            List<ReservationVO> anReservations = Optional.ofNullable(reservations
+            /*List<ReservationVO> anReservations = Optional.ofNullable(reservations
                     .stream()
                     .filter(res -> res.getValidate().equals(ValidateEnum.INSERTED) && res.getAnnounce().getId().equals(announce.getId()))
-                    .collect(Collectors.toList())).get();
+                    .collect(Collectors.toList())).get();*/
 
-            if (CollectionsUtils.isNotEmpty(anReservations)) {
+            ReservationVO rsv = (ReservationVO) CollectionsUtils.getFirst(reservations);
+            rsv.getAnnounce().setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));
+            rsv.setWeight(rsv.getWeight().add(reservationDTO.getWeight()));
 
-                ReservationVO rsv = (ReservationVO) CollectionsUtils.getFirst(anReservations);
-                rsv.getAnnounce().setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));
-                rsv.setWeight(rsv.getWeight().add(reservationDTO.getWeight()));
+            handleCategories(rsv, reservationDTO.getCategories());
 
-                handleCategories(rsv, reservationDTO.getCategories());
+            StringBuilder noteBuilder = new StringBuilder();
+            noteBuilder.append(StringUtils.isNotEmpty(rsv.getDescription()) ? rsv.getDescription() + "\n" : "")
+                    .append(StringUtils.isNotEmpty(reservationDTO.getDescription()) ? reservationDTO.getDescription() + "\n" : "");
 
-                StringBuilder noteBuilder = new StringBuilder();
-                noteBuilder.append(StringUtils.isNotEmpty(rsv.getDescription()) ? rsv.getDescription() + "\n" : "")
-                        .append(StringUtils.isNotEmpty(reservationDTO.getDescription()) ? reservationDTO.getDescription() + "\n" : "");
+            rsv.setDescription(noteBuilder.toString());
 
-                rsv.setDescription(noteBuilder.toString());
-
-                return (ReservationVO)merge(rsv);
-            }
+            return (ReservationVO)merge(rsv);
         }
 
         announce.setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));
@@ -120,8 +117,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         reservation.setStatus(StatusEnum.VALID);
         save(reservation);
         String message= MessageFormat.format(notificationMessagePattern,user.getUsername(),
-                " a fait une reservation de ["+reservation.getWeight()+" Kg ] sur votre annonce "+announce.getDeparture() +"/"+announce.getArrival(),
-                " du " + DateUtils.getDateStandard(announce.getStartDate())
+                " a fait une reservation de ["+reservation.getWeight()+" Kg ] sur votre annonce ["+announce.getDeparture() +"]-["+announce.getArrival(),
+                " ] du " + DateUtils.getDateStandard(announce.getStartDate())
                         + " au "+ DateUtils.getDateStandard(announce.getEndDate()));
         generateEvent(announce,message);
         return reservation;
@@ -254,7 +251,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
 
     @Override
     public List<ReservationVO> reservationByAnnounce(Long announceId, PageBy pageBy) throws Exception {
-        List<ReservationVO> reservations = findBy(ReservationVO.FINDBYANNOUNCE, ReservationVO.class, announceId, ANNOUNCE_PARAM, pageBy);
+        List<ReservationVO> reservations = findBy(ReservationVO.FIND_BY_ANNOUNCE, ReservationVO.class, announceId, ANNOUNCE_PARAM, pageBy);
         handleReservationInfos(reservations);
         return reservations;
 
@@ -271,11 +268,22 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
             case CREATED:
                 reservations = findByUserId(ReservationUserVO.class, userId, pageBy);
                 break;
+
         }
         handleReservationInfos(reservations);
         return reservations;
     }
 
+    @Override
+    public List reservationByAnnounceAndUser(Long userId, Long announceId, ValidateEnum validateEnum,PageBy pageBy) throws Exception {
+
+        Map params = new HashMap();
+        params.put(USER_PARAM,userId);
+        params.put(ANNOUNCE_PARAM,announceId);
+        params.put(VALIDATE_PARAM,validateEnum);
+        return findBy(ReservationVO.FIND_BY_ANNOUNCE_AND_USER_AND_VALIDATE, ReservationVO.class, params, null,null);
+
+    }
 
     private void handleReservationInfos(List reservations) {
         if (CollectionsUtils.isNotEmpty(reservations)) {
@@ -345,14 +353,12 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         Set subscribers=new HashSet();
         Long id =null;
         UserVO user=null;
-        NotificationType type=null;
 
         if(obj instanceof AnnounceVO){
 
             AnnounceVO announce= (AnnounceVO) obj;
             user= announce.getUser();
             id=announce.getId();
-            type=NotificationType.ANNOUNCE;
         }
 
         if (obj instanceof ReservationVO){
@@ -360,14 +366,13 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
             ReservationVO reservation= (ReservationVO)obj;
             user= reservation.getUser();
             id=reservation.getId();
-            type=NotificationType.RESERVATION;
         }
 
         subscribers.add(user);
 
         if (CollectionsUtils.isNotEmpty(subscribers)){
             fillProps(props,id,message, user.getId(),subscribers);
-            generateEvent(type);
+            generateEvent(NotificationType.ANNOUNCE);
         }
     }
 

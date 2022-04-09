@@ -18,16 +18,18 @@ public class Notification {
     private String token;
     private NotificationType type;
     private Long  random;
+    private Long  elementId;
 
     public Notification() {
     }
 
-    public Notification(Long id,String title, String messageBody, NotificationType type, Long  random) {
+    public Notification(Long id, Long elementId,String title, String messageBody, NotificationType type, Long  random) {
         this.title = title;
         this.message = messageBody;
         this.type = type;
         this.random = random;
         this.id=id;
+        this.elementId=elementId;
     }
 
     public Notification(String title, String messageBody, String topic, Long random) {

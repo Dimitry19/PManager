@@ -8,6 +8,7 @@ import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
+import cm.travelpost.tp.security.PasswordGenerator;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.controller.RedirectType;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
@@ -102,20 +103,6 @@ public class UserController extends CommonController {
                     return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
                 }
 
-
-                /*if (mailSenderSendGrid.manageResponse(sent)) {
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
-                    response.setStatus(200);
-                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-
-                } else {
-                    pmResponse.setRetCode(sent.getStatusCode());
-                    pmResponse.setRetDescription(sent.getBody());
-                    response.setStatus(sent.getStatusCode());
-                    userService.remove(usr);
-                    return new ResponseEntity<>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-                }*/
             }
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de register: ", e);
@@ -198,7 +185,6 @@ public class UserController extends CommonController {
     ResponseEntity<Object> login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login) throws Exception {
         logger.info("login request in");
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.addCookie(new Cookie("username", login.getUsername()));
         UserVO user = null;
 
 
@@ -212,7 +198,9 @@ public class UserController extends CommonController {
                 if (user != null) {
                     user.setRetCode(WebServiceResponseCode.OK_CODE);
                     user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+                    cookie(response,user.getUsername(),user.getPassword());
                     return new ResponseEntity<>(user, HttpStatus.OK);
+
                 } else {
                     WSCommonResponseVO commonResponse = new WSCommonResponseVO();
                     commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
@@ -742,22 +730,60 @@ public class UserController extends CommonController {
 
     @RequestMapping(value = WSConstants.USER_WS_LOGOUT, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
     public @ResponseBody
-    ResponseEntity<Response> logout(HttpServletRequest request, HttpServletResponse response, @RequestParam  @Valid String username) throws IOException {
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equalsIgnoreCase(username)) {
-                cookie.setValue(null);
-                cookie.setMaxAge(0);
-                cookie.setPath(request.getContextPath());
-                response.addCookie(cookie);
-            }
-        }
+    ResponseEntity<Response> logout(HttpServletRequest request, HttpServletResponse response, @RequestParam  @Valid String username) throws Exception {
+
+        //TODO Gerer les cookies pour la deconnexion
 
         Response pmResponse = new Response();
-        pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-        pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
-        return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+
+        UserVO user = userService.findByUsername(username,false);
+
+       if (user!=null){
+
+           for (Cookie cookie : request.getCookies()) {
+
+//               cookie.setValue(null);
+//               cookie.setMaxAge(0);
+//               cookie.setPath(request.getContextPath());
+//               response.addCookie(cookie);
+//               pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+//               pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+//               return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+
+               if (StringUtils.equals(cookie.getValue(),_cookie(user.getUsername(),user.getPassword()))) {
+
+                   cookie.setValue(null);
+                   cookie.setMaxAge(0);
+                   cookie.setPath(request.getContextPath());
+                   response.addCookie(cookie);
+                   pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                   pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+                   return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+
+
+               }
+                   pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                   pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+                   return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+           }
+       }else{
+           pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+           pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+           return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+       }
+       throw new UserNotFoundException(WebServiceResponseCode.ERROR_LOGOUT_LABEL);
     }
 
+    private void  cookie(HttpServletResponse response,String username, String password){
+        Cookie cookie =new Cookie("_tps_", _cookie(username,password));
+        cookie.setSecure(true);
+        cookie.setDomain(travelPostDomain);
+        cookie.setMaxAge(3600);
+        response.addCookie(cookie);
+    }
+    private String _cookie(String username, String password){
 
+        return PasswordGenerator.encrypt(username).concat(password.substring(0, password.length()-4).concat(password.substring(2,password.length()-1)));
 
+    }
 }

@@ -46,6 +46,7 @@ public class WebServiceResponseCode {
     public static final String ERROR_INVALID_TOKEN_REGISTER_LABEL = "Token invalide , peut etre le lien a deja expire";
     public static final String ERROR_USED_TOKEN_REGISTER_LABEL = "Le compte a deje ete active";
     public static final String ERROR_LOGIN_LABEL = "Verifier les donn?es d'accès";
+    public static final String ERROR_LOGOUT_LABEL = "Erreur durant la deconnexion";
 
     public static final String ERROR_UPDATE_USER_LABEL = "Erreur durant l'ajournement des données";
 

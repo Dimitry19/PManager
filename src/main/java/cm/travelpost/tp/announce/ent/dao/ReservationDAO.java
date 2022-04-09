@@ -6,6 +6,7 @@ import cm.framework.ds.hibernate.dao.CommonDAO;
 import cm.travelpost.tp.common.ent.vo.CommonVO;
 import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.ReservationType;
+import cm.travelpost.tp.common.enums.ValidateEnum;
 import cm.travelpost.tp.ws.requests.announces.ReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.ValidateReservationDTO;
@@ -31,4 +32,6 @@ public interface ReservationDAO<T extends CommonVO> extends CommonDAO {
     List<ReservationVO> reservationByAnnounce(Long announceId, PageBy pageBy) throws Exception;
 
     List<T> reservationByUser(Long userId, ReservationType type, PageBy pageBy) throws Exception;
+
+    List<T> reservationByAnnounceAndUser(Long userId, Long announceId, ValidateEnum validateEnum,PageBy pageBy) throws Exception;
 }
