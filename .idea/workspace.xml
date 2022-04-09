@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.b4505d5618d37e50bdcb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.b4505d5618d37e50bdcb.js" beforeDir="false" />
-    </list>
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -292,7 +287,7 @@
       <path value="$PROJECT_DIR$/src/main/webapp/src/assets/css/font-awesome/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -743,14 +738,7 @@
       <workItem from="1649064466406" duration="8855000" />
       <workItem from="1649138359350" duration="15863000" />
       <workItem from="1649367340980" duration="152000" />
-      <workItem from="1649367515711" duration="12359000" />
-    </task>
-    <task id="LOCAL-00027" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
-      <created>1619435053269</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1619435053269</updated>
+      <workItem from="1649367515711" duration="12682000" />
     </task>
     <task id="LOCAL-00028" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;logs/PackManager/application.log">
       <created>1619435149615</created>
@@ -1088,11 +1076,18 @@
       <option name="project" value="LOCAL" />
       <updated>1649417450658</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="Merge branch 'BetaVersion202203' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into BetaVersion2022&#10;&#10;# Conflicts:&#10;#&#9;src/main/resources/static/index.html">
+      <created>1649445865844</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1649445865844</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="513283000" />
+    <option name="totallyTimeSpent" value="513606000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1105,7 +1100,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.43705294" side_tool="true" weight="0.34912717" />
@@ -1124,8 +1118,8 @@
       <window_info id="Image Layers" order="3" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.60228896" weight="0.36159602" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5629471" visible="true" weight="0.34912717" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="13" sideWeight="0.60228896" visible="true" weight="0.36159602" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5629471" weight="0.34912717" />
       <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
       <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.32689655" />
       <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49642345" weight="0.46633416" />
