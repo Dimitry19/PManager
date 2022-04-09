@@ -84,6 +84,14 @@ public class Notification {
 
     public void setToken(String token) {  this.token = token;  }
 
+    public Long getElementId() {
+        return elementId;
+    }
+
+    public void setElementId(Long elementId) {
+        this.elementId = elementId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
