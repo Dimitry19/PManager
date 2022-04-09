@@ -1,11 +1,11 @@
 package cm.framework.ds.hibernate.dao;
 
-import cm.packagemanager.pmanager.common.ent.vo.PageBy;
-import cm.packagemanager.pmanager.common.event.IEvent;
-import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
-import cm.packagemanager.pmanager.common.exception.RecordNotFoundException;
-import cm.packagemanager.pmanager.rating.ent.vo.RatingCountVO;
-import cm.packagemanager.pmanager.user.ent.vo.UserVO;
+import cm.travelpost.tp.common.ent.vo.PageBy;
+import cm.travelpost.tp.common.event.IEvent;
+import cm.travelpost.tp.common.exception.BusinessResourceException;
+import cm.travelpost.tp.common.exception.RecordNotFoundException;
+import cm.travelpost.tp.rating.ent.vo.RatingCountVO;
+import cm.travelpost.tp.user.ent.vo.UserVO;
 import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +44,10 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     List<T> all(Class<T> clazz, PageBy pageBy) throws Exception;
 
-    List<T> all(Class<T> clazz) throws Exception;
+	@Transactional(readOnly = true)
+	List<T> findByJoinUserId(Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
+
+	List<T> all(Class<T> clazz) throws Exception;
 
     List<T> all(Class<T> clazz, PageBy pageBy, String... filters) throws Exception;
 
@@ -56,6 +59,8 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception;
 
     List<T> findBy(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception;
+
+    List<T> findBy(String namedQuery, Class<T> clazz, Map params, PageBy pageBy,String... filters) throws Exception;
 
     List<T> findByUserNameQuery(String queryName, Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
 
