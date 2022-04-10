@@ -1,9 +1,9 @@
 package cm.framework.ds.hibernate.dao;
 
-import cm.packagemanager.pmanager.common.Constants;
-import cm.packagemanager.pmanager.common.event.IEvent;
-import cm.packagemanager.pmanager.common.exception.BusinessResourceException;
-import cm.packagemanager.pmanager.common.exception.UserException;
+import cm.travelpost.tp.common.Constants;
+import cm.travelpost.tp.common.event.IEvent;
+import cm.travelpost.tp.common.exception.BusinessResourceException;
+import cm.travelpost.tp.common.exception.UserException;
 import org.hibernate.query.Query;
 
 import java.io.Serializable;
