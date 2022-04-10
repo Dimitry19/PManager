@@ -35,7 +35,7 @@ public class DefaultController extends CommonController {
 		response.sendRedirect(getRedirectPage(RedirectType.INDEX));
 	}
 
-	@RequestMapping (value = "/index", method = RequestMethod.GET)
+	@RequestMapping (value = "/index1234", method = RequestMethod.GET)
 	public void error(HttpServletResponse response) throws Exception {
 		System.out.println("index -> index.html.....");
 		int totalUsers=userService.count(null, null,null);
