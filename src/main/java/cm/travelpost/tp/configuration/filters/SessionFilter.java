@@ -44,6 +44,10 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
     private static Logger logger = LoggerFactory.getLogger(SessionFilter.class);
 
+
+    @Autowired
+    UserService userService;
+
     @Value("${custom.user.guest}")
     private String guest;
 
@@ -65,9 +69,19 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
     @Value("${jwt.expirationDateInMs}")
     private int jwtExpirationInMs;
 
+    @Value("${tp.travelpost.app.escape.announces}")
+    private String escapeAnnounce;
 
-    @Autowired
-    UserService userService;
+    @Value("${tp.travelpost.app.escape.other}")
+    private String escapeOther;
+
+    @Value("${tp.travelpost.app.escape.home}")
+    private String escapeHome;
+
+    @Value("${tp.travelpost.postman.enable}")
+    private boolean postman;
+
+
 
 
     @Override
@@ -80,7 +94,8 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
             // get  only the Token
             logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
 
-            if(!validate(request)){
+
+            if(!validate(request) && !postman){
                 error(response);
             }else{
                 filterChain.doFilter(request, response);
@@ -140,10 +155,6 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
         boolean isServiceLogin=isService && isLogin;
         boolean isServiceLogout=isService && isLogout;
-
-//        if(StringUtils.isEmpty(username)){
-//            username="Guest";
-//        }
 
         if(StringUtils.equals(username,guest)){
             return Boolean.TRUE;

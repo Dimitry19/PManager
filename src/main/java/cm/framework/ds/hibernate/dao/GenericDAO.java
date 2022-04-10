@@ -36,7 +36,9 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     @Transactional
     T findById(Class<T> clazz, ID id, String... filters);
 
-    void delete(Class<T> clazz, ID id, boolean enableFlushSession) throws RecordNotFoundException;
+    void remove(Class<T> clazz, ID id, boolean enableFlushSession) throws RecordNotFoundException;
+
+    void delete(Class<T> clazz, ID id) throws RecordNotFoundException;
 
     List<T> findByUser(Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
 

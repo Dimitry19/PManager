@@ -1,19 +1,24 @@
 package cm.travelpost.tp.common.exception;
 
+import cm.travelpost.tp.common.properties.CommonProperties;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.validation.UnexpectedTypeException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ErrorResponse {
+@Component
+public class ErrorResponse extends CommonProperties {
 
     protected final Log logger = LogFactory.getLog(ErrorResponse.class);
 
@@ -45,7 +50,9 @@ public class ErrorResponse {
     public ErrorResponse(Exception ex) {
         logger.error(ErrorResponse.class +" {}" ,ex);
         StringBuilder stringBuilder = new StringBuilder();
+
         HttpMessageNotReadableException is;
+
         if (ex instanceof MethodArgumentNotValidException) {
             MethodArgumentNotValidException ob = (MethodArgumentNotValidException) ex;
             List<ObjectError> errors = ob.getBindingResult().getAllErrors();
@@ -58,6 +65,7 @@ public class ErrorResponse {
                 }
             }
         }
+
         if (ex instanceof HttpMessageNotReadableException) {
             setDefaultCodes();
             HttpMessageNotReadableException ob = (HttpMessageNotReadableException) ex;
@@ -98,7 +106,18 @@ public class ErrorResponse {
             AnnounceException ob = (AnnounceException) ex;
             stringBuilder.append(ob.getMessage());
         }
-        stringBuilder.append(ex.getMessage());
+
+        if (ex instanceof MaxUploadSizeExceededException) {
+            setDefaultCodes("maxFileSize.exception");
+            MaxUploadSizeExceededException ob = (MaxUploadSizeExceededException) ex;
+            stringBuilder.append("Limite de dimension a été depassé\n");
+            stringBuilder.append("La dimensione maximale accepté est de :1MB");
+        }
+
+        if (BooleanUtils.isFalse(ex instanceof MaxUploadSizeExceededException)) {
+            stringBuilder.append(ex.getMessage());
+        }
+
         this.message = stringBuilder.toString();
         this.retCode = -1;
         this.details.add(stringBuilder.toString());

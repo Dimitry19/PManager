@@ -97,7 +97,7 @@ public class ReviewController extends CommonController {
     @DeleteMapping(value = REVIEW_WS_DELETE, headers = WSConstants.HEADER_ACCEPT)
     public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         Response pmResponse = new Response();
 
         try {

@@ -43,8 +43,10 @@ public class MailController extends CommonController {
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(CONTACT_US_MAIL_WS)
     public ResponseEntity<Response> contactUS(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ContactUSDTO contactusDTO) {
+
         logger.info("contact us - request");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+
 
         Response pmResponse = new Response();
         try {

@@ -21,27 +21,29 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public class AirlineDAOImpl extends Generic implements AirlineDAO {
 
     private static Logger logger = LoggerFactory.getLogger(AirlineDAOImpl.class);
 
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)
     public AirlineVO add(String code,String description) throws Exception {
 
         if(StringUtils.isNotEmpty(code) && StringUtils.isNotEmpty(description)){
 
-            AirlineIdVO airlineId = new AirlineIdVO(code, Constants.DEFAULT_TOKEN);
-            AirlineVO airline= (AirlineVO) checkAndResolve(AirlineVO.class,airlineId);
+            AirlineIdVO id = new AirlineIdVO(code, Constants.DEFAULT_TOKEN);
+            AirlineVO airline= (AirlineVO) checkAndResolve(AirlineVO.class,id);
 
             if(airline!=null)
                 throw new Exception(" Compagnie aerienne ["+code+"] existe deja");
 
             airline= new AirlineVO();
-            airline.setId(airlineId);
+            airline.setId(id);
             airline.setDescription(description);
 
-            Long id =(Long) save(airline);
+             save(airline);
             return (AirlineVO) get(AirlineVO.class,id);
         }
         return null;
@@ -81,6 +83,23 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
         }
         return false;
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class,BusinessResourceException.class, AnnounceException.class})
+    public boolean delete(AirlineIdVO id) throws BusinessResourceException {
+        logger.info("Airline delete");
+
+        try {
+            AirlineVO airline = (AirlineVO) findById(AirlineVO.class,id);
+            if(airline==null)
+                throw new Exception(" Compagnie aerienne ["+id.getCode()+"] inexistante");
+
+            return updateDelete(airline);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     @Override
     public AirlineVO findByCode(String code) throws Exception {
 
@@ -97,10 +116,8 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
     public boolean updateDelete(AirlineVO airline) throws Exception {
 
         if(airline!=null){
-            airline.setCancelled(true);
-            update(airline);
-            evict(airline);
-
+            airline.cancel();
+            merge(airline);
             AirlineVO upAirline = (AirlineVO) get(AirlineVO.class,airline.getId());
             return upAirline.isCancelled();
         }

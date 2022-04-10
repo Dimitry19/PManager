@@ -70,7 +70,7 @@ public class AnnounceController extends CommonController {
     ResponseEntity<Object> create(HttpServletResponse response, HttpServletRequest request,
                                       @RequestBody @Valid AnnounceDTO ar) throws AnnounceException {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         AnnounceVO announce = null;
 
         try {
@@ -116,7 +116,7 @@ public class AnnounceController extends CommonController {
     ResponseEntity<Object> update(HttpServletResponse response, HttpServletRequest request, @PathVariable("id") @Valid long id,
                                       @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("AnnounceController -update");
 
@@ -169,7 +169,7 @@ public class AnnounceController extends CommonController {
                                             @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws Exception {
 
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
 
@@ -220,7 +220,7 @@ public class AnnounceController extends CommonController {
                                                             @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException, Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
         PageBy pageBy = new PageBy(page, size);
@@ -275,7 +275,7 @@ public class AnnounceController extends CommonController {
                                                             @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException,Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
 
@@ -324,7 +324,7 @@ public class AnnounceController extends CommonController {
                                                             @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException,Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
 
@@ -360,7 +360,7 @@ public class AnnounceController extends CommonController {
     @DeleteMapping(value = DELETE, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") @Valid Long id) throws AnnounceException {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         Response pmResponse = new Response();
 
         try {
@@ -396,7 +396,7 @@ public class AnnounceController extends CommonController {
     @GetMapping(value = ANNOUNCE_WS_BY_ID_AND_SOURCE, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id , @RequestParam Source source) throws AnnounceException {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
         try {
             logger.info("retrieve announce request in");

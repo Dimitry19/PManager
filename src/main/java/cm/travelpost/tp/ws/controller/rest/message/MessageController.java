@@ -41,7 +41,7 @@ public class MessageController extends CommonController {
     public ResponseEntity<MessageVO> addMessage(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid MessageDTO mdto) throws Exception {
         HttpHeaders headers = new HttpHeaders();
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         logger.info("add message to announce request in");
 
         try {
@@ -70,7 +70,7 @@ public class MessageController extends CommonController {
                      @RequestBody @Valid UpdateMessageDTO umr) throws Exception {
 
         logger.info("Update message requestin");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("MessageController -update");
             umr.setId(id);
@@ -107,7 +107,7 @@ public class MessageController extends CommonController {
                                                            @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre un nombre positif") int page,
                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         logger.info("get all users request in");
         HttpHeaders headers = new HttpHeaders();
         PageBy pageBy = new PageBy(page, size);
@@ -149,7 +149,7 @@ public class MessageController extends CommonController {
                                                            @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre un nombre positif") int page,
                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         logger.info("get all users request in");
         HttpHeaders headers = new HttpHeaders();
         PageBy pageBy = new PageBy(page, size);
@@ -187,7 +187,7 @@ public class MessageController extends CommonController {
     @DeleteMapping(value = DELETE, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         Response pmResponse = new Response();
 
         try {
@@ -225,6 +225,7 @@ public class MessageController extends CommonController {
     @GetMapping(MESSAGES_WS)
     public ResponseEntity<PaginateResponse> messages(@Valid @Positive(message = "Page number should be a positive number") @RequestParam int page,
                                                      @Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
+
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();

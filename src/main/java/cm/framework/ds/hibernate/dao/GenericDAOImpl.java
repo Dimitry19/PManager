@@ -43,6 +43,7 @@ import java.util.*;
  * @param <ID>
  * @param <NID>
  */
+@Transactional
 public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable> extends AEvent<T> implements GenericDAO<T, ID, NID> {
 
 
@@ -60,6 +61,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String TRANSPORT_PARAM = "transport";
     protected static final String ANNOUNCE_PARAM = "announceId";
     protected static final String START_DATE_PARAM = "startDate";
+    protected static final String NAME_PARAM = "name";
     protected static final String SEARCH_PARAM = "search";
     protected static final String VALIDATE_PARAM = "validate";
     protected static final String ALIAS_ORDER = " as t order by t. ";
@@ -200,7 +202,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     @Transactional
-    public void delete(Class<T> clazz, ID id, boolean enableFlushSession) {
+    public void remove(Class<T> clazz, ID id, boolean enableFlushSession) {
         try {
             Session session = sessionFactory.getCurrentSession();
 
@@ -213,6 +215,22 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
                     // entités pas besoin de faire le flush car le flush fait la synchronisation entre l'entité et la session hibernate
                     // du coup cree une transaction et enverra en erreur la remove
                 }
+            }
+        } catch (Exception e) {
+            throw new BusinessResourceException(e.getMessage());
+        }
+
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+    public void delete(Class<T> clazz, ID id) {
+        try {
+            Session session = sessionFactory.getCurrentSession();
+
+            T ent = findByIdViaSession(clazz, id).get();
+            if (ent != null) {
+                session.delete(ent);
             }
         } catch (Exception e) {
             throw new BusinessResourceException(e.getMessage());
@@ -435,7 +453,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         Query query = session.createQuery(FROM + clazz.getName());
         pageBy(query, pageBy);
         List results = query.list();
-        return CollectionsUtils.isNotEmpty(results) ? results.size() : 0;
+        return CollectionsUtils.size(results);
     }
 
 

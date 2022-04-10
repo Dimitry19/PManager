@@ -5,8 +5,6 @@
 
 package cm.travelpost.tp.city.ent.vo;
 
-import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -20,7 +18,7 @@ import java.io.Serializable;
 
 })
 
-public class CityVO extends WSCommonResponseVO implements Serializable {
+public class CityVO  implements Serializable {
 
     private static final long serialVersionUID = -6128390864869421614L;
     public static final String AUTOCOMPLETE = "cm.travelpost.tp.city.ent.vo.CityVO.autoComplete";
@@ -75,4 +73,5 @@ public class CityVO extends WSCommonResponseVO implements Serializable {
 			return other.name == null;
         } else return name.equals(other.name);
 	}
+
 }
