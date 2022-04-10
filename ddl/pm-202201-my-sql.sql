@@ -25,9 +25,9 @@ create table AIRLINE
 
 create table CITY
 (
-    ID   VARCHAR not null
+    ID   VARCHAR(50) not null
         primary key,
-    NAME VARCHAR not null
+    NAME VARCHAR(255) not null
 );
 
 

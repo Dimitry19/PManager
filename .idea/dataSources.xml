@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Database" uuid="5bd01531-bd90-4f79-9ad4-e345b761356f">
+    <data-source source="LOCAL" name="HOME" uuid="5bd01531-bd90-4f79-9ad4-e345b761356f">
       <driver-ref>h2.unified</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:tcp://localhost/../../../db/manager</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="Hibernate" uuid="f5601717-7195-450b-ad74-d596ce5860c7">
-      <driver-ref>h2.unified</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.h2.Driver</jdbc-driver>
-      <jdbc-url>jdbc:h2:tcp://i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/cl6j8lyroz9fs4ut</jdbc-url>
     </data-source>
     <data-source source="LOCAL" name="DB MYSQL" uuid="32dd2d4f-ab58-49b7-85d8-9c9fa515f192">
       <driver-ref>mysql.8</driver-ref>
@@ -19,7 +13,7 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/cl6j8lyroz9fs4ut</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="Hibernate" uuid="733bbb2a-507e-490b-862c-a649762e3bbe">
+    <data-source source="LOCAL" name="Hibernate(MYSQL)" uuid="733bbb2a-507e-490b-862c-a649762e3bbe">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
@@ -30,7 +24,6 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:file:$PROJECT_DIR$/../database-h2/travelpost/manager;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
 </project>
