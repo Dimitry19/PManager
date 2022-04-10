@@ -1,5 +1,6 @@
 package cm.travelpost.tp.airline.ent.service;
 
+import cm.travelpost.tp.airline.ent.vo.AirlineIdVO;
 import cm.travelpost.tp.airline.ent.vo.AirlineVO;
 import cm.travelpost.tp.common.exception.DashboardException;
 import cm.travelpost.tp.ws.requests.CommonDTO;
@@ -16,5 +17,5 @@ public interface AirlineService {
 
     List<AirlineVO> all() throws Exception;
 
-    boolean delete(Long id);
+    boolean delete(AirlineIdVO id);
 }

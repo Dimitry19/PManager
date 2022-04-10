@@ -4,8 +4,6 @@ import cm.travelpost.tp.city.ent.vo.CityVO;
 import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.ws.requests.CommonDTO;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ public interface CityService extends InitializingBean {
 
     List<CityVO> cities(PageBy pageBy) throws Exception;
 
-    Page cities(Pageable pageable) throws Exception;
+//    Page cities(Pageable pageable) throws Exception;
 
     int count(Object o,PageBy pageBy) throws Exception;
 

@@ -1,4 +1,6 @@
 1-Modifier le lien(adresse IP de la base de données) + mot de passe
 2-Activer SSL
-3-Generer les packages
-4-Prendre les fichiers ddl ajournés
+3-Modifier la versions dans le pom
+4-Generer les packages(jar e war)
+5-Prendre les fichiers ddl ajournés
+6-Configuration externe des logs de l'application

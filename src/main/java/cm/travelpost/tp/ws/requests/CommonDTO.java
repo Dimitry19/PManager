@@ -7,7 +7,7 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public abstract class CommonDTO {
+public class CommonDTO {
 
 	@NotNull(message = "Le code de la compagnie doit etre valorisé")
 	@NotBlank(message = "Le code de la compagnie doit etre valorisé")

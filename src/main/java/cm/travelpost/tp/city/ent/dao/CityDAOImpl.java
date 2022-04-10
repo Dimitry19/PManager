@@ -4,7 +4,6 @@ package cm.travelpost.tp.city.ent.dao;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.city.ent.vo.CityVO;
 import cm.travelpost.tp.common.ent.vo.PageBy;
-import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
@@ -26,8 +25,6 @@ public class CityDAOImpl extends Generic implements CityDAO {
 
     private static Logger logger = LoggerFactory.getLogger(CityDAOImpl.class);
 
-   /* @Autowired
-    CityHelper helper;*/
 
     @Override
     @Transactional(readOnly = true)
@@ -39,7 +36,7 @@ public class CityDAOImpl extends Generic implements CityDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public int count(Object o,PageBy pageBy) throws AnnounceException,Exception {
+    public int count(Object o,PageBy pageBy) throws Exception {
         logger.info(" City - count");
          if(o == null) {
             return count(CityVO.class, pageBy);
@@ -52,8 +49,9 @@ public class CityDAOImpl extends Generic implements CityDAO {
     @Transactional(readOnly = true)
     public List<CityVO> cities(PageBy pageBy) throws Exception {
 
-        List<CityVO> announces = all(CityVO.class, pageBy,null );
-        return announces;
+        List<CityVO> cities = allAndOrderBy(CityVO.class, NAME_PARAM, false, pageBy);
+
+        return cities;
     }
 
 
@@ -82,15 +80,16 @@ public class CityDAOImpl extends Generic implements CityDAO {
      * @throws Exception
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public CityVO create(CommonDTO dto) throws Exception {
 
         if (dto != null) {
             CityVO city =   (CityVO)checkAndResolve(CityVO.class, dto.getCode());
 
             if(city !=null){
-                throw new Exception("Cette ville existe déjà");
+                return null;
             }
+            city = new CityVO();
             city.setId(dto.getCode());
             city.setName(dto.getName());
 
@@ -157,7 +156,7 @@ public class CityDAOImpl extends Generic implements CityDAO {
             String code = (String)id;
             CityVO city = city(code);
             if (city != null) {
-                delete(CityVO.class, code, true);
+                delete(CityVO.class, code);
                 return true;
             }
         } catch (Exception e) {

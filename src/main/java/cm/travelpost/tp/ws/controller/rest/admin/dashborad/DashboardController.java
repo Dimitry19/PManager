@@ -1,8 +1,10 @@
 package cm.travelpost.tp.ws.controller.rest.admin.dashborad;
 
 import cm.travelpost.tp.administrator.ent.enums.DashBoardObjectType;
+import cm.travelpost.tp.airline.ent.vo.AirlineIdVO;
 import cm.travelpost.tp.airline.ent.vo.AirlineVO;
 import cm.travelpost.tp.city.ent.vo.CityVO;
+import cm.travelpost.tp.common.Constants;
 import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.exception.DashboardException;
 import cm.travelpost.tp.constant.WSConstants;
@@ -40,43 +42,54 @@ public class DashboardController extends CommonController {
 	 * @return
 	 * @throws Exception
 	 */
-	@ApiOperation(value = "Add a company airlines or city ", response = Object.class)
+	@ApiOperation(value = "Add a company airlines or city ", response = AirlineVO.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful Added Company Airline/ City",
-					response = Object.class, responseContainer = "Object")})
+					response = AirlineVO.class, responseContainer = "Object")})
 	@PostMapping(value = WSConstants.CREATE, consumes = MediaType.APPLICATION_JSON,produces = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
 	ResponseEntity<Object> createCompanyOrCity(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid CommonDTO dto) throws DashboardException,Exception{
 
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
 
 		try {
 			createOpentracingSpan("DashboardController - createCompanyOrCity");
 
 			logger.info("createCompanyOrCity Operation ");
+			AirlineVO airline=null;
+			CityVO city=null;
 
-			Object  object = null;
+			Object o=null;
+
 
 			if (dto != null) {
 
 				switch (dto.getObjectType()){
 					case AIRLINE:
-						 object  = airplaneService.add(dto.getCode(), dto.getName());
+						o  = airlineService.add(dto.getCode(), dto.getName());
+						break;
 
 					case CITY:
-						object  = cityService.create(dto);
+						o  = cityService.create(dto);
+						break;
 
 				}
-				if (object != null) {
-					WSCommonResponseVO wsr = new WSCommonResponseVO();
-					wsr.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "La compagnie aerienne"));
-					wsr.setRetCode(WebServiceResponseCode.OK_CODE);
-					return  new ResponseEntity<>(wsr, HttpStatus.CREATED);
+				if (o instanceof AirlineVO) {
+
+					airline = (AirlineVO)o;
+					airline.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "L'element"));
+					airline.setRetCode(WebServiceResponseCode.OK_CODE);
+					return  new ResponseEntity(airline, HttpStatus.CREATED);
+				}
+
+				if (o instanceof CityVO) {
+					city = (CityVO)o;
+					return  new ResponseEntity(city, HttpStatus.CREATED);
 				}
 			}
 		} catch (DashboardException e) {
@@ -85,25 +98,27 @@ public class DashboardController extends CommonController {
 		}  finally {
 			finishOpentracingSpan();
 		}
-		WSCommonResponseVO commonResponse= new WSCommonResponseVO();
-		commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-		commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "La compagnie aerienne"));
-		return new ResponseEntity<>(commonResponse, HttpStatus.NOT_ACCEPTABLE);
+		WSCommonResponseVO wsCommonResponse = new WSCommonResponseVO();
+		wsCommonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "L'element"));
+		wsCommonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+		return  new ResponseEntity(wsCommonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+
 	}
 
-	@ApiOperation(value = "Update an airline / city ", response = Object.class)
+	@ApiOperation(value = "Update an airline / city ", response = AirlineVO.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 500, message = "Server error"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful Update Object",
-					response = Object.class, responseContainer = "Object")})
+					response = AirlineVO.class, responseContainer = "Object")})
 	@PutMapping(value = WSConstants.UPDATE, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
-	ResponseEntity<Object> updateCompanyOrCity(HttpServletResponse response, HttpServletRequest request, @PathVariable("code") @Valid String code,
+	public @ResponseBody ResponseEntity<Object> updateCompanyOrCity(HttpServletResponse response, HttpServletRequest request, @PathVariable("code") @Valid String code,
 								  @RequestBody @Valid CommonDTO dto) throws Exception {
 
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+
 		try {
 			createOpentracingSpan("DashboardController - updateCompanyOrCity");
 
@@ -118,7 +133,7 @@ public class DashboardController extends CommonController {
 
 			switch (dto.getObjectType()){
 				case AIRLINE:
-					airline  =  airplaneService.update(dto);
+					airline  =  airlineService.update(dto);
 				case CITY:
 					city = cityService.update(dto);
 
@@ -131,8 +146,8 @@ public class DashboardController extends CommonController {
 			}
 
 			if (city != null) {
-				city.setRetCode(WebServiceResponseCode.OK_CODE);
-				city.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "La ville"));
+//				city.setRetCode(WebServiceResponseCode.OK_CODE);
+//				city.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "La ville"));
 				return new ResponseEntity<>(city, HttpStatus.OK);
 			}else {
 				WSCommonResponseVO  commonResponse = new WSCommonResponseVO();
@@ -159,9 +174,10 @@ public class DashboardController extends CommonController {
 	 */
 	@ApiOperation(value = "Delete a company or city that we get  with an ID", response = Response.class)
 	@DeleteMapping(value = WSConstants.DELETE, headers = WSConstants.HEADER_ACCEPT)
-	public ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") @Valid Object o) throws Exception {
+	public @ResponseBody ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") @Valid String o) throws Exception {
 
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+
 		Response pmResponse = new Response();
 
 		try {
@@ -169,27 +185,30 @@ public class DashboardController extends CommonController {
 
 			logger.info("delete Operation ");
 
-			if(o instanceof Long){
+			if(o.contains("_"+Constants.DEFAULT_TOKEN)){
 
-				Long id = (Long)o;
+				String code = o.substring(0,o.lastIndexOf("_"+Constants.DEFAULT_TOKEN));
+				AirlineIdVO id = new AirlineIdVO();
+				id.setToken(Constants.DEFAULT_TOKEN);
+				id.setCode(code);
 
-				if (airplaneService.delete(id)) {
+
+				if (airlineService.delete(id)) {
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La compagnie aerienne"));
 					return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-
 				}
 
-			}
 
-			if(o instanceof String){
-				String id = (String) o;
-				if (cityService.delete(id)) {
+			}else{
+
+				    cityService.delete(o);
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La ville"));
 					return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-				}
 			}
+
+
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, (String)o));
 			return new ResponseEntity<>(pmResponse, HttpStatus.METHOD_NOT_ALLOWED);

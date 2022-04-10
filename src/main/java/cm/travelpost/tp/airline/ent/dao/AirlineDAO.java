@@ -1,5 +1,6 @@
 package cm.travelpost.tp.airline.ent.dao;
 
+import cm.travelpost.tp.airline.ent.vo.AirlineIdVO;
 import cm.travelpost.tp.airline.ent.vo.AirlineVO;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
@@ -18,6 +19,9 @@ public interface AirlineDAO {
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class,BusinessResourceException.class, AnnounceException.class})
     boolean delete(String code) throws DashboardException;
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class,BusinessResourceException.class, AnnounceException.class})
+    boolean delete(AirlineIdVO code) throws DashboardException;
 
     AirlineVO findByCode(String code) throws DashboardException,Exception;
 

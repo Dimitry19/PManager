@@ -8,8 +8,8 @@
 		<version>2.3.0.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>cm.packagermanager</groupId>
-	<artifactId>travelpost</artifactId>
+	<groupId>cm.travelpost</groupId>
+	<artifactId>tpservices</artifactId>
 	<version>1.0.0-beta-ssl</version>
 	<packaging>jar</packaging>
 	<name>TravelPost</name>
@@ -134,7 +134,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
+			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
 		<!--DATABASE-->
@@ -394,6 +394,14 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<!-- Ceci permet d'exclure devtools from maven spring build plugin-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludeDevtools>true</excludeDevtools>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

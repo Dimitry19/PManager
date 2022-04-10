@@ -15,4 +15,7 @@ public class CommonProperties {
 
 	@Value("${tp.travelpost.app.email}")
 	protected String travelPostEmail;
+
+	@Value("1MB")
+	protected String maxFileSize;
 }
