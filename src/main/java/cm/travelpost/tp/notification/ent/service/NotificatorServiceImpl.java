@@ -302,7 +302,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
     }
 
     String _title(NotificationType type){
-        StringBuilder tb = new StringBuilder("Notification");
+        StringBuilder tb = new StringBuilder("Notification ");
         tb.append(type.toValue());
         return tb.toString();
     }
