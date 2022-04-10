@@ -2,6 +2,13 @@
 <configuration>
 
 <property name="LOGS" value="./logs" />
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+    <logger name="jsonLogger" additivity="false" level="DEBUG">
+        <appender-ref ref="consoleAppender"/>
+    </logger>
+
 
 <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
     <layout class="ch.qos.logback.classic.PatternLayout">
@@ -47,9 +54,12 @@
 </appender>
 
 <!-- LOG everything at INFO level -->
-<root level="error">
-    <appender-ref ref="Console" />
-</root>
+<!--<root level="error">-->
+<!--    <appender-ref ref="Console" />-->
+<!--</root>-->
+    <root level="INFO">
+        <appender-ref ref="consoleAppender"/>
+    </root>
 
 <!-- LOG at D level -->
 <logger name="cm.travelpost.tp" level="trace" additivity="false">
