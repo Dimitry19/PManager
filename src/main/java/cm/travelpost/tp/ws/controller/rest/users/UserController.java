@@ -65,7 +65,7 @@ public class UserController extends CommonController {
     ResponseEntity<Response> register(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid RegisterDTO register) throws ValidationException, IOException {
 
         logger.info("register request in");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
         Response pmResponse = new Response();
 
@@ -131,7 +131,7 @@ public class UserController extends CommonController {
 
         try {
             logger.info("confirm request in");
-            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
             createOpentracingSpan("UserController -confirmation");
 
@@ -184,7 +184,7 @@ public class UserController extends CommonController {
     public @ResponseBody
     ResponseEntity<Object> login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login) throws Exception {
         logger.info("login request in");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         UserVO user = null;
 
 
@@ -233,7 +233,7 @@ public class UserController extends CommonController {
                                               HttpServletResponse response,
                                               @RequestParam("userId") @Valid Long userId,
                                               @RequestParam("enable") @Valid boolean enable) throws Exception {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         logger.info(" Manage notification request in");
         try {
             createOpentracingSpan("UserController - Manage notification");
@@ -264,7 +264,7 @@ public class UserController extends CommonController {
                                   @RequestBody @Valid UpdateUserDTO userDTO) throws UserException, ValidationException, IOException {
 
         logger.info("update user request in");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("UserController -update");
 
@@ -308,7 +308,7 @@ public class UserController extends CommonController {
                                           @RequestBody @Valid ManagePasswordDTO managePassword) throws UserException, ValidationException, IOException {
 
         logger.info("edit  user password  request in");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("UserController - edit password");
             Response pmresponse = new Response();
@@ -347,7 +347,7 @@ public class UserController extends CommonController {
 
 
         logger.info("password request in");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         Response pmResponse = new Response();
 
         try {
@@ -417,7 +417,7 @@ public class UserController extends CommonController {
     @DeleteMapping(value = WSConstants.DELETE, headers = WSConstants.HEADER_ACCEPT)
     public Response delete(HttpServletResponse response, HttpServletRequest request, @Valid @RequestParam("id") Long id) throws UserException {
         logger.info("delete request in");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         Response pmResponse = new Response();
 
         try {
@@ -459,7 +459,7 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController -getUser");
             logger.info("retrieve user request in");
-            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
             UserVO user = userService.getUser(id);
             if (user != null) {
                 return new ResponseEntity<UserVO>(user, HttpStatus.OK);
@@ -487,7 +487,7 @@ public class UserController extends CommonController {
     public ResponseEntity<Response> sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailDTO mail) throws MessagingException, IOException {
 
         logger.info("send mail request in");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         Response pmResponse = new Response();
 
         try {
@@ -570,7 +570,7 @@ public class UserController extends CommonController {
     public ResponseEntity<Response> subscribe(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, UserException {
 
         logger.info("subscribe request in");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
         Response pmResponse = new Response();
 
@@ -619,7 +619,7 @@ public class UserController extends CommonController {
                                                 @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, IOException {
 
         logger.info("unsubscribe request in");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
         Response pmResponse = new Response();
 
@@ -667,7 +667,7 @@ public class UserController extends CommonController {
     public ResponseEntity<PaginateResponse> subscriptions(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId) throws ValidationException, IOException {
 
         logger.info("subscriptions request in");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
@@ -704,7 +704,7 @@ public class UserController extends CommonController {
     public ResponseEntity<PaginateResponse> subscribers(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId) throws ValidationException, IOException {
 
         logger.info("subscribers request in");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
@@ -775,7 +775,7 @@ public class UserController extends CommonController {
     }
 
     private void  cookie(HttpServletResponse response,String username, String password){
-        Cookie cookie =new Cookie("_tps_", _cookie(username,password));
+        Cookie cookie =new Cookie("_tps_2P_", _cookie(username,password));
         cookie.setSecure(true);
         cookie.setDomain(travelPostDomain);
         cookie.setMaxAge(3600);

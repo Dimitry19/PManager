@@ -37,6 +37,6 @@ public class CategoryDAOImpl extends CommonGenericDAO implements CategoryDAO {
     @Override
     public void delete(String code) throws BusinessResourceException {
         CategoryVO category=(CategoryVO) checkAndResolve(CategoryVO.class,code);
-        delete(CategoryVO.class,category.getCode(),true);
+        remove(CategoryVO.class,category.getCode(),true);
     }
 }

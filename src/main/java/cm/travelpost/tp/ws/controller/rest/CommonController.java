@@ -54,6 +54,8 @@ public class CommonController  extends WSConstants {
     protected final Log logger = LogFactory.getLog(CommonController.class);
 
     public static final String HEADER_TOTAL = "x-total-count";
+    public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
+    public static final String ACCESS_CONTROL_ALLOW_ORIGIN_VALUE = "*";
 
 
     @Value("${redirect.page}")
@@ -72,7 +74,7 @@ public class CommonController  extends WSConstants {
 
 
     @Autowired
-    protected AirlineService airplaneService;
+    protected AirlineService airlineService;
 
     @Autowired
     protected CityService cityService;

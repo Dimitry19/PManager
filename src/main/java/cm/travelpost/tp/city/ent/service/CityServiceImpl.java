@@ -7,8 +7,6 @@ import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.ws.requests.CommonDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,9 +62,9 @@ public class CityServiceImpl implements CityService {
     }
 
 
-    public Page cities(Pageable pageable) throws AnnounceException,Exception {
-        return (Page) dao.cities(pageable.getPageNumber(), pageable.getPageSize());
-    }
+//    public Page cities(Pageable pageable) throws AnnounceException,Exception {
+//        return (Page) dao.cities(pageable.getPageNumber(), pageable.getPageSize());
+//    }
 
     public int count( Object o, PageBy pageBy) throws AnnounceException,Exception {
         return dao.count(o, pageBy);

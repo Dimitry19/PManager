@@ -60,7 +60,9 @@ public class ImageController extends CommonController {
                                                @RequestParam("type") @Valid UploadImageType type,
                                                @RequestParam("imageFile") MultipartFile file
     ) throws Exception {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+
+
         logger.info(" upload user image request in");
         HttpHeaders headers = new HttpHeaders();
         try {
@@ -91,9 +93,11 @@ public class ImageController extends CommonController {
     @DeleteMapping(value = DELETE, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<Response> deleteImage(HttpServletRequest request, HttpServletResponse response,
 												@RequestParam("id") @Valid Long id,
-												@RequestParam("imageName") @Valid String filename
-    ) throws Exception {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+												@RequestParam("imageName") @Valid String filename) throws Exception {
+
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+
+
         logger.info(" delete user image request in");
         try {
             createOpentracingSpan("ImageController - delete user or announce image");
@@ -127,7 +131,9 @@ public class ImageController extends CommonController {
     public ResponseEntity<ImageVO> getImage(HttpServletRequest request, HttpServletResponse response,
                                             @PathVariable("imageName") String imageName) throws Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+
+
         HttpHeaders headers = new HttpHeaders();
         logger.info(" get image request in");
         try {

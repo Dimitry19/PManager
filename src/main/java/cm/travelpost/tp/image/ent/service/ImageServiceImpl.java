@@ -73,7 +73,7 @@ public class ImageServiceImpl implements ImageService {
             image = (ImageVO) imageDAO.findById(ImageVO.class, id);
         }
         if (image == null) throw new Exception("Image not found");
-        imageDAO.delete(ImageVO.class, image.getId(), true);
+        imageDAO.remove(ImageVO.class, image.getId(), true);
         return imageDAO.find(ImageVO.class, id) != null;
     }
 

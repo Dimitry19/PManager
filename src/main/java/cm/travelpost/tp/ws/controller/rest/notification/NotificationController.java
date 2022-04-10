@@ -35,7 +35,7 @@ public class NotificationController extends CommonController {
     @GetMapping(value = NOTIFICATIION_WS_BY_ID, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<Object> read(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
         try {
             logger.info("retrieve notification request in");

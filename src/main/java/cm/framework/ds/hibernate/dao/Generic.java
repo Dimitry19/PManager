@@ -43,4 +43,5 @@ public abstract class Generic<T, ID extends Serializable> extends CommonGenericD
             }
         }
     }
+
 }

@@ -57,15 +57,18 @@ public class ReservationController extends CommonController {
     ResponseEntity<ReservationVO> addReservation(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid ReservationDTO reservationDTO) throws Exception {
 
         try {
-            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
             logger.info("add reservation request in");
 
             createOpentracingSpan("ReservationController - add reservation");
             ReservationVO reservation = reservationService.addReservation(reservationDTO);
+
             if (reservation == null) {
+
                 reservation = new ReservationVO();
                 reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "La reservation"));
                 reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
+
                 return new ResponseEntity<>(reservation, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "La reservation"));
@@ -94,7 +97,7 @@ public class ReservationController extends CommonController {
     @PutMapping(value = RESERVATION_WS_UPDATE_ID, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     ResponseEntity<ReservationVO> updateReservation(HttpServletResponse response, HttpServletRequest request, @PathVariable @Valid long id, @RequestBody @Valid UpdateReservationDTO urr) throws Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("ReservationController -update");
 
@@ -102,10 +105,13 @@ public class ReservationController extends CommonController {
             urr.setId(id);
 
             ReservationVO reservation = reservationService.updateReservation(urr);
+
             if (reservation != null) {
                 reservation.setRetCode(WebServiceResponseCode.OK_CODE);
                 reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_RESERV_LABEL, "modifiée"));
+
             } else {
+
                 reservation = new ReservationVO();
                 reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
                 reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "La reservation"));
@@ -126,7 +132,7 @@ public class ReservationController extends CommonController {
     @DeleteMapping(value = DELETE, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<Response> deleteReservation(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         Response pmResponse = new Response();
 
 
@@ -135,11 +141,14 @@ public class ReservationController extends CommonController {
             createOpentracingSpan("ReservationController - delete reservation");
 
             if (reservationService.deleteReservation(id)) {
+
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                 pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La reservation"));
+
                 return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 
             } else {
+
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, "La reservation"));
 
@@ -165,14 +174,17 @@ public class ReservationController extends CommonController {
     @GetMapping(RESERVATION_WS_BY_ID)
     public ResponseEntity<ReservationVO> getReservation(HttpServletRequest request,
                                                         HttpServletResponse response, @RequestParam("id") long id) throws Exception {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("ReservationController - retrieve reservation");
 
 
             ReservationVO reservation = reservationService.getReservation(id);
+
             if (reservation != null) {
+
                 reservation.setRetCode(WebServiceResponseCode.OK_CODE);
+
                 return new ResponseEntity<>(reservation, HttpStatus.OK);
             }
             reservation = new ReservationVO();
@@ -200,10 +212,12 @@ public class ReservationController extends CommonController {
     @PostMapping(value = VALIDATE, produces = MediaType.APPLICATION_JSON)
     ResponseEntity<ReservationVO> validate(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid ValidateReservationDTO vr) throws Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
+
             createOpentracingSpan("ReservationController - validate");
-            Response pmResponse = new Response();
+
+
             if (vr == null) return null;
 
             ReservationVO reservation = reservationService.validate(vr);
@@ -256,7 +270,7 @@ public class ReservationController extends CommonController {
                                                                @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                                @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         HttpHeaders headers = new HttpHeaders();
 
         logger.info("find reservation by user request in");
@@ -271,7 +285,7 @@ public class ReservationController extends CommonController {
             reservations = reservationService.reservationsByUser(userId, type, pageBy);
 
             if (CollectionsUtils.isNotEmpty(reservations)) {
-                res.setCount(count);
+                res.setCount(CollectionsUtils.size(reservations));
                 res.setResults(reservations);
             }
             headers.add(HEADER_TOTAL, Long.toString(count));
@@ -311,7 +325,7 @@ public class ReservationController extends CommonController {
                                                                    @RequestParam(required = false, defaultValue = DEFAULT_SIZE) int size) throws Exception {
 
         try {
-            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
             HttpHeaders headers = new HttpHeaders();
             PaginateResponse paginateResponse = new PaginateResponse();
             logger.info("find reservation by announce request in");
@@ -324,7 +338,7 @@ public class ReservationController extends CommonController {
                 headers.add(HEADER_TOTAL, Long.toString(count));
             } else {
                 List<ReservationVO> reservations = reservationService.reservationsByAnnounce(announceId, pageBy);
-                paginateResponse.setCount(count);
+                paginateResponse.setCount(CollectionsUtils.size(reservations));
                 paginateResponse.setResults(reservations);
                 headers.add(HEADER_TOTAL, Long.toString(reservations.size()));
             }
@@ -338,5 +352,4 @@ public class ReservationController extends CommonController {
             finishOpentracingSpan();
         }
     }
-
 }

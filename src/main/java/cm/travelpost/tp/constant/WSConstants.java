@@ -127,11 +127,12 @@ public class WSConstants extends CommonProperties {
 
     /******** IMG REQUEST ********/
     public static final String CITY_WS = "/ws/city/*";
+    public static final String CITIES_WS = "/ws/city/cities";
 
 
 
     /************ ADMIN DASHBOARD REQUEST*************/
-    public static final String DASHBOARD_WS = "/ws/" + DASHBOARD+"/*";
+    public static final String DASHBOARD_WS = "/ws" + DASHBOARD+"/*";
     public static final String DASHBOARD_DELETE = "/delete/{code}";
 
 }
