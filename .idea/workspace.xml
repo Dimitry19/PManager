@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="Deploy Heroku 10/04/2022 + script mysql">
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/DefaultController.java" afterDir="false" />
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="Deploy Heroku 10/04/2022 + redirect correct">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -60,46 +60,40 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificatorServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
-              <caret line="289" selection-start-line="289" selection-end-line="289" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1080">
-              <caret line="72" selection-start-line="72" selection-end-line="72" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/32dd2d4f-ab58-49b7-85d8-9c9fa515f192/console.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="126" column="33" selection-end-line="136" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ddl/Views_20210207-my-sql.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="136" selection-start-line="136" selection-end-line="136" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/logback-spring.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="56" selection-start-line="56" selection-start-column="4" selection-end-line="58" selection-end-column="11" />
+            <state relative-caret-position="210">
+              <caret line="14" column="43" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="399">
+              <caret line="103" column="36" selection-start-line="103" selection-start-column="36" selection-end-line="103" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="79" column="34" lean-forward="true" selection-start-line="79" selection-start-column="34" selection-end-line="79" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/enums/NotificationType.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="18" column="15" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -107,17 +101,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Procfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="52" selection-start-column="42" selection-end-column="52" />
+            <state relative-caret-position="15">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/DefaultController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
+            <state relative-caret-position="360">
+              <caret line="32" selection-start-line="32" selection-start-column="2" selection-end-line="50" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/ErrorController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/RedirectType.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -125,7 +137,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="942">
+            <state relative-caret-position="1500">
               <caret line="100" column="28" selection-start-line="100" selection-start-column="28" selection-end-line="100" selection-end-column="28" />
             </state>
           </provider>
@@ -136,15 +148,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state>
               <caret column="34" selection-end-line="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ddl/pm-202201-my-sql.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" selection-start-line="25" selection-end-line="31" />
             </state>
           </provider>
         </entry>
@@ -252,12 +255,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/wrapper/UserWrapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/enums/NotificationType.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/vo/Notification.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java" />
         <option value="$PROJECT_DIR$/installation/Note.txt" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java" />
@@ -274,7 +273,6 @@
         <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/city/CityController.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/city/ent/vo/CityVO.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/CommonDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java" />
@@ -300,9 +298,14 @@
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/32dd2d4f-ab58-49b7-85d8-9c9fa515f192/console.sql" />
         <option value="$PROJECT_DIR$/ddl/Views_20210207-my-sql.sql" />
-        <option value="$PROJECT_DIR$/src/main/resources/logback-spring.xml" />
         <option value="$PROJECT_DIR$/Procfile" />
         <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/DefaultController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/ErrorController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/logback-spring.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/enums/NotificationType.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" />
       </list>
     </option>
   </component>
@@ -345,9 +348,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="852" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectId" id="26NIITASinlHudPOvdCo5Fw5A25" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -357,7 +359,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="CatdeaLogs" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -387,27 +388,58 @@
               <item name="PManager" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="cm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="cm" type="462c0819:PsiDirectoryNode" />
+              <item name="tp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="cm" type="462c0819:PsiDirectoryNode" />
+              <item name="tp" type="462c0819:PsiDirectoryNode" />
+              <item name="ws" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="cm" type="462c0819:PsiDirectoryNode" />
+              <item name="tp" type="462c0819:PsiDirectoryNode" />
+              <item name="ws" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
-              <item name="Database Consoles" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
-              <item name="Database Consoles" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
-              <item name="32dd2d4f-ab58-49b7-85d8-9c9fa515f192" type="1e004dc1:ScratchProjectViewPane$MyRootNode$1$1" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="CatdeaLogs" />
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -488,7 +520,7 @@
     </option>
     <option name="contentProportion" value="0.14379562" />
   </component>
-  <component name="RunManager" selected="Maven.package">
+  <component name="RunManager" selected="Spring Boot.TP">
     <configuration name="clean" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -676,56 +708,9 @@
       <workItem from="1649331031619" duration="15420000" />
       <workItem from="1649407863030" duration="15677000" />
       <workItem from="1649437633252" duration="5258000" />
-      <workItem from="1649603080596" duration="4959000" />
-    </task>
-    <task id="LOCAL-00083" summary="BetaVersion202203 Branch : enable https and cleaner">
-      <created>1647381190298</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1647381190299</updated>
-    </task>
-    <task id="LOCAL-00084" summary="BetaVersion202203 Branch : enable https and cleaner">
-      <created>1647382127446</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1647382127446</updated>
-    </task>
-    <task id="LOCAL-00085" summary="BetaVersion202203 Branch : enable https and cleaner">
-      <created>1647382479515</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1647382479515</updated>
-    </task>
-    <task id="LOCAL-00086" summary="BetaVersion202203 Branch : enable https and cleaner">
-      <created>1647382811942</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1647382811942</updated>
-    </task>
-    <task id="LOCAL-00087" summary="BetaVersion202203 Branch : enable https and guest">
-      <created>1647386189400</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1647386189401</updated>
-    </task>
-    <task id="LOCAL-00088" summary="BetaVersion202203 Branch : enable https and procfile">
-      <created>1647431928886</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1647431928886</updated>
-    </task>
-    <task id="LOCAL-00089" summary="BetaVersion202203 Branch : enable https and config">
-      <created>1647463086511</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1647463086512</updated>
+      <workItem from="1649603080596" duration="6023000" />
+      <workItem from="1649640864900" duration="294000" />
+      <workItem from="1649641173078" duration="251000" />
     </task>
     <task id="LOCAL-00090" summary="BetaVersion202203 Branch : enable https and config">
       <created>1647463457834</created>
@@ -1021,11 +1006,60 @@
       <option name="project" value="LOCAL" />
       <updated>1649612248027</updated>
     </task>
-    <option name="localTasksCounter" value="132" />
+    <task id="LOCAL-00132" summary="Deploy Heroku 10/04/2022 + redirect correct">
+      <created>1649612973705</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1649612973706</updated>
+    </task>
+    <task id="LOCAL-00133" summary="Deploy Heroku 10/04/2022 + redirect correct">
+      <created>1649613065057</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1649613065057</updated>
+    </task>
+    <task id="LOCAL-00134" summary="Deploy Heroku 10/04/2022 + redirect correct">
+      <created>1649613781907</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1649613781908</updated>
+    </task>
+    <task id="LOCAL-00135" summary="Deploy Heroku 10/04/2022 + logback config correct">
+      <created>1649614213695</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1649614213695</updated>
+    </task>
+    <task id="LOCAL-00136" summary="Centralisation generation message notification">
+      <created>1649640917161</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1649640917161</updated>
+    </task>
+    <task id="LOCAL-00137" summary="Centralisation generation message notification.">
+      <created>1649641204117</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1649641204118</updated>
+    </task>
+    <task id="LOCAL-00138" summary="Centralisation generation message notification.Good">
+      <created>1649641416793</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1649641416793</updated>
+    </task>
+    <option name="localTasksCounter" value="139" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="678203000" />
+    <option name="totallyTimeSpent" value="679812000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1038,8 +1072,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8115942" visible="true" weight="0.19527897" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8080439" visible="true" weight="0.15808298" />
       <window_info id="Structure" order="1" sideWeight="0.15845825" side_tool="true" weight="0.17381974" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -1047,12 +1082,12 @@
       <window_info id="Web" order="5" side_tool="true" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info id="Capture Tool" order="7" />
-      <window_info id="Persistence" order="8" sideWeight="0.1884058" side_tool="true" visible="true" weight="0.19527897" />
+      <window_info id="Persistence" order="8" sideWeight="0.19195612" side_tool="true" visible="true" weight="0.15808298" />
       <window_info id="Learn" order="9" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.3229308" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5965665" visible="true" weight="0.48698884" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6888412" weight="0.44097695" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" sideWeight="0.49928468" visible="true" weight="0.32218093" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5965665" weight="0.48698884" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6888412" weight="0.43990088" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
@@ -1062,14 +1097,14 @@
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.48211733" weight="0.37546468" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.6251788" weight="0.43690637" />
+      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.6251788" weight="0.4361834" />
       <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49785408" weight="0.29491946" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
       <window_info anchor="bottom" id="Inspection Results" order="16" weight="0.32917705" />
       <window_info anchor="bottom" id="Docker" order="17" show_stripe_button="false" />
       <window_info anchor="bottom" id="Hibernate Console" order="18" weight="0.32971507" />
       <window_info anchor="bottom" id="JPA Console" order="19" weight="0.32971507" />
-      <window_info anchor="bottom" id="Run Dashboard" order="20" weight="0.35068154" />
+      <window_info anchor="bottom" id="Run Dashboard" order="20" weight="0.4708798" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49810606" weight="0.24964234" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1135,11 +1170,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="BetaVersion202203 Branch : enable https and cleaner" />
-    <MESSAGE value="BetaVersion202203 Branch : enable https and guest" />
-    <MESSAGE value="BetaVersion202203 Branch : enable https and procfile" />
-    <MESSAGE value="BetaVersion202203 Branch : Logback alternative config xml e properties" />
-    <MESSAGE value="BetaVersion202203 Branch : enable https and config" />
     <MESSAGE value="clean pom" />
     <MESSAGE value="Correction de la methode de recuperation des infos de l'utilisateur" />
     <MESSAGE value="Modifications partie FE" />
@@ -1160,7 +1190,12 @@
     <MESSAGE value="Refactoring du package + modifications variées +config home" />
     <MESSAGE value="Deploy Heroku 10/04/2022" />
     <MESSAGE value="Deploy Heroku 10/04/2022 + script mysql" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deploy Heroku 10/04/2022 + script mysql" />
+    <MESSAGE value="Deploy Heroku 10/04/2022 + redirect correct" />
+    <MESSAGE value="Deploy Heroku 10/04/2022 + logback config correct" />
+    <MESSAGE value="Centralisation generation message notification" />
+    <MESSAGE value="Centralisation generation message notification." />
+    <MESSAGE value="Centralisation generation message notification.Good" />
+    <option name="LAST_COMMIT_MESSAGE" value="Centralisation generation message notification.Good" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1275,7 +1310,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>387</line>
+          <line>407</line>
           <properties />
           <option name="timeStamp" value="235" />
         </line-breakpoint>
@@ -1287,7 +1322,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>224</line>
+          <line>227</line>
           <properties />
           <option name="timeStamp" value="252" />
         </line-breakpoint>
@@ -1359,19 +1394,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>189</line>
+          <line>190</line>
           <properties />
           <option name="timeStamp" value="285" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>200</line>
+          <line>201</line>
           <properties />
           <option name="timeStamp" value="287" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>377</line>
+          <line>383</line>
           <properties />
           <option name="timeStamp" value="288" />
         </line-breakpoint>
@@ -1389,7 +1424,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java</url>
-          <line>85</line>
+          <line>90</line>
           <properties />
           <option name="timeStamp" value="316" />
         </line-breakpoint>
@@ -1473,7 +1508,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/ErrorResponse.java</url>
-          <line>119</line>
+          <line>129</line>
           <properties />
           <option name="timeStamp" value="361" />
         </line-breakpoint>
@@ -1485,13 +1520,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>531</line>
+          <line>539</line>
           <properties />
           <option name="timeStamp" value="365" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>542</line>
+          <line>550</line>
           <properties />
           <option name="timeStamp" value="366" />
         </line-breakpoint>
@@ -1590,45 +1625,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/AnnounceDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1129">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/vo/AirlineVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="24" column="41" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#49#1" expanded="true" />
-            <element signature="e#0#48#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="79" selection-start-line="10" selection-start-column="79" selection-end-line="10" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/service/AirlineService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/dao/AirlineDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="23" column="30" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/vo/AirlineIdVO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -1789,13 +1785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="95" column="46" selection-start-line="95" selection-start-column="36" selection-end-line="95" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/AnnounceServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -1894,24 +1883,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://32dd2d4f-ab58-49b7-85d8-9c9fa515f192/schema/cl6j8lyroz9fs4ut/view/valid_reservation_received">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://32dd2d4f-ab58-49b7-85d8-9c9fa515f192/schema/cl6j8lyroz9fs4ut/view/valid_reservation_received" />
     <entry file="file://$PROJECT_DIR$/ddl/pm-202201-my-sql.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="25" selection-start-line="25" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ddl/Views_20210207.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="34" selection-end-line="1" />
         </state>
       </provider>
     </entry>
@@ -1922,45 +1898,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/32dd2d4f-ab58-49b7-85d8-9c9fa515f192/console.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="942">
-          <caret line="100" column="28" selection-start-line="100" selection-start-column="28" selection-end-line="100" selection-end-column="28" />
+        <state relative-caret-position="1890">
+          <caret line="126" column="33" selection-end-line="136" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/32dd2d4f-ab58-49b7-85d8-9c9fa515f192/console.sql">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="126" column="33" selection-end-line="136" />
+        <state relative-caret-position="-2509">
+          <caret line="49" column="39" selection-start-line="49" selection-start-column="39" selection-end-line="49" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ddl/Views_20210207-my-sql.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
+        <state relative-caret-position="2040">
           <caret line="136" selection-start-line="136" selection-end-line="136" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/logback-spring.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="56" selection-start-line="56" selection-start-column="4" selection-end-line="58" selection-end-column="11" />
+        <state relative-caret-position="210">
+          <caret line="14" column="43" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Procfile">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="52" selection-start-column="42" selection-end-column="52" />
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/DefaultController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
+        <state relative-caret-position="360">
+          <caret line="32" selection-start-line="32" selection-start-column="2" selection-end-line="50" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/ErrorController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/RedirectType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1500">
+          <caret line="100" column="28" selection-start-line="100" selection-start-column="28" selection-end-line="100" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddl/Views_20210207.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="34" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/enums/NotificationType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="18" column="15" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="79" column="34" lean-forward="true" selection-start-line="79" selection-start-column="34" selection-end-line="79" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="103" column="36" selection-start-line="103" selection-start-column="36" selection-end-line="103" selection-end-column="36" />
         </state>
       </provider>
     </entry>

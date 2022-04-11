@@ -99,10 +99,12 @@ public abstract class Generic<T, ID extends Serializable> extends CommonGenericD
                 message=MessageFormat.format(notificationMessageCommentPattern,username
                         ," a ajouté un commentaire sur l'annonce "+departure+"/"+arrival,
                         " pour la date " + startDate+ " et retour le "+ endDate, "");
+                break;
             case COMMENT_UPD:
                 message=MessageFormat.format(notificationMessageCommentPattern,username
                         ," a modifié un commentaire sur l'annonce "+departure+"/"+arrival,
                         " pour la date " + startDate+ " et retour le "+ endDate, "");
+                break;
         }
         return message;
     }
