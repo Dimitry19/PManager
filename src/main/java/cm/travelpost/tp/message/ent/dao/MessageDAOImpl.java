@@ -197,15 +197,6 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         return result;
     }
 
-    @Override
-    public String composeQuery(Object o, String alias) {
-        return null;
-    }
-
-    @Override
-    public void composeQueryParameters(Object o, Query query) {
-
-    }
 
     @Override
     public void generateEvent(Object obj , String message) throws Exception {
@@ -224,7 +215,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
             });
         }
 
-        if(user.equals(announceUser)){
+        if(user.equals(announceUser) || user.getId() == announceUser.getId()){
             List<ReservationVO> reservations = announceDAO.findReservations(announce.getId());
 
             if(CollectionsUtils.isNotEmpty(reservations)) {

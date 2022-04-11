@@ -37,6 +37,8 @@ import java.util.stream.Collectors;
 @Repository
 public class UserDAOImpl extends Generic implements UserDAO {
 
+
+
     private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 
 
@@ -61,10 +63,10 @@ public class UserDAOImpl extends Generic implements UserDAO {
         if(o instanceof CountBy && id!=null){
             CountBy cb= (CountBy)o;
             if(cb.equals(CountBy.SUBSCRIPTIONS)){
-                return CollectionsUtils.isNotEmpty(subscriptions(id))?subscriptions(id).size():0;
+                return CollectionsUtils.size(subscriptions(id));
             }
             if(cb.equals(CountBy.SUBSCRIBERS)){
-                return CollectionsUtils.isNotEmpty(subscribers(id))?subscriptions(id).size():0;
+                return CollectionsUtils.size(subscribers(id));
             }
             return 0;
         }
@@ -158,7 +160,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<UserVO> getAllUsersToConfirm() throws Exception {
         logger.info("User:  users to confirm");
-        return findBy(UserVO.JOB_CONFIRM, UserVO.class, 0, "act", null);
+        return findBy(UserVO.JOB_CONFIRM, UserVO.class, 0, ACTIVE_PARAM, null);
     }
 
     @Override
@@ -305,7 +307,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         filters = new String[2];
         filters[0] = FilterConstants.CANCELLED;
         filters[1] = FilterConstants.ACTIVE_MBR;
-        return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, "username", null, filters);
+        return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, filters);
 
     }
 
@@ -320,7 +322,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             filters[1] = FilterConstants.ACTIVE_MBR;
         }
 
-        return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, "username", null, filters);
+        return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, filters);
 
     }
 
@@ -334,7 +336,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         session.enableFilter(FilterConstants.ACTIVE_MBR);
 
         String where = composeQuery(userSeachDTO, "u");
-        Query query = session.createQuery("from UserVO  as a " + where);
+        Query query = session.createQuery("from UserVO  as u " + where);
         composeQueryParameters(userSeachDTO, query);
         query.setFirstResult(pageBy.getPage());
         query.setMaxResults(pageBy.getSize());
@@ -350,7 +352,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         filters = new String[1];
         filters[0] = FilterConstants.CANCELLED;
 
-        return (UserVO) findByUniqueResult(UserVO.CONF_TOKEN, UserVO.class, token, "ctoken", null, filters);
+        return (UserVO) findByUniqueResult(UserVO.CONF_TOKEN, UserVO.class, token, CONFIRM_TOKEN_PARAM, null, filters);
     }
 
     @Override
@@ -386,7 +388,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserVO findByEmail(String email) throws Exception {
         logger.info("User: find by email");
-        return (UserVO) findByUniqueResult(UserVO.EMAIL, UserVO.class, email, "email");
+        return (UserVO) findByUniqueResult(UserVO.EMAIL, UserVO.class, email, EMAIL_PARAM);
     }
 
     @Override
@@ -395,7 +397,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         filters = new String[2];
         filters[0] = FilterConstants.CANCELLED;
         filters[1] = FilterConstants.ACTIVE_MBR;
-        return (UserVO) findByUniqueResult(UserVO.FACEBOOK, UserVO.class, facebookId, "facebookId", null, filters);
+        return (UserVO) findByUniqueResult(UserVO.FACEBOOK, UserVO.class, facebookId, FACEBOOK_ID_PARAM, null, filters);
     }
 
     @Override
@@ -404,7 +406,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         filters = new String[2];
         filters[0] = FilterConstants.CANCELLED;
         filters[1] = FilterConstants.ACTIVE_MBR;
-        return (UserVO) findByUniqueResult(UserVO.FACEBOOK, UserVO.class, googleId, "googleId", null, filters);
+        return (UserVO) findByUniqueResult(UserVO.FACEBOOK, UserVO.class, googleId, GOOGLE_ID_PARAM, null, filters);
 
     }
 
@@ -471,21 +473,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
         return result;
     }
 
-    @Override
-    public UserVO updateImage(Long userId, MultipartFile multipartFile) throws IOException {
-
-        String fileName = org.springframework.util.StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        UserVO user = findById(userId);
-        //user.setPicture(fileName);
-        Session session = sessionFactory.getCurrentSession();
-        user.setCancelled(true);
-        session.merge(user);
-
-        String uploadDir = imagesFolder + user.getId();
-
-        fileUtils.saveFileToFileSystem(uploadDir, fileName, multipartFile);
-        return null;
-    }
 
     @Override
     @Transactional(rollbackFor = {UserException.class, Exception.class})

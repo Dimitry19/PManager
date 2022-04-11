@@ -212,11 +212,11 @@ public class UserServiceImpl implements UserService {
         return userDAO.updateUser(userDTO);
     }
 
-    @Override
-    @Transactional(rollbackFor = IOException.class)
-    public UserVO updateImage(Long userId, MultipartFile multipartFile) throws UserException, IOException {
-        return userDAO.updateImage(userId, multipartFile);
-    }
+//    @Override
+//    @Transactional(rollbackFor = IOException.class)
+//    public UserVO updateImage(Long userId, MultipartFile multipartFile) throws UserException, IOException {
+//        return userDAO.updateImage(userId, multipartFile);
+//    }
 
     public boolean managePassword(String email) throws Exception , UserException, MailjetSocketTimeoutException, MailjetException, MessagingException {
         UserVO user = findByEmail(email);

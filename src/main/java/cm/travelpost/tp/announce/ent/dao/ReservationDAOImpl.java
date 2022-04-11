@@ -355,16 +355,6 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         return false;
     }
 
-    @Override
-    public String composeQuery(Object o, String alias) throws Exception {
-        return null;
-    }
-
-    @Override
-    public void composeQueryParameters(Object o, Query query) throws Exception {
-
-    }
-
 
     @Override
     public void generateEvent(Object obj , String message) throws Exception {
