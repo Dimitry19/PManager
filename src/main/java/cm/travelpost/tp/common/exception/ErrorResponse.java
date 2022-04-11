@@ -6,9 +6,11 @@ import io.jsonwebtoken.ExpiredJwtException;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.exception.SQLGrammarException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -114,7 +116,15 @@ public class ErrorResponse extends CommonProperties {
             stringBuilder.append("La dimensione maximale accepté est de :1MB");
         }
 
-        if (BooleanUtils.isFalse(ex instanceof MaxUploadSizeExceededException)) {
+        if (ex instanceof SQLGrammarException || ex instanceof CannotCreateTransactionException) {
+            setDefaultCodes("DataBase connection error");
+            stringBuilder.append("Une erreur est survenue durant la connexion au service de base de données\n");
+            stringBuilder.append("Veuillez reessayer d'ici quelques minutes");
+        }
+
+        if (BooleanUtils.isFalse(ex instanceof MaxUploadSizeExceededException) ||
+                BooleanUtils.isFalse(ex instanceof SQLGrammarException) ||
+                BooleanUtils.isFalse(ex instanceof CannotCreateTransactionException)) {
             stringBuilder.append(ex.getMessage());
         }
 

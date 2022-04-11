@@ -43,8 +43,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Autowired
     RoleDAO roleDAO;
 
-    //@Autowired
-    UserHelper helper;
 
 
     public UserDAOImpl() {
@@ -97,8 +95,11 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
             update(subscriber);
             update(subscription);
-            String message= MessageFormat.format(notificationMessagePattern,subscriber.getUsername(),
-                    " s'est abonné "," à votre profil");
+
+            String message= new String();
+
+            message= buildNotificationMessage(message,NotificationType.SUBSCRIBE,subscriber.getUsername(),null, null,
+                    null, null, null);
 
             generateEvent(subscription,message);
         } else throw new UserException("Une erreur survenue pendant l'abonnement, veuillez reessayer");
@@ -118,7 +119,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
             update(subscriber);
             update(subscription);
 
-            String message= MessageFormat.format(notificationMessagePattern,subscriber.getUsername()," s'est désabonné "," à votre profil");
+            String message= new String();
+            message=buildNotificationMessage(message,NotificationType.UNSUBSCRIBE,subscriber.getUsername(),null, null,
+                    null, null, null);
             generateEvent(subscription,message);
         } else throw new UserException("Une erreur survenue pendant la desinscription, veuillez reessayer");
     }
@@ -167,9 +170,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
         filters[1] = FilterConstants.ACTIVE_MBR;
 
         logger.info("User: all users page by");
-        return  helper.allUsers();
+        //return  helper.allUsers();
 
-        //return all(UserVO.class, null, filters);
+        return all(UserVO.class, null, filters);
     }
 
     @Override
