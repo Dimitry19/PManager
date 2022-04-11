@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Set;
 
 import static cm.travelpost.tp.notification.enums.NotificationType.COMMENT;
+import static cm.travelpost.tp.notification.enums.NotificationType.COMMENT_UPD;
 
 @Repository
 public class MessageDAOImpl extends Generic implements MessageDAO {
@@ -77,7 +78,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         String message=new String();
 
 
-        message=buildNotificationMessage(message,COMMENT,user.getUsername(),comment.getAnnounce().getDeparture(),
+        message=buildNotificationMessage(message,COMMENT_UPD,user.getUsername(),comment.getAnnounce().getDeparture(),
                 comment.getAnnounce().getArrival(),DateUtils.getDateStandard(comment.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(comment.getAnnounce().getEndDate()),null);
 
