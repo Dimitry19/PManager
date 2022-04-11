@@ -1,11 +1,11 @@
 package cm.travelpost.tp.message.ent.dao;
 
-import cm.framework.ds.hibernate.dao.Generic;
 import cm.framework.ds.hibernate.enums.FindBy;
 import cm.travelpost.tp.announce.ent.dao.AnnounceDAO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.travelpost.tp.common.Constants;
+import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -196,15 +197,6 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         return result;
     }
 
-    @Override
-    public String composeQuery(Object o, String alias) {
-        return null;
-    }
-
-    @Override
-    public void composeQueryParameters(Object o, Query query) {
-
-    }
 
     @Override
     public void generateEvent(Object obj , String message) throws Exception {
@@ -223,7 +215,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
             });
         }
 
-        if(user.equals(announceUser)){
+        if(user.equals(announceUser) || user.getId() == announceUser.getId()){
             List<ReservationVO> reservations = announceDAO.findReservations(announce.getId());
 
             if(CollectionsUtils.isNotEmpty(reservations)) {

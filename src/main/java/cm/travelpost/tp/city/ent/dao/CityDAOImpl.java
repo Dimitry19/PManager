@@ -165,11 +165,4 @@ public class CityDAOImpl extends Generic implements CityDAO {
 
         return false;
     }
-
-    @Override
-    public String composeQuery(Object obj, String alias) throws Exception { return null;}
-
-    @Override
-    public void composeQueryParameters(Object obj, Query query) throws Exception  {}
-
 }

@@ -90,13 +90,4 @@ public class ReviewDAOImpl extends Generic implements ReviewDAO {
         return result;
     }
 
-    @Override
-    public String composeQuery(Object o, String alias) throws Exception {
-        return null;
-    }
-
-    @Override
-    public void composeQueryParameters(Object o, Query query) throws Exception {
-
-    }
 }

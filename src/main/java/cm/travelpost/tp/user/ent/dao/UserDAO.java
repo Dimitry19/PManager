@@ -82,8 +82,6 @@ public interface UserDAO extends CommonDAO {
 
     boolean checkLogin(LoginDTO lr) throws Exception;
 
-    UserVO updateImage(Long userId, MultipartFile multipartFile) throws IOException;
-
     UserVO manageNotification(Long userId, boolean enableNotification) throws UserException;
 
     boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException;

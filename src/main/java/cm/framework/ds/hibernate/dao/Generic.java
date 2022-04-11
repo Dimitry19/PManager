@@ -22,9 +22,13 @@ public abstract class Generic<T, ID extends Serializable> extends CommonGenericD
 
     public abstract boolean updateDelete(Object id) throws BusinessResourceException, UserException;
 
-    public abstract String composeQuery(Object o, String alias) throws Exception;
+    public  String composeQuery(Object o, String alias) throws Exception{
+        return null;
+    }
 
-    public abstract void composeQueryParameters(Object o, Query query) throws Exception;
+    public  void composeQueryParameters(Object o, Query query) throws Exception{
+
+    }
 
 
     /**
