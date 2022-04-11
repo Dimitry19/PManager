@@ -16,6 +16,7 @@ public enum NotificationType {
     UNSUBSCRIBE("Desabonnement"),
     ANNOUNCE(" Annonce"),
 
+    COMMENT_UPD("Commentaire Modifié"),
     RESERVATION_UPD("Reservation Modifiée"),
     RESERVATION_VALIDATE("Reservation acceptée"),
     RESERVATION_UNVALIDATE("Reservation refusée"),
