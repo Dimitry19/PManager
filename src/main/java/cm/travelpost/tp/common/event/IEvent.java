@@ -17,6 +17,7 @@ public interface IEvent<T> {
     String PROP_ID="id";
     String PROP_MSG="message";
     String PROP_USR_ID ="userId";
+    String PROP_ANNOUNCE_ID ="userId";
     String PROP_USR_NAME ="username";
     String PROP_SUBSCRIBERS ="subscribers";
 

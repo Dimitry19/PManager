@@ -3,6 +3,7 @@ package cm.travelpost.tp.message.ent.dao;
 import cm.framework.ds.hibernate.enums.FindBy;
 import cm.travelpost.tp.announce.ent.dao.AnnounceDAO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
+import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.travelpost.tp.common.Constants;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.common.ent.vo.PageBy;
@@ -29,6 +30,8 @@ import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static cm.travelpost.tp.notification.enums.NotificationType.COMMENT;
 
 @Repository
 public class MessageDAOImpl extends Generic implements MessageDAO {
@@ -71,10 +74,12 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         comment.setContent(mdto.getContent());
         update(comment);
 
-        String message= MessageFormat.format(notificationMessageCommentPattern,user.getUsername()
-                ," a modifié son commentaire sur l'annonce "+comment.getAnnounce().getDeparture() +"/"+comment.getAnnounce().getArrival(),
-                " pour la date " + DateUtils.getDateStandard(comment.getAnnounce().getStartDate())
-                        + " et retour le "+ DateUtils.getDateStandard(comment.getAnnounce().getEndDate()), "");
+        String message=new String();
+
+
+        message=buildNotificationMessage(message,COMMENT,user.getUsername(),comment.getAnnounce().getDeparture(),
+                comment.getAnnounce().getArrival(),DateUtils.getDateStandard(comment.getAnnounce().getStartDate()),
+                DateUtils.getDateStandard(comment.getAnnounce().getEndDate()),null);
 
         generateEvent(comment,message);
         return comment;
@@ -109,10 +114,10 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         announce.addMessage(comment);
         save(comment);
 
-        String message= MessageFormat.format(notificationMessageCommentPattern,user.getUsername()
-                ," a commenté l'annonce "+announce.getDeparture() +"/"+announce.getArrival(),
-                 " pour la date " + DateUtils.getDateStandard(announce.getStartDate())
-                         + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()), "");
+        String message=new String();
+        message=buildNotificationMessage(message,COMMENT,user.getUsername(),comment.getAnnounce().getDeparture(),
+                comment.getAnnounce().getArrival(),DateUtils.getDateStandard(comment.getAnnounce().getStartDate()),
+                DateUtils.getDateStandard(comment.getAnnounce().getEndDate()),null);
 
         generateEvent(comment,message);
         return comment;
@@ -207,6 +212,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         MessageVO comment= (MessageVO) obj;
         UserVO user= comment.getUser();
         AnnounceVO announce=comment.getAnnounce();
+        UserVO announceUser=announce.getUser();
 
         Set subscribers=new HashSet();
         subscribers.add(announce.getUser());
@@ -217,9 +223,21 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
             });
         }
 
+        if(user.equals(announceUser)){
+            List<ReservationVO> reservations = announceDAO.findReservations(announce.getId());
+
+            if(CollectionsUtils.isNotEmpty(reservations)) {
+                reservations.stream().filter(r->r.getUser()!=null && r.getUser().getId()!=user.getId() && r.getUser().isEnableNotification())
+                        .forEach(r->{
+                            subscribers.add(r.getUser());
+                        });
+            }
+        }
+
         if (CollectionsUtils.isNotEmpty(subscribers)){
-            fillProps(props,comment.getId().getId(),message, user.getId(),subscribers);
+            fillProps(props,announce.getId(),message, user.getId(),subscribers);
             generateEvent( NotificationType.ANNOUNCE);
         }
     }
+
 }

@@ -27,7 +27,7 @@ import static cm.travelpost.tp.constant.WSConstants.*;
 @RestController
 @RequestMapping(NOTIFICATION_WS)
 @Api(value = "notifications-service", description = "Reviews Operations")
-public class NotificationController extends CommonController {
+public class  NotificationController extends CommonController {
 
     protected final Log logger = LogFactory.getLog(NotificationController.class);
 
@@ -47,7 +47,7 @@ public class NotificationController extends CommonController {
                     WSCommonResponseVO wsResponse = new WSCommonResponseVO();
                     wsResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.READ_CODE_LABEL, "La notification"));
-                    return new ResponseEntity<>((WSCommonResponseVO) wsResponse, HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>((WSCommonResponseVO) wsResponse, HttpStatus.OK);
                 }
             }
             return new ResponseEntity<>(notification, HttpStatus.OK);
