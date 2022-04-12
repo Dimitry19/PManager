@@ -29,7 +29,7 @@ public class ApiError {
     public ApiError(Exception ex) {
         //logger.error(ApiError.class +" {}" ,ex);
         StringBuilder stringBuilder = new StringBuilder();
-        HttpMessageNotReadableException is;
+
         if (ex instanceof MethodArgumentNotValidException) {
             MethodArgumentNotValidException ob = (MethodArgumentNotValidException) ex;
             List<ObjectError> errors = ob.getBindingResult().getAllErrors();

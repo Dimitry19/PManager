@@ -263,7 +263,7 @@ public class ReservationController extends CommonController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Successful retrieval",
                     response = ResponseEntity.class, responseContainer = "List")})
-    @RequestMapping(value = BY_USER, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = BY_USER,  headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<PaginateResponse> reservationsByUser(HttpServletResponse response, HttpServletRequest request,
                                                                @RequestParam @Valid long userId,
                                                                @RequestParam @Valid ReservationType type,
@@ -282,7 +282,7 @@ public class ReservationController extends CommonController {
             createOpentracingSpan("ReservationController -reservationsByUser");
             PaginateResponse res = new PaginateResponse();
             int count = reservationService.count(userId, null, FindBy.USER,type);
-            reservations = reservationService.reservationsByUser(userId, type, pageBy);
+            reservations =reservationService.reservationsByUser(userId, type, pageBy);
 
             if (CollectionsUtils.isNotEmpty(reservations)) {
                 res.setCount(CollectionsUtils.size(reservations));
@@ -290,7 +290,7 @@ public class ReservationController extends CommonController {
             }
             headers.add(HEADER_TOTAL, Long.toString(count));
 
-            return new ResponseEntity<PaginateResponse>(res, headers, HttpStatus.OK);
+            return new ResponseEntity<>(res, headers, HttpStatus.OK);
         } catch (Exception e) {
             logger.info(" ReservationController - reservationsByUser:Exception occurred while fetching the response from the database.", e);
             throw e;
@@ -343,7 +343,7 @@ public class ReservationController extends CommonController {
                 headers.add(HEADER_TOTAL, Long.toString(reservations.size()));
             }
 
-            return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+            return new ResponseEntity<>(paginateResponse, headers, HttpStatus.OK);
 
         } catch (Exception e) {
             logger.info(" ReservationController - reservationsByAnnounce:Exception occurred while fetching the response from the database.", e);

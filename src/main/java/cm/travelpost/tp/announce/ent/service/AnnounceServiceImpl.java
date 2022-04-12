@@ -43,8 +43,8 @@ public class AnnounceServiceImpl implements AnnounceService {
         return dao.search(asdto, pageBy);
     }
 
-    public AnnounceVO update(UpdateAnnounceDTO announce) throws AnnounceException,Exception {
-        return dao.update(announce);
+    public AnnounceVO update(UpdateAnnounceDTO dto) throws AnnounceException,Exception {
+        return dao.update(dto);
     }
 
     public AnnounceVO update(Integer id) throws AnnounceException,AnnounceException {

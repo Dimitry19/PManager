@@ -22,7 +22,6 @@ import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.announces.ReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.ValidateReservationDTO;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,7 +37,7 @@ import static cm.travelpost.tp.notification.enums.NotificationType.*;
 
 
 @Repository("reservationDAO")
-public class ReservationDAOImpl extends Generic implements ReservationDAO {
+public class ReservationDAOImpl extends Generic implements ReservationDAO<ReservationVO> {
 
     private static Logger logger = LoggerFactory.getLogger(ReservationDAOImpl.class);
 
@@ -119,9 +117,9 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         reservation.setStatus(StatusEnum.VALID);
         save(reservation);
 
-        String message=new String();
 
-        message=buildNotificationMessage(message,RESERVATION,reservation.getUser().getUsername(),
+
+        String message=buildNotificationMessage(RESERVATION,reservation.getUser().getUsername(),
                 reservation.getAnnounce().getDeparture(),
                 reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),String.valueOf(reservation.getWeight()));
@@ -167,10 +165,9 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         }
         update(reservation);
 
-        String message=new String();
         String kg=" la reservation est passée de ["+oldWeight+" Kg ] a ["+reservationDTO.getWeight()+" Kg ] ";
 
-        message=buildNotificationMessage(message,RESERVATION_UPD,reservation.getUser().getUsername(),
+        String message=buildNotificationMessage(RESERVATION_UPD,reservation.getUser().getUsername(),
                 reservation.getAnnounce().getDeparture(),
                 reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),kg);
@@ -203,9 +200,9 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         update(announce);
         //delete(ReservationVO.class,id,true);
 
-        String message=new String();
 
-        message=buildNotificationMessage(message,RESERVATION_DEL,reservation.getUser().getUsername(),
+
+        String message=buildNotificationMessage(RESERVATION_DEL,reservation.getUser().getUsername(),
                 reservation.getAnnounce().getDeparture(),
                 reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),String.valueOf(reservation.getWeight()));
@@ -241,9 +238,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         String validate= reservationDTO.isValidate() ?  ValidateEnum.ACCEPTED.toValue():ValidateEnum.REFUSED.toValue();
 
 
-        String message=new String();
 
-        message=buildNotificationMessage(message,((reservationDTO.isValidate())?RESERVATION_VALIDATE:RESERVATION_UNVALIDATE),reservation.getUser().getUsername(),
+        String message=buildNotificationMessage(((reservationDTO.isValidate())?RESERVATION_VALIDATE:RESERVATION_UNVALIDATE),reservation.getUser().getUsername(),
                 reservation.getAnnounce().getDeparture(),
                 reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),String.valueOf(reservation.getWeight()));

@@ -16,6 +16,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +34,7 @@ import java.text.MessageFormat;
 public class DashboardController extends CommonController {
 	//Implementer le controle tel que seul l'admin peut operer ici
 
-
+	protected final Log logger = LogFactory.getLog(DashboardController.class);
 	/**
 	 * Cette methode cree une compagnie aerienne ou une ville
 	 *
@@ -84,12 +86,12 @@ public class DashboardController extends CommonController {
 					airline = (AirlineVO)o;
 					airline.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "L'element"));
 					airline.setRetCode(WebServiceResponseCode.OK_CODE);
-					return  new ResponseEntity(airline, HttpStatus.CREATED);
+					return  new ResponseEntity<>(airline, HttpStatus.CREATED);
 				}
 
 				if (o instanceof CityVO) {
 					city = (CityVO)o;
-					return  new ResponseEntity(city, HttpStatus.CREATED);
+					return  new ResponseEntity<>(city, HttpStatus.CREATED);
 				}
 			}
 		} catch (DashboardException e) {
@@ -101,7 +103,7 @@ public class DashboardController extends CommonController {
 		WSCommonResponseVO wsCommonResponse = new WSCommonResponseVO();
 		wsCommonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "L'element"));
 		wsCommonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-		return  new ResponseEntity(wsCommonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+		return  new ResponseEntity<>(wsCommonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 
 	}
 
@@ -134,8 +136,10 @@ public class DashboardController extends CommonController {
 			switch (dto.getObjectType()){
 				case AIRLINE:
 					airline  =  airlineService.update(dto);
+					break;
 				case CITY:
 					city = cityService.update(dto);
+					break;
 
 			}
 
@@ -146,8 +150,6 @@ public class DashboardController extends CommonController {
 			}
 
 			if (city != null) {
-//				city.setRetCode(WebServiceResponseCode.OK_CODE);
-//				city.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "La ville"));
 				return new ResponseEntity<>(city, HttpStatus.OK);
 			}else {
 				WSCommonResponseVO  commonResponse = new WSCommonResponseVO();
@@ -210,7 +212,7 @@ public class DashboardController extends CommonController {
 
 
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-			pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, (String)o));
+			pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, o));
 			return new ResponseEntity<>(pmResponse, HttpStatus.METHOD_NOT_ALLOWED);
 		} catch (Exception e) {
 			logger.error("Erreur durant l'elimination de l'element avec id" +o+"", e);

@@ -26,10 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -98,9 +95,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             update(subscriber);
             update(subscription);
 
-            String message= new String();
-
-            message= buildNotificationMessage(message,NotificationType.SUBSCRIBE,subscriber.getUsername(),null, null,
+           String message= buildNotificationMessage(NotificationType.SUBSCRIBE,subscriber.getUsername(),null, null,
                     null, null, null);
 
             generateEvent(subscription,message);
@@ -121,8 +116,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             update(subscriber);
             update(subscription);
 
-            String message= new String();
-            message=buildNotificationMessage(message,NotificationType.UNSUBSCRIBE,subscriber.getUsername(),null, null,
+
+            String message=buildNotificationMessage( NotificationType.UNSUBSCRIBE,subscriber.getUsername(),null, null,
                     null, null, null);
             generateEvent(subscription,message);
         } else throw new UserException("Une erreur survenue pendant la desinscription, veuillez reessayer");

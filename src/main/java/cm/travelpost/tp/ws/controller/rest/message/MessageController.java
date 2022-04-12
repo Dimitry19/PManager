@@ -52,9 +52,9 @@ public class MessageController extends CommonController {
                 if (message != null) {
                     message.setRetCode(WebServiceResponseCode.OK_CODE);
                     message.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "Commentaire"));
-                    return new ResponseEntity<MessageVO>(message, headers, HttpStatus.OK);
+                    return new ResponseEntity<>(message, headers, HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<MessageVO>(message, headers, HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>(null, headers, HttpStatus.NOT_FOUND);
                 }
             }
         } catch (Exception e) {

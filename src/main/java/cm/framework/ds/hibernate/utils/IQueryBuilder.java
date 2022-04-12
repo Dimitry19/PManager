@@ -3,9 +3,7 @@ package cm.framework.ds.hibernate.utils;
 import java.util.Map;
 
 public interface IQueryBuilder<T extends IQueryBuilder> {
-	//T setPage(PageBy var1);
 
-	//PageBy getPage();
 
 	T addOrderBy(String var1, String var2, Boolean var3);
 

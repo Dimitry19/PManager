@@ -332,13 +332,6 @@
 
 		<!-- GESTION TOKEN POUR LES REQUETES WS END-->
 
-
-		<!-- send email -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
-
 		<!--app.mailjet-->
 
 		<dependency>
@@ -396,13 +389,14 @@
 				</executions>
 			</plugin>
 			<!-- Ceci permet d'exclure devtools from maven spring build plugin-->
-			<plugin>
+			<!--<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<excludeDevtools>true</excludeDevtools>
 				</configuration>
-			</plugin>
+			</plugin>-->
 		</plugins>
+
 	</build>
 </project>

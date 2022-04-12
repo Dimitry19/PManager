@@ -73,10 +73,8 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         comment.setContent(mdto.getContent());
         update(comment);
 
-        String message=new String();
 
-
-        message=buildNotificationMessage(message,COMMENT_UPD,user.getUsername(),comment.getAnnounce().getDeparture(),
+        String message=buildNotificationMessage(COMMENT_UPD,user.getUsername(),comment.getAnnounce().getDeparture(),
                 comment.getAnnounce().getArrival(),DateUtils.getDateStandard(comment.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(comment.getAnnounce().getEndDate()),null);
 
@@ -113,8 +111,8 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         announce.addMessage(comment);
         save(comment);
 
-        String message=new String();
-        message=buildNotificationMessage(message,COMMENT,user.getUsername(),comment.getAnnounce().getDeparture(),
+
+        String message=buildNotificationMessage(COMMENT,user.getUsername(),comment.getAnnounce().getDeparture(),
                 comment.getAnnounce().getArrival(),DateUtils.getDateStandard(comment.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(comment.getAnnounce().getEndDate()),null);
 

@@ -2,7 +2,6 @@ package cm.travelpost.tp.ws.controller.rest.notification;
 
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
-import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
@@ -13,15 +12,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
 import java.text.MessageFormat;
 
-import static cm.travelpost.tp.constant.WSConstants.*;
+import static cm.travelpost.tp.constant.WSConstants.NOTIFICATION_WS;
 
 
 @RestController
@@ -47,17 +48,13 @@ public class  NotificationController extends CommonController {
                     WSCommonResponseVO wsResponse = new WSCommonResponseVO();
                     wsResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.READ_CODE_LABEL, "La notification"));
-                    return new ResponseEntity<>((WSCommonResponseVO) wsResponse, HttpStatus.OK);
+                    return new ResponseEntity<>(wsResponse, HttpStatus.OK);
                 }
             }
             return new ResponseEntity<>(notification, HttpStatus.OK);
-        } catch (UserException e) {
-            logger.info(" NotificationController -read:Exception occurred while fetching the response from the database.", e);
-            throw e;
         } catch (Exception e) {
             logger.info(" NotificationController -read:Exception occurred while fetching the response from the database.", e);
             throw e;
-
         } finally {
             finishOpentracingSpan();
         }

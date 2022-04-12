@@ -1,10 +1,10 @@
 package cm.travelpost.tp.ws.controller.rest.image;
 
+import cm.travelpost.tp.common.enums.UploadImageType;
+import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.image.ent.bo.ImageMultipart;
 import cm.travelpost.tp.image.ent.service.ImageService;
 import cm.travelpost.tp.image.ent.vo.ImageVO;
-import cm.travelpost.tp.common.enums.UploadImageType;
-import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.responses.Response;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
@@ -25,13 +25,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 
-import static cm.travelpost.tp.constant.WSConstants.*;
+import static cm.travelpost.tp.constant.WSConstants.IMG_WS;
 
 /*1-https://dzone.com/articles/upload-and-retrieve-filesimages-using-spring-boot*/
 @RestController
@@ -154,9 +153,9 @@ public class ImageController extends CommonController {
 
 
     @PostMapping("/uploadFile")
-    public ResponseEntity<Object> uploadFile(@RequestParam("File") MultipartFile file) throws IOException {
+    public ResponseEntity<Object> uploadFile(@RequestParam("File") MultipartFile file)  {
 
-        return new ResponseEntity<Object>("The File Uploaded Successfully.", HttpStatus.OK);
+        return new ResponseEntity<>("The File Uploaded Successfully.", HttpStatus.OK);
     }
 
     @PostMapping(value = "image/upload/file/{name}")

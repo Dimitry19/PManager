@@ -5,16 +5,16 @@ import cm.travelpost.tp.common.event.IEvent;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.notification.enums.NotificationType;
+import org.hibernate.QueryException;
 import org.hibernate.query.Query;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Set;
 
 
-public abstract class Generic<T, ID extends Serializable> extends CommonGenericDAO {
+public abstract class Generic extends CommonGenericDAO {
 
     public static String where=" where ";
     public String notificationMessagePattern = "{0} {1} {2}";
@@ -22,7 +22,10 @@ public abstract class Generic<T, ID extends Serializable> extends CommonGenericD
 
     public abstract boolean updateDelete(Object id) throws BusinessResourceException, UserException;
 
-    public  String composeQuery(Object o, String alias) throws Exception{
+    public  String composeQuery(Object o, String alias) throws QueryException {
+        if(o==null || alias == null){
+            return "";
+        }
         return null;
     }
 
@@ -42,10 +45,10 @@ public abstract class Generic<T, ID extends Serializable> extends CommonGenericD
      * @param kg
      * @return
      */
-    public String  buildNotificationMessage(String message, @NotNull NotificationType notificationType, String username, String departure,
+    public String  buildNotificationMessage(@NotNull NotificationType notificationType, String username, String departure,
                                             String arrival, String startDate, String endDate, String kg){
 
-
+        String message= null;
         switch (notificationType){
             case USER:
                 break;
@@ -68,51 +71,47 @@ public abstract class Generic<T, ID extends Serializable> extends CommonGenericD
                 break;
             case ANNOUNCE_DEL:
                 message =MessageFormat.format(notificationMessagePattern,username,
-                        " a supprimé l'annonce " + departure +"/"+arrival,
-                        "pour la date " + startDate+ "et retour le "+ endDate);
+                        " a supprimé l'annonce " + departure +"/"+arrival,partMessage(startDate,(endDate)));
                 break;
             case RESERVATION:
                 message= MessageFormat.format(notificationMessagePattern,username,
-                        " a fait une reservation  de [" +kg+" kg ] sur votre annonce "
-                                + departure +"/"+arrival," de la date du " + startDate+ " et retour le "+ endDate);
+                        " a fait une reservation  de [" +kg+" kg ] sur votre annonce " + departure +"/"+arrival,partMessage(startDate,(endDate)));
                 break;
             case RESERVATION_VALIDATE:
                  message= MessageFormat.format(notificationMessagePattern,username,
-                        " a accepté votre reservation  de [" +kg+" kg ] sur l' annonce "
-                                + departure +"/"+arrival," de la date du " + startDate+ " et retour le "+ endDate);
+                        " a accepté votre reservation  de [" +kg+" kg ] sur l' annonce "  + departure +"/"+arrival,partMessage(startDate,(endDate)));
                 break;
             case RESERVATION_UNVALIDATE:
                 message= MessageFormat.format(notificationMessagePattern,username,
-                        " a refusé votre reservation  de [" +kg+" kg ] sur l' annonce "
-                                + departure +"/"+arrival," de la date du " + startDate+ " et retour le "+ endDate);
+                        " a refusé votre reservation  de [" +kg+" kg ] sur l' annonce " + departure +"/"+arrival,partMessage(startDate,(endDate+kg)));
                 break;
             case RESERVATION_UPD:
 
                  message= MessageFormat.format(notificationMessagePattern,username,
-                         " a modifié une reservation sur votre annonce "+departure +"/"+arrival,
-                        " du " + startDate + " et retour le "+ endDate+kg);
+                         " a modifié une reservation sur votre annonce "+departure +"/"+arrival,partMessage(startDate,(endDate+kg)));
 
                 break;
             case RESERVATION_DEL:
 
                 message= MessageFormat.format(notificationMessagePattern,username,
-                        " a supprimé une reservation  de [" +kg+" kg ] sur votre annonce "
-                                + departure +"/"+arrival," de la date du " + startDate+ " et retour le "+ endDate);
+                        " a supprimé une reservation  de [" +kg+" kg ] sur votre annonce " + departure +"/"+arrival,partMessage(startDate, endDate));
                 break;
             case COMMENT:
                 message=MessageFormat.format(notificationMessageCommentPattern,username
-                        ," a ajouté un commentaire sur l'annonce "+departure+"/"+arrival,
-                        " pour la date " + startDate+ " et retour le "+ endDate, "");
+                        ," a ajouté un commentaire sur l'annonce "+departure+"/"+arrival,partMessage(startDate, endDate),"");
                 break;
             case COMMENT_UPD:
                 message=MessageFormat.format(notificationMessageCommentPattern,username
-                        ," a modifié un commentaire sur l'annonce "+departure+"/"+arrival,
-                        " pour la date " + startDate+ " et retour le "+ endDate, "");
+                        ," a modifié un commentaire sur l'annonce "+departure+"/"+arrival, partMessage(startDate, endDate), "");
                 break;
         }
         return message;
     }
 
+    private String partMessage(String startDate, String endDate){
+
+        return ",date de l'annonce [" + startDate+ "]  et retour le  [ "+ endDate+"]";
+    }
 
     public void fillProps(Map props, Long id,String message, Long userId,Set subscribers) throws Exception {
 

@@ -21,8 +21,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +43,7 @@ import static cm.travelpost.tp.constant.WSConstants.ANNOUNCE_WS;
 @Api(value = "Announce-service", description = "Announces Operations")
 public class AnnounceController extends CommonController {
 
-    protected final Log logger = LogFactory.getLog(AnnounceController.class);
+
 
 
     /**
@@ -76,7 +74,7 @@ public class AnnounceController extends CommonController {
         try {
             createOpentracingSpan("AnnounceController -create");
 
-            logger.info("create announce request in");
+            log.info("create announce request in");
             if (ar != null) {
                 announce = announceService.create(ar);
 
@@ -91,7 +89,7 @@ public class AnnounceController extends CommonController {
                 }
             }
         } catch (AnnounceException e) {
-            logger.error("Erreur durant l'execution de  add announce: ", e);
+            log.error("Erreur durant l'execution de  add announce: ", e);
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,7 +133,7 @@ public class AnnounceController extends CommonController {
                 return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
             }
         } catch (AnnounceException e) {
-            logger.error("Erreur durant l'ajournement de l'announce " + uar.toString() + "{ }", e);
+            log.error("Erreur durant l'ajournement de l'announce " + uar.toString() + "{ }", e);
             throw e;
         } finally {
             finishOpentracingSpan();
@@ -173,10 +171,10 @@ public class AnnounceController extends CommonController {
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
 
-        logger.info("find  announces request in");
+        log.info("find  announces request in");
 
         try {
-            createOpentracingSpan("AnnounceController -find");
+            createOpentracingSpan("AnnounceController -search");
 
             if (dto != null) {
 
@@ -187,12 +185,12 @@ public class AnnounceController extends CommonController {
                 return getPaginateResponseResponseEntity(headers,paginateResponse,count,announces);
             }
         } catch (Exception e) {
-            logger.info(" AnnounceController -find:Exception occurred while fetching the response from the database.", e);
+            log.info(" AnnounceController -find:Exception occurred while fetching the response from the database.", e);
             throw e;
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.PRECONDITION_FAILED);
+        return new ResponseEntity<>(paginateResponse, headers, HttpStatus.PRECONDITION_FAILED);
     }
 
     /**
@@ -225,7 +223,7 @@ public class AnnounceController extends CommonController {
         PaginateResponse paginateResponse = new PaginateResponse();
         PageBy pageBy = new PageBy(page, size);
 
-        logger.info("find announce by user request in");
+        log.info("find announce by user request in");
 
 
         try {
@@ -241,7 +239,7 @@ public class AnnounceController extends CommonController {
                 paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
             }
         } catch (AnnounceException e) {
-            logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
+            log.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
             throw e;
         } finally {
             finishOpentracingSpan();
@@ -280,7 +278,7 @@ public class AnnounceController extends CommonController {
         PaginateResponse paginateResponse = new PaginateResponse();
 
         PageBy pageBy = new PageBy(page, size);
-        logger.info("find announce by type request in");
+        log.info("find announce by type request in");
 
 
         try {
@@ -291,7 +289,7 @@ public class AnnounceController extends CommonController {
             return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
 
         } catch (AnnounceException e) {
-            logger.info(" AnnounceController -announcesByType:Exception occurred while fetching the response from the database.", e);
+            log.info(" AnnounceController -announcesByType:Exception occurred while fetching the response from the database.", e);
             throw e;
         } finally {
             finishOpentracingSpan();
@@ -329,7 +327,7 @@ public class AnnounceController extends CommonController {
         PaginateResponse paginateResponse = new PaginateResponse();
 
         PageBy pageBy = new PageBy(page, size);
-        logger.info("find announce by transport request in");
+        log.info("find announce by transport request in");
 
 
         try {
@@ -340,7 +338,7 @@ public class AnnounceController extends CommonController {
             return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
 
         } catch (AnnounceException e) {
-            logger.info(" AnnounceController -announcesByType:Exception occurred while fetching the response from the database.", e);
+            log.info(" AnnounceController -announcesByType:Exception occurred while fetching the response from the database.", e);
             throw e;
         } finally {
             finishOpentracingSpan();
@@ -364,7 +362,7 @@ public class AnnounceController extends CommonController {
         Response pmResponse = new Response();
 
         try {
-            logger.info("delete request in");
+            log.info("delete request in");
             createOpentracingSpan("AnnounceController -delete");
 
             if (id != null) {
@@ -382,7 +380,7 @@ public class AnnounceController extends CommonController {
             }
             return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
         } catch (AnnounceException e) {
-            logger.error("Erreur durant l'elimination de l'annonce {}", e);
+            log.error("Erreur durant l'elimination de l'annonce {}", e);
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
@@ -399,7 +397,7 @@ public class AnnounceController extends CommonController {
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
         try {
-            logger.info("retrieve announce request in");
+            log.info("retrieve announce request in");
             createOpentracingSpan("AnnounceController -get announce");
             AnnounceVO announce = null;
             if (id != null) {
@@ -414,7 +412,7 @@ public class AnnounceController extends CommonController {
             }
             return new ResponseEntity<>(announce, HttpStatus.OK);
         } catch (AnnounceException e) {
-            logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
+            log.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
             if(source.equals(Source.NOTIFICATION)){
                 WSCommonResponseVO wsResponse = new WSCommonResponseVO();
                 wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
@@ -452,7 +450,7 @@ public class AnnounceController extends CommonController {
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
-        logger.info("retrieve  announces request in");
+        log.info("retrieve  announces request in");
         PageBy pageBy = new PageBy(page, Integer.valueOf(DEFAULT_SIZE));
 
         try {
@@ -480,7 +478,7 @@ public class AnnounceController extends CommonController {
 
             return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
         } catch (AnnounceException e) {
-            logger.info(" AnnounceController -announces:Exception occurred while fetching the response from the database.", e);
+            log.info(" AnnounceController -announces:Exception occurred while fetching the response from the database.", e);
             throw e;
         } finally {
             finishOpentracingSpan();

@@ -38,7 +38,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -51,7 +50,7 @@ import java.util.List;
 public class CommonController  extends WSConstants {
 
 
-    protected final Log logger = LogFactory.getLog(CommonController.class);
+    protected final Log log = LogFactory.getLog(CommonController.class);
 
     public static final String HEADER_TOTAL = "x-total-count";
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
@@ -142,7 +141,7 @@ public class CommonController  extends WSConstants {
     }
 
 
-    protected  ResponseEntity<byte []> manageImage(String filename,byte[] data) throws IOException {
+    protected  ResponseEntity<byte []> manageImage(String filename,byte[] data)  {
 
          String contentType = servletContext.getMimeType(filename);
          return ResponseEntity
@@ -165,6 +164,7 @@ public class CommonController  extends WSConstants {
                 headers.add(HEADER_TOTAL, Long.toString(count));
                 paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                 paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
+                break;
             default:
 
                 if (CollectionsUtils.isNotEmpty(results)) {
@@ -203,7 +203,7 @@ public class CommonController  extends WSConstants {
         }else{
             pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
         }
-        return new ResponseEntity<Response>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
+        return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     public String getRedirectPage(RedirectType type) {
@@ -212,12 +212,16 @@ public class CommonController  extends WSConstants {
         switch (type){
             case INDEX:
                 redirectSb.append(redirectPage);
+                break;
             case CONFIRMATION:
                 redirectSb.append(redirectConfirmPage);
+                break;
             case CONFIRMATION_ERROR:
                 redirectSb.append(redirectConfirmErrorPage);
+                break;
             case ERROR:
                 redirectSb.append(redirectPageError);
+                break;
         }
         return redirectSb.toString();
     }

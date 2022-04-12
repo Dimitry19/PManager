@@ -31,6 +31,8 @@ import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
 import org.apache.commons.lang3.BooleanUtils;
+import org.hibernate.QueryException;
+import org.hibernate.QueryParameterException;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +42,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -207,9 +208,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             save(announce);
             addAnnounceToUser(announce);
 
-            String message=new String();
 
-            message=buildNotificationMessage(message,ANNOUNCE,announce.getUser().getUsername(),announce.getDeparture(),
+
+            String message=buildNotificationMessage(ANNOUNCE,announce.getUser().getUsername(),announce.getDeparture(),
                     announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
                     DateUtils.getDateStandard(announce.getEndDate()),null);
 
@@ -223,36 +224,36 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     /**
      * Cette methode permet d'ajourner une annonce
-     * @param udto  ddonnees de l'annonce à ajourner
+     * @param dto  ddonnees de l'annonce à ajourner
      * @return AnnonceVO
      * @throws Exception
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
-    public AnnounceVO update(UpdateAnnounceDTO udto) throws AnnounceException,Exception {
+    public AnnounceVO update(UpdateAnnounceDTO dto) throws AnnounceException,Exception {
 
-        UserVO user = userDAO.findById(udto.getUserId());
+        UserVO user = userDAO.findById(dto.getUserId());
 
         if (user == null) {
             throw new RecordNotFoundException("Aucun utilisateur trouvé");
         }
 
-        AnnounceVO announce = announce(udto.getId());
+        AnnounceVO announce = announce(dto.getId());
         if (announce == null) {
             throw new RecordNotFoundException("Aucune annonce  trouvée");
         }
-        if (CollectionsUtils.isEmpty(udto.getCategories())) {
-            udto.setCategories(new ArrayList<>());
-            udto.getCategories().add(constants.DEFAULT_CATEGORIE);
+        if (CollectionsUtils.isEmpty(dto.getCategories())) {
+            dto.setCategories(new ArrayList<>());
+            dto.getCategories().add(constants.DEFAULT_CATEGORIE);
         }
         double rating = calcolateAverage(user);
         announce.getUserInfo().setRating(rating);
-        setAnnounce(announce, user, udto,false);
+        setAnnounce(announce, user, dto,false);
         update(announce);
 
-        String message=new String();
 
-        message=buildNotificationMessage(message,ANNOUNCE_UPD,announce.getUser().getUsername(),announce.getDeparture(),
+
+        String message=buildNotificationMessage(ANNOUNCE_UPD,announce.getUser().getUsername(),announce.getDeparture(),
                 announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
                 DateUtils.getDateStandard(announce.getEndDate()),null);
 
@@ -315,9 +316,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                         " car il existe des résevations pour une quantité ["+sumQtyRes+"] Kg");
             }
 
-            String message=new String();
-
-            message= buildNotificationMessage(message,ANNOUNCE_DEL,announce.getUser().getUsername(),announce.getDeparture(),
+            String message= buildNotificationMessage(ANNOUNCE_DEL,announce.getUser().getUsername(),announce.getDeparture(),
                     announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
                     DateUtils.getDateStandard(announce.getEndDate()),null);
             generateEvent(announce,message);
@@ -367,8 +366,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             throw new AnnounceException("Une des dates n'est pas valide");
         }
 
-        if (DateUtils.isBefore(startDate, DateUtils.currentDate())) {
-            throw new AnnounceException("La date de depart n'est pas valide, elle doit etre minimum la date courante");
+        if (isCreate && DateUtils.isBefore(startDate, DateUtils.currentDate())) {
+            throw new AnnounceException("La date de depart n'est pas valide, elle doit etre minimum la date d'aujourd\'hui");
         }
 
 
@@ -458,6 +457,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
     public boolean updateDelete(Object o) throws BusinessResourceException {
         boolean result = false;
 
@@ -500,7 +500,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
     public List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception {
 
         try {
@@ -511,6 +511,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
     public BigDecimal checkQtyReservations(Long id,boolean onlyRefused) throws AnnounceException,Exception {
 
         try {
@@ -547,7 +548,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    public String composeQuery(Object obj, String alias) throws Exception {
+    public String composeQuery(Object obj, String alias) throws QueryException {
 
         AnnounceSearchDTO announceSearch = (AnnounceSearchDTO) obj;
 
@@ -634,17 +635,17 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             }
             hql.append(" group by " + alias + ".id ");
             hql.append(" order by " + alias + ".startDate desc");
-        } catch (Exception e) {
+        } catch (QueryException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
-            throw new Exception("Erreur dans la fonction " + AnnounceDAO.class.getName() + " composeQuery");
+            throw new QueryException("Erreur dans la fonction " + AnnounceDAO.class.getName() + " composeQuery");
 
         }
         return hql.toString();
     }
 
     @Override
-    public void composeQueryParameters(Object obj, Query query) throws Exception {
+    public void composeQueryParameters(Object obj, Query query) throws QueryParameterException {
 
         AnnounceSearchDTO announceSearch = (AnnounceSearchDTO) obj;
 
@@ -701,10 +702,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 				query.setParameter("email", "%"+announceSearch.getUser()+"%");
 			}*/
 
-        } catch (Exception e) {
+        } catch (QueryParameterException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
-            throw new Exception("Erreur dans la fonction " + AnnounceDAO.class.getName() + " composeQueryParameters");
+            throw new QueryParameterException("Erreur dans la fonction " + AnnounceDAO.class.getName() + " composeQueryParameters");
         }
     }
 
@@ -759,6 +760,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
     public void generateEvent(Object obj , String message) throws Exception {
 
         AnnounceVO announce= (AnnounceVO) obj;
