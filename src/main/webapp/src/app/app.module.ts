@@ -36,6 +36,7 @@ import { TooltipDirective } from './directive/tooltip.directive';
 import {OptionsComponent} from './options/options.component';
 import { FilterProductsComponent } from './filter-products/filter-products.component';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+
 import { CarouselComponent } from './carousel/carousel.component';
 import { CookieModule } from 'ngx-cookie';
 

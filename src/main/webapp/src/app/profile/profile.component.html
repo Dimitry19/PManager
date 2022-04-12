@@ -476,7 +476,7 @@
                         <div class="card-block groups-contact">
                             <div class="list-group list-contacts">
                                 <button class="list-group-item list-group-item-action" id="mesRes" data-toggle="tab" href="#mesRes-tab" role="tab" aria-controls="mesRes-tab" aria-selected="true">Mes Reservations
-                                    <span class="badge badge-primary badge-pill" [innerHTML]=" myReservations ? myReservations.count : 0 "></span>
+                                    <span class="badge badge-primary badge-pill" [innerHTML]=" myReservations?.count ? myReservations.count : 0 "></span>
                                 </button>
                                 <button class="list-group-item list-group-item-action" id="leurRes" data-toggle="tab" href="#leurRes-tab" role="tab" aria-controls="leurRes-tab" aria-selected="false">Reservations reçues
                                     <span class="badge badge-success badge-pill" [innerHTML]="countAnnWithRes"></span>
@@ -493,7 +493,7 @@
                                 <h5 class="card-header-text">Mes reservations</h5>
                             </div>
                             <div class="card-block table-details">
-                                <table *ngIf="myReservations" datatable [dtOptions]="dtOptions" class="table hover" id="">
+                                <table *ngIf="myReservations" datatable [dtOptions]="dtOptions" class="table hover datatable" id="own">
                                     <thead>
                                         <tr>
                                             <th>Ville de Départ</th>
@@ -532,7 +532,7 @@
                                 <h5 class="card-header-text">Mes reservations reçues</h5>
                             </div>
                             <div class="card-block table-details">
-                                <table *ngIf="annonceWithRes" datatable [dtOptions]="dtOptions" class="table hover" id="">
+                                <table *ngIf="annonceWithRes.length > 0" datatable [dtOptions]="dtOptions" class="table hover" id="receive">
                                     <thead>
                                         <tr>
                                             <th>Ville de Départ</th>
@@ -544,7 +544,7 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody *ngIf="annonceWithRes.length > 0">
+                                    <tbody>
                                         <!-- <ng-container *ngFor="let reserve of annonceWithRes; let i = index; trackBy:tracbByFn"> -->
                                         <tr *ngFor="let res of annonceWithRes; let y = index; trackBy:tracbByFn" [class]="res.announceInfo.price > 0 ? 'seller' : 'buyer'">
                                             <td><span class="value" [innerHTML]=" res.announceInfo.departure"></span></td>
@@ -552,7 +552,7 @@
                                             <td><span class="value" [innerHTML]=" res.announceInfo.startDate"></span></td>
                                             <td><span class="value" [innerHTML]=" res.announceInfo.endDate"></span></td>
                                             <td><span class="value" [innerHTML]=" res.weight"></span></td>
-                                            <td><span class="value" [innerHTML]=" res.userInfo?.username"></span></td>
+                                            <td><span class="value" [innerHTML]="res.userInfo?.username"></span></td>
                                             <td class="">
                                                 <ul class="actionRes">
                                                     <li *ngIf="res.validate == 'INSERTED'" class="actions"><a (click)="valide(res.id)"><i class="fa fa-check text-success"></i></a></li>
@@ -563,6 +563,7 @@
                                                 </ul>
                                             </td>
                                         </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -778,7 +779,7 @@
                 </div>
             </div>
             <div *ngIf="views" class="modal-footer">
-                <span class="pr-4" [innerHTML]="annonceRes.userInfo?.username"></span>
+                <span class="pr-4" [innerHTML]="'reservé par '+annonceRes.userInfo?.username"></span>
                 <span [class]="annonceRes.validate == 'INSERTED' ?'badge value badge-info badge-pill':annonceRes.validate == 'ACCEPTED' ?'badge value badge-success badge-pill':'badge value badge-danger badge-pill'" [innerHTML]="annonceRes.validate == 'INSERTED' ?'En attente':annonceRes.validate == 'ACCEPTED' ?'Confirmée':'Refusée'"></span>
             </div>
             <div *ngIf="!views" class="modal-footer">

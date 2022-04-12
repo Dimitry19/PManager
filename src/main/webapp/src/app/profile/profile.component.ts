@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms';
 import { ServiceRequest, notif } from '../serviceRequest';
@@ -9,7 +9,8 @@ import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 // import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 import * as _ from 'underscore';
 import { SharedService } from '../SharedConstants';
-import { IfStmt } from '@angular/compiler';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 declare var $: any;
 
 @Component({
@@ -35,7 +36,7 @@ export class ProfileComponent implements OnInit {
   annonceRes;
   annonceWithRes = [];
   countAnnWithRes = 0;
-  dtOptions: DataTables.Settings = {};
+  dtOptions:any = {};
   titleModal: string;
   loggedUser;
   myReservations;
@@ -53,6 +54,11 @@ export class ProfileComponent implements OnInit {
   mesAbonnements: Array<any> = [];
   mesAbonnes: Array<any> = [];
   sectionToshow: string;
+  @ViewChildren(DataTableDirective)
+  //dtElement: DataTableDirective;
+  dtElements: QueryList<DataTableDirective>;
+  dtTrigger1 : Subject<any> = new Subject();
+  dtTrigger2 : Subject<any> = new Subject();
 
 
   constructor(private router: Router,private startup: ServiceRequest, private formBuilder: FormBuilder, private route: ActivatedRoute,
@@ -76,6 +82,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     let self = this;
+    
     self.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -275,7 +282,6 @@ export class ProfileComponent implements OnInit {
         );
         
       }
-
     }
 
   }
@@ -690,5 +696,20 @@ find(i): boolean{
     return true;
   }
   return false;
+}
+rerender(){
+  let self = this;
+  this.dtElements.forEach((dtElement: DataTableDirective) =>{
+    if(dtElement.dtInstance){
+      dtElement.dtInstance.then((dtInstance: DataTables.Api) =>{dtInstance.destroy()})
+    }
+  });
+  this.dtTrigger1.next();
+  this.dtTrigger2.next();
+}
+ngOnDestroy():void{
+  let self = this;
+  this.dtTrigger1.unsubscribe();
+  this.dtTrigger2.unsubscribe();
 }
 }

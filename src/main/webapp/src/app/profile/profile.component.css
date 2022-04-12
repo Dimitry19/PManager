@@ -30,7 +30,9 @@
     padding: 2em;
 }
 
-#simpletable tr:hover {
+#simpletable tr:hover,
+#own tr:hover,
+#receive tr:hover {
     cursor: pointer;
 }
 

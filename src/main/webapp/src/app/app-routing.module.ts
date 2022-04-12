@@ -17,7 +17,7 @@ const routes: Routes = [
   // { path: '', redirectTo: '/nofound'},
 
   // { path: '**', canActivate: [AdminGuard], redirectTo: 'home' },
-  { path:'home', canActivate: [AdminGuard], component: HomeComponent},
+  { path:'home', canActivate: [AdminGuard], component: HomeComponent, data: {breadcrumb: { lable: "Home" }}},
   { path:'myaccount', canActivate: [AdminGuard], component: ProfileComponent},
   { path:'addAnnonce/:type', canActivate: [AdminGuard], component: AddProductComponent},
   { path:'annonce/:id/:notification', canActivate: [AdminGuard], component: ProductComponent},
