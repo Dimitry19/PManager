@@ -21,7 +21,8 @@ export interface notif {
 export class ServiceRequest {
  
   sessionUser: string = 'Guest';
-  
+  private client: RxStomp;
+  public notifications: notif[] = [];
   constructor(private spinner: NgxSpinnerService,private httpClient: HttpClient) {
 
   }
@@ -440,6 +441,10 @@ getAllUsers(){
       return this.httpClient.get(Urlconstances.BASEURL + 'ws/user/logout?username='+username,options).pipe(map((res: any)=> res),
       catchError((this.handleError)),finalize(() => {
         this.spinner.hide();
+        this.sessionUser = 'Guest';
+        this.notifications = [];
+        caches.delete(sessionStorage.loggedUser).then(c =>{console.log("caches",c);
+        });
       }));
   }
 
@@ -447,8 +452,7 @@ getAllUsers(){
    /*source stomp: https://ngdeveloper.com/spring-boot-2-angular-11-websocket-2-3-sockjs-1-0-2/ */
    /**soure rxstomp: https://www.codesandnotes.be/2020/03/31/websocket-based-notification-system-using-spring/ */
 
-private client: RxStomp;
-public notifications: notif[] = [];
+
 
 connectClicked(user: string) {
   if (!this.client || this.client.connected) {
@@ -497,6 +501,11 @@ stopClicked() {
   if (this.client && this.client.connected) {
     this.client.publish({destination: '/swns/stop'});
   }
+}
+
+removeMessage(id:number){
+  this.notifications.splice(id,1);
+  return this.notifications;
 }
 
 }

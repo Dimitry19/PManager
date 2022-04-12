@@ -9,6 +9,7 @@ import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 // import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 import * as _ from 'underscore';
 import { SharedService } from '../SharedConstants';
+import { IfStmt } from '@angular/compiler';
 declare var $: any;
 
 @Component({
@@ -46,6 +47,8 @@ export class ProfileComponent implements OnInit {
   viewTable:boolean = false;
   file : File;
   notification:string;
+  notificationType:string;
+  idAnnonce:number;
   notificationsList: Array<notif> = [];
   mesAbonnements: Array<any> = [];
   mesAbonnes: Array<any> = [];
@@ -55,15 +58,18 @@ export class ProfileComponent implements OnInit {
   constructor(private router: Router,private startup: ServiceRequest, private formBuilder: FormBuilder, private route: ActivatedRoute,
                           private notifyService : AlertService, private domSanitizer: DomSanitizer) {
       let self = this;  
-      self.route.paramMap.subscribe(url =>{
-        self.id = url.get('id');
-        self.sectionToshow = url.get('section');
-      });    
-      
-      self.startup.notifications.forEach((val:notif) =>{                  
-        self.notificationsList.push(val);
-         // .toLocaleDateString('fr-FR', self.options);
-      }); 
+      self.id = self.route.snapshot.paramMap.get('id');
+      self.sectionToshow = self.route.snapshot.paramMap.get('section'); 
+      if(sessionStorage.loggedUser){
+        self.loggedUser = JSON.parse(sessionStorage.loggedUser);
+        self.notificationsList = this.startup.notifications;  
+      } 
+      setInterval(() => {
+        if(sessionStorage.loggedUser){
+          self.loggedUser = JSON.parse(sessionStorage.loggedUser);
+          self.notificationsList = this.startup.notifications;  
+        }      
+      }, 500);
 
      
    }
@@ -100,14 +106,7 @@ export class ProfileComponent implements OnInit {
           if(response.retCode > -1){
             self.loggedUser.announces = response.results;  
 
-            _.each(self.loggedUser.announces, (item, index) =>{
-              self.startup.getReserveAnn(item.id).toPromise().then(response=>{
-                self.loggedUser.announces[index]['reservations'] = response.count;
-                if(response.count > 0){
-                  self.annonceReserve(response);
-                }
-              });
-            });
+            self.annonceReserve();
             self.annonces = self.loggedUser.announces;
           }else{
             self.notifyService.showError(response.details[0],"");
@@ -136,7 +135,20 @@ export class ProfileComponent implements OnInit {
         });
 
         
-        self.msg(+self.id);
+        
+        $(document).ready(function () {
+          $('#tab'+self.id).click();
+          
+          if(self.notificationsList){
+            self.notification = self.notificationsList[self.id].message;  
+            self.notificationType = "USER";
+          }
+          
+        });
+        setTimeout(function() {
+          self.msg(+self.id);
+      }, 6000*10);
+        
 
         self.updateUser = self.formBuilder.group({
           firstName: [self.loggedUser.firstName, [Validators.required]],
@@ -173,14 +185,7 @@ export class ProfileComponent implements OnInit {
           self.startup.annonceUserId(self.loggedUser.id).subscribe(response =>{
             if(response.retCode > -1){
               self.loggedUser.announces = response.results;  
-            _.each(self.loggedUser.announces, (item, index) =>{
-              self.startup.getReserveAnn(item.id).toPromise().then(response=>{
-                self.loggedUser.announces[index]['reservations'] = response.count;
-                if(response.count > 0){
-                  self.annonceReserve(response);
-                }
-              });
-            });
+              self.annonceReserve();
             self.annonces = self.loggedUser.announces;
             }else{
               self.notifyService.showError(response.details[0],"");
@@ -224,14 +229,7 @@ export class ProfileComponent implements OnInit {
         self.startup.annonceUserId(self.loggedUser.id).subscribe(response =>{      
           if(response.retCode > -1){
             self.loggedUser.announces = response.results;  
-            _.each(self.loggedUser.announces, (item, index) =>{
-              self.startup.getReserveAnn(item.id).toPromise().then(response=>{
-                self.loggedUser.announces[index]['reservations'] = response.count;
-                if(response.count > 0){
-                  self.annonceReserve(response);
-                }
-              });
-            });
+            self.annonceReserve();
             self.annonces = self.loggedUser.announces;
           }else{
             self.notifyService.showError(response.details[0],"");
@@ -310,7 +308,7 @@ toggleView(x){
     x.innerHTML = "Carte";
   }
 }
- annonceReserve(response){
+ annonceReserve(){
   let self = this;
   self.startup.getReserveFromUsers(self.loggedUser.id).subscribe(response=>{
     if(response.retCode != -1){
@@ -365,7 +363,10 @@ toggleView(x){
     let self = this;    
     if(self.notificationsList){
       self.startup.notificationId(self.notificationsList[ind].id).subscribe(val =>{
-        self.notification = self.notificationsList[ind].message;     
+        self.notification = val.message;  
+        self.idAnnonce = val.announceId;
+        self.notificationType = val.type;
+        self.notificationsList.splice(ind,1);   
       });
     } 
   }
@@ -375,10 +376,13 @@ toggleView(x){
       self.readOnly = true;
   }
 
-  detail(id){
+  detail(id,source){
     let self = this;
-    let annonce = _.findWhere(self.annonces,{id:parseInt(id)});    
-    self.router.navigate(["/annonce",id,"OTHER"]);
+    // let annonce = _.findWhere(self.annonces,{id:parseInt(id)});
+    if(source == "NOTIFICATION"){
+      self.startup.removeMessage(id);
+    }
+    self.router.navigate(["/annonce",id,source]);
   }
 
   mySexe(sexe){
