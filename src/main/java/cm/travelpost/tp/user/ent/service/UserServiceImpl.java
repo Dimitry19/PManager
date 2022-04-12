@@ -30,11 +30,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,7 +117,7 @@ public class UserServiceImpl implements UserService {
 
         if (user == null) {
             if (lr.getEmail() != null) {
-                user = userDAO.findByEmail(lr.getEmail());
+                //user = userDAO.findByEmail(lr.getEmail());
             }
 
 			/*if(lr.getProvider()!=null){
@@ -148,10 +146,10 @@ public class UserServiceImpl implements UserService {
     public UserVO checkLoginAdmin(LoginDTO login) throws Exception {
         AtomicBoolean found = new AtomicBoolean(false);
 
-        UserVO admin = userDAO.findByEmail(login.getEmail());
-        if (admin == null) {
+        UserVO admin = userDAO.findByUsername(login.getUsername()); //userDAO.findByEmail(login.getEmail());
+       /* if (admin == null) {
             admin = userDAO.findByUsername(login.getUsername());
-        }
+        }*/
         if (admin != null) {
             admin.getRoles().forEach(x -> {
                 if (RoleEnum.ADMIN.equals(RoleEnum.fromValue(x.getDescription().name()))) {

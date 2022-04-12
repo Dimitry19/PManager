@@ -1,11 +1,11 @@
 package cm.travelpost.tp.message.ent.dao;
 
+import cm.framework.ds.hibernate.dao.Generic;
 import cm.framework.ds.hibernate.enums.FindBy;
 import cm.travelpost.tp.announce.ent.dao.AnnounceDAO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.travelpost.tp.common.Constants;
-import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
@@ -20,13 +20,11 @@ import cm.travelpost.tp.user.ent.dao.UserDAO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.messages.MessageDTO;
 import cm.travelpost.tp.ws.requests.messages.UpdateMessageDTO;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -207,19 +205,23 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         UserVO announceUser=announce.getUser();
 
         Set subscribers=new HashSet();
-        subscribers.add(announce.getUser());
+
+        if(notSame(announceUser.getId(),user.getId())){
+            subscribers.add(announce.getUser());
+        }
+
 
         if(CollectionsUtils.isNotEmpty(announce.getMessages())) {
-            announce.getMessages().stream().filter(m->m.getUser()!=null && m.getUser().getId()!=user.getId() && m.getUser().isEnableNotification()).forEach(m->{
+            announce.getMessages().stream().filter(m->m.getUser()!=null && notSame(m.getUser().getId(),user.getId()) && m.getUser().isEnableNotification()).forEach(m->{
                 subscribers.add(m.getUser());
             });
         }
 
-        if(user.equals(announceUser) || user.getId() == announceUser.getId()){
+        if(same(announceUser.getId(),user.getId())){
             List<ReservationVO> reservations = announceDAO.findReservations(announce.getId());
 
             if(CollectionsUtils.isNotEmpty(reservations)) {
-                reservations.stream().filter(r->r.getUser()!=null && r.getUser().getId()!=user.getId() && r.getUser().isEnableNotification())
+                reservations.stream().filter(r->r.getUser()!=null && notSame(r.getUser().getId(),user.getId()) && r.getUser().isEnableNotification())
                         .forEach(r->{
                             subscribers.add(r.getUser());
                         });
@@ -230,6 +232,14 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
             fillProps(props,announce.getId(),message, user.getId(),subscribers);
             generateEvent( NotificationType.ANNOUNCE);
         }
+    }
+
+
+    private boolean notSame(long id, long compareId){
+        return !same(id,compareId);
+    }
+    private boolean same(long id, long compareId){
+        return id==compareId;
     }
 
 }
