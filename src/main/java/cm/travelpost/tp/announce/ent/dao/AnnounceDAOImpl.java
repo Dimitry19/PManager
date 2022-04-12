@@ -471,7 +471,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 merge(announce);
                 announce = (AnnounceVO) get(AnnounceVO.class, id);
                 result = (announce != null) && (announce.isCancelled()) && deleteReservations(id);
-
             }
         } catch (Exception e) {
             throw new BusinessResourceException(e.getMessage());
