@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
 
         if (user == null) {
             if (lr.getEmail() != null) {
-                user = userDAO.findByEmail(lr.getEmail());
+               // user = userDAO.findByEmail(lr.getEmail());
             }
 
 			/*if(lr.getProvider()!=null){
@@ -148,10 +148,10 @@ public class UserServiceImpl implements UserService {
     public UserVO checkLoginAdmin(LoginDTO login) throws Exception {
         AtomicBoolean found = new AtomicBoolean(false);
 
-        UserVO admin = userDAO.findByEmail(login.getEmail());
-        if (admin == null) {
+        UserVO admin = admin = userDAO.findByUsername(login.getUsername());//userDAO.findByEmail(login.getEmail());
+       /* if (admin == null) {
             admin = userDAO.findByUsername(login.getUsername());
-        }
+        }*/
         if (admin != null) {
             admin.getRoles().forEach(x -> {
                 if (RoleEnum.ADMIN.equals(RoleEnum.fromValue(x.getDescription().name()))) {

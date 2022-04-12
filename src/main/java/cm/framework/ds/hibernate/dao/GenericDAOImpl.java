@@ -748,7 +748,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
     private List<T> commonFindByUser(Class<T> clazz, Long userId, String alias,PageBy pageBy, Session session){
-        Query query = session.createQuery(SELECT_FROM + clazz.getName() +alias , clazz);
+        Query query = session.createQuery(SELECT+FROM + clazz.getName() +alias , clazz);
         query.setParameter(USER_PARAM, userId);
         pageBy(query, pageBy);
 

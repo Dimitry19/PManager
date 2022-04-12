@@ -198,7 +198,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
     }
 
 
-    @Override
+ @Override
     public void generateEvent(Object obj , String message) throws Exception {
 
         MessageVO comment= (MessageVO) obj;
@@ -207,19 +207,23 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         UserVO announceUser=announce.getUser();
 
         Set subscribers=new HashSet();
-        subscribers.add(announce.getUser());
+
+        if(notSame(announceUser.getId(),user.getId())){
+            subscribers.add(announce.getUser());
+        }
+
 
         if(CollectionsUtils.isNotEmpty(announce.getMessages())) {
-            announce.getMessages().stream().filter(m->m.getUser()!=null && m.getUser().getId()!=user.getId() && m.getUser().isEnableNotification()).forEach(m->{
+            announce.getMessages().stream().filter(m->m.getUser()!=null && notSame(m.getUser().getId(),user.getId()) && m.getUser().isEnableNotification()).forEach(m->{
                 subscribers.add(m.getUser());
             });
         }
 
-        if(user.equals(announceUser) || user.getId() == announceUser.getId()){
+        if(same(announceUser.getId(),user.getId())){
             List<ReservationVO> reservations = announceDAO.findReservations(announce.getId());
 
             if(CollectionsUtils.isNotEmpty(reservations)) {
-                reservations.stream().filter(r->r.getUser()!=null && r.getUser().getId()!=user.getId() && r.getUser().isEnableNotification())
+                reservations.stream().filter(r->r.getUser()!=null && notSame(r.getUser().getId(),user.getId()) && r.getUser().isEnableNotification())
                         .forEach(r->{
                             subscribers.add(r.getUser());
                         });
@@ -230,6 +234,14 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
             fillProps(props,announce.getId(),message, user.getId(),subscribers);
             generateEvent( NotificationType.ANNOUNCE);
         }
+    }
+
+
+    private boolean notSame(long id, long compareId){
+        return !same(id,compareId);
+    }
+    private boolean same(long id, long compareId){
+        return id==compareId;
     }
 
 }
