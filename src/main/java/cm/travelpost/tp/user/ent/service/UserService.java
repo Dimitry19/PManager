@@ -46,7 +46,7 @@ public interface UserService {
 
     UserVO updateUser(UpdateUserDTO userDTO) throws Exception;
 
-    UserVO updateImage(Long userId, MultipartFile multipartFile) throws UserException, IOException;
+   // UserVO updateImage(Long userId, MultipartFile multipartFile) throws UserException, IOException;
 
     boolean managePassword(String email) throws Exception, UserException, IOException, MailjetSocketTimeoutException, MailjetException, MessagingException;
 

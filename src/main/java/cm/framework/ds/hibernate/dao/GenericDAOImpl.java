@@ -52,10 +52,13 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     private static final MathContext MATH_CONTEXT = new MathContext(2, RoundingMode.HALF_UP);
 
 
+    protected static final String SELECT_FROM = " select elt  FROM";
     protected static final String SELECT  = " select elt  ";
     protected static final String FROM = " FROM ";
     protected static final String DESC = " desc ";
     protected static final String ASC = " asc ";
+
+
     protected static final String USER_PARAM = "userId";
     protected static final String TYPE_PARAM = "announceType";
     protected static final String TRANSPORT_PARAM = "transport";
@@ -64,6 +67,13 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String NAME_PARAM = "name";
     protected static final String SEARCH_PARAM = "search";
     protected static final String VALIDATE_PARAM = "validate";
+    protected static final String EMAIL_PARAM = "email";
+    protected static final String FACEBOOK_ID_PARAM = "facebookId";
+    protected static final String GOOGLE_ID_PARAM = "googleId";
+    protected static final String ACTIVE_PARAM ="active" ;
+    protected static final String CONFIRM_TOKEN_PARAM ="ctoken" ;
+    protected static final String USERNAME_PARAM = "username";
+
     protected static final String ALIAS_ORDER = " as t order by t. ";
     protected static final String ALIAS_BY_USER_ID = " as elt where elt.userId =:userId ";
     protected static final String ALIAS_BY_JOIN_USER_ID = " as elt join elt.user as u where u.id =:userId";
@@ -738,7 +748,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
     private List<T> commonFindByUser(Class<T> clazz, Long userId, String alias,PageBy pageBy, Session session){
-        Query query = session.createQuery(SELECT+FROM + clazz.getName() +alias , clazz);
+        Query query = session.createQuery(SELECT_FROM + clazz.getName() +alias , clazz);
         query.setParameter(USER_PARAM, userId);
         pageBy(query, pageBy);
 

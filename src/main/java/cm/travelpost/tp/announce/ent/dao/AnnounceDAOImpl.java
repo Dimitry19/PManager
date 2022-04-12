@@ -44,6 +44,8 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static cm.travelpost.tp.notification.enums.NotificationType.*;
+
 
 @Repository
 public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
@@ -205,11 +207,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             save(announce);
             addAnnounceToUser(announce);
 
+            String message=new String();
 
-            String message= MessageFormat.format(notificationMessagePattern,announce.getUser().getUsername(),
-                    " a creé l'annonce " + announce.getDeparture() +"/"+announce.getArrival(),
-                    "pour la date " + DateUtils.getDateStandard(announce.getStartDate())
-                            + "et retour le "+ DateUtils.getDateStandard(announce.getEndDate()));
+            message=buildNotificationMessage(message,ANNOUNCE,announce.getUser().getUsername(),announce.getDeparture(),
+                    announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
+                    DateUtils.getDateStandard(announce.getEndDate()),null);
+
+
             generateEvent(announce,message);
 
             return announce;
@@ -246,10 +250,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         setAnnounce(announce, user, udto,false);
         update(announce);
 
-        String message= MessageFormat.format(notificationMessagePattern,user.getUsername(),
-                " a modifié l'annonce "+announce.getDeparture() +"/"+announce.getArrival(),
-                " de " + DateUtils.getDateStandard(announce.getStartDate())
-                        + " au "+ DateUtils.getDateStandard(announce.getEndDate()));
+        String message=new String();
+
+        message=buildNotificationMessage(message,ANNOUNCE_UPD,announce.getUser().getUsername(),announce.getDeparture(),
+                announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
+                DateUtils.getDateStandard(announce.getEndDate()),null);
+
         generateEvent(announce,message);
         return announce;
 
@@ -309,10 +315,11 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                         " car il existe des résevations pour une quantité ["+sumQtyRes+"] Kg");
             }
 
-            String message= MessageFormat.format(notificationMessagePattern,announce.getUser().getUsername(),
-                    " a supprimé l'annonce "+announce.getDeparture() +"/"+announce.getArrival(),
-                    " du " + DateUtils.getDateStandard(announce.getStartDate())
-                            + " au "+ DateUtils.getDateStandard(announce.getEndDate()));
+            String message=new String();
+
+            message= buildNotificationMessage(message,ANNOUNCE_DEL,announce.getUser().getUsername(),announce.getDeparture(),
+                    announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
+                    DateUtils.getDateStandard(announce.getEndDate()),null);
             generateEvent(announce,message);
         } catch (AnnounceException e) {
             throw e;
@@ -492,6 +499,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         return null;
     }
 
+    @Override
+    @Transactional
     public List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception {
 
         try {

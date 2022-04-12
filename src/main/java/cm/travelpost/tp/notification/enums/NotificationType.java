@@ -14,7 +14,16 @@ public enum NotificationType {
     RESERVATION("Reservation"),
     SUBSCRIBE("Abonnement"),
     UNSUBSCRIBE("Desabonnement"),
-    ANNOUNCE(" Annonce");
+    ANNOUNCE(" Annonce"),
+
+    COMMENT_UPD("Commentaire Modifé"),
+    RESERVATION_UPD("Reservation Modifiée"),
+    RESERVATION_VALIDATE("Reservation acceptée"),
+    RESERVATION_UNVALIDATE("Reservation refusée"),
+    RESERVATION_DEL("Reservation Supprimée"),
+
+    ANNOUNCE_UPD(" Annonce Modifiée"),
+    ANNOUNCE_DEL(" Annonce Supprimée");
 
     String value;
 

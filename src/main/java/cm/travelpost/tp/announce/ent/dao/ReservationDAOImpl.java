@@ -35,6 +35,8 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static cm.travelpost.tp.notification.enums.NotificationType.*;
+
 
 @Repository("reservationDAO")
 public class ReservationDAOImpl extends Generic implements ReservationDAO {
@@ -116,10 +118,15 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         reservation.setValidate(ValidateEnum.INSERTED);
         reservation.setStatus(StatusEnum.VALID);
         save(reservation);
-        String message= MessageFormat.format(notificationMessagePattern,user.getUsername(),
-                " a fait une reservation de ["+reservation.getWeight()+" Kg ] sur votre annonce ["+announce.getDeparture() +"]-["+announce.getArrival(),
-                " ] du " + DateUtils.getDateStandard(announce.getStartDate())
-                        + " au "+ DateUtils.getDateStandard(announce.getEndDate()));
+
+        String message=new String();
+
+        message=buildNotificationMessage(message,RESERVATION,reservation.getUser().getUsername(),
+                reservation.getAnnounce().getDeparture(),
+                reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
+                DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),String.valueOf(reservation.getWeight()));
+
+
         generateEvent(announce,message);
         return reservation;
     }
@@ -159,11 +166,16 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
             reservation.setDescription(reservationDTO.getDescription());
         }
         update(reservation);
-        String message= MessageFormat.format(notificationMessagePattern,user.getUsername(),
-                " a modifié une reservation sur votre annonce "+announce.getDeparture() +"/"+announce.getArrival(),
-                " du " + DateUtils.getDateStandard(announce.getStartDate())
-                        + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate())+" la reservation est passée de ["+oldWeight+" Kg ] a ["+reservationDTO.getWeight()+" Kg ] ");
-        generateEvent(announce,message);
+
+        String message=new String();
+        String kg=" la reservation est passée de ["+oldWeight+" Kg ] a ["+reservationDTO.getWeight()+" Kg ] ";
+
+        message=buildNotificationMessage(message,RESERVATION_UPD,reservation.getUser().getUsername(),
+                reservation.getAnnounce().getDeparture(),
+                reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
+                DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),kg);
+
+       generateEvent(announce,message);
         return reservation;
     }
 
@@ -190,10 +202,14 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
         update(announce);
         //delete(ReservationVO.class,id,true);
-        String message= MessageFormat.format(notificationMessagePattern,reservation.getUser().getUsername(),
-                " a supprimé une reservation de ["+reservation.getWeight() +" Kg ] sur votre annonce "+ announce.getDeparture() +"/"+announce.getArrival(),
-                " de la date du " + DateUtils.getDateStandard(announce.getStartDate())
-                        + " et retour le "+ DateUtils.getDateStandard(announce.getEndDate()));
+
+        String message=new String();
+
+        message=buildNotificationMessage(message,RESERVATION_DEL,reservation.getUser().getUsername(),
+                reservation.getAnnounce().getDeparture(),
+                reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
+                DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),String.valueOf(reservation.getWeight()));
+
         generateEvent(announce,message);
         return updateDelete(reservation);
 
@@ -224,11 +240,15 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
 
         String validate= reservationDTO.isValidate() ?  ValidateEnum.ACCEPTED.toValue():ValidateEnum.REFUSED.toValue();
 
-        String message= MessageFormat.format(notificationMessagePattern,
-                reservation.getUser().getUsername(),
-                " a " +validate +" votre reservation  de [" +reservation.getWeight() +" kg ] sur l' annonce "+ reservation.getAnnounce().getDeparture() +"/"+reservation.getAnnounce().getArrival(),
-                " de la date du " + DateUtils.getDateStandard(reservation.getAnnounce().getStartDate())
-                        + " et retour le "+ DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()));
+
+        String message=new String();
+
+        message=buildNotificationMessage(message,((reservationDTO.isValidate())?RESERVATION_VALIDATE:RESERVATION_UNVALIDATE),reservation.getUser().getUsername(),
+                reservation.getAnnounce().getDeparture(),
+                reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
+                DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),String.valueOf(reservation.getWeight()));
+
+
         generateEvent(reservation,message);
 
         return reservation.getId() != null ? reservation : null;
@@ -335,16 +355,6 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         return false;
     }
 
-    @Override
-    public String composeQuery(Object o, String alias) throws Exception {
-        return null;
-    }
-
-    @Override
-    public void composeQueryParameters(Object o, Query query) throws Exception {
-
-    }
-
 
     @Override
     public void generateEvent(Object obj , String message) throws Exception {
@@ -365,7 +375,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
 
             ReservationVO reservation= (ReservationVO)obj;
             user= reservation.getUser();
-            id=reservation.getId();
+            id=reservation.getAnnounce().getId();
         }
 
         subscribers.add(user);

@@ -48,7 +48,7 @@ import static org.hibernate.annotations.FetchMode.SELECT;
         @NamedQuery(name = UserVO.CONF_TOKEN, query = "select u from UserVO u where  u.confirmationToken =:ctoken "),
         @NamedQuery(name = UserVO.FACEBOOK, query = "select u from UserVO u where  u.facebookId =:facebookId "),
         @NamedQuery(name = UserVO.GOOGLE, query = "select u from UserVO u where  u.googleId =:googleId "),
-        @NamedQuery(name = UserVO.JOB_CONFIRM, query = "select u from UserVO u where u.confirmationToken is not  null and u.active =:act"),
+        @NamedQuery(name = UserVO.JOB_CONFIRM, query = "select u from UserVO u where u.confirmationToken is not  null and u.active =:active"),
 })
 
 @Filters({
