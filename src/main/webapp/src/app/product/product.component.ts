@@ -784,8 +784,7 @@ public categories: { [key: string]: Object; }[] = [
  
   profileUser(id){
     let self = this;
-    
-    if(id && id != null){
+    if(id && id != null && id != self.loggedUser.id){
       self.router.navigate(["/profile",id]);
     }
     

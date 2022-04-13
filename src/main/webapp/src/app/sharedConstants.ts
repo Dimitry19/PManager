@@ -29,8 +29,8 @@ export class UsersUtils {
     provider: string="", role: string="USER", socialId: string="") {
     return {email, firstName,gender,lastName,password,phone,username,provider, role, socialId};
   }
-  static logUser(email: string, password: string,username: string,provider: string="", socialId: string=""):User {
-    return {email,password,username,provider,socialId};
+  static logUser(password: string,username: string,email: string="test@ya.nn",provider: string="", socialId: string=""):User {
+    return {password,username,email,provider,socialId};
   }
   static createAnnounce(announceType: string, arrival: string, categories: Array<string>, departure: string, description: string, endDate: number,
     goldPrice: number, preniumPrice: number, price: number, startDate: number,transport:string,userId:number,weight:number): Annonce {

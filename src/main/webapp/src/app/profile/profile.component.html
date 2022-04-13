@@ -389,14 +389,14 @@
                 <div *ngIf="!viewTable" class="card-block p-4">
                     <div class="row">
                         <ul class="style_featured">
-                            <li *ngFor="let annonce of annonces; let i = index;trackBy:tracbByFn" class="" (click)="detail(annonce.id)">
+                            <li *ngFor="let annonce of annonces; let i = index;trackBy:tracbByFn" class="" (click)="detail(annonce.id,'OTHER')">
                                 <div [class]="annonce.announceType == 'SELLER' ? 'card b-l-success business-info services m-b-20 seller' : 'card b-l-success business-info services m-b-20 buyer'">
                                     <div class="card-header">
                                         <span class="float-left" [innerHTML]="annonce.category == null ? 'AUTRES':annonce.category.description"></span>
                                         <div class="title_annonce">
                                             <h5 class="card-header-text">Annonce <span [innerHTML]="i+1"></span></h5>
                                         </div>
-                                        <span class="float-right messages" [innerHTML]="annonce.reservations > 0 ?annonce.reservations+'&nbsp;reservation(s)':' '"></span>
+                                        <span class="float-right messages" [innerHTML]="annonce.countReservation > 0 ? annonce.countReservation+'&nbsp;reservation(s)':' '"></span>
                                     </div>
                                     <div class="card-block">
                                         <div class="row">
@@ -442,7 +442,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let annonce of annonces; let i = index; trackBy:tracbByFn" [class]="annonce.announceType == 'SELLER' ? 'seller' : 'buyer'" (click)="detail(annonce.id)">
+                            <tr *ngFor="let annonce of annonces; let i = index; trackBy:tracbByFn" [class]="annonce.announceType == 'SELLER' ? 'seller' : 'buyer'" (click)="detail(annonce.id,'OTHER')">
                                 <td><span class="value" [innerHTML]=" annonce.departure"></span></td>
                                 <td><span class="value" [innerHTML]=" annonce.arrival"></span></td>
                                 <td><span class="value" [innerHTML]=" annonce.startDate"></span></td>
@@ -458,7 +458,7 @@
                                 <td><span class="value" [innerHTML]=" annonce.price  == 0 ? '-':annonce.price"></span></td>
                                 <td><span class="value" [innerHTML]=" annonce.preniumPrice == 0 ? '-':annonce.preniumPrice"></span></td>
                                 <td><span class="value" [innerHTML]=" annonce.goldPrice == 0 ? '-':annonce.goldPrice"></span></td>
-                                <td><span class="value messages" [innerHTML]=" annonce.reservations > 0 ?annonce.reservations+'&nbsp;reservation(s)':' '"></span></td>
+                                <td><span class="value messages" [innerHTML]=" annonce.countReservation > 0 ? annonce.countReservation+'&nbsp;reservation(s)':' '"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -476,7 +476,7 @@
                         <div class="card-block groups-contact">
                             <div class="list-group list-contacts">
                                 <button class="list-group-item list-group-item-action" id="mesRes" data-toggle="tab" href="#mesRes-tab" role="tab" aria-controls="mesRes-tab" aria-selected="true">Mes Reservations
-                                    <span class="badge badge-primary badge-pill" [innerHTML]=" myReservations ? myReservations.count : 0 "></span>
+                                    <span class="badge badge-primary badge-pill" [innerHTML]=" myReservations?.count ? myReservations.count : 0 "></span>
                                 </button>
                                 <button class="list-group-item list-group-item-action" id="leurRes" data-toggle="tab" href="#leurRes-tab" role="tab" aria-controls="leurRes-tab" aria-selected="false">Reservations reçues
                                     <span class="badge badge-success badge-pill" [innerHTML]="countAnnWithRes"></span>
@@ -493,7 +493,7 @@
                                 <h5 class="card-header-text">Mes reservations</h5>
                             </div>
                             <div class="card-block table-details">
-                                <table *ngIf="myReservations" datatable [dtOptions]="dtOptions" class="table hover" id="">
+                                <table *ngIf="myReservations" datatable [dtOptions]="dtOptions" class="table hover datatable" id="own">
                                     <thead>
                                         <tr>
                                             <th>Ville de Départ</th>
@@ -532,7 +532,7 @@
                                 <h5 class="card-header-text">Mes reservations reçues</h5>
                             </div>
                             <div class="card-block table-details">
-                                <table *ngIf="annonceWithRes" datatable [dtOptions]="dtOptions" class="table hover" id="">
+                                <table *ngIf="annonceWithRes.length > 0" datatable [dtOptions]="dtOptions" class="table hover" id="receive">
                                     <thead>
                                         <tr>
                                             <th>Ville de Départ</th>
@@ -544,7 +544,7 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody *ngIf="annonceWithRes.length > 0">
+                                    <tbody>
                                         <!-- <ng-container *ngFor="let reserve of annonceWithRes; let i = index; trackBy:tracbByFn"> -->
                                         <tr *ngFor="let res of annonceWithRes; let y = index; trackBy:tracbByFn" [class]="res.announceInfo.price > 0 ? 'seller' : 'buyer'">
                                             <td><span class="value" [innerHTML]=" res.announceInfo.departure"></span></td>
@@ -552,7 +552,7 @@
                                             <td><span class="value" [innerHTML]=" res.announceInfo.startDate"></span></td>
                                             <td><span class="value" [innerHTML]=" res.announceInfo.endDate"></span></td>
                                             <td><span class="value" [innerHTML]=" res.weight"></span></td>
-                                            <td><span class="value" [innerHTML]=" res.userInfo?.username"></span></td>
+                                            <td><span class="value" [innerHTML]="res.userInfo?.username"></span></td>
                                             <td class="">
                                                 <ul class="actionRes">
                                                     <li *ngIf="res.validate == 'INSERTED'" class="actions"><a (click)="valide(res.id)"><i class="fa fa-check text-success"></i></a></li>
@@ -563,6 +563,7 @@
                                                 </ul>
                                             </td>
                                         </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -641,7 +642,7 @@
                             <div class="card lista">
                                 <div class="card-block groups-contact">
                                     <div class="list-group">
-                                        <button *ngFor="let notif of notificationsList; trackBy: tracbByFn ; let i=index" class="list-group-item list-group-item-action justify-content-between" data-toggle="tab" href="#mesNotif-tab" role="tab" aria-controls="mesNotif-tab" aria-selected="true"
+                                        <button *ngFor="let notif of notificationsList; trackBy: tracbByFn ; let i=index" [id]="'tab'+i" class="list-group-item list-group-item-action justify-content-between" data-toggle="tab" href="#mesNotif-tab" role="tab" aria-controls="mesNotif-tab" aria-selected="true"
                                             [innerText]="notif.message" (click)="msg(i)">
                                             <!--<a class="nav-link" id="mesNotif" ></a>-->
                                         </button>
@@ -654,6 +655,7 @@
                                 <div class="card tab-pane fade" id="mesNotif-tab" role="tabpanel" aria-labelledby="mesNotif">
                                     <div class="card-block table-details">
                                         <h3 [innerHTML]="notification"></h3>
+                                        <i><a *ngIf="notificationType !='USER'" (click)="detail(idAnnonce,'NOTIFICATION')">Aller à l'annonce</a></i>
                                     </div>
                                 </div>
                             </div>
@@ -777,7 +779,7 @@
                 </div>
             </div>
             <div *ngIf="views" class="modal-footer">
-                <span class="pr-4" [innerHTML]="annonceRes.userInfo?.username"></span>
+                <span class="pr-4" [innerHTML]="'reservé par '+annonceRes.userInfo?.username"></span>
                 <span [class]="annonceRes.validate == 'INSERTED' ?'badge value badge-info badge-pill':annonceRes.validate == 'ACCEPTED' ?'badge value badge-success badge-pill':'badge value badge-danger badge-pill'" [innerHTML]="annonceRes.validate == 'INSERTED' ?'En attente':annonceRes.validate == 'ACCEPTED' ?'Confirmée':'Refusée'"></span>
             </div>
             <div *ngIf="!views" class="modal-footer">

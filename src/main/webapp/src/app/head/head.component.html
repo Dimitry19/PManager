@@ -58,8 +58,8 @@
                             <b class="nameuser"> {{loggedUser?.username | uppercase}}</b>
                         </a>
                         <div id="options" class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-55">
-                            <a class="dropdown-item fa fa-user-circle-o customcolor" [routerLink]="['/myaccount']"> My account</a>
-                            <a class="dropdown-item fa fa-sign-out customcolor" href="" data-toggle="modal" data-target="#modalLogout" data-backdrop="static" data-keyboard="false"> Logout</a>
+                            <a class="dropdown-item fa fa-user-circle-o customcolor" [routerLink]="['/myaccount']"> Mon compte</a>
+                            <a class="dropdown-item fa fa-sign-out customcolor" href="" data-toggle="modal" data-target="#modalLogout" data-backdrop="static" data-keyboard="false"> Se déconnecter</a>
                             <!--<a class="dropdown-item customcolor" href="#">Something else here</a>-->
                         </div>
                     </li>
@@ -132,11 +132,11 @@
                 <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-user-circle-o mr-1"></i>
-              Login</a>
+                        Connexion</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn-outline" data-toggle="tab" href="#panel8" role="tab"><i class="fa fa-user-circle-o-plus mr-1"></i>
-              Register</a>
+                        S'inscrire</a>
                     </li>
                 </ul>
 
@@ -179,7 +179,7 @@
 
                                 </div>
 
-                                <div class="md-form form-sm mb-4">
+                                <div *ngIf="false" class="md-form form-sm mb-4">
                                     <!-- <i class="fa fa-envelope prefix"></i>-->
                                     <input [class.is-invalid]="userForm.get('email').invalid && userForm.get('email').touched" type="email" id="modalLogEmail2" class="form-control form-control-md displaystyle" placeholder="Votre email" name="email" formControlName="email" required>
                                     <div *ngIf="(userForm.get('email').invalid && userForm.get('email').touched) || userForm.get('email').dirty">
@@ -196,7 +196,7 @@
 									</label>
                                 </div>
                                 <div class="text-center mt-2">
-                                    <button class="btn btn-info" type="submit" [disabled]="userForm.invalid">Log in <i class="fa fa-sign-in ml-1"></i></button>
+                                    <button class="btn btn-info" type="submit" [disabled]="userForm.invalid">Connexion <i class="fa fa-sign-in ml-1"></i></button>
                                 </div>
                             </form>
                             <!-- <p class="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"> or Sign in with:</p>
@@ -416,11 +416,11 @@
                 <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link btn-outline" data-toggle="tab" href="#panel6" role="tab"><i class="fa fa-user-circle-o mr-1"></i>
-              Login</a>
+                        Connexion</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#panel9" role="tab"><i class="fa fa-user-circle-o-plus mr-1"></i>
-              Register</a>
+                            S'inscrire</a>
                     </li>
                 </ul>
 
@@ -453,7 +453,7 @@
 								<span [class]="lock ? 'fa fa-unlock':'fa fa-unlock-alt'"></span>
 							</label>Voir le mot de passe
                                 </div>
-                                <div class="md-form form-sm mb-4">
+                                <div *ngIf="false" class="md-form form-sm mb-4">
                                     <!-- <i class="fa fa-envelope prefix"></i>-->
                                     <input [class.is-invalid]="userForm.get('email').invalid && userForm.get('email').touched" type="email" id="modalLogEmail3" class="form-control form-control-md displaystyle" placeholder="Your email" name="email" formControlName="email" required>
                                     <div *ngIf="(userForm.get('email').invalid && userForm.get('email').touched) || userForm.get('email').dirty">
@@ -469,7 +469,7 @@
 								</label>Souviens-toi de moi
                                 </div>
                                 <div class="text-center mt-2">
-                                    <button class="btn btn-info" [disabled]="userForm.invalid">Log in <i class="fa fa-sign-in ml-1"></i></button>
+                                    <button class="btn btn-info" [disabled]="userForm.invalid">Connexion <i class="fa fa-sign-in ml-1"></i></button>
                                 </div>
                             </form>
                             <!-- <p class="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"> or Sign in with:</p> -->
@@ -762,7 +762,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title w-100 text-center" id="myModalLabelLogout">Logout</h4>
+                <h4 class="modal-title w-100 text-center" id="myModalLabelLogout">Se déconnecter</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -799,7 +799,7 @@
                 corriger si nécessaire. À cette fin, vous pouvez nous contacter directement au moyen de votre profil utilisateur.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
@@ -809,7 +809,7 @@
 <div class="cookie" style="display:none" id="cookiesSideModalRightBottom">
     <p>
         En utilisant notre site Web, vous acceptez notre
-        <a href=’insert-link’>politique en matière de cookies</a>
+        <span style="text-decoration-line: underline;">politique en matière de cookies</span>
     </p>
-    <span aria-hidden="true" (click)="closeCookies()">&times;</span>
+    <button class="btn btn-outline-primary" aria-hidden="true" (click)="closeCookies()">OK</button>
 </div>

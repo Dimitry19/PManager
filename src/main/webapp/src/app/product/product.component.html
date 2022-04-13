@@ -10,7 +10,7 @@
                 <div class="card mt-4">
                     <div class="card-body p-0">
                         <div class="intro">
-                            <a [routerLink]="['/profile/',annonce.userInfo?.id]">
+                            <a (click)="profileUser(annonce.userInfo?.id)">
                                 <img *ngIf="!sharedService.checkImage(annonce.userInfo,true)" class="profile-img" src="assets/images/user-account.png" alt="profile">
                                 <img *ngIf="sharedService.checkImage(annonce.userInfo,true)" class="profile-img" [src]="foto" alt="profile">
                             </a>
@@ -80,7 +80,7 @@
 
             <div *ngIf="annonce" class="col-lg-8">
                 <div [class]="readOnly == true ?'card detail mt-4':'card mt-4'">
-                    <div class="card-body noPadding">
+                    <div class="card-body">
                         <div *ngIf="readOnly" class="row">
                             <div class="col-md-6">
                                 <ul>

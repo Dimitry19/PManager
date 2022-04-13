@@ -67,7 +67,7 @@ export class HeadComponent implements OnInit {
   userFormF: FormGroup;
   pwd: any;
   notificationList: Array<notif> = [];
-  notifNumber: number = 0;
+
   //time: number = 1;
   loggedUser: any;
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
@@ -79,10 +79,10 @@ export class HeadComponent implements OnInit {
       self.timerId = setInterval(() => {
         if(sessionStorage.loggedUser){
           self.loggedUser = JSON.parse(sessionStorage.loggedUser);
-          self.notifNumber = this.startup.notifications.length;
+         
           self.notificationList = this.startup.notifications;  
         }      
-      }, 1000);
+      }, 500);
       
        $(document).ready(function () {
           	var currentGfgStep, nextGfgStep, previousGfgStep;
@@ -162,7 +162,7 @@ export class HeadComponent implements OnInit {
     if(self.router.url.indexOf('index') > -1 || self.router.url === "/"){                 
       this.userForm = this.formBuilder.group({
         username: ['', [Validators.required]],
-        email: ['', [Validators.required, Validators.email, Validators.pattern(self.emailPattern)]],
+        // email: ['', [Validators.required, Validators.email, Validators.pattern(self.emailPattern)]],
         password: ['', [Validators.required]]
       });
       this.userFormR = this.formBuilder.group({
@@ -215,13 +215,23 @@ export class HeadComponent implements OnInit {
       
       //l'id de l'annonce commenté dans la notification.
       self.startup.notificationId(self.notificationList[ind].id).subscribe(val =>{ 
-        if(self.router.url.indexOf("annonce") > -1){
-          this.router.navigateByUrl('#urlabsolu', { skipLocationChange: false }).then(() => {
-            self.router.navigate(["/annonce",self.notificationList[ind].id,"NOTIFICATION"]); 
-          }); 
-        }else{
-          self.router.navigate(["/annonce",self.notificationList[ind].id,"NOTIFICATION"]); 
-        }                            
+        if(val.type == "ANNOUNCE"){
+          if(self.router.url.indexOf("annonce") > -1){
+            this.router.navigateByUrl('#urlabsolu', { skipLocationChange: false }).then(() => {
+              self.router.navigate(["/annonce",val.announceId,"NOTIFICATION"]); 
+              // self.notificationList.splice(ind,1);
+              self.startup.removeMessage(ind);
+            }); 
+          }else{
+            self.router.navigate(["/annonce",val.announceId,"NOTIFICATION"]); 
+            // self.notificationList.splice(ind,1);
+            self.startup.removeMessage(ind);
+          } 
+        }else if(val.type == "USER"){
+          self.router.navigate(["myaccount",{section:"review",id:ind}]);
+          // self.notificationList.splice(ind,1);
+        }
+                                   
       });  
       
     }
@@ -229,9 +239,11 @@ export class HeadComponent implements OnInit {
 
   loggedIn() {
    let self = this;
-   self.user = UsersUtils.logUser(self.userForm.value.email,self.userForm.value.password,self.userForm.value.username);
+   
+   self.user = UsersUtils.logUser(self.userForm.value.password,self.userForm.value.username);
   this.startup.isLoggedIn(self.user).subscribe(response =>{
     $('#modalLRForm').modal('hide'); 
+    $('#modalLRFormR').modal('hide');
     if(response.retCode == 0){
       self.msg_regis = response.retDescription;
       sessionStorage.setItem('loggedUser',JSON.stringify(response));
@@ -243,15 +255,14 @@ export class HeadComponent implements OnInit {
             backdrop: 'static',
             keyboard: false
           });
-      }, 6000);
+      }, 1500);
       setTimeout(function() {
-        $('#cookiesSideModalRightBottom').delay(2000).fadeIn();
+        $('#cookiesSideModalRightBottom').delay(1000).fadeIn();
         sessionStorage.disclaimerModal = 1;
-      }, 9000);
+      }, 1600);
       
     }
       self.connected = !self.connected;
-      self.notifNumber = this.startup.notifications.length; 
       self.userForm.reset();
       self.router.navigate(["/home"]);
       
@@ -298,6 +309,7 @@ closeCookies(){
        });
    });
      $('#modalLRFormR').modal('hide');
+     $('#modalLRForm').modal('hide'); 
      $('#dialogA').modal('show');
      self.userFormR.reset();
      self.userForm.controls.password.setValue(null);
