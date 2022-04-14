@@ -116,13 +116,13 @@ import { CookieModule } from 'ngx-cookie';
     }),
     CookieModule.forRoot(),
     AppRoutingModule,
-     TranslateModule.forRoot({
-       loader: {
-         provide: TranslateLoader,
-         useFactory: (HttpLoaderFactory),
-         deps: [HttpClient]
-        }
-      })
+    //  TranslateModule.forRoot({
+    //    loader: {
+    //      provide: TranslateLoader,
+    //      useFactory: (HttpLoaderFactory),
+    //      deps: [HttpClient]
+    //     }
+    //   })
   ],
 
   providers: [ServiceRequest, 
@@ -135,6 +135,6 @@ import { CookieModule } from 'ngx-cookie';
 export class AppModule { }
 
 // required for AOT compilation
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-    return new TranslateHttpLoader(http);
-}
+// export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+//     return new TranslateHttpLoader(http);
+// }

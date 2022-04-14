@@ -111,7 +111,7 @@
     </section>
 
     <xng-breadcrumb [separator]="separatorTemplate">
-        <ng-template #separatorTemplate>&#10148;</ng-template>
+        <ng-template #separatorTemplate>&#9758;</ng-template>
     </xng-breadcrumb>
 </main>
 
@@ -809,10 +809,31 @@
 </div>
 
 <!-- cookies -->
-<div class="cookie" style="display:none" id="cookiesSideModalRightBottom">
+<!-- <div class="cookie" style="display:none" id="cookiesSideModalRightBottom">
     <p>
         En utilisant notre site Web, vous acceptez notre
         <span style="text-decoration-line: underline;">politique en matière de cookies</span>
     </p>
     <button class="btn btn-outline-primary" aria-hidden="true" (click)="closeCookies()">OK</button>
+</div> -->
+<div class="modal fade" id="cookiesSideModalRightBottom" tabindex="-1" role="dialog" aria-labelledby="disclaimerModaltitle" aria-hidden="true">
+    <div class="modal-dialog modal-side modal-bottom-left" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="disclaimerModalLongTitle">Cookies</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    En utilisant notre site Web, vous acceptez notre
+                    <span style="text-decoration-line: underline;">politique en matière de cookies</span>
+                </p>
+            </div>
+            <div class="modal-footer cookie">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeCookies()">OK</button>
+            </div>
+        </div>
+    </div>
 </div>

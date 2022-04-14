@@ -86,7 +86,17 @@ export class ProductsComponent implements OnInit {
          this.loggedUser = JSON.parse(sessionStorage.loggedUser);
        }       
        this.page = parseInt(this.route.snapshot.paramMap.get('page'));
-       this.allAnnonces(this.page);
+       this.route.queryParamMap.subscribe(val =>{
+         let filtres = val.get('filterString');
+         if(filtres){
+          this.filterAnnonces(JSON.parse(filtres));
+         }else{
+          this.allAnnonces(this.page);
+         }
+         
+         
+       })
+       
 
   }
 

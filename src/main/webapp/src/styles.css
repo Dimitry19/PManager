@@ -551,6 +551,68 @@ label.taille {
     animation: shakeVertical ease-out 1s infinite;
 }
 
+
+/* modal side css  */
+
+
+/* modal-dialog modal-frame modal-bottom/modal-dialog modal-frame modal-top => modal bottom/top */
+
+.modal .modal-dialog.modal-top {
+    top: 0
+}
+
+.modal .modal-dialog.modal-left {
+    left: 0
+}
+
+.modal .modal-dialog.modal-right {
+    right: 0
+}
+
+.modal .modal-dialog.modal-bottom {
+    bottom: 0
+}
+
+.modal .modal-dialog.modal-top-left {
+    top: 10px;
+    left: 10px
+}
+
+.modal .modal-dialog.modal-top-right {
+    top: 10px;
+    right: 10px
+}
+
+.modal .modal-dialog.modal-bottom-left {
+    bottom: 10px;
+    left: 10px
+}
+
+.modal .modal-dialog.modal-bottom-right {
+    right: 10px;
+    bottom: 10px
+}
+
+.modal .modal-side {
+    position: absolute;
+    width: 100%;
+    right: 10px;
+    bottom: 10px;
+    margin: 0;
+}
+
+.modal .modal-frame {
+    position: absolute;
+    max-width: 100%;
+    width: 100%;
+    margin: 0
+}
+
+#cookiesSideModalRightBottom .modal-header,
+.modal-footer.cookie button {
+    background-color: #42C2FF;
+}
+
 @keyframes shakeVertical {
     0%,
     100% {

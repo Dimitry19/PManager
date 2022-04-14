@@ -5,20 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.8059e26c13bb5d002c6a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.8059e26c13bb5d002c6a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.5783361f83bdfd5a64fd.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.acfb29c4961329b1f33c.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.acfb29c4961329b1f33c.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.cf65887f88b6a1eb89a1.css" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -75,8 +64,8 @@
       <file leaf-file-name="GenericDAOImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="739" column="74" selection-start-line="739" selection-start-column="74" selection-end-line="739" selection-end-column="74" />
+            <state relative-caret-position="71">
+              <caret line="725" column="52" selection-start-line="725" selection-start-column="52" selection-end-line="725" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -781,14 +770,7 @@
       <workItem from="1649367340980" duration="152000" />
       <workItem from="1649367515711" duration="12682000" />
       <workItem from="1649582093494" duration="608000" />
-      <workItem from="1649744213695" duration="19921000" />
-    </task>
-    <task id="LOCAL-00033" summary="test">
-      <created>1638109560386</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1638109560386</updated>
+      <workItem from="1649744213695" duration="24301000" />
     </task>
     <task id="LOCAL-00034" summary="integration Angular">
       <created>1638116198613</created>
@@ -1126,11 +1108,18 @@
       <option name="project" value="LOCAL" />
       <updated>1649782228965</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="breadcrumbs">
+      <created>1649930023107</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1649930023107</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="534135000" />
+    <option name="totallyTimeSpent" value="538515000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1166,7 +1155,6 @@
       <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.5772532" weight="0.36159602" />
       <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
       <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.32689655" />
-      <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49642345" weight="0.46633416" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.13447782" />
       <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49810606" weight="0.3297568" />
       <window_info id="Web" order="5" side_tool="true" />
@@ -1179,6 +1167,7 @@
       <window_info id="Learn" order="9" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="17" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49642345" weight="0.46633416" />
       <window_info anchor="right" id="Maven" order="11" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
@@ -1235,7 +1224,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="Amelioration du logging" />
     <MESSAGE value="Bug fixing recherhe annonces" />
     <MESSAGE value="new commit for notification and datatables" />
     <MESSAGE value="local commit" />
@@ -1260,7 +1248,8 @@
     <MESSAGE value="Merge branch 'BetaVersion202203' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into BetaVersion2022&#10;&#10;# Conflicts:&#10;#&#9;src/main/resources/static/index.html" />
     <MESSAGE value="bugfixing redirection" />
     <MESSAGE value="bugfixing datatables" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugfixing datatables" />
+    <MESSAGE value="breadcrumbs" />
+    <option name="LAST_COMMIT_MESSAGE" value="breadcrumbs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1720,8 +1709,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="739" column="74" selection-start-line="739" selection-start-column="74" selection-end-line="739" selection-end-column="74" />
+        <state relative-caret-position="71">
+          <caret line="725" column="52" selection-start-line="725" selection-start-column="52" selection-end-line="725" selection-end-column="52" />
         </state>
       </provider>
     </entry>

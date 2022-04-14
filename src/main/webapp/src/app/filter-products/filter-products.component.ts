@@ -16,7 +16,6 @@ export class FilterProductsComponent implements OnInit {
   keyword = 'name';
   villes = SharedConstants.Villes;
   Transports = SharedConstants.Transports;
-  itemFiltres = ["transport","category","price","startDate","endDate","departure","arrival","weigth"];
   lieux_depart;
   lieux_arrivee;
   Categories = SharedConstants.Categories;

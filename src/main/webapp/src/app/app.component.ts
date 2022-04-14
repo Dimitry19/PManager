@@ -9,11 +9,12 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
 
 
-  constructor(private translate: TranslateService) {
+  constructor() {
     let self = this;
-    // self.translate.addLangs(["fr","it","en"]);
-    self.translate.setDefaultLang('fr');
-    // self.translate.use('it');
+    // private translate: TranslateService
+    // // self.translate.addLangs(["fr","it","en"]);
+    // self.translate.setDefaultLang('fr');
+    // // self.translate.use('it');
   }
 
 }

@@ -47,7 +47,7 @@
                 <div class="slide"></div>
             </li>
             <li *ngIf="!disableEverything" class="nav-item">
-                <a [class]=" sectionToshow == 'Rinfo' ? 'nav-link active' : 'nav-link'" data-toggle="tab" href="#Rinfo" role="tab">Reservations</a>
+                <a [class]=" sectionToshow == 'Rinfo' ? 'nav-link active' : 'nav-link'" data-toggle="tab" href="#Rinfo" role="tab">Réservations</a>
                 <div class="slide"></div>
             </li>
             <li class="nav-item">
@@ -382,7 +382,7 @@
 
             <div class="card">
                 <div class="card-header colonne">
-                    <a class="float-left" (click)="toggleView(view)" #view>Tableau</a>
+                    <a class="float-left" (click)="toggleView()" #view>Changer l'affichage</a>
                     <h5 class="card-header-text">Mes annonces</h5>
                 </div>
                 <!-- card view -->
@@ -438,7 +438,7 @@
                                 <th>Prix Classique(&euro;)</th>
                                 <th>Prix Rapide(&euro;)</th>
                                 <th>Prix Ultra Rapide(&euro;)</th>
-                                <th>Reservations</th>
+                                <th>Réservations</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -475,10 +475,10 @@
                     <div class="card">
                         <div class="card-block groups-contact">
                             <div class="list-group list-contacts">
-                                <button class="list-group-item list-group-item-action" id="mesRes" data-toggle="tab" href="#mesRes-tab" role="tab" aria-controls="mesRes-tab" aria-selected="true">Mes Reservations
+                                <button class="list-group-item list-group-item-action" id="mesRes" data-toggle="tab" href="#mesRes-tab" role="tab" aria-controls="mesRes-tab" aria-selected="true">Mes réservations
                                     <span class="badge badge-primary badge-pill" [innerHTML]=" myReservations?.count ? myReservations.count : 0 "></span>
                                 </button>
-                                <button class="list-group-item list-group-item-action" id="leurRes" data-toggle="tab" href="#leurRes-tab" role="tab" aria-controls="leurRes-tab" aria-selected="false">Reservations reçues
+                                <button class="list-group-item list-group-item-action" id="leurRes" data-toggle="tab" href="#leurRes-tab" role="tab" aria-controls="leurRes-tab" aria-selected="false">Mes réservations reçues
                                     <span class="badge badge-success badge-pill" [innerHTML]="countAnnWithRes"></span>
                                 </button>
                             </div>
@@ -490,7 +490,7 @@
                     <div class="tab-content" id="nav-vertical-tab-bgContent_1">
                         <div class="card tab-pane fade show active" id="mesRes-tab" role="tabpanel" aria-labelledby="mesRes">
                             <div class="card-header colonne">
-                                <h5 class="card-header-text">Mes reservations</h5>
+                                <h5 class="card-header-text">Mes réservations</h5>
                             </div>
                             <div class="card-block table-details">
                                 <table *ngIf="myReservations" datatable [dtOptions]="dtOptions" class="table hover datatable" id="own">
@@ -519,6 +519,7 @@
                                                     <li *ngIf="res.validate == 'INSERTED'" class="actions"><a (click)="editRes(res,false)"><i class="fa fa-edit text-primary"></i></a></li>
                                                     <li *ngIf="res.validate == 'INSERTED'" class="actions"><a (click)="delRes(res)"><i class="fa fa-trash text-danger"></i></a></li>
                                                     <li class="actions"><a (click)="editRes(res,true)"><i class="fa fa-eye text-info"></i></a></li>
+                                                    <li class="actions"><a (click)="detail(res.announceInfo.id,'OTHER')"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a></li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -529,7 +530,7 @@
 
                         <div class="card tab-pane fade" id="leurRes-tab" role="tabpanel" aria-labelledby="leurRes">
                             <div class="card-header  colonne">
-                                <h5 class="card-header-text">Mes reservations reçues</h5>
+                                <h5 class="card-header-text">Mes réservations reçues</h5>
                             </div>
                             <div class="card-block table-details">
                                 <table *ngIf="annonceWithRes.length > 0" datatable [dtOptions]="dtOptions" class="table hover" id="receive">
@@ -560,6 +561,7 @@
                                                     <li class="actions"><a (click)="editRes(res,true)"><i class="fa fa-eye text-info"></i></a></li>
                                                     <li *ngIf="res.validate == 'INSERTED'" class="actions"><a (click)="refus(res.id)"><i class="fa fa-times text-danger"></i></a></li>
                                                     <li *ngIf="res.validate == 'REFUSED'" class="actions"><span class="badge badge-danger badge-pill">Refusée</span></li>
+                                                    <li class="actions"><a (click)="detail(res.announceInfo.id,'OTHER')"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a></li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -579,8 +581,8 @@
                     <div class="card">
                         <div class="card-block">
                             <div class="list-group list-contacts">
-                                <button class="list-group-item list-group-item-action active" id="abonnes-tab" data-toggle="tab" href="#abonnes" role="tab" aria-controls="abonnes" aria-selected="true">Abonnés</button>
-                                <button class="list-group-item list-group-item-action" id="abonnement-tab" data-toggle="tab" href="#abonnement" role="tab" aria-controls="abonnement" aria-selected="false">Abonement</button>
+                                <button class="list-group-item list-group-item-action active" id="abonnes-tab" data-toggle="tab" href="#abonnes" role="tab" aria-controls="abonnes" aria-selected="true">Mes abonnés</button>
+                                <button class="list-group-item list-group-item-action" id="abonnement-tab" data-toggle="tab" href="#abonnement" role="tab" aria-controls="abonnement" aria-selected="false">Mes abonements</button>
                                 <!--<li class="list-group-item"><a href="#">Favourite Contacts</a></li>-->
                             </div>
                         </div>

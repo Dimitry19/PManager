@@ -72,12 +72,6 @@ THE SOFTWARE.
 @ng-select/ng-select
 MIT
 
-@ngx-translate/core
-MIT
-
-@ngx-translate/http-loader
-MIT
-
 @stomp/rx-stomp
 Apache-2.0
 

@@ -225,7 +225,6 @@ updateComment(idcomment,data){
         }));
 }
 announceFiltred(filter){
-  
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
   return this.httpClient.post(Urlconstances.BASEURL + 'ws/announce/find', JSON.stringify(filter),options).pipe(map((res: any)=> res),
