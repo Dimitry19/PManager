@@ -547,7 +547,7 @@ public categories: { [key: string]: Object; }[] = [
         this.notifyService.showSuccess(response.retDescription,"");
       }
       else{
-        this.notifyService.showError(response.retDescription,"");
+        this.notifyService.showError(response.details[0],"");
       }
     });
   }

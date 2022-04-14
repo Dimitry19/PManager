@@ -72,6 +72,12 @@ THE SOFTWARE.
 @ng-select/ng-select
 MIT
 
+@ngx-translate/core
+MIT
+
+@ngx-translate/http-loader
+MIT
+
 @stomp/rx-stomp
 Apache-2.0
 
@@ -1301,6 +1307,9 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
+xng-breadcrumb
+MIT
 
 zone.js
 MIT

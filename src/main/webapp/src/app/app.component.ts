@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-// import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +9,10 @@ import { Component} from '@angular/core';
 export class AppComponent {
 
 
-  constructor() {
+  constructor(private translate: TranslateService) {
     let self = this;
-    // private translate: TranslateService
     // self.translate.addLangs(["fr","it","en"]);
-    // self.translate.setDefaultLang('it');
+    self.translate.setDefaultLang('fr');
     // self.translate.use('it');
   }
 

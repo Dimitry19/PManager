@@ -71,6 +71,7 @@
         "stompjs": "^2.3.3",
         "tslib": "^2.0.0",
         "underscore": "^1.12.1",
+        "xng-breadcrumb": "^6.7.0",
         "zone.js": "~0.10.2"
     },
     "devDependencies": {

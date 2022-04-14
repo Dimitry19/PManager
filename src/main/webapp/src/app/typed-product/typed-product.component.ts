@@ -44,7 +44,8 @@ export class TypedProductComponent implements OnInit {
   }
 
   detail(id){
-    this.router.navigate(["/annonce",id,"OTHER"]);
+    
+    this.router.navigate(["/annonce",id,"OTHER","read"]);
   }
 
   announceClasses(response){

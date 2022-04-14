@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,7 +36,8 @@ import { TooltipDirective } from './directive/tooltip.directive';
 import {OptionsComponent} from './options/options.component';
 import { FilterProductsComponent } from './filter-products/filter-products.component';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-
+import {BreadcrumbModule} from 'xng-breadcrumb';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { CarouselComponent } from './carousel/carousel.component';
 import { CookieModule } from 'ngx-cookie';
 
@@ -101,6 +102,7 @@ import { CookieModule } from 'ngx-cookie';
     HttpClientModule,
     MultiSelectAllModule,
     DataTablesModule,
+    BreadcrumbModule,
     AutocompleteLibModule,
     ToastContainerModule,
     //  for setting global options
@@ -114,13 +116,13 @@ import { CookieModule } from 'ngx-cookie';
     }),
     CookieModule.forRoot(),
     AppRoutingModule,
-  //   TranslateModule.forRoot({
-  //     loader: {
-  //         provide: TranslateLoader,
-  //         useFactory: (createTranslateLoader),
-  //         deps: [HttpClient]
-  //     }
-  // })
+     TranslateModule.forRoot({
+       loader: {
+         provide: TranslateLoader,
+         useFactory: (HttpLoaderFactory),
+         deps: [HttpClient]
+        }
+      })
   ],
 
   providers: [ServiceRequest, 
@@ -131,3 +133,8 @@ import { CookieModule } from 'ngx-cookie';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// required for AOT compilation
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+    return new TranslateHttpLoader(http);
+}

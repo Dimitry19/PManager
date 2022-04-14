@@ -51,10 +51,10 @@
                 <ul class="navbar-nav nav-flex-icons">
                     <li class="nav-item avatar dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span *ngIf="!sharedService.checkImage(loggedUser)" class="position-absolute  p-2 bg-success border border-light rounded-circle"></span>
+                            <span *ngIf="sharedService.checkImage(loggedUser)" class="position-absolute p-2 bg-success border border-light rounded-circle"></span>
                             <i *ngIf="!sharedService.checkImage(loggedUser)" class="fa fa-user-circle-o fa-2x"></i>
                             <img class="profile-img" [src]="'data:'+loggedUser.image.origin+';base64,'+loggedUser.image.picByte" alt="profile" *ngIf="sharedService.checkImage(loggedUser)">
-                            <span *ngIf="!sharedService.checkImage(loggedUser)" class="position-absolute start-100 translate-middle p-2 bg-success border border-light rounded-circle online1"></span>
-                            <span *ngIf="sharedService.checkImage(loggedUser)" class="position-absolute start-100 translate-middle p-2 bg-success border border-light rounded-circle online"></span>
                             <b class="nameuser"> {{loggedUser?.username | uppercase}}</b>
                         </a>
                         <div id="options" class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-55">
@@ -110,6 +110,9 @@
         <!-- Header -->
     </section>
 
+    <xng-breadcrumb [separator]="separatorTemplate">
+        <ng-template #separatorTemplate>&#10148;</ng-template>
+    </xng-breadcrumb>
 </main>
 
 

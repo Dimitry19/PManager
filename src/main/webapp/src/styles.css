@@ -534,6 +534,19 @@ label.taille {
     background-color: #42C2FF;
 }
 
+.xng-breadcrumb-list {
+    padding: 0 0 0 3em !important;
+}
+
+.xng-breadcrumb-root {
+    background: #e6eaee !important;
+}
+
+.xng-breadcrumb-item {
+    position: relative !important;
+    top: 3px !important;
+}
+
 .animate-shakeVertical {
     animation: shakeVertical ease-out 1s infinite;
 }

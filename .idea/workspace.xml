@@ -2,97 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ddl/Views_20210207.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ddl/Views_20210207.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/awselect.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/bootstrap-slider.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/.npmignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/HELP-US-OUT.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/FontAwesome.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/animated.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/bordered-pulled.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/core.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/fixed-width.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/font-awesome.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/icons.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/larger.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/list.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/mixins.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/path.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/rotated-flipped.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/screen-reader.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/stacked.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/variables.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_animated.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_bordered-pulled.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_core.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_fixed-width.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_icons.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_larger.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_list.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_mixins.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_path.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_rotated-flipped.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_screen-reader.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_stacked.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_variables.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/font-awesome.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/auto.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/avion.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/background.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/background_signin.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/cargo.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/cargo1.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/find.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/loupe.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/profile.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_favicon-removebg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_favicon.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_favicon1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_titre.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/user-account.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/zoom-lens.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/awselect.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/bootstrap-slider.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/highlight.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/modernizr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/villes.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/background.8b867812ffb6bfb9cd9b.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/background_signin.36b5d3294bf96cdd0000.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.20fd1704ea223900efa9.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.8b43027f47b20503057d.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.f691f37e57f04c152e23.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.b9a166f6968f83c02ffc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.b9a166f6968f83c02ffc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/polyfills-es2015.23e4061cb9749259368f.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/polyfills-es5.91bacdbb83aa65f9c411.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/runtime-es2015.a4dadbc03350107420a4.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/runtime-es5.a4dadbc03350107420a4.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/scripts.3bd42039c0602d1afe84.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sort_asc.4bba59196d7ce2619696.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sort_asc_disabled.07c018ae0160704a3290.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sort_both.8b117faa9d4dd934d6bb.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sort_desc.c4196d3286cc33244c83.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sort_desc_disabled.27ac5d1bc294b1fae056.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.8059e26c13bb5d002c6a.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.8059e26c13bb5d002c6a.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.5783361f83bdfd5a64fd.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/styles.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -149,8 +75,8 @@
       <file leaf-file-name="GenericDAOImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="750" selection-start-line="750" selection-end-line="750" />
+            <state relative-caret-position="285">
+              <caret line="739" column="74" selection-start-line="739" selection-start-column="74" selection-end-line="739" selection-end-column="74" />
             </state>
           </provider>
         </entry>
@@ -397,6 +323,7 @@
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
+      <path value="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" />
       <path value="$PROJECT_DIR$/src/main/webapp/package.json" />
       <path value="$PROJECT_DIR$/src/main/webapp/src/assets/css/font-awesome/package.json" />
     </packageJsonPaths>
@@ -854,28 +781,7 @@
       <workItem from="1649367340980" duration="152000" />
       <workItem from="1649367515711" duration="12682000" />
       <workItem from="1649582093494" duration="608000" />
-      <workItem from="1649744213695" duration="12629000" />
-    </task>
-    <task id="LOCAL-00030" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/dataSources/5bd01531-bd90-4f79-9ad4-e345b761356f.xml&#10;#&#9;PManager.iml&#10;#&#9;logs/PackManager/application.log">
-      <created>1621952443730</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1621952443730</updated>
-    </task>
-    <task id="LOCAL-00031" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log">
-      <created>1622013993763</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1622013993764</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;logs/PackManager/application.log">
-      <created>1638107050278</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1638107050278</updated>
+      <workItem from="1649744213695" duration="19921000" />
     </task>
     <task id="LOCAL-00033" summary="test">
       <created>1638109560386</created>
@@ -1199,11 +1105,32 @@
       <option name="project" value="LOCAL" />
       <updated>1649767208585</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="bugfixing datatables">
+      <created>1649781778155</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1649781778155</updated>
+    </task>
+    <task id="LOCAL-00080" summary="bugfixing datatables">
+      <created>1649781869717</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1649781869717</updated>
+    </task>
+    <task id="LOCAL-00081" summary="bugfixing datatables">
+      <created>1649782228965</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1649782228965</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="526843000" />
+    <option name="totallyTimeSpent" value="534135000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1216,9 +1143,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.42274678" side_tool="true" weight="0.36159602" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.43848354" side_tool="true" weight="0.34912717" />
       <window_info anchor="right" id="Maven Projects" order="5" weight="0.3297568" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info id="Capture Tool" order="7" />
@@ -1234,12 +1162,12 @@
       <window_info id="Image Layers" order="3" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.56151646" visible="true" weight="0.34912717" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.56151646" visible="true" weight="0.34912717" />
       <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.5772532" weight="0.36159602" />
       <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
       <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.32689655" />
       <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49642345" weight="0.46633416" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.13447782" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.13447782" />
       <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49810606" weight="0.3297568" />
       <window_info id="Web" order="5" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="8" />
@@ -1307,7 +1235,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="integration Angular" />
     <MESSAGE value="Amelioration du logging" />
     <MESSAGE value="Bug fixing recherhe annonces" />
     <MESSAGE value="new commit for notification and datatables" />
@@ -1332,7 +1259,8 @@
     <MESSAGE value="Merge branch 'Login20200601' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into Login20200601&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;logs/PackManager/application-error.log&#10;#&#9;logs/PackManager/application.log&#10;#&#9;src/main/resources/static/index.html&#10;#&#9;src/main/resources/static/main-es2015.7557f5db7a52293925b1.js&#10;#&#9;src/main/resources/static/main-es5.7557f5db7a52293925b1.js&#10;#&#9;src/main/resources/static/main-es5.786f2f808114e259c7bf.js&#10;#&#9;src/main/resources/static/main-es5.b9309e3c175942f10fd2.js&#10;#&#9;src/main/webapp/src/app/add-product/add-product.component.css&#10;#&#9;src/main/webapp/src/app/add-product/add-product.component.html&#10;#&#9;src/main/webapp/src/app/add-product/add-product.component.ts&#10;#&#9;src/main/webapp/src/app/admin/admin.guard.ts&#10;#&#9;src/main/webapp/src/app/alert.service.ts&#10;#&#9;src/main/webapp/src/app/app-routing.module.ts&#10;#&#9;src/main/webapp/src/app/app.component.css&#10;#&#9;src/main/webapp/src/app/app.component.spec.ts&#10;#&#9;src/main/webapp/src/app/app.component.ts&#10;#&#9;src/main/webapp/src/app/app.module.ts&#10;#&#9;src/main/webapp/src/app/constancesURL.ts&#10;#&#9;src/main/webapp/src/app/footer/footer.component.css&#10;#&#9;src/main/webapp/src/app/footer/footer.component.html&#10;#&#9;src/main/webapp/src/app/footer/footer.component.ts&#10;#&#9;src/main/webapp/src/app/head/head.component.css&#10;#&#9;src/main/webapp/src/app/head/head.component.html&#10;#&#9;src/main/webapp/src/app/head/head.component.ts&#10;#&#9;src/main/webapp/src/app/header/header.component.css&#10;#&#9;src/main/webapp/src/app/header/header.component.html&#10;#&#9;src/main/webapp/src/app/home/home.component.css&#10;#&#9;src/main/webapp/src/app/home/home.component.html&#10;#&#9;src/main/webapp/src/app/home/home.component.ts&#10;#&#9;src/main/webapp/src/app/nofound/nofound.component.css&#10;#&#9;src/main/webapp/src/app/nofound/nofound.component.html&#10;#&#9;src/main/webapp/src/app/nofound/nofound.component.ts&#10;#&#9;src/main/webapp/src/app/options/options.component.html&#10;#&#9;src/main/webapp/src/app/product/product.component.css&#10;#&#9;src/main/webapp/src/app/product/product.component.html&#10;#&#9;src/main/webapp/src/app/product/product.component.ts&#10;#&#9;src/main/webapp/src/app/products/products.component.css&#10;#&#9;src/main/webapp/src/app/products/products.component.html&#10;#&#9;src/main/webapp/src/app/products/products.component.ts&#10;#&#9;src/main/webapp/src/app/profile/profile.component.css&#10;#&#9;src/main/webapp/src/app/profile/profile.component.html&#10;#&#9;src/main/webapp/src/app/profile/profile.component.ts&#10;#&#9;src/main/webapp/src/app/search-all/search-all.component.css&#10;#&#9;src/main/webapp/src/app/search-all/search-all.component.html&#10;#&#9;src/main/webapp/src/app/serviceRequest.ts&#10;#&#9;src/main/webapp/src/app/sharedConstants.ts&#10;#&#9;src/main/webapp/src/app/typed-product/typed-product.component.css&#10;#&#9;src/main/webapp/src/app/typed-product/typed-product.component.html&#10;#&#9;src/main/webapp/src/app/typed-product/typed-product.component.ts&#10;#&#9;src/main/webapp/src/assets/css/awselect.css&#10;#&#9;src/main/webapp/src/awselect.css&#10;#&#9;src/main/webapp/src/styles.css" />
     <MESSAGE value="Merge branch 'BetaVersion202203' of https://helixteamhub.cloud/tjd/projects/packagemanager/repositories/git/PManager into BetaVersion2022&#10;&#10;# Conflicts:&#10;#&#9;src/main/resources/static/index.html" />
     <MESSAGE value="bugfixing redirection" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugfixing redirection" />
+    <MESSAGE value="bugfixing datatables" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfixing datatables" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1792,8 +1720,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="750" selection-start-line="750" selection-end-line="750" />
+        <state relative-caret-position="285">
+          <caret line="739" column="74" selection-start-line="739" selection-start-column="74" selection-end-line="739" selection-end-column="74" />
         </state>
       </provider>
     </entry>
