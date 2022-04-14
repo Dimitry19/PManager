@@ -60,6 +60,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
 
     protected static final String ANNOUNCE_TABLE_ALIAS = "a.";
+    protected static final String ID_PARAM = "id";
     protected static final String USER_PARAM = "userId";
     protected static final String TYPE_PARAM = "announceType";
     protected static final String TRANSPORT_PARAM = "transport";
@@ -88,6 +89,9 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String ALIAS_BY_USER_ID = " as elt where elt.userId =:userId ";
     protected static final String ALIAS_BY_JOIN_USER_ID = " as elt join elt.user as u where u.id =:userId";
     protected static final String ALIAS_BY_JOIN_USER_RES_ID = " as elt join elt.userReservation as u where u.id =:userId";
+    protected static final String GROUP_BY = " group by ";
+    protected static final String ORDER_BY = " order by ";
+
 
     @Autowired
     protected SessionFactory sessionFactory;

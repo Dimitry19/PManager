@@ -96,8 +96,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         if(o instanceof AnnounceSearchDTO){
             AnnounceSearchDTO announceSearch =(AnnounceSearchDTO) o;
-            List result=commonSearchAnnounce(announceSearch,null);
-            return CollectionsUtils.size(result);
+            return CollectionsUtils.size(commonSearchAnnounce(announceSearch,null));
         }
        return 0;
 
@@ -117,8 +116,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         PageBy pageBy = new PageBy(page, size);
         return allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, pageBy);
-
-
     }
 
     /**
@@ -316,7 +313,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             String message= buildNotificationMessage(ANNOUNCE_DEL,announce.getUser().getUsername(),announce.getDeparture(),
                     announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
                     DateUtils.getDateStandard(announce.getEndDate()),null);
-            generateEvent(announce,message);
+            generateEvent(announce,message,true);
         } catch (AnnounceException e) {
             logger.info("Erreur durant la suppression de l'annonce");
             throw e;
@@ -386,7 +383,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                     DateUtils.isSame(endDate, DateUtils.currentDate());
 
             //Si la modification se fait à la date courante ou bien si  tous les kg ont été reservés -> Completed
-            if((weight.compareTo(sumQtyRes)==0 || closeDate) || (weight.compareTo(sumQtyRes)==0 && closeDate)){
+            if((weight.compareTo(sumQtyRes)==0 || BooleanUtils.isTrue(closeDate))
+                    || (weight.compareTo(sumQtyRes)==0 && BooleanUtils.isTrue(closeDate))){
                 announce.setStatus(StatusEnum.COMPLETED);
                 updateReservationsStatus(announce.getId(), StatusEnum.COMPLETED);
             }
@@ -617,8 +615,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             if (!addCondition) {
                 hql = new StringBuilder();
             }
-            hql.append(" group by " + alias + "id ");
-            hql.append(" order by " + alias +START_DATE_PARAM +" desc");
+            hql.append(GROUP_BY + alias + ID_PARAM);
+            hql.append(ORDER_BY + alias +START_DATE_PARAM +DESC);
         } catch (QueryException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
@@ -637,45 +635,45 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             if (StringUtils.isNotEmpty(announceSearch.getTransport())) {
                 TransportEnum transport = getTransport(announceSearch.getTransport());
-                query.setParameter("transport", transport);
+                query.setParameter(TRANSPORT_PARAM, transport);
             }
 
             if (StringUtils.isNotEmpty(announceSearch.getAnnounceType())) {
                 AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
-                query.setParameter("announceType", announceType);
+                query.setParameter(ANNOUNCE_TYPE_PARAM, announceType);
             }
 
-            if (ObjectUtils.isCallable(announceSearch, "price")) {
+            if (ObjectUtils.isCallable(announceSearch, PRICE_PARAM)) {
 
                 BigDecimal price = announceSearch.getPrice();
                 if (price.compareTo(BigDecimal.ZERO) > 0) {
-                    query.setParameter("goldPrice", price);
-                    query.setParameter("price", price);
-                    query.setParameter("preniumPrice", price);
+                    query.setParameter(GOLD_PRICE_PARAM, price);
+                    query.setParameter(PRICE_PARAM, price);
+                    query.setParameter(PRENIUM_PRICE_PARAM, price);
                 }
             }
-            if (ObjectUtils.isCallable(announceSearch, "startDate") && announceSearch.getStartDate() > 0) {
+            if (ObjectUtils.isCallable(announceSearch, START_DATE_PARAM) && announceSearch.getStartDate() > 0) {
                 Date startDate = DateUtils.milliSecondToDate(announceSearch.getStartDate());
-                query.setParameter("startDate", startDate);
+                query.setParameter(START_DATE_PARAM, startDate);
 
             }
-            if (ObjectUtils.isCallable(announceSearch, "endDate") && announceSearch.getEndDate() > 0) {
+            if (ObjectUtils.isCallable(announceSearch, END_DATE_PARAM) && announceSearch.getEndDate() > 0) {
                 Date endDate = DateUtils.milliSecondToDate(announceSearch.getEndDate());
-                query.setParameter("endDate", endDate);
+                query.setParameter(END_DATE_PARAM, endDate);
             }
 
             if (StringUtils.isNotEmpty(announceSearch.getDeparture())) {
-                query.setParameter("departure", "%" + announceSearch.getDeparture() + "%");
-                query.setParameter("DEPARTURE", "%" + announceSearch.getDeparture().toUpperCase() + "%");
+                query.setParameter(DEPARTURE_PARAM, "%" + announceSearch.getDeparture() + "%");
+                query.setParameter(DEPARTURE_PARAM, "%" + announceSearch.getDeparture().toUpperCase() + "%");
             }
 
             if (StringUtils.isNotEmpty(announceSearch.getArrival())) {
-                query.setParameter("arrival", "%" + announceSearch.getArrival() + "%");
-                query.setParameter("ARRIVAL", "%" + announceSearch.getArrival().trim().toUpperCase() + "%");
+                query.setParameter(ARRIVAL_PARAM, "%" + announceSearch.getArrival() + "%");
+                query.setParameter(ARRIVAL_PARAM, "%" + announceSearch.getArrival().trim().toUpperCase() + "%");
             }
 
             if (StringUtils.isNotEmpty(announceSearch.getCategory())) {
-                query.setParameter("category", announceSearch.getCategory());
+                query.setParameter(CATEGORY_PARAM, announceSearch.getCategory());
             }
 			/*if (ObjectUtils.isCallable(announceSearch,"userId")){
 				query.setParameter("userId", announceSearch.getUserId());
@@ -739,6 +737,20 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     }
 
+    @Transactional(readOnly = true,propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
+    void generateEvent(AnnounceVO announce , String message, boolean delete)throws Exception {
+
+
+        UserVO user= announce.getUser();
+
+        Set subscribers=fillSubscribers(user,announce);
+
+        if (CollectionsUtils.isNotEmpty(subscribers)){
+            fillProps(props,1L,message, user.getId(),subscribers);
+            generateEvent(USER);
+        }
+    }
+
     @Override
     @Transactional(readOnly = true,propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
     public void generateEvent(Object obj , String message) throws Exception {
@@ -746,8 +758,18 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         AnnounceVO announce= (AnnounceVO) obj;
         UserVO user= announce.getUser();
 
-        Set subscribers=new HashSet();
+        Set subscribers=fillSubscribers(user,announce);
 
+        if (CollectionsUtils.isNotEmpty(subscribers)){
+            fillProps(props,announce.getId(),message, user.getId(),subscribers);
+            generateEvent(NotificationType.ANNOUNCE);
+        }
+
+    }
+
+    private Set fillSubscribers(UserVO user, AnnounceVO announce) throws Exception{
+
+        Set subscribers=new HashSet();
         if(CollectionsUtils.isNotEmpty(user.getSubscribers())){
             subscribers.addAll(user.getSubscribers().stream().filter(UserVO ::isEnableNotification).collect(Collectors.toSet()));
         }
@@ -759,10 +781,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if(CollectionsUtils.isNotEmpty(announce.getMessages())) {
             announce.getMessages().stream().filter(m->m.getUser()!=user && m.getUser().isEnableNotification()).forEach(m->subscribers.add(m.getUser()));
         }
-        if (CollectionsUtils.isNotEmpty(subscribers)){
-            fillProps(props,announce.getId(),message, user.getId(),subscribers);
-            generateEvent( NotificationType.ANNOUNCE);
-        }
+
+        return subscribers;
 
     }
 }

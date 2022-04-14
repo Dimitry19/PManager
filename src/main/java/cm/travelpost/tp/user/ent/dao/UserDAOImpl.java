@@ -83,7 +83,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
-    public void subscribe(SubscribeDTO subscribe) throws UserException {
+    public void subscribe(SubscribeDTO subscribe) throws UserException,Exception {
         UserVO subscriber = findById(subscribe.getSubscriberId());
         UserVO subscription = findById(subscribe.getSubscriptionId());
 
@@ -103,7 +103,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
-    public void unsubscribe(SubscribeDTO subscribe) throws UserException {
+    public void unsubscribe(SubscribeDTO subscribe) throws UserException,Exception {
 
         UserVO subscriber = findById(subscribe.getSubscriberId());
         UserVO subscription = findById(subscribe.getSubscriptionId());
@@ -583,7 +583,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     }
 
     @Override
-    public void generateEvent(Object obj , String message)  {
+    public void generateEvent(Object obj , String message)  throws UserException,Exception{
 
         UserVO user= (UserVO) obj;
         Set subscribers=new HashSet();
@@ -593,13 +593,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
 
         if (CollectionsUtils.isNotEmpty(subscribers)){
-            try {
-                fillProps(props,user.getId(),message, user.getId(),subscribers);
-                generateEvent(NotificationType.USER);
-            } catch (Exception e) {
-                logger.error("Erreur durant la generation de l'event {}",e);
-                e.printStackTrace();
-            }
+            fillProps(props,user.getId(),message, user.getId(),subscribers);
+            generateEvent(NotificationType.USER);
         }
     }
 }

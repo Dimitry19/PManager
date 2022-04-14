@@ -87,13 +87,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void subscribe(SubscribeDTO subscribe) throws UserException {
+    public void subscribe(SubscribeDTO subscribe) throws Exception {
         userDAO.subscribe(subscribe);
     }
 
 
     @Override
-    public void unsubscribe(SubscribeDTO subscribe) throws UserException {
+    public void unsubscribe(SubscribeDTO subscribe) throws Exception {
         userDAO.unsubscribe(subscribe);
     }
 

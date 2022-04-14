@@ -34,9 +34,9 @@ public interface UserDAO extends CommonDAO {
 
     UserVO login(String username, String password) throws Exception;
 
-    void subscribe(SubscribeDTO subscribe) throws UserException;
+    void subscribe(SubscribeDTO subscribe) throws UserException, Exception;
 
-    void unsubscribe(SubscribeDTO subscribe) throws UserException;
+    void unsubscribe(SubscribeDTO subscribe) throws UserException, Exception;
 
     List<UserVO> subscriptions(Long userId) throws UserException;
 

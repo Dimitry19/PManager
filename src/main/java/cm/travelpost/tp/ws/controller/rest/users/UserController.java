@@ -559,7 +559,7 @@ public class UserController extends CommonController {
             @ApiResponse(code = 200, message = "Successful subscription",
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(value = WSConstants.USER_ADD_SUBSCRIBER_WS, produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML}, consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ResponseEntity<Response> subscribe(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, UserException {
+    public ResponseEntity<Response> subscribe(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, UserException,Exception {
 
         logger.info("subscribe request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -608,7 +608,7 @@ public class UserController extends CommonController {
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(value = WSConstants.UNSUBSCRIBE_WS, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
     public ResponseEntity<Response> unsubscribe(HttpServletRequest request, HttpServletResponse response,
-                                                @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, IOException {
+                                                @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, Exception {
 
         logger.info("unsubscribe request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
