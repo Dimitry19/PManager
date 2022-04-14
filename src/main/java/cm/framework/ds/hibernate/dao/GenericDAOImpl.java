@@ -770,7 +770,8 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         return query.getResultList();
     }
 
-    private void enableFilters(Session session,String ...filters){
+    @Transactional(propagation = Propagation.REQUIRED)
+    void enableFilters(Session session, String... filters){
         if (filters != null) {
             for (String filter : filters) {
                 session.enableFilter(filter);

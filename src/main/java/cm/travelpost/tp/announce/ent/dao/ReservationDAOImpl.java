@@ -283,7 +283,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
         params.put(USER_PARAM,userId);
         params.put(ANNOUNCE_PARAM,announceId);
         params.put(VALIDATE_PARAM,validateEnum);
-        return findBy(ReservationVO.FIND_BY_ANNOUNCE_AND_USER_AND_VALIDATE, ReservationVO.class, params, null,(String) null);
+        return findBy(ReservationVO.FIND_BY_ANNOUNCE_AND_USER_AND_VALIDATE, ReservationVO.class, params, null, null);
 
     }
 
