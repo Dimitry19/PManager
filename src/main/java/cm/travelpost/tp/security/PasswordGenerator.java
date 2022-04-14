@@ -35,18 +35,4 @@ public class PasswordGenerator {
         return null;
 
     }
-
-
-    public static String generate() {
-
-        StringBuffer sb = new StringBuffer(LENGHT);
-        /*StringBuilder sb = new StringBuilder(LENGHT);*/
-        for (int i = 0; i < LENGHT; i++) {
-            sb.append(ALPHABET.charAt(rnd.nextInt(ALPHABET.length())));
-        }
-        return sb.toString();
-
-    }
-
-
 }

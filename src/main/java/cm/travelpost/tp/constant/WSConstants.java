@@ -16,6 +16,7 @@ public class WSConstants extends CommonProperties {
 
 
     public static final String DASHBOARD = "/dashboard";
+    public static final String AUTH = "/auth/authenticate";
     public static final String CREATE = "/create";
     public static final String ADD = "/add";
     public static final String UPDATE = "/update";
@@ -30,6 +31,9 @@ public class WSConstants extends CommonProperties {
     public static final String AUTOCOMPLETE = "/autocomplete/{search}";
 
 
+    /************ USER REQUEST*************/
+    public static final String AUTHENTICATE_WS = "/ws/auth/*";
+    public static final String AUTH_TOKEN = "/authenticate";
 
 
     /************ USER REQUEST*************/

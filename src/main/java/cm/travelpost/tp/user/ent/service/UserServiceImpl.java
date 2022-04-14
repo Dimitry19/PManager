@@ -27,6 +27,7 @@ import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -107,7 +108,7 @@ public class UserServiceImpl implements UserService {
         return userDAO.subscribers(userId);
     }
 
-    public UserVO login(LoginDTO lr) throws Exception {
+    public UserVO login(LoginDTO lr) throws BadCredentialsException,Exception {
 
         UserVO user = checkLoginAdmin(lr);
         if (user != null) {
@@ -116,23 +117,6 @@ public class UserServiceImpl implements UserService {
 
         user = userDAO.login(lr.getUsername(), lr.getPassword());
 
-
-        if (user == null) {
-            if (lr.getEmail() != null) {
-               // user = userDAO.findByEmail(lr.getEmail());
-            }
-
-			/*if(lr.getProvider()!=null){
-
-				if(lr.getProvider().equals(GOOGLE_PROVIDER)){
-					user=userDAO.findByGoogleId(lr.getSocialId());
-				}
-
-				if(lr.getProvider().equals(FACEBOOK_PROVIDER)){
-					user=userDAO.findByFacebookId(lr.getSocialId());
-				}
-			}*/
-        }
         return user;
     }
 
@@ -145,13 +129,10 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public UserVO checkLoginAdmin(LoginDTO login) throws Exception {
+    public UserVO checkLoginAdmin(LoginDTO login) throws Exception,BadCredentialsException {
         AtomicBoolean found = new AtomicBoolean(false);
 
-        UserVO admin = admin = userDAO.findByUsername(login.getUsername());//userDAO.findByEmail(login.getEmail());
-       /* if (admin == null) {
-            admin = userDAO.findByUsername(login.getUsername());
-        }*/
+        UserVO admin = userDAO.findByUsername(login.getUsername());
         if (admin != null) {
             admin.getRoles().forEach(x -> {
                 if (RoleEnum.ADMIN.equals(RoleEnum.fromValue(x.getDescription().name()))) {
