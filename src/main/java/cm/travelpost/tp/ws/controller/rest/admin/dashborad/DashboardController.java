@@ -28,13 +28,14 @@ import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
 
+import static cm.travelpost.tp.administrator.ent.enums.DashBoardObjectType.AIRLINE;
+
 @RestController
 @RequestMapping(WSConstants.DASHBOARD_WS)
 @Api(value = "Dashboard-service", description = "Dashboard admin Operations")
 public class DashboardController extends CommonController {
-	//Implementer le controle tel que seul l'admin peut operer ici
 
-	protected final Log logger = LogFactory.getLog(DashboardController.class);
+ 	protected final Log logger = LogFactory.getLog(DashboardController.class);
 	/**
 	 * Cette methode cree une compagnie aerienne ou une ville
 	 *
@@ -71,16 +72,12 @@ public class DashboardController extends CommonController {
 
 			if (dto != null) {
 
-				switch (dto.getObjectType()){
-					case AIRLINE:
-						o  = airlineService.add(dto.getCode(), dto.getName());
-						break;
-
-					case CITY:
+				if (dto.getObjectType() == AIRLINE) {
+						o = airlineService.add(dto.getCode(), dto.getName());
+				}else{
 						o  = cityService.create(dto);
-						break;
-
 				}
+
 				if (o instanceof AirlineVO) {
 
 					airline = (AirlineVO)o;
@@ -133,14 +130,10 @@ public class DashboardController extends CommonController {
 			AirlineVO airline=null;
 			CityVO city=null;
 
-			switch (dto.getObjectType()){
-				case AIRLINE:
-					airline  =  airlineService.update(dto);
-					break;
-				case CITY:
-					city = cityService.update(dto);
-					break;
-
+			if (dto.getObjectType() == AIRLINE) {
+				airline = airlineService.update(dto);
+			}else{
+				city = cityService.update(dto);
 			}
 
 			if (airline != null) {
@@ -222,6 +215,6 @@ public class DashboardController extends CommonController {
 		}
 	}
 	private String getMessage(DashBoardObjectType objectType){
-		return (objectType == DashBoardObjectType.AIRLINE)?"La compagnie aerienne":"La ville";
+		return (objectType == AIRLINE)?"La compagnie aerienne":"La ville";
 	}
 }

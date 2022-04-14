@@ -2,6 +2,8 @@ package cm.travelpost.tp.common.utils;
 
 import cm.travelpost.tp.user.ent.vo.RoleVO;
 
+import static cm.travelpost.tp.common.enums.RoleEnum.ADMIN;
+
 public class CommonUtils {
 
 
@@ -11,17 +13,12 @@ public class CommonUtils {
     public static final String claimsAdminKey="isAdmin";
     public static final String claimsUserKey="isUser";
 
+    private CommonUtils(){}
+
 
     public static  String decodeRole(RoleVO role){
         if(role==null) return  null;
 
-            switch (role.getDescription()){
-                case ADMIN:
-                    return ROLE_ADMIN;
-                default:
-                        return ROLE_USER;
-
-            }
-
+        return (role.getDescription() == ADMIN) ? ROLE_ADMIN:ROLE_USER;
     }
 }

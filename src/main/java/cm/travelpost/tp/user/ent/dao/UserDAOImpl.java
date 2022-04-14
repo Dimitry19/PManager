@@ -76,9 +76,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         logger.info("User: login");
 
-        UserVO user=internalLogin(username, password);
+        return internalLogin(username, password);
 
-        return user;
     }
 
 
@@ -181,7 +180,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             calcolateAverage(user);
             return user;
         } catch (UserException e) {
-            logger.error("User:" + e.getMessage());
+            logger.error("User: {}" , e.getMessage());
             throw e;
         }
     }
@@ -262,8 +261,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setLastName(userDTO.getLastName());
             //setRole(user, userDTO.getRole());
             calcolateAverage(user);
-            UserVO u=(UserVO) merge(user);
-            return u;
+            return (UserVO) merge(user);
+
 
         } else throw new UserException("Aucun utilisateur trouvé");
 
@@ -351,7 +350,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserVO findById(Long id) throws UserException {
 
         try {
@@ -361,9 +360,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
             filters[0] = FilterConstants.ACTIVE_MBR;
             filters[1] = FilterConstants.CANCELLED;
 
-            UserVO user = (UserVO) find(UserVO.class, id,filters);
+            return (UserVO) find(UserVO.class, id,filters);
             //Hibernate.initialize(user.getMessages()); // on l'utilise quand la fetch avec message est lazy
-            return user;
+            //return user;
         } catch (Exception e) {
             throw new UserException(e.getMessage());
         }
@@ -447,6 +446,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     }
 
     @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
         boolean result = false;
 
@@ -474,10 +474,13 @@ public class UserDAOImpl extends Generic implements UserDAO {
     public UserVO manageNotification(Long userId, boolean enableNotification) throws UserException {
 
         UserVO user = findById(userId);
+        if (user == null){
+            throw new UserException("Utilisateur non trouvé");
+        }
         try {
 
             boolean precedent = user.isEnableNotification();
-            if (user != null && precedent != enableNotification) {
+            if (precedent != enableNotification) {
                 user.setEnableNotification(enableNotification);
                 update(user);
                 return (UserVO) get(UserVO.class, userId);
@@ -495,12 +498,12 @@ public class UserDAOImpl extends Generic implements UserDAO {
         logger.info("Modification du mot de passe");
         UserVO user = findById(userId);
         if (user == null) {
-            logger.error("Erreur : aucun utilisateur correspondant a l'id:" + userId);
+            logger.error("Erreur : aucun utilisateur correspondant a l'id{}" , userId);
             throw new UserException("Aucun utilisateur trouvé avec cet identifiant" + userId);
         }
         String decryptedPassword = PasswordGenerator.decrypt(user.getPassword());
         if (!StringUtils.equals(decryptedPassword, oldPassword)) {
-            logger.error("Erreur : mots de passe inexacts {}-{}:", decryptedPassword, oldPassword);
+            logger.error("Erreur : mot de passe inexact {}-{}:", decryptedPassword, oldPassword);
             throw new UserException("Le mot de passe ne correspond pas: veuillez contrôler l'ancien mot de passe");
         }
 
@@ -514,7 +517,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     public List<CommunicationVO> communications(Long userId) throws Exception {
         UserVO user = findById(userId);
         if (user == null) {
-            logger.error("Erreur : aucun utilisateur correspondant a l'id:" + userId);
+            logger.error("Erreur : aucun utilisateur correspondant a l'id {}" , userId);
             throw new UserException("Aucun utilisateur trouvé avec cet identifiant" + userId);
         }
 
@@ -576,7 +579,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public void composeQueryParameters(Object o, Query query) {
-
+        logger.info("compose query");
     }
 
     @Override

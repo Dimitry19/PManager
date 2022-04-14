@@ -59,11 +59,21 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String ASC = " asc ";
 
 
+    protected static final String ANNOUNCE_TABLE_ALIAS = "a.";
     protected static final String USER_PARAM = "userId";
     protected static final String TYPE_PARAM = "announceType";
     protected static final String TRANSPORT_PARAM = "transport";
     protected static final String ANNOUNCE_PARAM = "announceId";
+    protected static final String ANNOUNCE_TYPE_PARAM = "announceType";
     protected static final String START_DATE_PARAM = "startDate";
+    protected static final String END_DATE_PARAM = "endDate";
+    protected static final String PRICE_PARAM = "price";
+    protected static final String GOLD_PRICE_PARAM = "goldPrice";
+    protected static final String PRENIUM_PRICE_PARAM = "preniumPrice";
+    protected static final String DEPARTURE_PARAM = "departure";
+    protected static final String ARRIVAL_PARAM = "arrival";
+    protected static final String CATEGORY_PARAM = "category";
+
     protected static final String NAME_PARAM = "name";
     protected static final String SEARCH_PARAM = "search";
     protected static final String VALIDATE_PARAM = "validate";
@@ -180,7 +190,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     public <T> T findByIdForCheckAndResolve(Class<T> clazz, ID id) {
 
         if (id == null) {
-            this.logger.error("Errore esecuzione findByIdForCheckAndResolve:{}-{}", clazz, null);
+            logger.error("Errore esecuzione findByIdForCheckAndResolve:{}-{}", clazz, null);
             throw new IllegalArgumentException("ID cannot be null");
         }
         return getForCheckAndResolve(clazz, id);
@@ -190,7 +200,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     public T findById(Class<T> clazz, ID id) {
 
         if (id == null) {
-            this.logger.error("Errore esecuzione findById:{}-{}", clazz, null);
+            logger.error("Errore esecuzione findById:{}-{}", clazz, null);
             throw new IllegalArgumentException("ID cannot be null");
         }
         return get(clazz, id);
@@ -707,9 +717,14 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
             counterRating += ratingCount.getCount();
             totalRating += ratingCount.getRating().toValue() * ratingCount.getCount();
         }
-        double averageRating = new BigDecimal(((double) totalRating / (double) counterRating), MATH_CONTEXT).doubleValue();
-        user.setRating(averageRating);
-        return averageRating;
+        BigDecimal tr=   BigDecimal.valueOf(totalRating);
+        BigDecimal cr=   BigDecimal.valueOf(counterRating);
+        double average = 0.0;
+        if(cr.compareTo(BigDecimal.ZERO)> 0){
+            average =tr.divide(cr,MATH_CONTEXT).doubleValue();
+        }
+        user.setRating(average);
+        return average;
     }
 
     @Override
@@ -737,7 +752,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     public void generateEvent( NotificationType type) throws Exception{
-        Event event = new Event(DateUtils.DateToSQLDate(new Date()),type);
+        Event event = new Event(DateUtils.dateToSQLDate(new Date()),type);
 
         event.setId((Long) props.get(PROP_ID));
         event.setMessage((String) props.get(PROP_MSG));

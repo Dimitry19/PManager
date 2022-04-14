@@ -8,6 +8,8 @@ import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,8 @@ import java.util.List;
 @Service("announceService")
 @Transactional
 public class AnnounceServiceImpl implements AnnounceService {
+
+    protected final Log logger = LogFactory.getLog(AnnounceServiceImpl.class);
 
     @Autowired
     AnnounceDAO dao;
@@ -47,7 +51,7 @@ public class AnnounceServiceImpl implements AnnounceService {
         return dao.update(dto);
     }
 
-    public AnnounceVO update(Integer id) throws AnnounceException,AnnounceException {
+    public AnnounceVO update(Integer id) throws AnnounceException {
         return dao.update(id);
     }
 
@@ -83,11 +87,11 @@ public class AnnounceServiceImpl implements AnnounceService {
     }
 
     public void afterPropertiesSet() throws AnnounceException {
-        System.out.println("Init method after properties are set : ");
+       logger.info("Init method after properties are set : ");
     }
 
     public void destroy() throws Exception {
-        System.out.println("Spring Container is destroy! Customer clean up");
+        logger.info("Spring Container is destroy! Customer clean up");
     }
 
 

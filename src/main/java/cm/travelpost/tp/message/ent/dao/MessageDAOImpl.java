@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -125,22 +126,21 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
     public List<MessageVO> messagesByUser(UserVO user, PageBy pageBy) throws Exception {
 
         logger.info("Message: user message");
-        if (user == null) return null;
+        if (user == null) return new ArrayList<>();
         return messagesBy(user.getId(), FindBy.USER,pageBy);
     }
 
     @Override
     public List<MessageVO> messagesBy(Long id, FindBy fbType, PageBy pageBy) throws Exception {
 
-        if (id == null) return null;
+        if (id == null) return new ArrayList<>();
 
-        switch (fbType){
-            case USER:
-                return findByUser(MessageVO.class, id, pageBy);
-            case ANNOUNCE:
-                return findBy(MessageVO.FIND_BY_ANNOUNCE, MessageVO.class, id, ANNOUNCE_PARAM, pageBy);
+        if (fbType == FindBy.USER) {
+            return findByUser(MessageVO.class, id, pageBy);
+        }else if(fbType ==  FindBy.ANNOUNCE){
+            return findBy(MessageVO.FIND_BY_ANNOUNCE, MessageVO.class, id, ANNOUNCE_PARAM, pageBy);
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -153,8 +153,8 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
     @Override
     public MessageVO findById(MessageIdVO id) throws BusinessResourceException {
         logger.info("Message: findBy");
-        MessageVO message = (MessageVO) findById(MessageVO.class, id);
-        return message;
+       return  (MessageVO) findById(MessageVO.class, id);
+
     }
 
 
@@ -210,9 +210,8 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
 
 
         if(CollectionsUtils.isNotEmpty(announce.getMessages())) {
-            announce.getMessages().stream().filter(m->m.getUser()!=null && notSame(m.getUser().getId(),user.getId()) && m.getUser().isEnableNotification()).forEach(m->{
-                subscribers.add(m.getUser());
-            });
+            announce.getMessages().stream().filter(m->m.getUser()!=null && notSame(m.getUser().getId(),user.getId()) && m.getUser().isEnableNotification()).forEach(m->
+                subscribers.add(m.getUser()));
         }
 
         if(same(announceUser.getId(),user.getId())){
@@ -220,9 +219,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
 
             if(CollectionsUtils.isNotEmpty(reservations)) {
                 reservations.stream().filter(r->r.getUser()!=null && notSame(r.getUser().getId(),user.getId()) && r.getUser().isEnableNotification())
-                        .forEach(r->{
-                            subscribers.add(r.getUser());
-                        });
+                        .forEach(r-> subscribers.add(r.getUser()));
             }
         }
 

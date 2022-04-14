@@ -34,6 +34,7 @@ import static cm.travelpost.tp.constant.WSConstants.MESSAGE_WS;
 @Api(value = "messages-service", description = "Messages Operations")
 public class MessageController extends CommonController {
 
+    private static final String COMMENT_LABEL = "Commentaire";
     protected final Log logger = LogFactory.getLog(MessageController.class);
 
 
@@ -51,13 +52,14 @@ public class MessageController extends CommonController {
 
                 if (message != null) {
                     message.setRetCode(WebServiceResponseCode.OK_CODE);
-                    message.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "Commentaire"));
+                    message.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, COMMENT_LABEL));
                     return new ResponseEntity<>(message, headers, HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>(null, headers, HttpStatus.NOT_FOUND);
                 }
             }
         } catch (Exception e) {
+            logger.info("add message to announce error");
             throw e;
         } finally {
             finishOpentracingSpan();
@@ -115,7 +117,7 @@ public class MessageController extends CommonController {
 
         try {
             logger.info("find message by user request in");
-            createOpentracingSpan("MessageController -messagesByAnnounce");
+            createOpentracingSpan("MessageController - messagesByAnnounce");
             if (announceId != null) {
                 int count = messageService.count(pageBy);
                 List<MessageVO> messages = messageService.messagesBy(announceId, FindBy.ANNOUNCE, pageBy);
@@ -130,7 +132,7 @@ public class MessageController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+        return new ResponseEntity<>(paginateResponse, headers, HttpStatus.OK);
     }
 
     /**
@@ -172,7 +174,7 @@ public class MessageController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+        return new ResponseEntity<>(paginateResponse, headers, HttpStatus.OK);
     }
 
     /**
@@ -193,19 +195,7 @@ public class MessageController extends CommonController {
         try {
             createOpentracingSpan("MessageController -delete");
             logger.info("delete message request in");
-            if (id != null) {
-                if (messageService.delete(id)) {
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "Commentaire"));
-
-                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-                } else {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, "Commentaire"));
-
-                }
-            }
-            return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
+            return getResponseDeleteResponseEntity(id, pmResponse, messageService.delete(id), COMMENT_LABEL);
         } catch (Exception e) {
             logger.error("Erreur durant la suppression du commentaire");
             throw e;
@@ -213,6 +203,8 @@ public class MessageController extends CommonController {
             finishOpentracingSpan();
         }
     }
+
+
 
     /**
      * Cette methode permet de recuperer tous les messages avec pagination
@@ -237,8 +229,9 @@ public class MessageController extends CommonController {
             int count = messageService.count(pageBy);
             List<MessageVO> messages = messageService.messages(pageBy);
 
-            return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  messages);
+            return getPaginateResponseResponseEntity(headers,paginateResponse, count,  messages);
         } catch (Exception e) {
+            logger.info("retrieve messages call error");
             throw e;
         } finally {
             finishOpentracingSpan();

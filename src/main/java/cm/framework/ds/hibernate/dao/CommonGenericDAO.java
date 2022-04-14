@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class CommonGenericDAO extends GenericDAOImpl {
 
-    public Map map = new HashMap();
-    public String[] filters = null;
+    protected Map map = new HashMap();
+    protected String[] filters = null;
 
 }

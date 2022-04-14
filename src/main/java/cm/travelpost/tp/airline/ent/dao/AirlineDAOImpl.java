@@ -11,13 +11,13 @@ import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.ws.requests.CommonDTO;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 @Repository
@@ -25,6 +25,8 @@ import java.util.List;
 public class AirlineDAOImpl extends Generic implements AirlineDAO {
 
     private static Logger logger = LoggerFactory.getLogger(AirlineDAOImpl.class);
+
+    private  String errorPattern = "La compagnie aerienne [{0}] {1}";
 
 
     @Override
@@ -37,7 +39,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
             AirlineVO airline= (AirlineVO) checkAndResolve(AirlineVO.class,id);
 
             if(airline!=null)
-                throw new Exception(" Compagnie aerienne ["+code+"] existe deja");
+                throw new Exception(MessageFormat.format(errorPattern,code, "existe déjà"));
 
             airline= new AirlineVO();
             airline.setId(id);
@@ -57,7 +59,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
         AirlineIdVO airlineId = new AirlineIdVO(updAirline.getCode(), Constants.DEFAULT_TOKEN);
 
         if (airlineId == null) {
-            throw new RecordNotFoundException("Aucune compagnie  trouvéé avec le code :"+updAirline.getCode());
+            throw new RecordNotFoundException("Aucune compagnie  trouvée avec le code :"+updAirline.getCode());
         }
         AirlineVO airline=(AirlineVO) checkAndResolve(AirlineVO.class,airlineId);
         airline.setDescription(updAirline.getName());
@@ -75,7 +77,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
         try {
             AirlineVO airline = findByCode(code);
             if(airline==null)
-                throw new Exception(" Compagnie aerienne ["+code+"] inexistante");
+                throw new Exception(MessageFormat.format(errorPattern,code, " inexistante"));
 
             return updateDelete(airline);
         } catch (Exception e) {
@@ -92,7 +94,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
         try {
             AirlineVO airline = (AirlineVO) findById(AirlineVO.class,id);
             if(airline==null)
-                throw new Exception(" Compagnie aerienne ["+id.getCode()+"] inexistante");
+                throw new Exception(MessageFormat.format(errorPattern,id.getCode(), " inexistante"));
 
             return updateDelete(airline);
         } catch (Exception e) {

@@ -53,64 +53,71 @@ public abstract class Generic extends CommonGenericDAO {
             case USER:
                 break;
             case SUBSCRIBE:
-                message=MessageFormat.format(notificationMessagePattern,username," s'est abonné "," à votre profil");
+                message=MessageFormat.format(notificationMessagePattern,username," s'est abonné à votre profil ","");
                 break;
             case UNSUBSCRIBE:
-                message =MessageFormat.format(notificationMessagePattern,username," s'est désabonné "," de votre profil");
+                message =MessageFormat.format(notificationMessagePattern,username," s'est désabonné à votre profil","");
                 break;
             case ANNOUNCE:
                 message =MessageFormat.format(notificationMessagePattern,username,
-                        " a creé l'annonce " + departure +"/"+arrival,
-                        "pour la date " + startDate+ "et retour le "+ endDate);
+                        " a creé l'annonce " + partOneMessage(departure,arrival),
+                        partTwoMessage("pour ",startDate,(endDate)));
 
                 break;
             case ANNOUNCE_UPD:
-                message =MessageFormat.format(notificationMessagePattern,username,
-                        " a modifié l'annonce " + departure +"/"+arrival,
-                        "pour la date " + startDate+ "et retour le "+ endDate);
+                message =MessageFormat.format(notificationMessagePattern,username," a modifié l'annonce " + partOneMessage(departure,arrival),
+                        partTwoMessage("pour ",startDate,(endDate)));
                 break;
             case ANNOUNCE_DEL:
                 message =MessageFormat.format(notificationMessagePattern,username,
-                        " a supprimé l'annonce " + departure +"/"+arrival,partMessage(startDate,(endDate)));
+                        " a supprimé l'annonce " + partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate)));
                 break;
             case RESERVATION:
                 message= MessageFormat.format(notificationMessagePattern,username,
-                        " a fait une reservation  de [" +kg+" kg ] sur votre annonce " + departure +"/"+arrival,partMessage(startDate,(endDate)));
+                        " a fait une reservation  de [" +kg+" kg ] sur votre annonce " + partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate)));
                 break;
             case RESERVATION_VALIDATE:
                  message= MessageFormat.format(notificationMessagePattern,username,
-                        " a accepté votre reservation  de [" +kg+" kg ] sur l' annonce "  + departure +"/"+arrival,partMessage(startDate,(endDate)));
+                        " a accepté votre reservation  de [" +kg+" kg ] sur l' annonce "  + partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate)));
                 break;
             case RESERVATION_UNVALIDATE:
                 message= MessageFormat.format(notificationMessagePattern,username,
-                        " a refusé votre reservation  de [" +kg+" kg ] sur l' annonce " + departure +"/"+arrival,partMessage(startDate,(endDate+kg)));
+                        " a refusé votre reservation  de [" +kg+" kg ] sur l' annonce " + partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate+kg)));
                 break;
             case RESERVATION_UPD:
 
                  message= MessageFormat.format(notificationMessagePattern,username,
-                         " a modifié une reservation sur votre annonce "+departure +"/"+arrival,partMessage(startDate,(endDate+kg)));
+                         " a modifié une reservation sur votre annonce "+partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate+kg)));
 
                 break;
             case RESERVATION_DEL:
 
                 message= MessageFormat.format(notificationMessagePattern,username,
-                        " a supprimé une reservation  de [" +kg+" kg ] sur votre annonce " + departure +"/"+arrival,partMessage(startDate, endDate));
+                        " a supprimé une reservation  de [" +kg+" kg ] sur votre annonce " + partOneMessage(departure,arrival), partTwoMessage(startDate, endDate));
                 break;
             case COMMENT:
                 message=MessageFormat.format(notificationMessageCommentPattern,username
-                        ," a ajouté un commentaire sur l'annonce "+departure+"/"+arrival,partMessage(startDate, endDate),"");
+                        ," a ajouté un commentaire sur l'annonce "+partOneMessage(departure,arrival), partTwoMessage(startDate, endDate),"");
                 break;
             case COMMENT_UPD:
                 message=MessageFormat.format(notificationMessageCommentPattern,username
-                        ," a modifié un commentaire sur l'annonce "+departure+"/"+arrival, partMessage(startDate, endDate), "");
+                        ," a modifié un commentaire sur l'annonce "+partOneMessage(departure,arrival), partTwoMessage(startDate, endDate), "");
                 break;
         }
         return message;
     }
 
-    private String partMessage(String startDate, String endDate){
-
+    private String partTwoMessage(String startDate, String endDate){
         return ",date de l'annonce [" + startDate+ "]  et retour le  [ "+ endDate+"]";
+    }
+
+    private String partTwoMessage(String start,String startDate, String endDate){
+        return start +"la  [" + startDate+ "]  et retour le  [ "+ endDate+"]";
+    }
+
+    private String partOneMessage(String departure, String arrival){
+
+        return departure +"/"+arrival;
     }
 
     public void fillProps(Map props, Long id,String message, Long userId,Set subscribers) throws Exception {

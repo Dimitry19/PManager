@@ -226,7 +226,7 @@ public class UserController extends CommonController {
     ResponseEntity<UserVO> manageNotification(HttpServletRequest request,
                                               HttpServletResponse response,
                                               @RequestParam("userId") @Valid Long userId,
-                                              @RequestParam("enable") @Valid boolean enable) throws Exception {
+                                              @RequestParam("enable") @Valid boolean enable) throws UserException {
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         logger.info(" Manage notification request in");
         try {
@@ -692,7 +692,7 @@ public class UserController extends CommonController {
             @ApiResponse(code = 200, message = "Successful Subscribers list ",
                     response = ResponseEntity.class, responseContainer = "Object")})
     @RequestMapping(value = WSConstants.USER_SUBSCRIBER_WS, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<PaginateResponse> subscribers(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId) throws ValidationException, IOException {
+    public ResponseEntity<PaginateResponse> subscribers(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId) throws ValidationException, Exception {
 
         logger.info("subscribers request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);

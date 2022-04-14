@@ -1,0 +1,26 @@
+select distinct announcevo0_.ID as id1_4_,
+announcevo0_.cancelled as cancelle2_4_,
+announcevo0_.dateCreated as datecrea3_4_,
+announcevo0_.lastUpdated as lastupda4_4_,
+announcevo0_.TOKEN as token5_4_,
+announcevo0_.ANNOUNCE_TYPE as announce6_4_,
+announcevo0_.ARRIVAL as arrival7_4_,
+announcevo0_.DEPARTURE as departur8_4_,
+announcevo0_.DESCRIPTION as descript9_4_,
+announcevo0_.END_DATE as end_dat10_4_,
+announcevo0_.GOLD_PRICE as gold_pr11_4_,
+announcevo0_.image_ID as image_i19_4_,
+announcevo0_.PRENIUM_PRICE as prenium12_4_,
+announcevo0_.PRICE as price13_4_,
+announcevo0_.REMAIN_WEIGHT as remain_14_4_,
+announcevo0_.START_DATE as start_d15_4_,
+announcevo0_.STATUS as status16_4_,
+announcevo0_.TRANSPORT as transpo17_4_,
+announcevo0_.R_USER_ID as r_user_20_4_,
+announcevo0_.WEIGHT as weight18_4_,
+(select coalesce(count(r.r_announce_id),0)  from PUBLIC.RESERVATION r where  r.r_announce_id = announcevo0_.id and r.cancelled ='0') as formula1_
+from PUBLIC.ANNOUNCE announcevo0_
+inner join PUBLIC.ANNOUNCE_CATEGORY categories1_ on announcevo0_.ID=categories1_.ANNOUNCE_ID
+inner join PUBLIC.CATEGORY categoryvo2_ on categories1_.CATEGORIES_CODE=categoryvo2_.CODE
+where announcevo0_.CANCELLED=false and ( exists (select announcevo0_.id from announce where announcevo0_.cancelled = false and announcevo0_.status<> 'COMPLETED'))
+and (announcevo0_.GOLD_PRICE<=5 or announcevo0_.PRICE<=5 or announcevo0_.PRENIUM_PRICE<=5) and categoryvo2_.CODE='AUTRES' group by announcevo0_.ID order by announcevo0_.START_DATE desc

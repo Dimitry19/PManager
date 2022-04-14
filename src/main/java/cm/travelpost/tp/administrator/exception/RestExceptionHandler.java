@@ -100,9 +100,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> details = new ArrayList<>();
-        for (String error : ex.getSupportedMethods()) {
-            details.add(error);
-        }
+
+        CollectionsUtils.makeCopies(ex.getSupportedMethods(),details);
+
         String[] code = new String[1];
         code[0] = String.valueOf(HttpStatus.METHOD_NOT_ALLOWED.value());
         ErrorResponse error = new ErrorResponse("Not supported Methods", details, code, DEFAULT_ERROR);

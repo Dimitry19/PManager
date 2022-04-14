@@ -4,12 +4,14 @@ package cm.travelpost.tp.announce.ent.vo;
 import cm.travelpost.tp.common.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AnnounceInfo {
+public class AnnounceInfo implements Serializable {
+    private static final long serialVersionUID = 1905122041950251207L;
 
 
     private Long id;

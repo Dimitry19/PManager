@@ -3,7 +3,6 @@ package cm.travelpost.tp.ws.controller.rest.city;
 import cm.travelpost.tp.city.ent.vo.CityVO;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
-import cm.travelpost.tp.ws.controller.rest.announce.AnnounceController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -28,7 +27,7 @@ import static cm.travelpost.tp.constant.WSConstants.CITY_WS;
 @Api(value = "City-service", description = " Read only city  Operations")
 public class CityController  extends CommonController {
 
-    protected final Log logger = LogFactory.getLog(AnnounceController.class);
+    protected final Log logger = LogFactory.getLog(CityController.class);
 
 
 

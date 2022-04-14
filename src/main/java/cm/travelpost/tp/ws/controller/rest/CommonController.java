@@ -34,10 +34,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -159,25 +161,23 @@ public class CommonController  extends WSConstants {
 
     protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, int count, List results) {
 
-        switch (count) {
-            case 0:
-                headers.add(HEADER_TOTAL, Long.toString(count));
-                paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
-                break;
-            default:
+        if (count == 0) {
+            headers.add(HEADER_TOTAL, Long.toString(count));
+            paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
+        } else {
 
-                if (CollectionsUtils.isNotEmpty(results)) {
-                    paginateResponse.setCount(count);
-                }
-                paginateResponse.setResults(results);
-                paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
-                headers.add(HEADER_TOTAL, Long.toString(results.size()));
-                break;
+            if (CollectionsUtils.isNotEmpty(results)) {
+                paginateResponse.setCount(count);
+            }
+            paginateResponse.setResults(results);
+            paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
+            headers.add(HEADER_TOTAL, Long.toString(results.size()));
         }
         return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
     }
+
 
     protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse,List results) {
 
@@ -204,6 +204,23 @@ public class CommonController  extends WSConstants {
             pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
         }
         return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @NotNull
+    public static ResponseEntity<Response> getResponseDeleteResponseEntity(@RequestParam @Valid Long id, Response pmResponse, boolean delete, String label) throws Exception {
+        if (id != null) {
+            if (delete) {
+                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, label));
+
+                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+            } else {
+                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, label));
+
+            }
+        }
+        return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
     }
 
     public String getRedirectPage(RedirectType type) {

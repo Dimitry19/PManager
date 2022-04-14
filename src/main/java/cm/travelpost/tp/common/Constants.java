@@ -8,7 +8,7 @@ import javax.annotation.ManagedBean;
 public class Constants {
 
     @Value("${constant.prod_cat_code}")
-    public String DEFAULT_CATEGORIE;
+    public String defaultCategorie;
 
     public static final String SUBJECT = "SUBJECT";
     public static final String DEFAULT_TOKEN = "PM";

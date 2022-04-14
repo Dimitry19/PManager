@@ -44,8 +44,9 @@ public class DateUtils {
         try {
             return  dateWithoutTime( new Date());
         } catch (Exception e) {
+            logger.trace("Impossible recuperer la date actuelle:" + e);
+            throw e;
         }
-        return null;
     }
 
 
@@ -100,7 +101,7 @@ public class DateUtils {
         return dateStr;
     }
 
-    public static java.sql.Date DateToSQLDate(Date inputDate) {
+    public static java.sql.Date dateToSQLDate(Date inputDate) {
         java.sql.Date sqlDate = null;
         if (inputDate != null) {
             sqlDate = new java.sql.Date(inputDate.getTime());
