@@ -117,4 +117,6 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     List<RatingCountVO> findRatingCounts(UserVO user);
 
     Query search(String sqlQuery, String where,String... filters);
+
+
 }

@@ -181,8 +181,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws UserException {
-        return userDAO.find(userSeachDTO, pageBy);
+    public List<UserVO> search(UserSeachDTO userSeachDTO, PageBy pageBy) throws UserException {
+        return userDAO.search(userSeachDTO, pageBy);
     }
 
     @Transactional(rollbackFor = UserException.class)

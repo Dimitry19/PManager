@@ -9,9 +9,7 @@ import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.users.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface UserDAO extends CommonDAO {
@@ -21,7 +19,7 @@ public interface UserDAO extends CommonDAO {
 
     UserVO findByOnlyUsername(String username, boolean isRegistration) throws Exception;
 
-    List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException;
+    List<UserVO> search(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException;
 
     UserVO findByToken(String token) throws Exception;
 

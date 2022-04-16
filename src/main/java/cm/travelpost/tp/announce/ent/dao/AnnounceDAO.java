@@ -11,6 +11,7 @@ import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -44,6 +45,9 @@ public interface AnnounceDAO extends CommonDAO {
     List<AnnounceVO> search(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws Exception;
 
     void announcesStatus() throws AnnounceException, Exception;
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
+    void announcesToNotificate(int numberDays) throws AnnounceException,Exception;
 
 
     @Transactional

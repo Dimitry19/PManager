@@ -9,6 +9,7 @@ import cm.travelpost.tp.common.enums.AnnounceType;
 import cm.travelpost.tp.common.enums.TransportEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
+import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
@@ -124,7 +125,9 @@ public class AnnounceController extends CommonController {
             AnnounceVO announce = announceService.update(uar);
             if (announce != null) {
                 announce.setRetCode(WebServiceResponseCode.OK_CODE);
-                announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, ANNOUNCE_LABEL));
+                if(StringUtils.isEmpty(announce.getRetDescription())){
+                    announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, ANNOUNCE_LABEL));
+                }
                 return new ResponseEntity<>(announce, HttpStatus.OK);
             } else {
                 WSCommonResponseVO  commonResponse = new WSCommonResponseVO();

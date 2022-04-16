@@ -58,8 +58,14 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String DESC = " desc ";
     protected static final String ASC = " asc ";
 
+    protected static final String AND = " and ";
+    protected static final String OR = " or ";
+    protected static final String WHERE = " where ";
+    protected static final String LIKE = " like ";
+
 
     protected static final String ANNOUNCE_TABLE_ALIAS = "a.";
+    protected static final String USER_TABLE_ALIAS = "u.";
     protected static final String ID_PARAM = "id";
     protected static final String USER_PARAM = "userId";
     protected static final String TYPE_PARAM = "announceType";
