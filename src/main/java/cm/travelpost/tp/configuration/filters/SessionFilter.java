@@ -117,6 +117,8 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
     @Override
     public void error(HttpServletResponse response) throws IOException {
 
+        logger.error("Into Invalid token");
+
         ErrorResponse errorResponse = new ErrorResponse();
         String[] codes=new String[1];
         codes[0]= "401";

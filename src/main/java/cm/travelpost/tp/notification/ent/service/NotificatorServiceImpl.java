@@ -171,6 +171,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
                 deadEvents.add(event);
 
             } catch (Exception e) {
+                logger.error("Erreur durant la creation de la notification {}", e);
                 deadEvents.add(event);
             }
         });

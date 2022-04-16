@@ -47,6 +47,9 @@ public class WebSocketConfig extends CommonProperties implements WebSocketMessag
     @Value("${travel.post.stomp.notification.origin.prod.ssl}")
     private String originProdSsl;
 
+    @Value("${travel.post.stomp.notification.origin.prod.aws}")
+    private String originProdAws;
+
     @Value("${travel.post.stomp.notification.endpoint}")
     private String endpoint;
 
@@ -86,7 +89,7 @@ public class WebSocketConfig extends CommonProperties implements WebSocketMessag
         registry.addEndpoint(endpoint)
                 .addInterceptors(new HttpHandshakeInterceptor())
                 .setAllowedOrigins(originLocalhost,originLocalhost127,originLocalhostSsl,
-                        originLocalhostSsl127,originProdSsl)
+                        originLocalhostSsl127,originProdSsl,originProdAws)
                 .withSockJS();
     }
 

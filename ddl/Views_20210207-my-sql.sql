@@ -130,7 +130,3 @@ FROM RESERVATION R
                     ON R.R_USER_ID = U.ID
 WHERE (A.R_USER_ID = U.ID)
   AND (A.ID = R.R_ANNOUNCE_ID);
-
-
-
-

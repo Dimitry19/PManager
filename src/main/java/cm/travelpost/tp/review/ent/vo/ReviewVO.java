@@ -17,7 +17,7 @@ https://github.com/cloudControl/spring-boot-example-app/tree/master/src/main
 */
 
 @Entity
-@Table(name = "REVIEW")
+@Table(name = "review")
 @NamedQueries({
         @NamedQuery(name = ReviewVO.RATING, query = "select new cm.travelpost.tp.rating.ent.vo.RatingCountVO(r.rating, count(r)) from ReviewVO r where r.ratingUser =:userId group by r.rating order by r.rating DESC"),
 })

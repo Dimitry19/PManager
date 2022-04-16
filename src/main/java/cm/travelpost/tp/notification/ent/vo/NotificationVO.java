@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "NOTIFICATION")
+@Table(name = "notification")
 
 @Where(clause = FilterConstants.FILTER_NOTIFICATION_CANC_COMPLETED)
 public class NotificationVO extends CommonVO {
@@ -57,7 +57,7 @@ public class NotificationVO extends CommonVO {
 
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinTable(name = "USER_NOTIFICATION", joinColumns = @JoinColumn(name = "NOTIFICATIONS_ID"),
+    @JoinTable(name = "user_notification", joinColumns = @JoinColumn(name = "NOTIFICATIONS_ID"),
             inverseJoinColumns = @JoinColumn(name = "USERS_ID"))
     private Set<UserVO> users = new HashSet();
 

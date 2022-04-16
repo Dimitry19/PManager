@@ -36,7 +36,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "ANNOUNCE")
+@Table(name = "announce")
 @NamedQueries(value = {
         @NamedQuery(name = AnnounceVO.FINDBYUSER, query = "select a from AnnounceVO a where a.user.id =:userId order by a.startDate desc"),
         @NamedQuery(name = AnnounceVO.FINDBYTYPE, query = "select a from AnnounceVO a where a.announceType =:announceType order by a.startDate desc"),
@@ -233,7 +233,7 @@ public class AnnounceVO extends CommonVO {
 
     @Access(AccessType.PROPERTY)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "ANNOUNCE_CATEGORY", joinColumns = @JoinColumn(name = "ANNOUNCE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
+    @JoinTable(name = "announce_category", joinColumns = @JoinColumn(name = "ANNOUNCE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
     @JsonProperty
     public Set<CategoryVO> getCategories() {
         return categories;
@@ -255,7 +255,7 @@ public class AnnounceVO extends CommonVO {
     @Transient
     public String getDescriptionTransport() {   return descriptionTransport;  }
 
-    @Formula(value = "(select coalesce(count(r.r_announce_id),0)  from RESERVATION r where  r.r_announce_id = id and r.cancelled ='0')")
+    @Formula(value = "(select coalesce(count(r.r_announce_id),0)  from reservation r where  r.r_announce_id = id and r.cancelled ='0')")
     public Integer getCountReservation() {
         return countReservation;
     }
