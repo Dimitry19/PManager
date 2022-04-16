@@ -4,6 +4,8 @@ import cm.travelpost.tp.common.exception.ErrorResponse;
 import cm.travelpost.tp.common.session.SessionManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.BooleanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -13,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AFilter  implements IFilter {
+
+    private static Logger log = LoggerFactory.getLogger(AFilter.class);
+
 
     @Value("${custom.api.auth.http.tokenValue}")
     protected String token;
@@ -35,6 +40,8 @@ public abstract class AFilter  implements IFilter {
     }
 
     protected void error(HttpServletResponse response, boolean isSession) throws IOException {
+
+        log.error("Into Unauthorized");
 
         String[] codes=new String[1];
         codes[0]=BooleanUtils.isFalse(isSession)?"401":"400";

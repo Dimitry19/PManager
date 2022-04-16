@@ -73,6 +73,8 @@ public class AuthenticationFilter extends CommonFilter {
 
     private boolean authorized(ServletRequest servletRequest,ServletResponse servletResponse) throws Exception {
 
+
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
@@ -86,13 +88,26 @@ public class AuthenticationFilter extends CommonFilter {
         String username=request.getHeader(sessionHeader);
         boolean isAdminRole=false;
 
+
+//        System.out.println("uri: "+uri);
+//        System.out.println("apiKey: "+apiKey);
+//        System.out.println("isService: "+isService);
+//        System.out.println("isConfirm: "+isConfirm);
+//        System.out.println("isNotApiKey: "+isNotApiKey);
+//        System.out.println("isNotUpload: "+isNotUpload);
+//        System.out.println("isDashBoard: "+isDashBoard);
+//        System.out.println("username: "+username);
+
+
         if(StringUtils.isNotEmpty(username)){
             // Ici  je verifie si l'utilisateur a le role ADMIN pour pouvoir acceder à la dashboard
             UserVO user=userService.findByUsername(username, Boolean.FALSE);
-            isAdminRole = CollectionsUtils.size(user.getRoles()
-                    .stream()
-                    .map(RoleVO::getDescription)
-                    .filter(r->r==RoleEnum.ADMIN).collect(Collectors.toList()))!=0;
+            if (user!=null) {
+                isAdminRole = CollectionsUtils.size(user.getRoles()
+                        .stream()
+                        .map(RoleVO::getDescription)
+                        .filter(r -> r == RoleEnum.ADMIN).collect(Collectors.toList())) != 0;
+            }
         }
 
         if((!isConfirm && isService && isNotApiKey && isNotUpload ) ||(!isAdminRole  && isDashBoard)){

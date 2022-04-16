@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
-@Table(name = "IMAGE")
+@Table(name = "image")
 @NamedQueries({
         @NamedQuery(name = ImageVO.IMG_BY_NAME, query = " select i from ImageVO  as i where i.name=: name"),
 })

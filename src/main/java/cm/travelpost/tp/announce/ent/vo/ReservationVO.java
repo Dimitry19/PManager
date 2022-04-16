@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 @Entity
-@Table(name = "RESERVATION")
+@Table(name = "reservation")
 @NamedQueries({
         @NamedQuery(name = ReservationVO.FIND_BY_ANNOUNCE, query = " select r from  ReservationVO as r where r.announce.id =: announceId"),
         @NamedQuery(name = ReservationVO.FIND_BY_USER, query = " select r from  ReservationVO as r where r.user.id =: userId"),
@@ -54,7 +54,7 @@ public class ReservationVO extends CommonVO {
 
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "RESERVATION_CATEGORY", joinColumns = @JoinColumn(name = "RESERVATION_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
+    @JoinTable(name = "reservation_category", joinColumns = @JoinColumn(name = "RESERVATION_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
     @JsonProperty
     private Set<CategoryVO> categories = new HashSet<>();
 

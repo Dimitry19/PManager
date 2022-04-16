@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "AdminVO")
-@Table(name = "ADMINISTRATOR")
+@Table(name = "administrator")
 public class AdminVO extends CommonVO {
 
     private static final long serialVersionUID = 8381323893860477832L;

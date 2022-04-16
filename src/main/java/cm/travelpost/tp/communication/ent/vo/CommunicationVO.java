@@ -15,7 +15,7 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = CommunicationVO.FIND_BY_USER_ID, query = "select c from CommunicationVO c where c.admin=:adminId")
 })
-@Table(name = "COMMUNICATION")
+@Table(name = "communication")
 public class CommunicationVO extends CommonVO {
 
     public static final String FIND_BY_USER_ID = "cm.travelpost.tp.communication.ent.vo.CommunicationVO.findByUserId";

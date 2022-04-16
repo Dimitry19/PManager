@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "VALID_RESERVATION_CREATED", schema = "VIEWS")
+@Table(name = "valid_reservation_created")
 @Immutable
 public class ReservationUserVO implements Serializable {
 
