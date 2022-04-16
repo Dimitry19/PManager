@@ -9,9 +9,7 @@ import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.users.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface UserDAO extends CommonDAO {
@@ -34,9 +32,9 @@ public interface UserDAO extends CommonDAO {
 
     UserVO login(String username, String password) throws Exception;
 
-    void subscribe(SubscribeDTO subscribe) throws UserException;
+    void subscribe(SubscribeDTO subscribe) throws UserException, Exception;
 
-    void unsubscribe(SubscribeDTO subscribe) throws UserException;
+    void unsubscribe(SubscribeDTO subscribe) throws UserException, Exception;
 
     List<UserVO> subscriptions(Long userId) throws UserException;
 

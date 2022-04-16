@@ -44,8 +44,9 @@ public class DateUtils {
         try {
             return  dateWithoutTime( new Date());
         } catch (Exception e) {
+            logger.trace("Impossible recuperer la date actuelle:" + e);
+            throw e;
         }
-        return null;
     }
 
 
@@ -100,7 +101,7 @@ public class DateUtils {
         return dateStr;
     }
 
-    public static java.sql.Date DateToSQLDate(Date inputDate) {
+    public static java.sql.Date dateToSQLDate(Date inputDate) {
         java.sql.Date sqlDate = null;
         if (inputDate != null) {
             sqlDate = new java.sql.Date(inputDate.getTime());
@@ -249,6 +250,20 @@ public class DateUtils {
         return null;
     }
 
+
+    public static boolean isDifferenceDay(Date d1, Date d2,long numbersDays, boolean extreme){
+
+        return extreme ?differenceDay(d1,d2)==numbersDays: differenceDay(d1,d2)<=numbersDays;
+    }
+
+    public static Long differenceDay(Date d1, Date d2){
+
+        if(d1 == null || d2 == null ) return null;
+
+        long diff = d2.getTime() - d1.getTime();
+
+        return diff / (24 * 60 * 60 * 1000);
+    }
     static void printDate(Date date){
 
         System.out.println("converted Date: " + dateWithoutTime(date));

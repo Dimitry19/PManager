@@ -31,6 +31,8 @@ import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
 import org.apache.commons.lang3.BooleanUtils;
+import org.hibernate.QueryException;
+import org.hibernate.QueryParameterException;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +42,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -66,6 +67,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Autowired
     protected QueryUtils queryUtils;
+    private String retrieveReservationError="Erreur durant la recuperation des reservations liées à l'annonce id={}";
 
 
     @Override
@@ -94,10 +96,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         if(o instanceof AnnounceSearchDTO){
             AnnounceSearchDTO announceSearch =(AnnounceSearchDTO) o;
-            List result=commonSearchAnnounce(announceSearch,null);
-            return CollectionsUtils.isNotEmpty(result) ? result.size() : 0;
+            return CollectionsUtils.size(commonSearchAnnounce(announceSearch,null));
         }
-       return 0;
+        return 0;
 
     }
 
@@ -105,8 +106,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Transactional(readOnly = true)
     public List<AnnounceVO> announces(PageBy pageBy) throws AnnounceException,Exception {
 
-        List<AnnounceVO> announces = allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, pageBy);
-        return announces;
+        return allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, pageBy);
+
     }
 
     @Override
@@ -114,9 +115,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     public List<AnnounceVO> announces(int page, int size) throws AnnounceException,Exception {
 
         PageBy pageBy = new PageBy(page, size);
-        List<AnnounceVO> announces = allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, pageBy);
-        return announces;
-
+        return allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, pageBy);
     }
 
     /**
@@ -135,9 +134,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if (user == null) {
             throw new UserException("Aucun utilisateur trouvé avec cet id " + userId);
         }
-        List<AnnounceVO> announces = findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId, pageBy);
-        return announces;
-
+        return findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId, pageBy);
     }
 
     /**
@@ -154,7 +151,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         List<AnnounceVO> announces = null;
 
-        if(o==null) return null;
+        if(o==null) return new ArrayList<>();
 
         if(o instanceof AnnounceType){
 
@@ -207,9 +204,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             save(announce);
             addAnnounceToUser(announce);
 
-            String message=new String();
 
-            message=buildNotificationMessage(message,ANNOUNCE,announce.getUser().getUsername(),announce.getDeparture(),
+
+            String message=buildNotificationMessage(ANNOUNCE,announce.getUser().getUsername(),announce.getDeparture(),
                     announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
                     DateUtils.getDateStandard(announce.getEndDate()),null);
 
@@ -223,36 +220,36 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     /**
      * Cette methode permet d'ajourner une annonce
-     * @param udto  ddonnees de l'annonce à ajourner
+     * @param dto  ddonnees de l'annonce à ajourner
      * @return AnnonceVO
      * @throws Exception
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
-    public AnnounceVO update(UpdateAnnounceDTO udto) throws AnnounceException,Exception {
+    public AnnounceVO update(UpdateAnnounceDTO dto) throws AnnounceException,Exception {
 
-        UserVO user = userDAO.findById(udto.getUserId());
+        UserVO user = userDAO.findById(dto.getUserId());
 
         if (user == null) {
             throw new RecordNotFoundException("Aucun utilisateur trouvé");
         }
 
-        AnnounceVO announce = announce(udto.getId());
+        AnnounceVO announce = announce(dto.getId());
         if (announce == null) {
             throw new RecordNotFoundException("Aucune annonce  trouvée");
         }
-        if (CollectionsUtils.isEmpty(udto.getCategories())) {
-            udto.setCategories(new ArrayList<>());
-            udto.getCategories().add(constants.DEFAULT_CATEGORIE);
+        if (CollectionsUtils.isEmpty(dto.getCategories())) {
+            dto.setCategories(new ArrayList<>());
+            dto.getCategories().add(constants.defaultCategorie);
         }
         double rating = calcolateAverage(user);
         announce.getUserInfo().setRating(rating);
-        setAnnounce(announce, user, udto,false);
+        setAnnounce(announce, user, dto,false);
         update(announce);
 
-        String message=new String();
 
-        message=buildNotificationMessage(message,ANNOUNCE_UPD,announce.getUser().getUsername(),announce.getDeparture(),
+
+        String message=buildNotificationMessage(ANNOUNCE_UPD,announce.getUser().getUsername(),announce.getDeparture(),
                 announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
                 DateUtils.getDateStandard(announce.getEndDate()),null);
 
@@ -274,7 +271,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Transactional(readOnly = true)
     public List<AnnounceVO> search(AnnounceSearchDTO announceSearch, PageBy pageBy) throws AnnounceException,Exception {
 
-          return commonSearchAnnounce(announceSearch,pageBy);
+        return commonSearchAnnounce(announceSearch,pageBy);
     }
 
 
@@ -284,12 +281,31 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     public void announcesStatus() throws AnnounceException,Exception {
         List<AnnounceVO> announces = Optional.ofNullable(allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, null)).orElseGet(Collections::emptyList);
         if (CollectionsUtils.isNotEmpty(announces)) {
-            announces.stream().filter(ann -> !ann.isCancelled() && DateUtils.isBefore(ann.getEndDate(), DateUtils.currentDate()))
+            announces.stream().filter(ann -> !ann.isCancelled() && DateUtils.isDifferenceDay(ann.getEndDate(), DateUtils.currentDate(),7,true))
                     .forEach(a -> {
                         a.setStatus(StatusEnum.COMPLETED);
                         update(a);
                         try {
                             updateReservationsStatus(a.getId(), StatusEnum.COMPLETED);
+                            generateEvent(a,"l'annonce de " +partOneMessage(a.getDeparture(),a.getArrival()) + partTwoMessage(" et ayant", DateUtils.dateToString(a.getStartDate()),DateUtils.dateToString(a.getEndDate()))+" n'est plus disponible", true);
+
+                        } catch (Exception e) {
+                            logger.error("Erreur durant l''execution du Batch d''ajournement de status de l'annonce");
+                            e.printStackTrace();
+                        }
+                    });
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
+    public void announcesToNotificate(int numberDays) throws AnnounceException,Exception {
+        List<AnnounceVO> announces = Optional.ofNullable(allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, null)).orElseGet(Collections::emptyList);
+        if (CollectionsUtils.isNotEmpty(announces)) {
+            announces.stream().filter(ann -> !ann.isCancelled() && DateUtils.isDifferenceDay(ann.getEndDate(), DateUtils.currentDate(), numberDays,false))
+                    .forEach(a -> {
+                        try {
+                            generateEvent(a,"Dans " + numberDays + " l'annonce de " +partOneMessage(a.getDeparture(),a.getArrival()) + partTwoMessage(" et ayant", DateUtils.dateToString(a.getStartDate()),DateUtils.dateToString(a.getEndDate()))+" ne sera plus disponible");
                         } catch (Exception e) {
                             logger.error("Erreur durant l''execution du Batch d''ajournement de status de l'annonce");
                             e.printStackTrace();
@@ -303,8 +319,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     public boolean delete(Long id) throws Exception {
         logger.info("Announce: delete");
 
-        //delete(AnnounceVO.class,id,true);
-
         try {
             AnnounceVO announce = announce(id);
 
@@ -315,13 +329,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                         " car il existe des résevations pour une quantité ["+sumQtyRes+"] Kg");
             }
 
-            String message=new String();
-
-            message= buildNotificationMessage(message,ANNOUNCE_DEL,announce.getUser().getUsername(),announce.getDeparture(),
+            String message= buildNotificationMessage(ANNOUNCE_DEL,announce.getUser().getUsername(),announce.getDeparture(),
                     announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
                     DateUtils.getDateStandard(announce.getEndDate()),null);
-            generateEvent(announce,message);
+            generateEvent(announce,message,true);
         } catch (AnnounceException e) {
+            logger.info("Erreur durant la suppression de l'annonce");
             throw e;
         }
         return updateDelete(id);
@@ -334,7 +347,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         if (user != null) {
             user.addAnnounce(announce);
-             update(user);
+            update(user);
             return (UserVO) get(UserVO.class, user.getId());
         } else {
             return null;
@@ -367,8 +380,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             throw new AnnounceException("Une des dates n'est pas valide");
         }
 
-        if (DateUtils.isBefore(startDate, DateUtils.currentDate())) {
-            throw new AnnounceException("La date de depart n'est pas valide, elle doit etre minimum la date courante");
+        if (isCreate && DateUtils.isBefore(startDate, DateUtils.currentDate())) {
+            throw new AnnounceException("La date de depart n'est pas valide, elle doit etre minimum la date d'aujourd\'hui");
         }
 
 
@@ -376,30 +389,29 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             throw new AnnounceException("La date de depart ne peut pas etre superieure à celle de retour");
         }
 
-        BigDecimal oldWeight = announce.getWeight();
-        BigDecimal oldRemainWeight = announce.getRemainWeight()==null ? BigDecimal.ZERO:announce.getRemainWeight();
-        BigDecimal diffWeight = oldWeight!=null ? weight.subtract(oldWeight): weight;
-
-
 
         BigDecimal sumQtyRes=BigDecimal.ZERO;
 
         if (BooleanUtils.isFalse(isCreate)){
-            sumQtyRes=checkQtyReservations(announce.getId(),true);
+            sumQtyRes=checkQtyReservations(announce.getId(),false);
             // Il y a deja des reservations faites sur l'annonce
-            if(announce.getCountReservation()!=null && sumQtyRes.compareTo(BigDecimal.ZERO)>0){
-
-                if (BigDecimalUtils.lessThan(weight, sumQtyRes)) {
-                    throw new AnnounceException("Impossible de reduire la quantité , car il existe des resevations pour une quantité "+sumQtyRes+" Kg");
-                }
+            if(announce.getCountReservation()!=null && sumQtyRes.compareTo(BigDecimal.ZERO)>0 && BigDecimalUtils.lessThan(weight, sumQtyRes)){
+                throw new AnnounceException("Impossible de reduire la quantité , car il existe des resevations pour une quantité "+sumQtyRes+" Kg");
             }
             boolean closeDate= DateUtils.isBefore(endDate, DateUtils.currentDate()) ||
                     DateUtils.isSame(endDate, DateUtils.currentDate());
+            boolean allReserved=weight.compareTo(sumQtyRes)==0;
 
             //Si la modification se fait à la date courante ou bien si  tous les kg ont été reservés -> Completed
-            if((weight.compareTo(sumQtyRes)==0 || closeDate) || (weight.compareTo(sumQtyRes)==0 && closeDate)){
-                announce.setStatus(StatusEnum.COMPLETED);
-                updateReservationsStatus(announce.getId(), StatusEnum.COMPLETED);
+            if((BooleanUtils.isTrue(allReserved) || BooleanUtils.isTrue(closeDate))
+                    || (BooleanUtils.isTrue(allReserved) && BooleanUtils.isTrue(closeDate))){
+
+                StringBuilder sb = new StringBuilder("Bientot l'annonce et les reservations associées ne seront plus disponibles car ");
+                sb.append(BooleanUtils.isTrue(allReserved) ?"la disponibilité des Kg est terminée tout a déjà été reservé ":"la date d'arrivée de l'annonce est déjà atteinte");
+                //announce.setStatus(StatusEnum.COMPLETED);
+                //updateReservationsStatus(announce.getId(), StatusEnum.COMPLETED);
+                announce.setRetDescription(sb.toString());
+                generateEvent(announce ,  sb.toString(), true);
             }
 
         }
@@ -409,7 +421,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         announce.setGoldPrice(goldenPrice);
         announce.setWeight(weight);
         announce.setRemainWeight(weight.subtract(sumQtyRes));
-        //announce.setRemainWeight(oldRemainWeight.add(diffWeight));
         announce.setUser(user);
         announce.setStartDate(startDate);
         announce.setEndDate(endDate);
@@ -433,7 +444,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 update(reservation);
             }
         } catch (Exception e) {
-            logger.error("Erreur durant la recuperation des reservations liées à l'annonce id={}", id);
+            logger.error(retrieveReservationError, id);
             throw e;
         }
         return true;
@@ -458,6 +469,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
     public boolean updateDelete(Object o) throws BusinessResourceException {
         boolean result = false;
 
@@ -471,7 +483,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 merge(announce);
                 announce = (AnnounceVO) get(AnnounceVO.class, id);
                 result = (announce != null) && (announce.isCancelled()) && deleteReservations(id);
-
             }
         } catch (Exception e) {
             throw new BusinessResourceException(e.getMessage());
@@ -500,17 +511,18 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
     public List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception {
 
         try {
             return findBy(ReservationVO.FIND_BY_ANNOUNCE, ReservationVO.class, id, ANNOUNCE_PARAM, null);
         } catch (AnnounceException e) {
-            logger.error("Erreur durant la recuperation des reservations liées à l'annonce id={}", id);
+            logger.error(retrieveReservationError, id);
             throw e;
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
     public BigDecimal checkQtyReservations(Long id,boolean onlyRefused) throws AnnounceException,Exception {
 
         try {
@@ -521,25 +533,25 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             }
 
             if(onlyRefused){
-                return  reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED))
+                return  reservations.stream().filter(r->r.getValidate().equals(ValidateEnum.REFUSED))
                         .map(ReservationVO::getWeight).reduce(BigDecimal.ZERO,BigDecimal::add);
 
             }
-           return reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED)
+            return reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED)
                     &&!r.getValidate().equals(ValidateEnum.INSERTED))
                     .map(ReservationVO::getWeight).reduce(BigDecimal.ZERO,BigDecimal::add);
 
         } catch (AnnounceException e) {
-            logger.error("Erreur durant la recuperation des reservations liées à l'annonce id={}", id);
+            logger.error(retrieveReservationError, id);
             throw e;
         }
     }
 
 
-    private List commonSearchAnnounce(AnnounceSearchDTO announceSearch,PageBy pageBy) throws Exception {
+    private List commonSearchAnnounce(AnnounceSearchDTO announceSearch,PageBy pageBy) throws AnnounceException {
         filters= new String[1];
         filters[0]= FilterConstants.CANCELLED;
-        String where = composeQuery(announceSearch, "a");
+        String where = composeQuery(announceSearch, ANNOUNCE_TABLE_ALIAS);
         Query query = search(AnnounceVO.ANNOUNCE_SEARCH , where,filters);
         composeQueryParameters(announceSearch, query);
         pageBy(query,pageBy);
@@ -547,7 +559,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    public String composeQuery(Object obj, String alias) throws Exception {
+    public String composeQuery(Object obj, String alias) throws QueryException {
 
         AnnounceSearchDTO announceSearch = (AnnounceSearchDTO) obj;
 
@@ -563,60 +575,56 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             boolean addCondition = false;
 
             if (StringUtils.isNotEmpty(announceSearch.getTransport())) {
-                hql.append(alias + ".transport=:transport ");
+                hql.append(alias + TRANSPORT_PARAM+"+=:"+TRANSPORT_PARAM);
             }
 
             addCondition = addCondition(hql.toString());
 
             if (StringUtils.isNotEmpty(announceSearch.getAnnounceType())) {
                 buildAndOr(hql, addCondition, andOrOr);
-                hql.append(alias + ".announceType=:announceType ");
+                hql.append(alias + ANNOUNCE_TYPE_PARAM+"=:"+ANNOUNCE_TYPE_PARAM);
             }
 
             addCondition = addCondition(hql.toString());
 
-            if (ObjectUtils.isCallable(announceSearch, "price")) {
-                BigDecimal price = announceSearch.getPrice();
-                if (price.compareTo(BigDecimal.ZERO) > 0) {
-                    buildAndOr(hql, addCondition, andOrOr);
-                    hql.append(" ( " + alias + ".goldPrice<=:goldPrice or " + alias + ".price<=:price or " + alias + ".preniumPrice<=:preniumPrice) ");
-                }
-            }
-            addCondition = addCondition(hql.toString());
-
-            if (ObjectUtils.isCallable(announceSearch, "startDate") && announceSearch.getStartDate() > 0) {
+            if (ObjectUtils.isCallable(announceSearch, PRICE_PARAM) && announceSearch.getPrice().compareTo(BigDecimal.ZERO) > 0) {
                 buildAndOr(hql, addCondition, andOrOr);
-                hql.append(alias + ".startDate=:startDate ");
+                hql.append(" ( " + alias  +GOLD_PRICE_PARAM +"<=:"+GOLD_PRICE_PARAM +" or " + alias +PRICE_PARAM+"<=:"+PRICE_PARAM+" " +
+                        "or " + alias + PRENIUM_PRICE_PARAM +"<=:"+PRENIUM_PRICE_PARAM+") ");
+            }
+            addCondition = addCondition(hql.toString());
+
+            if (ObjectUtils.isCallable(announceSearch, START_DATE_PARAM) && announceSearch.getStartDate() > 0) {
+                buildAndOr(hql, addCondition, andOrOr);
+                hql.append(alias + START_DATE_PARAM +"=:" +START_DATE_PARAM+"");
             }
 
             addCondition = addCondition(hql.toString());
 
-            if (ObjectUtils.isCallable(announceSearch, "endDate") && announceSearch.getEndDate() > 0) {
+            if (ObjectUtils.isCallable(announceSearch, END_DATE_PARAM) && announceSearch.getEndDate() > 0) {
                 buildAndOr(hql, addCondition, andOrOr);
-                hql.append(alias + ".endDate=:endDate ");
+                hql.append(alias + END_DATE_PARAM +"=:" +END_DATE_PARAM+"");
             }
 
             addCondition = addCondition(hql.toString());
 
             if (StringUtils.isNotEmpty(announceSearch.getDeparture())) {
                 buildAndOr(hql, addCondition, andOrOr);
-
-               // hql.append(alias + ".departure like:departure ");
-                hql.append("("+alias + ".departure like:departure or "+ alias +".departure like:DEPARTURE)");
+                hql.append("("+alias + DEPARTURE_PARAM+" like:"+DEPARTURE_PARAM+" or "+ alias +DEPARTURE_PARAM +" like:DEPARTURE)");
             }
             addCondition = addCondition(hql.toString());
 
             if (StringUtils.isNotEmpty(announceSearch.getArrival())) {
                 buildAndOr(hql, addCondition, andOrOr);
-                //hql.append(alias + ".arrival like:arrival ");
-                hql.append("("+alias + ".arrival like:arrival or "+ alias +".arrival like:ARRIVAL)");
+
+                hql.append("("+alias + ARRIVAL_PARAM+" like:"+ARRIVAL_PARAM +" or "+ alias +ARRIVAL_PARAM+" like:ARRIVAL)");
             }
 
 
             addCondition = addCondition(hql.toString());
             if (joinCategory) {
                 buildAndOr(hql, addCondition, andOrOr);
-                hql.append(" c.code =:category");
+                hql.append(" c.code =:"+CATEGORY_PARAM);
             }
 			/*addCondition = addCondition(hql.toString());
 			if (ObjectUtils.isCallable(announceSearch,"userId")){
@@ -632,19 +640,19 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             if (!addCondition) {
                 hql = new StringBuilder();
             }
-            hql.append(" group by " + alias + ".id ");
-            hql.append(" order by " + alias + ".startDate desc");
-        } catch (Exception e) {
+            hql.append(GROUP_BY + alias + ID_PARAM);
+            hql.append(ORDER_BY + alias +START_DATE_PARAM +DESC);
+        } catch (QueryException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
-            throw new Exception("Erreur dans la fonction " + AnnounceDAO.class.getName() + " composeQuery");
+            throw new QueryException("Erreur dans la fonction " + AnnounceDAO.class.getName() + " composeQuery");
 
         }
         return hql.toString();
     }
 
     @Override
-    public void composeQueryParameters(Object obj, Query query) throws Exception {
+    public void composeQueryParameters(Object obj, Query query) throws QueryParameterException {
 
         AnnounceSearchDTO announceSearch = (AnnounceSearchDTO) obj;
 
@@ -652,46 +660,45 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             if (StringUtils.isNotEmpty(announceSearch.getTransport())) {
                 TransportEnum transport = getTransport(announceSearch.getTransport());
-                query.setParameter("transport", transport);
+                query.setParameter(TRANSPORT_PARAM, transport);
             }
 
             if (StringUtils.isNotEmpty(announceSearch.getAnnounceType())) {
                 AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
-                query.setParameter("announceType", announceType);
+                query.setParameter(ANNOUNCE_TYPE_PARAM, announceType);
             }
 
-            if (ObjectUtils.isCallable(announceSearch, "price")) {
+            if (ObjectUtils.isCallable(announceSearch, PRICE_PARAM)) {
 
                 BigDecimal price = announceSearch.getPrice();
-                //AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
                 if (price.compareTo(BigDecimal.ZERO) > 0) {
-                    query.setParameter("goldPrice", price);
-                    query.setParameter("price", price);
-                    query.setParameter("preniumPrice", price);
+                    query.setParameter(GOLD_PRICE_PARAM, price);
+                    query.setParameter(PRICE_PARAM, price);
+                    query.setParameter(PRENIUM_PRICE_PARAM, price);
                 }
             }
-            if (ObjectUtils.isCallable(announceSearch, "startDate") && announceSearch.getStartDate() > 0) {
+            if (ObjectUtils.isCallable(announceSearch, START_DATE_PARAM) && announceSearch.getStartDate() > 0) {
                 Date startDate = DateUtils.milliSecondToDate(announceSearch.getStartDate());
-                query.setParameter("startDate", startDate);
+                query.setParameter(START_DATE_PARAM, startDate);
 
             }
-            if (ObjectUtils.isCallable(announceSearch, "endDate") && announceSearch.getEndDate() > 0) {
+            if (ObjectUtils.isCallable(announceSearch, END_DATE_PARAM) && announceSearch.getEndDate() > 0) {
                 Date endDate = DateUtils.milliSecondToDate(announceSearch.getEndDate());
-                query.setParameter("endDate", endDate);
+                query.setParameter(END_DATE_PARAM, endDate);
             }
 
             if (StringUtils.isNotEmpty(announceSearch.getDeparture())) {
-                query.setParameter("departure", "%" + announceSearch.getDeparture() + "%");
-                query.setParameter("DEPARTURE", "%" + announceSearch.getDeparture().toUpperCase() + "%");
+                query.setParameter(DEPARTURE_PARAM, "%" + announceSearch.getDeparture() + "%");
+                query.setParameter(DEPARTURE_PARAM, "%" + announceSearch.getDeparture().toUpperCase() + "%");
             }
 
             if (StringUtils.isNotEmpty(announceSearch.getArrival())) {
-                query.setParameter("arrival", "%" + announceSearch.getArrival() + "%");
-                query.setParameter("ARRIVAL", "%" + announceSearch.getArrival().trim().toUpperCase() + "%");
+                query.setParameter(ARRIVAL_PARAM, "%" + announceSearch.getArrival() + "%");
+                query.setParameter(ARRIVAL_PARAM, "%" + announceSearch.getArrival().trim().toUpperCase() + "%");
             }
 
             if (StringUtils.isNotEmpty(announceSearch.getCategory())) {
-                query.setParameter("category", announceSearch.getCategory());
+                query.setParameter(CATEGORY_PARAM, announceSearch.getCategory());
             }
 			/*if (ObjectUtils.isCallable(announceSearch,"userId")){
 				query.setParameter("userId", announceSearch.getUserId());
@@ -701,10 +708,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 				query.setParameter("email", "%"+announceSearch.getUser()+"%");
 			}*/
 
-        } catch (Exception e) {
+        } catch (QueryParameterException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
-            throw new Exception("Erreur dans la fonction " + AnnounceDAO.class.getName() + " composeQueryParameters");
+            throw new QueryParameterException("Erreur dans la fonction " + AnnounceDAO.class.getName() + " composeQueryParameters");
         }
     }
 
@@ -717,7 +724,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         announce.getCategories().clear();
         if (CollectionsUtils.isNotEmpty(categories)) {
-            categories.stream().filter(cat -> StringUtils.isNotEmpty(cat)).forEach(x -> {
+            categories.stream().filter(StringUtils::isNotEmpty).forEach(x -> {
                 try {
                     CategoryVO category = categoryDAO.findByCode(x);
                     if (category == null) {
@@ -748,44 +755,59 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     BigDecimal priceByAnnounceType(AnnounceType type, BigDecimal price){
 
-        switch (type){
-            case BUYER:
-                return BigDecimal.ZERO;
-            case SELLER:
-                return price;
+        if (type == AnnounceType.SELLER){
+            return price;
         }
         return BigDecimal.ZERO;
 
     }
 
+    @Transactional(readOnly = true,propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
+    void generateEvent(AnnounceVO announce , String message, boolean delete)throws Exception {
+
+
+        UserVO user= announce.getUser();
+
+        Set subscribers=fillSubscribers(user,announce);
+
+        if (CollectionsUtils.isNotEmpty(subscribers)){
+            fillProps(props,1L,message, user.getId(),subscribers);
+            generateEvent(USER);
+        }
+    }
+
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
     public void generateEvent(Object obj , String message) throws Exception {
 
         AnnounceVO announce= (AnnounceVO) obj;
         UserVO user= announce.getUser();
 
-        Set subscribers=new HashSet();
+        Set subscribers=fillSubscribers(user,announce);
 
+        if (CollectionsUtils.isNotEmpty(subscribers)){
+            fillProps(props,announce.getId(),message, user.getId(),subscribers);
+            generateEvent(NotificationType.ANNOUNCE);
+        }
+
+    }
+
+    private Set fillSubscribers(UserVO user, AnnounceVO announce) throws Exception{
+
+        Set subscribers=new HashSet();
         if(CollectionsUtils.isNotEmpty(user.getSubscribers())){
-            subscribers.addAll(user.getSubscribers().stream().filter(u->u.isEnableNotification()).collect(Collectors.toSet()));
+            subscribers.addAll(user.getSubscribers().stream().filter(UserVO ::isEnableNotification).collect(Collectors.toSet()));
         }
         List<ReservationVO> reservations=findReservations(announce.getId());
         if(CollectionsUtils.isNotEmpty(reservations)){
-            reservations.stream().filter(r->r.getUser()!=user && r.getUser().isEnableNotification()).forEach(r->{
-                subscribers.add(r.getUser());
-
-            });
+            reservations.stream().filter(r->r.getUser()!=user && r.getUser().isEnableNotification()).forEach(r-> subscribers.add(r.getUser()));
         }
 
         if(CollectionsUtils.isNotEmpty(announce.getMessages())) {
-            announce.getMessages().stream().filter(m->m.getUser()!=user && m.getUser().isEnableNotification()).forEach(m->{
-                subscribers.add(m.getUser());
-            });
+            announce.getMessages().stream().filter(m->m.getUser()!=user && m.getUser().isEnableNotification()).forEach(m->subscribers.add(m.getUser()));
         }
-        if (CollectionsUtils.isNotEmpty(subscribers)){
-            fillProps(props,announce.getId(),message, user.getId(),subscribers);
-            generateEvent( NotificationType.ANNOUNCE);
-        }
+
+        return subscribers;
 
     }
 }

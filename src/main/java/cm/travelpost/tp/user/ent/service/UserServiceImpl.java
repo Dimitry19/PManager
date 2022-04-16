@@ -24,18 +24,17 @@ import cm.travelpost.tp.ws.requests.review.UpdateReviewDTO;
 import cm.travelpost.tp.ws.requests.users.*;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +53,7 @@ Le fait d’avoir des singletons a un impact en environnement multi-threadé
 @Transactional
 public class UserServiceImpl implements UserService {
 
+    protected final Log logger = LogFactory.getLog(UserServiceImpl.class);
 
     @Autowired
     private UserDAO userDAO;
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
     @PostConstruct
     public void init() {
-        System.out.println("User service starts....");
+        logger.info("User service starts....");
     }
 
 
@@ -87,13 +87,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void subscribe(SubscribeDTO subscribe) throws UserException {
+    public void subscribe(SubscribeDTO subscribe) throws Exception {
         userDAO.subscribe(subscribe);
     }
 
 
     @Override
-    public void unsubscribe(SubscribeDTO subscribe) throws UserException {
+    public void unsubscribe(SubscribeDTO subscribe) throws Exception {
         userDAO.unsubscribe(subscribe);
     }
 
@@ -108,15 +108,12 @@ public class UserServiceImpl implements UserService {
         return userDAO.subscribers(userId);
     }
 
-    public UserVO login(LoginDTO lr) throws BadCredentialsException,Exception {
+    public UserVO login(LoginDTO lr) throws Exception {
 
         UserVO user = checkLoginAdmin(lr);
-        if (user != null) {
-            return user;
+        if (user == null) {
+            user = userDAO.login(lr.getUsername(), lr.getPassword());
         }
-
-        user = userDAO.login(lr.getUsername(), lr.getPassword());
-
         return user;
     }
 
@@ -129,7 +126,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public UserVO checkLoginAdmin(LoginDTO login) throws Exception,BadCredentialsException {
+    public UserVO checkLoginAdmin(LoginDTO login) throws Exception {
         AtomicBoolean found = new AtomicBoolean(false);
 
         UserVO admin = userDAO.findByUsername(login.getUsername());
@@ -184,7 +181,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws Exception {
+    public List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws UserException {
         return userDAO.find(userSeachDTO, pageBy);
     }
 
@@ -208,8 +205,8 @@ public class UserServiceImpl implements UserService {
 
         String decrypt = PasswordGenerator.decrypt(user.getPassword());
 
-        List<String> labels = new ArrayList<String>();
-        List<String> emails = new ArrayList<String>();
+        List<String> labels = new ArrayList<>();
+        List<String> emails = new ArrayList<>();
 
         labels.add(MailType.PASSWORD_KEY);
         labels.add(MailType.USERNAME_KEY);
@@ -220,14 +217,10 @@ public class UserServiceImpl implements UserService {
 
         String title= MessageFormat.format(MailType.PASSWORD_TEMPLATE,MailType.PASSWORD_TEMPLATE_TITLE);
 
-         googleMailSenderService.sendMail(title,emails,null,null,personalMailSender.getTravelPostPseudo(),user.getUsername(),decrypt,false);
+        googleMailSenderService.sendMail(title,emails,null,null,personalMailSender.getTravelPostPseudo(),user.getUsername(),decrypt,false);
 
-         return personalMailSender.send(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, null, decrypt),
+        return personalMailSender.send(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, null, decrypt),
                 emailTo, null,null,personalMailSender.getTravelPostPseudo(),null,false,null);
-
-
-//        return mailSenderSendGrid.sendMailMessage(MailType.PASSWORD_TEMPLATE, MailType.PASSWORD_TEMPLATE_TITLE, MailUtils.replace(user, labels, null, decrypt),
-//                emails, null, null, null, user.getUsername(), null, false);
     }
 
     @Transactional(rollbackFor = UserException.class)
@@ -301,7 +294,7 @@ public class UserServiceImpl implements UserService {
 
         ReviewVO review = reviewDAO.findById(id);
         if (review == null) {
-            throw new Exception("Avis non existant");
+            throw new UserException("Avis non existant");
         }
         return reviewDAO.update(review);
     }
@@ -327,9 +320,9 @@ public class UserServiceImpl implements UserService {
         private final Map<Rating, Long> ratingCount;
 
         public ReviewsSummaryBOImpl(List<RatingCountVO> ratingCounts) {
-            this.ratingCount = new HashMap<Rating, Long>();
-            for (RatingCountVO ratingCount : ratingCounts) {
-                this.ratingCount.put(ratingCount.getRating(), ratingCount.getCount());
+            this.ratingCount = new HashMap<>();
+            for (RatingCountVO rc : ratingCounts) {
+                this.ratingCount.put(rc.getRating(), rc.getCount());
             }
         }
 

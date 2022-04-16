@@ -6,11 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+
 @Component
 @DisallowConcurrentExecution
-public class AnnounceManagerJob extends AAnnounceJob  {
+public class AnnounceNotificateJob extends AAnnounceJob  {
 
-    private static Logger log = LoggerFactory.getLogger(AnnounceManagerJob.class);
+    private static Logger log = LoggerFactory.getLogger(AnnounceNotificateJob.class);
 
 
 
@@ -19,7 +20,7 @@ public class AnnounceManagerJob extends AAnnounceJob  {
         log.info("Job ** {} ** starting @ {}", context.getJobDetail().getKey().getName(), context.getFireTime());
 
         try {
-            announceDAO.announcesStatus();
+            announceDAO.announcesToNotificate(7);
         } catch (Exception e) {
             log.error("{}", context.getJobDetail().getKey().getName());
             e.printStackTrace();
