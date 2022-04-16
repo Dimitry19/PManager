@@ -304,14 +304,14 @@ export class ProfileComponent implements OnInit {
    }
  }
 
-toggleView(x){
+toggleView(){
   let self = this;
   if(self.viewTable){
     self.viewTable = false;
-    x.innerHTML = "Tableau";
+    // x.innerHTML = "Changer l'affichage";
   }else{
     self.viewTable = true;
-    x.innerHTML = "Carte";
+    // x.innerHTML = "Changer l'affichage";
   }
 }
  annonceReserve(){

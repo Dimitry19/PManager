@@ -185,6 +185,7 @@ export class HeadComponent implements OnInit {
           self.pwd = value;
           this.keyupPwd(value);
         });
+        sessionStorage.clear();
         self.router.navigate(["/index"]);    
     }
     else{
@@ -257,9 +258,14 @@ export class HeadComponent implements OnInit {
           });
       }, 1500);
       setTimeout(function() {
-        $('#cookiesSideModalRightBottom').delay(1000).fadeIn();
+        // $('#cookiesSideModalRightBottom').delay(1000).fadeIn();
+        $('#cookiesSideModalRightBottom').modal({
+          show: true,
+          backdrop: 'static',
+          keyboard: false
+        });
         sessionStorage.disclaimerModal = 1;
-      }, 1600);
+      }, 6000);
       
     }
       self.connected = !self.connected;

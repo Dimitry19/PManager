@@ -50,7 +50,7 @@
 }
 
 .listRes {
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     height: 18em;
     padding-top: 1em
 }

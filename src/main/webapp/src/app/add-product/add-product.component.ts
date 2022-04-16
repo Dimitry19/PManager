@@ -296,7 +296,7 @@ export class AddProductComponent implements OnInit {
          if(response.retCode == 0){
           //  this.updSessions(response);
            this.router.navigate(["home"]);
-           this.notifyService.showSuccess("Votre annonce a été ajouté avec sucess","");
+           this.notifyService.showSuccess(response.retDescription,"");
          }else{
            this.notifyService.showError(response.message,"");
           //  this.router.navigate(["/"]);

@@ -9,17 +9,7 @@
     /* margin-bottom: -70px;   */
 }
 
-.online {
-    left: 2.5em;
-    bottom: 2.7em;
-}
-
-.online1 {
-    left: 1.7em;
-    bottom: 1.7em;
-}
-
-.cookie {
+.oldcookie {
     /* position: fixed; */
     bottom: 40px;
     left: 10%;
@@ -34,13 +24,13 @@
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
 }
 
-.cookie>p {
+.oldcookie>p {
     width: 90%;
     display: inline-block;
     padding: 0em 2em;
 }
 
-.cookie>span {
+.oldcookie>span {
     cursor: pointer;
 }
 

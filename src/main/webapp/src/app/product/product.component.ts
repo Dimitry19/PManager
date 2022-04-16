@@ -547,7 +547,7 @@ public categories: { [key: string]: Object; }[] = [
         this.notifyService.showSuccess(response.retDescription,"");
       }
       else{
-        this.notifyService.showError(response.retDescription,"");
+        this.notifyService.showError(response.details[0],"");
       }
     });
   }
@@ -614,7 +614,10 @@ public categories: { [key: string]: Object; }[] = [
            this.annonce.messages.reverse();
            //this.annonce.messages.sort((one, two) => (one > two ? -1 : 1));           
            this.updSessions('AM');
-           this.notifyService.showSuccess(response.retDescription,"");
+          //  this.notifyService.showSuccess(response.retDescription,"");
+        }
+        else{
+          this.notifyService.showError(response.details[0],"");
         }
       });
      }

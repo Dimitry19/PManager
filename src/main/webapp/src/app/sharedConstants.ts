@@ -41,6 +41,10 @@ export class UsersUtils {
 export class SharedConstants {
 
   public static Categories = [
+    {
+      value: "",
+      description: "Indifférent"
+    },
      {
        value: "AUTRES",
        description: "Autres"

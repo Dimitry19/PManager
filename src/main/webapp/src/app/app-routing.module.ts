@@ -11,18 +11,41 @@ import { AddProductComponent } from './add-product/add-product.component';
 
 
 const routes: Routes = [
-  { path:'index', component: HeaderComponent},
+  { path:'index', component: HeaderComponent, data: { breadcrumb: 'Index' }},
   { path: '',   redirectTo: '/index', pathMatch: 'full' },
-  { path:'annonces/:page', component: ProductsComponent},
+  { path:'annonces/:page', component: ProductsComponent, data: { breadcrumb: 'Annonces' }},
   // { path: '', redirectTo: '/nofound'},
 
   // { path: '**', canActivate: [AdminGuard], redirectTo: 'home' },
-  { path:'home', canActivate: [AdminGuard], component: HomeComponent, data: {breadcrumb: { lable: "Home" }}},
-  { path:'myaccount', canActivate: [AdminGuard], component: ProfileComponent},
-  { path:'addAnnonce/:type', canActivate: [AdminGuard], component: AddProductComponent},
-  { path:'annonce/:id/:notification', canActivate: [AdminGuard], component: ProductComponent},
-  { path:'profile/:id', canActivate: [AdminGuard], component:  ProfileComponent},
-  { path:'**', component: NofoundComponent}
+  { path:'home', canActivate: [AdminGuard], component: HomeComponent, data: { breadcrumb: 'Home' }},
+  { path:'myaccount', canActivate: [AdminGuard], component: ProfileComponent, data: { breadcrumb: 'Mon compte' }},
+  { path:'addAnnonce/:type', canActivate: [AdminGuard], component: AddProductComponent, data: { breadcrumb: 'Ajouter une annonce' }},
+  { path:'annonce/:id/:notification', canActivate: [AdminGuard], component: ProductComponent, data: {
+    // breadcrumb: (resolvedId: string) => ` ${resolvedId} `
+    breadcrumb: 'annonce'
+  },
+  children: [
+    {
+      path: ':read',
+      canActivate: [AdminGuard],
+      component: ProductComponent,
+      data: {
+        breadcrumb: 'read'
+      }
+    },{
+      path: ':modify',
+      canActivate: [AdminGuard],
+      component: ProductComponent,
+      data: {
+        breadcrumb: 'modify'
+        // label: 'read',
+        // info: { myData: { icon: 'home', iconType: 'material' } }
+      }
+    }
+  ]
+  },
+  { path:'profile/:id', canActivate: [AdminGuard], component:  ProfileComponent, data: { breadcrumb: 'Profile' }},
+  { path:'**', component: NofoundComponent, data: { breadcrumb: 'not found' }}
 
 
 ];

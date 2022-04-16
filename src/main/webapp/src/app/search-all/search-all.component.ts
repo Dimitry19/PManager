@@ -107,10 +107,9 @@ export class SearchAllComponent implements OnInit {
      "userId":"",
        "and":true
      };
-
      var filterString = JSON.stringify(filter);
 
-       this.router.navigate(["/annonces",0], {queryParams:{filterString}});
+      this.router.navigate(["/annonces",0], {queryParams:{filterString}});
 
    }
 
