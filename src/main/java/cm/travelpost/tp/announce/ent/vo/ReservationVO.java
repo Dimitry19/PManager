@@ -95,6 +95,11 @@ public class ReservationVO extends CommonVO {
     @JsonProperty
     private AnnounceInfo announceInfo;
 
+
+    @Transient
+    @JsonProperty
+    private String warning;
+
     public AnnounceInfo getAnnounceInfo() {
         return announceInfo;
     }
@@ -172,6 +177,15 @@ public class ReservationVO extends CommonVO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    public String getWarning() {
+        return warning;
+    }
+
+    public void setWarning(String warning) {
+        this.warning = warning;
     }
 
     public void addCategory(CategoryVO category) {

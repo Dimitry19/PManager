@@ -8,10 +8,7 @@ package cm.travelpost.tp.announce.ent.dao;
 
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.airline.ent.dao.AirlineDAO;
-import cm.travelpost.tp.announce.ent.vo.AnnounceIdVO;
-import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
-import cm.travelpost.tp.announce.ent.vo.CategoryVO;
-import cm.travelpost.tp.announce.ent.vo.ReservationVO;
+import cm.travelpost.tp.announce.ent.vo.*;
 import cm.travelpost.tp.common.Constants;
 import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.AnnounceType;
@@ -174,6 +171,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if (announce == null) return null;
         double rating = calcolateAverage(announce.getUser());
         announce.getUserInfo().setRating(rating);
+
+        BigDecimal sumQtyRes= checkQtyReservations(id,false);
+        warning( announce , announce.getEndDate(), announce.getWeight(),  sumQtyRes);
         return announce;
     }
 
@@ -342,6 +342,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
 
+    @Transactional
     public UserVO addAnnounceToUser(AnnounceVO announce) throws BusinessResourceException {
 
         UserVO user = announce.getUser();
@@ -377,14 +378,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             throw new AnnounceException("La date de depart ne peut pas etre superieure à celle de retour");
         }
 
+        if (BooleanUtils.isTrue(isCreate) &&DateUtils.isBefore(startDate, DateUtils.currentDate())) {
+            throw new AnnounceException("La date de depart n'est pas valide, elle doit etre minimum la date d'aujourd\'hui");
+        }
 
         BigDecimal sumQtyRes=BigDecimal.ZERO;
 
         if (BooleanUtils.isFalse(isCreate)){
-
-            if (DateUtils.isBefore(startDate, DateUtils.currentDate())) {
-                throw new AnnounceException("La date de depart n'est pas valide, elle doit etre minimum la date d'aujourd\'hui");
-            }
 
             sumQtyRes=checkQtyReservations(announce.getId(),false);
             // Il y a deja des reservations faites sur l'annonce
@@ -392,17 +392,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             if(sumQtyRes.compareTo(BigDecimal.ZERO)>0 && BigDecimalUtils.lessThan(weight, sumQtyRes)){
                 throw new AnnounceException("Impossible de reduire la quantité , car il existe des resevations pour une quantité ["+sumQtyRes+"] Kg");
             }
-            boolean closeDate= DateUtils.isBefore(endDate, DateUtils.currentDate()) || DateUtils.isSame(endDate, DateUtils.currentDate());
-            boolean allReserved=weight.compareTo(sumQtyRes)==0;
 
-            //Si la modification se fait à la date courante ou bien si  tous les kg ont été reservés -> Completed
-            if(BooleanUtils.isTrue(allReserved) || BooleanUtils.isTrue(closeDate)){
-
-                StringBuilder sb = new StringBuilder("Bientot l'annonce et les reservations associées ne seront plus disponibles car ");
-                sb.append(BooleanUtils.isTrue(allReserved) ?"la disponibilité des Kg est terminée tout a déjà été reservé ":"la date d'arrivée de l'annonce est déjà atteinte");
-                announce.setRetDescription(sb.toString());
-            }
-
+            warning( announce , endDate, weight,  sumQtyRes);
         }
 
         announce.setPrice(price);
@@ -515,8 +506,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
     }
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
-    public BigDecimal checkQtyReservations(Long id,boolean onlyRefused) throws AnnounceException,Exception {
+    public BigDecimal checkQtyReservations(Long id, boolean onlyRefused) throws AnnounceException,Exception {
 
         try {
 
@@ -783,6 +775,47 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
 
         return subscribers;
+
+    }
+
+    @Override
+    public void warning(Object o, Date endDate, BigDecimal weight, BigDecimal sumQtyRes){
+
+
+        boolean closeDate= DateUtils.isBefore(endDate, DateUtils.currentDate()) || DateUtils.isSame(endDate, DateUtils.currentDate());
+        boolean allReserved=(weight != null && sumQtyRes != null) && weight.compareTo(sumQtyRes)==0;
+
+        //Si la modification se fait à la date courante ou bien si  tous les kg ont été reservés -> Completed
+        if(BooleanUtils.isTrue(allReserved) || BooleanUtils.isTrue(closeDate)){
+
+            StringBuilder sb = new StringBuilder("Bientot l'annonce et les reservations associées ne seront plus disponibles car ");
+            sb.append(BooleanUtils.isTrue(allReserved) ?"la disponibilité des Kg est terminée tout a déjà été reservé ":"la date d'arrivée de l'annonce est déjà atteinte");
+
+
+            if(o instanceof  AnnounceVO){
+                AnnounceVO announce = (AnnounceVO) o;
+                 announce.setRetDescription(sb.toString());
+                 announce.setWarning(sb.toString());
+            }
+
+            if(o instanceof  ReservationVO){
+                ReservationVO reservation = (ReservationVO) o;
+                reservation.setWarning(sb.toString());
+            }
+
+            if(o instanceof  ReservationUserVO){
+                ReservationUserVO reservation = (ReservationUserVO) o;
+                reservation.setWarning(sb.toString());
+            }
+
+            if(o instanceof  ReservationReceivedUserVO){
+                ReservationReceivedUserVO reservation = (ReservationReceivedUserVO) o;
+                reservation.setWarning(sb.toString());
+            }
+
+
+
+        }
 
     }
 }

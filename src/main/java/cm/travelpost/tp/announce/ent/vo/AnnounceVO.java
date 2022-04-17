@@ -94,6 +94,8 @@ public class AnnounceVO extends CommonVO {
 
     private Set<MessageVO> messages = new HashSet<>();
 
+    private String warning;
+
     @Embedded
     private AnnounceIdVO announceId;
 
@@ -249,15 +251,22 @@ public class AnnounceVO extends CommonVO {
         return announceId;
     }
 
+    @Formula(value = "(select coalesce(count(r.r_announce_id),0)  from reservation r where  r.r_announce_id = id and r.cancelled ='0')")
+    public Integer getCountReservation() {
+        return countReservation;
+    }
+
+
     @Transient
     public UserInfo getUserInfo() {   return userInfo;  }
 
     @Transient
     public String getDescriptionTransport() {   return descriptionTransport;  }
 
-    @Formula(value = "(select coalesce(count(r.r_announce_id),0)  from reservation r where  r.r_announce_id = id and r.cancelled ='0')")
-    public Integer getCountReservation() {
-        return countReservation;
+    @Transient
+    @JsonProperty
+    public String getWarning(){
+        return warning;
     }
 
 
@@ -350,6 +359,10 @@ public class AnnounceVO extends CommonVO {
     public void setDescriptionTransport(String descriptionTransport) {
 
         this.descriptionTransport = descriptionTransport;
+    }
+
+    public void setWarning(String warning) {
+        this.warning = warning;
     }
 
     public void setCountReservation(Integer countReservation) {

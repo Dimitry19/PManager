@@ -14,6 +14,8 @@ import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 public interface AnnounceDAO extends CommonDAO {
@@ -52,4 +54,9 @@ public interface AnnounceDAO extends CommonDAO {
 
     @Transactional
     List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception;
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
+    BigDecimal checkQtyReservations(Long id, boolean onlyRefused) throws AnnounceException,Exception;
+
+    void warning(Object o, Date endDate, BigDecimal weight, BigDecimal sumQtyRes);
 }

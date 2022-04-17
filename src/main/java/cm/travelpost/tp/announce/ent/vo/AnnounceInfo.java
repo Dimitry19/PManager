@@ -17,6 +17,7 @@ public class AnnounceInfo implements Serializable {
     private Long id;
     private String departure;
     private String arrival;
+    private String warning;
 
 
     @JsonFormat(pattern = DateUtils.STD_PATTERN)
@@ -47,6 +48,7 @@ public class AnnounceInfo implements Serializable {
         this.weight = announce.getWeight();
         this.remainWeight = announce.getRemainWeight();
         this.countReservation = announce.getCountReservation();
+        this.warning=announce.getWarning();
         this.categories.addAll(announce.getCategories());
     }
 
@@ -145,4 +147,7 @@ public class AnnounceInfo implements Serializable {
     public void setCountReservation(Integer countReservation) {
         this.countReservation = countReservation;
     }
+    public String getWarning() {  return warning; }
+
+    public void setWarning(String warning) {  this.warning = warning; }
 }
