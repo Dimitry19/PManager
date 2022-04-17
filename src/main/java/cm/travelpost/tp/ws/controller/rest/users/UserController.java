@@ -23,6 +23,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
@@ -49,6 +50,10 @@ import java.util.List;
 public class UserController extends CommonController {
 
     protected final Log logger = LogFactory.getLog(UserController.class);
+
+
+    @Value("${tp.travelpost.active.registration.enable}")
+    protected boolean enableAutoActivateRegistration;
 
 
     @ApiOperation(value = "Register an user ", response = Response.class)
@@ -91,6 +96,12 @@ public class UserController extends CommonController {
                     return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
                 }
 
+                if (enableAutoActivateRegistration){
+                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
+                    response.setStatus(200);
+                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                }
                 if(mailService.buildAndSendMail(request, usr)){
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);

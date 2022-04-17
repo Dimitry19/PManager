@@ -203,8 +203,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
             filters = new String[2];
 
-            map.put("email", register.getEmail());
-            map.put("username", register.getUsername());
+            map.put(EMAIL_PARAM, register.getEmail());
+            map.put(USERNAME_PARAM, register.getUsername());
 
             filters[1] = FilterConstants.ACTIVE_MBR;
             filters[0] = FilterConstants.CANCELLED;

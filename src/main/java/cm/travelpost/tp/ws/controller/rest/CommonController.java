@@ -239,6 +239,8 @@ public class CommonController  extends WSConstants {
             case ERROR:
                 redirectSb.append(redirectPageError);
                 break;
+                default:
+                    break;
         }
         return redirectSb.toString();
     }

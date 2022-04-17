@@ -1,4 +1,4 @@
-package cm.travelpost.tp.ws.controller.rest.admin.dashborad;
+package cm.travelpost.tp.ws.controller.rest.admin.dashboard;
 
 import cm.travelpost.tp.administrator.ent.enums.DashBoardObjectType;
 import cm.travelpost.tp.airline.ent.vo.AirlineIdVO;

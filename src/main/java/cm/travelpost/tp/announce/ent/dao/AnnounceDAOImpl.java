@@ -306,9 +306,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             announces.stream().filter(ann -> !ann.isCancelled() && DateUtils.isDifferenceDay(ann.getEndDate(), DateUtils.currentDate(), numberDays,false))
                     .forEach(a -> {
                         try {
-                            generateEvent(a,"Dans " + numberDays + " l'annonce de " +partOneMessage(a.getDeparture(),a.getArrival()) + partTwoMessage(" et ayant", DateUtils.dateToString(a.getStartDate()),DateUtils.dateToString(a.getEndDate()))+" ne sera plus disponible");
+                            generateEvent(a,"Dans " + numberDays + " jours l'annonce de " +partOneMessage(a.getDeparture(),a.getArrival()) + partTwoMessage(" et ayant", DateUtils.dateToString(a.getStartDate()),DateUtils.dateToString(a.getEndDate()))+" ne sera plus disponible");
                         } catch (Exception e) {
-                            logger.error("Erreur durant l''execution du Batch d''ajournement de status de l'annonce");
+                            logger.error("Erreur durant l''execution du Batch de notifation des annonceurs");
                             e.printStackTrace();
                         }
                     });
@@ -363,7 +363,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         BigDecimal goldenPrice = priceByAnnounceType(adto.getAnnounceType(),adto.getGoldPrice());
         BigDecimal weight = adto.getWeight();
 
-        if(!DateUtils.validLongValue(adto.getStartDate()) || !DateUtils.validLongValue(adto.getEndDate())){
+        if(BooleanUtils.isFalse(DateUtils.validLongValue(adto.getStartDate())) || BooleanUtils.isFalse(DateUtils.validLongValue(adto.getEndDate()))){
 
             throw new AnnounceException("Une des dates n'est pas valide");
 
@@ -371,19 +371,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         Date startDate=DateUtils.milliSecondToDate(adto.getStartDate());
         Date endDate = DateUtils.milliSecondToDate(adto.getEndDate());
-
-
-        if (weight == null ) {
-            throw new AnnounceException("Quantité n'est pas valide, elle doit etre superieure a zero");
-        }
-
-        if (startDate == null || endDate == null) {
-            throw new AnnounceException("Une des dates n'est pas valide");
-        }
-
-        if (isCreate && DateUtils.isBefore(startDate, DateUtils.currentDate())) {
-            throw new AnnounceException("La date de depart n'est pas valide, elle doit etre minimum la date d'aujourd\'hui");
-        }
 
 
         if (DateUtils.isAfter(startDate, endDate)) {
@@ -395,25 +382,25 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         if (BooleanUtils.isFalse(isCreate)){
 
+            if (DateUtils.isBefore(startDate, DateUtils.currentDate())) {
+                throw new AnnounceException("La date de depart n'est pas valide, elle doit etre minimum la date d'aujourd\'hui");
+            }
+
             sumQtyRes=checkQtyReservations(announce.getId(),false);
             // Il y a deja des reservations faites sur l'annonce
-            if(announce.getCountReservation()!=null && sumQtyRes.compareTo(BigDecimal.ZERO)>0 && BigDecimalUtils.lessThan(weight, sumQtyRes)){
-                throw new AnnounceException("Impossible de reduire la quantité , car il existe des resevations pour une quantité "+sumQtyRes+" Kg");
+
+            if(sumQtyRes.compareTo(BigDecimal.ZERO)>0 && BigDecimalUtils.lessThan(weight, sumQtyRes)){
+                throw new AnnounceException("Impossible de reduire la quantité , car il existe des resevations pour une quantité ["+sumQtyRes+"] Kg");
             }
-            boolean closeDate= DateUtils.isBefore(endDate, DateUtils.currentDate()) ||
-                    DateUtils.isSame(endDate, DateUtils.currentDate());
+            boolean closeDate= DateUtils.isBefore(endDate, DateUtils.currentDate()) || DateUtils.isSame(endDate, DateUtils.currentDate());
             boolean allReserved=weight.compareTo(sumQtyRes)==0;
 
             //Si la modification se fait à la date courante ou bien si  tous les kg ont été reservés -> Completed
-            if((BooleanUtils.isTrue(allReserved) || BooleanUtils.isTrue(closeDate))
-                    || (BooleanUtils.isTrue(allReserved) && BooleanUtils.isTrue(closeDate))){
+            if(BooleanUtils.isTrue(allReserved) || BooleanUtils.isTrue(closeDate)){
 
                 StringBuilder sb = new StringBuilder("Bientot l'annonce et les reservations associées ne seront plus disponibles car ");
                 sb.append(BooleanUtils.isTrue(allReserved) ?"la disponibilité des Kg est terminée tout a déjà été reservé ":"la date d'arrivée de l'annonce est déjà atteinte");
-                //announce.setStatus(StatusEnum.COMPLETED);
-                //updateReservationsStatus(announce.getId(), StatusEnum.COMPLETED);
                 announce.setRetDescription(sb.toString());
-                //generateEvent(announce ,  sb.toString(), true);
             }
 
         }
@@ -632,16 +619,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 buildAndOr(hql, addCondition, andOrOr);
                 hql.append(" c.code =:"+CATEGORY_PARAM);
             }
-			/*addCondition = addCondition(hql.toString());
-			if (ObjectUtils.isCallable(announceSearch,"userId")){
-				buildAndOr(hql, addCondition, andOrOr);
-				hql.append(alias+".user.id=:userId ");
-			}
-			addCondition = addCondition(hql.toString());
-			if (StringUtils.isNotEmpty(announceSearch.getUser())) {
-				buildAndOr(hql, addCondition, andOrOr);
-				hql.append(" ( "+alias+".user.username like:user or "+alias+".user.email like:email) ");
-			}*/
             addCondition = addCondition(hql.toString());
             if (!addCondition) {
                 hql = new StringBuilder();
@@ -706,14 +683,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             if (StringUtils.isNotEmpty(announceSearch.getCategory())) {
                 query.setParameter(CATEGORY_PARAM, announceSearch.getCategory());
             }
-			/*if (ObjectUtils.isCallable(announceSearch,"userId")){
-				query.setParameter("userId", announceSearch.getUserId());
-			}
-			if (StringUtils.isNotEmpty(announceSearch.getUser())) {
-				query.setParameter("user", "%"+announceSearch.getUser()+"%");
-				query.setParameter("email", "%"+announceSearch.getUser()+"%");
-			}*/
-
         } catch (QueryParameterException e) {
             logger.error(e.getMessage());
             e.printStackTrace();
