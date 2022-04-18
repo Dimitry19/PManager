@@ -4,6 +4,7 @@ import cm.framework.ds.hibernate.dao.CommonDAO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.travelpost.tp.common.ent.vo.PageBy;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
@@ -26,9 +27,14 @@ public interface AnnounceDAO extends CommonDAO {
 
     int count(Object o,PageBy pageBy) throws AnnounceException, Exception;
 
+    int count(Object o, StatusEnum status,PageBy pageBy) throws AnnounceException, Exception;
+
     List<AnnounceVO> announcesByUser(UserVO user) throws AnnounceException,Exception;
 
     List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws AnnounceException,Exception;
+
+    @Transactional(readOnly = true)
+    List<AnnounceVO> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception;
 
     List<AnnounceVO> announcesBy(Object o, PageBy pageBy) throws AnnounceException,Exception;
 

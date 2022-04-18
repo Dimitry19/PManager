@@ -1,5 +1,5 @@
 GET
-http://localhost:8080/pmanager/ws/message/user?userId=2&page=0
+http://localhost:8080/services/ws/message/user?userId=2&page=0
 
 
 

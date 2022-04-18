@@ -45,6 +45,7 @@ public abstract class Generic extends CommonGenericDAO {
     public String  buildNotificationMessage(@NotNull NotificationType notificationType, String username, String departure,
                                             String arrival, String startDate, String endDate, String kg){
 
+        username = "Un utilisateur ";
         String message= null;
         switch (notificationType){
             case USER:

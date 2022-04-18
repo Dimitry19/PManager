@@ -6,6 +6,7 @@ import cm.travelpost.tp.announce.enums.Source;
 import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.enums.AnnounceType;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.TransportEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
@@ -217,8 +218,8 @@ public class AnnounceController extends CommonController {
                     response = ResponseEntity.class, responseContainer = "List")})
     @GetMapping(value = BY_USER, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announcesByUser(HttpServletResponse response, HttpServletRequest request,
-                                                            @RequestParam @Valid Long userId,
-                                                            @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
+                                                            @RequestParam @Valid Long userId, @RequestParam StatusEnum status,
+                                                            @RequestParam(required = false, defaultValue = DEFAULT_PAGE)@Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException, Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -232,15 +233,18 @@ public class AnnounceController extends CommonController {
         try {
             createOpentracingSpan("AnnounceController -announcesByUser");
 
+            if(status ==null){
+                status =StatusEnum.VALID;
+            }
+
             if (userId != null) {
-                int count = announceService.count( userId,pageBy);
-                List<AnnounceVO> announces = announceService.announcesByUser(userId, pageBy);
+                int count = announceService.count(userId,status,pageBy);
+                List<AnnounceVO> announces = announceService.announcesByUser(userId,status,pageBy);
                 return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
 
             } else {
                 paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
-                return new ResponseEntity<>(paginateResponse, headers, HttpStatus.NOT_FOUND);
             }
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
@@ -248,7 +252,7 @@ public class AnnounceController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-
+        return new ResponseEntity<>(paginateResponse, headers, HttpStatus.OK);
     }
 
 

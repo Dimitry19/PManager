@@ -4,6 +4,7 @@ package cm.travelpost.tp.announce.ent.service;
 import cm.travelpost.tp.announce.ent.dao.AnnounceDAO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.common.ent.vo.PageBy;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
@@ -64,6 +65,11 @@ public class AnnounceServiceImpl implements AnnounceService {
         return dao.announcesByUser(userId, pageBy);
     }
 
+    public List<AnnounceVO> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception {
+
+        return dao.announcesByUser(userId, status,pageBy);
+    }
+
     public List<AnnounceVO> announcesBy(Object o ,  PageBy pageBy) throws AnnounceException,Exception {
 
         return dao.announcesBy(o, pageBy);
@@ -84,6 +90,10 @@ public class AnnounceServiceImpl implements AnnounceService {
 
     public int count( Object o, PageBy pageBy) throws AnnounceException,Exception {
         return dao.count(o, pageBy);
+    }
+
+    public int count(Object o, StatusEnum status,PageBy pageBy) throws AnnounceException,Exception {
+        return dao.count(o, status,pageBy);
     }
 
     public void afterPropertiesSet() throws AnnounceException {

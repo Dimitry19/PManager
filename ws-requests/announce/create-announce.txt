@@ -1,4 +1,4 @@
-http://localhost:8080/pmanager/ws/announce/create
+http://localhost:8080/services/ws/announce/create
 
 "transport": [PLANE, NAVE, AUTO]
 "announceType": [BUYER, SELLER]

@@ -26,6 +26,10 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     Optional<T> findByIdViaSession(Class<T> clazz, ID id);
 
+    int countByNameQuery(String queryName, Class<T> clazz, Map params, PageBy pageBy) throws Exception;
+
+    int countByNameQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception;
+
     int count(Class<T> clazz, PageBy pageBy);
 
     T findById(Class<T> clazz, ID id);
@@ -65,6 +69,9 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     List<T> findBy(String namedQuery, Class<T> clazz, Map params, PageBy pageBy,String... filters) throws Exception;
 
     List<T> findByUserNameQuery(String queryName, Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
+
+    @Transactional(readOnly = true)
+    List<T> findBySqlQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception;
 
     int countByNameQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception;
 

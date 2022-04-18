@@ -174,7 +174,7 @@ public class SwaggerApiConfig  extends CommonProperties {
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                //.forPaths(regex("/pmanager/anyPath.*"))
+                //.forPaths(regex("/services/anyPath.*"))
                 .build();
     }
 

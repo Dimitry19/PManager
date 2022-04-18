@@ -80,6 +80,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String DEPARTURE_PARAM = "departure";
     protected static final String ARRIVAL_PARAM = "arrival";
     protected static final String CATEGORY_PARAM = "category";
+    protected static final String STATUS_PARAM = "status";
 
     protected static final String NAME_PARAM = "name";
     protected static final String SEARCH_PARAM = "search";
@@ -158,6 +159,11 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         Session session = sessionFactory.getCurrentSession();
 
         return Optional.ofNullable(session.get(clazz, id));
+    }
+
+    @Override
+    public int countByNameQuery(String queryName, Class<T> clazz, Map params, PageBy pageBy) throws Exception {
+        return 0;
     }
 
 
@@ -464,11 +470,38 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<T> findBySqlQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String ...filters) throws Exception {
+
+        Session session = this.sessionFactory.getCurrentSession();
+        session.enableFilter(FilterConstants.CANCELLED);
+        enableFilters(session,filters);
+        Query query = session.createQuery(queryName, clazz);
+        query.setParameter(paramName, id);
+        pageBy(query, pageBy);
+
+        return query.getResultList();
+    }
+
+    @Override
     public int countByNameQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception {
         Session session = this.sessionFactory.getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
         Query query = session.createNamedQuery(queryName, clazz);
         query.setParameter(paramName, id);
+        pageBy(query, pageBy);
+        List results = query.list();
+        return CollectionsUtils.size(results);
+    }
+
+    @Override
+    public int countByNameQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.enableFilter(FilterConstants.CANCELLED);
+        enableFilters(session,filters);
+        Query query = session.createNamedQuery(queryName, clazz);
+        query.setParameter(paramName, id);
+
         pageBy(query, pageBy);
         List results = query.list();
         return CollectionsUtils.size(results);

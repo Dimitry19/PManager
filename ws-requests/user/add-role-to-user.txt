@@ -1,4 +1,4 @@
-http://localhost:8080/pmanager/ws/user/role
+http://localhost:8080/services/ws/user/role
 
 {
 	"email":"xxxxxx@yahoo.fr",

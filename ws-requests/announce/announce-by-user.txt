@@ -1,5 +1,5 @@
 GET
-http://localhost:8080/pmanager/ws/announce/user?userId=2&page=0
+http://localhost:8080/services/ws/announce/user?userId=2&page=0
 
 
 

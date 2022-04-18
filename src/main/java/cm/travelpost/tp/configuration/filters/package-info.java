@@ -13,6 +13,8 @@
         @FilterDef(name = FilterConstants.ACTIVE_MBR, defaultCondition = "ACTIVE=true"),
         @FilterDef(name = FilterConstants.ACTIVE_MBR_WORK, defaultCondition = "ACTIVE=1"),
         @FilterDef(name = FilterConstants.CANCELLED, defaultCondition = "CANCELLED=false"),
+        @FilterDef(name = FilterConstants.COMPLETED, defaultCondition = "COMPLETED='COMPLETED'"),
+        @FilterDef(name = FilterConstants.NOT_COMPLETED, defaultCondition = "COMPLETED <> 'COMPLETED'"),
         @FilterDef(name = "dateFilter", parameters = @ParamDef(name = "fromDate", type = "timestamp"))
 
 })

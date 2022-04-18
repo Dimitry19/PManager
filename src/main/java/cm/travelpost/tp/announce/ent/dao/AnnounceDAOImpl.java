@@ -102,6 +102,32 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Override
     @Transactional(readOnly = true)
+    public int count(Object o,StatusEnum status,PageBy pageBy) throws AnnounceException,Exception {
+        logger.info(" Announce - count");
+
+        if(o == null) {
+            return count(AnnounceVO.class,  pageBy);
+        }
+
+        if (o instanceof Long) {
+
+            Long userId = (Long) o;
+
+            filters = new String[1];
+            if(status == StatusEnum.COMPLETED){
+                filters[0]=FilterConstants.COMPLETED;
+            }else{
+                filters[0]=FilterConstants.NOT_COMPLETED;
+            }
+            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,USER_PARAM,pageBy, filters);
+        }
+
+        return 0;
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<AnnounceVO> announces(PageBy pageBy) throws AnnounceException,Exception {
 
         return allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, pageBy);
@@ -134,6 +160,26 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
         return findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId, pageBy);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AnnounceVO> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception {
+
+        UserVO user = userDAO.findById(userId);
+        if (user == null) {
+            throw new UserException("Aucun utilisateur trouvé avec cet id " + userId);
+        }
+
+        filters = new String[1];
+        if(status == StatusEnum.COMPLETED){
+            filters[0]=FilterConstants.COMPLETED;
+        }else{
+            filters[0]=FilterConstants.NOT_COMPLETED;
+        }
+
+        return findBySqlQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId,USER_PARAM, pageBy,filters);
+    }
+
 
     /**
      * Retourne les annonces ayant un certain type (BUYER,SELLER)dont on a passé en parametre l'id
@@ -534,8 +580,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 
     private List commonSearchAnnounce(AnnounceSearchDTO announceSearch,PageBy pageBy) throws AnnounceException {
-        filters= new String[1];
+        filters= new String[2];
         filters[0]= FilterConstants.CANCELLED;
+        filters[1]= FilterConstants.NOT_COMPLETED;
         String where = composeQuery(announceSearch, ANNOUNCE_TABLE_ALIAS);
         Query query = search(AnnounceVO.ANNOUNCE_SEARCH , where,filters);
         composeQueryParameters(announceSearch, query);
