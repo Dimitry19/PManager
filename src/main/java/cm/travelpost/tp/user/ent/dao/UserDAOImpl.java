@@ -26,10 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,7 +67,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             }
             return 0;
         }
-      return 0;
+        return 0;
     }
 
     @Override
@@ -79,15 +76,14 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         logger.info("User: login");
 
-        UserVO user=internalLogin(username, password);
+        return internalLogin(username, password);
 
-        return user;
     }
 
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
-    public void subscribe(SubscribeDTO subscribe) throws UserException {
+    public void subscribe(SubscribeDTO subscribe) throws UserException,Exception {
         UserVO subscriber = findById(subscribe.getSubscriberId());
         UserVO subscription = findById(subscribe.getSubscriptionId());
 
@@ -98,9 +94,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             update(subscriber);
             update(subscription);
 
-            String message= new String();
-
-            message= buildNotificationMessage(message,NotificationType.SUBSCRIBE,subscriber.getUsername(),null, null,
+            String message= buildNotificationMessage(NotificationType.SUBSCRIBE,subscriber.getUsername(),null, null,
                     null, null, null);
 
             generateEvent(subscription,message);
@@ -109,7 +103,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
-    public void unsubscribe(SubscribeDTO subscribe) throws UserException {
+    public void unsubscribe(SubscribeDTO subscribe) throws UserException,Exception {
 
         UserVO subscriber = findById(subscribe.getSubscriberId());
         UserVO subscription = findById(subscribe.getSubscriptionId());
@@ -121,8 +115,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             update(subscriber);
             update(subscription);
 
-            String message= new String();
-            message=buildNotificationMessage(message,NotificationType.UNSUBSCRIBE,subscriber.getUsername(),null, null,
+
+            String message=buildNotificationMessage( NotificationType.UNSUBSCRIBE,subscriber.getUsername(),null, null,
                     null, null, null);
             generateEvent(subscription,message);
         } else throw new UserException("Une erreur survenue pendant la desinscription, veuillez reessayer");
@@ -186,7 +180,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             calcolateAverage(user);
             return user;
         } catch (UserException e) {
-            logger.error("User:" + e.getMessage());
+            logger.error("User: {}" , e.getMessage());
             throw e;
         }
     }
@@ -267,8 +261,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setLastName(userDTO.getLastName());
             //setRole(user, userDTO.getRole());
             calcolateAverage(user);
-            UserVO u=(UserVO) merge(user);
-            return u;
+            return (UserVO) merge(user);
+
 
         } else throw new UserException("Aucun utilisateur trouvé");
 
@@ -278,7 +272,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateUser(UserVO user) {
-            update(user);
+        update(user);
     }
 
     @Override
@@ -356,7 +350,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserVO findById(Long id) throws UserException {
 
         try {
@@ -366,9 +360,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
             filters[0] = FilterConstants.ACTIVE_MBR;
             filters[1] = FilterConstants.CANCELLED;
 
-            UserVO user = (UserVO) find(UserVO.class, id,filters);
+            return (UserVO) find(UserVO.class, id,filters);
             //Hibernate.initialize(user.getMessages()); // on l'utilise quand la fetch avec message est lazy
-            return user;
+            //return user;
         } catch (Exception e) {
             throw new UserException(e.getMessage());
         }
@@ -452,6 +446,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     }
 
     @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
         boolean result = false;
 
@@ -479,10 +474,13 @@ public class UserDAOImpl extends Generic implements UserDAO {
     public UserVO manageNotification(Long userId, boolean enableNotification) throws UserException {
 
         UserVO user = findById(userId);
+        if (user == null){
+            throw new UserException("Utilisateur non trouvé");
+        }
         try {
 
             boolean precedent = user.isEnableNotification();
-            if (user != null && precedent != enableNotification) {
+            if (precedent != enableNotification) {
                 user.setEnableNotification(enableNotification);
                 update(user);
                 return (UserVO) get(UserVO.class, userId);
@@ -500,12 +498,12 @@ public class UserDAOImpl extends Generic implements UserDAO {
         logger.info("Modification du mot de passe");
         UserVO user = findById(userId);
         if (user == null) {
-            logger.error("Erreur : aucun utilisateur correspondant a l'id:" + userId);
+            logger.error("Erreur : aucun utilisateur correspondant a l'id{}" , userId);
             throw new UserException("Aucun utilisateur trouvé avec cet identifiant" + userId);
         }
         String decryptedPassword = PasswordGenerator.decrypt(user.getPassword());
         if (!StringUtils.equals(decryptedPassword, oldPassword)) {
-            logger.error("Erreur : mots de passe inexacts {}-{}:", decryptedPassword, oldPassword);
+            logger.error("Erreur : mot de passe inexact {}-{}:", decryptedPassword, oldPassword);
             throw new UserException("Le mot de passe ne correspond pas: veuillez contrôler l'ancien mot de passe");
         }
 
@@ -519,7 +517,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     public List<CommunicationVO> communications(Long userId) throws Exception {
         UserVO user = findById(userId);
         if (user == null) {
-            logger.error("Erreur : aucun utilisateur correspondant a l'id:" + userId);
+            logger.error("Erreur : aucun utilisateur correspondant a l'id {}" , userId);
             throw new UserException("Aucun utilisateur trouvé avec cet identifiant" + userId);
         }
 
@@ -581,11 +579,11 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public void composeQueryParameters(Object o, Query query) {
-
+        logger.info("compose query");
     }
 
     @Override
-    public void generateEvent(Object obj , String message)  {
+    public void generateEvent(Object obj , String message)  throws UserException,Exception{
 
         UserVO user= (UserVO) obj;
         Set subscribers=new HashSet();
@@ -595,13 +593,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
 
         if (CollectionsUtils.isNotEmpty(subscribers)){
-            try {
-                fillProps(props,user.getId(),message, user.getId(),subscribers);
-                generateEvent(NotificationType.USER);
-            } catch (Exception e) {
-                logger.error("Erreur durant la generation de l'event {}",e);
-                e.printStackTrace();
-            }
+            fillProps(props,user.getId(),message, user.getId(),subscribers);
+            generateEvent(NotificationType.USER);
         }
     }
 }

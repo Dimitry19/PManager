@@ -36,6 +36,7 @@ public class WebServiceResponseCode {
 
 
     // NOK LABEL
+    public static final String ERROR_CREDENTIALS_LABEL = "Verifier les données inserées {username, password}";
     public static final String ERROR_PAGINATE_RESPONSE_LABEL = "Une erreur est survenue durant la recuperation des données";
     public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre elimine car inexistant";
     public static final String ERROR_MAIL_SENT_LABEL = "Le mail n'a pas pu etre envoye";

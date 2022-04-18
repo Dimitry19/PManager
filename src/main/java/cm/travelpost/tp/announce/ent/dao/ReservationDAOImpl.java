@@ -22,7 +22,6 @@ import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.announces.ReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.ValidateReservationDTO;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +30,15 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static cm.travelpost.tp.common.enums.ReservationType.RECEIVED;
 import static cm.travelpost.tp.notification.enums.NotificationType.*;
 
 
 @Repository("reservationDAO")
-public class ReservationDAOImpl extends Generic implements ReservationDAO {
+public class ReservationDAOImpl extends Generic implements ReservationDAO<ReservationVO> {
 
     private static Logger logger = LoggerFactory.getLogger(ReservationDAOImpl.class);
 
@@ -85,14 +84,9 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         checkUserReservation(announce, userAnnounces);
         checkRemainWeight(announce, reservationDTO.getWeight());
 
-        List<ReservationVO> reservations = reservationByAnnounceAndUser(user.getId(),announce.getId(), ValidateEnum.INSERTED,null);
+        List<ReservationVO> reservations = reservationByAnnounceAndUser(user.getId(),announce.getId(), ValidateEnum.INSERTED, null);
+
         if (CollectionsUtils.isNotEmpty(reservations)) {
-
-            /*List<ReservationVO> anReservations = Optional.ofNullable(reservations
-                    .stream()
-                    .filter(res -> res.getValidate().equals(ValidateEnum.INSERTED) && res.getAnnounce().getId().equals(announce.getId()))
-                    .collect(Collectors.toList())).get();*/
-
             ReservationVO rsv = (ReservationVO) CollectionsUtils.getFirst(reservations);
             rsv.getAnnounce().setRemainWeight(announce.getRemainWeight().subtract(reservationDTO.getWeight()));
             rsv.setWeight(rsv.getWeight().add(reservationDTO.getWeight()));
@@ -119,9 +113,9 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         reservation.setStatus(StatusEnum.VALID);
         save(reservation);
 
-        String message=new String();
 
-        message=buildNotificationMessage(message,RESERVATION,reservation.getUser().getUsername(),
+
+        String message=buildNotificationMessage(RESERVATION,reservation.getUser().getUsername(),
                 reservation.getAnnounce().getDeparture(),
                 reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),String.valueOf(reservation.getWeight()));
@@ -167,15 +161,14 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         }
         update(reservation);
 
-        String message=new String();
         String kg=" la reservation est passée de ["+oldWeight+" Kg ] a ["+reservationDTO.getWeight()+" Kg ] ";
 
-        message=buildNotificationMessage(message,RESERVATION_UPD,reservation.getUser().getUsername(),
+        String message=buildNotificationMessage(RESERVATION_UPD,reservation.getUser().getUsername(),
                 reservation.getAnnounce().getDeparture(),
                 reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),kg);
 
-       generateEvent(announce,message);
+        generateEvent(announce,message);
         return reservation;
     }
 
@@ -201,11 +194,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         AnnounceVO announce = reservation.getAnnounce();
         announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
         update(announce);
-        //delete(ReservationVO.class,id,true);
 
-        String message=new String();
-
-        message=buildNotificationMessage(message,RESERVATION_DEL,reservation.getUser().getUsername(),
+        String message=buildNotificationMessage(RESERVATION_DEL,reservation.getUser().getUsername(),
                 reservation.getAnnounce().getDeparture(),
                 reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),String.valueOf(reservation.getWeight()));
@@ -238,12 +228,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         reservation.setValidate(reservationDTO.isValidate() ? ValidateEnum.ACCEPTED : ValidateEnum.REFUSED);
         update(reservation);
 
-        String validate= reservationDTO.isValidate() ?  ValidateEnum.ACCEPTED.toValue():ValidateEnum.REFUSED.toValue();
-
-
-        String message=new String();
-
-        message=buildNotificationMessage(message,((reservationDTO.isValidate())?RESERVATION_VALIDATE:RESERVATION_UNVALIDATE),reservation.getUser().getUsername(),
+        String message=buildNotificationMessage(((reservationDTO.isValidate())?RESERVATION_VALIDATE:RESERVATION_UNVALIDATE),reservation.getUser().getUsername(),
                 reservation.getAnnounce().getDeparture(),
                 reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),String.valueOf(reservation.getWeight()));
@@ -257,8 +242,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public ReservationVO getReservation(long id) throws Exception {
-        ReservationVO reservation = (ReservationVO) findById(ReservationVO.class, id);
-        return reservation;
+        return (ReservationVO) findById(ReservationVO.class, id);
+
     }
 
     @Override
@@ -281,14 +266,11 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
     public List reservationByUser(Long userId, ReservationType type, PageBy pageBy) throws Exception {
         List<ReservationUserVO> reservations = null;
 
-        switch (type) {
-            case RECEIVED:
-                reservations = findByJoinUserId(ReservationReceivedUserVO.class, userId, pageBy);
-                break;
-            case CREATED:
-                reservations = findByUserId(ReservationUserVO.class, userId, pageBy);
-                break;
+        if (type == RECEIVED) {
 
+            reservations = findByJoinUserId(ReservationReceivedUserVO.class, userId, pageBy);
+        }else {
+            reservations = findByUserId(ReservationUserVO.class, userId, pageBy);
         }
         handleReservationInfos(reservations);
         return reservations;
@@ -301,7 +283,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
         params.put(USER_PARAM,userId);
         params.put(ANNOUNCE_PARAM,announceId);
         params.put(VALIDATE_PARAM,validateEnum);
-        return findBy(ReservationVO.FIND_BY_ANNOUNCE_AND_USER_AND_VALIDATE, ReservationVO.class, params, null,null);
+        return findBy(ReservationVO.FIND_BY_ANNOUNCE_AND_USER_AND_VALIDATE, ReservationVO.class, params, null, null);
 
     }
 
@@ -377,12 +359,13 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
             user= reservation.getUser();
             id=reservation.getAnnounce().getId();
         }
+        if(user!=null){
+            subscribers.add(user);
 
-        subscribers.add(user);
-
-        if (CollectionsUtils.isNotEmpty(subscribers)){
-            fillProps(props,id,message, user.getId(),subscribers);
-            generateEvent(NotificationType.ANNOUNCE);
+            if (CollectionsUtils.isNotEmpty(subscribers)){
+                fillProps(props,id,message, user.getId(),subscribers);
+                generateEvent(NotificationType.ANNOUNCE);
+            }
         }
     }
 
@@ -435,7 +418,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO {
 
         reservation.getCategories().clear();
         if (CollectionsUtils.isNotEmpty(rcategories)) {
-            rcategories.stream().filter(x -> StringUtils.isNotEmpty(x)).forEach(x -> {
+            rcategories.stream().filter(StringUtils::isNotEmpty).forEach(x -> {
                 CategoryVO category = categoryDAO.findByCode(x);
                 fillCategories(category, categories);
             });
