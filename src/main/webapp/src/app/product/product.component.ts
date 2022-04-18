@@ -527,7 +527,7 @@ public categories: { [key: string]: Object; }[] = [
 
       this.startup.annonceUpd(annonceUpd).toPromise().then(response =>{
         if(response.retCode == 0){
-          this.notifyService.showSuccess("Votre annonce a été ajournée avec sucess","");
+          this.notifyService.showSuccess(response.retDescription,"");
           this.updReservation(response);
           this.updSessions('U');
         }

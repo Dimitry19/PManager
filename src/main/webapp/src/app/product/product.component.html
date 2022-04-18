@@ -153,19 +153,19 @@
                                             <!-- <h5 class="card-title">Primary card title</h5> -->
                                             <ul class="list-group list-group-flush text-center">
                                                 <li class="list-group-item">
-                                                    Recuperation a domicile
+                                                    Récuperation à domicile
                                                     <span class="glyphicon glyphicon-ok pull-right"></span>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    Retrait a domicile
+                                                    Retrait à domicile
                                                     <span class="glyphicon glyphicon-remove pull-right"></span>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    Depot 2 jours avant
+                                                    Dépot 2 jours avant
                                                     <span class="glyphicon glyphicon-remove pull-right"></span>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    Retrait 2 jours apres
+                                                    Retrait 2 jours après
                                                     <span class="glyphicon glyphicon-remove pull-right"></span>
                                                 </li>
                                             </ul>
@@ -182,19 +182,19 @@
                                             <!-- <h5 class="card-title">Primary card title</h5> -->
                                             <ul class="list-group list-group-flush text-center">
                                                 <li class="list-group-item">
-                                                    Recuperation a domicile
+                                                    Récuperation à domicile
                                                     <span class="glyphicon glyphicon-ok pull-right"></span>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    Retrait a domicile
+                                                    Retrait à domicile
                                                     <span class="glyphicon glyphicon-remove pull-right"></span>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    Depot 1 jours avant
+                                                    Dépot 1 jour avant
                                                     <span class="glyphicon glyphicon-remove pull-right"></span>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    Retrait 1 jours apres
+                                                    Retrait 1 jour après
                                                     <span class="glyphicon glyphicon-remove pull-right"></span>
                                                 </li>
                                             </ul>
@@ -210,7 +210,7 @@
 
                         <div *ngIf="!readOnly" class="row">
                             <div class="col-md-6 task-detail">
-                                <label for="lieux_depart">Ville de Départ</label><br>
+                                <label for="lieux_depart">Ville de départ</label><br>
                                 <input *ngIf="readOnlyOwner || noModify" type="text" class="form-control value" [value]="annonce.departure" [disabled]="readOnlyOwner||noModify">
                                 <div *ngIf="!readOnlyOwner && !noModify" class="ng-autocomplete text-center">
                                     <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEvent($event)' [ngModel]="annonce.departure" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
@@ -235,7 +235,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <label for="date_depart">Date de Départ</label><br>
+                                <label for="date_depart">Date de départ</label><br>
                                 <input *ngIf="readOnlyOwner || noModify" type="text" class="form-control value" [(ngModel)]="annonce.startDate" [disabled]="readOnlyOwner || noModify">
                                 <ejs-datetimepicker *ngIf="!readOnlyOwner && !noModify" id='startDate' [class.is-invalid]="!annonce.startDate" class="form-control" placeholder='Date de Départ' [(ngModel)]="annonce.startDate" [max]='annonce.endDate' format='dd/MM/yyyy' Locale="it-IT"></ejs-datetimepicker>
                                 <div *ngIf="!annonce.startDate">
@@ -250,7 +250,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <label for="transport">Mode de Transport</label><br>
+                                <label for="transport">Mode de transport</label><br>
                                 <input *ngIf="readOnlyOwner || noModify" class="form-control value" [value]="annonce.descriptionTransport" [disabled]="readOnlyOwner || noModify">
                                 <div *ngIf="!readOnlyOwner && !noModify" class="ng-autocomplete text-center">
                                     <ng-autocomplete [data]="dataT" [searchKeyword]="keyword" (selected)='selectEventT($event)' [ngModel]="annonce.descriptionTransport" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
@@ -275,7 +275,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <label for="prixClassiq">Prix Classique(&euro;)</label><br>
+                                <label for="prixClassiq">Prix classique(&euro;)</label><br>
                                 <input class="form-control value" [class.is-invalid]="(annonce.price == 0 || !annonce.price) && annonce.announceType == 'SELLER'" [(ngModel)]="annonce.price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" [disabled]="(readOnlyOwner || noModify || annonce.announceType == 'BUYER')">
                                 <div *ngIf="!annonce.price && !readOnly && annonce.announceType == 'SELLER'">
                                     <div class="dialogbox">
@@ -288,7 +288,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <label for="prixGold">Prix Ultra Rapide(&euro;)</label><br>
+                                <label for="prixGold">Prix ultra rapide(&euro;)</label><br>
                                 <input class="form-control value" [class.is-invalid]="(annonce.goldPrice == 0 || !annonce.goldPrice) && annonce.announceType == 'SELLER'" [(ngModel)]="annonce.goldPrice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                     [disabled]="(readOnlyOwner|| noModify || annonce.announceType == 'BUYER') ">
                                 <div *ngIf="!readOnly && !annonce.goldPrice && annonce.announceType == 'SELLER'">
@@ -325,7 +325,7 @@
                                 <br>
                             </div>
                             <div class="col-md-6 task-detail">
-                                <label for="lieux_arrivee">Ville d'Arrivée</label><br>
+                                <label for="lieux_arrivee">Ville d'arrivée</label><br>
                                 <input *ngIf="readOnlyOwner || noModify" type="text" class="form-control value" [value]="annonce.arrival" [disabled]="readOnlyOwner || noModify">
                                 <div *ngIf="!readOnlyOwner && !noModify" class="ng-autocomplete text-center">
                                     <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEventA($event)' [ngModel]="annonce.arrival" (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
@@ -351,7 +351,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <label for="date_arrivee">Date d'Arrivée</label><br>
+                                <label for="date_arrivee">Date d'arrivée</label><br>
                                 <input *ngIf="readOnlyOwner || noModify" class="form-control value" [(ngModel)]="annonce.endDate" [disabled]="readOnlyOwner || noModify">
                                 <ejs-datetimepicker *ngIf="!readOnlyOwner && !noModify" id='endDate' [class.is-invalid]="!annonce.endDate" class="form-control" placeholder="Date d'Arrivée" [(ngModel)]="annonce.endDate" [min]='annonce.startDate' format='dd/MM/yyyy' Locale="it-IT"></ejs-datetimepicker>
                                 <div *ngIf="!annonce.endDate">
@@ -366,7 +366,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <label for="poids">Nombre de Kilo(Kg)</label><br>
+                                <label for="poids">Nombre de kilo(Kg)</label><br>
                                 <input class="form-control value" [class.is-invalid]="!annonce.weight || annonce.weight == 0" [(ngModel)]="annonce.weight" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" [disabled]="readOnlyOwner">
                                 <div *ngIf="!annonce.weight && !readOnly">
                                     <div class="dialogbox">
@@ -380,21 +380,21 @@
                                     </div>
                                 </div>
                                 <br>
-                                <label for="poids">Nombre de Kilo(Kg) restant(s)</label><br>
+                                <label for="poids">Nombre de kilo(Kg) restant(s)</label><br>
                                 <input class="form-control value" [(ngModel)]="annonce.remainWeight" disabled>
                                 <div *ngIf="!annonce.weight && !readOnly">
                                     <div class="dialogbox">
                                         <div class="content">
                                             <span class="tip tip-up"></span>
                                             <div class="message">
-                                                <p>Nombre de Kilo non valide!!!</p><br>
+                                                <p>Nombre de kilo non valide!!!</p><br>
 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <br>
-                                <label for="prixPremiun">Prix Rapide(&euro;)</label><br>
+                                <label for="prixPremiun">Prix rapide(&euro;)</label><br>
                                 <input class="form-control value" [class.is-invalid]="(annonce.preniumPrice == 0 || !annonce.preniumPrice) && annonce.announceType == 'SELLER'" [(ngModel)]="annonce.preniumPrice" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                     [disabled]="(readOnlyOwner || noModify || annonce.announceType == 'BUYER')">
                                 <div *ngIf="!readOnly && !annonce.preniumPrice && annonce.announceType == 'SELLER'">
@@ -453,19 +453,16 @@
                         <div class="card-body posi">
                             <h5 class="card-title"></h5>
                             <span>
-              Vous avez reservé <span class="value" [innerHTML]="userResRead"></span>kg!!!.
+                                Vous avez reservé <span class="value" [innerHTML]="userResRead"></span>kg!!!.
                             </span>
-                            <span *ngIf="status == 'ACCEPTED'" class="text-success">
-              Votre reservation a été confirmée !!!.
-            </span>
-                            <span *ngIf="status == 'REFUSED'" class="text-danger">
-              Votre reservation a été refusée !!!.
-            </span>
+                            <span *ngIf="status == 'ACCEPTED'" class="text-success">Votre reservation a été confirmée !!!.</span>
+                            <span *ngIf="status == 'REFUSED'" class="text-danger">Votre reservation a été refusée !!!.</span>
                         </div>
                     </div>
 
                 </div>
-                <div *ngIf="!show && !hasreserve && annonce?.remainWeight == 0 && annonce.price > 0">
+                <!-- && !hasreserve -->
+                <div *ngIf="!show  && annonce?.remainWeight == 0 && annonce.price > 0">
                     <br><br>
                     <h5><span class="messages">Plus de kilos disponible!!!</span></h5>
                 </div>
@@ -544,7 +541,7 @@
                         <div class="container contain">
                             <div class="row">
                                 <div class="categorys">
-                                    <label for="category">Categorie</label><br>
+                                    <label for="category">Categorie <i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i></label><br>
                                     <ul>
                                         <li *ngFor="let cats of annonce.categories; let i=index; trackBy: tracbByFn" class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" [id]="'Checkbox'+i" [value]="cats.code">
@@ -557,7 +554,7 @@
                             </div>
                             <div class="row">
                                 <div class="kilox">
-                                    <label for="kilos">Kilos</label><br>
+                                    <label for="kilos">Kilos <i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i></label><br>
                                     <div class="form-check form-check-inline">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-danger btn-number" (click)="minus()" [disabled]="userRes < 2">
@@ -575,7 +572,7 @@
                             </div>
                         </div>
                         <div class="containNote">
-                            <textarea name="name" class="note" rows="4" cols="30" placeholder="Inseré une note" [(ngModel)]="note" spellcheck="true"></textarea>
+                            <textarea name="name" class="note" rows="4" cols="30" placeholder="Inserer une note" [(ngModel)]="note" spellcheck="true"></textarea>
                         </div>
 
                         <br><br>
@@ -691,7 +688,7 @@
         </button>
             </div>
             <div class="modal-body text-center">
-                Vos modifications ne seront pas sauvergader
+                Vos modifications ne seront pas sauvergadées
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
@@ -769,7 +766,7 @@
                     <div class="container contain">
                         <div class="row" *ngIf="annonce">
                             <div class="category">
-                                <label for="category">Categorie</label><br>
+                                <label for="category">Categorie <i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i></label><br>
                                 <div>
                                     <ng-container *ngIf="catRes?.length==0">
                                         <div *ngFor="let cats of annonce.categories; let i=index; trackBy: tracbByFn" class="form-check form-check-inline">
@@ -806,7 +803,7 @@
                         </div>
                         <div class="row" *ngIf="annonce">
                             <div class="kilos">
-                                <label for="kilos">Kilos</label><br>
+                                <label for="kilos">Kilos <i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i></label><br>
                                 <div class="form-check form-check-inline">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-danger btn-number" (click)="minus()" [disabled]="userRes < 2">

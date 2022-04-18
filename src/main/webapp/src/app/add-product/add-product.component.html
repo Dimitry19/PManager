@@ -6,10 +6,10 @@
         <div class="inner">
             <div class="container">
                 <div class="progress">
-                    <div *ngIf="type == 'acheteur'" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" style="width: 20%;">
+                    <div *ngIf="type == 'acheteur'" class="progress-bar-striped progress-bar progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" style="width: 20%;">
                         <!-- Step 1 of 5 -->
                         20%</div>
-                    <div *ngIf="type == 'vendeur'" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" style="width: 15%;">
+                    <div *ngIf="type == 'vendeur'" class="progress-bar-striped progress-bar progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" style="width: 15%;">
                         <!-- Step 1 of 6 -->
                         15%</div>
                 </div>
@@ -43,7 +43,7 @@
                         <div class="well">
 
                             <div class="col-md-12">
-                                <h2>Mode de Transports: <span class="valeur">{{transport|uppercase}}</span></h2>
+                                <h2>Mode de Transport: <span class="valeur">{{transport|uppercase}}</span></h2>
                             </div>
 
                             <div class="row" id="contRow">
@@ -360,8 +360,9 @@
                             </div>
                             <br>
                             <div *ngIf="type == 'acheteur'" class="col-md-12">
-                                <label for="kilo"><h3 class="label">Nombre de kg</h3></label><br>
-                                <input class="input_value" type="text" min="1" max="23" step="1" placeHolder="Inserer un nombre" [(ngModel)]="kilo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                                <label for="kilo"><h3 class="label">Nombre de kg <i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i></h3></label><br>
+                                <input data-toggle="tooltip" data-placement="top" title="la valeur doit etre au moins 1" class="input_value" type="text" min="1" max="23" step="1" placeHolder="Inserer un nombre" [(ngModel)]="kilo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                />
                             </div>
                             <br>
                         </div>
@@ -384,9 +385,10 @@
 
                         <div class="well">
                             <br><br>
-                            <div class="col-md-12" data-toggle="tooltip" data-placement="left" title="la valeur doit etre au moins 1">
-                                <label for="kilo"><h3 class="label">Nombre de Kilogramme à Vendre</h3></label><br>
-                                <input class="input_value" type="text" min="1" step="1" placeHolder="Inserer un nombre" [(ngModel)]="kilo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                            <div class="col-md-12">
+                                <label for="kilo"><h3 class="label">Nombre de Kg à vendre <i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i></h3></label><br>
+                                <input data-toggle="tooltip" data-placement="top" title="la valeur doit etre au moins 1" class="input_value" type="text" min="1" step="1" placeHolder="Inserer un nombre" [(ngModel)]="kilo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                />
                             </div>
                             <br>
                             <div class="container">
@@ -404,27 +406,28 @@
                                                 <h4 class="text-center">Classique</h4>
                                             </div>
 
-                                            <div id="kilo" class="panel-body text-center" data-toggle="tooltip" data-placement="top" title="la valeur doit etre au moins 1">
-                                                <input class="input_value" type="text" min="1" step="1" placeHolder="Inserer un prix" style="width:100%" #prix [(ngModel)]="prix_kg" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                                            <div id="kilo" class="panel-body text-center">
+                                                <input class="input_value" type="text" data-toggle="tooltip" data-placement="top" title="la valeur doit etre au moins 1" min="1" step="1" placeHolder="Inserer un prix" style="width:100%" #prix [(ngModel)]="prix_kg" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                                />
                                             </div>
                                             <!-- <app-options></app-options> -->
                                             <div class="card-body text-primary p-0">
                                                 <!-- <h5 class="card-title">Primary card title</h5> -->
                                                 <ul class="list-group list-group-flush text-center">
                                                     <li class="list-group-item">
-                                                        Récuperation a domicile
+                                                        Dépot à domicile
                                                         <span class="glyphicon glyphicon-ok pull-right"></span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        Retrait a domicile
+                                                        Retrait à domicile
                                                         <span class="glyphicon glyphicon-remove pull-right"></span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        Depot 3 jours avant
+                                                        Dépot 3 jours avant
                                                         <span class="glyphicon glyphicon-remove pull-right"></span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        Retrait 3 jours apres
+                                                        Retrait 3 jours après
                                                         <span class="glyphicon glyphicon-remove pull-right"></span>
                                                     </li>
                                                 </ul>
@@ -445,27 +448,28 @@
                                                 <h4 class="text-center">Rapide</h4>
                                             </div>
 
-                                            <div class="panel-body text-center" data-toggle="tooltip" data-placement="top" title="la valeur doit etre au moins 1">
-                                                <input class="input_value" type="text" min="1" step="1" placeHolder="Inserer un prix" style="width:100%" #prix1 [(ngModel)]="prix1_kg" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                                            <div class="panel-body text-center">
+                                                <input class="input_value" type="text" data-toggle="tooltip" data-placement="top" title="la valeur doit etre au moins 1" min="1" step="1" [disabled]="!prix_kg" placeHolder="Inserer un prix" style="width:100%" #prix1 [(ngModel)]="prix1_kg" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                                />
                                             </div>
                                             <!-- <app-options></app-options> -->
                                             <div class="card-body text-primary p-0">
                                                 <!-- <h5 class="card-title">Primary card title</h5> -->
                                                 <ul class="list-group list-group-flush text-center">
                                                     <li class="list-group-item">
-                                                        Recuperation a domicile
+                                                        Récuperation à domicile
                                                         <span class="glyphicon glyphicon-ok pull-right"></span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        Retrait a domicile
+                                                        Retrait à domicile
                                                         <span class="glyphicon glyphicon-remove pull-right"></span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        Depot 2 jours avant
+                                                        Dépot 2 jours avant
                                                         <span class="glyphicon glyphicon-remove pull-right"></span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        Retrait 2 jours apres
+                                                        Retrait 2 jours après
                                                         <span class="glyphicon glyphicon-remove pull-right"></span>
                                                     </li>
                                                 </ul>
@@ -485,27 +489,28 @@
                                                 <h4 class="text-center">Ultra Rapide</h4>
                                             </div>
 
-                                            <div class="panel-body text-center" data-toggle="tooltip" data-placement="top" title="la valeur doit etre au moins 1">
-                                                <input class="input_value" type="text" min="1" max="20" step="1" placeHolder="Inserer un prix" style="width:100%" #prix2 [(ngModel)]="prix2_kg" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                                            <div class="panel-body text-center">
+                                                <input class="input_value" type="text" data-toggle="tooltip" data-placement="top" title="la valeur doit etre au moins 1" min="1" step="1" [disabled]="!prix_kg" placeHolder="Inserer un prix" style="width:100%" #prix2 [(ngModel)]="prix2_kg" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                                />
                                             </div>
                                             <!-- <app-options></app-options> -->
                                             <div class="card-body text-primary p-0">
                                                 <!-- <h5 class="card-title">Primary card title</h5> -->
                                                 <ul class="list-group list-group-flush text-center">
                                                     <li class="list-group-item">
-                                                        Recuperation a domicile
+                                                        Récuperation à domicile
                                                         <span class="glyphicon glyphicon-ok pull-right"></span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        Retrait a domicile
+                                                        Livraison à domicile
                                                         <span class="glyphicon glyphicon-remove pull-right"></span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        Depot 1 jours avant
+                                                        Dépot 1 jour avant
                                                         <span class="glyphicon glyphicon-remove pull-right"></span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        Retrait 1 jours apres
+                                                        Retrait 1 jour après
                                                         <span class="glyphicon glyphicon-remove pull-right"></span>
                                                     </li>
                                                 </ul>
@@ -527,7 +532,7 @@
                             </li>
 
                             <li class="list-inline-item float-right">
-                                <button type="button" class="btn btn-primary next" [disabled]="!(kilo && prix_kg && prix1_kg && prix2_kg)">Sauver et continuer</button>
+                                <button type="button" class="btn btn-primary next" [disabled]="!(kilo && prix_kg)">Sauver et continuer</button>
                             </li>
                         </ul>
                     </div>
@@ -583,7 +588,7 @@
                                     </tbody>
                                 </table>
                                 <div class="">
-                                    <textarea id="description" name="desc_ann" rows="8" cols="30" placeholder="Decrivez votre annonce..." [(ngModel)]="desc_ann" (ngModelChange)="description($event)" spellcheck="true"></textarea>
+                                    <textarea [ngClass]="desc_ann.length < 15 ? 'border border-danger':'border border-white'" id="description" name="desc_ann" rows="8" cols="30" placeholder="Decrivez votre annonce..." [(ngModel)]="desc_ann" (ngModelChange)="description($event)" spellcheck="true"></textarea>
                                 </div>
                             </div>
                         </div>

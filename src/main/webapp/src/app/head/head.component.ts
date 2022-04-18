@@ -65,7 +65,7 @@ export class HeadComponent implements OnInit {
   userForm: FormGroup;
   userFormR: FormGroup;
   userFormF: FormGroup;
-  pwd: any;
+  // pwd: any;
   notificationList: Array<notif> = [];
 
   //time: number = 1;
@@ -182,7 +182,7 @@ export class HeadComponent implements OnInit {
         });
         
         this.userFormR.get('password1').valueChanges.subscribe(value => {
-          self.pwd = value;
+          // self.pwd = value;
           this.keyupPwd(value);
         });
         sessionStorage.clear();
@@ -258,12 +258,10 @@ export class HeadComponent implements OnInit {
           });
       }, 1500);
       setTimeout(function() {
-        // $('#cookiesSideModalRightBottom').delay(1000).fadeIn();
-        $('#cookiesSideModalRightBottom').modal({
-          show: true,
-          backdrop: 'static',
-          keyboard: false
-        });
+        $('#cookiesSideModalRightBottom').delay(1000).fadeIn();
+        // $('#cookiesSideModalRightBottom').modal({
+        //   show: true,
+        // });
         sessionStorage.disclaimerModal = 1;
       }, 6000);
       
@@ -405,9 +403,6 @@ closeCookies(){
     self.connected = !self.connected;
     //self.user = null;
     //this.time = 0;
-    clearInterval(self.timerId);
-    this.startup.disconnectClicked();  
-    sessionStorage.clear();
     self.startup.islogout(self.userForm.value.username).subscribe(response =>{
       if(response.retCode != -1){         
         this.notifyService.showSuccess(response.retDescription,"");
@@ -417,7 +412,10 @@ closeCookies(){
         self.userForm.controls.password.markAsUntouched({onlySelf: true});
         self.userForm.controls.username.markAsPristine({ onlySelf: true });
         self.userForm.controls.username.markAsUntouched({ onlySelf: true });
-  
+        clearInterval(self.timerId);
+        this.startup.disconnectClicked();  
+        sessionStorage.clear();
+        self.loggedUser = null;
         self.router.navigate(['/']);          
       }else{
         this.notifyService.showError(response.message,"");

@@ -210,6 +210,17 @@ textarea {
     box-shadow: 0 0 0 0.2rem rgb(23 162 184 / 0%);
 }
 
+.password-contain {
+    position: relative;
+    width: 18em;
+    font-size: 22px;
+    padding: 0 40px;
+    color: rgb(46, 45, 45);
+    font-weight: 500;
+    margin: 0 1.3em;
+    display: flex;
+}
+
 .depart {
     color: #42C2FF;
 }

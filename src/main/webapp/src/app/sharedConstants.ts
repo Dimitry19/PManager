@@ -85,32 +85,17 @@ export class SharedConstants {
      }
   ];
   public static Villes = villes;
-//   [
-//     {
-//       id: 1,
-//       name: 'MILAN'
-//     },
-//     {
-//       id: 2,
-//       name: 'BOLOGNE'
-//     },
-//     {
-//       id: 3,
-//       name: 'DOUALA'
-//     },
-//     {
-//       id: 4,
-//       name: 'YAOUNDE'
-//     },
-//     {
-//       id: 5,
-//       name: 'PARIS'
-//     }
-//  ];
+
 }
 
 export class SharedService {
 
+  //for validation
+  capital: boolean = false;
+  number: boolean = false;
+  specialCHAR: boolean = false;
+  lenght: boolean = false;
+  
   checkImage(user: any, product: boolean = false): boolean{
 
     return ((!product && user && user.image != null && user.image.origin != null && user.image.picByte != null) || (product && user && user.origin != null && user.picByte != null));

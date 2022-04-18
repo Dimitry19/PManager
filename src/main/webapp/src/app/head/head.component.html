@@ -110,9 +110,9 @@
         <!-- Header -->
     </section>
 
-    <xng-breadcrumb [separator]="separatorTemplate">
+    <!-- <xng-breadcrumb [separator]="separatorTemplate">
         <ng-template #separatorTemplate>&#9758;</ng-template>
-    </xng-breadcrumb>
+    </xng-breadcrumb> -->
 </main>
 
 
@@ -301,7 +301,7 @@
                                                         <p class="password-contain" id="specialCHAR">Doit contenir un caractère special !</p>
 
                                                         <i [class]="capital ? 'fa fa-check iconYes' : 'fa fa-times iconNo'" id="capitalIcon"></i>
-                                                        <p class="password-contain" id="capital">Doit contenir une majiscule !</p>
+                                                        <p class="password-contain" id="capital">Doit contenir une majuscule !</p>
 
                                                         <i [class]="lenght ? 'fa fa-check iconYes' : 'fa fa-times iconNo'" id="lengthIcon"></i>
                                                         <p class="password-contain" id="length">Doit avoir au moins 8 caractères !</p>
@@ -567,16 +567,16 @@
                                                     </div>
                                                     <!--caratteristique della password-->
                                                     <div class="message" id="message">
-                                                        <i [class]="number ? 'fa fa-check iconYes' : 'fa fa-times iconNo'" id="numberIcon"></i>
+                                                        <i [class]="number ? 'fa fa-check iconYes text-success' : 'fa fa-times iconNo text-danger '" id="numberIcon"></i>
                                                         <p class="password-contain" id="number">Doit contenir un chiffre !</p>
 
-                                                        <i [class]="specialCHAR ? 'fa fa-check iconYes' : 'fa fa-times iconNo'" id="charIcon"></i>
+                                                        <i [class]="specialCHAR ? 'fa fa-check iconYes text-success' : 'fa fa-times iconNo text-danger'" id="charIcon"></i>
                                                         <p class="password-contain" id="specialCHAR">Doit contenir un caractère special !</p>
 
-                                                        <i [class]="capital ? 'fa fa-check iconYes' : 'fa fa-times iconNo'" id="capitalIcon"></i>
-                                                        <p class="password-contain" id="capital">Doit contenir une majiscule !</p>
+                                                        <i [class]="capital ? 'fa fa-check iconYes text-success' : 'fa fa-times iconNo text-danger'" id="capitalIcon"></i>
+                                                        <p class="password-contain" id="capital">Doit contenir une majuscule !</p>
 
-                                                        <i [class]="lenght ? 'fa fa-check iconYes' : 'fa fa-times iconNo'" id="lengthIcon"></i>
+                                                        <i [class]="lenght ? 'fa fa-check iconYes text-success' : 'fa fa-times iconNo text-danger'" id="lengthIcon"></i>
                                                         <p class="password-contain" id="length">Doit avoir au moins 8 caractères !</p>
                                                     </div>
 
@@ -809,31 +809,24 @@
 </div>
 
 <!-- cookies -->
-<!-- <div class="cookie" style="display:none" id="cookiesSideModalRightBottom">
+<div id="cookiesSideModalRightBottom" class="oldcookie modal-frame" style="display:none">
     <p>
         En utilisant notre site Web, vous acceptez notre
         <span style="text-decoration-line: underline;">politique en matière de cookies</span>
     </p>
-    <button class="btn btn-outline-primary" aria-hidden="true" (click)="closeCookies()">OK</button>
-</div> -->
-<div class="modal fade" id="cookiesSideModalRightBottom" tabindex="-1" role="dialog" aria-labelledby="disclaimerModaltitle" aria-hidden="true">
-    <div class="modal-dialog modal-side modal-bottom-left" role="document">
+    <button class="btn btn-outline-success" aria-hidden="true" (click)="closeCookies()">OK</button>
+</div>
+<!-- <div class="modal fade" id="cookiesSideModalRightBottom" tabindex="-1" role="dialog" aria-labelledby="disclaimerModaltitle" aria-hidden="true">
+    <div class="modal-dialog modal-frame modal-bottom" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="disclaimerModalLongTitle">Cookies</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-            </div>
-            <div class="modal-body">
+            <div class="modal-body oldcookie">
                 <p>
                     En utilisant notre site Web, vous acceptez notre
                     <span style="text-decoration-line: underline;">politique en matière de cookies</span>
                 </p>
+                <span type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeCookies()">OK</span>
             </div>
-            <div class="modal-footer cookie">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeCookies()">OK</button>
-            </div>
+
         </div>
     </div>
-</div>
+</div> -->
