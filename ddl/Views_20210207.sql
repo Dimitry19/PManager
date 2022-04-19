@@ -149,6 +149,8 @@ select * from PUBLIC.ANNOUNCE
 where status = 'COMPLETED';
 
 
+drop view VIEWS.v_message_completed;
 create view VIEWS.V_MESSAGE_COMPLETED as
-select * from PUBLIC.MESSAGE;
+select * from PUBLIC.MESSAGE M
+INNER JOIN VIEWS.V_ANNOUNCE_COMPLETED VAC ON M.R_ANNOUNCE = VAC.ID;
 

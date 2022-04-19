@@ -741,6 +741,12 @@ public class UserController extends CommonController {
 
        if (user!=null){
 
+           if(request.getCookies() == null){
+               pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+               pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+               return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+           }
+
            for (Cookie cookie : request.getCookies()) {
 
 //               cookie.setValue(null);
