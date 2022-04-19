@@ -23,7 +23,7 @@ export class AddProductComponent implements OnInit {
   email;
   phone;
   productsSession;
-  desc_ann;
+  desc_ann: string = "";
   shared = new SharedService()
   categories = SharedConstants.Categories;
   data = SharedConstants.Villes;
@@ -255,16 +255,37 @@ export class AddProductComponent implements OnInit {
 
      }
 
-    categs(item,t){           
-       if(_.indexOf(this.cat, item) > -1){
-          this.cat.splice(_.indexOf(this.cat, item),1);
-          this.values[t] = false;         
-       }else{
-          this.cat.push(item);
-          this.values[t] = true;       
-       }
+    categs(item,t){  
+      if(_.indexOf(this.cat, item) > -1){
+        this.cat.splice(_.indexOf(this.cat, item),1);
+        this.values[t] = false;         
+     }else{
+        this.cat.push(item);
+        this.values[t] = true;       
+     }     
+     
+      if(item == "Indifférent" ){
+        if(_.indexOf(this.cat, item) > -1){
+          this.cat = [];
+          this.categories.forEach((elt,i) =>{
+            this.cat.push(elt.description);
+              i > 0 ? this.values[i] = true : ''; 
+              // $("#Checkbox"+i).prop('checked',true);
+           });
+           
+        }else{
+          this.cat = [];
+          this.categories.forEach((elt,i) =>{
+              this.values[i] = false; 
+           });
+        }
+       
+      }            
+      
     }
+    checkAll(){
 
+    }
     addAnnonce(){
        let self = this;
        switch (self.transport){

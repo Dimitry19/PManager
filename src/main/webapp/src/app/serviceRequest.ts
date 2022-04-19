@@ -58,6 +58,8 @@ export class ServiceRequest {
   }
 
   setOptions() {
+    // x-amz-security-token
+    // AUTH_API_KEY
     const headers = { headers: new HttpHeaders({
       "AUTH_API_KEY":"abcd123456",
       "session-user": this.sessionUser,

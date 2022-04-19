@@ -11,6 +11,10 @@
     padding: 2em 1em;
 }
 
+.reserCard {
+    display: none;
+}
+
 .intro input[type=file] {
     margin-left: -5em;
     opacity: 0;
@@ -20,6 +24,10 @@
 
 .actionRes {
     display: flex;
+}
+
+#reserCard .actionRes {
+    display: contents;
 }
 
 .colonne a:hover {
@@ -38,6 +46,40 @@
 
 .addPanding {
     padding-left: 4em;
+}
+
+.table .input-group>.form-control {
+    width: unset;
+}
+
+
+/* for validation */
+
+.message {
+    position: relative;
+    background: #fff;
+    top: 0.5rem;
+    opacity: 1;
+    transition: .3s;
+    line-height: 1.7;
+    width: 10em;
+}
+
+.iconNo,
+.iconYes {
+    position: relative;
+    top: 1.7rem;
+    font-size: 16px;
+}
+
+.password-contain {
+    position: relative;
+    width: max-content;
+    font-size: 16px;
+    color: #2e2d2d;
+    font-weight: 500;
+    margin: 0 1.3em;
+    display: flex;
 }
 
 
@@ -616,6 +658,7 @@ header .downlad-btn:hover {
 .cardS {
     width: fit-content;
     margin: 0em 0em 1em 1em;
+    cursor: pointer;
 }
 
 .cardS img {
@@ -974,6 +1017,9 @@ Responsive
     .table-details {
         display: none;
     }
+    .reserCard {
+        display: flex;
+    }
     #mytab li.nav-item {
         padding: 1em 3em;
     }
@@ -1111,6 +1157,9 @@ Responsive
     .table-details {
         display: none;
     }
+    .reserCard {
+        display: flex;
+    }
     #nav-vertical-tab-bgContent table.table {
         width: 16em;
     }
@@ -1172,6 +1221,9 @@ Responsive
     }
     .table-details {
         display: none;
+    }
+    .reserCard {
+        display: flex;
     }
     #nav-vertical-tab-bgContent table.table {
         width: 16em;
@@ -1240,6 +1292,9 @@ Responsive
     }
     .table-details {
         display: none;
+    }
+    .reserCard {
+        display: flex;
     }
     #nav-vertical-tab-bgContent table.table {
         width: 16em;

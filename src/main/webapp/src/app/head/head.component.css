@@ -10,18 +10,19 @@
 }
 
 .oldcookie {
-    /* position: fixed; */
-    bottom: 40px;
-    left: 10%;
-    right: 10%;
-    width: 100%;
+    z-index: 1055;
+    position: absolute;
+    width: 18em;
     padding: 5px 14px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     background-color: #eee;
     border-radius: 5px;
-    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 2px 1px rgb(0 0 0 / 20%);
+}
+
+#cookiesSideModalRightBottom .modal-content {
+    background-color: unset;
 }
 
 .oldcookie>p {
@@ -1177,6 +1178,14 @@ div#messages section {
     color: #fff;
 }
 
+.valid {
+    color: green;
+}
+
+.invalid {
+    color: red;
+}
+
 
 /* style de la div message pour la pwd*/
 
@@ -1190,27 +1199,7 @@ div#messages section {
     line-height: 0;
 }
 
-.password-contain {
-    position: relative;
-    width: 18em;
-    font-size: 22px;
-    padding: 0 40px;
-    color: rgb(46, 45, 45);
-    font-weight: 500;
-    margin: 0 1.3em;
-    display: flex;
-}
-
-.valid {
-    color: green;
-}
-
-.invalid {
-    color: red;
-}
-
 .iconNo {
-    color: red;
     position: relative;
     top: 1.7rem;
     right: 8rem;
@@ -1218,7 +1207,6 @@ div#messages section {
 }
 
 .iconYes {
-    color: green;
     position: relative;
     top: 1.7rem;
     right: 8rem;

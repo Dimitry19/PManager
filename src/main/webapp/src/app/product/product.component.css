@@ -19,7 +19,7 @@
 }
 
 .zoneRes {
-    width: max-content;
+    overflow-y: scroll;
 }
 
 .catBadge {
@@ -531,7 +531,7 @@
         margin-left: 1em;
     }
     .comment-box {
-        width: 10em;
+        width: 16em;
     }
 }
 
@@ -540,7 +540,7 @@
         margin-left: 1em;
     }
     .comment-box {
-        width: 10em;
+        width: 16em;
     }
 }
 
@@ -549,7 +549,7 @@
         margin-left: 1em;
     }
     .comment-box {
-        width: 10em;
+        width: 16em;
     }
 }
 
@@ -558,6 +558,6 @@
         width: 1em;
     }
     .comment-box {
-        width: 10em;
+        width: 16em;
     }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn} from '@angular/forms';
 import { ServiceRequest, notif } from '../serviceRequest';
 import { AlertService } from '.././alert.service';
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
@@ -13,6 +13,26 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 declare var $: any;
 
+function passwordConfirming (password): ValidatorFn{
+  return (c: AbstractControl): {[key: string]: boolean } | null => {
+    let confirmPassword = c.value;
+    if (password !== confirmPassword) {
+        var element = document.getElementsByName('confirmPassword');
+        element.forEach(elt => {
+          elt.className = elt.className.replace(/\bng-invalid\b/g, "displaystyle-warning");
+        });
+
+      return {"invalid": true};
+    }
+    else{
+      var element = document.getElementsByName('confirmPassword');
+      element.forEach(elt => {
+        elt.className = elt.className.replace(/\bdisplaystyle-warning\b/g, "ng-valid");
+      });
+    }
+    return null;
+  }
+}
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -22,7 +42,6 @@ export class ProfileComponent implements OnInit {
   
   catRes;
   noteRes;
-  sexeUser = "MALE";
   current_datetime: Date;
   options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   birthday;
@@ -39,6 +58,7 @@ export class ProfileComponent implements OnInit {
   dtOptions:any = {};
   titleModal: string;
   loggedUser;
+  profileUser;
   myReservations;
   id:string;
   readOnly: Boolean = true;
@@ -54,6 +74,11 @@ export class ProfileComponent implements OnInit {
   mesAbonnements: Array<any> = [];
   mesAbonnes: Array<any> = [];
   sectionToshow: string;
+   //for validation
+   capital: boolean = false;
+   number: boolean = false;
+   specialCHAR: boolean = false;
+   lenght: boolean = false;
   @ViewChildren(DataTableDirective)
   //dtElement: DataTableDirective;
   dtElements: QueryList<DataTableDirective>;
@@ -61,8 +86,10 @@ export class ProfileComponent implements OnInit {
   dtTrigger2 : Subject<any> = new Subject();
 
 
-  constructor(private router: Router,private startup: ServiceRequest, private formBuilder: FormBuilder, private route: ActivatedRoute,
-                          private notifyService : AlertService, private domSanitizer: DomSanitizer) {
+  constructor(private router: Router,private startup: ServiceRequest, private formBuilder: FormBuilder, 
+    private route: ActivatedRoute,private notifyService : AlertService, private domSanitizer: DomSanitizer) {
+      
+      
       let self = this;  
       self.id = self.route.snapshot.paramMap.get('id');
       self.sectionToshow = self.route.snapshot.paramMap.get('section'); 
@@ -111,10 +138,10 @@ export class ProfileComponent implements OnInit {
         self.loggedUser = JSON.parse(sessionStorage.loggedUser);
         self.startup.annonceUserId(self.loggedUser.id).subscribe(response =>{
           if(response.retCode > -1){
-            self.loggedUser.announces = response.results;  
+            // self.loggedUser.announces = response.results;  
 
             self.annonceReserve();
-            self.annonces = self.loggedUser.announces;
+            self.annonces = response.results;
           }else{
             self.notifyService.showError(response.details[0],"");
           }
@@ -142,7 +169,7 @@ export class ProfileComponent implements OnInit {
         });
 
         
-        
+        // j'ouvre la notification ensuite je le supprime après 1min.
         $(document).ready(function () {
           $('#tab'+self.id).click();
           
@@ -155,45 +182,21 @@ export class ProfileComponent implements OnInit {
         setTimeout(function() {
           self.msg(+self.id);
       }, 6000*10);
-        
-
-        self.updateUser = self.formBuilder.group({
-          firstName: [self.loggedUser.firstName, [Validators.required]],
-          lastName: [self.loggedUser.lastName, [Validators.required]],
-          phone: [self.loggedUser.phone, [Validators.required]]
-          }          
-        );
-   
-       self.updateUserMDP = self.formBuilder.group({
-          password: ['', [Validators.required]],
-          password1: ['', [Validators.required]],
-          password2: ['', [Validators.required]],
-          },
-          {validator: self.passwordConfirming}
-        );
-        
 
       }
-      else if(!self.sectionToshow && self.id ){
+      else if(!self.sectionToshow && self.id ){ //visualizzazione du profil d'un utilisateur
         self.disableEverything = true;
         self.sectionToshow = 'personal';
-       
-        self.updateUserMDP = self.formBuilder.group({
-          password: [{value:'', disabled: self.disableEverything},[Validators.required]],
-          password1: [{value:'', disabled: self.disableEverything}, [Validators.required]],
-          password2: [{value:'', disabled: self.disableEverything}, [Validators.required]],
-          },
-          {validator: self.passwordConfirming}
-        );
         
         self.startup.userInfo(self.id).subscribe(response =>{
-          self.loggedUser = response;          
-          self.check = self.loggedUser.enableNotification;
-          self.startup.annonceUserId(self.loggedUser.id).subscribe(response =>{
+          self.profileUser = response;   
+
+          self.check = self.profileUser.enableNotification;
+          self.startup.annonceUserId(self.profileUser.id).subscribe(response =>{
             if(response.retCode > -1){
-              self.loggedUser.announces = response.results;  
+              // self.loggedUser.announces = response.results;  
               self.annonceReserve();
-            self.annonces = self.loggedUser.announces;
+            self.annonces = response.results;
             }else{
               self.notifyService.showError(response.details[0],"");
             }
@@ -201,11 +204,11 @@ export class ProfileComponent implements OnInit {
             // sessionStorage.setItem('loggedUser',JSON.stringify(self.loggedUser));     
           });
           
-          if(self.sharedService.checkImage(self.loggedUser)){
-            self.source = 'data:'+self.loggedUser.image.origin+';base64,'+self.loggedUser.image.picByte;
+          if(self.sharedService.checkImage(self.profileUser)){
+            self.source = 'data:'+self.profileUser.image.origin+';base64,'+self.profileUser.image.picByte;
           }
           
-          self.startup.getReserveUser(self.loggedUser.id).subscribe(response =>{
+          self.startup.getReserveUser(self.profileUser.id).subscribe(response =>{
             self.myReservations = response;
           },
           error =>{
@@ -213,20 +216,13 @@ export class ProfileComponent implements OnInit {
           }
           );
 
-          self.startup.mesAbonnements(self.loggedUser.id).subscribe(response =>{
+          self.startup.mesAbonnements(self.profileUser.id).subscribe(response =>{
             self.mesAbonnements = response?.results;
           });
-          self.startup.mesAbonnes(self.loggedUser.id).subscribe(response =>{
+          self.startup.mesAbonnes(self.profileUser.id).subscribe(response =>{
             self.mesAbonnes = response?.results;
           });
-         
-
-          self.updateUser = self.formBuilder.group({
-            firstName: [self.loggedUser?.firstName, [Validators.required]],
-            lastName: [self.loggedUser?.lastName, [Validators.required]],            
-            phone: [self.loggedUser?.phone, [Validators.required]]            
-          }
-          );
+          
           
         });
          
@@ -235,9 +231,9 @@ export class ProfileComponent implements OnInit {
         self.loggedUser = JSON.parse(sessionStorage.loggedUser);
         self.startup.annonceUserId(self.loggedUser.id).subscribe(response =>{      
           if(response.retCode > -1){
-            self.loggedUser.announces = response.results;  
+            // self.loggedUser.announces = response.results;  
             self.annonceReserve();
-            self.annonces = self.loggedUser.announces;
+            self.annonces = response.results;
           }else{
             self.notifyService.showError(response.details[0],"");
           }          
@@ -265,23 +261,26 @@ export class ProfileComponent implements OnInit {
         self.startup.mesAbonnes(self.loggedUser.id).subscribe(response =>{
           self.mesAbonnes = response?.results;
         });
-        
-        self.updateUser = self.formBuilder.group({
-          firstName: [self.loggedUser.firstName, [Validators.required]],
-          lastName: [self.loggedUser.lastName, [Validators.required]],
-          phone: [self.loggedUser.phone, [Validators.required]]
-          }
-        );
-   
-       self.updateUserMDP = self.formBuilder.group({
-          password: ['', [Validators.required]],
-          password1: ['', [Validators.required]],
-          password2: ['', [Validators.required]],
-          },
-          {validator: self.passwordConfirming}
-        );
-        
       }
+
+      self.updateUser = self.formBuilder.group({
+        firstName: [self.loggedUser.firstName, [Validators.required]],
+        lastName: [self.loggedUser.lastName, [Validators.required]],
+        gender: [self.loggedUser.gender, [Validators.required]],
+        phone: [self.loggedUser.phone, [Validators.required]]
+        }
+      );
+ 
+     self.updateUserMDP = self.formBuilder.group({
+        password: ['', [Validators.required]],
+        password1: ['', [Validators.required]],
+        password2: ['', [Validators.required]],
+        },
+        {validator: self.passwordConfirming}
+      );
+      this.updateUserMDP.get('password1').valueChanges.subscribe(value => {
+        this.keyupPwd(value);
+      });
     }
 
   }
@@ -391,10 +390,6 @@ toggleView(){
     self.router.navigate(["/annonce",id,source]);
   }
 
-  mySexe(sexe){
-    let self = this;
-    self.sexeUser = sexe;
-  }
   checked(item){
     let self = this;
     self.check = item.target.checked;
@@ -424,17 +419,25 @@ toggleView(){
      "lastName":self.updateUser.value.lastName,
      "phone":self.updateUser.value.phone,
      "role":self.loggedUser.roles[0].description,
-     "gender":self.sexeUser.toString()
+     "gender":self.updateUser.value.gender
    };
 
    self.startup.userUpd(userupd).toPromise().then(response=>{
 
      if(response.retCode != -1){
-       self.notifyService.showSuccess("Le changement des données personelles a été effectué correctement","");
+       self.notifyService.showSuccess(response.retDescription,"");
         // self.updSessions(response);
         self.loggedUser.firstName = self.updateUser.value.firstName;
         self.loggedUser.lastName = self.updateUser.value.lastName; 
         self.loggedUser.phone = self.updateUser.value.phone;
+        self.loggedUser.gender = self.updateUser.value.gender;
+        self.startup.userInfo(self.loggedUser.id).subscribe(info =>{
+          delete info.retCode;
+          delete info.retDescription;
+          delete info.review;
+          sessionStorage.setItem('loggedUser',JSON.stringify(info));
+          self.loggedUser = JSON.parse(sessionStorage.loggedUser);
+        })
         self.refreshPage();
      }else{
        self.notifyService.showError(response.message,"");
@@ -605,11 +608,12 @@ toggleView(){
              self.loggedUser.image = {};
              self.loggedUser.image.picByte = response.picByte;
              self.loggedUser.image.origin = response.origin;
-            //  let loggedUserTmp = self.loggedUser;
-            //  sessionStorage.removeItem("loggedUser");
-            //  if(loggedUserTmp){                        
-            //   sessionStorage.setItem('loggedUser',JSON.stringify(loggedUserTmp));
-            //  }           
+             let loggedUserTmp = self.loggedUser;
+             sessionStorage.removeItem("loggedUser");
+             if(loggedUserTmp){                        
+              sessionStorage.setItem('loggedUser',JSON.stringify(loggedUserTmp));
+             }
+             self.loggedUser = sessionStorage.getItem('loggedUser');    
              
           }else{
             self.notifyService.showError(response.message,"");
@@ -711,5 +715,42 @@ ngOnDestroy():void{
   let self = this;
   this.dtTrigger1.unsubscribe();
   this.dtTrigger2.unsubscribe();
+}
+ //for validation
+ keyupPwd(value){
+  let self = this;
+    //for number
+    if(value.match(/[0-9]/)){
+     self.number = true;
+    }
+    else{
+     self.number = false;
+    }
+    //for specialCHAR
+    if(value.match(/[^a-z^A-Z^0-9]/)){
+     self.specialCHAR = true;
+    }
+    else{
+     self.specialCHAR = false;
+    }
+    //for capital
+    if(value.match(/[A-Z]/)){
+     self.capital = true;
+    }
+    else{
+     self.capital = false;
+    }
+    //for length
+    if(value.length >= 8){
+     self.lenght = true;
+    }
+    else{
+     self.lenght = false;
+  }
+  if(self.updateUserMDP.get('password1').valid){
+    self.updateUserMDP.get('password2').setValidators(passwordConfirming(value));
+    self.updateUserMDP.get('password2').updateValueAndValidity;
+  }
+  
 }
 }
