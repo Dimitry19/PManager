@@ -65,7 +65,7 @@ public class AnnounceServiceImpl implements AnnounceService {
         return dao.announcesByUser(userId, pageBy);
     }
 
-    public List<AnnounceVO> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception {
+    public List<?> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception {
 
         return dao.announcesByUser(userId, status,pageBy);
     }

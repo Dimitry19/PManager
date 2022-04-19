@@ -148,3 +148,7 @@ create view VIEWS.V_ANNOUNCE_COMPLETED as
 select * from PUBLIC.ANNOUNCE
 where status = 'COMPLETED';
 
+
+create view VIEWS.V_MESSAGE_COMPLETED as
+select * from PUBLIC.MESSAGE;
+

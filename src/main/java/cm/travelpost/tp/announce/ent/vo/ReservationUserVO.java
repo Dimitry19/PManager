@@ -7,6 +7,7 @@ import cm.travelpost.tp.constant.FieldConstants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -16,6 +17,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "valid_reservation_created")
+@Immutable
 public class ReservationUserVO extends CommonReservationTransient {
 
     @Id

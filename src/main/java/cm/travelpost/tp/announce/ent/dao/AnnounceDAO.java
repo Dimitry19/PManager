@@ -34,7 +34,7 @@ public interface AnnounceDAO extends CommonDAO {
     List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws AnnounceException,Exception;
 
     @Transactional(readOnly = true)
-    List<AnnounceVO> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception;
+    List<?> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception;
 
     List<AnnounceVO> announcesBy(Object o, PageBy pageBy) throws AnnounceException,Exception;
 

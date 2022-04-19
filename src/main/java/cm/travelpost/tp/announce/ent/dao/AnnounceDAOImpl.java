@@ -115,11 +115,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             filters = new String[1];
             if(status == StatusEnum.COMPLETED){
-                filters[0]=FilterConstants.COMPLETED;
-            }else{
-                filters[0]=FilterConstants.NOT_COMPLETED;
+                return countByNameQuery(AnnounceCompletedVO.FINDBYUSER,AnnounceMasterVO.class,userId,USER_PARAM,pageBy, null);
             }
-            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,USER_PARAM,pageBy, filters);
+            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,USER_PARAM,pageBy, null);
         }
 
         return 0;
@@ -163,7 +161,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AnnounceVO> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception {
+    public List<?> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception {
 
         UserVO user = userDAO.findById(userId);
         if (user == null) {
@@ -172,12 +170,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         filters = new String[1];
         if(status == StatusEnum.COMPLETED){
-            filters[0]=FilterConstants.COMPLETED;
-        }else{
-            filters[0]=FilterConstants.NOT_COMPLETED;
+            return findBySqlQuery(AnnounceCompletedVO.SQL_FIND_BY_USER, AnnounceMasterVO.class, userId,USER_PARAM, pageBy,null);
         }
 
-        return findBySqlQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId,USER_PARAM, pageBy,filters);
+        return findBySqlQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId,USER_PARAM, pageBy,null);
     }
 
 
@@ -433,7 +429,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if (BooleanUtils.isFalse(isCreate)){
 
             sumQtyRes=checkQtyReservations(announce.getId(),false);
-            // Il y a deja des reservations faites sur l'annonce
+            // Il y a deja des reservations acceptées  sur l'annonce
 
             if(sumQtyRes.compareTo(BigDecimal.ZERO)>0 && BigDecimalUtils.lessThan(weight, sumQtyRes)){
                 throw new AnnounceException("Impossible de reduire la quantité , car il existe des resevations pour une quantité ["+sumQtyRes+"] Kg");

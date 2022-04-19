@@ -11,10 +11,8 @@ import javax.persistence.Entity;
 
 
 @Entity
-@DiscriminatorValue("VALID")
+@DiscriminatorValue("COMPLETED")
 //@Where(clause = FilterConstants.FILTER_ANNOUNCE_CANC_COMPLETED)
-public class AnnounceVO extends AnnounceMasterVO {
-
-
+public class AnnounceCompletedVO extends AnnounceMasterVO {
 
 }

@@ -1,6 +1,6 @@
 package cm.travelpost.tp.message.ent.vo;
 
-import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.common.ent.vo.CommonVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.user.ent.vo.UserVO;
@@ -49,7 +49,7 @@ public class MessageVO extends CommonVO {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "R_ANNOUNCE", referencedColumnName = "ID", updatable = false)
     @JsonBackReference
-    private AnnounceVO announce;
+    private AnnounceMasterVO announce;
 
     @Basic(optional = false)
     @Column(name = "CONTENT", nullable = false)
@@ -77,7 +77,7 @@ public class MessageVO extends CommonVO {
         return content;
     }
 
-    public AnnounceVO getAnnounce() {
+    public AnnounceMasterVO getAnnounce() {
         return announce;
     }
 
@@ -91,7 +91,7 @@ public class MessageVO extends CommonVO {
         setUserId(user.getId());
     }
 
-    public void setAnnounce(AnnounceVO announce) {
+    public void setAnnounce(AnnounceMasterVO announce) {
         this.announce = announce;
     }
 

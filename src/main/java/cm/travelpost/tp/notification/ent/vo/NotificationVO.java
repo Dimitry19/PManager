@@ -11,6 +11,8 @@ import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.constant.FieldConstants;
 import cm.travelpost.tp.notification.enums.NotificationType;
 import cm.travelpost.tp.user.ent.vo.UserVO;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -19,7 +21,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "notification")
+@Filters({
+        @Filter(name = FilterConstants.CANCELLED)
 
+        //@Filter(name = FilterConstants.ACTIVE_MBR_WORK)
+})
 @Where(clause = FilterConstants.FILTER_NOTIFICATION_CANC_COMPLETED)
 public class NotificationVO extends CommonVO {
 

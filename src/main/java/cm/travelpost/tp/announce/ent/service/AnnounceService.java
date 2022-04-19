@@ -25,7 +25,7 @@ public interface AnnounceService extends InitializingBean {
 
     List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws AnnounceException,Exception;
 
-    List<AnnounceVO> announcesByUser(Long userId, StatusEnum status,PageBy pageBy) throws AnnounceException,Exception;
+    List<?> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception;
 
     List<AnnounceVO> announcesBy(Object o, PageBy pageBy) throws AnnounceException,Exception;
 

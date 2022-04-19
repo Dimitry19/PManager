@@ -52,6 +52,8 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     private static final MathContext MATH_CONTEXT = new MathContext(2, RoundingMode.HALF_UP);
 
 
+
+
     protected static final String SELECT_FROM = " select elt  FROM";
     protected static final String SELECT  = " select elt  ";
     protected static final String FROM = " FROM ";
@@ -503,8 +505,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         query.setParameter(paramName, id);
 
         pageBy(query, pageBy);
-        List results = query.list();
-        return CollectionsUtils.size(results);
+        return CollectionsUtils.size(query.list());
     }
 
     @Override

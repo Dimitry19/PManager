@@ -239,7 +239,7 @@ public class AnnounceController extends CommonController {
 
             if (userId != null) {
                 int count = announceService.count(userId,status,pageBy);
-                List<AnnounceVO> announces = announceService.announcesByUser(userId,status,pageBy);
+                List announces = announceService.announcesByUser(userId,status,pageBy);
                 return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
 
             } else {

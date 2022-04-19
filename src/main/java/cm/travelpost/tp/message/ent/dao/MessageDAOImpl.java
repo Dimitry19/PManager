@@ -199,7 +199,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
 
         MessageVO comment= (MessageVO) obj;
         UserVO user= comment.getUser();
-        AnnounceVO announce=comment.getAnnounce();
+        AnnounceVO announce=(AnnounceVO)comment.getAnnounce();
         UserVO announceUser=announce.getUser();
 
         Set subscribers=new HashSet();

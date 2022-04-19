@@ -135,3 +135,7 @@ WHERE (A.R_USER_ID = U.ID)
  create view v_announce_completed as
  select * from announce
  where status = 'COMPLETED';
+
+
+create view v_message_completed as
+select * from message
