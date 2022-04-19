@@ -2,11 +2,12 @@ package cm.travelpost.tp.security;
 
 
 import cm.travelpost.tp.configuration.filters.AuthenticationFilter;
-import cm.travelpost.tp.security.jwt.config.JwtAuthenticationEntryPoint;
+import cm.travelpost.tp.configuration.filters.SessionFilter;
 import cm.travelpost.tp.websocket.constants.WebSocketConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,7 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -27,13 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
-    @Autowired
-    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
-    @Autowired
-    AuthenticationFilter authenticationFilter;
-
-
     private static final String[] AUTH_LIST = {
             "/v2/api-docs",
             "/configuration/ui",
@@ -42,13 +35,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui.html",
             "/ws/**",
             "/webjars/**",
-            "/authenticate",
             WebSocketConstants.END_POINT
     };
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+       /* http.csrf().disable();
+        http.httpBasic().disable().requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();*/
+
+       logger.info("into configure");
+//        http.csrf().disable();
+//        http.httpBasic().disable();
 
         http
         .authorizeRequests()
@@ -69,9 +69,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .requiresChannel()
                 .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
                 .requiresSecure();
-        http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                //.addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class);
 
 
+
+            /* http
+                .cors()
+                .and()
+                .headers()
+                .frameOptions().disable()
+                .and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/stomp").permitAll() // On autorise l'appel handshake entre le client et le serveur
+                .anyRequest()
+                .authenticated();*/
     }
 
     @Bean
@@ -85,7 +97,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -95,9 +106,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-       // auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
 
     }
 
+    @Bean
+    public FilterRegistrationBean  authenticationFilterBean() {
+        FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+
+        registrationBean.setFilter(authenticationFilter);
+        registrationBean.addUrlPatterns("/user/*");
+        registrationBean.setOrder(2); //set precedence
+        return registrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean  sessionFilterBean() {
+        FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
+        SessionFilter sessionFilter = new SessionFilter();
+
+        registrationBean.setFilter(sessionFilter);
+        registrationBean.addUrlPatterns("/user/*");
+        registrationBean.setOrder(2);
+        return registrationBean;
+    }
 
 }

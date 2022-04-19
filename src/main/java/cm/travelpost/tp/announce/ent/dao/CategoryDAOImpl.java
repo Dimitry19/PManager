@@ -19,8 +19,8 @@ public class CategoryDAOImpl extends CommonGenericDAO implements CategoryDAO {
     public CategoryVO findByCode(String code) throws ResourceNotFoundException {
 
         if (StringUtils.isEmpty(code)) return null;
-        CategoryVO category = (CategoryVO) findById(CategoryVO.class, code.toUpperCase());
-        return category;
+        return(CategoryVO) findById(CategoryVO.class, code.toUpperCase());
+
     }
 
     @Override

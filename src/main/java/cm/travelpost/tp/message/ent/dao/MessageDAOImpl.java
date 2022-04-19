@@ -153,7 +153,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
     @Override
     public MessageVO findById(MessageIdVO id) throws BusinessResourceException {
         logger.info("Message: findBy");
-        return  (MessageVO) findById(MessageVO.class, id);
+       return  (MessageVO) findById(MessageVO.class, id);
 
     }
 
@@ -199,7 +199,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
 
         MessageVO comment= (MessageVO) obj;
         UserVO user= comment.getUser();
-        AnnounceVO announce=comment.getAnnounce();
+        AnnounceVO announce=(AnnounceVO)comment.getAnnounce();
         UserVO announceUser=announce.getUser();
 
         Set subscribers=new HashSet();
@@ -211,7 +211,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
 
         if(CollectionsUtils.isNotEmpty(announce.getMessages())) {
             announce.getMessages().stream().filter(m->m.getUser()!=null && notSame(m.getUser().getId(),user.getId()) && m.getUser().isEnableNotification()).forEach(m->
-                    subscribers.add(m.getUser()));
+                subscribers.add(m.getUser()));
         }
 
         if(same(announceUser.getId(),user.getId())){

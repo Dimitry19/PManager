@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 
 @Entity(name = "MessageVO")
-@Table(name = "MESSAGE")
+@Table(name = "message")
 @NamedQueries({
         @NamedQuery(name = MessageVO.FINDALL, query = "select m from MessageVO m "),
         @NamedQuery(name = MessageVO.FIND_BY_ANNOUNCE, query = "select m from MessageVO m where m.announce.id =: announceId order by m.dateCreated asc"),
@@ -50,6 +50,7 @@ public class MessageVO extends CommonVO {
     @JoinColumn(name = "R_ANNOUNCE", referencedColumnName = "ID", updatable = false)
     @JsonBackReference
     private AnnounceVO announce;
+
 
     @Basic(optional = false)
     @Column(name = "CONTENT", nullable = false)

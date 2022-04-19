@@ -13,6 +13,7 @@ import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public interface UserService {
 
     UserVO updateUser(UpdateUserDTO userDTO) throws Exception;
 
-    // UserVO updateImage(Long userId, MultipartFile multipartFile) throws UserException, IOException;
+   // UserVO updateImage(Long userId, MultipartFile multipartFile) throws UserException, IOException;
 
     boolean managePassword(String email) throws Exception, UserException, IOException, MailjetSocketTimeoutException, MailjetException, MessagingException;
 

@@ -4,13 +4,18 @@ import java.math.BigDecimal;
 
 public class BigDecimalUtils {
 
+
+
+    private BigDecimalUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static BigDecimal convertStringToBigDecimal(String value) {
 
         if (StringUtils.isEmpty(value)) return null;
 
         return new BigDecimal(value);
     }
-
 
     /**
      * Retourne true si la valeur du premier argument est superieure à celle du second

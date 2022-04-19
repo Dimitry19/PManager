@@ -4,17 +4,20 @@ package cm.travelpost.tp.announce.ent.vo;
 import cm.travelpost.tp.common.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AnnounceInfo {
+public class AnnounceInfo implements Serializable {
+    private static final long serialVersionUID = 1905122041950251207L;
 
 
     private Long id;
     private String departure;
     private String arrival;
+    private String warning;
 
 
     @JsonFormat(pattern = DateUtils.STD_PATTERN)
@@ -45,6 +48,7 @@ public class AnnounceInfo {
         this.weight = announce.getWeight();
         this.remainWeight = announce.getRemainWeight();
         this.countReservation = announce.getCountReservation();
+        this.warning=announce.getWarning();
         this.categories.addAll(announce.getCategories());
     }
 
@@ -143,4 +147,7 @@ public class AnnounceInfo {
     public void setCountReservation(Integer countReservation) {
         this.countReservation = countReservation;
     }
+    public String getWarning() {  return warning; }
+
+    public void setWarning(String warning) {  this.warning = warning; }
 }

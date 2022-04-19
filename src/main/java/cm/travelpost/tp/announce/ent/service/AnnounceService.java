@@ -2,6 +2,7 @@ package cm.travelpost.tp.announce.ent.service;
 
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.common.ent.vo.PageBy;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
@@ -24,6 +25,8 @@ public interface AnnounceService extends InitializingBean {
 
     List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws AnnounceException,Exception;
 
+    List<?> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception;
+
     List<AnnounceVO> announcesBy(Object o, PageBy pageBy) throws AnnounceException,Exception;
 
     AnnounceVO announce(Long id) throws AnnounceException,Exception;
@@ -35,6 +38,8 @@ public interface AnnounceService extends InitializingBean {
     Page announces(Pageable pageable) throws AnnounceException,Exception;
 
     int count(Object o,PageBy pageBy) throws AnnounceException,Exception;
+
+    int count(Object o, StatusEnum status,PageBy pageBy) throws AnnounceException,Exception;
 
     void afterPropertiesSet() throws Exception;
 

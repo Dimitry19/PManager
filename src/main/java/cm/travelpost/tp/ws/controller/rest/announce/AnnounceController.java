@@ -6,9 +6,11 @@ import cm.travelpost.tp.announce.enums.Source;
 import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.enums.AnnounceType;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.TransportEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
+import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
@@ -47,6 +49,7 @@ public class AnnounceController extends CommonController {
 
     protected final Log logger = LogFactory.getLog(AnnounceController.class);
 
+    private static  final String ANNOUNCE_LABEL ="L'annonce";
 
     /**
      * Cette methode cree une annonce
@@ -81,12 +84,9 @@ public class AnnounceController extends CommonController {
                 announce = announceService.create(ar);
 
                 if (announce != null) {
-                    announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "L'annonce"));
+                    announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, ANNOUNCE_LABEL));
                     announce.setRetCode(WebServiceResponseCode.OK_CODE);
 
-                    if(imageCheck(announce.getImage())){
-                        //manageImage(response,announce.getImage().getName(),announce.getImage().getPicByte());
-                    }
                     return new ResponseEntity<>(announce, HttpStatus.CREATED);
                 }
             }
@@ -100,7 +100,7 @@ public class AnnounceController extends CommonController {
         }
         WSCommonResponseVO  commonResponse= new WSCommonResponseVO();
         commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-        commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "L'annonce"));
+        commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, ANNOUNCE_LABEL));
         return new ResponseEntity<>(commonResponse, HttpStatus.NOT_ACCEPTABLE);
     }
 
@@ -126,12 +126,14 @@ public class AnnounceController extends CommonController {
             AnnounceVO announce = announceService.update(uar);
             if (announce != null) {
                 announce.setRetCode(WebServiceResponseCode.OK_CODE);
-                announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "L'annonce"));
+                if(StringUtils.isEmpty(announce.getRetDescription())){
+                    announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, ANNOUNCE_LABEL));
+                }
                 return new ResponseEntity<>(announce, HttpStatus.OK);
             } else {
                 WSCommonResponseVO  commonResponse = new WSCommonResponseVO();
                 commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "L'annonce"));
+                commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, ANNOUNCE_LABEL));
                 return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
             }
         } catch (AnnounceException e) {
@@ -173,10 +175,10 @@ public class AnnounceController extends CommonController {
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
 
-        logger.info("find  announces request in");
+        logger.info("Search  announces request in");
 
         try {
-            createOpentracingSpan("AnnounceController -find");
+            createOpentracingSpan("AnnounceController -search");
 
             if (dto != null) {
 
@@ -192,7 +194,7 @@ public class AnnounceController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.PRECONDITION_FAILED);
+        return new ResponseEntity<>(paginateResponse, headers, HttpStatus.PRECONDITION_FAILED);
     }
 
     /**
@@ -216,8 +218,8 @@ public class AnnounceController extends CommonController {
                     response = ResponseEntity.class, responseContainer = "List")})
     @GetMapping(value = BY_USER, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announcesByUser(HttpServletResponse response, HttpServletRequest request,
-                                                            @RequestParam @Valid Long userId,
-                                                            @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
+                                                            @RequestParam @Valid Long userId, @RequestParam StatusEnum status,
+                                                            @RequestParam(required = false, defaultValue = DEFAULT_PAGE)@Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException, Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -231,9 +233,13 @@ public class AnnounceController extends CommonController {
         try {
             createOpentracingSpan("AnnounceController -announcesByUser");
 
+            if(status ==null){
+                status =StatusEnum.VALID;
+            }
+
             if (userId != null) {
-                int count = announceService.count( userId,pageBy);
-                List<AnnounceVO> announces = announceService.announcesByUser(userId, pageBy);
+                int count = announceService.count(userId,status,pageBy);
+                List announces = announceService.announcesByUser(userId,status,pageBy);
                 return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
 
             } else {
@@ -246,7 +252,7 @@ public class AnnounceController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+        return new ResponseEntity<>(paginateResponse, headers, HttpStatus.OK);
     }
 
 
@@ -367,20 +373,7 @@ public class AnnounceController extends CommonController {
             logger.info("delete request in");
             createOpentracingSpan("AnnounceController -delete");
 
-            if (id != null) {
-                if (announceService.delete(id)) {
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "L'annonce"));
-
-                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-
-                } else {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, "L'annonce"));
-
-                }
-            }
-            return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
+            return getResponseDeleteResponseEntity(id, pmResponse, announceService.delete(id), ANNOUNCE_LABEL);
         } catch (AnnounceException e) {
             logger.error("Erreur durant l'elimination de l'annonce {}", e);
             throw e;
@@ -407,8 +400,8 @@ public class AnnounceController extends CommonController {
                 if (announce == null) {
                     WSCommonResponseVO wsResponse = new WSCommonResponseVO();
                     wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, "L'annonce"));
-                    return new ResponseEntity<>((Object) wsResponse, HttpStatus.NOT_FOUND);
+                    wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
+                    return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
                 }
 
             }
@@ -418,7 +411,7 @@ public class AnnounceController extends CommonController {
             if(source.equals(Source.NOTIFICATION)){
                 WSCommonResponseVO wsResponse = new WSCommonResponseVO();
                 wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, "L'annonce"));
+                wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
                 return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
             }
             throw e;
@@ -492,7 +485,6 @@ public class AnnounceController extends CommonController {
         if(CollectionsUtils.isNotEmpty(announce)){
             announces.addAll(announce);
         }
-
     }
 
 }

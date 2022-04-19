@@ -6,6 +6,8 @@ import cm.travelpost.tp.common.mail.ent.vo.ContactUSVO;
 import cm.travelpost.tp.common.mail.ent.wrapper.MailWrapper;
 import com.sun.mail.smtp.SMTPSendFailedException;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -32,14 +34,16 @@ import java.util.*;
 @Transactional
 public class IGoogleMailSenderServiceImpl extends CommonMailSenderService implements IGoogleMailSenderService {
 
-
+	protected final Log log = LogFactory.getLog(IGoogleMailSenderServiceImpl.class);
 
 	@Autowired
 	private PersonalMailSender personalMailSender;
 
 	@Override
 	public void sendMail() {
-
+		if(log.isDebugEnabled()){
+			log.info("Send mail method");
+		}
 	}
 
 	@Override
@@ -72,10 +76,6 @@ public class IGoogleMailSenderServiceImpl extends CommonMailSenderService implem
 
 		String emailTemplateString = buildTemplateMail(templateName,messageSubject,message,variableLabel);
 
-
-		//MimeMessage mimeMessage=createEmails(to,personalMailSender.getDefaultContactUs(),messageSubject,message, emailTemplateString);
-
-		//sendMessage(new Gmail(), personalMailSender.getDefaultContactUs(),mimeMessage);
 		SimpleMailMessage smm =mailToSend(emailTemplateString,messageSubject,to,cc,bcc,from,from,replyToEnabled);
 
 		personalMailSender.send(smm);
@@ -293,12 +293,16 @@ public class IGoogleMailSenderServiceImpl extends CommonMailSenderService implem
      * @return
      */
     private File convert(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
-        return convFile;
+
+		File convFile = new File(file.getOriginalFilename());
+		convFile.createNewFile();
+        try(FileOutputStream fos = new FileOutputStream(convFile)){
+			fos.write(file.getBytes());
+			return convFile;
+		}catch (IOException e){
+			log.error ("File conversion error");
+			throw e;
+		}
     }
 
     private File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException {
@@ -306,7 +310,4 @@ public class IGoogleMailSenderServiceImpl extends CommonMailSenderService implem
         multipart.transferTo(convFile);
         return convFile;
     }
-
-
-
 }

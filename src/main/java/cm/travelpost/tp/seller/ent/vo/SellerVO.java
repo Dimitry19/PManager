@@ -5,6 +5,6 @@ import javax.persistence.DiscriminatorColumn;
 /**
  *
  */
-@DiscriminatorColumn
+@DiscriminatorColumn()
 public class SellerVO {
 }

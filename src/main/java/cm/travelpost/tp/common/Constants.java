@@ -13,12 +13,6 @@ public class Constants {
     public static final String SUBJECT = "SUBJECT";
     public static final String DEFAULT_TOKEN = "PM";
 
-    public static final String AND = " and ";
-    public static final String OR = " or ";
-
-
-
-
     public static final int CONTENT_LENGTH = 500;
     public static final int EMAIL_LENGTH = 50;
 

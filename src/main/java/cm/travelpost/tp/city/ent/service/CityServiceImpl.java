@@ -6,6 +6,8 @@ import cm.travelpost.tp.city.ent.vo.CityVO;
 import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.ws.requests.CommonDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,8 @@ import java.util.List;
 @Service("cityService")
 @Transactional
 public class CityServiceImpl implements CityService {
+
+    private static Logger log = LoggerFactory.getLogger(CityServiceImpl.class);
 
     @Autowired
     CityDAO dao;
@@ -71,11 +75,11 @@ public class CityServiceImpl implements CityService {
     }
 
     public void afterPropertiesSet() throws AnnounceException {
-        System.out.println("Init method after properties are set : ");
+        log.info("Init method after properties are set : ");
     }
 
     public void destroy() throws Exception {
-        System.out.println("Spring Container is destroy! Customer clean up");
+      log.info("Spring Container is destroy! Customer clean up");
     }
 
 

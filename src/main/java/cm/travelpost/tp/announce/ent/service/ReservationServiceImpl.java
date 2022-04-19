@@ -12,12 +12,14 @@ import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.ws.requests.announces.ReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.ValidateReservationDTO;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static cm.framework.ds.hibernate.enums.FindBy.ANNOUNCE;
+import static cm.framework.ds.hibernate.enums.FindBy.USER;
 
 @Service
 @Transactional
@@ -54,10 +56,10 @@ public class ReservationServiceImpl extends Generic implements ReservationServic
     @Override
     public int count(Long id, PageBy pageBy, FindBy findBy, ReservationType type) throws Exception {
 
-        switch (findBy){
-            case ANNOUNCE:
+        if (findBy == ANNOUNCE){
+
                 return dao.countByNameQuery(ReservationVO.FIND_BY_ANNOUNCE, ReservationVO.class, id, ANNOUNCE_PARAM, pageBy);
-            case USER:
+        }else if( findBy == USER){
                 if(type == null || type == ReservationType.CREATED ){
                     return dao.countByNameQuery(ReservationVO.FIND_BY_USER, ReservationVO.class, id, USER_PARAM, pageBy) ;
                 }

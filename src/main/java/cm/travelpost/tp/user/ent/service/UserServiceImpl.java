@@ -181,8 +181,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws UserException {
-        return userDAO.find(userSeachDTO, pageBy);
+    public List<UserVO> search(UserSeachDTO userSeachDTO, PageBy pageBy) throws UserException {
+        return userDAO.search(userSeachDTO, pageBy);
     }
 
     @Transactional(rollbackFor = UserException.class)
@@ -217,9 +217,9 @@ public class UserServiceImpl implements UserService {
 
         String title= MessageFormat.format(MailType.PASSWORD_TEMPLATE,MailType.PASSWORD_TEMPLATE_TITLE);
 
-        googleMailSenderService.sendMail(title,emails,null,null,personalMailSender.getTravelPostPseudo(),user.getUsername(),decrypt,false);
+         googleMailSenderService.sendMail(title,emails,null,null,personalMailSender.getTravelPostPseudo(),user.getUsername(),decrypt,false);
 
-        return personalMailSender.send(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, null, decrypt),
+         return personalMailSender.send(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, null, decrypt),
                 emailTo, null,null,personalMailSender.getTravelPostPseudo(),null,false,null);
     }
 

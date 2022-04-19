@@ -11,6 +11,8 @@ import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.constant.FieldConstants;
 import cm.travelpost.tp.notification.enums.NotificationType;
 import cm.travelpost.tp.user.ent.vo.UserVO;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -18,8 +20,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "NOTIFICATION")
+@Table(name = "notification")
+@Filters({
+        @Filter(name = FilterConstants.CANCELLED)
 
+        //@Filter(name = FilterConstants.ACTIVE_MBR_WORK)
+})
 @Where(clause = FilterConstants.FILTER_NOTIFICATION_CANC_COMPLETED)
 public class NotificationVO extends CommonVO {
 
@@ -57,7 +63,7 @@ public class NotificationVO extends CommonVO {
 
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinTable(name = "USER_NOTIFICATION", joinColumns = @JoinColumn(name = "NOTIFICATIONS_ID"),
+    @JoinTable(name = "user_notification", joinColumns = @JoinColumn(name = "NOTIFICATIONS_ID"),
             inverseJoinColumns = @JoinColumn(name = "USERS_ID"))
     private Set<UserVO> users = new HashSet();
 

@@ -57,28 +57,15 @@ public class MailController extends CommonController {
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                 pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
                 response.setStatus(200);
-                return new ResponseEntity<Response>(pmResponse, HttpStatus.OK);
+                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 
             }else{
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,"Veuillez reessayez plutard , Merci!"));
                 response.setStatus(503);
-                return new ResponseEntity<Response>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
+                return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
             }
 
-
-         /*   if (mailSenderSendGrid.manageResponse(sent)) {
-
-                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
-                response.setStatus(200);
-
-                return pmResponse;
-            } else {
-                pmResponse.setRetCode(sent.getStatusCode());
-                pmResponse.setRetDescription(sent.getBody());
-                response.setStatus(sent.getStatusCode());
-            }*/
         } catch (Exception e) {
             return getResponseMailResponseEntity(pmResponse, e,"Veuillez reessayez plutard , Merci!");
         } finally {

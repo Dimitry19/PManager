@@ -68,7 +68,7 @@ public class QuartzCronConfiguration {
     }
 
     public static SimpleTriggerFactoryBean createTrigger(JobDetail jobDetail, long pollFrequencyMs, String triggerName) {
-        log.debug("createTrigger(jobDetail={}, pollFrequencyMs={}, triggerName={})", jobDetail.toString(), pollFrequencyMs, triggerName);
+        log.debug("createTrigger(jobDetail={}, pollFrequencyMs={}, triggerName={})", jobDetail, pollFrequencyMs, triggerName);
 
         SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
         factoryBean.setJobDetail(jobDetail);
@@ -82,7 +82,7 @@ public class QuartzCronConfiguration {
     }
 
     public static CronTriggerFactoryBean createCronTrigger(JobDetail jobDetail, String cronExpression, String triggerName) {
-        log.debug("createCronTrigger(jobDetail={}, cronExpression={}, triggerName={})", jobDetail.toString(), cronExpression, triggerName);
+        log.debug("createCronTrigger(jobDetail={}, cronExpression={}, triggerName={})", jobDetail, cronExpression, triggerName);
 
         // To fix an issue with time-based cron jobs
         Calendar calendar = Calendar.getInstance();

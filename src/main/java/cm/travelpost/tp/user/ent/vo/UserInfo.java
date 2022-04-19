@@ -5,9 +5,11 @@ import cm.travelpost.tp.common.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class UserInfo {
+public class UserInfo implements Serializable {
+    private static final long serialVersionUID = 1905122041532201207L;
 
     private Long id;
 

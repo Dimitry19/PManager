@@ -1,6 +1,7 @@
 package cm.framework.ds.hibernate.utils;
 
 
+import cm.framework.ds.hibernate.utils.QueryUtils.OperatorEnum;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -12,7 +13,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Stack;
-import cm.framework.ds.hibernate.utils.QueryUtils.OperatorEnum;
 
 
 public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
@@ -509,14 +509,7 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 		return this;
 	}
 
-	/*public HQLBuilder setPage(PageBy pageBy) {
-		this.pageBy = pageBy;
-		return this;
-	}
 
-	public PageBy getPage() {
-		return this.pageBy;
-	}*/
 	public QueryBuilder and() {
 		this.checkAppendAnd();
 		return this;

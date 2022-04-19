@@ -42,6 +42,7 @@ import static cm.travelpost.tp.constant.WSConstants.*;
 public class ReservationController extends CommonController {
 
 
+    private static final String RESERVATION_LABEL = "La reservation";
     protected final Log logger = LogFactory.getLog(ReservationController.class);
 
     @ApiOperation(value = "create an reservation ", response = ReservationVO.class)
@@ -66,12 +67,12 @@ public class ReservationController extends CommonController {
             if (reservation == null) {
 
                 reservation = new ReservationVO();
-                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "La reservation"));
+                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, RESERVATION_LABEL));
                 reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
 
                 return new ResponseEntity<>(reservation, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
-                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "La reservation"));
+                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, RESERVATION_LABEL));
                 reservation.setRetCode(WebServiceResponseCode.OK_CODE);
             }
 
@@ -114,7 +115,7 @@ public class ReservationController extends CommonController {
 
                 reservation = new ReservationVO();
                 reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
-                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "La reservation"));
+                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, RESERVATION_LABEL));
 
                 return new ResponseEntity<>(reservation, HttpStatus.NOT_FOUND);
             }
@@ -143,14 +144,14 @@ public class ReservationController extends CommonController {
             if (reservationService.deleteReservation(id)) {
 
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La reservation"));
+                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, RESERVATION_LABEL));
 
                 return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 
             } else {
 
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, "La reservation"));
+                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, RESERVATION_LABEL));
 
             }
             return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
@@ -232,7 +233,7 @@ public class ReservationController extends CommonController {
                 reservation = new ReservationVO();
                 response.setStatus(org.apache.http.HttpStatus.SC_NOT_FOUND);
                 reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
-                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "La reservation"));
+                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, RESERVATION_LABEL));
 
             }
             return new ResponseEntity<>(reservation, HttpStatus.NOT_FOUND);
@@ -263,7 +264,7 @@ public class ReservationController extends CommonController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Successful retrieval",
                     response = ResponseEntity.class, responseContainer = "List")})
-    @RequestMapping(value = BY_USER, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = BY_USER,  headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<PaginateResponse> reservationsByUser(HttpServletResponse response, HttpServletRequest request,
                                                                @RequestParam @Valid long userId,
                                                                @RequestParam @Valid ReservationType type,
@@ -282,7 +283,7 @@ public class ReservationController extends CommonController {
             createOpentracingSpan("ReservationController -reservationsByUser");
             PaginateResponse res = new PaginateResponse();
             int count = reservationService.count(userId, null, FindBy.USER,type);
-            reservations = reservationService.reservationsByUser(userId, type, pageBy);
+            reservations =reservationService.reservationsByUser(userId, type, pageBy);
 
             if (CollectionsUtils.isNotEmpty(reservations)) {
                 res.setCount(CollectionsUtils.size(reservations));
@@ -290,7 +291,7 @@ public class ReservationController extends CommonController {
             }
             headers.add(HEADER_TOTAL, Long.toString(count));
 
-            return new ResponseEntity<PaginateResponse>(res, headers, HttpStatus.OK);
+            return new ResponseEntity<>(res, headers, HttpStatus.OK);
         } catch (Exception e) {
             logger.info(" ReservationController - reservationsByUser:Exception occurred while fetching the response from the database.", e);
             throw e;
@@ -343,7 +344,7 @@ public class ReservationController extends CommonController {
                 headers.add(HEADER_TOTAL, Long.toString(reservations.size()));
             }
 
-            return new ResponseEntity<PaginateResponse>(paginateResponse, headers, HttpStatus.OK);
+            return new ResponseEntity<>(paginateResponse, headers, HttpStatus.OK);
 
         } catch (Exception e) {
             logger.info(" ReservationController - reservationsByAnnounce:Exception occurred while fetching the response from the database.", e);
