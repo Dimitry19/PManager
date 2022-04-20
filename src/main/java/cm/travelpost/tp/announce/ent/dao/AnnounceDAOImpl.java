@@ -168,7 +168,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             throw new UserException("Aucun utilisateur trouvé avec cet id " + userId);
         }
 
-        filters = new String[1];
         if(status == StatusEnum.COMPLETED){
             return findBySqlQuery(AnnounceCompletedVO.SQL_FIND_BY_USER, AnnounceCompletedVO.class, userId,USER_PARAM, pageBy,null);
         }

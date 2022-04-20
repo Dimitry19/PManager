@@ -1,6 +1,6 @@
 package cm.travelpost.tp.message.ent.vo;
 
-import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceCompletedVO;
 import cm.travelpost.tp.common.ent.vo.CommonVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.user.ent.vo.UserVO;
@@ -17,24 +17,24 @@ import java.util.Objects;
  *
  */
 
-@Entity(name = "MessageVO")
-@Table(name = "message")
+@Entity
+@Table(name = "v_message_completed")
 @NamedQueries({
-        @NamedQuery(name = MessageVO.FINDALL, query = "select m from MessageVO m "),
-        @NamedQuery(name = MessageVO.FIND_BY_ANNOUNCE, query = "select m from MessageVO m where m.announce.id =: announceId order by m.dateCreated asc"),
-        @NamedQuery(name = MessageVO.GET_ID_SQL, query = "select max(m.id.id) from MessageVO m ")
+        @NamedQuery(name = MessageCompletedVO.FINDALL, query = "select m from MessageCompletedVO m "),
+        @NamedQuery(name = MessageCompletedVO.FIND_BY_ANNOUNCE, query = "select m from MessageCompletedVO m where m.announceCompleted.id =: announceId order by m.dateCreated asc"),
+        @NamedQuery(name = MessageCompletedVO.GET_ID_SQL, query = "select max(m.id.id) from MessageCompletedVO m ")
 })
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
 })
 @Where(clause= FilterConstants.FILTER_WHERE_MESSAGE_CANCELLED)
-public class MessageVO extends CommonVO {
+public class MessageCompletedVO extends CommonVO {
 
-    public static final String FINDALL = "cm.travelpost.tp.message.ent.vo.MessageVO.findAll";
+    public static final String FINDALL = "cm.travelpost.tp.message.ent.vo.MessageCompletedVO.findAll";
 
-    public static final String FIND_BY_ANNOUNCE = "cm.travelpost.tp.message.ent.vo.MessageVO.findByAnnounce";
+    public static final String FIND_BY_ANNOUNCE = "cm.travelpost.tp.message.ent.vo.MessageCompletedVO.findByAnnounce";
 
-    public final static String GET_ID_SQL = "cm.travelpost.tp.message.ent.vo.MessageVO.getId";
+    public final static String GET_ID_SQL = "cm.travelpost.tp.message.ent.vo.MessageCompletedVO.getId";
 
     private static final long serialVersionUID = 1L;
 
@@ -49,8 +49,7 @@ public class MessageVO extends CommonVO {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "R_ANNOUNCE", referencedColumnName = "ID", updatable = false)
     @JsonBackReference
-    private AnnounceVO announce;
-
+    private AnnounceCompletedVO announceCompleted;
 
     @Basic(optional = false)
     @Column(name = "CONTENT", nullable = false)
@@ -78,8 +77,8 @@ public class MessageVO extends CommonVO {
         return content;
     }
 
-    public AnnounceVO getAnnounce() {
-        return announce;
+    public AnnounceCompletedVO getAnnounceCompleted() {
+        return announceCompleted;
     }
 
     public UserVO getUser() {
@@ -92,8 +91,8 @@ public class MessageVO extends CommonVO {
         setUserId(user.getId());
     }
 
-    public void setAnnounce(AnnounceVO announce) {
-        this.announce = announce;
+    public void setAnnounceCompleted(AnnounceCompletedVO announce) {
+        this.announceCompleted = announce;
     }
 
     public void setContent(String content) {
@@ -124,7 +123,7 @@ public class MessageVO extends CommonVO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MessageVO messageVO = (MessageVO) o;
+        MessageCompletedVO messageVO = (MessageCompletedVO) o;
         return Objects.equals(content, messageVO.content) && username.equals(messageVO.username) && id.equals(messageVO.id);
     }
 

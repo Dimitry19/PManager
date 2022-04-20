@@ -132,10 +132,16 @@ WHERE (A.R_USER_ID = U.ID)
   AND (A.ID = R.R_ANNOUNCE_ID);
 
 
+
  create view v_announce_completed as
  select * from announce
  where status = 'COMPLETED';
 
 
+
+drop view if exists v_message_completed;
+
 create view v_message_completed as
-select * from message
+select m.* from message m
+inner join v_announce_completed vac
+on m.R_ANNOUNCE = vac.ID;
