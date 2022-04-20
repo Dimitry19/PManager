@@ -149,7 +149,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
         if (reservation == null) {
             throw new Exception("Reservation non trouve");
         }
-        AnnounceVO announce = reservation.getAnnounce();
+        AnnounceMasterVO announce = reservation.getAnnounce();
 
         BigDecimal oldWeight=reservation.getWeight();
         if (BigDecimalUtils.lessThan(reservation.getWeight(), reservationDTO.getWeight())) {
@@ -199,7 +199,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
             throw new Exception("Impossible d'eliminer cette reservation car déjà validée");
         }
 
-        AnnounceVO announce = reservation.getAnnounce();
+        AnnounceMasterVO announce = reservation.getAnnounce();
         announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
         update(announce);
 

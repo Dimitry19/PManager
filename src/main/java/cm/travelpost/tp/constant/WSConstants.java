@@ -66,6 +66,7 @@ public class WSConstants extends CommonProperties {
     public static final String ANNOUNCES_WS = "/announces";
     public static final String ANNOUNCE_WS_USER_ID_PAGE_NO = "/announces/{pageno}";
     public static final String ANNOUNCE_WS_BY_ID_AND_SOURCE = "/announce";
+    public static final String ANNOUNCE_WS_COMPLETED_BY_ID = "/announceCompleted";
     public static final String ANNOUNCE_WS_BY_TYPE = "/type";
     public static final String ANNOUNCE_WS_BY_TRANSPORT = "/transport";
     public static final String ANNOUNCE_WS_ALL = "/all";

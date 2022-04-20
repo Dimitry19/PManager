@@ -1,7 +1,6 @@
 package cm.travelpost.tp.user.ent.vo;
 
 import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
-import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.common.ent.vo.CommonVO;
 import cm.travelpost.tp.common.enums.Gender;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
@@ -404,7 +403,7 @@ public class UserVO extends CommonVO {
     }
 
 
-    public void addAnnounce(AnnounceVO announce) {
+    public void addAnnounce(AnnounceMasterVO announce) {
         this.announces.add(announce);
         announce.setUser(this);
 
