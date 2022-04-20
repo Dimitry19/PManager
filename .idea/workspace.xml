@@ -2,37 +2,97 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/villes.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/js/villes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.5422e5647aac28de6f9f.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.5422e5647aac28de6f9f.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/scripts.3bd42039c0602d1afe84.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.a976efdd715985b2a55a.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/constancesURL.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/constancesURL.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/serviceRequest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/serviceRequest.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/app/sharedConstants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/app/sharedConstants.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/assets/js/villes.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/assets/js/villes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/src/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/awselect.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/bootstrap-slider.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/.npmignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/HELP-US-OUT.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/FontAwesome.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/animated.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/bordered-pulled.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/core.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/fixed-width.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/font-awesome.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/icons.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/larger.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/list.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/mixins.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/path.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/rotated-flipped.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/screen-reader.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/stacked.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/variables.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_animated.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_bordered-pulled.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_core.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_fixed-width.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_icons.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_larger.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_list.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_mixins.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_path.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_rotated-flipped.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_screen-reader.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_stacked.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_variables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/font-awesome.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/i18n/fr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/auto.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/avion.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/background.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/background_signin.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/cargo.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/cargo1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/find.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/loupe.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/profile.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_favicon-removebg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_favicon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_favicon1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/travel_titre.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/user-account.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/zoom-lens.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/awselect.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/bootstrap-slider.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/highlight.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/modernizr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/villes.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/background.8b867812ffb6bfb9cd9b.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/background_signin.36b5d3294bf96cdd0000.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.20fd1704ea223900efa9.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.8b43027f47b20503057d.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/fontawesome-webfont.f691f37e57f04c152e23.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.5d9e775ffb1c42ecae0f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.5d9e775ffb1c42ecae0f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/polyfills-es2015.23e4061cb9749259368f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/polyfills-es5.91bacdbb83aa65f9c411.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/runtime-es2015.a4dadbc03350107420a4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/runtime-es5.a4dadbc03350107420a4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/scripts.984748f2597b1387c72b.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sort_asc.4bba59196d7ce2619696.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sort_asc_disabled.07c018ae0160704a3290.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sort_both.8b117faa9d4dd934d6bb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sort_desc.c4196d3286cc33244c83.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/sort_desc_disabled.27ac5d1bc294b1fae056.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.ae6c453ac52546671e69.css" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -98,11 +158,8 @@
       <file leaf-file-name="GenericDAOImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
+            <state relative-caret-position="10650">
               <caret line="740" selection-start-line="740" selection-end-line="740" />
-              <folding>
-                <element signature="e#4317#4345#1" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -110,7 +167,7 @@
       <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
+            <state relative-caret-position="1335">
               <caret line="89" column="37" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
             </state>
           </provider>
@@ -128,7 +185,7 @@
       <file leaf-file-name="ReservationController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
+            <state relative-caret-position="3750">
               <caret line="284" selection-start-line="284" selection-end-line="284" />
             </state>
           </provider>
@@ -137,7 +194,7 @@
       <file leaf-file-name="ReservationDAOImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
+            <state relative-caret-position="3765">
               <caret line="285" column="64" selection-start-line="285" selection-start-column="64" selection-end-line="285" selection-end-column="64" />
             </state>
           </provider>
@@ -152,19 +209,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VALID_RESERVATION_RECEIVED.sql" pinned="false" current-in-tab="false">
-        <entry file="dbSrc:///9904b5c3/5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/VIEWS/view/VALID_RESERVATION_RECEIVED.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="18" selection-start-column="18" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MethodProxy.java" pinned="false" current-in-tab="false">
         <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.2.6.RELEASE/spring-core-5.2.6.RELEASE-sources.jar!/org/springframework/cglib/proxy/MethodProxy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
+            <state relative-caret-position="2895">
               <caret line="219" selection-start-line="219" selection-end-line="219" />
             </state>
           </provider>
@@ -173,7 +221,7 @@
       <file leaf-file-name="Views_20210207.sql" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ddl/Views_20210207.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
+            <state relative-caret-position="600">
               <caret line="40" column="7" selection-start-line="38" selection-end-line="68" selection-end-column="38" />
             </state>
           </provider>
@@ -340,7 +388,6 @@
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
-      <path value="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" />
       <path value="$PROJECT_DIR$/src/main/webapp/package.json" />
       <path value="$PROJECT_DIR$/src/main/webapp/src/assets/css/font-awesome/package.json" />
     </packageJsonPaths>
@@ -355,6 +402,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="PManager" type="58d84e3e:PackageViewProjectNode" />
+              <item name="PManager" type="616d4139:PackageViewModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -519,19 +578,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
       <pane id="Scope" />
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="PManager" type="58d84e3e:PackageViewProjectNode" />
-              <item name="PManager" type="616d4139:PackageViewModuleNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="CatdeaLogs" />
     </panes>
   </component>
@@ -799,6 +846,8 @@
       <workItem from="1649367515711" duration="12682000" />
       <workItem from="1649582093494" duration="608000" />
       <workItem from="1649744213695" duration="62785000" />
+      <workItem from="1650317339351" duration="67000" />
+      <workItem from="1650428662410" duration="199000" />
     </task>
     <task id="LOCAL-00035" summary="Amelioration du logging">
       <created>1639009044099</created>
@@ -1147,7 +1196,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="576999000" />
+    <option name="totallyTimeSpent" value="577265000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1160,10 +1209,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50429183" side_tool="true" weight="0.34912717" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50429183" side_tool="true" visible="true" weight="0.34912717" />
       <window_info anchor="right" id="Maven Projects" order="5" weight="0.3297568" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info id="Capture Tool" order="7" />
@@ -1174,7 +1222,6 @@
       <window_info id="UI Designer" order="4" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.84334767" weight="0.38154614" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.45636624" weight="0.37905237" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
@@ -1183,7 +1230,7 @@
       <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.5772532" weight="0.36159602" />
       <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
       <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.32689655" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.13447782" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4980695" visible="true" weight="0.13447782" />
       <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49810606" weight="0.3297568" />
       <window_info id="Web" order="5" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="8" />
@@ -1199,6 +1246,7 @@
       <window_info anchor="right" id="Maven" order="11" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.45636624" weight="0.37905237" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4985694" weight="0.32668328" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -1674,14 +1722,14 @@
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.2.6.RELEASE/spring-core-5.2.6.RELEASE-sources.jar!/org/springframework/cglib/proxy/MethodProxy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
+        <state relative-caret-position="2895">
           <caret line="219" selection-start-line="219" selection-end-line="219" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
+        <state relative-caret-position="3765">
           <caret line="285" column="64" selection-start-line="285" selection-start-column="64" selection-end-line="285" selection-end-column="64" />
         </state>
       </provider>
@@ -1693,16 +1741,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbSrc:///9904b5c3/5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/VIEWS/view/VALID_RESERVATION_RECEIVED.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="18" selection-start-column="18" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="dbSrc:///9904b5c3/5bd01531-bd90-4f79-9ad4-e345b761356f/database/MANAGER/schema/VIEWS/view/VALID_RESERVATION_RECEIVED.sql" />
     <entry file="file://$PROJECT_DIR$/ddl/Views_20210207.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
+        <state relative-caret-position="600">
           <caret line="40" column="7" selection-start-line="38" selection-end-line="68" selection-end-column="38" />
         </state>
       </provider>
@@ -1716,24 +1758,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
+        <state relative-caret-position="3750">
           <caret line="284" selection-start-line="284" selection-end-line="284" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
+        <state relative-caret-position="10650">
           <caret line="740" selection-start-line="740" selection-end-line="740" />
-          <folding>
-            <element signature="e#4317#4345#1" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
+        <state relative-caret-position="1335">
           <caret line="89" column="37" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
         </state>
       </provider>
