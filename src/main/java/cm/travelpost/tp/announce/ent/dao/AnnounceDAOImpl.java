@@ -115,7 +115,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             filters = new String[1];
             if(status == StatusEnum.COMPLETED){
-                return countByNameQuery(AnnounceCompletedVO.FINDBYUSER,AnnounceMasterVO.class,userId,USER_PARAM,pageBy, null);
+                return countByNameQuery(AnnounceCompletedVO.FINDBYUSER,AnnounceCompletedVO.class,userId,USER_PARAM,pageBy, null);
             }
             return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,USER_PARAM,pageBy, null);
         }
@@ -170,7 +170,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         filters = new String[1];
         if(status == StatusEnum.COMPLETED){
-            return findBySqlQuery(AnnounceCompletedVO.SQL_FIND_BY_USER, AnnounceMasterVO.class, userId,USER_PARAM, pageBy,null);
+            return findBySqlQuery(AnnounceCompletedVO.SQL_FIND_BY_USER, AnnounceCompletedVO.class, userId,USER_PARAM, pageBy,null);
         }
 
         return findBySqlQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId,USER_PARAM, pageBy,null);

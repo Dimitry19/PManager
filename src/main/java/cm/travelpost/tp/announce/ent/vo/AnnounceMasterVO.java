@@ -43,8 +43,6 @@ import java.util.Set;
 @Where(clause = FilterConstants.FILTER_ANNOUNCE_CANC)
 public class AnnounceMasterVO extends CommonVO {
 
-
-
 	private static final long serialVersionUID = -6128390864869421614L;
 
 
