@@ -21,7 +21,7 @@ public class RoleController extends CommonController {
     @PostMapping(value = ROLE_WS_ADD)
     public ResponseEntity<RoleVO> add(@RequestBody RoleDTO role) throws Exception {
         try {
-            logger.info("add  role  request in");
+            log.info("add  role  request in");
             createOpentracingSpan("RoleController -add");
             RoleVO roleCreated = roleService.add(role);
             return new ResponseEntity<>(roleCreated, HttpStatus.CREATED);

@@ -30,6 +30,7 @@ import static cm.travelpost.tp.constant.WSConstants.*;
 public class ReviewController extends CommonController {
 
 
+    private static final String REVIEW_LABEL = "L'avis";
     protected final Log logger = LogFactory.getLog(ReviewController.class);
 
     @PostMapping(value = REVIEW_WS_ADD, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
@@ -41,7 +42,7 @@ public class ReviewController extends CommonController {
             ReviewVO review = userService.addReview(reviewDTO);
             if (review != null) {
                 review.setRetCode(WebServiceResponseCode.OK_CODE);
-                review.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, "L'avis"));
+                review.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, REVIEW_LABEL));
                 return new ResponseEntity<>(review, HttpStatus.CREATED);
             }
             return new ResponseEntity<>(review, HttpStatus.EXPECTATION_FAILED);
@@ -67,12 +68,12 @@ public class ReviewController extends CommonController {
 
             if (review != null) {
                 review.setRetCode(WebServiceResponseCode.OK_CODE);
-                review.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "L'avis"));
+                review.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, REVIEW_LABEL));
 
             } else {
                 review = new ReviewVO();
                 review.setRetCode(WebServiceResponseCode.NOK_CODE);
-                review.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "L'avis"));
+                review.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, REVIEW_LABEL));
 
             }
             return review;
@@ -107,12 +108,12 @@ public class ReviewController extends CommonController {
                 if (userService.deleteReview(id)) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_LABEL);
-                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "L'avis"));
+                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, REVIEW_LABEL));
 
                 } else {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_LABEL);
-                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, "L'avis"));
+                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, REVIEW_LABEL));
                 }
             }
         } catch (Exception e) {

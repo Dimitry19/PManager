@@ -8,7 +8,6 @@ package cm.travelpost.tp.administrator.api;
 import cm.travelpost.tp.common.properties.CommonProperties;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +26,7 @@ import java.util.List;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 @EnableSwagger2
-@ConditionalOnExpression(value = "${swagger.prod.enabled:false}")
+//@ConditionalOnExpression(value = "${swagger.prod.enabled:false}")
 @Configuration
 public class SwaggerApiConfig  extends CommonProperties {
 
@@ -167,14 +166,14 @@ public class SwaggerApiConfig  extends CommonProperties {
 
     private ApiKey apiToken() {
 
-        return new ApiKey("APIKey", "AUTH_API_KEY", SecurityScheme.In.HEADER.name());
+        return new ApiKey("APIKey", "x-amz-security-token", SecurityScheme.In.HEADER.name());
     }
 
 
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                //.forPaths(regex("/pmanager/anyPath.*"))
+                //.forPaths(regex("/services/anyPath.*"))
                 .build();
     }
 

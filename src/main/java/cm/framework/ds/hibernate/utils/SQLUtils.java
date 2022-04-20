@@ -6,6 +6,7 @@ public class SQLUtils {
 	private static final String LIKE_CHARS = "%";
 
 	public SQLUtils() {
+		throw new IllegalStateException("Utility class");
 	}
 
 	public static String forLike(String search, boolean caseInsensitive,  boolean before,boolean after) {

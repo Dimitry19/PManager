@@ -3,7 +3,7 @@ package cm.travelpost.tp.common.mail.ent.vo;
 import javax.persistence.*;
 
 @Entity(name = "ContactUSVO")
-@Table(name = "CONTACT_US")
+@Table(name = "contact_us")
 public class ContactUSVO extends EmailVO {
 
 

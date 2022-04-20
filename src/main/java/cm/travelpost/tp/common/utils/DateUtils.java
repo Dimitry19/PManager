@@ -260,9 +260,9 @@ public class DateUtils {
 
         if(d1 == null || d2 == null ) return null;
 
-        long diff = d2.getTime() - d1.getTime();
+         long diff = d2.getTime() - d1.getTime();
 
-        return diff / (24 * 60 * 60 * 1000);
+         return diff / (24 * 60 * 60 * 1000);
     }
     static void printDate(Date date){
 

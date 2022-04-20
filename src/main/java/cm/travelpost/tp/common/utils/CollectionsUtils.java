@@ -1,13 +1,12 @@
 package cm.travelpost.tp.common.utils;
 
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
 
 public class CollectionsUtils {
 
-
+    static String [] array;
 
     public static Object getFirstOrNull(Collection<?> elements) {
 
@@ -38,6 +37,15 @@ public class CollectionsUtils {
     public static boolean isEmpty(Collection<?> elements) {
 
         return elements == null || elements.isEmpty();
+    }
+
+    public static void makeCopies(String[] source, List destination) {
+        if(isEmpty(destination)){
+            destination = new ArrayList();
+        }
+         array = Arrays.copyOf(source, source.length);
+
+        Collections.addAll(destination, source);
     }
 
     public static int size(Collection<?> elements) {

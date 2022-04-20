@@ -28,14 +28,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableJpaRepositories(basePackages = {"cm.travelpost.tp","cm.framework.ds"})
 public class TravelPostApplication extends SpringBootServletInitializer {
 
-    private static Logger logger = LoggerFactory.getLogger(TravelPostApplication.class);
+    private static Logger log = LoggerFactory.getLogger(TravelPostApplication.class);
 
     public static void main(String[] args) {
 
         SpringApplication application = new SpringApplication(TravelPostApplication.class);
-
-        //application.setAllowBeanDefinitionOverriding(true);
-
+        if(log.isDebugEnabled()){
+            log.info("Application  starts....");
+        }
         application.run(args);
     }
 

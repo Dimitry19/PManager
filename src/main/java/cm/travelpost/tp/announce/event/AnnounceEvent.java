@@ -19,18 +19,22 @@ public class AnnounceEvent extends Event {
         super(date, type);
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public String getMessage() {
         return message;
     }
 
+    @Override
     public void setMessage(String message) {
         this.message = message;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

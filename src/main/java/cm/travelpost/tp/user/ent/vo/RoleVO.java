@@ -8,7 +8,7 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ROLE")
+@Table(name = "role")
 @TypeDef(
         name = "role_enum",
         typeClass = RoleType.class

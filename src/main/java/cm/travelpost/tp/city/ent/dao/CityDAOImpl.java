@@ -8,7 +8,6 @@ import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.ws.requests.CommonDTO;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -49,9 +48,7 @@ public class CityDAOImpl extends Generic implements CityDAO {
     @Transactional(readOnly = true)
     public List<CityVO> cities(PageBy pageBy) throws Exception {
 
-        List<CityVO> cities = allAndOrderBy(CityVO.class, NAME_PARAM, false, pageBy);
-
-        return cities;
+        return allAndOrderBy(CityVO.class, NAME_PARAM, false, pageBy);
     }
 
 
@@ -138,6 +135,7 @@ public class CityDAOImpl extends Generic implements CityDAO {
                     throw new BusinessResourceException("Aucune ville n'a ete trouvé avec cet id");
 
         } catch ( Exception e) {
+            logger.error("Erreur survenue durant la suppression de la ville{}",id);
             throw e;
         }
         return updateDelete(id);

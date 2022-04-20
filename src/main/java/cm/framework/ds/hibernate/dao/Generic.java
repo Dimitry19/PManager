@@ -1,6 +1,5 @@
 package cm.framework.ds.hibernate.dao;
 
-import cm.travelpost.tp.common.Constants;
 import cm.travelpost.tp.common.event.IEvent;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.UserException;
@@ -16,7 +15,6 @@ import java.util.Set;
 
 public abstract class Generic extends CommonGenericDAO {
 
-    public static String where=" where ";
     public String notificationMessagePattern = "{0} {1} {2}";
     public String notificationMessageCommentPattern = "{0} {1} {2} {3}";
 
@@ -47,6 +45,7 @@ public abstract class Generic extends CommonGenericDAO {
     public String  buildNotificationMessage(@NotNull NotificationType notificationType, String username, String departure,
                                             String arrival, String startDate, String endDate, String kg){
 
+        username = "Un utilisateur ";
         String message= null;
         switch (notificationType){
             case USER:
@@ -76,7 +75,7 @@ public abstract class Generic extends CommonGenericDAO {
                         " a fait une reservation  de [" +kg+" kg ] sur votre annonce " + partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate)));
                 break;
             case RESERVATION_VALIDATE:
-                message= MessageFormat.format(notificationMessagePattern,username,
+                 message= MessageFormat.format(notificationMessagePattern,username,
                         " a accepté votre reservation  de [" +kg+" kg ] sur l' annonce "  + partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate)));
                 break;
             case RESERVATION_UNVALIDATE:
@@ -85,8 +84,8 @@ public abstract class Generic extends CommonGenericDAO {
                 break;
             case RESERVATION_UPD:
 
-                message= MessageFormat.format(notificationMessagePattern,username,
-                        " a modifié une reservation sur votre annonce "+partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate+kg)));
+                 message= MessageFormat.format(notificationMessagePattern,username,
+                         " a modifié une reservation sur votre annonce "+partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate+kg)));
 
                 break;
             case RESERVATION_DEL:
@@ -121,20 +120,19 @@ public abstract class Generic extends CommonGenericDAO {
 
     public void fillProps(Map props, Long id,String message, Long userId,Set subscribers) throws Exception {
 
-        props.put(IEvent.PROP_ID,id);
-        props.put(IEvent.PROP_MSG,message);
-        props.put(IEvent.PROP_USR_ID,userId);
-        props.put(IEvent.PROP_SUBSCRIBERS,subscribers);
+            props.put(IEvent.PROP_ID,id);
+            props.put(IEvent.PROP_MSG,message);
+            props.put(IEvent.PROP_USR_ID,userId);
+            props.put(IEvent.PROP_SUBSCRIBERS,subscribers);
 
     }
-
 
     public void buildAndOr(StringBuilder hql, boolean addCondition, boolean andOrOr) {
         if (addCondition) {
             if (!andOrOr) {
-                hql.append(Constants.OR);
+                hql.append(OR);
             } else {
-                hql.append(Constants.AND);
+                hql.append(AND);
             }
         }
     }

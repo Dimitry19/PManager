@@ -10,16 +10,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "VALID_RESERVATION_CREATED", schema = "VIEWS")
+@Table(name = "valid_reservation_created")
 @Immutable
-public class ReservationUserVO implements Serializable {
+public class ReservationUserVO extends CommonReservationTransient {
 
     @Id
     @Column(name = "ID")
@@ -87,14 +86,6 @@ public class ReservationUserVO implements Serializable {
 
     public void setDateCreated(Timestamp dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    @Transient
-    @JsonProperty
-    private AnnounceInfo announceInfo;
-
-    public AnnounceInfo getAnnounceInfo() {
-        return announceInfo;
     }
 
     public void setAnnounceInfo(AnnounceInfo announceInfo) {

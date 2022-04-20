@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(name = "AIRLINE")
+@Table(name = "airline")
 @NamedQueries({
         @NamedQuery(name = AirlineVO.FINDBYCODE, query = "select a from AirlineVO a where a.id.code  =:code"),
         @NamedQuery(name = AirlineVO.ALL, query = "select a from AirlineVO a order by a.description"),

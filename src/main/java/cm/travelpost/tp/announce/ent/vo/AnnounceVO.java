@@ -18,16 +18,15 @@ import cm.travelpost.tp.image.ent.vo.ImageVO;
 import cm.travelpost.tp.message.ent.vo.MessageVO;
 import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
-import com.fasterxml.jackson.annotation.*;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.Filters;
+import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.Where;
 
-import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -36,7 +35,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "ANNOUNCE")
+@Table(name = "announce")
 @NamedQueries(value = {
         @NamedQuery(name = AnnounceVO.FINDBYUSER, query = "select a from AnnounceVO a where a.user.id =:userId order by a.startDate desc"),
         @NamedQuery(name = AnnounceVO.FINDBYTYPE, query = "select a from AnnounceVO a where a.announceType =:announceType order by a.startDate desc"),
@@ -48,6 +47,8 @@ import java.util.Set;
 @Where(clause = FilterConstants.FILTER_ANNOUNCE_CANC_COMPLETED)
 public class AnnounceVO extends CommonVO {
 
+
+
     private static final long serialVersionUID = -6128390864869421614L;
 
 
@@ -58,41 +59,43 @@ public class AnnounceVO extends CommonVO {
     public static final String ANNOUNCE_SEARCH = "select  distinct  a from AnnounceVO  as a join a.categories as c ";
 
 
-    private Long id;
+    protected Long id;
 
-    private String departure;
+    protected String departure;
 
-    private String arrival;
+    protected String arrival;
 
-    private Date startDate;
+    protected Date startDate;
 
-    private Date endDate;
+    protected Date endDate;
 
-    private ImageVO image;
+    protected ImageVO image;
 
-    private TransportEnum transport;
+    protected TransportEnum transport;
 
-    private BigDecimal price;
+    protected BigDecimal price;
 
-    private BigDecimal goldPrice;
+    protected BigDecimal goldPrice;
 
-    private BigDecimal preniumPrice;
+    protected BigDecimal preniumPrice;
 
-    private BigDecimal weight;
+    protected BigDecimal weight;
 
-    private BigDecimal remainWeight;
+    protected BigDecimal remainWeight;
 
-    private AnnounceType announceType;
+    protected AnnounceType announceType;
 
-    private UserVO user;
+    protected UserVO user;
 
-    private StatusEnum status;
+    protected StatusEnum status;
 
-    private String description;
+    protected String description;
 
-    private Set<CategoryVO> categories = new HashSet<>();
+    protected Set<CategoryVO> categories = new HashSet<>();
 
-    private Set<MessageVO> messages = new HashSet<>();
+    protected Set<MessageVO> messages = new HashSet<>();
+
+    protected String warning;
 
     @Embedded
     private AnnounceIdVO announceId;
@@ -203,11 +206,11 @@ public class AnnounceVO extends CommonVO {
         return status;
     }
 
-   // @Basic(optional = false)
+    // @Basic(optional = false)
     @Access(AccessType.PROPERTY)
     @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.MERGE}, mappedBy = "announce", fetch = FetchType.LAZY)
     @JsonManagedReference
-    @OrderBy(clause = "id.id ASC")
+    @org.hibernate.annotations.OrderBy(clause = "id.id ASC")
     @Where(clause = "cancelled=false")
     //@JsonIgnore
     public Set<MessageVO> getMessages() {
@@ -233,7 +236,7 @@ public class AnnounceVO extends CommonVO {
 
     @Access(AccessType.PROPERTY)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "ANNOUNCE_CATEGORY", joinColumns = @JoinColumn(name = "ANNOUNCE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
+    @JoinTable(name = "announce_category", joinColumns = @JoinColumn(name = "ANNOUNCE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
     @JsonProperty
     public Set<CategoryVO> getCategories() {
         return categories;
@@ -249,15 +252,22 @@ public class AnnounceVO extends CommonVO {
         return announceId;
     }
 
+    @Formula(value = "(select coalesce(count(r.r_announce_id),0)  from reservation r where  r.r_announce_id = id and r.cancelled ='0')")
+    public Integer getCountReservation() {
+        return countReservation;
+    }
+
+
     @Transient
     public UserInfo getUserInfo() {   return userInfo;  }
 
     @Transient
     public String getDescriptionTransport() {   return descriptionTransport;  }
 
-    @Formula(value = "(select coalesce(count(r.r_announce_id),0)  from RESERVATION r where  r.r_announce_id = id and r.cancelled ='0')")
-    public Integer getCountReservation() {
-        return countReservation;
+    @Transient
+    @JsonProperty
+    public String getWarning(){
+        return warning;
     }
 
 
@@ -352,6 +362,10 @@ public class AnnounceVO extends CommonVO {
         this.descriptionTransport = descriptionTransport;
     }
 
+    public void setWarning(String warning) {
+        this.warning = warning;
+    }
+
     public void setCountReservation(Integer countReservation) {
         this.countReservation = countReservation;
     }
@@ -362,7 +376,7 @@ public class AnnounceVO extends CommonVO {
 
     public void removeCategory(CategoryVO category) {
 
-		categories.remove(category);
+        categories.remove(category);
     }
 
     public void addMessage(MessageVO message) {
@@ -406,11 +420,11 @@ public class AnnounceVO extends CommonVO {
         if (id.equals(other.id))
             return false;
         if (user == null) {
-			return other.user == null;
+            return other.user == null;
         } else return user.equals(other.user);
-	}
+    }
 
-	private String toUpperCase(String value){
+    private String toUpperCase(String value){
         if(StringUtils.isNotEmpty(value)){
             return value.toUpperCase();
         }

@@ -52,14 +52,22 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     private static final MathContext MATH_CONTEXT = new MathContext(2, RoundingMode.HALF_UP);
 
 
+
+
     protected static final String SELECT_FROM = " select elt  FROM";
     protected static final String SELECT  = " select elt  ";
     protected static final String FROM = " FROM ";
     protected static final String DESC = " desc ";
     protected static final String ASC = " asc ";
 
+    protected static final String AND = " and ";
+    protected static final String OR = " or ";
+    protected static final String WHERE = " where ";
+    protected static final String LIKE = " like ";
+
 
     protected static final String ANNOUNCE_TABLE_ALIAS = "a.";
+    protected static final String USER_TABLE_ALIAS = "u.";
     protected static final String ID_PARAM = "id";
     protected static final String USER_PARAM = "userId";
     protected static final String TYPE_PARAM = "announceType";
@@ -74,6 +82,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String DEPARTURE_PARAM = "departure";
     protected static final String ARRIVAL_PARAM = "arrival";
     protected static final String CATEGORY_PARAM = "category";
+    protected static final String STATUS_PARAM = "status";
 
     protected static final String NAME_PARAM = "name";
     protected static final String SEARCH_PARAM = "search";
@@ -110,9 +119,9 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     public List autocomplete(String namedQuery, ID search, boolean caseInsensitive) {
         return
                 sessionFactory.getCurrentSession()
-                        .getNamedQuery(namedQuery)
-                        .setParameter(SEARCH_PARAM, SQLUtils.forLike((String) search,caseInsensitive,true,true))
-                        .getResultList();
+                .getNamedQuery(namedQuery)
+                .setParameter(SEARCH_PARAM, SQLUtils.forLike((String) search,caseInsensitive,true,true))
+                .getResultList();
 
     }
 
@@ -152,6 +161,11 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         Session session = sessionFactory.getCurrentSession();
 
         return Optional.ofNullable(session.get(clazz, id));
+    }
+
+    @Override
+    public int countByNameQuery(String queryName, Class<T> clazz, Map params, PageBy pageBy) throws Exception {
+        return 0;
     }
 
 
@@ -435,7 +449,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         Query query = session.createNamedQuery(namedQuery, clazz);
 
         params.forEach((k, v) ->
-                query.setParameter((String) k, v)
+            query.setParameter((String) k, v)
         );
 
         pageBy(query, pageBy);
@@ -458,6 +472,20 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<T> findBySqlQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String ...filters) throws Exception {
+
+        Session session = this.sessionFactory.getCurrentSession();
+        session.enableFilter(FilterConstants.CANCELLED);
+        enableFilters(session,filters);
+        Query query = session.createQuery(queryName, clazz);
+        query.setParameter(paramName, id);
+        pageBy(query, pageBy);
+
+        return query.getResultList();
+    }
+
+    @Override
     public int countByNameQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception {
         Session session = this.sessionFactory.getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
@@ -466,6 +494,18 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         pageBy(query, pageBy);
         List results = query.list();
         return CollectionsUtils.size(results);
+    }
+
+    @Override
+    public int countByNameQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.enableFilter(FilterConstants.CANCELLED);
+        enableFilters(session,filters);
+        Query query = session.createNamedQuery(queryName, clazz);
+        query.setParameter(paramName, id);
+
+        pageBy(query, pageBy);
+        return CollectionsUtils.size(query.list());
     }
 
     @Override
@@ -653,7 +693,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         logger.info("Generic merge");
         Session session = this.sessionFactory.getCurrentSession();
         if (t != null) {
-            return (T)session.merge(t);
+             return (T)session.merge(t);
         }
         return null;
     }
