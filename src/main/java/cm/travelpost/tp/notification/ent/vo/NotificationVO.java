@@ -5,7 +5,7 @@
 
 package cm.travelpost.tp.notification.ent.vo;
 
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.constant.FieldConstants;
@@ -23,8 +23,6 @@ import java.util.Set;
 @Table(name = "notification")
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
-
-        //@Filter(name = FilterConstants.ACTIVE_MBR_WORK)
 })
 @Where(clause = FilterConstants.FILTER_NOTIFICATION_CANC_COMPLETED)
 public class NotificationVO extends CommonVO {

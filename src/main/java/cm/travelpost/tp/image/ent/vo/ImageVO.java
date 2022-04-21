@@ -1,8 +1,7 @@
 package cm.travelpost.tp.image.ent.vo;
 
-
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
-import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.utils.ImageUtils;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonIgnore;

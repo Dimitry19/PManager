@@ -2,7 +2,7 @@ package cm.travelpost.tp.message.ent.dao;
 
 import cm.framework.ds.hibernate.dao.CommonDAO;
 import cm.framework.ds.hibernate.enums.FindBy;
-import cm.travelpost.tp.common.ent.vo.PageBy;
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 
 import cm.travelpost.tp.message.ent.vo.MessageIdVO;

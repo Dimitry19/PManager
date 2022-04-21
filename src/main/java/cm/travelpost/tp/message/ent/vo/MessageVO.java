@@ -1,7 +1,7 @@
 package cm.travelpost.tp.message.ent.vo;
 
+import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
-import cm.travelpost.tp.common.ent.vo.CommonVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;

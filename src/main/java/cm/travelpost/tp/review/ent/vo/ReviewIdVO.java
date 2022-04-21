@@ -1,6 +1,6 @@
 package cm.travelpost.tp.review.ent.vo;
 
-import cm.travelpost.tp.common.ent.vo.CommonIdVO;
+import cm.framework.ds.common.ent.vo.CommonIdVO;
 
 import javax.persistence.Embeddable;
 

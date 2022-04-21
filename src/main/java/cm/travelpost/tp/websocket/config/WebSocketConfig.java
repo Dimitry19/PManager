@@ -74,6 +74,9 @@ public class WebSocketConfig extends CommonProperties implements WebSocketMessag
     @Value("${travel.post.stomp.notification.prefix.destination}")
     private String prefixDestination;
 
+    @Value("/sms")
+    private String brokerSms;
+
 
 
     @Override

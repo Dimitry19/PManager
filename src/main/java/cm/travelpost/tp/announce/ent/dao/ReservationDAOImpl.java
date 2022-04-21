@@ -1,8 +1,9 @@
 package cm.travelpost.tp.announce.ent.dao;
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
+
 import cm.travelpost.tp.announce.ent.vo.*;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.ReservationType;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.ValidateEnum;

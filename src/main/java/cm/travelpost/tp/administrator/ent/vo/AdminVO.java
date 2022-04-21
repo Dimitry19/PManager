@@ -1,6 +1,7 @@
 package cm.travelpost.tp.administrator.ent.vo;
 
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+
+import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.user.ent.vo.RoleVO;
 
 import javax.persistence.*;

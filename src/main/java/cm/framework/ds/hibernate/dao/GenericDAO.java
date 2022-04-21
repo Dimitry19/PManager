@@ -1,6 +1,6 @@
 package cm.framework.ds.hibernate.dao;
 
-import cm.travelpost.tp.common.ent.vo.PageBy;
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.event.IEvent;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;

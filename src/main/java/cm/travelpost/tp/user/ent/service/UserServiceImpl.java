@@ -1,7 +1,7 @@
 package cm.travelpost.tp.user.ent.service;
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.Constants;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.RoleEnum;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.mail.MailType;

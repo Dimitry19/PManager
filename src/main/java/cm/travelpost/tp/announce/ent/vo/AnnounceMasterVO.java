@@ -1,6 +1,7 @@
 package cm.travelpost.tp.announce.ent.vo;
 
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+
+import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.common.enums.AnnounceType;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.TransportEnum;

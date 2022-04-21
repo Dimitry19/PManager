@@ -1,4 +1,4 @@
-package cm.travelpost.tp.common.ent.bo;
+package cm.framework.ds.common.ent.bo;
 
 import java.sql.Timestamp;
 

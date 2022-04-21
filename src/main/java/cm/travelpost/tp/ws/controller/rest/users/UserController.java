@@ -2,8 +2,8 @@ package cm.travelpost.tp.ws.controller.rest.users;
 
 
 import cm.framework.ds.hibernate.enums.CountBy;
-import cm.travelpost.tp.common.ent.vo.PageBy;
-import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
+import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
 import cm.travelpost.tp.common.utils.StringUtils;

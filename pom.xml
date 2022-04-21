@@ -349,6 +349,13 @@
 
 		<!-- Thanks for using app.mailjet-->
 
+		<!--Twillo SMS Gateway-->
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>7.1.0</version>
+		</dependency>
+		<!--Twillo SMS Gateway-->
 
 	</dependencies>
 

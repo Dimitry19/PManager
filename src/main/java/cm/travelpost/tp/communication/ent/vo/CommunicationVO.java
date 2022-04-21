@@ -1,7 +1,7 @@
 package cm.travelpost.tp.communication.ent.vo;
 
+import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.administrator.ent.vo.AdminVO;
-import cm.travelpost.tp.common.ent.vo.CommonVO;
 import cm.travelpost.tp.common.enums.CommunicationType;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 

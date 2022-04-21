@@ -1,7 +1,7 @@
-package cm.travelpost.tp.common.ent.vo;
+package cm.framework.ds.common.ent.vo;
 
-import cm.travelpost.tp.common.ent.bo.Auditable;
-import cm.travelpost.tp.common.listener.audit.TableListener;
+import cm.framework.ds.common.ent.bo.Auditable;
+import cm.framework.ds.common.listener.audit.TableListener;
 import cm.travelpost.tp.common.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -6,11 +6,12 @@ package cm.travelpost.tp.announce.ent.dao;
  * et aussi eviter HibernateException: Found two representations of same collection
  */
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.airline.ent.dao.AirlineDAO;
 import cm.travelpost.tp.announce.ent.vo.*;
 import cm.travelpost.tp.common.Constants;
-import cm.travelpost.tp.common.ent.vo.PageBy;
+
 import cm.travelpost.tp.common.enums.AnnounceType;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.TransportEnum;
@@ -69,7 +70,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public int count(Object o,PageBy pageBy) throws AnnounceException,Exception {
+    public int count(Object o, PageBy pageBy) throws AnnounceException,Exception {
         logger.info(" Announce - count");
 
         if(o == null) {
