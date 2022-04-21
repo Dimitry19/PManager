@@ -61,7 +61,7 @@ export class ServiceRequest {
     // x-amz-security-token
     // AUTH_API_KEY
     const headers = { headers: new HttpHeaders({
-      "AUTH_API_KEY":"abcd123456",
+      "x-amz-security-token":"abcd123456",
       "session-user": this.sessionUser,
       'content-type': 'application/json;text/plain;multipart/form-data;image/*'
   })};
@@ -188,12 +188,10 @@ commentByAnnounce(idAnnonce){
       }));
 }
 
-annonceUserId(idUser){
-  
-  
+annonceUserId(idUser,status){
   var options = this.setOptions();
   // var timestamp = new Date().getTime();
-  return this.httpClient.get(Urlconstances.BASEURL + 'ws/announce/user?page=0&size=12&userId='+idUser,options).pipe(map((res: any)=> res),
+  return this.httpClient.get(Urlconstances.BASEURL + 'ws/announce/user?page=0&size=12&userId='+idUser+'&status='+status,options).pipe(map((res: any)=> res),
   catchError((this.handleError)),finalize(() => {
         this.spinner.hide();
       }));
@@ -444,8 +442,6 @@ getAllUsers(){
         this.spinner.hide();
         this.sessionUser = 'Guest';
         this.notifications = [];
-        caches.delete(sessionStorage.loggedUser).then(c =>{console.log("caches",c);
-        });
       }));
   }
 

@@ -69,12 +69,10 @@
                         <!-- <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt=""> -->
                     </div>
                 </div>
-                <!-- <h1 class="my-4">Shop Name</h1>
-                <div class="list-group">
-                <a href="#" class="list-group-item active">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
-                </div> -->
+                <!-- warning -->
+                <div *ngIf="annonce.warning != null" class="wrap">
+                    <h4 class="button" [innerHTML]="annonce.warning"></h4>
+                </div>
             </div>
             <!-- /.col-lg-4 -->
 

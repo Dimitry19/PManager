@@ -10,7 +10,21 @@
 }
 
 .oldcookie {
-    z-index: 1055;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 8%;
+    width: 24%;
+    left: 0;
+    margin: 70px 10px;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px 1px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+    padding: 5px 30px;
+    -webkit-animation: fadeIn-3QK7U 3s;
+    animation: fadeIn-3QK7U 3s;
+    z-index: 10000;
+    background: #e6eaee;
+    /* z-index: 1055;
     position: absolute;
     width: 18em;
     padding: 5px 14px;
@@ -18,7 +32,7 @@
     justify-content: space-between;
     background-color: #eee;
     border-radius: 5px;
-    box-shadow: 0 0 2px 1px rgb(0 0 0 / 20%);
+    box-shadow: 0 0 2px 1px rgb(0 0 0 / 20%); */
 }
 
 #cookiesSideModalRightBottom .modal-content {
@@ -350,34 +364,29 @@ input.ng-valid {
 }
 
 .inscription {
-    background-color: #adb5bd;
+    /* background-color: #adb5bd; */
     color: #f8f9fa;
-    border: 1px solid #adb5bd;
+    border: 1px solid;
     margin-left: 15px;
 }
 
 .inscription:hover {
-    background-color: #797d82 !important;
-    border: 1px solid #797d82;
-    border-color: #797d82 !important;
+    /* background-color: #797d82 !important; */
+    border: 1px solid;
+    /* border-color: #797d82 !important; */
 }
 
 .inscription:focus {
-    background-color: #797d82 !important;
-    border: 1px solid #797d82 !important;
-    border-color: #797d82 !important;
+    /* background-color: #797d82 !important; */
+    /* border: 1px solid #797d82 !important; */
+    /* border-color: #797d82 !important; */
     outline: 0;
-    box-shadow: 0 0 0 0.2rem #797d82;
 }
 
 .inscription:active {
-    background-color: #797d82 !important;
-    border: 1px solid #797d82;
-    border-color: #797d82 !important;
-}
-
-.registerIn {
-    background-color: #797d82;
+    /* background-color: #797d82 !important; */
+    border: 1px solid;
+    /* border-color: #797d82 !important; */
 }
 
 .z-depth-1a {
@@ -743,6 +752,29 @@ div#messages section:active {
 
 div#messages section {
     cursor: pointer;
+}
+
+
+/* dropdown style */
+
+.drop-down {
+    border: 1px solid;
+    /* width: 200px; */
+    border-radius: 5px;
+    /* display: none; */
+    margin: 10px 0px;
+}
+
+.drop-down>a {
+    list-style: none;
+    padding: 10px 20px;
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+
+.drop-down>a:hover {
+    opacity: 0.7;
+    border-bottom: 4px solid #37ea3a;
 }
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {

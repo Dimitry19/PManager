@@ -13,7 +13,7 @@ export class AppComponent {
   constructor() {
     let self = this;
     $(document).ready(function () {
-      $('[data-toggle="tooltip"]').tooltip()
+      $('[rel="tooltip"]').tooltip()
   });
     // private translate: TranslateService
     // // self.translate.addLangs(["fr","it","en"]);

@@ -396,86 +396,171 @@
 
             <div class="card">
                 <div class="card-header colonne">
-                    <a class="float-left" (click)="toggleView()" #view>Changer l'affichage</a>
-                    <h5 class="card-header-text">Mes annonces</h5>
+                    <h4>
+                        <a class="float-left"><button class="btn buttonStyle" (click)="toggleView()">Changer l'affichage</button></a>
+                        <span class="card-header-text">Mes annonces</span>
+                        <a class="float-right"><button class="btn buttonStyle" (click)="oldAnnounce(view.value)" #view>Voir mes annonces expirées</button></a>
+                    </h4>
                 </div>
-                <!-- card view -->
-                <div *ngIf="!viewTable" class="card-block p-4">
-                    <div class="row">
-                        <ul class="style_featured">
-                            <li *ngFor="let annonce of annonces; let i = index;trackBy:tracbByFn" class="" (click)="detail(annonce.id,'OTHER')">
-                                <div [class]="annonce.announceType == 'SELLER' ? 'card b-l-success business-info services m-b-20 seller' : 'card b-l-success business-info services m-b-20 buyer'">
-                                    <div class="card-header">
-                                        <!-- <span class="float-left" [innerHTML]="annonce.category == null ? 'AUTRES':annonce.category.description"></span> -->
-                                        <div class="title_annonce">
-                                            <h5 class="card-header-text">Annonce <span [innerHTML]="i+1"></span></h5>
-                                        </div>
-                                        <span class="float-right messages" [innerHTML]="annonce.countReservation > 0 ? annonce.countReservation+'&nbsp;reservation(s)':' '"></span>
-                                    </div>
-                                    <div class="card-block">
-                                        <div class="row">
-                                            <div class="col-md-6 task-detail">
-                                                <label for="lieux_depart">Ville de Départ:&nbsp; </label> <span class="value" [innerHTML]=" annonce.departure"></span><br>
-                                                <label for="date_depart">Date de Départ:&nbsp; </label> <span class="value" [innerHTML]=" annonce.startDate"></span><br>
-                                                <label for="transport">Mode de Transport:&nbsp; </label> <span class="value" [innerHTML]=" annonce.descriptionTransport"></span><br>
-                                                <label for="prixClassiq">Prix Classique(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.price  == 0 ? '-':annonce.price"></span><br>
-                                                <label for="prixGold">Prix Ultra Rapide(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.goldPrice == 0 ? '-':annonce.goldPrice"></span><br>
+                <ng-container *ngIf="status == 'VALID'">
+                    <!-- card view -->
+                    <div *ngIf="!viewTable" class="card-block p-4">
+                        <div class="row">
+                            <ul class="style_featured">
+                                <li *ngFor="let annonce of annonces; let i = index;trackBy:tracbByFn" class="" (click)="detail(annonce.id,'OTHER')">
+                                    <div [class]="annonce.announceType == 'SELLER' ? 'card b-l-success business-info services m-b-20 seller' : 'card b-l-success business-info services m-b-20 buyer'">
+                                        <div class="card-header">
+                                            <!-- <span class="float-left" [innerHTML]="annonce.category == null ? 'AUTRES':annonce.category.description"></span> -->
+                                            <div class="title_annonce">
+                                                <h5 class="card-header-text">Annonce <span [innerHTML]="i+1"></span></h5>
                                             </div>
-                                            <div class="col-md-6 task-detail">
-                                                <label for="lieux_arrivee">Ville d'Arrivée:&nbsp; </label> <span class="value" [innerHTML]=" annonce.arrival"></span><br>
-                                                <label for="date_arrivee">Date d'Arrivée:&nbsp; </label> <span class="value" [innerHTML]=" annonce.endDate"></span><br>
-                                                <label for="poids">Nombre de Kilo(Kg):&nbsp; </label> <span class="value" [innerHTML]=" annonce.weight"></span><br>
-                                                <label for="prixPremiun">Prix Rapide(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.preniumPrice == 0 ? '-':annonce.preniumPrice"></span><br>
+                                            <span class="float-right messages" [innerHTML]="annonce.countReservation > 0 ? annonce.countReservation+'&nbsp;reservation(s)':' '"></span>
+                                        </div>
+                                        <div class="card-block">
+                                            <div class="row">
+                                                <div class="col-md-6 task-detail">
+                                                    <label for="lieux_depart">Ville de Départ:&nbsp; </label> <span class="value" [innerHTML]=" annonce.departure"></span><br>
+                                                    <label for="date_depart">Date de Départ:&nbsp; </label> <span class="value" [innerHTML]=" annonce.startDate"></span><br>
+                                                    <label for="transport">Mode de Transport:&nbsp; </label> <span class="value" [innerHTML]=" annonce.descriptionTransport"></span><br>
+                                                    <label for="prixClassiq">Prix Classique(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.price  == 0 ? '-':annonce.price"></span><br>
+                                                    <label for="prixGold">Prix Ultra Rapide(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.goldPrice == 0 ? '-':annonce.goldPrice"></span><br>
+                                                </div>
+                                                <div class="col-md-6 task-detail">
+                                                    <label for="lieux_arrivee">Ville d'Arrivée:&nbsp; </label> <span class="value" [innerHTML]=" annonce.arrival"></span><br>
+                                                    <label for="date_arrivee">Date d'Arrivée:&nbsp; </label> <span class="value" [innerHTML]=" annonce.endDate"></span><br>
+                                                    <label for="poids">Nombre de Kilo(Kg):&nbsp; </label> <span class="value" [innerHTML]=" annonce.weight"></span><br>
+                                                    <label for="prixPremiun">Prix Rapide(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.preniumPrice == 0 ? '-':annonce.preniumPrice"></span><br>
+
+                                                </div>
 
                                             </div>
-
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <!-- table view -->
-                <div class="table-details">
-                    <table *ngIf="viewTable" datatable [dtOptions]="dtOptions" class="table hover datatable" id="simpletable">
-                        <thead>
-                            <tr>
-                                <th>Ville de Départ</th>
-                                <th>Ville d'Arrivée</th>
-                                <th>Date de Départ</th>
-                                <th>Date d'Arrivée</th>
-                                <th>Nombre de Kilo(s) </th>
-                                <th>Categories</th>
-                                <th>Mode de Transport</th>
-                                <th>Prix Classique(&euro;)</th>
-                                <th>Prix Rapide(&euro;)</th>
-                                <th>Prix Ultra Rapide(&euro;)</th>
-                                <th>Réservations</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let annonce of annonces; let i = index; trackBy:tracbByFn" [class]="annonce.announceType == 'SELLER' ? 'seller' : 'buyer'" (click)="detail(annonce.id,'OTHER')">
-                                <td><span class="value" [innerHTML]=" annonce.departure"></span></td>
-                                <td><span class="value" [innerHTML]=" annonce.arrival"></span></td>
-                                <td><span class="value" [innerHTML]=" annonce.startDate"></span></td>
-                                <td><span class="value" [innerHTML]=" annonce.endDate"></span></td>
-                                <td><span class="value" [innerHTML]=" annonce.weight"></span></td>
-                                <td>
-                                    <span *ngIf="annonce.categories.length == 0" class="value" innerHTML="AUTRES"></span>
-                                    <span *ngIf="annonce.categories.length > 0" class="value">
+                    <!-- table view -->
+                    <div class="table-details">
+                        <table *ngIf="viewTable" datatable [dtOptions]="dtOptions" class="table hover datatable" id="simpletable">
+                            <thead>
+                                <tr>
+                                    <th>Ville de Départ</th>
+                                    <th>Ville d'Arrivée</th>
+                                    <th>Date de Départ</th>
+                                    <th>Date d'Arrivée</th>
+                                    <th>Nombre de Kilo(s) </th>
+                                    <th>Categories</th>
+                                    <th>Mode de Transport</th>
+                                    <th>Prix Classique(&euro;)</th>
+                                    <th>Prix Rapide(&euro;)</th>
+                                    <th>Prix Ultra Rapide(&euro;)</th>
+                                    <th>Réservations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let annonce of annonces; let i = index; trackBy:tracbByFn" [class]="annonce.announceType == 'SELLER' ? 'seller' : 'buyer'" (click)="detail(annonce.id,'OTHER')">
+                                    <td><span class="value" [innerHTML]=" annonce.departure"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.arrival"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.startDate"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.endDate"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.weight"></span></td>
+                                    <td>
+                                        <span *ngIf="annonce.categories.length == 0" class="value" innerHTML="AUTRES"></span>
+                                        <span *ngIf="annonce.categories.length > 0" class="value">
 							 <span *ngFor="let cat of annonce.categories" [innerHTML]="cat.description+'&nbsp;'"></span>
-                                    </span>
-                                </td>
-                                <td><span class="value" [innerHTML]=" annonce.descriptionTransport"></span></td>
-                                <td><span class="value" [innerHTML]=" annonce.price  == 0 ? '-':annonce.price"></span></td>
-                                <td><span class="value" [innerHTML]=" annonce.preniumPrice == 0 ? '-':annonce.preniumPrice"></span></td>
-                                <td><span class="value" [innerHTML]=" annonce.goldPrice == 0 ? '-':annonce.goldPrice"></span></td>
-                                <td><span class="value messages" [innerHTML]=" annonce.countReservation > 0 ? annonce.countReservation+'&nbsp;reservation(s)':' '"></span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                        </span>
+                                    </td>
+                                    <td><span class="value" [innerHTML]=" annonce.descriptionTransport"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.price  == 0 ? '-':annonce.price"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.preniumPrice == 0 ? '-':annonce.preniumPrice"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.goldPrice == 0 ? '-':annonce.goldPrice"></span></td>
+                                    <td><span class="value messages" [innerHTML]=" annonce.countReservation > 0 ? annonce.countReservation+'&nbsp;reservation(s)':' '"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="status == 'COMPLETED'">
+                    <!-- card view -->
+                    <div *ngIf="!viewTable" class="card-block p-4">
+                        <div class="row">
+                            <ul class="style_featured">
+                                <li *ngFor="let annonce of oldAnnonces; let i = index;trackBy:tracbByFn" class="" (click)="detail(annonce.id,'OTHER')">
+                                    <div [class]="annonce.announceType == 'SELLER' ? 'card b-l-success business-info services m-b-20 seller' : 'card b-l-success business-info services m-b-20 buyer'">
+                                        <div class="card-header">
+                                            <!-- <span class="float-left" [innerHTML]="annonce.category == null ? 'AUTRES':annonce.category.description"></span> -->
+                                            <div class="title_annonce">
+                                                <h5 class="card-header-text">Annonce <span [innerHTML]="i+1"></span></h5>
+                                            </div>
+                                            <span class="float-right messages" [innerHTML]="annonce.countReservation > 0 ? annonce.countReservation+'&nbsp;reservation(s)':' '"></span>
+                                        </div>
+                                        <div class="card-block">
+                                            <div class="row">
+                                                <div class="col-md-6 task-detail">
+                                                    <label for="lieux_depart">Ville de Départ:&nbsp; </label> <span class="value" [innerHTML]=" annonce.departure"></span><br>
+                                                    <label for="date_depart">Date de Départ:&nbsp; </label> <span class="value" [innerHTML]=" annonce.startDate"></span><br>
+                                                    <label for="transport">Mode de Transport:&nbsp; </label> <span class="value" [innerHTML]=" annonce.descriptionTransport"></span><br>
+                                                    <label for="prixClassiq">Prix Classique(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.price  == 0 ? '-':annonce.price"></span><br>
+                                                    <label for="prixGold">Prix Ultra Rapide(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.goldPrice == 0 ? '-':annonce.goldPrice"></span><br>
+                                                </div>
+                                                <div class="col-md-6 task-detail">
+                                                    <label for="lieux_arrivee">Ville d'Arrivée:&nbsp; </label> <span class="value" [innerHTML]=" annonce.arrival"></span><br>
+                                                    <label for="date_arrivee">Date d'Arrivée:&nbsp; </label> <span class="value" [innerHTML]=" annonce.endDate"></span><br>
+                                                    <label for="poids">Nombre de Kilo(Kg):&nbsp; </label> <span class="value" [innerHTML]=" annonce.weight"></span><br>
+                                                    <label for="prixPremiun">Prix Rapide(&euro;):&nbsp; </label> <span class="value" [innerHTML]=" annonce.preniumPrice == 0 ? '-':annonce.preniumPrice"></span><br>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- table view -->
+                    <div class="table-details">
+                        <table *ngIf="viewTable" datatable [dtOptions]="dtOptions" class="table hover datatable" id="simpletable">
+                            <thead>
+                                <tr>
+                                    <th>Ville de Départ</th>
+                                    <th>Ville d'Arrivée</th>
+                                    <th>Date de Départ</th>
+                                    <th>Date d'Arrivée</th>
+                                    <th>Nombre de Kilo(s) </th>
+                                    <th>Categories</th>
+                                    <th>Mode de Transport</th>
+                                    <th>Prix Classique(&euro;)</th>
+                                    <th>Prix Rapide(&euro;)</th>
+                                    <th>Prix Ultra Rapide(&euro;)</th>
+                                    <th>Réservations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let annonce of oldAnnonces; let i = index; trackBy:tracbByFn" [class]="annonce.announceType == 'SELLER' ? 'seller' : 'buyer'" (click)="detail(annonce.id,'OTHER')">
+                                    <td><span class="value" [innerHTML]=" annonce.departure"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.arrival"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.startDate"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.endDate"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.weight"></span></td>
+                                    <td>
+                                        <span *ngIf="annonce.categories.length == 0" class="value" innerHTML="AUTRES"></span>
+                                        <span *ngIf="annonce.categories.length > 0" class="value">
+							 <span *ngFor="let cat of annonce.categories" [innerHTML]="cat.description+'&nbsp;'"></span>
+                                        </span>
+                                    </td>
+                                    <td><span class="value" [innerHTML]=" annonce.descriptionTransport"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.price  == 0 ? '-':annonce.price"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.preniumPrice == 0 ? '-':annonce.preniumPrice"></span></td>
+                                    <td><span class="value" [innerHTML]=" annonce.goldPrice == 0 ? '-':annonce.goldPrice"></span></td>
+                                    <td><span class="value messages" [innerHTML]=" annonce.countReservation > 0 ? annonce.countReservation+'&nbsp;reservation(s)':' '"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-container>
+
 
             </div>
 

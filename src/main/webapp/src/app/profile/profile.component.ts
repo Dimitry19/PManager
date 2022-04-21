@@ -84,6 +84,8 @@ export class ProfileComponent implements OnInit {
   dtElements: QueryList<DataTableDirective>;
   dtTrigger1 : Subject<any> = new Subject();
   dtTrigger2 : Subject<any> = new Subject();
+  oldAnnonces: any;
+  status: string = "VALID";
 
 
   constructor(private router: Router,private startup: ServiceRequest, private formBuilder: FormBuilder, 
@@ -136,7 +138,7 @@ export class ProfileComponent implements OnInit {
       if(self.sectionToshow && self.id && self.sectionToshow === 'review'){
        
         self.loggedUser = JSON.parse(sessionStorage.loggedUser);
-        self.startup.annonceUserId(self.loggedUser.id).subscribe(response =>{
+        self.startup.annonceUserId(self.loggedUser.id,"VALID").subscribe(response =>{
           if(response.retCode > -1){
             // self.loggedUser.announces = response.results;  
 
@@ -192,7 +194,7 @@ export class ProfileComponent implements OnInit {
           self.profileUser = response;   
 
           self.check = self.profileUser.enableNotification;
-          self.startup.annonceUserId(self.profileUser.id).subscribe(response =>{
+          self.startup.annonceUserId(self.profileUser.id,"VALID").subscribe(response =>{
             if(response.retCode > -1){
               // self.loggedUser.announces = response.results;  
               self.annonceReserve();
@@ -229,7 +231,7 @@ export class ProfileComponent implements OnInit {
       }
       else if(!self.sectionToshow && !self.id ){
         self.loggedUser = JSON.parse(sessionStorage.loggedUser);
-        self.startup.annonceUserId(self.loggedUser.id).subscribe(response =>{      
+        self.startup.annonceUserId(self.loggedUser.id,"VALID").subscribe(response =>{      
           if(response.retCode > -1){
             // self.loggedUser.announces = response.results;  
             self.annonceReserve();
@@ -336,7 +338,8 @@ toggleView(){
    self.startup.validReserve(val).toPromise().then(response =>{
      if(response.retCode != -1){
        self.notifyService.showSuccess(response.retDescription,"");
-       self.refreshPage();
+      //  self.refreshPage();
+      self.annonceReserve();
      }else{
        self.notifyService.showError(response.message,"");
      }
@@ -351,7 +354,8 @@ toggleView(){
    self.startup.validReserve(val).toPromise().then(response =>{
      if(response.retCode != -1){
        self.notifyService.showSuccess(response.retDescription,"");
-       self.refreshPage();
+      //  self.refreshPage();
+      self.annonceReserve();
      }else{
        self.notifyService.showError(response.message,"");
      }
@@ -752,5 +756,33 @@ ngOnDestroy():void{
     self.updateUserMDP.get('password2').updateValueAndValidity;
   }
   
+}
+oldAnnounce(x){
+  let self = this;
+  if(self.status == "VALID"){
+    self.startup.annonceUserId(self.loggedUser.id,"COMPLETED").subscribe(response =>{      
+      if(response.retCode > -1){
+        self.status = "COMPLETED";
+        self.oldAnnonces = response.results;
+        x.innerHTML = "Voir mes annonces valides";
+      }else{
+        self.notifyService.showError(response.details[0],"");
+      }          
+      // sessionStorage.setItem('loggedUser',JSON.stringify(self.loggedUser));     
+    });
+  }
+  if(self.status == "COMPLETED"){
+    self.startup.annonceUserId(self.loggedUser.id,"VALID").subscribe(response =>{      
+      if(response.retCode > -1){
+        self.status = "VALID";
+        self.oldAnnonces = response.results;
+        x.innerHTML = "Voir mes annonces expirées";
+      }else{
+        self.notifyService.showError(response.details[0],"");
+      }          
+      // sessionStorage.setItem('loggedUser',JSON.stringify(self.loggedUser));     
+    });
+  }
+
 }
 }

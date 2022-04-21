@@ -88,9 +88,10 @@
     box-shadow: 0 0 0 0.2rem #42C2FF;
 }
 
-.btn-rounded.my-3 {
+
+/* .btn-rounded.my-3 {
     border-radius: 20px;
-}
+} */
 
 .btn-info {
     background-color: #42C2FF;
@@ -113,9 +114,10 @@
     color: #fff;
 }
 
-.btn-rounded {
+
+/* .btn-rounded {
     border-radius: 10em;
-}
+} */
 
 .btn-white {
     color: #0a5cd6;

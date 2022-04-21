@@ -57,7 +57,7 @@
                             <img class="profile-img" [src]="'data:'+loggedUser.image.origin+';base64,'+loggedUser.image.picByte" alt="profile" *ngIf="sharedService.checkImage(loggedUser)">
                             <b class="nameuser"> {{loggedUser?.username | uppercase}}</b>
                         </a>
-                        <div id="options" class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-55">
+                        <div id="options" class="dropdown-menu dropdown-menu-lg-right dropdown-secondary drop-down" aria-labelledby="navbarDropdownMenuLink-55">
                             <a class="dropdown-item fa fa-user-circle-o customcolor" [routerLink]="['/myaccount']"> Mon compte</a>
                             <a class="dropdown-item fa fa-sign-out customcolor" href="" data-toggle="modal" data-target="#modalLogout" data-backdrop="static" data-keyboard="false"> Se déconnecter</a>
                             <!--<a class="dropdown-item customcolor" href="#">Something else here</a>-->
@@ -97,10 +97,10 @@
 
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <button type="button" class="btn btn-default btn-rounded my-3  btn-info" data-toggle="modal" data-target="#modalLRForm" data-backdrop="static" data-keyboard="false">Connexion</button>
+                        <button type="button" class="btn buttonStyle my-3  btn-info" data-toggle="modal" data-target="#modalLRForm" data-backdrop="static" data-keyboard="false">Connexion</button>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class=" btn btn-default btn-rounded my-3 inscription" data-toggle="modal" data-target="#modalLRFormR" data-backdrop="static" data-keyboard="false">Inscription</button>
+                        <button type="button" class=" btn buttonStyle my-3 inscription" data-toggle="modal" data-target="#modalLRFormR" data-backdrop="static" data-keyboard="false">Inscription</button>
                     </li>
 
                 </ul>
