@@ -20,7 +20,6 @@ import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.*;
-import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.notification.enums.NotificationType;
 import cm.travelpost.tp.user.ent.dao.UserDAO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
@@ -218,6 +217,18 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         return announce;
     }
 
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
+    public AnnounceCompletedVO announceCompleted(Long id) throws Exception {
+
+        AnnounceCompletedVO announce = (AnnounceCompletedVO) findById(AnnounceCompletedVO.class, id);
+        if (announce == null) return null;
+        double rating = calcolateAverage(announce.getUser());
+        announce.getUserInfo().setRating(rating);
+        return announce;
+    }
+
     /**
      * Cette methode permet de creer une annonce
      * @param adto  ddonnees de l'annonce à creer
@@ -226,7 +237,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
-    public AnnounceVO create(AnnounceDTO adto) throws AnnounceException,Exception {
+    public AnnounceMasterVO create(AnnounceDTO adto) throws AnnounceException,Exception {
 
         if (adto != null) {
 
@@ -384,7 +395,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 
     @Transactional
-    public UserVO addAnnounceToUser(AnnounceVO announce) throws BusinessResourceException {
+    public UserVO addAnnounceToUser(AnnounceMasterVO announce) throws BusinessResourceException {
 
         UserVO user = announce.getUser();
 
@@ -398,7 +409,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
 
-    private void setAnnounce(AnnounceVO announce, UserVO user, AnnounceDTO adto,boolean isCreate) throws AnnounceException,Exception {
+    private void setAnnounce(AnnounceMasterVO announce, UserVO user, AnnounceDTO adto,boolean isCreate) throws AnnounceException,Exception {
 
         BigDecimal price = priceByAnnounceType(adto.getAnnounceType(),adto.getPrice());
         BigDecimal preniumPrice = priceByAnnounceType(adto.getAnnounceType(),adto.getPreniumPrice());
@@ -575,11 +586,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 
     private List commonSearchAnnounce(AnnounceSearchDTO announceSearch,PageBy pageBy) throws AnnounceException {
-        filters= new String[2];
-        filters[0]= FilterConstants.CANCELLED;
-        filters[1]= FilterConstants.NOT_COMPLETED;
+
         String where = composeQuery(announceSearch, ANNOUNCE_TABLE_ALIAS);
-        Query query = search(AnnounceVO.ANNOUNCE_SEARCH , where,filters);
+        Query query = search(AnnounceVO.ANNOUNCE_SEARCH , where,null);
         composeQueryParameters(announceSearch, query);
         pageBy(query,pageBy);
         return query.list();
@@ -729,11 +738,11 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         return  StringUtils.isNotEmpty(val) && !StringUtils.equals(val,  WHERE);
     }
 
-    private void handleCategories(AnnounceVO announce, List<String> categories) throws AnnounceException {
+    private void handleCategories(AnnounceMasterVO announce, List<String> categories) throws AnnounceException {
 
         announce.getCategories().clear();
         if (CollectionsUtils.isNotEmpty(categories)) {
-            categories.stream().filter(StringUtils::isNotEmpty).forEach(x -> {
+            categories.stream().filter(StringUtils::isNotEmpty).filter(c->StringUtils.notEquals(c,"Indifférent")).forEach(x -> {
                 try {
                     CategoryVO category = categoryDAO.findByCode(x);
                     if (category == null) {

@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "valid_reservation_received")
+@Table(name = "valid_reservation_received", schema = "views")
 @Immutable
 public class ReservationReceivedUserVO extends CommonReservationTransient {
 

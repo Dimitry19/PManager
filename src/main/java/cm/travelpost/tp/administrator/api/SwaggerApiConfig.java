@@ -166,7 +166,7 @@ public class SwaggerApiConfig  extends CommonProperties {
 
     private ApiKey apiToken() {
 
-        return new ApiKey("APIKey", "x-amz-security-token", SecurityScheme.In.HEADER.name());
+        return new ApiKey("APIKey", "AUTH_API_KEY", SecurityScheme.In.HEADER.name());
     }
 
 

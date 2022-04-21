@@ -2,6 +2,8 @@ package cm.travelpost.tp.announce.ent.service;
 
 
 import cm.travelpost.tp.announce.ent.dao.AnnounceDAO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceCompletedVO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.StatusEnum;
@@ -39,7 +41,7 @@ public class AnnounceServiceImpl implements AnnounceService {
 		System.out.println("Announce service starts...." );
 	}
 	*/
-    public AnnounceVO create(AnnounceDTO announceDTO) throws AnnounceException,Exception {
+    public AnnounceMasterVO create(AnnounceDTO announceDTO) throws AnnounceException,Exception {
 
         return dao.create(announceDTO);
     }
@@ -58,6 +60,11 @@ public class AnnounceServiceImpl implements AnnounceService {
 
     public AnnounceVO announce(Long id) throws AnnounceException,Exception {
         return dao.announce(id);
+    }
+
+
+    public AnnounceCompletedVO announceCompleted(Long id) throws AnnounceException,Exception {
+        return dao.announceCompleted(id);
     }
 
     public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws AnnounceException,Exception {

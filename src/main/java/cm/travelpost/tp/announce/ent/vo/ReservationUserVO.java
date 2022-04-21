@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "valid_reservation_created")
+@Table(name = "valid_reservation_created", schema = "views")
 @Immutable
 public class ReservationUserVO extends CommonReservationTransient {
 
@@ -63,7 +63,7 @@ public class ReservationUserVO extends CommonReservationTransient {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "R_ANNOUNCE_ID", updatable = false, insertable = false)
     @JsonBackReference
-    private AnnounceVO announce;
+    private AnnounceMasterVO announce;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "VALIDATE")
@@ -113,11 +113,11 @@ public class ReservationUserVO extends CommonReservationTransient {
         this.userId = userId;
     }
 
-    public AnnounceVO getAnnounce() {
+    public AnnounceMasterVO getAnnounce() {
         return announce;
     }
 
-    public void setAnnounce(AnnounceVO announce) {
+    public void setAnnounce(AnnounceMasterVO announce) {
         this.announce = announce;
         announceInfo = new AnnounceInfo(announce);
     }
