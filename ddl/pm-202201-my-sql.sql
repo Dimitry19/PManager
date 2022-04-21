@@ -457,3 +457,13 @@ create table user_role
 create index ROLE_ID
        on user_role (ROLE_ID);
 
+-- auto-generated definition
+create table sms_otp(
+        ID BIGINT auto_increment primary key,
+        CANCELLED    BOOLEAN      not null,
+        DATECREATED  TIMESTAMP,
+        LASTUPDATED  TIMESTAMP,
+        OTP_CODE     INTEGER      not null,
+        unique(OTP_CODE),
+        PHONE_NUMBER VARCHAR(255) not null
+);

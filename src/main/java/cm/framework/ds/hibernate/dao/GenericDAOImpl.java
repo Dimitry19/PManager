@@ -1,8 +1,7 @@
 package cm.framework.ds.hibernate.dao;
 
-
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.utils.SQLUtils;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.event.AEvent;
 import cm.travelpost.tp.common.event.Event;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
@@ -785,11 +784,6 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     public Query search(String sqlQuery, String where, String... filters) {
 
         Session session = this.sessionFactory.getCurrentSession();
-
-        if (filters ==null){
-            filters = new String[1];
-            filters[0] = FilterConstants.CANCELLED;
-        }
         enableFilters(session,filters);
         return session.createQuery(sqlQuery+where);
     }
@@ -816,11 +810,13 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Transactional(propagation = Propagation.REQUIRED)
     void enableFilters(Session session, String... filters){
-        if (filters != null) {
-            for (String filter : filters) {
-                session.enableFilter(filter);
-            }
+
+        if (filters ==null){
+            filters = new String[1];
+            filters[0] = FilterConstants.CANCELLED;
+        }
+        for (String filter : filters) {
+            session.enableFilter(filter);
         }
     }
-
 }

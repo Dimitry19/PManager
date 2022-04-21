@@ -2,8 +2,8 @@ package cm.travelpost.tp.ws.controller.rest.users;
 
 
 import cm.framework.ds.hibernate.enums.CountBy;
-import cm.travelpost.tp.common.ent.vo.PageBy;
-import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
+import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
 import cm.travelpost.tp.common.utils.StringUtils;
@@ -677,8 +677,10 @@ public class UserController extends CommonController {
 
         try {
             createOpentracingSpan("UserController - subscriptions");
+
             int count = userService.count(CountBy.SUBSCRIPTIONS,userId,null);
             List<UserVO> users = userService.subscriptions(userId);
+
             return getPaginateResponseResponseEntity(headers, paginateResponse, count,users);
 
         } catch (Exception e) {
@@ -780,7 +782,6 @@ public class UserController extends CommonController {
        }
        throw new UserNotFoundException(WebServiceResponseCode.ERROR_LOGOUT_LABEL);
     }
-
     private void  cookie(HttpServletResponse response,String username, String password){
         Cookie cookie =new Cookie("_tps_2P_", _cookie(username,password));
         cookie.setSecure(true);

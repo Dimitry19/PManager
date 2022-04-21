@@ -1,8 +1,9 @@
 package cm.travelpost.tp.city.ent.dao;
 
+
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.CommonDAO;
 import cm.travelpost.tp.city.ent.vo.CityVO;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.ws.requests.CommonDTO;
 

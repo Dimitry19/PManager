@@ -66,6 +66,9 @@ public class SwaggerApiConfig  extends CommonProperties {
     @Value("${swagger.api.groupname.city}")
     private String apiGroupNameCity;
 
+    @Value("${swagger.api.groupname.sms}")
+    private String apiGroupNameSms;
+
 
 
     @Value("${swagger.api.contact}")
@@ -145,6 +148,11 @@ public class SwaggerApiConfig  extends CommonProperties {
     @Bean
     public Docket cityApi() {
         return createDocket(apiGroupNameCity, contextRoot+"/ws/city.*");
+    }
+
+    @Bean
+    public Docket otpApi() {
+        return createDocket(apiGroupNameSms, contextRoot+"/ws/sms.*");
     }
 
 

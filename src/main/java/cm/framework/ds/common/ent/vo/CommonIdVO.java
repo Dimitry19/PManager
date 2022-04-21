@@ -1,7 +1,8 @@
-package cm.travelpost.tp.common.ent.vo;
+package cm.framework.ds.common.ent.vo;
 
+import cm.framework.ds.common.listener.audit.TableListener;
 import cm.travelpost.tp.airline.ent.vo.AirlineIdVO;
-import cm.travelpost.tp.common.listener.audit.TableListener;
+
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;

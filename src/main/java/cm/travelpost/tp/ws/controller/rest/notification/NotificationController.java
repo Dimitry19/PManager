@@ -1,7 +1,7 @@
 package cm.travelpost.tp.ws.controller.rest.notification;
 
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
-import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 import cm.travelpost.tp.ws.controller.rest.CommonController;

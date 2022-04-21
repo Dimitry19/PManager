@@ -1,6 +1,7 @@
 package cm.travelpost.tp.announce.ent.vo;
 
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+
+import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.ValidateEnum;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -29,7 +31,7 @@ import java.util.Set;
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
 })
-//@Where(clause = FilterConstants.FILTER_WHERE_RESERVATION_CANC)
+@Where(clause = FilterConstants.FILTER_WHERE_RESERVATION_CANC)
 public class ReservationVO extends CommonVO {
 
     public static final String FIND_BY_ANNOUNCE = "cm.travelpost.tp.announce.ent.vo.ReservationVO.findByAnnounce";
@@ -66,7 +68,7 @@ public class ReservationVO extends CommonVO {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "R_ANNOUNCE_ID", updatable = true)
     @JsonBackReference
-    private AnnounceVO announce;
+    private AnnounceMasterVO announce;
 
     @Basic(optional = false)
     @Enumerated(EnumType.STRING)
@@ -142,11 +144,11 @@ public class ReservationVO extends CommonVO {
         this.userInfo = new UserInfo(user);
     }
 
-    public AnnounceVO getAnnounce() {
+    public AnnounceMasterVO getAnnounce() {
         return announce;
     }
 
-    public void setAnnounce(AnnounceVO announce) {
+    public void setAnnounce(AnnounceMasterVO announce) {
         this.announce = announce;
         announceInfo = new AnnounceInfo(announce);
     }

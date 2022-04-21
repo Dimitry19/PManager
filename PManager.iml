@@ -3,7 +3,63 @@
   <component name="ExternalSystem" externalSystem="Maven" />
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/batch/jobs/cron/announce/AnnounceSubmitJobs.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/announce/AnnounceSubmitJobs.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/configuration/filters/AuthenticationFilter.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/batch/config/BatchConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/config/BatchConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/configuration/cfg/CustomWebMvcConfigurerAdapter.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/CustomWebMvcConfigurerAdapter.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/configuration/cfg/HttpSessionListenerConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HttpSessionListenerConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/administrator/tracing/OpenTracingConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/administrator/tracing/OpenTracingConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/batch/config/cron/QuartzCronConfiguration.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/config/cron/QuartzCronConfiguration.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/batch/jobs/cron/QuartzSubmitJobs.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/QuartzSubmitJobs.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerApiConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/administrator/api/SwaggerApiConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/TravelPostApplication.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/batch/jobs/cron/user/UserSubmitJobs.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/user/UserSubmitJobs.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/security/WebSecurityConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/security/WebSecurityConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/_cm/travelpost/tp/websocket/config/WebSocketConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/websocket/config/WebSocketConfig.java</file>
+          <file>jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/ext/jersey-spring5/2.30.1/jersey-spring5-2.30.1.jar!/jersey-spring-applicationContext.xml</file>
+          <file>file://$MAVEN_REPOSITORY$/org/glassfish/jersey/ext/jersey-spring5/2.30.1/jersey-spring5-2.30.1.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/org/springframework/batch/spring-batch-core/4.2.2.RELEASE/spring-batch-core-4.2.2.RELEASE.jar!/beanRefContext.xml</file>
+          <file>jar://$MAVEN_REPOSITORY$/org/springframework/batch/spring-batch-core/4.2.2.RELEASE/spring-batch-core-4.2.2.RELEASE.jar!/jsrBaseContext.xml</file>
+          <file>file://$MAVEN_REPOSITORY$/org/springframework/batch/spring-batch-core/4.2.2.RELEASE/spring-batch-core-4.2.2.RELEASE.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-data-rest/3.0.0/springfox-data-rest-3.0.0.jar!/springfox/documentation/spring/data/rest/schema/SpringDataRestSchemaExtensions.class</file>
+          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-data-rest/3.0.0/springfox-data-rest-3.0.0.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-oas/3.0.0/springfox-oas-3.0.0.jar!/springfox/documentation/oas/configuration/OpenApiMappingConfiguration.class</file>
+          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-oas/3.0.0/springfox-oas-3.0.0.jar!/springfox/documentation/oas/configuration/OpenApiWebFluxConfiguration.class</file>
+          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-oas/3.0.0/springfox-oas-3.0.0.jar!/springfox/documentation/oas/configuration/OpenApiWebMvcConfiguration.class</file>
+          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-oas/3.0.0/springfox-oas-3.0.0.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-schema/3.0.0/springfox-schema-3.0.0.jar!/springfox/documentation/schema/configuration/ModelsConfiguration.class</file>
+          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-schema/3.0.0/springfox-schema-3.0.0.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-web/3.0.0/springfox-spring-web-3.0.0.jar!/springfox/documentation/spring/web/SpringfoxWebConfiguration.class</file>
+          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-web/3.0.0/springfox-spring-web-3.0.0.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-webflux/3.0.0/springfox-spring-webflux-3.0.0.jar!/springfox/documentation/spring/web/SpringfoxWebFluxConfiguration.class</file>
+          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-webflux/3.0.0/springfox-spring-webflux-3.0.0.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-webmvc/3.0.0/springfox-spring-webmvc-3.0.0.jar!/springfox/documentation/spring/web/SpringfoxWebMvcConfiguration.class</file>
+          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-webmvc/3.0.0/springfox-spring-webmvc-3.0.0.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-swagger-common/3.0.0/springfox-swagger-common-3.0.0.jar!/springfox/documentation/swagger/configuration/SwaggerCommonConfiguration.class</file>
+          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-swagger-common/3.0.0/springfox-swagger-common-3.0.0.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-swagger2/3.0.0/springfox-swagger2-3.0.0.jar!/springfox/documentation/swagger2/configuration/Swagger2WebFluxConfiguration.class</file>
+          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-swagger2/3.0.0/springfox-swagger2-3.0.0.jar!/springfox/documentation/swagger2/configuration/Swagger2WebMvcConfiguration.class</file>
+          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-swagger2/3.0.0/springfox-swagger2-3.0.0.jar</file>
+        </fileset>
+      </configuration>
     </facet>
     <facet type="web" name="Web">
       <configuration>
@@ -80,6 +136,8 @@
     <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-client:2.30.1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.jersey.media:jersey-media-jaxb:2.30.1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.hk2.external:jakarta.inject:2.6.1" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.activation:jakarta.activation-api:1.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.jersey.containers:jersey-container-servlet-core:2.30.1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.jersey.containers:jersey-container-servlet:2.30.1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.jersey.ext:jersey-bean-validation:2.30.1" level="project" />
@@ -102,7 +160,6 @@
     <orderEntry type="library" name="Maven: org.glassfish.jersey.media:jersey-media-json-jackson:2.30.1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.jersey.ext:jersey-entity-filtering:2.30.1" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.11.0" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.activation:jakarta.activation-api:1.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-mail:2.3.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:5.2.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:jakarta.mail:1.6.5" level="project" />
@@ -127,7 +184,6 @@
     <orderEntry type="library" name="Maven: jakarta.xml.soap:jakarta.xml.soap-api:1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.jvnet.staxex:stax-ex:1.8.3" level="project" />
     <orderEntry type="library" name="Maven: jakarta.xml.ws:jakarta.xml.ws-api:2.3.3" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: jakarta.jws:jakarta.jws-api:2.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-oxm:5.2.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.ws:spring-ws-core:3.0.9.RELEASE" level="project" />
@@ -235,5 +291,10 @@
     <orderEntry type="library" name="Maven: junit:junit:4.13" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:2.2" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest:2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.twilio.sdk:twilio:7.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.5" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:javax.activation-api:1.2.0" level="project" />
   </component>
 </module>

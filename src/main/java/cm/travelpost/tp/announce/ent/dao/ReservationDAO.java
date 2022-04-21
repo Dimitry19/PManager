@@ -1,10 +1,10 @@
 package cm.travelpost.tp.announce.ent.dao;
 
 
-import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.framework.ds.hibernate.dao.CommonDAO;
-import cm.travelpost.tp.common.ent.vo.CommonVO;
-import cm.travelpost.tp.common.ent.vo.PageBy;
+import cm.framework.ds.common.ent.vo.CommonVO;
+import cm.framework.ds.common.ent.vo.PageBy;
+import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.travelpost.tp.common.enums.ReservationType;
 import cm.travelpost.tp.common.enums.ValidateEnum;
 import cm.travelpost.tp.ws.requests.announces.ReservationDTO;

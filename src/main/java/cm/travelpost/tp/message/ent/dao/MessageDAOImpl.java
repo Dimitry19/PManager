@@ -2,11 +2,12 @@ package cm.travelpost.tp.message.ent.dao;
 
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.framework.ds.hibernate.enums.FindBy;
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.announce.ent.dao.AnnounceDAO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.travelpost.tp.common.Constants;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
@@ -97,7 +98,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         if (user == null) {
             throw new UserNotFoundException("Utisateur non trouvé");
         }
-        AnnounceVO announce = announceDAO.announce(mdto.getAnnounceId());
+        AnnounceMasterVO announce = announceDAO.announce(mdto.getAnnounceId());
 
         if (announce == null) {
             throw new Exception("Announce non trouvé");
@@ -166,7 +167,7 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         return updateDelete(id);
     }
 
-    private void setMessage(AnnounceVO announce, UserVO user, MessageVO message, MessageDTO mdto) {
+    private void setMessage(AnnounceMasterVO announce, UserVO user, MessageVO message, MessageDTO mdto) {
         message.setAnnounce(announce);
         message.setContent(mdto.getContent());
         message.setCancelled(false);

@@ -1,11 +1,11 @@
 package cm.travelpost.tp.ws.controller.rest.admin.dashboard;
 
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.administrator.ent.enums.DashBoardObjectType;
 import cm.travelpost.tp.airline.ent.vo.AirlineIdVO;
 import cm.travelpost.tp.airline.ent.vo.AirlineVO;
 import cm.travelpost.tp.city.ent.vo.CityVO;
 import cm.travelpost.tp.common.Constants;
-import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.exception.DashboardException;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.ws.controller.rest.CommonController;

@@ -1,7 +1,7 @@
 package cm.travelpost.tp.user.ent.vo;
 
-import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+import cm.framework.ds.common.ent.vo.CommonVO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.common.enums.Gender;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
@@ -102,7 +102,7 @@ public class UserVO extends CommonVO {
 
     private Set<MessageVO> messages = new HashSet<>();
 
-    private Set<AnnounceVO> announces = new HashSet<>();
+    private Set<AnnounceMasterVO> announces = new HashSet<>();
 
     private Set<RoleVO> roles = new HashSet<>();
 
@@ -249,7 +249,7 @@ public class UserVO extends CommonVO {
     @OrderBy(clause = "startDate DESC")
     @Where(clause = "cancelled = false")
     @JsonIgnore
-    public Set<AnnounceVO> getAnnounces() {
+    public Set<AnnounceMasterVO> getAnnounces() {
         return announces;
     }
 
@@ -358,7 +358,7 @@ public class UserVO extends CommonVO {
         this.roles = roles;
     }
 
-    public void setAnnounces(Set<AnnounceVO> announces) {
+    public void setAnnounces(Set<AnnounceMasterVO> announces) {
         this.announces = announces;
     }
 
@@ -403,22 +403,22 @@ public class UserVO extends CommonVO {
     }
 
 
-    public void addAnnounce(AnnounceVO announce) {
+    public void addAnnounce(AnnounceMasterVO announce) {
         this.announces.add(announce);
         announce.setUser(this);
 
     }
 
-    public void removeAnnounce(AnnounceVO announce) {
+    public void removeAnnounce(AnnounceMasterVO announce) {
         announce.setUser(null);
         this.announces.remove(announce);
     }
 
     public void removeAnnounces() {
-        Iterator<AnnounceVO> iterator = this.announces.iterator();
+        Iterator<AnnounceMasterVO> iterator = this.announces.iterator();
 
         while (iterator.hasNext()) {
-            AnnounceVO announce = iterator.next();
+            AnnounceMasterVO announce = iterator.next();
             announce.setUser(null);
             iterator.remove();
         }
@@ -521,10 +521,10 @@ public class UserVO extends CommonVO {
             review.cancel();
         }
 
-        Iterator<AnnounceVO> iterAnnounce = this.announces.iterator();
+        Iterator<AnnounceMasterVO> iterAnnounce = this.announces.iterator();
 
         while (iterAnnounce.hasNext()) {
-            AnnounceVO announce = iterAnnounce.next();
+            AnnounceMasterVO announce = iterAnnounce.next();
             announce.cancel();
         }
 

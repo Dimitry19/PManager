@@ -1,8 +1,9 @@
 package cm.travelpost.tp.announce.ent.dao;
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
+
 import cm.travelpost.tp.announce.ent.vo.*;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.ReservationType;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.ValidateEnum;
@@ -149,7 +150,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
         if (reservation == null) {
             throw new Exception("Reservation non trouve");
         }
-        AnnounceVO announce = reservation.getAnnounce();
+        AnnounceMasterVO announce = reservation.getAnnounce();
 
         BigDecimal oldWeight=reservation.getWeight();
         if (BigDecimalUtils.lessThan(reservation.getWeight(), reservationDTO.getWeight())) {
@@ -199,7 +200,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
             throw new Exception("Impossible d'eliminer cette reservation car déjà validée");
         }
 
-        AnnounceVO announce = reservation.getAnnounce();
+        AnnounceMasterVO announce = reservation.getAnnounce();
         announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
         update(announce);
 

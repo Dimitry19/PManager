@@ -1,6 +1,6 @@
 package cm.travelpost.tp.airline.ent.vo;
 
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;

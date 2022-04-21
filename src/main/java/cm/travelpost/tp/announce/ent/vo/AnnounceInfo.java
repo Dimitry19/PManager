@@ -35,7 +35,7 @@ public class AnnounceInfo implements Serializable {
     private Set<CategoryVO> categories = new HashSet<>();
     private Integer countReservation;
 
-    public AnnounceInfo(AnnounceVO announce) {
+    public AnnounceInfo(AnnounceMasterVO announce) {
         this.id = announce.getId();
         this.departure = announce.getDeparture();
         this.arrival = announce.getArrival();
