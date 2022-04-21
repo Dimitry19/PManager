@@ -25,6 +25,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public NotificationVO read(Long id) throws Exception {
+        if(logger.isDebugEnabled()){
+            logger.info("Read notification with id {}", id);
+        }
         return dao.read(id);
     }
 }

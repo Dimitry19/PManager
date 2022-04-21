@@ -14,6 +14,7 @@ import cm.travelpost.tp.message.ent.service.MessageService;
 import cm.travelpost.tp.notification.ent.service.NotificationService;
 import cm.travelpost.tp.user.ent.service.RoleService;
 import cm.travelpost.tp.user.ent.service.UserService;
+import cm.travelpost.tp.user.ent.service.otp.SmsService;
 import cm.travelpost.tp.ws.controller.RedirectType;
 import cm.travelpost.tp.ws.responses.PaginateResponse;
 import cm.travelpost.tp.ws.responses.Response;
@@ -32,6 +33,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSendException;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -105,6 +107,13 @@ public class CommonController  extends WSConstants {
 
     @Autowired
     protected MessageService messageService;
+
+
+    @Autowired
+    protected  SmsService smsService;
+
+    @Autowired
+    protected SimpMessagingTemplate socket;
 
 
     @Autowired
