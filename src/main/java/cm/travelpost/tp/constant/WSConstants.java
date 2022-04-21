@@ -60,6 +60,8 @@ public class WSConstants extends CommonProperties {
     public static final String USER_SUBSCRIPTION_WS = "/subscriptions/{userId}";
     public static final String USER_SUBSCRIBER_WS = "/subscribers/{userId}";
 
+    public static final String USER_WS_OTP = "/otp";
+
 
     /************ ANNOUNCE REQUEST*************/
     public static final String ANNOUNCE_WS = "/ws/announce/*";
@@ -135,5 +137,10 @@ public class WSConstants extends CommonProperties {
     /************ ADMIN DASHBOARD REQUEST*************/
     public static final String DASHBOARD_WS = "/ws" + DASHBOARD+"/*";
     public static final String DASHBOARD_DELETE = "/delete/{code}";
+
+    /*******************SMS TWILLO ******************/
+    public static final String SMS_WS = "/ws/sms/*";
+    public static final String SMS_SEND = "/send";
+    public static final String SMS_CALLBACK = "/smscallback";
 
 }

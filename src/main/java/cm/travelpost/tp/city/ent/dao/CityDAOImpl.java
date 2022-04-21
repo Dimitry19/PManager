@@ -1,9 +1,9 @@
 package cm.travelpost.tp.city.ent.dao;
 
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.city.ent.vo.CityVO;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
@@ -35,7 +35,7 @@ public class CityDAOImpl extends Generic implements CityDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public int count(Object o,PageBy pageBy) throws Exception {
+    public int count(Object o, PageBy pageBy) throws Exception {
         logger.info(" City - count");
          if(o == null) {
             return count(CityVO.class, pageBy);

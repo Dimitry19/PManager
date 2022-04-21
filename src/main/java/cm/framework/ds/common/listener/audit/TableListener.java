@@ -1,6 +1,8 @@
-package cm.travelpost.tp.common.listener.audit;
+package cm.framework.ds.common.listener.audit;
 
-import cm.travelpost.tp.common.ent.bo.Auditable;
+
+
+import cm.framework.ds.common.ent.bo.Auditable;
 
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;

@@ -1,7 +1,7 @@
 package cm.travelpost.tp.user.ent.vo;
 
+import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
-import cm.travelpost.tp.common.ent.vo.CommonVO;
 import cm.travelpost.tp.common.enums.Gender;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;

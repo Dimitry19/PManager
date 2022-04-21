@@ -1,6 +1,6 @@
 package cm.travelpost.tp.user.ent.service;
 
-import cm.travelpost.tp.common.ent.vo.PageBy;
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.review.ent.bo.ReviewsSummaryBO;
 import cm.travelpost.tp.review.ent.vo.ReviewDetailsVO;

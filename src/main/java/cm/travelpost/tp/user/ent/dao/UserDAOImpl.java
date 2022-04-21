@@ -1,9 +1,9 @@
 package cm.travelpost.tp.user.ent.dao;
 
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.framework.ds.hibernate.enums.CountBy;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.RoleEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
@@ -134,6 +134,11 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public List<UserVO> subscriptions(Long userId) throws UserException {
+
+        if(logger.isDebugEnabled()){
+            logger.info("Retrieve subscriptions for the user with id {}", userId);
+        }
+
         UserVO user = findById(userId);
         if (user == null)
             throw new UserNotFoundException(USER_NOT_FOUND);
@@ -144,6 +149,11 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public List<UserVO> subscribers(Long userId) throws UserException {
+
+        if(logger.isDebugEnabled()){
+            logger.info("Retrieve subscribers for the user with id {}", userId);
+        }
+
         UserVO user = findById(userId);
         if (user == null)
             throw new UserNotFoundException(USER_NOT_FOUND);
@@ -155,14 +165,21 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserVO> getAllUsers() throws Exception {
-        logger.info("User: all users");
+        if(logger.isDebugEnabled()){
+            logger.info("User: all users");
+        }
+
         return all(UserVO.class, null);
     }
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<UserVO> getAllUsersToConfirm() throws Exception {
-        logger.info("User:  users to confirm");
+
+        if(logger.isDebugEnabled()){
+            logger.info("User:  users to confirm");
+        }
+
         return findBy(UserVO.JOB_CONFIRM, UserVO.class, 0, ACTIVE_PARAM, null);
     }
 
@@ -183,7 +200,11 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserVO getUser(Long id) throws UserException {
-        logger.info("User: get user");
+
+        if(logger.isDebugEnabled()){
+            logger.info("User: get user with id {}", id);
+        }
+
         try {
             UserVO user = findById(id);
             calcolateAverage(user);
@@ -197,9 +218,10 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public UserVO register(RegisterDTO register) throws UserException {
-        logger.info("User: register");
+        if(logger.isDebugEnabled()){
+            logger.info("User registration {}", register);
+        }
         try {
-            //UserVO user=findByNaturalIdss(register.getUsername(), register.getEmail(),true);
 
             filters = new String[2];
 
@@ -211,7 +233,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
             UserVO user = (UserVO) findByNaturalIds(UserVO.class, map, filters);
             if (user != null) {
-                logger.error("User: username deja exisitant");
+                logger.error("User: username deja existant");
                 user.setError(WebServiceResponseCode.ERROR_USERNAME_REGISTER_LABEL + " et " + WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
                 return user;
             }
@@ -255,7 +277,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public UserVO updateUser(UpdateUserDTO userDTO) throws Exception {
-        logger.info("User: update");
+        if(logger.isDebugEnabled()){
+            logger.info("User update {}", userDTO);
+        }
 
         UserVO user = findById(userDTO.getId());
 
@@ -287,7 +311,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public boolean deleteUser(Long id) throws UserException {
-        logger.info("User: delete");
+        if(logger.isDebugEnabled()){
+            logger.info("Delete user with id {}", id);
+        }
         //delete(UserVO.class,id,false);
         return updateDelete(id);
     }
@@ -306,7 +332,10 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserVO findByUsername(String username) throws Exception {
 
-        logger.info("User: find by username");
+        if(logger.isDebugEnabled()){
+            logger.info("User: find by username {}", username);
+        }
+
         filters = new String[2];
         filters[0] = FilterConstants.CANCELLED;
         filters[1] = FilterConstants.ACTIVE_MBR;
@@ -317,8 +346,10 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public UserVO findByOnlyUsername(String username, boolean disableFilter) throws Exception {
-        logger.info("User: find by only username");
 
+        if(logger.isDebugEnabled()){
+            logger.info("User: find by only username {}", username);
+        }
         if (!disableFilter) {
             filters = new String[2];
             filters[0] = FilterConstants.CANCELLED;
@@ -352,7 +383,11 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public UserVO findByToken(String token) throws Exception {
-        logger.info("User: find by token");
+
+        if(logger.isDebugEnabled()){
+            logger.info("User: find token  {}", token);
+        }
+
         filters = new String[1];
         filters[0] = FilterConstants.CANCELLED;
 
@@ -364,7 +399,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     public UserVO findById(Long id) throws UserException {
 
         try {
-            logger.info("User: find by id");
+            if(logger.isDebugEnabled()){
+                logger.info("User: find by id  {}", id);
+            }
 
             filters = new String[2];
             filters[0] = FilterConstants.ACTIVE_MBR;
@@ -391,7 +428,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserVO findByEmail(String email) throws Exception {
-        logger.info("User: find by email");
+        if(logger.isDebugEnabled()){
+            logger.info("User: find by email {}", email);
+        }
         return (UserVO) findByUniqueResult(UserVO.EMAIL, UserVO.class, email, EMAIL_PARAM);
     }
 

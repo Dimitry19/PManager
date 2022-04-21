@@ -1,8 +1,8 @@
 package cm.travelpost.tp.ws.controller.rest.message;
 
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.enums.FindBy;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.message.ent.vo.MessageVO;
 import cm.travelpost.tp.ws.controller.rest.CommonController;

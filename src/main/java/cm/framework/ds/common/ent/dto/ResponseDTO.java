@@ -1,6 +1,7 @@
-package cm.travelpost.tp.common.ent.dto;
+package cm.framework.ds.common.ent.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
 
@@ -16,7 +17,7 @@ public final class ResponseDTO<T> {
     private final Boolean isLastPage;
 
     private ResponseDTO(final List<T> elements, final int totalItems, final int totalPages, final int currentPage,
-                        final Boolean isFirstPage, final Boolean isLastPage) {
+						final Boolean isFirstPage, final Boolean isLastPage) {
         this.elements = elements;
         this.totalItems = totalItems;
         this.totalPages = totalPages;

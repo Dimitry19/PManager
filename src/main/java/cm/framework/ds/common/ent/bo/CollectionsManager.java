@@ -1,6 +1,6 @@
-package cm.travelpost.tp.common.ent.bo;
+package cm.framework.ds.common.ent.bo;
 
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+import cm.framework.ds.common.ent.vo.CommonVO;
 
 import java.util.Collection;
 

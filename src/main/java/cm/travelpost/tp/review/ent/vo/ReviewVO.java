@@ -1,6 +1,6 @@
 package cm.travelpost.tp.review.ent.vo;
 
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.rating.enums.Rating;
 import cm.travelpost.tp.user.ent.vo.UserVO;

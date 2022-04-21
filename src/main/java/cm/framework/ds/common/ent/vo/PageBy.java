@@ -1,4 +1,4 @@
-package cm.travelpost.tp.common.ent.vo;
+package cm.framework.ds.common.ent.vo;
 
 public class PageBy {
 
