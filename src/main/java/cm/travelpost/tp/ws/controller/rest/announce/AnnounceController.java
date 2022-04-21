@@ -387,7 +387,7 @@ public class AnnounceController extends CommonController {
         return null;
     }
 
-    @ApiOperation(value = "Retrieve an announce with an ID and Source", response = AnnounceVO.class)
+    @ApiOperation(value = "Retrieve an announce completed with an ID ", response = AnnounceVO.class)
     @GetMapping(value = ANNOUNCE_WS_COMPLETED_BY_ID, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<Object> getAnnounceCompleted(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id ) throws AnnounceException {
 

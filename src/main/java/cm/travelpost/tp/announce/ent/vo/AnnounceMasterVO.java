@@ -16,11 +16,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.Filters;
-import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -40,6 +43,7 @@ import java.util.Set;
 })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "status")
+@DiscriminatorOptions(insert = false,force=false)
 @Where(clause = FilterConstants.FILTER_ANNOUNCE_CANC)
 public class AnnounceMasterVO extends CommonVO {
 
@@ -92,15 +96,15 @@ public class AnnounceMasterVO extends CommonVO {
 	protected String warning;
 
 	@Embedded
-	private AnnounceIdVO announceId;
+	protected AnnounceIdVO announceId;
 
-	private String descriptionTransport;
-
-	@Transient
-	private UserInfo userInfo;
+	protected String descriptionTransport;
 
 	@Transient
-	private Integer countReservation;
+	protected UserInfo userInfo;
+
+	@Transient
+	protected Integer countReservation;
 
 	public AnnounceMasterVO() {
 		super();

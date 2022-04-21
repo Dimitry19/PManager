@@ -20,7 +20,6 @@ import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.*;
-import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.notification.enums.NotificationType;
 import cm.travelpost.tp.user.ent.dao.UserDAO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
@@ -248,7 +247,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 throw new UserException("Aucun utilisateur trouvé avec cet id " + adto.getUserId());
             }
 
-            AnnounceMasterVO announce = new AnnounceMasterVO();
+            AnnounceVO announce = new AnnounceVO();
             setAnnounce(announce, user, adto,true);
 
             announce.setStatus(StatusEnum.VALID);
@@ -587,11 +586,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 
     private List commonSearchAnnounce(AnnounceSearchDTO announceSearch,PageBy pageBy) throws AnnounceException {
-        filters= new String[2];
-        filters[0]= FilterConstants.CANCELLED;
-        filters[1]= FilterConstants.NOT_COMPLETED;
+
         String where = composeQuery(announceSearch, ANNOUNCE_TABLE_ALIAS);
-        Query query = search(AnnounceVO.ANNOUNCE_SEARCH , where,filters);
+        Query query = search(AnnounceVO.ANNOUNCE_SEARCH , where,null);
         composeQueryParameters(announceSearch, query);
         pageBy(query,pageBy);
         return query.list();
@@ -745,7 +742,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         announce.getCategories().clear();
         if (CollectionsUtils.isNotEmpty(categories)) {
-            categories.stream().filter(StringUtils::isNotEmpty).forEach(x -> {
+            categories.stream().filter(StringUtils::isNotEmpty).filter(c->StringUtils.notEquals(c,"Indifférent")).forEach(x -> {
                 try {
                     CategoryVO category = categoryDAO.findByCode(x);
                     if (category == null) {

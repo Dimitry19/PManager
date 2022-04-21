@@ -6,6 +6,8 @@
 package cm.travelpost.tp.announce.ent.vo;
 
 
+import org.hibernate.annotations.DiscriminatorOptions;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -19,6 +21,7 @@ import javax.persistence.NamedQuery;
 		@NamedQuery(name = AnnounceVO.FINDBYTRANSPORT, query = "select a from AnnounceVO a where a.transport =:transport order by a.startDate desc"),
 })
 @DiscriminatorValue("VALID")
+@DiscriminatorOptions(insert = true,force=true)
 public class AnnounceVO extends AnnounceMasterVO {
 
 	public static final String FINDBYUSER = "cm.travelpost.tp.announce.ent.vo.AnnounceVO.findByUser";

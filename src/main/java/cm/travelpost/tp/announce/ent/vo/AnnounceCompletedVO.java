@@ -6,6 +6,8 @@
 package cm.travelpost.tp.announce.ent.vo;
 
 
+import org.hibernate.annotations.DiscriminatorOptions;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -19,6 +21,7 @@ import javax.persistence.NamedQuery;
 		@NamedQuery(name = AnnounceCompletedVO.FINDBYTRANSPORT, query = "select a from AnnounceCompletedVO a where a.transport =:transport order by a.startDate desc"),
 })
 @DiscriminatorValue("COMPLETED")
+@DiscriminatorOptions(insert = false,force=false)
 public class AnnounceCompletedVO extends AnnounceMasterVO {
 	public static final String FINDBYUSER = "cm.travelpost.tp.announce.ent.vo.AnnounceCompletedVO.findByUser";
 	public static final String FINDBYTYPE = "cm.travelpost.tp.announce.ent.vo.AnnounceCompletedVO.findByType";
