@@ -5,28 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="ok last modification notification handle">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/announce/AAnnounceJob.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/announce/AnnounceNotificateJob.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es2015.efd6452bd327bb2492c6.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es5.efd6452bd327bb2492c6.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/styles.e238caae363a51505138.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/QuartzSubmitJobs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/QuartzSubmitJobs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/announce/AnnounceManagerJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/announce/AnnounceManagerJob.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/announce/AnnounceSubmitJobs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/announce/AnnounceSubmitJobs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/DateUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/DateUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.110398297b8050834170.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.110398297b8050834170.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.c76c14e9fa45fd4f7bf0.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,17 +134,6 @@
     </dirStrings>
   </component>
   <component name="Git.Settings">
-    <option name="PREVIOUS_COMMIT_AUTHORS">
-      <list>
-        <option value="Dimitry19 &lt;orlynn1anais&gt;" />
-      </list>
-    </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="BetaVersion202203" />
-      </map>
-    </option>
     <favorite-branches>
       <branch-storage>
         <map>
@@ -178,6 +154,17 @@
         </map>
       </branch-storage>
     </favorite-branches>
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Dimitry19 &lt;orlynn1anais&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="BetaVersion202203_orig" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -420,7 +407,7 @@
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="H2" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/city" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="node.js.detected.package.stylelint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.stylelint" value="project" />
@@ -440,11 +427,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\DevJava\ws\PManager\src\main\resources" />
       <recent name="F:\DevJava\ws\PManager\src\main\java\cm\packagemanager\pmanager\city" />
       <recent name="F:\DevJava\ws\PManager\src\main\java\cm\framework\hibernate\dao" />
       <recent name="F:\DevJava\ws\PManager" />
       <recent name="F:\DevJava\ws\PManager\ddl" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\DevJava\ws\PManager\src\main\resources" />
@@ -539,7 +526,7 @@
       <item itemvalue="Spring Boot.TP" />
     </list>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -666,34 +653,8 @@
       <workItem from="1650076008903" duration="148000" />
       <workItem from="1650076221879" duration="21817000" />
       <workItem from="1650125118548" duration="17230000" />
-    </task>
-    <task id="LOCAL-00094" summary="BetaVersion202203 Branch : Logback alternative config xml e properties">
-      <created>1647472175665</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1647472175665</updated>
-    </task>
-    <task id="LOCAL-00095" summary="BetaVersion202203 Branch : Logback alternative config xml e properties">
-      <created>1647472452963</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1647472452963</updated>
-    </task>
-    <task id="LOCAL-00096" summary="BetaVersion202203 Branch : enable https and config">
-      <created>1647475437057</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1647475437057</updated>
-    </task>
-    <task id="LOCAL-00097" summary="BetaVersion202203 Branch : enable https and config">
-      <created>1647475708389</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1647475708389</updated>
+      <workItem from="1650557290301" duration="347000" />
+      <workItem from="1650612371205" duration="16061000" />
     </task>
     <task id="LOCAL-00098" summary="clean pom">
       <created>1647478171494</created>
@@ -1010,7 +971,35 @@
       <option name="project" value="LOCAL" />
       <updated>1650069216902</updated>
     </task>
-    <option name="localTasksCounter" value="143" />
+    <task id="LOCAL-00143" summary="OTP configuration service">
+      <created>1650557569674</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1650557569674</updated>
+    </task>
+    <task id="LOCAL-00144" summary="Correction cote FE de la visualisation d'une annonce deja completée">
+      <created>1650619756820</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1650619756820</updated>
+    </task>
+    <task id="LOCAL-00145" summary="Gestion de la visualisation de l'annonce expirée">
+      <created>1650628413450</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1650628413450</updated>
+    </task>
+    <task id="LOCAL-00146" summary="Deploy du 22/04/2022 après gestion affichage annonces en mobile">
+      <created>1650634077955</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1650634077955</updated>
+    </task>
+    <option name="localTasksCounter" value="147" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1080,7 +1069,7 @@
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -1124,10 +1113,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="Modifications Variées" />
-    <MESSAGE value="Correction de la notification" />
-    <MESSAGE value="Gestion envoi mail avec google" />
-    <MESSAGE value="Mail senders Configuration" />
     <MESSAGE value="Resolution probleme reservation" />
     <MESSAGE value="push" />
     <MESSAGE value="Ajout du control sur le debut du job des notifications" />
@@ -1149,7 +1134,11 @@
     <MESSAGE value="clean" />
     <MESSAGE value="Gestion notification suppression annonce" />
     <MESSAGE value="ok last modification notification handle" />
-    <option name="LAST_COMMIT_MESSAGE" value="ok last modification notification handle" />
+    <MESSAGE value="OTP configuration service" />
+    <MESSAGE value="Correction cote FE de la visualisation d'une annonce deja completée" />
+    <MESSAGE value="Gestion de la visualisation de l'annonce expirée" />
+    <MESSAGE value="Deploy du 22/04/2022 après gestion affichage annonces en mobile" />
+    <option name="LAST_COMMIT_MESSAGE" value="Deploy du 22/04/2022 après gestion affichage annonces en mobile" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1406,7 +1395,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>458</line>
+          <line>459</line>
           <option name="timeStamp" value="389" />
         </line-breakpoint>
         <line-breakpoint type="java-field">
@@ -1421,6 +1410,10 @@
           <properties class="cm.travelpost.tp.user.ent.dao.UserDAO" method="findById" />
           <option name="timeStamp" value="238" />
         </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.jasypt.exceptions.EncryptionOperationNotPossibleException" package="org.jasypt.exceptions" />
+          <option name="timeStamp" value="397" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
