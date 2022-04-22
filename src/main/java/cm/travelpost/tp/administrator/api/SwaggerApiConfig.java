@@ -87,6 +87,12 @@ public class SwaggerApiConfig  extends CommonProperties {
     private String apiInfoVersion;
 
 
+    @Value("${custom.api.auth.http.tokenName}")
+    private String apiKeyPropertie;
+
+
+
+
 
    @Bean
     public Docket announcesApi() {
@@ -172,9 +178,10 @@ public class SwaggerApiConfig  extends CommonProperties {
                 .build();
     }
 
+
     private ApiKey apiToken() {
 
-        return new ApiKey("APIKey", "AUTH_API_KEY", SecurityScheme.In.HEADER.name());
+        return new ApiKey("APIKey", apiKeyPropertie, SecurityScheme.In.HEADER.name());
     }
 
 
