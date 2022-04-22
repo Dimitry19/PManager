@@ -595,7 +595,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Maven.clean">
+  <component name="RunManager" selected="Spring Boot.TP">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -664,14 +664,8 @@
       <module name="PManager" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="cm.travelpost.tp.TravelPostApplication" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="ALTERNATIVE_JRE_PATH" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TravelPostApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="PManager" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="cm.packagemanager.pmanager.TravelPostApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8.0_281" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -690,7 +684,6 @@
       <item itemvalue="Maven.clean" />
       <item itemvalue="Maven.build" />
       <item itemvalue="Spring Boot.TP" />
-      <item itemvalue="Spring Boot.TravelPostApplication" />
     </list>
   </component>
   <component name="SvnConfiguration">
