@@ -390,7 +390,7 @@ public class AnnounceController extends CommonController {
 
     @ApiOperation(value = "Retrieve an announce completed with an ID ", response = AnnounceVO.class)
     @GetMapping(value = ANNOUNCE_WS_COMPLETED_BY_ID, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<Object> getAnnounceCompleted(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id, @RequestParam Source source ) throws AnnounceException {
+    public ResponseEntity<Object> getAnnounceCompleted(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id ) throws AnnounceException {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
