@@ -1,6 +1,6 @@
 package cm.travelpost.tp.review.ent.vo;
 
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.rating.enums.Rating;
 import cm.travelpost.tp.user.ent.vo.UserVO;
@@ -17,7 +17,7 @@ https://github.com/cloudControl/spring-boot-example-app/tree/master/src/main
 */
 
 @Entity
-@Table(name = "REVIEW")
+@Table(name = "review")
 @NamedQueries({
         @NamedQuery(name = ReviewVO.RATING, query = "select new cm.travelpost.tp.rating.ent.vo.RatingCountVO(r.rating, count(r)) from ReviewVO r where r.ratingUser =:userId group by r.rating order by r.rating DESC"),
 })

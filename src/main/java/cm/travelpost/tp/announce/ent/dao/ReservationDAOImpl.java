@@ -1,8 +1,9 @@
 package cm.travelpost.tp.announce.ent.dao;
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
+
 import cm.travelpost.tp.announce.ent.vo.*;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.ReservationType;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.ValidateEnum;
@@ -113,6 +114,10 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
         reservation.setStatus(StatusEnum.VALID);
         save(reservation);
 
+        BigDecimal sumQtyRes=announceDAO.checkQtyReservations(announce.getId(),false);
+
+        announceDAO.warning(reservation, announce.getEndDate(),announce.getWeight(),sumQtyRes);
+
 
 
         String message=buildNotificationMessage(RESERVATION,reservation.getUser().getUsername(),
@@ -145,7 +150,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
         if (reservation == null) {
             throw new Exception("Reservation non trouve");
         }
-        AnnounceVO announce = reservation.getAnnounce();
+        AnnounceMasterVO announce = reservation.getAnnounce();
 
         BigDecimal oldWeight=reservation.getWeight();
         if (BigDecimalUtils.lessThan(reservation.getWeight(), reservationDTO.getWeight())) {
@@ -160,6 +165,10 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
             reservation.setDescription(reservationDTO.getDescription());
         }
         update(reservation);
+
+        BigDecimal sumQtyRes=announceDAO.checkQtyReservations(announce.getId(),false);
+
+        announceDAO.warning(reservation, announce.getEndDate(),announce.getWeight(),sumQtyRes);
 
         String kg=" la reservation est passée de ["+oldWeight+" Kg ] a ["+reservationDTO.getWeight()+" Kg ] ";
 
@@ -191,7 +200,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
             throw new Exception("Impossible d'eliminer cette reservation car déjà validée");
         }
 
-        AnnounceVO announce = reservation.getAnnounce();
+        AnnounceMasterVO announce = reservation.getAnnounce();
         announce.setRemainWeight(announce.getRemainWeight().add(reservation.getWeight()));
         update(announce);
 
@@ -242,7 +251,14 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public ReservationVO getReservation(long id) throws Exception {
-        return (ReservationVO) findById(ReservationVO.class, id);
+        ReservationVO reservation= (ReservationVO) findById(ReservationVO.class, id);
+
+        if(reservation!=null){
+            BigDecimal sumQtyRes=announceDAO.checkQtyReservations(reservation.getAnnounce().getId(),false);
+
+            announceDAO.warning(reservation, reservation.getAnnounce().getEndDate(),reservation.getAnnounce().getWeight(),sumQtyRes);
+        }
+        return reservation;
 
     }
 
@@ -287,29 +303,14 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
 
     }
 
-    private void handleReservationInfos(List reservations) {
+    private void handleReservationInfos(List reservations) throws Exception{
         if (CollectionsUtils.isNotEmpty(reservations)) {
             reservations.stream().forEach(r -> {
+                try {
+                    reservationInfo(r);
 
-                if (r instanceof ReservationUserVO) {
-                    ReservationUserVO res = (ReservationUserVO) r;
-                    AnnounceInfo ai = new AnnounceInfo(res.getAnnounce());
-                    res.setAnnounceInfo(ai);
-                }
-                if (r instanceof ReservationReceivedUserVO) {
-                    ReservationReceivedUserVO res = (ReservationReceivedUserVO) r;
-                    AnnounceInfo ai = new AnnounceInfo(res.getAnnounce());
-                    res.setAnnounceInfo(ai);
-                    UserInfo ui = new UserInfo(res.getUserReservation());
-                    res.setUserInfo(ui);
-                }
-
-                if (r instanceof ReservationVO) {
-                    ReservationVO res = (ReservationVO) r;
-                    AnnounceInfo ai = new AnnounceInfo(res.getAnnounce());
-                    res.setAnnounceInfo(ai);
-                    UserInfo ui = new UserInfo(res.getUser());
-                    res.setUserInfo(ui);
+                } catch (Exception e) {
+                    logger.error("Erreur durant la gestion des reservations {}",e);
                 }
             });
         }
@@ -434,4 +435,34 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
     }
 
 
+    private void reservationInfo(Object r) throws Exception{
+
+        if (r instanceof ReservationUserVO) {
+            ReservationUserVO res = (ReservationUserVO) r;
+            AnnounceInfo ai = new AnnounceInfo(res.getAnnounce());
+            res.setAnnounceInfo(ai);
+
+            BigDecimal sumQtyRes = announceDAO.checkQtyReservations(res.getAnnounce().getId(), false);
+            announceDAO.warning(res, res.getAnnounce().getEndDate(), res.getAnnounce().getWeight(), sumQtyRes);
+        }
+        if (r instanceof ReservationReceivedUserVO) {
+            ReservationReceivedUserVO res = (ReservationReceivedUserVO) r;
+            AnnounceInfo ai = new AnnounceInfo(res.getAnnounce());
+            res.setAnnounceInfo(ai);
+            UserInfo ui = new UserInfo(res.getUserReservation());
+            res.setUserInfo(ui);
+            BigDecimal sumQtyRes = announceDAO.checkQtyReservations(res.getAnnounce().getId(), false);
+            announceDAO.warning(res, res.getAnnounce().getEndDate(), res.getAnnounce().getWeight(), sumQtyRes);
+        }
+
+        if (r instanceof ReservationVO) {
+            ReservationVO res = (ReservationVO) r;
+            AnnounceInfo ai = new AnnounceInfo(res.getAnnounce());
+            res.setAnnounceInfo(ai);
+            UserInfo ui = new UserInfo(res.getUser());
+            res.setUserInfo(ui);
+            BigDecimal sumQtyRes = announceDAO.checkQtyReservations(res.getAnnounce().getId(), false);
+            announceDAO.warning(res, res.getAnnounce().getEndDate(), res.getAnnounce().getWeight(), sumQtyRes);
+        }
+    }
 }

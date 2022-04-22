@@ -42,7 +42,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
 
 
-    private static Logger logger = LoggerFactory.getLogger(SessionFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(SessionFilter.class);
 
 
     @Autowired
@@ -117,11 +117,13 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
     @Override
     public void error(HttpServletResponse response) throws IOException {
 
+        logger.error("Into Invalid token");
+
         ErrorResponse errorResponse = new ErrorResponse();
         String[] codes=new String[1];
-        codes[0]= "401";
+        codes[0]= String.valueOf(HttpStatus.SC_GATEWAY_TIMEOUT);
         List<String> details= new ArrayList();
-        details.add("Token invalide , se connecter de nouveau");
+        details.add("Session expiree, se connecter de nouveau ");
         errorResponse.setCode(codes);
         errorResponse.setDetails(details);
         errorResponse.setMessage(details.get(0));

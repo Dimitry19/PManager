@@ -26,4 +26,15 @@ public class AnnounceSubmitJobs extends QuartzSubmitJobs {
         log.info("Change Status Announce Job started...");
         return QuartzCronConfiguration.createCronTrigger(jobDetail, CRON_EVERY_SATURDAY_AT_15, "Change Status AnnounceTrigger");
     }
+
+    @Bean(name = "announceNotificate")
+    public JobDetailFactoryBean jobAnnounceNotificate() {
+        return QuartzCronConfiguration.createJobDetail(AnnounceNotificateJob.class, "Announce notificate Job");
+    }
+
+    @Bean(name = "announceNotificateTrigger")
+    public CronTriggerFactoryBean triggerAnnounceNotificate(@Qualifier("announceNotificate") JobDetail jobDetail) {
+        log.info(" Announce  notificate Job started...");
+        return QuartzCronConfiguration.createCronTrigger(jobDetail, CRON_EVERY_FRIDAY_AT_15, " Announce Notificate Trigger");
+    }
 }

@@ -1,0 +1,1371 @@
+.intro img {
+    position: absolute;
+    /*   below means you can click through the image onto the invisible input */
+    pointer-events: none;
+    /* width:50px;
+  top: 50%;
+  transform: translatey(-50%); */
+}
+
+.table-details {
+    padding: 2em 1em;
+}
+
+.reserCard {
+    display: none;
+}
+
+.intro input[type=file] {
+    margin-left: -5em;
+    opacity: 0;
+    width: 6em;
+    cursor: pointer;
+}
+
+.actionRes {
+    display: flex;
+}
+
+#reserCard .actionRes {
+    display: contents;
+}
+
+
+/* .colonne a:hover {
+  
+} */
+
+#simpletable {
+    padding: 2em;
+}
+
+#simpletable tr:hover,
+#own tr:hover,
+#receive tr:hover {
+    cursor: pointer;
+}
+
+.addPanding {
+    padding-left: 4em;
+}
+
+.table .input-group>.form-control {
+    width: unset;
+}
+
+
+/* for validation */
+
+.message {
+    position: relative;
+    background: #fff;
+    top: 0.5rem;
+    opacity: 1;
+    transition: .3s;
+    line-height: 1.7;
+    width: 10em;
+}
+
+.iconNo,
+.iconYes {
+    position: relative;
+    top: 1.7rem;
+    font-size: 16px;
+}
+
+.password-contain {
+    position: relative;
+    width: max-content;
+    font-size: 16px;
+    color: #2e2d2d;
+    font-weight: 500;
+    margin: 0 1.3em;
+    display: flex;
+}
+
+
+/* navbar */
+
+#navPanel {
+    -moz-transform: translatex(5em);
+    -webkit-transform: translatex(5em);
+    -ms-transform: translatex(5em);
+    transform: translatex(5em);
+    -moz-transition: -moz-transform 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    -webkit-transition: -webkit-transform 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    -ms-transition: -ms-transform 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    -webkit-overflow-scrolling: touch;
+    visibility: hidden;
+    overflow-y: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background: #6cc091;
+    color: #daefe3;
+    height: 100%;
+    max-width: 80%;
+    width: 20em;
+    padding: 0.5em 1.25em;
+    z-index: 10010;
+}
+
+#navPanel.visible {
+    -moz-transform: translatex(0);
+    -webkit-transform: translatex(0);
+    -ms-transform: translatex(0);
+    transform: translatex(0);
+    box-shadow: 0 0 1.5em 0 rgba(0, 0, 0, 0.2);
+    visibility: visible;
+}
+
+#navPanel a:not(.close) {
+    border-top: solid 1px #8dcca9;
+    color: #daefe3;
+    font-weight: 600;
+    display: block;
+    padding: 0.75em 0;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+#navPanel a:not(.close):first-child {
+    border: none;
+}
+
+#navPanel .close {
+    text-decoration: none;
+    -moz-transition: color 0.2s ease-in-out;
+    -webkit-transition: color 0.2s ease-in-out;
+    -ms-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    -webkit-tap-highlight-color: transparent;
+    border: 0;
+    color: #daefe3;
+    cursor: pointer;
+    display: block;
+    height: 4em;
+    padding-right: 1.25em;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+    /*vertical-align: middle;*/
+    width: 5em;
+}
+
+#navPanel .close:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important;
+    content: '\f00d';
+    width: 3em;
+    height: 3em;
+    line-height: 3em;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: center;
+}
+
+#navPanel .close:hover {
+    color: inherit;
+}
+
+
+/* fine navbar */
+
+.btn-rounded.my-3 {
+    border-radius: 20px;
+}
+
+.logo {
+    width: 150px;
+}
+
+.fa-user-circle-o {
+    color: #42C2FF;
+}
+
+.customtoggle {
+    background: #357991;
+}
+
+.profil_user {
+    color: black;
+}
+
+.perso {
+    display: grid;
+}
+
+.information {
+    font-size: medium;
+    color: #42C2FF;
+}
+
+.input-group-addon {
+    border: 1px solid lightgray;
+    padding: 1px 10px;
+}
+
+.categorie {
+    margin: 2em 0em;
+    background-color: #42C2FF !important;
+}
+
+.categories {
+    margin: 2em;
+}
+
+.categorys {
+    margin-bottom: 1em;
+}
+
+.categorys>label {
+    padding-right: 1em;
+}
+
+.kilox>label {
+    padding-right: 1em;
+}
+
+.choix {
+    width: max-content;
+    border-radius: 2em;
+}
+
+.choices {
+    width: 15em;
+}
+
+.radio label input[type="radio"] {
+    display: initial !important;
+}
+
+
+/* style style_featured */
+
+.style_featured {
+    padding: 20px 0;
+    text-align: center;
+    display: contents;
+    cursor: pointer;
+    width: -webkit-fill-available;
+}
+
+.style_featured>li {
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: 0.5s;
+    width: 40em;
+}
+
+.style_featured>li:hover {
+    /* margin-top: +19px; */
+    border: 1px solid rgb(153, 200, 250);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 9px 9px 9px;
+    background: rgba(153, 200, 250, 0.1);
+    transition: 0.99s;
+}
+
+#mytab li.nav-item {
+    padding: 1em 5em;
+}
+
+.messages {
+    color: red;
+}
+
+.customspace {
+    padding: 0em 2em;
+}
+
+.secondary-color {
+    background-color: #cccccc;
+}
+
+li.actions {
+    margin: 0em 1em;
+}
+
+.seller td,
+.buyer td {
+    text-align: center;
+}
+
+table.dataTable tbody tr.seller {
+    background-color: lightblue;
+}
+
+table.dataTable tbody tr.buyer {
+    background-color: lightgray;
+}
+
+table.dataTable tbody tr.seller:hover {
+    background-color: #f6f6f6;
+}
+
+table.dataTable tbody tr.buyer:hover {
+    background-color: #f6f6f6;
+}
+
+.lista {
+    height: 15em;
+    overflow: scroll;
+    margin-bottom: 1em;
+}
+
+
+/*--------------------------------
+INNER
+----------------------------------*/
+
+.inner {
+    display: -ms-flexbox;
+    -ms-flex-wrap: wrap;
+    -ms-flex-pack: justify;
+    -moz-justify-content: space-between;
+    -webkit-justify-content: space-between;
+    -ms-justify-content: space-between;
+    justify-content: space-between;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.inner li {
+    margin-right: 2em;
+    margin-bottom: 3em;
+}
+
+
+/* ---------------------------------
+1. PRIMARY STYLES
+--------------------------------- */
+
+
+/* html{ font-size: 100%; height: 100%; overflow-x: hidden; margin: 0px;  padding: 0px; touch-action: manipulation; }
+
+
+body{ font-size: 16px; font-family: "roboto", sans-serif, serif; width: 100%; height: 100%; margin: 0; font-weight: 400;
+	-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; word-wrap: break-word;
+	color: #333; }
+
+h1, h2, h3, h4, h5, h6, p, a, ul, span, li, img, inpot, button{ margin: 0; padding: 0; }
+
+h1,h2,h3,h4,h5,h6{ line-height: 1.5; font-weight: inherit; }
+
+h1,h2,h3{ font-family: "roboto", sans-serif, cursive; }
+
+p{ line-height: 1.6; font-size: 1.05em; font-weight: 400; color: #777; }
+
+h1{ font-size: 4em; line-height: 1; }
+h2{ font-size: 2.2em; line-height: 1.1; }
+h3{ font-size: 1.8em; }
+h4{ font-size: 1.3em; }
+h5{ font-size: 1em; }
+h6{ font-size: .9em; letter-spacing: 1px; } */
+
+a,
+button {
+    display: inline-block;
+    text-decoration: none;
+    line-height: 1;
+    color: inherit;
+    -webkit-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+}
+
+a:focus,
+a:active,
+a:hover,
+a b.light-color:hover {
+    text-decoration: none;
+    color: #42C2FF;
+}
+
+
+/* b{ font-weight: 600; }
+
+img{ width: 100%; }
+
+li{ list-style: none; display: inline-block; }
+
+span{ display: inline-block; }
+
+button{ outline: 0; border: 0; cursor: pointer; color: inherit;}
+button:disabled{cursor: not-allowed;}
+.icon{ font-size: 1.1em; display: inline-block; line-height: inherit; }
+
+[class^="icon-"]:before, [class*=" icon-"]:before{ line-height: inherit; }
+
+b.max-bold{ font-weight: 700; }
+
+.modal-footer button{
+outline: 0; border: 0; cursor: pointer; color: #fff;
+} */
+
+
+/* ---------------------------------
+2. COMMONS FOR PAGE DESIGN
+--------------------------------- */
+
+.section {
+    padding: 20px 0 70px;
+}
+
+.section .heading {
+    margin-bottom: 60px;
+}
+
+.section .heading:before {
+    content: '';
+    height: 10px;
+    width: 50px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: block;
+    background: #FFA804;
+}
+
+.margin-t-10 {
+    margin-top: 10px;
+}
+
+.margin-b-30 {
+    margin-bottom: 30px;
+}
+
+.margin-b-50 {
+    margin-bottom: 50px;
+}
+
+.margin-tb-20 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.margin-tb-30 {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.font-yellow {
+    color: #FFA600;
+}
+
+.font-semi-white {
+    color: #ddd;
+}
+
+.font-lite-black {
+    color: #999;
+}
+
+.nav-link {
+    border: none;
+}
+
+.nav-item .active {
+    color: #2079d2;
+    border: none;
+}
+
+.tab-timeline:hover {
+    box-shadow: 10px 10px 8px #abbeea;
+}
+
+.tab-header {
+    margin-left: 1em;
+    margin-bottom: 2em;
+    /* border-radius: 2em; */
+    border: none;
+    width: 97%;
+}
+
+.card-block {
+    width: 100%;
+}
+
+.card-header .card-header-text {
+    text-align: center;
+}
+
+div.colonne span.card-header-text {
+    padding: 0 24em;
+}
+
+.task-detail {
+    padding: 1em 0em 0em 2em;
+    text-align: left;
+}
+
+.value {
+    font-family: bold;
+}
+
+.addon-btn {
+    float: right;
+}
+
+.title_annonce {
+    display: inline-block;
+}
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+
+/* ---------------------------------
+3. HEADER
+--------------------------------- */
+
+header {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+header .heading-wrapper {
+    border-radius: 5px;
+    padding: 30px 40px 20px;
+    background: #FFAD01;
+    color: #fff;
+}
+
+header .info {
+    margin-bottom: 10px;
+}
+
+header .info .icon {
+    float: left;
+    font-size: 30px;
+}
+
+header .info .right-area {
+    margin-left: 45px;
+}
+
+header .downlad-btn {
+    padding: 15px 30px;
+    border-radius: 4px;
+    float: right;
+    margin-top: 30px;
+    box-shadow: inset 0 0px 4px rgba(0, 0, 0, .3);
+    background: #FFAD01;
+    color: #fff;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+header .downlad-btn:hover {
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
+}
+
+
+/* ---------------------------------
+4. INTRO SECTION
+--------------------------------- */
+
+.intro-section {
+    padding-top: 200px;
+    position: relative;
+    background-size: contain;
+    z-index: 1;
+    background-image: url(../../assets/images/background_signin.jpg);
+}
+
+.intro-section:before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .2);
+}
+
+.intro-section:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    z-index: -1;
+    background: #fff;
+    width: 0px;
+}
+
+.intro {
+    padding: 0 20px;
+    margin-top: 100px;
+    text-align: center;
+    background: #fff;
+    margin-bottom: 3em;
+    height: 6em;
+    width: 50em;
+    display: flex;
+}
+
+.intro .profile-img {
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    top: -100px;
+    /* margin-bottom: -70px;   */
+}
+
+.crop {
+    overflow: hidden;
+}
+
+#abonnes,
+#abonnement {
+    border: none;
+}
+
+.buttonS {
+    border: 1px solid #42C2FF !important;
+}
+
+.cardS:hover {
+    border: 1px solid #99c8fa;
+    box-shadow: 0 9px 9px 9px rgb(0 0 0 / 10%);
+    background: rgba(153, 200, 250, .1);
+    transition: .99s;
+}
+
+.cardS {
+    width: fit-content;
+    border-radius: 10px;
+    margin: 0em 0em 1em 1em;
+    cursor: pointer;
+}
+
+.cardS img {
+    height: 10em;
+    width: 10em;
+}
+
+.cardS .card-body {
+    width: 10em;
+    padding: 0.25rem;
+}
+
+.cartes {
+    display: inline-block;
+    position: relative;
+}
+
+
+/* ---------------------------------
+5. BTN SECTION
+--------------------------------- */
+
+.btn-section {
+    padding-top: 100px;
+}
+
+
+/* .btn{ margin: 0 10px 10px; padding: 12px 30px; border-radius: 5px; } */
+
+.modal-dialog .form-elegant .btn .fab {
+    color: #42C2FF !important;
+}
+
+.btn-bg-yellow {
+    border: 1px solid #FFAD01;
+    background: #FFAD01;
+    color: #fff;
+}
+
+.btn-bg-purple {
+    border: 1px solid #28023D;
+    background: #28023D;
+    color: #fff;
+}
+
+.btn-border-purple {
+    border: 1px solid #28023D;
+    color: #222;
+}
+
+.btn-color-yellow {
+    border: 1px solid #28023D;
+    background: #28023D;
+    color: #FFAD01;
+}
+
+.btn-bg-yellow:hover {
+    background: none;
+    color: #111;
+}
+
+.btn-bg-purple:hover {
+    background: none;
+    color: #111;
+}
+
+.btn-border-purple:hover {
+    background: #28023D;
+    color: #fff;
+}
+
+.btn-color-yellow:hover {
+    background: none;
+    color: #111;
+}
+
+.btn-outline-info {
+    color: #42C2FF;
+    border-color: #42C2FF;
+}
+
+.btn-outline {
+    color: #42C2FF;
+}
+
+.btn-info {
+    background-color: #42C2FF;
+    /* border-color: #42C2FF; */
+    color: #fff;
+}
+
+.focus,
+.btn-info:focus {
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem #42C2FF;
+}
+
+.btn-outline-info:not(:disabled):not(.disabled).active,
+.btn-outline-info:not(:disabled):not(.disabled):active,
+.btn-info:hover,
+.btn-outline-info:hover {
+    background-color: #42C2FF;
+    /* border-color: #42C2FF; */
+    color: #fff;
+}
+
+.waves-effect {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.waves-effect:disabled {
+    cursor: not-allowed;
+}
+
+
+/* ---------------------------------
+6. PROGRESSBAR & ACCORDIANS
+--------------------------------- */
+
+
+/* LINE PROGRESSBAR */
+
+.line-progress {
+    position: relative;
+    padding-bottom: 25px;
+}
+
+.line-progress .progressbar-text {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #777!important;
+}
+
+.line-progress .progress-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #777;
+}
+
+
+/* ACCORDIANS */
+
+.panel-area .panel-title {
+    padding: 10px 20px;
+    cursor: pointer;
+    position: relative;
+    color: #fff;
+    border-radius: 3px;
+    background: #FFAD01;
+    color: #fff;
+}
+
+.panel-area .panel-desc {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    -webkit-transition: all .05s, opacity .25s .1s, -webkit-transform .1s;
+    transition: all .05s, opacity .25s .1s, transform .1s;
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0);
+    -webkit-transform-origin: top;
+    transform-origin: top;
+}
+
+.panel-area .panel-title .icon {
+    float: right;
+    font-size: .7em;
+    margin-top: 5px;
+}
+
+.panel-area .panel-title.active {
+    background: #28023D;
+}
+
+.panel-area .panel-title.active+.panel-desc {
+    opacity: 1;
+    padding: 20px 20px 0;
+    max-height: 300px;
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+}
+
+.panel-area .panel-title .icon.plus,
+.panel-area .panel-title.active .icon.minus {
+    display: block;
+}
+
+.panel-area .panel-title .icon.minus,
+.panel-area .panel-title.active .icon.plus {
+    display: none;
+}
+
+
+/*-------------------------------------------
+Responsive
+--------------------------------------------*/
+
+
+/* Screens Resolution : 992px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 2560px) {
+    .intro {
+        padding: 20px 10px 0;
+        margin-right: -15px;
+        margin-left: -15px;
+        height: 6em;
+        width: 42em;
+        display: flex;
+    }
+    .intro .profile-img {
+        height: 6em;
+        width: 6em;
+        border-radius: 100px;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        top: -20px;
+    }
+    /* ---------------------------------
+	9. COUNTER SECTION
+	--------------------------------- */
+    /* .right{ padding-left: 8%;} */
+    /* .left{padding-right: 22%;} */
+}
+
+
+/* Screens Resolution : 992px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 1440px) {
+    .intro {
+        padding: 20px 10px 0;
+        margin-right: -15px;
+        margin-left: -15px;
+        height: 6em;
+        width: 42em;
+        display: flex;
+    }
+    .intro .profile-img {
+        height: 6em;
+        width: 6em;
+        border-radius: 100px;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        top: -20px;
+    }
+    /* ---------------------------------
+	9. COUNTER SECTION
+	--------------------------------- */
+    /* .right{ padding-left: 15%;} */
+    /* .left{padding-right: 15%;} */
+}
+
+
+/* Screens Resolution : 992px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 1200px) {
+    /* ---------------------------------
+	9. COUNTER SECTION
+	--------------------------------- */
+    /* .right{ padding-left: 7%;} */
+    /* .left{padding-right: 8%;} */
+}
+
+
+/* Screens Resolution : 1024px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 1024px) {
+    #mytab li.nav-item {
+        padding: 1em 4em;
+    }
+    .intro {
+        padding: 20px 10px 0;
+        margin-right: -15px;
+        margin-left: -15px;
+        height: 6em;
+        width: 42em;
+        display: flex;
+    }
+    .intro .profile-img {
+        height: 6em;
+        width: 6em;
+        border-radius: 100px;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        top: -20px;
+    }
+}
+
+
+/* Screens Resolution : 992px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 992px) {
+    /* ---------------------------------
+	4. INTRO SECTION
+	--------------------------------- */
+    .intro-section {
+        padding-top: 250px;
+    }
+    /* .right{ padding-left: 4%;} */
+    /* .left{padding-right: 5%;} */
+}
+
+
+/* Screens Resolution : 768px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 768px) {
+    p {
+        line-height: 1.4;
+    }
+    h1 {
+        font-size: 3em;
+    }
+    h2 {
+        font-size: 2em;
+    }
+    h3 {
+        font-size: 1.8em;
+    }
+    #mytab li.nav-item {
+        padding: 1em 3em;
+    }
+    /* ---------------------------------
+	2. COMMONS FOR PAGE DESIGN
+	--------------------------------- */
+    .section {
+        padding: 50px 0 0px;
+    }
+    .section .heading {
+        margin-bottom: 30px;
+    }
+    /* ---------------------------------
+	4. INTRO SECTION
+	--------------------------------- */
+    .intro-section {
+        padding-top: 350px;
+    }
+    .table-details {
+        display: none;
+    }
+    .reserCard {
+        display: flex;
+    }
+    #mytab li.nav-item {
+        padding: 1em 3em;
+    }
+    .task-detail {
+        font-size: small;
+    }
+    .intro {
+        padding: 20px 10px 0;
+        margin-right: -15px;
+        margin-left: -15px;
+        height: 6em;
+        width: 42em;
+        display: flex;
+    }
+    .intro .profile-img {
+        height: 6em;
+        width: 6em;
+        border-radius: 100px;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        top: -20px;
+    }
+}
+
+
+/* Screens Resolution : 575px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 575px) {
+    /* ---------------------------------
+	1. PRIMARY STYLES
+	--------------------------------- */
+    body {
+        font-size: 14px;
+    }
+}
+
+
+/* Screens Resolution : 479px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 479px) {
+    /*.right{
+	/* padding-left: 0%; 
+}
+
+.left{
+	/* padding-right: 0%; 
+}*/
+}
+
+
+/* Screens Resolution : 359px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 359px) {
+    /* ---------------------------------
+	3. HEADER
+	--------------------------------- */
+    header .heading-wrapper {
+        padding: 30px 20px 20px;
+    }
+    header .info .icon {
+        font-size: 25px;
+    }
+    header .info .right-area {
+        margin-left: 35px;
+    }
+    #mytab li.nav-item {
+        padding: 1em 3em;
+    }
+    .task-detail {
+        font-size: medium;
+    }
+    #nav-vertical-tab-bgContent table.table {
+        width: 16em;
+    }
+    .style_featured {
+        padding: 20px 0;
+        text-align: center;
+        display: block;
+        cursor: pointer;
+        width: -webkit-fill-available;
+    }
+    .style_featured>li {
+        padding: 10px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        transition: .5s;
+        width: 20em;
+    }
+}
+
+
+/* Screens Resolution : 425px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 425px) {
+    .intro {
+        padding: 5px 10px 0;
+        margin-right: -15px;
+        margin-left: -15px;
+        height: 3.2em;
+        width: 26em;
+        display: flex;
+    }
+    .intro .profile-img {
+        height: 3em;
+        width: 3em;
+        border-radius: 100px;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        top: 0px;
+    }
+    .perso {
+        display: grid;
+        font-size: xx-small;
+        width: 3em
+    }
+    .profil_user {
+        font-size: xx-small;
+        line-height: 0;
+    }
+    .information {
+        font-size: xx-small;
+    }
+    .profil_user1 {
+        width: 15em
+    }
+    .profil_user1>h2 {
+        line-height: 0
+    }
+    .table-details {
+        display: none;
+    }
+    .reserCard {
+        display: flex;
+    }
+    #nav-vertical-tab-bgContent table.table {
+        width: 16em;
+    }
+    .style_featured {
+        padding: 20px 0;
+        text-align: center;
+        display: block;
+        cursor: pointer;
+        width: -webkit-fill-available;
+    }
+    .style_featured>li {
+        padding: 10px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        transition: .5s;
+        width: 20em;
+    }
+}
+
+
+/* Screens Resolution : 375px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 375px) {
+    .intro {
+        padding: 2px 10px 0;
+        margin-right: -15px;
+        margin-left: -15px;
+        height: 3em;
+        width: 23em;
+        display: flex;
+    }
+    .intro .profile-img {
+        height: 3em;
+        width: 3em;
+        border-radius: 100px;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        top: -1px;
+    }
+    .perso {
+        display: grid;
+        font-size: xx-small;
+        width: 3em
+    }
+    .profil_user {
+        font-size: xx-small;
+        line-height: 0;
+    }
+    .information {
+        font-size: xx-small;
+    }
+    .profil_user1 {
+        width: 12em
+    }
+    .profil_user1>h2 {
+        line-height: 0
+    }
+    .table-details {
+        display: none;
+    }
+    .reserCard {
+        display: flex;
+    }
+    #nav-vertical-tab-bgContent table.table {
+        width: 16em;
+    }
+    .style_featured {
+        padding: 20px 0;
+        text-align: center;
+        display: block;
+        cursor: pointer;
+        width: -webkit-fill-available;
+    }
+    .style_featured>li {
+        padding: 10px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        transition: .5s;
+        width: 20em;
+    }
+}
+
+
+/* Screens Resolution : 320px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 320px) {
+    #mytab li.nav-item {
+        padding: 1em 3em;
+    }
+    .task-detail {
+        font-size: medium;
+    }
+    .intro {
+        padding: 4px 10px 0;
+        margin-right: -15px;
+        margin-left: -15px;
+        height: 3em;
+        width: 20em;
+        display: flex;
+    }
+    .intro .profile-img {
+        height: 3em;
+        width: 3em;
+        border-radius: 100px;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        top: -3px;
+    }
+    .perso {
+        display: grid;
+        font-size: xx-small;
+        width: 3em
+    }
+    .profil_user {
+        font-size: xx-small;
+        line-height: 0;
+    }
+    .information {
+        font-size: xx-small;
+    }
+    .profil_user1 {
+        width: 9em
+    }
+    .profil_user1>h2 {
+        line-height: 0
+    }
+    .table-details {
+        display: none;
+    }
+    .reserCard {
+        display: flex;
+    }
+    #nav-vertical-tab-bgContent table.table {
+        width: 16em;
+    }
+    .style_featured {
+        padding: 20px 0;
+        text-align: center;
+        display: block;
+        cursor: pointer;
+        width: -webkit-fill-available;
+    }
+    .style_featured>li {
+        padding: 10px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        transition: .5s;
+        width: 20em;
+    }
+}
+
+
+/* Screens Resolution : 290px
+-------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 260px) {
+    /* ---------------------------------
+	3. HEADER
+	--------------------------------- */
+    header .heading-wrapper {
+        padding: 10px 15px 0px;
+    }
+    header .info .icon {
+        font-size: 15px;
+    }
+    header .info .right-area {
+        margin-left: 20px;
+    }
+    /* ---------------------------------
+	4. INTRO SECTION
+	--------------------------------- */
+    .intro .profile-img {
+        width: 3em;
+        height: 3em;
+        top: 0;
+        margin-bottom: 10px;
+    }
+    .intro {
+        padding: 0px 10px 0;
+        margin-right: -15px;
+        margin-left: -15px;
+        height: 9em;
+        width: 19em;
+        display: flex;
+    }
+    #nav-vertical-tab-bgContent table.table {
+        width: 16em;
+    }
+    .style_featured {
+        padding: 20px 0;
+        text-align: center;
+        display: block;
+        cursor: pointer;
+        width: -webkit-fill-available;
+    }
+    .style_featured>li {
+        padding: 10px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        transition: .5s;
+        width: 20em;
+    }
+}

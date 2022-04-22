@@ -1,6 +1,7 @@
 package cm.travelpost.tp.announce.ent.vo;
 
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+
+import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.ValidateEnum;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
@@ -9,6 +10,8 @@ import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -18,12 +21,15 @@ import java.util.Iterator;
 import java.util.Set;
 
 @Entity
-@Table(name = "RESERVATION")
+@Table(name = "reservation")
 @NamedQueries({
         @NamedQuery(name = ReservationVO.FIND_BY_ANNOUNCE, query = " select r from  ReservationVO as r where r.announce.id =: announceId"),
         @NamedQuery(name = ReservationVO.FIND_BY_USER, query = " select r from  ReservationVO as r where r.user.id =: userId"),
         @NamedQuery(name = ReservationVO.FIND_ANNOUNCE_USER, query = " select r from  ReservationVO as r inner join r.announce a where a.user.id =: userId"),
         @NamedQuery(name = ReservationVO.FIND_BY_ANNOUNCE_AND_USER_AND_VALIDATE, query = " select r from  ReservationVO as r where r.announce.id =:announceId  and r.user.id =: userId and r.validate =:validate"),
+})
+@Filters({
+        @Filter(name = FilterConstants.CANCELLED)
 })
 @Where(clause = FilterConstants.FILTER_WHERE_RESERVATION_CANC)
 public class ReservationVO extends CommonVO {
@@ -54,7 +60,7 @@ public class ReservationVO extends CommonVO {
 
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "RESERVATION_CATEGORY", joinColumns = @JoinColumn(name = "RESERVATION_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
+    @JoinTable(name = "reservation_category", joinColumns = @JoinColumn(name = "RESERVATION_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORIES_CODE"))
     @JsonProperty
     private Set<CategoryVO> categories = new HashSet<>();
 
@@ -62,7 +68,7 @@ public class ReservationVO extends CommonVO {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "R_ANNOUNCE_ID", updatable = true)
     @JsonBackReference
-    private AnnounceVO announce;
+    private AnnounceMasterVO announce;
 
     @Basic(optional = false)
     @Enumerated(EnumType.STRING)
@@ -94,6 +100,11 @@ public class ReservationVO extends CommonVO {
     @Transient
     @JsonProperty
     private AnnounceInfo announceInfo;
+
+
+    @Transient
+    @JsonProperty
+    private String warning;
 
     public AnnounceInfo getAnnounceInfo() {
         return announceInfo;
@@ -133,11 +144,11 @@ public class ReservationVO extends CommonVO {
         this.userInfo = new UserInfo(user);
     }
 
-    public AnnounceVO getAnnounce() {
+    public AnnounceMasterVO getAnnounce() {
         return announce;
     }
 
-    public void setAnnounce(AnnounceVO announce) {
+    public void setAnnounce(AnnounceMasterVO announce) {
         this.announce = announce;
         announceInfo = new AnnounceInfo(announce);
     }
@@ -172,6 +183,15 @@ public class ReservationVO extends CommonVO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    public String getWarning() {
+        return warning;
+    }
+
+    public void setWarning(String warning) {
+        this.warning = warning;
     }
 
     public void addCategory(CategoryVO category) {

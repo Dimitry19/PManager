@@ -13,7 +13,7 @@ public class WebServiceResponseCode {
     public static final String LOGIN_OK_LABEL = "Login effectue correctement";
     public static final String LOGOUT_OK_LABEL = "Logout effectue correctement";
     public static final String USER_REGISTER_LABEL = "Enregistrement completeé, consultez votre email pour confirmer votre enregistrement"+MAIL_SPAM;
-    public static final String USER_REGISTER_ACTIVE_LABEL = "Votre compte a été active.. Connectez vous maintenant";
+    public static final String USER_REGISTER_ACTIVE_LABEL = "Votre compte est  actif dès à présent.. Connectez vous maintenant";
 
     public static final String UPDATE_LABEL = "Données ajournées correctement";
     public static final String PAGINATE_RESPONSE_LABEL = "Données recupérées correctement";

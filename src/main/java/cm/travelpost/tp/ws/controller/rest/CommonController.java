@@ -6,6 +6,7 @@ import cm.travelpost.tp.announce.ent.service.ReservationService;
 import cm.travelpost.tp.city.ent.service.CityService;
 import cm.travelpost.tp.common.mail.ent.service.MailService;
 import cm.travelpost.tp.common.mail.sendgrid.MailSenderSendGrid;
+import cm.travelpost.tp.common.sms.ent.service.SmsService;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.FileUtils;
 import cm.travelpost.tp.constant.WSConstants;
@@ -32,6 +33,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSendException;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -105,6 +107,13 @@ public class CommonController  extends WSConstants {
 
     @Autowired
     protected MessageService messageService;
+
+    @Autowired
+    protected SmsService smsService;
+
+
+    @Autowired
+    protected SimpMessagingTemplate socket;
 
 
     @Autowired
@@ -239,6 +248,8 @@ public class CommonController  extends WSConstants {
             case ERROR:
                 redirectSb.append(redirectPageError);
                 break;
+                default:
+                    break;
         }
         return redirectSb.toString();
     }

@@ -1,8 +1,7 @@
 package cm.framework.ds.hibernate.dao;
 
-
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.utils.SQLUtils;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.event.AEvent;
 import cm.travelpost.tp.common.event.Event;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
@@ -52,14 +51,23 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     private static final MathContext MATH_CONTEXT = new MathContext(2, RoundingMode.HALF_UP);
 
 
+
+
     protected static final String SELECT_FROM = " select elt  FROM";
     protected static final String SELECT  = " select elt  ";
     protected static final String FROM = " FROM ";
     protected static final String DESC = " desc ";
     protected static final String ASC = " asc ";
 
+    protected static final String AND = " and ";
+    protected static final String OR = " or ";
+    protected static final String WHERE = " where ";
+    protected static final String LIKE = " like ";
+
 
     protected static final String ANNOUNCE_TABLE_ALIAS = "a.";
+    protected static final String USER_TABLE_ALIAS = "u.";
+    protected static final String ID_PARAM = "id";
     protected static final String USER_PARAM = "userId";
     protected static final String TYPE_PARAM = "announceType";
     protected static final String TRANSPORT_PARAM = "transport";
@@ -73,6 +81,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String DEPARTURE_PARAM = "departure";
     protected static final String ARRIVAL_PARAM = "arrival";
     protected static final String CATEGORY_PARAM = "category";
+    protected static final String STATUS_PARAM = "status";
 
     protected static final String NAME_PARAM = "name";
     protected static final String SEARCH_PARAM = "search";
@@ -88,6 +97,9 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String ALIAS_BY_USER_ID = " as elt where elt.userId =:userId ";
     protected static final String ALIAS_BY_JOIN_USER_ID = " as elt join elt.user as u where u.id =:userId";
     protected static final String ALIAS_BY_JOIN_USER_RES_ID = " as elt join elt.userReservation as u where u.id =:userId";
+    protected static final String GROUP_BY = " group by ";
+    protected static final String ORDER_BY = " order by ";
+
 
     @Autowired
     protected SessionFactory sessionFactory;
@@ -148,6 +160,11 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         Session session = sessionFactory.getCurrentSession();
 
         return Optional.ofNullable(session.get(clazz, id));
+    }
+
+    @Override
+    public int countByNameQuery(String queryName, Class<T> clazz, Map params, PageBy pageBy) throws Exception {
+        return 0;
     }
 
 
@@ -454,6 +471,20 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<T> findBySqlQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String ...filters) throws Exception {
+
+        Session session = this.sessionFactory.getCurrentSession();
+        session.enableFilter(FilterConstants.CANCELLED);
+        enableFilters(session,filters);
+        Query query = session.createQuery(queryName, clazz);
+        query.setParameter(paramName, id);
+        pageBy(query, pageBy);
+
+        return query.getResultList();
+    }
+
+    @Override
     public int countByNameQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception {
         Session session = this.sessionFactory.getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
@@ -462,6 +493,18 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         pageBy(query, pageBy);
         List results = query.list();
         return CollectionsUtils.size(results);
+    }
+
+    @Override
+    public int countByNameQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.enableFilter(FilterConstants.CANCELLED);
+        enableFilters(session,filters);
+        Query query = session.createNamedQuery(queryName, clazz);
+        query.setParameter(paramName, id);
+
+        pageBy(query, pageBy);
+        return CollectionsUtils.size(query.list());
     }
 
     @Override
@@ -741,11 +784,6 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     public Query search(String sqlQuery, String where, String... filters) {
 
         Session session = this.sessionFactory.getCurrentSession();
-
-        if (filters ==null){
-            filters = new String[1];
-            filters[0] = FilterConstants.CANCELLED;
-        }
         enableFilters(session,filters);
         return session.createQuery(sqlQuery+where);
     }
@@ -772,11 +810,13 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Transactional(propagation = Propagation.REQUIRED)
     void enableFilters(Session session, String... filters){
-        if (filters != null) {
-            for (String filter : filters) {
-                session.enableFilter(filter);
-            }
+
+        if (filters ==null){
+            filters = new String[1];
+            filters[0] = FilterConstants.CANCELLED;
+        }
+        for (String filter : filters) {
+            session.enableFilter(filter);
         }
     }
-
 }

@@ -43,17 +43,17 @@ public class QueryUtils {
 	public static final String DESC = "desc";
 
 	public static QueryUtils getInstance() {
-		return QueryUtils.LazyHolder.service;
+		return LazyHolder.service;
 	}
 
 	public QueryUtils() {
 	}
 
 	public final Map<String, Object> like(StringBuilder query, String alias, String propertyName, String searchFor, boolean before, boolean after, boolean forCaseInsensitive) {
-		return this.like(query, alias, propertyName, searchFor, before, after, forCaseInsensitive, QueryUtils.OperatorEnum.AND);
+		return this.like(query, alias, propertyName, searchFor, before, after, forCaseInsensitive, OperatorEnum.AND);
 	}
 
-	public final Map<String, Object> like(StringBuilder query, String alias, String propertyName, String searchFor, boolean before, boolean after, boolean forCaseInsensitive, QueryUtils.OperatorEnum condition) {
+	public final Map<String, Object> like(StringBuilder query, String alias, String propertyName, String searchFor, boolean before, boolean after, boolean forCaseInsensitive, OperatorEnum condition) {
 		Map<String, Object> parameters = new LinkedHashMap();
 		this.checkAppendOperator(query, condition);
 		MutableObject<String> parameterName = new MutableObject();
@@ -67,10 +67,10 @@ public class QueryUtils {
 	}
 
 	public final Map<String, Object> between(StringBuilder query, String alias, String propertyName, Object lower, Object upper) {
-		return this.between(query, alias, propertyName, lower, upper, QueryUtils.OperatorEnum.AND);
+		return this.between(query, alias, propertyName, lower, upper, OperatorEnum.AND);
 	}
 
-	public final Map<String, Object> between(StringBuilder query, String alias, String propertyName, Object lower, Object upper, QueryUtils.OperatorEnum condition) {
+	public final Map<String, Object> between(StringBuilder query, String alias, String propertyName, Object lower, Object upper, OperatorEnum condition) {
 		Map<String, Object> parameters = new LinkedHashMap();
 		this.checkAppendOperator(query, condition);
 		MutableObject<String> parameterNameLow = new MutableObject();
@@ -86,10 +86,10 @@ public class QueryUtils {
 	}
 
 	public final Map<String, Object> betweenOptional(StringBuilder query, String alias, String propertyName, Object lower, Object upper, boolean includeLower, boolean includeUpper) {
-		return this.betweenOptional(query, alias, propertyName, lower, upper, includeLower, includeUpper, QueryUtils.OperatorEnum.AND);
+		return this.betweenOptional(query, alias, propertyName, lower, upper, includeLower, includeUpper, OperatorEnum.AND);
 	}
 
-	public final Map<String, Object> betweenOptional(StringBuilder query, String alias, String propertyName, Object lower, Object upper, boolean includeLower, boolean includeUpper, QueryUtils.OperatorEnum condition) {
+	public final Map<String, Object> betweenOptional(StringBuilder query, String alias, String propertyName, Object lower, Object upper, boolean includeLower, boolean includeUpper, OperatorEnum condition) {
 		Map<String, Object> parameters = new LinkedHashMap();
 		if (lower == null && upper == null) {
 			return parameters;
@@ -105,7 +105,7 @@ public class QueryUtils {
 
 			if (upper != null) {
 				if (lower != null) {
-					this.checkAppendOperator(query, QueryUtils.OperatorEnum.AND);
+					this.checkAppendOperator(query, OperatorEnum.AND);
 				}
 
 				parameterName = new MutableObject();
@@ -123,10 +123,10 @@ public class QueryUtils {
 	}
 
 	public final Map<String, Object> less(StringBuilder query, String alias, String propertyName, Object value, boolean equal) {
-		return this.less(query, alias, propertyName, value, equal, QueryUtils.OperatorEnum.AND);
+		return this.less(query, alias, propertyName, value, equal, OperatorEnum.AND);
 	}
 
-	public final Map<String, Object> less(StringBuilder query, String alias, String propertyName, Object value, boolean equal, QueryUtils.OperatorEnum condition) {
+	public final Map<String, Object> less(StringBuilder query, String alias, String propertyName, Object value, boolean equal, OperatorEnum condition) {
 		Map<String, Object> parameters = new LinkedHashMap();
 		this.checkAppendOperator(query, condition);
 		MutableObject<String> parameterName = new MutableObject();
@@ -140,10 +140,10 @@ public class QueryUtils {
 	}
 
 	public final Map<String, Object> greater(StringBuilder query, String alias, String propertyName, Object value, boolean equal) {
-		return this.greater(query, alias, propertyName, value, equal, QueryUtils.OperatorEnum.AND);
+		return this.greater(query, alias, propertyName, value, equal, OperatorEnum.AND);
 	}
 
-	public final Map<String, Object> greater(StringBuilder query, String alias, String propertyName, Object value, boolean equal, QueryUtils.OperatorEnum condition) {
+	public final Map<String, Object> greater(StringBuilder query, String alias, String propertyName, Object value, boolean equal, OperatorEnum condition) {
 		Map<String, Object> parameters = new LinkedHashMap();
 		this.checkAppendOperator(query, condition);
 		MutableObject<String> parameterName = new MutableObject();
@@ -157,10 +157,10 @@ public class QueryUtils {
 	}
 
 	public final Map<String, Object> equal(StringBuilder query, String alias, String propertyName, Object value) {
-		return this.equal(query, alias, propertyName, value, QueryUtils.OperatorEnum.AND);
+		return this.equal(query, alias, propertyName, value, OperatorEnum.AND);
 	}
 
-	public final Map<String, Object> equal(StringBuilder query, String alias, String propertyName, Object value, QueryUtils.OperatorEnum condition) {
+	public final Map<String, Object> equal(StringBuilder query, String alias, String propertyName, Object value, OperatorEnum condition) {
 		Map<String, Object> parameters = new LinkedHashMap();
 		this.checkAppendOperator(query, condition);
 		MutableObject<String> parameterName = new MutableObject();
@@ -174,10 +174,10 @@ public class QueryUtils {
 	}
 
 	public final Map<String, Object> notEqual(StringBuilder query, String alias, String propertyName, Object value) {
-		return this.notEqual(query, alias, propertyName, value, QueryUtils.OperatorEnum.AND);
+		return this.notEqual(query, alias, propertyName, value, OperatorEnum.AND);
 	}
 
-	public final Map<String, Object> notEqual(StringBuilder query, String alias, String propertyName, Object value, QueryUtils.OperatorEnum condition) {
+	public final Map<String, Object> notEqual(StringBuilder query, String alias, String propertyName, Object value, OperatorEnum condition) {
 		Map<String, Object> parameters = new LinkedHashMap();
 		this.checkAppendOperator(query, condition);
 		MutableObject<String> parameterName = new MutableObject();
@@ -191,10 +191,10 @@ public class QueryUtils {
 	}
 
 	public final Map<String, Object> in(StringBuilder query, String alias, String propertyName, Object value) {
-		return this.in(query, alias, propertyName, value, QueryUtils.OperatorEnum.AND);
+		return this.in(query, alias, propertyName, value, OperatorEnum.AND);
 	}
 
-	public final Map<String, Object> in(StringBuilder query, String alias, String propertyName, Object value, QueryUtils.OperatorEnum condition) {
+	public final Map<String, Object> in(StringBuilder query, String alias, String propertyName, Object value, OperatorEnum condition) {
 		Map<String, Object> parameters = new LinkedHashMap();
 		this.checkAppendOperator(query, condition);
 		MutableObject<String> parameterName = new MutableObject();
@@ -208,10 +208,10 @@ public class QueryUtils {
 	}
 
 	public final Map<String, Object> notIn(StringBuilder query, String alias, String propertyName, Object value) {
-		return this.notIn(query, alias, propertyName, value, QueryUtils.OperatorEnum.AND);
+		return this.notIn(query, alias, propertyName, value, OperatorEnum.AND);
 	}
 
-	public final Map<String, Object> notIn(StringBuilder query, String alias, String propertyName, Object value, QueryUtils.OperatorEnum condition) {
+	public final Map<String, Object> notIn(StringBuilder query, String alias, String propertyName, Object value, OperatorEnum condition) {
 		Map<String, Object> parameters = new LinkedHashMap();
 		this.checkAppendOperator(query, condition);
 		MutableObject<String> parameterName = new MutableObject();
@@ -225,10 +225,10 @@ public class QueryUtils {
 	}
 
 	public final Map<String, Object> isNull(StringBuilder query, String alias, String propertyName) {
-		return this.isNull(query, alias, propertyName, QueryUtils.OperatorEnum.AND);
+		return this.isNull(query, alias, propertyName, OperatorEnum.AND);
 	}
 
-	public final Map<String, Object> isNull(StringBuilder query, String alias, String propertyName, QueryUtils.OperatorEnum condition) {
+	public final Map<String, Object> isNull(StringBuilder query, String alias, String propertyName, OperatorEnum condition) {
 		Map<String, Object> parameters = new LinkedHashMap();
 		this.checkAppendOperator(query, condition);
 		this.appendProperty(query, alias, propertyName).append(" is null ");
@@ -240,10 +240,10 @@ public class QueryUtils {
 	}
 
 	public final Map<String, Object> notNull(StringBuilder query, String alias, String propertyName) {
-		return this.notNull(query, alias, propertyName, QueryUtils.OperatorEnum.AND);
+		return this.notNull(query, alias, propertyName, OperatorEnum.AND);
 	}
 
-	public final Map<String, Object> notNull(StringBuilder query, String alias, String propertyName, QueryUtils.OperatorEnum condition) {
+	public final Map<String, Object> notNull(StringBuilder query, String alias, String propertyName, OperatorEnum condition) {
 		Map<String, Object> parameters = new LinkedHashMap();
 		this.checkAppendOperator(query, condition);
 		this.appendProperty(query, alias, propertyName).append(" is not null ");
@@ -255,14 +255,14 @@ public class QueryUtils {
 	}
 
 	public StringBuilder checkAppendAnd(StringBuilder query) {
-		return this.checkAppendOperator(query, QueryUtils.OperatorEnum.AND);
+		return this.checkAppendOperator(query, OperatorEnum.AND);
 	}
 
 	public StringBuilder checkAppendOr(StringBuilder query) {
-		return this.checkAppendOperator(query, QueryUtils.OperatorEnum.OR);
+		return this.checkAppendOperator(query, OperatorEnum.OR);
 	}
 
-	private StringBuilder checkAppendOperator(StringBuilder query, QueryUtils.OperatorEnum condition) {
+	private StringBuilder checkAppendOperator(StringBuilder query, OperatorEnum condition) {
 		if (query.length() == 0) {
 			return query;
 		} else {
@@ -330,7 +330,7 @@ public class QueryUtils {
 		return query.toString();
 	}
 
-	public final StringBuilder addJoin(StringBuilder query, QueryUtils.JoinEnum joinType, boolean isFetch, String entityAlias, String property, String alias) {
+	public final StringBuilder addJoin(StringBuilder query, JoinEnum joinType, boolean isFetch, String entityAlias, String property, String alias) {
 		switch(joinType) {
 			case LEFT:
 				query.append(" ").append(" left join ");

@@ -4,8 +4,7 @@ import cm.travelpost.tp.ws.controller.rest.CommonController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -21,33 +20,18 @@ public class DefaultController extends CommonController {
 	 * @throws IOException
 	 */
 
-    @RequestMapping (value = "/", method = RequestMethod.GET)
+
+
+    @GetMapping(value = "/")
 	public void  ping(HttpServletResponse response) throws Exception {
-		System.out.println("/ -> index.html.....");
+		logger.info("/ -> index.html.....");
 		int totalUsers=userService.count(null, null,null);
+
 
 		response.setIntHeader("totalUsers", totalUsers);
 		response.sendRedirect(getRedirectPage(RedirectType.INDEX));
+
 	}
 
-//	@RequestMapping (value = "/index1234", method = RequestMethod.GET)
-//	public void error(HttpServletResponse response) throws Exception {
-//		System.out.println("index -> index.html.....");
-//		int totalUsers=userService.count(null, null,null);
-//
-//		response.setIntHeader("totalUsers", totalUsers);
-//		response.sendRedirect(getRedirectPage(RedirectType.INDEX));
-//	}
-//
-//
-//	@RequestMapping(value = "/external-redirect", method = RequestMethod.GET)
-//	public ResponseEntity<Object> method() throws URISyntaxException {
-//
-//		URI externalUri = new URI("https://some-domain.com/path/to/somewhere");
-//		HttpHeaders httpHeaders = new HttpHeaders();
-//		httpHeaders.setLocation(externalUri);
-//
-//		return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
-//	}
 
 }

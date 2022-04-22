@@ -10,16 +10,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "VALID_RESERVATION_CREATED", schema = "VIEWS")
+@Table(name = "valid_reservation_created", schema = "views")
 @Immutable
-public class ReservationUserVO implements Serializable {
+public class ReservationUserVO extends CommonReservationTransient {
 
     @Id
     @Column(name = "ID")
@@ -64,7 +63,7 @@ public class ReservationUserVO implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "R_ANNOUNCE_ID", updatable = false, insertable = false)
     @JsonBackReference
-    private AnnounceVO announce;
+    private AnnounceMasterVO announce;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "VALIDATE")
@@ -87,14 +86,6 @@ public class ReservationUserVO implements Serializable {
 
     public void setDateCreated(Timestamp dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    @Transient
-    @JsonProperty
-    private AnnounceInfo announceInfo;
-
-    public AnnounceInfo getAnnounceInfo() {
-        return announceInfo;
     }
 
     public void setAnnounceInfo(AnnounceInfo announceInfo) {
@@ -122,11 +113,11 @@ public class ReservationUserVO implements Serializable {
         this.userId = userId;
     }
 
-    public AnnounceVO getAnnounce() {
+    public AnnounceMasterVO getAnnounce() {
         return announce;
     }
 
-    public void setAnnounce(AnnounceVO announce) {
+    public void setAnnounce(AnnounceMasterVO announce) {
         this.announce = announce;
         announceInfo = new AnnounceInfo(announce);
     }
