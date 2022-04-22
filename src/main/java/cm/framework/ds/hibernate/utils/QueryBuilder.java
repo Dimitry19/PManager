@@ -252,7 +252,7 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 	}
 
 	public final QueryBuilder notNull(String alias, String propertyName) {
-		this.checkAppendOperator((QueryUtils.OperatorEnum)null);
+		this.checkAppendOperator((OperatorEnum)null);
 		this.appendProperty(this.where, alias, propertyName).append(" is not null ");
 		if (log.isDebugEnabled()) {
 			log.debug(this.where.toString());
@@ -262,21 +262,21 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 	}
 
 	public QueryBuilder checkAppendAnd() {
-		return this.checkAppendOperator(QueryUtils.OperatorEnum.AND);
+		return this.checkAppendOperator(OperatorEnum.AND);
 	}
 
 	public QueryBuilder checkAppendOr() {
-		return this.checkAppendOperator(QueryUtils.OperatorEnum.OR);
+		return this.checkAppendOperator(OperatorEnum.OR);
 	}
 
-	private QueryBuilder checkAppendOperator(QueryUtils.OperatorEnum condition) {
+	private QueryBuilder checkAppendOperator(OperatorEnum condition) {
 		if (this.where.length() == 0) {
 			return this;
 		} else {
 			String whereStr = this.where.toString();
 			if (!whereStr.endsWith(" ( ") && !whereStr.endsWith(" and ") && !whereStr.endsWith(" or ")) {
 				if (condition == null) {
-					condition = QueryUtils.OperatorEnum.AND;
+					condition = OperatorEnum.AND;
 				}
 
 				switch(condition) {

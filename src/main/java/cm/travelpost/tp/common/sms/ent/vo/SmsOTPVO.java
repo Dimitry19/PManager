@@ -1,8 +1,7 @@
-package cm.travelpost.tp.user.ent.vo.otp;
+package cm.travelpost.tp.common.sms.ent.vo;
 
 import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
-import cm.travelpost.tp.user.ent.vo.UserVO;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;

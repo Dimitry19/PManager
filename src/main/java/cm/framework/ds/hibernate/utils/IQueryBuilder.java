@@ -51,7 +51,7 @@ public interface IQueryBuilder<T extends IQueryBuilder> {
 
 	T closeSubWhere();
 
-	T addJoin(IQueryBuilder.JoinEnum var1, boolean var2, String var3, String var4, String var5);
+	T addJoin(JoinEnum var1, boolean var2, String var3, String var4, String var5);
 
 	T and();
 

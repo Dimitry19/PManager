@@ -1,4 +1,4 @@
-package cm.travelpost.tp.user.ent.vo.otp;
+package cm.travelpost.tp.common.sms.ent.vo;
 
 public class OPTNumber {
 

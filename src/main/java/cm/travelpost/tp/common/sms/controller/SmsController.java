@@ -1,14 +1,16 @@
-package cm.travelpost.tp.ws.controller.rest.users.otp;
+package cm.travelpost.tp.common.sms.controller;
 
 import cm.travelpost.tp.constant.WSConstants;
-import cm.travelpost.tp.user.ent.vo.otp.OPTNumber;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.users.otp.OTPNumberDTO;
 import cm.travelpost.tp.ws.requests.users.otp.SmsDTO;
 import cm.travelpost.tp.ws.responses.Response;
+import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
@@ -16,21 +18,22 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static cm.travelpost.tp.websocket.constants.WebSocketConstants.SUSCRIBE_QUEUE_ITEM_SEND;
 
 @RestController
 @RequestMapping(WSConstants.SMS_WS)
+@Api(value = "Sms OTP Services",tags = {"OTP", "SMS"})
 public class SmsController extends CommonController {
 
 	protected final Log logger = LogFactory.getLog(SmsController.class);
+
 
 
 	@ApiOperation(value = "Send OTP Code ", response = Response.class)
@@ -46,16 +49,15 @@ public class SmsController extends CommonController {
 			consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> smsSend(@RequestBody SmsDTO sms) {
 
-		logger.info("smsSubmit request in");
+		logger.info("smsSend request in");
 
 		createOpentracingSpan("SmsController - smsSend");
 
 		try{
 
 			smsService.send(sms);
-			socket.convertAndSend(SUSCRIBE_QUEUE_ITEM_SEND, getTimeStamp() + ": SMS has been sent!: "+sms.getTo());
+			//socket.convertAndSend(SUSCRIBE_QUEUE_ITEM_SEND, getTimeStamp() + ": SMS has been sent!: "+sms.getTo());
 			return new ResponseEntity<>(true,HttpStatus.OK);
-
 		}
 		catch(Exception e){
 			logger.error("Erreur survenue durant l'envoi du code OTP {}",e);
@@ -69,7 +71,7 @@ public class SmsController extends CommonController {
 			consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void smsCallback(@RequestBody MultiValueMap<String, String> map) {
 		smsService.receive(map);
-		socket.convertAndSend(SUSCRIBE_QUEUE_ITEM_SEND, getTimeStamp() + ": Twilio has made a callback request! Here are the contents: "+map.toString());
+		//socket.convertAndSend(SUSCRIBE_QUEUE_ITEM_SEND, getTimeStamp() + ": Twilio has made a callback request! Here are the contents: "+map.toString());
 	}
 
 	@ApiOperation(value = "Manage OTP ", response = Response.class)
@@ -83,22 +85,27 @@ public class SmsController extends CommonController {
 					response = Response.class, responseContainer = "Object")})
 	@PostMapping(path = WSConstants.USER_WS_OTP, consumes = {javax.ws.rs.core.MediaType.APPLICATION_JSON}, produces = {javax.ws.rs.core.MediaType.APPLICATION_JSON}, headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody
-	ResponseEntity<String> validateOTP(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid OTPNumberDTO dto) throws ValidationException, IOException {
+	ResponseEntity<Response> validateOTP(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid OTPNumberDTO dto) throws ValidationException, Exception {
 
 		logger.info("validate otp  request in");
 		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+
+		Response tpResponse = new Response();
 
 		try {
 			createOpentracingSpan("SmsController - validate OTP");
 
 			if (dto != null) {
 
-				int sentOtp = OPTNumber.getOtp();
-				System.out.println(sentOtp + ":" + dto.getOtp());
-				if (sentOtp == dto.getOtp()) {
-					return new ResponseEntity<>("Success otp", HttpStatus.OK);
+				if (BooleanUtils.isTrue(smsService.validate(dto.getOtp()))) {
+
+					tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+					tpResponse.setRetDescription("Success otp");
+					return new ResponseEntity<Response>(tpResponse, HttpStatus.OK);
 				}
-				return new ResponseEntity<>("failure", HttpStatus.UNAUTHORIZED);
+				tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+				tpResponse.setRetDescription("failure otp");
+				return new ResponseEntity<Response>(tpResponse, HttpStatus.UNAUTHORIZED);
 			}
 		} catch (Exception e) {
 			logger.error("Erreur durant l\'execution de validateOTP: ", e);

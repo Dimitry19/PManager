@@ -116,7 +116,7 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     @Transactional(propagation = Propagation.REQUIRED)
      T  checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException,ClassCastException;
 
-    void pageBy(org.hibernate.query.Query query, PageBy pageBy);
+    void pageBy(Query query, PageBy pageBy);
 
     double calcolateAverage(T t) throws Exception;
 

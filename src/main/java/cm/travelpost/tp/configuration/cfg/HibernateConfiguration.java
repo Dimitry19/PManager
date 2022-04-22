@@ -60,6 +60,7 @@ public class HibernateConfiguration {
     @Value("${connection.pool_size}")
     private int POOL_SIZE;
 
+
     @Bean
     @ConfigurationProperties(prefix = "hibernate.datasource")
     public DataSource dataSource() {
@@ -98,4 +99,6 @@ public class HibernateConfiguration {
 
         return transactionManager;
     }
+
+
 }

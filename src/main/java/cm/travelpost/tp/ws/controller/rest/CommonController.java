@@ -6,6 +6,7 @@ import cm.travelpost.tp.announce.ent.service.ReservationService;
 import cm.travelpost.tp.city.ent.service.CityService;
 import cm.travelpost.tp.common.mail.ent.service.MailService;
 import cm.travelpost.tp.common.mail.sendgrid.MailSenderSendGrid;
+import cm.travelpost.tp.common.sms.ent.service.SmsService;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.FileUtils;
 import cm.travelpost.tp.constant.WSConstants;
@@ -14,7 +15,6 @@ import cm.travelpost.tp.message.ent.service.MessageService;
 import cm.travelpost.tp.notification.ent.service.NotificationService;
 import cm.travelpost.tp.user.ent.service.RoleService;
 import cm.travelpost.tp.user.ent.service.UserService;
-import cm.travelpost.tp.user.ent.service.otp.SmsService;
 import cm.travelpost.tp.ws.controller.RedirectType;
 import cm.travelpost.tp.ws.responses.PaginateResponse;
 import cm.travelpost.tp.ws.responses.Response;
@@ -108,9 +108,9 @@ public class CommonController  extends WSConstants {
     @Autowired
     protected MessageService messageService;
 
-
     @Autowired
-    protected  SmsService smsService;
+    protected SmsService smsService;
+
 
     @Autowired
     protected SimpMessagingTemplate socket;
