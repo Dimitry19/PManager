@@ -283,7 +283,6 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
         List<ReservationUserVO> reservations = null;
 
         if (type == RECEIVED) {
-
             reservations = findByJoinUserId(ReservationReceivedUserVO.class, userId, pageBy);
         }else {
              reservations = findByUserId(ReservationUserVO.class, userId, pageBy);
