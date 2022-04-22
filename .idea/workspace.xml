@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F/DevJava/ws/database-h2/travelpost/manager.mv.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/F/DevJava/ws/database-h2/travelpost/manager.trace.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -697,13 +698,6 @@
       <workItem from="1650428662410" duration="199000" />
       <workItem from="1650428957422" duration="6179000" />
     </task>
-    <task id="LOCAL-00039" summary="Bug fixing recherhe annonces">
-      <created>1639418850099</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1639418850099</updated>
-    </task>
     <task id="LOCAL-00040" summary="new implementation for socket">
       <created>1640162934024</created>
       <option name="number" value="00040" />
@@ -1040,7 +1034,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650641713743</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="Consolidation version beta de l'app">
+      <created>1650642370465</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1650642370465</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1348,6 +1349,10 @@
         <PinnedItemInfo parentTag="org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor" memberName="persistentClass" />
       </pinned-members>
     </pin-to-top-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
