@@ -1,5 +1,5 @@
 POST
-http://localhost:8080/pmanager/ws/message/update
+http://localhost:8080/services/ws/message/update
 {
    "id":3,
    "username":"dimo",

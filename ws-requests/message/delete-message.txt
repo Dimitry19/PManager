@@ -1,4 +1,4 @@
 GET
-http://localhost:8080/pmanager/ws/message/delete?id=1
+http://localhost:8080/services/ws/message/delete?id=1
 
 

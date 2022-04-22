@@ -1,4 +1,4 @@
-http://localhost:8080/pmanager/ws/user/register
+http://localhost:8080/services/ws/user/register
 
 {
 

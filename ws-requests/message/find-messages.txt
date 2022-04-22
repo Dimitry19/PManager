@@ -1,4 +1,4 @@
-http://localhost:8080/pmanager/ws/message/find
+http://localhost:8080/services/ws/message/find
 
 {
 

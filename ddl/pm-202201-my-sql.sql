@@ -1,401 +1,469 @@
--- we don't know how to generate database MANAGER (class Database) :(
-drop table IF EXISTS   ADMINISTRATOR;
-create table ADMINISTRATOR
+create schema tp_manager collate utf8mb4_0900_ai_ci;
+
+create table administrator
 (
-    ID BIGINT auto_increment primary key,
-    NAME VARCHAR(255) not null,
-    USERNAME VARCHAR(255) not null,
-    EMAIL VARCHAR(255) not null,
-    CANCELLED BOOLEAN not null,
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP
+       ID bigint auto_increment
+              primary key,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       EMAIL varchar(255) not null,
+       NAME varchar(255) not null,
+       USERNAME varchar(255) not null,
+       CANCELLED tinyint(1) not null
 );
 
-drop table IF EXISTS   AIRLINE;
-create table AIRLINE
+create table airline
 (
-    TOKEN VARCHAR(255) not null,
-    CODE VARCHAR(255) not null,
-    DESCRIPTION VARCHAR(255),
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP,
-    CANCELLED BOOLEAN not null,
-    primary key(CODE, TOKEN)
+       CODE varchar(255) not null,
+       TOKEN varchar(255) not null,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       CANCELLED tinyint(1) not null,
+       DESCRIPTION varchar(255) null,
+       primary key (CODE, TOKEN)
 );
 
-create table CITY
+create table batch_job_instance
 (
-    ID   VARCHAR not null
-        primary key,
-    NAME VARCHAR not null
+       JOB_INSTANCE_ID bigint auto_increment
+              primary key,
+       VERSION bigint null,
+       JOB_NAME varchar(100) not null,
+       JOB_KEY varchar(32) not null,
+       constraint JOB_NAME
+              unique (JOB_NAME, JOB_KEY)
 );
 
-
-drop table IF EXISTS  BATCH_JOB_INSTANCE;
-create table BATCH_JOB_INSTANCE
+create table batch_job_execution
 (
-    JOB_INSTANCE_ID BIGINT   auto_increment
-        primary key,
-    VERSION BIGINT,
-    JOB_NAME VARCHAR(100) not null,
-    JOB_KEY VARCHAR(32) not null,
-    unique (JOB_NAME, JOB_KEY)
+       JOB_EXECUTION_ID bigint auto_increment
+              primary key,
+       VERSION bigint null,
+       JOB_INSTANCE_ID bigint not null,
+       CREATE_TIME timestamp not null,
+       START_TIME timestamp null,
+       END_TIME timestamp null,
+       STATUS varchar(10) null,
+       EXIT_CODE varchar(2500) null,
+       EXIT_MESSAGE varchar(2500) null,
+       LAST_UPDATED timestamp null,
+       JOB_CONFIGURATION_LOCATION varchar(2500) null,
+       constraint batch_job_execution_ibfk_1
+              foreign key (JOB_INSTANCE_ID) references batch_job_instance (JOB_INSTANCE_ID)
 );
 
+create index JOB_INSTANCE_ID
+       on batch_job_execution (JOB_INSTANCE_ID);
 
-drop table IF EXISTS  BATCH_JOB_EXECUTION;
-create table BATCH_JOB_EXECUTION
+create table batch_job_execution_context
 (
-    JOB_EXECUTION_ID BIGINT   auto_increment
-        primary key,
-    VERSION BIGINT,
-    JOB_INSTANCE_ID BIGINT not null,
-    CREATE_TIME TIMESTAMP not null,
-    START_TIME TIMESTAMP default NULL,
-    END_TIME TIMESTAMP default NULL,
-    STATUS VARCHAR(10),
-    EXIT_CODE VARCHAR(2500),
-    EXIT_MESSAGE VARCHAR(2500),
-    LAST_UPDATED TIMESTAMP,
-    JOB_CONFIGURATION_LOCATION VARCHAR(2500),
-    foreign key (JOB_INSTANCE_ID) references BATCH_JOB_INSTANCE(JOB_INSTANCE_ID)
+       JOB_EXECUTION_ID bigint not null
+              primary key,
+       SHORT_CONTEXT varchar(2500) not null,
+       SERIALIZED_CONTEXT varchar(2500) null,
+       constraint batch_job_execution_context_ibfk_1
+              foreign key (JOB_EXECUTION_ID) references batch_job_execution (JOB_EXECUTION_ID)
 );
 
-drop table IF EXISTS  BATCH_JOB_EXECUTION_CONTEXT;
-create table BATCH_JOB_EXECUTION_CONTEXT
+create table batch_job_execution_params
 (
-    JOB_EXECUTION_ID BIGINT not null
-        primary key,
-    SHORT_CONTEXT VARCHAR(2500) not null,
-    SERIALIZED_CONTEXT VARCHAR(2500),
-    constraint JOB_EXEC_CTX_FK
-        foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION(JOB_EXECUTION_ID)
+       JOB_EXECUTION_ID bigint not null,
+       TYPE_CD varchar(6) not null,
+       KEY_NAME varchar(100) not null,
+       STRING_VAL varchar(250) null,
+       DATE_VAL timestamp null,
+       LONG_VAL bigint null,
+       DOUBLE_VAL double null,
+       IDENTIFYING char not null,
+       constraint batch_job_execution_params_ibfk_1
+              foreign key (JOB_EXECUTION_ID) references batch_job_execution (JOB_EXECUTION_ID)
 );
 
-drop table IF EXISTS  BATCH_JOB_EXECUTION_PARAMS;
-create table BATCH_JOB_EXECUTION_PARAMS
+create index JOB_EXECUTION_ID
+       on batch_job_execution_params (JOB_EXECUTION_ID);
+
+create table batch_step_execution
 (
-    JOB_EXECUTION_ID BIGINT not null,
-    TYPE_CD VARCHAR(6) not null,
-    KEY_NAME VARCHAR(100) not null,
-    STRING_VAL VARCHAR(250),
-    DATE_VAL TIMESTAMP  default NULL,
-    LONG_VAL BIGINT,
-    DOUBLE_VAL DOUBLE,
-    IDENTIFYING CHAR(1) not null,
-    foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION(JOB_EXECUTION_ID)
+       STEP_EXECUTION_ID bigint auto_increment
+              primary key,
+       VERSION bigint not null,
+       STEP_NAME varchar(100) not null,
+       JOB_EXECUTION_ID bigint not null,
+       START_TIME timestamp not null,
+       END_TIME timestamp null,
+       STATUS varchar(10) null,
+       COMMIT_COUNT bigint null,
+       READ_COUNT bigint null,
+       FILTER_COUNT bigint null,
+       WRITE_COUNT bigint null,
+       READ_SKIP_COUNT bigint null,
+       WRITE_SKIP_COUNT bigint null,
+       PROCESS_SKIP_COUNT bigint null,
+       ROLLBACK_COUNT bigint null,
+       EXIT_CODE varchar(2500) null,
+       EXIT_MESSAGE varchar(2500) null,
+       LAST_UPDATED timestamp null,
+       constraint batch_step_execution_ibfk_1
+              foreign key (JOB_EXECUTION_ID) references batch_job_execution (JOB_EXECUTION_ID)
 );
 
-drop table IF EXISTS  BATCH_STEP_EXECUTION;
-create table BATCH_STEP_EXECUTION
+create index JOB_EXECUTION_ID
+       on batch_step_execution (JOB_EXECUTION_ID);
+
+create table batch_step_execution_context
 (
-    STEP_EXECUTION_ID BIGINT   auto_increment
-        primary key,
-    VERSION BIGINT not null,
-    STEP_NAME VARCHAR(100) not null,
-    JOB_EXECUTION_ID BIGINT not null,
-    START_TIME TIMESTAMP not null,
-    END_TIME TIMESTAMP  default NULL,
-    STATUS VARCHAR(10),
-    COMMIT_COUNT BIGINT,
-    READ_COUNT BIGINT,
-    FILTER_COUNT BIGINT,
-    WRITE_COUNT BIGINT,
-    READ_SKIP_COUNT BIGINT,
-    WRITE_SKIP_COUNT BIGINT,
-    PROCESS_SKIP_COUNT BIGINT,
-    ROLLBACK_COUNT BIGINT,
-    EXIT_CODE VARCHAR(2500),
-    EXIT_MESSAGE VARCHAR(2500),
-    LAST_UPDATED TIMESTAMP,
-    foreign key (JOB_EXECUTION_ID) references BATCH_JOB_EXECUTION(JOB_EXECUTION_ID)
+       STEP_EXECUTION_ID bigint not null
+              primary key,
+       SHORT_CONTEXT varchar(2500) not null,
+       SERIALIZED_CONTEXT varchar(2500) null,
+       constraint batch_step_execution_context_ibfk_1
+              foreign key (STEP_EXECUTION_ID) references batch_step_execution (STEP_EXECUTION_ID)
 );
 
-drop table IF EXISTS  BATCH_STEP_EXECUTION_CONTEXT;
-create table BATCH_STEP_EXECUTION_CONTEXT
+create table category
 (
-    STEP_EXECUTION_ID BIGINT not null
-        primary key,
-    SHORT_CONTEXT VARCHAR(2500) not null,
-    SERIALIZED_CONTEXT VARCHAR(2500),
-    foreign key (STEP_EXECUTION_ID) references BATCH_STEP_EXECUTION(STEP_EXECUTION_ID)
+       CODE varchar(15) not null
+              primary key,
+       DESCRIPTION varchar(255) not null
 );
 
-
-drop table IF EXISTS  CATEGORY;
-create table CATEGORY
+create table city
 (
-    CODE VARCHAR(15) not null primary key,
-    DESCRIPTION VARCHAR(255) not null
+       ID varchar(50) not null
+              primary key,
+       NAME varchar(255) not null
 );
 
-drop table IF EXISTS  COMMUNICATION;
-create table COMMUNICATION
+create table communication
 (
-    ID BIGINT  auto_increment
-        primary key,
-    CONTENT VARCHAR(255) not null,
-    TYPE VARCHAR(255) not null,
-    R_ADMIN_ID BIGINT,
-    CANCELLED BOOLEAN not null,
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP,
-    foreign key (R_ADMIN_ID) references ADMINISTRATOR(ID)
+       ID bigint auto_increment
+              primary key,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       CONTENT varchar(255) not null,
+       TYPE varchar(255) not null,
+       R_ADMIN_ID bigint null,
+       CANCELLED tinyint(1) not null
 );
 
-drop table IF EXISTS  CONTACT_US;
-create table CONTACT_US
+create table contact_us
 (
-    ID BIGINT auto_increment
-        primary key,
-    CONTENT VARCHAR(500) not null,
-    RECEIVER VARCHAR(255) not null,
-    SENDER VARCHAR(255) not null,
-    SUBJECT VARCHAR(255) not null,
-    PSEUDO_SENDER VARCHAR(255),
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP,
+       ID bigint auto_increment
+              primary key,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       CONTENT varchar(500) not null,
+       RECEIVER varchar(255) not null,
+       SENDER varchar(255) not null,
+       SUBJECT varchar(255) not null,
+       PSEUDO_SENDER varchar(255) null
 );
 
-drop table IF EXISTS  IMAGE;
-create table IMAGE
+create table image
 (
-    ID BIGINT   auto_increment
-        primary key,
-    NAME VARCHAR(255) not null
-        unique,
-    TYPE VARCHAR(255),
-    ORIGIN VARCHAR(255),
-    PIC_BYTE binary,
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP,
+       ID bigint auto_increment
+              primary key,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       NAME varchar(255) not null,
+       TYPE varchar(255) null,
+       ORIGIN varchar(255) null,
+       PIC_BYTE longblob null,
+       constraint NAME
+              unique (NAME)
 );
 
-drop table IF EXISTS  NOTIFICATION;
-create table NOTIFICATION
+create table notification
 (
-    ID BIGINT   auto_increment
-        primary key,
-    R_ANNOUNCE_ID BIGINT,
-    MESSAGE VARCHAR(255) not null,
-    USER_ID BIGINT not null,
-    R_USER_ID BIGINT,
-    TITLE VARCHAR(60) not null,
-    TYPE VARCHAR(15) not null,
-    SESSION_ID VARCHAR(255),
-    STATUS VARCHAR(10) not null,
-    CANCELLED BOOLEAN not null,
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP,
+       ID bigint auto_increment
+              primary key,
+       CANCELLED tinyint(1) not null,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       R_ANNOUNCE_ID bigint null,
+       MESSAGE varchar(255) not null,
+       R_USER_ID bigint null,
+       SESSION_ID varchar(255) null,
+       STATUS varchar(10) not null,
+       TITLE varchar(60) not null,
+       TYPE varchar(10) not null,
+       USER_ID bigint not null
 );
 
-drop table IF EXISTS  ROLE;
-create table ROLE
+create table role
 (
-    ID INTEGER   auto_increment
-        primary key,
-    DESCRIPTION VARCHAR(255) not null
+       ID int auto_increment
+              primary key,
+       DESCRIPTION varchar(255) not null
 );
 
-
-drop table IF EXISTS  TP_USER;
-create table TP_USER
+create table tp_user
 (
-    ID BIGINT   auto_increment
-        primary key,
-    FIRST_NAME VARCHAR(255) not null,
-    LAST_NAME VARCHAR(255) not null,
-    GENDER VARCHAR(10),
-    PHONE VARCHAR(35) not null,
-    USERNAME VARCHAR(15) not null unique,
-    PASSWORD VARCHAR(255) not null,
-    EMAIL VARCHAR(255) not null unique,
-    IMAGE_ID BIGINT,
-    FACEBOOK_ID VARCHAR(255),
-    GOOGLE_ID VARCHAR(255),
-    ENABLE_NOTIF BOOLEAN not null ,
-    ACTIVE INTEGER not null,
-    CONFIRM_TOKEN VARCHAR(255),
-    ERROR VARCHAR(255),
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP,
-    CANCELLED BOOLEAN not null,
-    unique (EMAIL, USERNAME),
-    FOREIGN KEY (IMAGE_ID)
-    REFERENCES IMAGE(ID)
+       ID bigint auto_increment,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       ACTIVE int not null,
+       CANCELLED tinyint(1) not null,
+       CONFIRM_TOKEN varchar(255) null,
+       EMAIL varchar(255) not null,
+       FACEBOOK_ID varchar(255) null,
+       FIRST_NAME varchar(255) not null,
+       GENDER varchar(10) null,
+       GOOGLE_ID varchar(255) null,
+       LAST_NAME varchar(255) not null,
+       PASSWORD varchar(255) not null,
+       PHONE varchar(35) not null,
+       USERNAME varchar(15) not null,
+       IMAGE_ID bigint null,
+       ENABLE_NOTIF tinyint(1) not null,
+       ERROR varchar(255) null,
+       constraint EMAIL
+              unique (EMAIL),
+       constraint EMAIL_2
+              unique (EMAIL, USERNAME),
+       constraint PRIMARY_KEY_273
+              unique (ID),
+       constraint USERNAME
+              unique (USERNAME),
+       constraint tp_user_ibfk_1
+              foreign key (IMAGE_ID) references image (ID)
 );
 
-drop table IF EXISTS  ANNOUNCE;
-create table ANNOUNCE
+create index IMAGE_ID
+       on tp_user (IMAGE_ID);
+
+alter table tp_user
+       add primary key (ID);
+
+create table announce
 (
-    ID BIGINT  auto_increment
-        primary key,
-    TOKEN VARCHAR(255) not null,
-    DEPARTURE VARCHAR(255) not null,
-    ARRIVAL VARCHAR(255) not null,
-    DESCRIPTION VARCHAR(255) not null,
-    TRANSPORT VARCHAR(255) not null,
-    WEIGHT DECIMAL(19,2) not null,
-    REMAIN_WEIGHT DECIMAL(19,2),
-    START_DATE TIMESTAMP not null,
-    END_DATE TIMESTAMP not null,
-    GOLD_PRICE DECIMAL(19,2) not null,
-    PRENIUM_PRICE DECIMAL(19,2) not null,
-    PRICE DECIMAL(19,2) not null,
-    ANNOUNCE_TYPE VARCHAR(10),
-    STATUS VARCHAR(10),
-    R_USER_ID BIGINT,
-    IMAGE_ID BIGINT,
---     COUNTER_RESERVATION INTEGER,
-    CANCELLED BOOLEAN not null,
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP,
-    foreign key (R_USER_ID) references TP_USER(ID),
-    foreign key (IMAGE_ID) references IMAGE(ID)
+       ID bigint auto_increment,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       TOKEN varchar(255) not null,
+       ANNOUNCE_TYPE varchar(10) null,
+       ARRIVAL varchar(255) not null,
+       CANCELLED tinyint(1) not null,
+       DEPARTURE varchar(255) not null,
+       DESCRIPTION varchar(255) not null,
+       END_DATE timestamp not null,
+       GOLD_PRICE decimal(19,2) not null,
+       PRENIUM_PRICE decimal(19,2) not null,
+       PRICE decimal(19,2) not null,
+       START_DATE timestamp not null,
+       STATUS varchar(10) null,
+       TRANSPORT varchar(255) not null,
+       WEIGHT decimal(19,2) not null,
+       R_USER_ID bigint null,
+       REMAIN_WEIGHT decimal(19,2) null,
+       IMAGE_ID bigint null,
+       COUNTRESERVATION int null,
+       constraint PRIMARY_KEY_B9
+              unique (ID),
+       constraint announce_ibfk_1
+              foreign key (R_USER_ID) references tp_user (ID),
+       constraint announce_ibfk_2
+              foreign key (IMAGE_ID) references image (ID)
 );
 
-create unique index PRIMARY_KEY_B9
-    on ANNOUNCE (ID);
+create index IMAGE_ID
+       on announce (IMAGE_ID);
 
-drop table IF EXISTS  ANNOUNCE_CATEGORY;
-create table ANNOUNCE_CATEGORY
+create index R_USER_ID
+       on announce (R_USER_ID);
+
+alter table announce
+       add primary key (ID);
+
+create table announce_category
 (
-    ANNOUNCE_ID BIGINT not null,
-    CATEGORIES_CODE VARCHAR(15) not null,
-    primary key (ANNOUNCE_ID, CATEGORIES_CODE),
-    foreign key (ANNOUNCE_ID) references ANNOUNCE(ID),
-    foreign key (CATEGORIES_CODE) references CATEGORY(CODE)
+       ANNOUNCE_ID bigint not null,
+       CATEGORIES_CODE varchar(15) not null,
+       primary key (ANNOUNCE_ID, CATEGORIES_CODE),
+       constraint announce_category_ibfk_1
+              foreign key (ANNOUNCE_ID) references announce (ID),
+       constraint announce_category_ibfk_2
+              foreign key (CATEGORIES_CODE) references category (CODE)
 );
 
-drop table IF EXISTS  MESSAGE;
-create table MESSAGE
+create index CATEGORIES_CODE
+       on announce_category (CATEGORIES_CODE);
+
+create table message
 (
-    ID BIGINT not null,
-    TOKEN VARCHAR(255) not null,
-    CONTENT VARCHAR(255),
-    USERNAME VARCHAR(255),
-    R_ANNOUNCE BIGINT,
-    R_USER_ID BIGINT,
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP,
-    CANCELLED BOOLEAN not null,
-    primary key (ID, TOKEN),
-    foreign key (R_ANNOUNCE) references ANNOUNCE(ID),
-    foreign key (R_USER_ID) references TP_USER(ID)
+       ID bigint not null,
+       TOKEN varchar(255) not null,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       CANCELLED tinyint(1) not null,
+       CONTENT varchar(255) null,
+       R_ANNOUNCE bigint null,
+       R_USER_ID bigint null,
+       USERNAME varchar(255) null,
+       primary key (ID, TOKEN),
+       constraint message_ibfk_1
+              foreign key (R_ANNOUNCE) references announce (ID),
+       constraint message_ibfk_2
+              foreign key (R_USER_ID) references tp_user (ID)
 );
 
-drop table IF EXISTS  RESERVATION;
-create table RESERVATION
-(
-    ID BIGINT   auto_increment
-        primary key,
-    DESCRIPTION VARCHAR(255),
-    WEIGTH DECIMAL(19,2) not null,
-    VALIDATE VARCHAR(10) default 'INSERTED',
-    STATUS VARCHAR(10),
-    R_ANNOUNCE_ID BIGINT,
-    R_USER_ID BIGINT,
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP,
-    CANCELLED BOOLEAN not null,
+create index R_ANNOUNCE
+       on message (R_ANNOUNCE);
 
-    foreign key (R_ANNOUNCE_ID) references ANNOUNCE(ID),
-    foreign key (R_USER_ID) references TP_USER(ID)
+create index R_USER_ID
+       on message (R_USER_ID);
+
+create table reservation
+(
+       ID bigint auto_increment
+              primary key,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       WEIGTH decimal(19,2) not null,
+       R_ANNOUNCE_ID bigint null,
+       R_USER_ID bigint null,
+       DESCRIPTION varchar(255) null,
+       CANCELLED tinyint(1) not null,
+       VALIDATE varchar(10) default 'INSERTED' null,
+       STATUS varchar(10) null,
+       constraint reservation_ibfk_1
+              foreign key (R_ANNOUNCE_ID) references announce (ID),
+       constraint reservation_ibfk_2
+              foreign key (R_USER_ID) references tp_user (ID)
 );
 
-drop table IF EXISTS  RESERVATION_CATEGORY;
-create table RESERVATION_CATEGORY
+create index R_ANNOUNCE_ID
+       on reservation (R_ANNOUNCE_ID);
+
+create index R_USER_ID
+       on reservation (R_USER_ID);
+
+create table reservation_category
 (
-    RESERVATION_ID BIGINT not null,
-    CATEGORIES_CODE VARCHAR(15) not null,
-    primary key (RESERVATION_ID, CATEGORIES_CODE),
-    foreign key (RESERVATION_ID) references RESERVATION(ID),
-    foreign key (CATEGORIES_CODE) references CATEGORY(CODE)
+       RESERVATION_ID bigint not null,
+       CATEGORIES_CODE varchar(15) not null,
+       primary key (RESERVATION_ID, CATEGORIES_CODE),
+       constraint reservation_category_ibfk_1
+              foreign key (RESERVATION_ID) references reservation (ID),
+       constraint reservation_category_ibfk_2
+              foreign key (CATEGORIES_CODE) references category (CODE)
 );
 
-drop table IF EXISTS  REVIEW;
-create table REVIEW
+create index CATEGORIES_CODE
+       on reservation_category (CATEGORIES_CODE);
+
+create table review
 (
-    ID BIGINT   auto_increment,
-    TOKEN VARCHAR(5) not null,
-    TITLE VARCHAR(35) not null,
-    DETAILS VARCHAR(5000) not null,
-    RATING INTEGER not null,
-    INDEXES INTEGER not null,
-    R_USER_ID BIGINT not null,
-    RATING_USER_ID BIGINT,
-    CANCELLED BOOLEAN not null,
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP,
-    PRIMARY KEY (ID),
-    foreign key (R_USER_ID) references TP_USER(ID)
+       ID bigint auto_increment
+              primary key,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       TOKEN varchar(5) not null,
+       DETAILS varchar(5000) not null,
+       TITLE varchar(35) not null,
+       RATING int not null,
+       CANCELLED tinyint(1) not null,
+       INDEXES int not null,
+       R_USER_ID bigint not null,
+       RATING_USER_ID bigint null,
+       constraint review_ibfk_1
+              foreign key (R_USER_ID) references tp_user (ID)
 );
 
-drop table IF EXISTS  SUBSCRIBERS;
-create table SUBSCRIBERS
+create index R_USER_ID
+       on review (R_USER_ID);
+
+create table subscribers
 (
-    R_USER_ID BIGINT not null,
-    SUBSCRIBER_ID BIGINT not null,
-    primary key (R_USER_ID, SUBSCRIBER_ID),
-    foreign key (R_USER_ID) references TP_USER(ID),
-    foreign key (SUBSCRIBER_ID) references TP_USER(ID)
+       R_USER_ID bigint not null,
+       SUBSCRIBER_ID bigint not null,
+       primary key (R_USER_ID, SUBSCRIBER_ID),
+       constraint subscribers_ibfk_1
+              foreign key (R_USER_ID) references tp_user (ID),
+       constraint subscribers_ibfk_2
+              foreign key (SUBSCRIBER_ID) references tp_user (ID)
 );
 
-drop table IF EXISTS  SUBSCRIPTIONS;
-create table SUBSCRIPTIONS
+create index SUBSCRIBER_ID
+       on subscribers (SUBSCRIBER_ID);
+
+create table subscriptions
 (
-    SUBSCRIPTION_ID BIGINT not null,
-    R_USER_ID BIGINT not null,
-    primary key (SUBSCRIPTION_ID, R_USER_ID),
-    foreign key (R_USER_ID) references TP_USER(ID),
-    foreign key (SUBSCRIPTION_ID) references TP_USER(ID)
+       SUBSCRIPTION_ID bigint not null,
+       R_USER_ID bigint not null,
+       primary key (SUBSCRIPTION_ID, R_USER_ID),
+       constraint subscriptions_ibfk_1
+              foreign key (R_USER_ID) references tp_user (ID),
+       constraint subscriptions_ibfk_2
+              foreign key (SUBSCRIPTION_ID) references tp_user (ID)
 );
 
-create unique index PRIMARY_KEY_273
-    on TP_USER (ID);
+create index R_USER_ID
+       on subscriptions (R_USER_ID);
 
-drop table IF EXISTS  TP_USER_COMMUNICATION;
-create table USER_COMMUNICATION
+create table tp_user_communication
 (
-    USERS_ID BIGINT not null,
-    COMMUNICATIONS_ID BIGINT not null,
-    primary key (USERS_ID, COMMUNICATIONS_ID),
-    foreign key (USERS_ID) references TP_USER(ID),
-    foreign key (COMMUNICATIONS_ID) references COMMUNICATION(ID)
+       USERS_ID bigint not null,
+       COMMUNICATIONS_ID bigint not null,
+       primary key (USERS_ID, COMMUNICATIONS_ID),
+       constraint tp_user_communication_ibfk_1
+              foreign key (USERS_ID) references tp_user (ID),
+       constraint tp_user_communication_ibfk_2
+              foreign key (COMMUNICATIONS_ID) references communication (ID)
 );
 
-drop table IF EXISTS  USER_NOTIFICATION;
-create table USER_NOTIFICATION
+create index COMMUNICATIONS_ID
+       on tp_user_communication (COMMUNICATIONS_ID);
+
+create table user_communication
 (
-    USERS_ID BIGINT not null,
-    NOTIFICATIONS_ID BIGINT not null,
-    primary key (USERS_ID, NOTIFICATIONS_ID),
-    foreign key (NOTIFICATIONS_ID) references NOTIFICATION(ID),
-    foreign key (USERS_ID) references TP_USER(ID)
+       USERS_ID bigint not null,
+       COMMUNICATIONS_ID bigint not null,
+       primary key (USERS_ID, COMMUNICATIONS_ID),
+       constraint user_communication_ibfk_1
+              foreign key (USERS_ID) references tp_user (ID),
+       constraint user_communication_ibfk_2
+              foreign key (COMMUNICATIONS_ID) references communication (ID)
 );
 
-drop table IF EXISTS  USER_ROLE;
-create table USER_ROLE
+create index COMMUNICATIONS_ID
+       on user_communication (COMMUNICATIONS_ID);
+
+create table user_notification
 (
-    R_USER BIGINT not null,
-    ROLE_ID INTEGER not null,
-    primary key (R_USER, ROLE_ID),
-    foreign key (R_USER) references TP_USER(ID),
-    foreign key (ROLE_ID) references ROLE(ID)
+       USERS_ID bigint not null,
+       NOTIFICATIONS_ID bigint not null,
+       primary key (USERS_ID, NOTIFICATIONS_ID),
+       constraint user_notification_ibfk_1
+              foreign key (NOTIFICATIONS_ID) references notification (ID),
+       constraint user_notification_ibfk_2
+              foreign key (USERS_ID) references tp_user (ID)
 );
 
+create index NOTIFICATIONS_ID
+       on user_notification (NOTIFICATIONS_ID);
+
+create table user_role
+(
+       R_USER bigint not null,
+       ROLE_ID int not null,
+       primary key (R_USER, ROLE_ID),
+       constraint user_role_ibfk_1
+              foreign key (R_USER) references tp_user (ID),
+       constraint user_role_ibfk_2
+              foreign key (ROLE_ID) references role (ID)
+);
+
+create index ROLE_ID
+       on user_role (ROLE_ID);
 
 -- auto-generated definition
-create table sms_otp
-(
-    ID           BIGINT auto_increment
-        primary key,
-    CANCELLED    BOOLEAN      not null,
-    DATECREATED  TIMESTAMP,
-    LASTUPDATED  TIMESTAMP,
-    OTP_CODE     INTEGER      not null
-        constraint UK_B337Q95H9UV7475HE4H5LO9YI
-            unique,
-    PHONE_NUMBER VARCHAR(255) not null
+create table sms_otp(
+        ID BIGINT auto_increment primary key,
+        CANCELLED    BOOLEAN      not null,
+        DATECREATED  TIMESTAMP,
+        LASTUPDATED  TIMESTAMP,
+        OTP_CODE     INTEGER      not null,
+        unique(OTP_CODE),
+        PHONE_NUMBER VARCHAR(255) not null
 );
-
