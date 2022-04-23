@@ -1,3 +1,3 @@
-GET http://localhost:8080/pmanager/ws/user/info/{id}
+GET http://localhost:8080/services/ws/user/info/{id}
 
 

@@ -29,7 +29,7 @@ public class HttpsEnforcer extends CommonFilter {
 		if (request.getHeader(X_FORWARDED_PROTO) != null) {
 
 			if (request.getHeader(X_FORWARDED_PROTO).indexOf("https") != 0) {
-				String pathInfo = (request.getPathInfo() != null) ? request.getPathInfo() : "/pmanager";
+				String pathInfo = (request.getPathInfo() != null) ? request.getPathInfo() : "/services";
 				logger.info("redirect" ,"https://" + request.getServerName() + ":"+request.getServerPort() + pathInfo);
 				System.out.println("redirect:" +"https://" + request.getServerName() + ":"+request.getServerPort() + pathInfo);
 				//response.sendRedirect("https://" + request.getServerName() + ":"+request.getServerPort() + pathInfo);

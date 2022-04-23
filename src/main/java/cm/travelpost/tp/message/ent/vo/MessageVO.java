@@ -1,14 +1,13 @@
 package cm.travelpost.tp.message.ent.vo;
 
-import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+import cm.framework.ds.common.ent.vo.CommonVO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -18,7 +17,7 @@ import java.util.Objects;
  */
 
 @Entity(name = "MessageVO")
-@Table(name = "MESSAGE")
+@Table(name = "message")
 @NamedQueries({
         @NamedQuery(name = MessageVO.FINDALL, query = "select m from MessageVO m "),
         @NamedQuery(name = MessageVO.FIND_BY_ANNOUNCE, query = "select m from MessageVO m where m.announce.id =: announceId order by m.dateCreated asc"),
@@ -27,7 +26,7 @@ import java.util.Objects;
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
 })
-@Where(clause= FilterConstants.FILTER_WHERE_MESSAGE_CANCELLED)
+//@Where(clause= FilterConstants.FILTER_WHERE_MESSAGE_CANCELLED)
 public class MessageVO extends CommonVO {
 
     public static final String FINDALL = "cm.travelpost.tp.message.ent.vo.MessageVO.findAll";
@@ -49,7 +48,8 @@ public class MessageVO extends CommonVO {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "R_ANNOUNCE", referencedColumnName = "ID", updatable = false)
     @JsonBackReference
-    private AnnounceVO announce;
+    private AnnounceMasterVO announce;
+
 
     @Basic(optional = false)
     @Column(name = "CONTENT", nullable = false)
@@ -77,7 +77,7 @@ public class MessageVO extends CommonVO {
         return content;
     }
 
-    public AnnounceVO getAnnounce() {
+    public AnnounceMasterVO getAnnounce() {
         return announce;
     }
 
@@ -91,7 +91,7 @@ public class MessageVO extends CommonVO {
         setUserId(user.getId());
     }
 
-    public void setAnnounce(AnnounceVO announce) {
+    public void setAnnounce(AnnounceMasterVO announce) {
         this.announce = announce;
     }
 

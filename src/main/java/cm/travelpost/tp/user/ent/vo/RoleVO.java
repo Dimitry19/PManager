@@ -1,6 +1,6 @@
 package cm.travelpost.tp.user.ent.vo;
 
-import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.enums.RoleEnum;
 import cm.travelpost.tp.common.enums.RoleType;
 import org.hibernate.annotations.TypeDef;
@@ -8,7 +8,7 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ROLE")
+@Table(name = "role")
 @TypeDef(
         name = "role_enum",
         typeClass = RoleType.class

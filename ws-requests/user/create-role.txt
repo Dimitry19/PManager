@@ -1,4 +1,4 @@
-http://localhost:8080/pmanager/ws/role/add
+http://localhost:8080/services/ws/role/add
 
 {
    "role":"USER"

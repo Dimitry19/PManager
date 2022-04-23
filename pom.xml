@@ -146,6 +146,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.21</version>
 			<scope>runtime</scope>
 		</dependency>
 		<!--DATABASE END -->
@@ -342,6 +343,21 @@
 
 		<!-- Thanks for using app.mailjet-->
 
+		<!--Twillo SMS Gateway-->
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>7.1.0</version>
+		</dependency>
+		<!--Twillo SMS Gateway-->
+
+		<!-- Encrypt properties-->
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+		<!-- Encrypt properties End-->
 
 	</dependencies>
 
@@ -388,6 +404,13 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- Encrypt properties-->
+			<plugin>
+				<groupId>com.github.ulisesbocchio</groupId>
+				<artifactId>jasypt-maven-plugin</artifactId>
+				<version>3.0.3</version>
+			</plugin>
+			<!-- Encrypt properties end-->
 			<!-- Ceci permet d'exclure devtools from maven spring build plugin-->
 			<!--<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -1,6 +1,6 @@
 package cm.travelpost.tp.ws.responses;
 
-import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 
 import java.util.ArrayList;
 import java.util.List;

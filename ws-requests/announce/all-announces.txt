@@ -1,4 +1,4 @@
-GET http://localhost:8080/pmanager/ws/announce/announces?page=8
+GET http://localhost:8080/services/ws/announce/announces?page=8
 
 
-GET http://localhost:8080/pmanager/ws/announce/announces/0
+GET http://localhost:8080/services/ws/announce/announces/0

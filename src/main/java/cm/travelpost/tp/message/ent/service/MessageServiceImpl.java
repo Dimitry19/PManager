@@ -1,7 +1,7 @@
 package cm.travelpost.tp.message.ent.service;
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.enums.FindBy;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
 import cm.travelpost.tp.common.exception.UserException;

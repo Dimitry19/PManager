@@ -1,7 +1,8 @@
 package cm.travelpost.tp.city.ent.service;
 
+
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.city.ent.vo.CityVO;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.ws.requests.CommonDTO;
 import org.springframework.beans.factory.InitializingBean;
 

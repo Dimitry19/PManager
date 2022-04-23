@@ -1,13 +1,16 @@
 package cm.travelpost.tp.user.ent.dao;
 
+
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.framework.ds.hibernate.enums.CountBy;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.RoleEnum;
+import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
+import cm.travelpost.tp.common.utils.ObjectUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
@@ -17,11 +20,12 @@ import cm.travelpost.tp.user.ent.vo.RoleVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.users.*;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
-import org.hibernate.Session;
+import org.hibernate.QueryParameterException;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -35,12 +39,16 @@ import java.util.stream.Collectors;
 public class UserDAOImpl extends Generic implements UserDAO {
 
 
-
+    private static final String USER_NOT_FOUND = "Utilisateur non trouvé";
     private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 
 
     @Autowired
     RoleDAO roleDAO;
+
+
+    @Value("${tp.travelpost.active.registration.enable}")
+    protected boolean enableAutoActivateRegistration;
 
 
 
@@ -58,6 +66,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
 
         if(o instanceof CountBy && id!=null){
+
             CountBy cb= (CountBy)o;
             if(cb.equals(CountBy.SUBSCRIPTIONS)){
                 return CollectionsUtils.size(subscriptions(id));
@@ -83,7 +92,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
-    public void subscribe(SubscribeDTO subscribe) throws UserException {
+    public void subscribe(SubscribeDTO subscribe) throws UserException,Exception {
         UserVO subscriber = findById(subscribe.getSubscriberId());
         UserVO subscription = findById(subscribe.getSubscriptionId());
 
@@ -103,7 +112,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
-    public void unsubscribe(SubscribeDTO subscribe) throws UserException {
+    public void unsubscribe(SubscribeDTO subscribe) throws UserException,Exception {
 
         UserVO subscriber = findById(subscribe.getSubscriberId());
         UserVO subscription = findById(subscribe.getSubscriptionId());
@@ -125,9 +134,14 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public List<UserVO> subscriptions(Long userId) throws UserException {
+
+        if(logger.isDebugEnabled()){
+            logger.info("Retrieve subscriptions for the user with id {}", userId);
+        }
+
         UserVO user = findById(userId);
         if (user == null)
-            throw new UserNotFoundException("Utilisateur non trouvé");
+            throw new UserNotFoundException(USER_NOT_FOUND);
 
         return new ArrayList<>(user.getSubscriptions());
     }
@@ -135,9 +149,14 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public List<UserVO> subscribers(Long userId) throws UserException {
+
+        if(logger.isDebugEnabled()){
+            logger.info("Retrieve subscribers for the user with id {}", userId);
+        }
+
         UserVO user = findById(userId);
         if (user == null)
-            throw new UserNotFoundException("Utilisateur non trouvé");
+            throw new UserNotFoundException(USER_NOT_FOUND);
 
         return new ArrayList<>(user.getSubscribers());
     }
@@ -146,14 +165,21 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public List<UserVO> getAllUsers() throws Exception {
-        logger.info("User: all users");
+        if(logger.isDebugEnabled()){
+            logger.info("User: all users");
+        }
+
         return all(UserVO.class, null);
     }
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<UserVO> getAllUsersToConfirm() throws Exception {
-        logger.info("User:  users to confirm");
+
+        if(logger.isDebugEnabled()){
+            logger.info("User:  users to confirm");
+        }
+
         return findBy(UserVO.JOB_CONFIRM, UserVO.class, 0, ACTIVE_PARAM, null);
     }
 
@@ -174,13 +200,17 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserVO getUser(Long id) throws UserException {
-        logger.info("User: get user");
+
+        if(logger.isDebugEnabled()){
+            logger.info("User: get user with id {}", id);
+        }
+
         try {
             UserVO user = findById(id);
             calcolateAverage(user);
             return user;
         } catch (UserException e) {
-            logger.error("User: {}" , e.getMessage());
+            logger.error("User: {}" , e);
             throw e;
         }
     }
@@ -188,21 +218,22 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public UserVO register(RegisterDTO register) throws UserException {
-        logger.info("User: register");
+        if(logger.isDebugEnabled()){
+            logger.info("User registration {}", register);
+        }
         try {
-            //UserVO user=findByNaturalIdss(register.getUsername(), register.getEmail(),true);
 
             filters = new String[2];
 
-            map.put("email", register.getEmail());
-            map.put("username", register.getUsername());
+            map.put(EMAIL_PARAM, register.getEmail());
+            map.put(USERNAME_PARAM, register.getUsername());
 
             filters[1] = FilterConstants.ACTIVE_MBR;
             filters[0] = FilterConstants.CANCELLED;
 
             UserVO user = (UserVO) findByNaturalIds(UserVO.class, map, filters);
             if (user != null) {
-                logger.error("User: username deja exisitant");
+                logger.error("User: username deja existant");
                 user.setError(WebServiceResponseCode.ERROR_USERNAME_REGISTER_LABEL + " et " + WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
                 return user;
             }
@@ -226,7 +257,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setFirstName(register.getFirstName());
             user.setLastName(register.getLastName());
             user.setPhone(register.getPhone());
-            user.setActive(0);
+            user.setActive(enableAutoActivateRegistration?1:0); // TODO remettre à 0 quand le service d'envoi mail sera de nouveau disponible
             user.setEnableNotification(Boolean.TRUE);
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
@@ -246,7 +277,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public UserVO updateUser(UpdateUserDTO userDTO) throws Exception {
-        logger.info("User: update");
+        if(logger.isDebugEnabled()){
+            logger.info("User update {}", userDTO);
+        }
 
         UserVO user = findById(userDTO.getId());
 
@@ -264,7 +297,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             return (UserVO) merge(user);
 
 
-        } else throw new UserException("Aucun utilisateur trouvé");
+        } else throw new UserException(USER_NOT_FOUND);
 
     }
 
@@ -278,7 +311,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public boolean deleteUser(Long id) throws UserException {
-        logger.info("User: delete");
+        if(logger.isDebugEnabled()){
+            logger.info("Delete user with id {}", id);
+        }
         //delete(UserVO.class,id,false);
         return updateDelete(id);
     }
@@ -297,7 +332,10 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserVO findByUsername(String username) throws Exception {
 
-        logger.info("User: find by username");
+        if(logger.isDebugEnabled()){
+            logger.info("User: find by username {}", username);
+        }
+
         filters = new String[2];
         filters[0] = FilterConstants.CANCELLED;
         filters[1] = FilterConstants.ACTIVE_MBR;
@@ -308,8 +346,10 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public UserVO findByOnlyUsername(String username, boolean disableFilter) throws Exception {
-        logger.info("User: find by only username");
 
+        if(logger.isDebugEnabled()){
+            logger.info("User: find by only username {}", username);
+        }
         if (!disableFilter) {
             filters = new String[2];
             filters[0] = FilterConstants.CANCELLED;
@@ -322,27 +362,32 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException {
+    public List<UserVO> search(UserSeachDTO search, PageBy pageBy) throws BusinessResourceException {
+
+        return commonSearchUser(search, pageBy);
+    }
 
 
-        Session session = sessionFactory.getCurrentSession();
-        session.enableFilter(FilterConstants.CANCELLED);
-        session.enableFilter(FilterConstants.ACTIVE_MBR);
-
-        String where = composeQuery(userSeachDTO, "u");
-        Query query = session.createQuery("from UserVO  as u " + where);
-        composeQueryParameters(userSeachDTO, query);
-        query.setFirstResult(pageBy.getPage());
-        query.setMaxResults(pageBy.getSize());
+    private List commonSearchUser(UserSeachDTO search, PageBy pageBy) throws AnnounceException {
+        filters= new String[2];
+        filters[0]= FilterConstants.CANCELLED;
+        filters[1]= FilterConstants.ACTIVE_MBR;
+        String where = composeQuery(search, USER_TABLE_ALIAS);
+        Query query = search(UserVO.SEARCH , where,filters);
+        composeQueryParameters(search, query);
+        pageBy(query,pageBy);
         return query.list();
     }
 
 
 
-
     @Override
     public UserVO findByToken(String token) throws Exception {
-        logger.info("User: find by token");
+
+        if(logger.isDebugEnabled()){
+            logger.info("User: find token  {}", token);
+        }
+
         filters = new String[1];
         filters[0] = FilterConstants.CANCELLED;
 
@@ -354,7 +399,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     public UserVO findById(Long id) throws UserException {
 
         try {
-            logger.info("User: find by id");
+            if(logger.isDebugEnabled()){
+                logger.info("User: find by id  {}", id);
+            }
 
             filters = new String[2];
             filters[0] = FilterConstants.ACTIVE_MBR;
@@ -381,7 +428,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserVO findByEmail(String email) throws Exception {
-        logger.info("User: find by email");
+        if(logger.isDebugEnabled()){
+            logger.info("User: find by email {}", email);
+        }
         return (UserVO) findByUniqueResult(UserVO.EMAIL, UserVO.class, email, EMAIL_PARAM);
     }
 
@@ -531,10 +580,13 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
             UserVO userFound = findByUsername(username);
 
-            if ((StringUtils.notEquals(encryptedPassword, userFound.getPassword())) || (encryptedPassword == null || userFound == null)) {
+            if ((encryptedPassword == null || userFound == null)) {
                 throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
             }
 
+            if ((StringUtils.notEquals(encryptedPassword, userFound.getPassword()))) {
+                throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
+            }
 
             if (encryptedPassword.equals(userFound.getPassword())) {
                 return userFound;
@@ -554,22 +606,22 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     public String composeQuery(Object o, String alias) {
 
-        UserSeachDTO userSeach = (UserSeachDTO) o;
+        UserSeachDTO search = (UserSeachDTO) o;
 
-        StringBuilder hql = new StringBuilder(" where ");
+        StringBuilder hql = new StringBuilder(WHERE);
         try {
             boolean and = false;
 
-            if (StringUtils.isNotEmpty(userSeach.getUsername())) {
-                hql.append(alias + ".username=:username ");
+            if (StringUtils.isNotEmpty(search.getUsername())) {
+                hql.append(alias +USERNAME_PARAM+"=:"+USERNAME_PARAM);
             }
-            and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(), " where ");
-            if (StringUtils.isNotEmpty(userSeach.getUsername())) {
-                if (and) {
-                    hql.append(" and ");
-                }
-                hql.append(alias + ".announceType=:announceType ");
-            }
+//            and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(),WHERE);
+//            if (StringUtils.isNotEmpty(search.getUsername())) {
+//                if (and) {
+//                    hql.append(AND);
+//                }
+//                hql.append(alias + ANNOUNCE_TYPE_PARAM +"=:" + ANNOUNCE_TYPE_PARAM);
+//            }
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
@@ -579,11 +631,26 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public void composeQueryParameters(Object o, Query query) {
-        logger.info("compose query");
+        try{
+
+            UserSeachDTO search = (UserSeachDTO) o;
+
+            if (ObjectUtils.isCallable(search,USERNAME_PARAM) && StringUtils.isNotEmpty(search.getUsername())){
+				query.setParameter(USERNAME_PARAM, search.getUsername());
+			}
+
+    } catch (
+         QueryParameterException e) {
+        logger.error(e.getMessage());
+        e.printStackTrace();
+        throw new QueryParameterException("Erreur dans la fonction " + UserDAO.class.getName() + " composeQueryParameters");
+    }
+
+
     }
 
     @Override
-    public void generateEvent(Object obj , String message)  {
+    public void generateEvent(Object obj , String message)  throws UserException,Exception{
 
         UserVO user= (UserVO) obj;
         Set subscribers=new HashSet();
@@ -593,13 +660,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
 
         if (CollectionsUtils.isNotEmpty(subscribers)){
-            try {
-                fillProps(props,user.getId(),message, user.getId(),subscribers);
-                generateEvent(NotificationType.USER);
-            } catch (Exception e) {
-                logger.error("Erreur durant la generation de l'event {}",e);
-                e.printStackTrace();
-            }
+            fillProps(props,user.getId(),message, user.getId(),subscribers);
+            generateEvent(NotificationType.USER);
         }
     }
 }

@@ -1,6 +1,6 @@
 package cm.travelpost.tp.user.ent.service;
 
-import cm.travelpost.tp.common.ent.vo.PageBy;
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.review.ent.bo.ReviewsSummaryBO;
 import cm.travelpost.tp.review.ent.vo.ReviewDetailsVO;
@@ -65,9 +65,9 @@ public interface UserService {
     int count(Object o,Long id,PageBy pageBy) throws Exception;
 
 
-    void subscribe(SubscribeDTO subscribe) throws UserException;
+    void subscribe(SubscribeDTO subscribe) throws Exception;
 
-    void unsubscribe(SubscribeDTO subscribe) throws UserException;
+    void unsubscribe(SubscribeDTO subscribe) throws Exception;
 
     List<UserVO> subscriptions(Long userId) throws UserException;
 

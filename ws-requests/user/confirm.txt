@@ -1,1 +1,1 @@
-http://localhost:8080/pmanager/ws/user/confirm?token=xxxxxxxxxxxx
+http://localhost:8080/services/ws/user/confirm?token=xxxxxxxxxxxx

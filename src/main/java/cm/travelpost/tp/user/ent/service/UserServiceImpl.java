@@ -1,7 +1,7 @@
 package cm.travelpost.tp.user.ent.service;
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.Constants;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.RoleEnum;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.mail.MailType;
@@ -87,13 +87,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void subscribe(SubscribeDTO subscribe) throws UserException {
+    public void subscribe(SubscribeDTO subscribe) throws Exception {
         userDAO.subscribe(subscribe);
     }
 
 
     @Override
-    public void unsubscribe(SubscribeDTO subscribe) throws UserException {
+    public void unsubscribe(SubscribeDTO subscribe) throws Exception {
         userDAO.unsubscribe(subscribe);
     }
 
@@ -181,8 +181,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserVO> find(UserSeachDTO userSeachDTO, PageBy pageBy) throws UserException {
-        return userDAO.find(userSeachDTO, pageBy);
+    public List<UserVO> search(UserSeachDTO userSeachDTO, PageBy pageBy) throws UserException {
+        return userDAO.search(userSeachDTO, pageBy);
     }
 
     @Transactional(rollbackFor = UserException.class)
