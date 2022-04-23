@@ -1,7 +1,7 @@
 package cm.travelpost.tp.user.ent.vo;
 
-import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
-import cm.travelpost.tp.common.ent.vo.CommonVO;
+import cm.framework.ds.common.ent.vo.CommonVO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.common.enums.Gender;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
@@ -37,12 +37,12 @@ import static org.hibernate.annotations.FetchMode.SELECT;
  */
 
 @Entity(name = "UserVO")
-@Table(name = "TP_USER")
+@Table(name = "tp_user")
 @NamedQueries({
         @NamedQuery(name = UserVO.Q_AC_ITEM, query = "select u from UserVO u where (upper(u.lastName) like :searchFilter) or(upper(u.firstName) like :" +
                 "searchFilter ) or(u.username like :searchFilter) or( u.email like :searchFilter)  order by u.firstName"),
         @NamedQuery(name = UserVO.ALL, query = "select u from UserVO u   order by u.firstName"),
-        @NamedQuery(name = UserVO.FINDBYID, query = "select u from UserVO u where u.id  =:id"),
+        @NamedQuery(name = UserVO.FIND_BY_ID, query = "select u from UserVO u where u.id  =:id"),
         @NamedQuery(name = UserVO.USERNAME, query = "select u from UserVO u where u.username like :username "),
         @NamedQuery(name = UserVO.EMAIL, query = "select u from UserVO u where  u.email =:email "),
         @NamedQuery(name = UserVO.CONF_TOKEN, query = "select u from UserVO u where  u.confirmationToken =:ctoken "),
@@ -62,7 +62,7 @@ public class UserVO extends CommonVO {
 
     private static final long serialVersionUID = 6181438160768077660L;
 
-    public static final String FINDBYID = "cm.travelpost.tp.user.ent.vo.UserVO.findById";
+    public static final String FIND_BY_ID = "cm.travelpost.tp.user.ent.vo.UserVO.findById";
     public static final String Q_AC_ITEM = "cm.travelpost.tp.user.ent.vo.UserVO.QAutocompleteItem";
     public static final String ALL = "cm.travelpost.tp.user.ent.vo.UserVO.All";
     public static final String USERNAME = "cm.travelpost.tp.user.ent.vo.UserVO.findLikeId";
@@ -71,6 +71,7 @@ public class UserVO extends CommonVO {
     public static final String FACEBOOK = "cm.travelpost.tp.user.ent.vo.UserVO.findByFacebookId";
     public static final String GOOGLE = "cm.travelpost.tp.user.ent.vo.UserVO.findByGoogleId";
     public static final String JOB_CONFIRM = "cm.travelpost.tp.user.ent.vo.UserVO.toConfirmByJob";
+    public static final String SEARCH = "from UserVO as u ";
 
 
     private Long id;
@@ -101,7 +102,7 @@ public class UserVO extends CommonVO {
 
     private Set<MessageVO> messages = new HashSet<>();
 
-    private Set<AnnounceVO> announces = new HashSet<>();
+    private Set<AnnounceMasterVO> announces = new HashSet<>();
 
     private Set<RoleVO> roles = new HashSet<>();
 
@@ -248,12 +249,12 @@ public class UserVO extends CommonVO {
     @OrderBy(clause = "startDate DESC")
     @Where(clause = "cancelled = false")
     @JsonIgnore
-    public Set<AnnounceVO> getAnnounces() {
+    public Set<AnnounceMasterVO> getAnnounces() {
         return announces;
     }
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     public Set<RoleVO> getRoles() {
         return roles;
     }
@@ -269,7 +270,7 @@ public class UserVO extends CommonVO {
     @Access(AccessType.PROPERTY)
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "SUBSCRIBERS", joinColumns = @JoinColumn(name = "R_USER_ID"), inverseJoinColumns = @JoinColumn(name = "SUBSCRIBER_ID"))
+    @JoinTable(name = "subscribers", joinColumns = @JoinColumn(name = "R_USER_ID"), inverseJoinColumns = @JoinColumn(name = "SUBSCRIBER_ID"))
     public Set<UserVO> getSubscribers() {
         return subscribers;
     }
@@ -277,7 +278,7 @@ public class UserVO extends CommonVO {
     @Access(AccessType.PROPERTY)
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "SUBSCRIPTIONS", joinColumns = @JoinColumn(name = "SUBSCRIPTION_ID"), inverseJoinColumns = @JoinColumn(name = "R_USER_ID"))
+    @JoinTable(name = "subscriptions", joinColumns = @JoinColumn(name = "SUBSCRIPTION_ID"), inverseJoinColumns = @JoinColumn(name = "R_USER_ID"))
     public Set<UserVO> getSubscriptions() {
         return subscriptions;
     }
@@ -357,7 +358,7 @@ public class UserVO extends CommonVO {
         this.roles = roles;
     }
 
-    public void setAnnounces(Set<AnnounceVO> announces) {
+    public void setAnnounces(Set<AnnounceMasterVO> announces) {
         this.announces = announces;
     }
 
@@ -402,22 +403,22 @@ public class UserVO extends CommonVO {
     }
 
 
-    public void addAnnounce(AnnounceVO announce) {
+    public void addAnnounce(AnnounceMasterVO announce) {
         this.announces.add(announce);
         announce.setUser(this);
 
     }
 
-    public void removeAnnounce(AnnounceVO announce) {
+    public void removeAnnounce(AnnounceMasterVO announce) {
         announce.setUser(null);
         this.announces.remove(announce);
     }
 
     public void removeAnnounces() {
-        Iterator<AnnounceVO> iterator = this.announces.iterator();
+        Iterator<AnnounceMasterVO> iterator = this.announces.iterator();
 
         while (iterator.hasNext()) {
-            AnnounceVO announce = iterator.next();
+            AnnounceMasterVO announce = iterator.next();
             announce.setUser(null);
             iterator.remove();
         }
@@ -520,10 +521,10 @@ public class UserVO extends CommonVO {
             review.cancel();
         }
 
-        Iterator<AnnounceVO> iterAnnounce = this.announces.iterator();
+        Iterator<AnnounceMasterVO> iterAnnounce = this.announces.iterator();
 
         while (iterAnnounce.hasNext()) {
-            AnnounceVO announce = iterAnnounce.next();
+            AnnounceMasterVO announce = iterAnnounce.next();
             announce.cancel();
         }
 

@@ -1,7 +1,7 @@
 package cm.travelpost.tp.announce.ent.vo;
 
 
-import cm.travelpost.tp.common.ent.vo.CommonIdVO;
+import cm.framework.ds.common.ent.vo.CommonIdVO;
 import cm.travelpost.tp.constant.FieldConstants;
 
 import javax.persistence.Basic;

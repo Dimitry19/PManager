@@ -1,4 +1,4 @@
-POST http://localhost:8080/pmanager/ws/user/update
+POST http://localhost:8080/services/ws/user/update
 
 {
     "id":50,

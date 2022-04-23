@@ -1,9 +1,9 @@
 package cm.travelpost.tp.ws.controller.rest.reservation;
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.enums.FindBy;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.announce.ent.vo.ReservationVO;
-import cm.travelpost.tp.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.ReservationType;
 import cm.travelpost.tp.common.enums.ValidateEnum;
 import cm.travelpost.tp.common.utils.CollectionsUtils;

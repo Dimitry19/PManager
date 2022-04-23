@@ -8,7 +8,6 @@ package cm.travelpost.tp.administrator.api;
 import cm.travelpost.tp.common.properties.CommonProperties;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +26,7 @@ import java.util.List;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 @EnableSwagger2
-@ConditionalOnExpression(value = "${swagger.prod.enabled:false}")
+//@ConditionalOnExpression(value = "${swagger.prod.enabled:false}")
 @Configuration
 public class SwaggerApiConfig  extends CommonProperties {
 
@@ -67,6 +66,9 @@ public class SwaggerApiConfig  extends CommonProperties {
     @Value("${swagger.api.groupname.city}")
     private String apiGroupNameCity;
 
+    @Value("${swagger.api.groupname.sms}")
+    private String apiGroupNameSms;
+
 
 
     @Value("${swagger.api.contact}")
@@ -83,6 +85,12 @@ public class SwaggerApiConfig  extends CommonProperties {
 
     @Value("${swagger.api.info.version}")
     private String apiInfoVersion;
+
+
+    @Value("${custom.api.auth.http.tokenName}")
+    private String apiKeyPropertie;
+
+
 
 
 
@@ -148,6 +156,11 @@ public class SwaggerApiConfig  extends CommonProperties {
         return createDocket(apiGroupNameCity, contextRoot+"/ws/city.*");
     }
 
+    @Bean
+    public Docket otpApi() {
+        return createDocket(apiGroupNameSms, contextRoot+"/ws/sms.*");
+    }
+
 
     public Docket createDocket(String groupName,String paths) {
 
@@ -165,16 +178,17 @@ public class SwaggerApiConfig  extends CommonProperties {
                 .build();
     }
 
+
     private ApiKey apiToken() {
 
-        return new ApiKey("APIKey", "AUTH_API_KEY", SecurityScheme.In.HEADER.name());
+        return new ApiKey("APIKey", apiKeyPropertie, SecurityScheme.In.HEADER.name());
     }
 
 
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                //.forPaths(regex("/pmanager/anyPath.*"))
+                //.forPaths(regex("/services/anyPath.*"))
                 .build();
     }
 

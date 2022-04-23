@@ -404,3 +404,18 @@ create table USER_ROLE
         foreign key (ROLE_ID) references ROLE
 );
 
+-- auto-generated definition
+create table sms_otp
+(
+    ID           BIGINT auto_increment
+        primary key,
+    CANCELLED    BOOLEAN      not null,
+    DATECREATED  TIMESTAMP,
+    LASTUPDATED  TIMESTAMP,
+    OTP_CODE     INTEGER      not null
+        constraint UK_B337Q95H9UV7475HE4H5LO9YI
+            unique,
+    PHONE_NUMBER VARCHAR(255) not null
+);
+
+

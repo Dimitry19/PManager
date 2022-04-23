@@ -62,7 +62,7 @@ public class SwaggerConfig {
     private String apiGroupNameNotification;
 
 /*	@Bean
-	public Docket pmanagerRestApi() {
+	public Docket servicesRestApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
 				.apis(RequestHandlerSelectors.any())
@@ -80,59 +80,59 @@ public class SwaggerConfig {
 
    // @Bean
     public Docket announcesApi() {
-        return createDocket(apiGroupNameAnnounce, "/pmanager/ws/announce.*");
+        return createDocket(apiGroupNameAnnounce, "/services/ws/announce.*");
     }
 
     // @Bean
     public Docket mailApi() {
-        return createDocket(apiGroupNameMail, "/pmanager/ws/mail.*");
+        return createDocket(apiGroupNameMail, "/services/ws/mail.*");
     }
 
     // @Bean
     public Docket reviewApi() {
-        return createDocket(apiGroupNameReview, "/pmanager/ws/review.*");
+        return createDocket(apiGroupNameReview, "/services/ws/review.*");
     }
 
     // @Bean
     public Docket userApi() {
-        return createDocket(apiGroupNameUser, "/pmanager/ws/user.*");
+        return createDocket(apiGroupNameUser, "/services/ws/user.*");
     }
 
 
     // @Bean
     public Docket messageApi() {
-        return createDocket(apiGroupNameMessage, "/pmanager/ws/message.*");
+        return createDocket(apiGroupNameMessage, "/services/ws/message.*");
     }
 
 
     // @Bean
     public Docket roleApi() {
-        return createDocket(apiGroupNameRole, "/pmanager/ws/role.*");
+        return createDocket(apiGroupNameRole, "/services/ws/role.*");
     }
 
     // @Bean
     public Docket reservationApi() {
-        return createDocket(apiGroupNameReservation, "/pmanager/ws/reservation.*");
+        return createDocket(apiGroupNameReservation, "/services/ws/reservation.*");
     }
 
     // @Bean
     public Docket imageApi() {
-        return createDocket(apiGroupNameImage, "/pmanager/ws/image.*");
+        return createDocket(apiGroupNameImage, "/services/ws/image.*");
     }
 
     //  @Bean
     public Docket websocketApi() {
-        return createDocket(apiGroupNameWebsocket, "/pmanager/ws/socket/notification.*");
+        return createDocket(apiGroupNameWebsocket, "/services/ws/socket/notification.*");
     }
 
     // @Bean
     public Docket notificationApi() {
-        return createDocket(apiGroupNameNotification, "/pmanager/ws/notification.*");
+        return createDocket(apiGroupNameNotification, "/services/ws/notification.*");
     }
 
     // @Bean
     public Docket dashBoardCommunicationApi() {
-        return createDocket(apiGroupNameCommunication, "/pmanager/ws/dashboard/communication.*");
+        return createDocket(apiGroupNameCommunication, "/services/ws/dashboard/communication.*");
     }
 
 
@@ -153,7 +153,7 @@ public class SwaggerConfig {
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .forPaths(regex("/pmanager/anyPath.*"))
+                .forPaths(regex("/services/anyPath.*"))
                 .build();
     }
 

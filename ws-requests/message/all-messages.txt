@@ -1,4 +1,4 @@
-GET http://localhost:8080/pmanager/ws/message/messages?page=8
+GET http://localhost:8080/services/ws/message/messages?page=8
 
 
-GET http://localhost:8080/pmanager/ws/message/messages/0
+GET http://localhost:8080/services/ws/message/messages/0

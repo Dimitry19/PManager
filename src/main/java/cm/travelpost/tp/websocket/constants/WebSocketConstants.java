@@ -23,7 +23,7 @@ public class WebSocketConstants {
 
 
     public static final String ORIGIN_ALL = "*";
-    public static final String URL = "http://localhost:8080/pmanager/notifications";
-    public static final String URL_SSL = "https://localhost:8443/pmanager/notifications";
+    public static final String URL = "http://localhost:8080/services/notifications";
+    public static final String URL_SSL = "https://localhost:8443/services/notifications";
 
 }

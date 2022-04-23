@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 
 @Entity
-@Table(name = "CITY")
+@Table(name = "city")
 @NamedQueries(value = {
 
         @NamedQuery(name = CityVO.AUTOCOMPLETE, query = "select c from CityVO c where (upper(c.id) like :search )  or (upper(c.name) like :search ) " +

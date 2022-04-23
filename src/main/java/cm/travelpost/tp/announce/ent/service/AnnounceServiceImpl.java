@@ -1,9 +1,12 @@
 package cm.travelpost.tp.announce.ent.service;
 
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.announce.ent.dao.AnnounceDAO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceCompletedVO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
-import cm.travelpost.tp.common.ent.vo.PageBy;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
@@ -38,7 +41,7 @@ public class AnnounceServiceImpl implements AnnounceService {
 		System.out.println("Announce service starts...." );
 	}
 	*/
-    public AnnounceVO create(AnnounceDTO announceDTO) throws AnnounceException,Exception {
+    public AnnounceMasterVO create(AnnounceDTO announceDTO) throws AnnounceException,Exception {
 
         return dao.create(announceDTO);
     }
@@ -59,9 +62,19 @@ public class AnnounceServiceImpl implements AnnounceService {
         return dao.announce(id);
     }
 
+
+    public AnnounceCompletedVO announceCompleted(Long id) throws AnnounceException,Exception {
+        return dao.announceCompleted(id);
+    }
+
     public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws AnnounceException,Exception {
 
         return dao.announcesByUser(userId, pageBy);
+    }
+
+    public List<?> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception {
+
+        return dao.announcesByUser(userId, status,pageBy);
     }
 
     public List<AnnounceVO> announcesBy(Object o ,  PageBy pageBy) throws AnnounceException,Exception {
@@ -84,6 +97,10 @@ public class AnnounceServiceImpl implements AnnounceService {
 
     public int count( Object o, PageBy pageBy) throws AnnounceException,Exception {
         return dao.count(o, pageBy);
+    }
+
+    public int count(Object o, StatusEnum status,PageBy pageBy) throws AnnounceException,Exception {
+        return dao.count(o, status,pageBy);
     }
 
     public void afterPropertiesSet() throws AnnounceException {

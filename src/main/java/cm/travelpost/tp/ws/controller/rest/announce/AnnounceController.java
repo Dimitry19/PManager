@@ -1,14 +1,19 @@
 package cm.travelpost.tp.ws.controller.rest.announce;
 
 
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
+import cm.framework.ds.common.ent.vo.PageBy;
+
+import cm.travelpost.tp.announce.ent.vo.AnnounceCompletedVO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.announce.enums.Source;
-import cm.travelpost.tp.common.ent.vo.PageBy;
-import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.enums.AnnounceType;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.TransportEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
+import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
@@ -72,7 +77,7 @@ public class AnnounceController extends CommonController {
                                       @RequestBody @Valid AnnounceDTO ar) throws AnnounceException {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        AnnounceVO announce = null;
+        AnnounceMasterVO announce = null;
 
         try {
             createOpentracingSpan("AnnounceController -create");
@@ -124,7 +129,9 @@ public class AnnounceController extends CommonController {
             AnnounceVO announce = announceService.update(uar);
             if (announce != null) {
                 announce.setRetCode(WebServiceResponseCode.OK_CODE);
-                announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, ANNOUNCE_LABEL));
+                if(StringUtils.isEmpty(announce.getRetDescription())){
+                    announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, ANNOUNCE_LABEL));
+                }
                 return new ResponseEntity<>(announce, HttpStatus.OK);
             } else {
                 WSCommonResponseVO  commonResponse = new WSCommonResponseVO();
@@ -214,8 +221,8 @@ public class AnnounceController extends CommonController {
                     response = ResponseEntity.class, responseContainer = "List")})
     @GetMapping(value = BY_USER, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announcesByUser(HttpServletResponse response, HttpServletRequest request,
-                                                            @RequestParam @Valid Long userId,
-                                                            @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
+                                                            @RequestParam @Valid Long userId, @RequestParam StatusEnum status,
+                                                            @RequestParam(required = false, defaultValue = DEFAULT_PAGE)@Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException, Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -229,15 +236,18 @@ public class AnnounceController extends CommonController {
         try {
             createOpentracingSpan("AnnounceController -announcesByUser");
 
+            if(status ==null){
+                status =StatusEnum.VALID;
+            }
+
             if (userId != null) {
-                int count = announceService.count( userId,pageBy);
-                List<AnnounceVO> announces = announceService.announcesByUser(userId, pageBy);
+                int count = announceService.count(userId,status,pageBy);
+                List announces = announceService.announcesByUser(userId,status,pageBy);
                 return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
 
             } else {
                 paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
-                return new ResponseEntity<>(paginateResponse, headers, HttpStatus.NOT_FOUND);
             }
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
@@ -245,7 +255,7 @@ public class AnnounceController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-
+        return new ResponseEntity<>(paginateResponse, headers, HttpStatus.OK);
     }
 
 
@@ -378,15 +388,50 @@ public class AnnounceController extends CommonController {
         return null;
     }
 
+    @ApiOperation(value = "Retrieve an announce completed with an ID ", response = AnnounceVO.class)
+    @GetMapping(value = ANNOUNCE_WS_COMPLETED_BY_ID, headers = WSConstants.HEADER_ACCEPT)
+    public ResponseEntity<Object> getAnnounceCompleted(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id ) throws AnnounceException {
+
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+
+        try {
+            logger.info("retrieve announce request in");
+            createOpentracingSpan("AnnounceController -get announce completed");
+
+            AnnounceCompletedVO announce = null;
+            if (id != null) {
+                announce = announceService.announceCompleted(id);
+                if (announce == null) {
+                    WSCommonResponseVO wsResponse = new WSCommonResponseVO();
+                    wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
+                    return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
+                }
+
+            }
+            return new ResponseEntity<>(announce, HttpStatus.OK);
+        } catch (AnnounceException e) {
+            logger.info(" AnnounceController -get announce Completed:Exception occurred while fetching the response from the database.", e);
+
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            finishOpentracingSpan();
+        }
+        return null;
+    }
     @ApiOperation(value = "Retrieve an announce with an ID and Source", response = AnnounceVO.class)
     @GetMapping(value = ANNOUNCE_WS_BY_ID_AND_SOURCE, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id , @RequestParam Source source) throws AnnounceException {
+    public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id , @RequestParam @Valid Source source) throws AnnounceException {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
         try {
             logger.info("retrieve announce request in");
             createOpentracingSpan("AnnounceController -get announce");
+
+
             AnnounceVO announce = null;
             if (id != null) {
                 announce = announceService.announce(id);

@@ -1,7 +1,7 @@
 package cm.travelpost.tp.common.mail.ent.vo;
 
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.Constants;
-import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;

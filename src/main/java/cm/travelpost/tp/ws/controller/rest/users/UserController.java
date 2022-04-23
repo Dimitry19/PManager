@@ -2,8 +2,8 @@ package cm.travelpost.tp.ws.controller.rest.users;
 
 
 import cm.framework.ds.hibernate.enums.CountBy;
-import cm.travelpost.tp.common.ent.vo.PageBy;
-import cm.travelpost.tp.common.ent.vo.WSCommonResponseVO;
+import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
 import cm.travelpost.tp.common.utils.StringUtils;
@@ -23,6 +23,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
@@ -49,6 +50,10 @@ import java.util.List;
 public class UserController extends CommonController {
 
     protected final Log logger = LogFactory.getLog(UserController.class);
+
+
+    @Value("${tp.travelpost.active.registration.enable}")
+    protected boolean enableAutoActivateRegistration;
 
 
     @ApiOperation(value = "Register an user ", response = Response.class)
@@ -91,6 +96,12 @@ public class UserController extends CommonController {
                     return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
                 }
 
+                if (enableAutoActivateRegistration){
+                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
+                    response.setStatus(200);
+                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                }
                 if(mailService.buildAndSendMail(request, usr)){
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
@@ -559,7 +570,7 @@ public class UserController extends CommonController {
             @ApiResponse(code = 200, message = "Successful subscription",
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(value = WSConstants.USER_ADD_SUBSCRIBER_WS, produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML}, consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ResponseEntity<Response> subscribe(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, UserException {
+    public ResponseEntity<Response> subscribe(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, UserException,Exception {
 
         logger.info("subscribe request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -608,7 +619,7 @@ public class UserController extends CommonController {
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(value = WSConstants.UNSUBSCRIBE_WS, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
     public ResponseEntity<Response> unsubscribe(HttpServletRequest request, HttpServletResponse response,
-                                                @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, IOException {
+                                                @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, Exception {
 
         logger.info("unsubscribe request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -666,8 +677,10 @@ public class UserController extends CommonController {
 
         try {
             createOpentracingSpan("UserController - subscriptions");
+
             int count = userService.count(CountBy.SUBSCRIPTIONS,userId,null);
             List<UserVO> users = userService.subscriptions(userId);
+
             return getPaginateResponseResponseEntity(headers, paginateResponse, count,users);
 
         } catch (Exception e) {
@@ -730,6 +743,12 @@ public class UserController extends CommonController {
 
        if (user!=null){
 
+           if(request.getCookies() == null){
+               pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+               pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+               return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+           }
+
            for (Cookie cookie : request.getCookies()) {
 
 //               cookie.setValue(null);
@@ -763,7 +782,6 @@ public class UserController extends CommonController {
        }
        throw new UserNotFoundException(WebServiceResponseCode.ERROR_LOGOUT_LABEL);
     }
-
     private void  cookie(HttpServletResponse response,String username, String password){
         Cookie cookie =new Cookie("_tps_2P_", _cookie(username,password));
         cookie.setSecure(true);

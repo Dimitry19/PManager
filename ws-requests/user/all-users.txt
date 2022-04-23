@@ -1,6 +1,6 @@
-GET http://localhost:8080/pmanager/ws/user/users?page=0&size=3
+GET http://localhost:8080/services/ws/user/users?page=0&size=3
 
-GET http://localhost:8080/pmanager/ws/user/users/page
+GET http://localhost:8080/services/ws/user/users/page
 
 
 
