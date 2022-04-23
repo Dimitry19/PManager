@@ -361,7 +361,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                         try {
                             generateEvent(a,"Dans " + numberDays + " jours l'annonce de " +partOneMessage(a.getDeparture(),a.getArrival()) + partTwoMessage(" et ayant", DateUtils.dateToString(a.getStartDate()),DateUtils.dateToString(a.getEndDate()))+" ne sera plus disponible");
                         } catch (Exception e) {
-                            logger.error("Erreur durant l''execution du Batch de notifation des annonceurs");
+                            logger.error("Erreur durant l''execution du Batch de notification des annonceurs");
                             e.printStackTrace();
                         }
                     });
