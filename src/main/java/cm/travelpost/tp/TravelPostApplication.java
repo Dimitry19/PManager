@@ -32,6 +32,12 @@ public class TravelPostApplication extends SpringBootServletInitializer {
 
     private static Logger log = LoggerFactory.getLogger(TravelPostApplication.class);
 
+    private static final String secret ="tr@v3lP0st";
+
+
+    static {
+        System.setProperty("jasypt.encryptor.password",secret);
+    }
 
     public static void main(String[] args) {
 

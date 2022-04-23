@@ -266,6 +266,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 
             generateEvent(announce,message);
+            notificationForBuyers(announce);
 
             return announce;
         }
@@ -308,6 +309,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 DateUtils.getDateStandard(announce.getEndDate()),null);
 
         generateEvent(announce,message);
+        notificationForBuyers(announce);
         return announce;
 
     }
@@ -781,13 +783,49 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     }
 
+    /**
+     *  Recupere les utilisateurs à notifier ayant des annonces de type BUYER qui correspondent
+     *  à une annonce de type SELLER
+     * @return
+     */
+    private Set usersNotification(AnnounceVO announce) throws Exception {
+
+        Set subscribers=new HashSet();
+
+        if(AnnounceType.SELLER == announce.getAnnounceType()){
+            List<AnnounceVO>  announces= announcesBy(AnnounceType.BUYER,null);
+
+
+            if(CollectionsUtils.isNotEmpty(announces)){
+                List<AnnounceVO> check = Optional.ofNullable(announces.stream().filter(ua -> ua.getStatus() != StatusEnum.COMPLETED
+                        && (StringUtils.equals(ua.getDeparture(), announce.getDeparture())
+                        && StringUtils.equals(ua.getArrival(), announce.getArrival()))
+                        ||(StringUtils.equals(ua.getArrival(), announce.getArrival())))
+                        .collect(Collectors.toList()))
+                        .orElseGet(Collections::emptyList);
+
+                if (CollectionsUtils.isNotEmpty(check)) {
+                    subscribers.addAll(check.stream().map(AnnounceVO::getUser).collect(Collectors.toSet()));
+                }
+            }
+        }
+        return subscribers;
+    }
+
     @Transactional(readOnly = true,propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
-    public void generateEvent(AnnounceVO announce , String message, boolean delete)throws Exception {
+    public void generateEvent(AnnounceVO announce , String message, Object o)throws Exception {
 
 
         UserVO user= announce.getUser();
 
-        Set subscribers=fillSubscribers(user,announce);
+        Set subscribers = new HashSet();
+
+        if(o instanceof Set){
+            subscribers.addAll((Set)o);
+        }else{
+             subscribers=fillSubscribers(user,announce);
+
+        }
 
         if (CollectionsUtils.isNotEmpty(subscribers)){
             fillProps(props,1L,message, user.getId(),subscribers);
@@ -830,6 +868,21 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     }
 
+
+    public  void notificationForBuyers(AnnounceVO announce) throws Exception{
+
+        Set users=usersNotification(announce);
+
+        if (CollectionsUtils.isNotEmpty(users)){
+           String message=buildNotificationMessage(ANNOUNCE_BUYER,announce.getUser().getUsername(),announce.getDeparture(),
+                    announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
+                    DateUtils.getDateStandard(announce.getEndDate()),null);
+
+            generateEvent(announce,message,users);
+
+        }
+
+    }
     @Override
     public void warning(Object o, Date endDate, BigDecimal weight, BigDecimal sumQtyRes){
 
@@ -864,9 +917,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 ReservationReceivedUserVO reservation = (ReservationReceivedUserVO) o;
                 reservation.setWarning(sb.toString());
             }
-
-
-
         }
 
     }

@@ -23,7 +23,8 @@ public enum NotificationType {
     RESERVATION_DEL("Reservation Supprimée"),
 
     ANNOUNCE_UPD(" Annonce Modifiée"),
-    ANNOUNCE_DEL(" Annonce Supprimée");
+    ANNOUNCE_DEL(" Annonce Supprimée"),
+    ANNOUNCE_BUYER(" Annonce Pour acheteur");
 
     String value;
 

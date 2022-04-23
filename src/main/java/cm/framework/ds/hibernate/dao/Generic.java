@@ -70,6 +70,11 @@ public abstract class Generic extends CommonGenericDAO {
                 message =MessageFormat.format(notificationMessagePattern,username,
                         " a supprimé l'annonce " + partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate)));
                 break;
+            case ANNOUNCE_BUYER:
+                message =MessageFormat.format(notificationMessagePattern,username,
+                        " a creé l'annonce qui pourrait vous interesser " + partOneMessage(departure,arrival),
+                        partTwoMessage("pour ",startDate,(endDate)));
+                break;
             case RESERVATION:
                 message= MessageFormat.format(notificationMessagePattern,username,
                         " a fait une reservation  de [" +kg+" kg ] sur votre annonce " + partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate)));
