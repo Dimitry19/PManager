@@ -5,8 +5,11 @@ import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.iv.RandomIvGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@PropertySource("classpath:application.properties")
+@PropertySource("classpath:config.properties")
 public class JasyptConfiguration {
 
 	private static final String secret ="tr@v3lP0st";
