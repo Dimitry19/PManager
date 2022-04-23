@@ -386,8 +386,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
                             "une reservation car cet utilisateur  ne propose pas de voyage");
                 }
                 List check = Optional.ofNullable(userAnnounces.stream().filter(ua -> ua.getStatus() != StatusEnum.COMPLETED
-                        && !ua.isCancelled() &&
-                        StringUtils.equals(ua.getDeparture(), announce.getDeparture())
+                        && StringUtils.equals(ua.getDeparture(), announce.getDeparture())
                         && StringUtils.equals(ua.getArrival(), announce.getArrival())
                         && ua.getStartDate().equals(announce.getStartDate()))
                         .collect(Collectors.toList()))

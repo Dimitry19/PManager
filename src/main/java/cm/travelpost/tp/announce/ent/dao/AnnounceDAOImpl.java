@@ -67,6 +67,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Autowired
     protected QueryUtils queryUtils;
+
     private String retrieveReservationError="Erreur durant la recuperation des reservations liées à l'annonce id={}";
 
 
@@ -737,6 +738,33 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
         return BigDecimal.ZERO;
 
+    }
+
+    /**
+     *  Recupere les utilisateurs à notifier ayant des annonces de type BUYER qui correspondent
+     *  à une annonce de type SELLER
+     * @return
+     */
+    private Set usersNotification(AnnounceVO announce) throws Exception {
+
+
+        Set subscribers=new HashSet();
+
+        List<AnnounceVO> announces = announcesBy(AnnounceType.BUYER,null);
+
+        if(CollectionsUtils.isNotEmpty(announces)){
+            List<AnnounceVO> check = Optional.ofNullable(announces.stream().filter(ua -> ua.getStatus() != StatusEnum.COMPLETED
+                    && (StringUtils.equals(ua.getDeparture(), announce.getDeparture())
+                    && StringUtils.equals(ua.getArrival(), announce.getArrival()))
+                    ||(StringUtils.equals(ua.getArrival(), announce.getArrival())))
+                    .collect(Collectors.toList()))
+                    .orElseGet(Collections::emptyList);
+
+            if (CollectionsUtils.isNotEmpty(check)) {
+                subscribers.addAll(check.stream().map(AnnounceVO::getUser).collect(Collectors.toSet()));
+            }
+        }
+        return subscribers;
     }
 
     @Override
