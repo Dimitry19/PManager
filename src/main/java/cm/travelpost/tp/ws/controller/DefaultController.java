@@ -20,12 +20,18 @@ public class DefaultController extends CommonController {
 	 * @throws IOException
 	 */
 
+
+
     @GetMapping(value = "/")
 	public void  ping(HttpServletResponse response) throws Exception {
 		logger.info("/ -> index.html.....");
 		int totalUsers=userService.count(null, null,null);
 
+
 		response.setIntHeader("totalUsers", totalUsers);
 		response.sendRedirect(getRedirectPage(RedirectType.INDEX));
+
 	}
+
+
 }
