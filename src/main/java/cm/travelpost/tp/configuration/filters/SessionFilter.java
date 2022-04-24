@@ -192,10 +192,11 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
         if(isServiceLogout){
 
+            sessionManager.removeToSession(user.getUsername());
             return Boolean.TRUE;
         }
 
-        if(isService && !isRegister && !isServiceLogin && !isServiceLogout && !isFind){
+        if(isService && !isRegister && !isServiceLogin && !isFind){
 
             if(user==null) return Boolean.FALSE;
 
