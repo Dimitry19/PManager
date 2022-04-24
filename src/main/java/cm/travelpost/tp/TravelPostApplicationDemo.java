@@ -53,7 +53,7 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
         //encryptor.setConfig(config);
 
 
-        System.out.println("AC515f54b72001580033718870009d177b :"+encryptor.encrypt("AC515f54b72001580033718870009d177b"));
+        System.out.println("59ba0f382c4873d8c019dab9ec913d95 :"+encryptor.encrypt("59ba0f382c4873d8c019dab9ec913d95"));
         System.out.println("8f6e5efce6ed7c8d392f2e75d76c9899 :"+encryptor.encrypt("8f6e5efce6ed7c8d392f2e75d76c9899"));
         System.out.println("+19379143415 :"+encryptor.encrypt("+19379143415"));
 

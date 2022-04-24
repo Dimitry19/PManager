@@ -122,6 +122,10 @@ public class UserVO extends CommonVO {
 
     private double rating = 0;
 
+    private boolean mfa;
+
+    private String secret;
+
 
     public UserVO() {
         super();
@@ -402,6 +406,24 @@ public class UserVO extends CommonVO {
         this.confirmationToken = confirmationToken;
     }
 
+
+    @Transient
+    public boolean isMfa() {
+        return mfa;
+    }
+
+    public void setMfa(boolean mfa) {
+        this.mfa = mfa;
+    }
+
+    @Transient
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
 
     public void addAnnounce(AnnounceMasterVO announce) {
         this.announces.add(announce);

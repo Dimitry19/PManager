@@ -1,11 +1,12 @@
 package cm.travelpost.tp.ws.controller.rest.users;
 
 
-import cm.framework.ds.hibernate.enums.CountBy;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
+import cm.framework.ds.hibernate.enums.CountBy;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
+import cm.travelpost.tp.common.sms.ent.service.TotpService;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
@@ -14,15 +15,19 @@ import cm.travelpost.tp.ws.controller.RedirectType;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.mail.MailDTO;
 import cm.travelpost.tp.ws.requests.users.*;
+import cm.travelpost.tp.ws.requests.users.otp.CodeVerificationDTO;
+import cm.travelpost.tp.ws.requests.users.otp.SignupDTO;
 import cm.travelpost.tp.ws.responses.PaginateResponse;
 import cm.travelpost.tp.ws.responses.Response;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
+import cm.travelpost.tp.ws.responses.otp.SignupResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.web.PageableDefault;
@@ -30,6 +35,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
@@ -40,6 +46,7 @@ import javax.validation.ValidationException;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.net.URI;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -54,6 +61,9 @@ public class UserController extends CommonController {
 
     @Value("${tp.travelpost.active.registration.enable}")
     protected boolean enableAutoActivateRegistration;
+
+    @Autowired
+    TotpService totpService;
 
 
     @ApiOperation(value = "Register an user ", response = Response.class)
@@ -195,7 +205,7 @@ public class UserController extends CommonController {
 
 
         try {
-            createOpentracingSpan("UserController -login");
+            createOpentracingSpan("UserController - login");
 
             if (login != null) {
                 user = userService.login(login);
@@ -793,5 +803,32 @@ public class UserController extends CommonController {
 
         return PasswordGenerator.encrypt(username).concat(password.substring(0, password.length()-4).concat(password.substring(2,password.length()-1)));
 
+    }
+
+
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyCode(@Valid @RequestBody CodeVerificationDTO codeVerification) throws Exception {
+        String token = userService.verify(codeVerification.getUsername(), codeVerification.getCode());
+        Response response = new Response();
+        response.setRetDescription(token);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(value = "/userCreated", produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<?> createUser(@Valid @RequestBody SignupDTO payload) throws Exception{
+        log.info("creating user {}"+ payload.getUsername());
+
+        UserVO user =  userService.login(payload);
+         user.setMfa(payload.isMfa());
+
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath().path("/users/{username}")
+                .buildAndExpand(user.getUsername()).toUri();
+
+        return ResponseEntity
+                .created(location)
+                .body(new SignupResponse(user.isMfa(),
+                        totpService.getUriForImage(user.getSecret())));
     }
 }

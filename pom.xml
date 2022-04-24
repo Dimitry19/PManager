@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>cm.travelpost</groupId>
 	<artifactId>tpservices</artifactId>
-	<version>1.0.0-beta-ssl</version>
+	<version>1.0.1-beta-ssl</version>
 	<packaging>jar</packaging>
 	<name>TravelPost</name>
 	<description>Travel Post Services</description>
@@ -343,6 +343,14 @@
 
 		<!-- Thanks for using app.mailjet-->
 
+		<!-- OTP -->
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>23.0</version>
+		</dependency>
+
 		<!--Twillo SMS Gateway-->
 		<dependency>
 			<groupId>com.twilio.sdk</groupId>
@@ -351,6 +359,15 @@
 		</dependency>
 		<!--Twillo SMS Gateway-->
 
+		<dependency>
+			<groupId>dev.samstevens.totp</groupId>
+			<artifactId>totp</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+
+		<!-- OTP End -->
+
+
 		<!-- Encrypt properties-->
 		<dependency>
 			<groupId>com.github.ulisesbocchio</groupId>
@@ -358,6 +375,7 @@
 			<version>3.0.3</version>
 		</dependency>
 		<!-- Encrypt properties End-->
+
 
 	</dependencies>
 

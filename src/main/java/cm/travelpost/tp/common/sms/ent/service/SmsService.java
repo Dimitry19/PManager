@@ -11,4 +11,6 @@ public interface SmsService {
 	void receive(MultiValueMap<String, String> callBack);
 
 	boolean validate(int otpCode) throws Exception;
+
+	boolean validate(String  username, int otpCode) throws Exception;
 }
