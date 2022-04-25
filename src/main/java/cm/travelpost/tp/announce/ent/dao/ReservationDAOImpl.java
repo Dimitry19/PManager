@@ -227,9 +227,13 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
 
         ReservationVO reservation = (ReservationVO) findById(ReservationVO.class, reservationDTO.getId());
         if (reservation == null) {
-            throw new Exception("Reservation non trouvee");
+            throw new Exception("Reservation non trouvée");
         }
-        //reservation.setCancelled(!reservationDTO.isValidate());
+
+        if(reservation.getValidate()!=ValidateEnum.INSERTED){
+            return reservation;
+        }
+
         reservation.getAnnounce().setRemainWeight(!reservationDTO.isValidate() ? reservation.getAnnounce().getRemainWeight().add(reservation.getWeight())
                 : reservation.getAnnounce().getRemainWeight());
 

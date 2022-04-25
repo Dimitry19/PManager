@@ -245,7 +245,7 @@ create table announce
        ARRIVAL varchar(255) not null,
        CANCELLED tinyint(1) not null,
        DEPARTURE varchar(255) not null,
-       DESCRIPTION varchar(255) not null,
+       DESCRIPTION varchar(500) not null,
        END_DATE timestamp not null,
        GOLD_PRICE decimal(19,2) not null,
        PRENIUM_PRICE decimal(19,2) not null,
