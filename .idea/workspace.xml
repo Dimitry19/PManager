@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="ok last modification notification handle">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/WebServiceResponseCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/WebServiceResponseCode.java" afterDir="false" />
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/awselect.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/awselect.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.e238caae363a51505138.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/styles.e238caae363a51505138.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -449,7 +449,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.TP">
+  <component name="RunManager" selected="Maven.package">
     <configuration name="clean" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -650,13 +650,6 @@
       <workItem from="1650125118548" duration="17230000" />
       <workItem from="1650557290301" duration="347000" />
       <workItem from="1650612371205" duration="16061000" />
-    </task>
-    <task id="LOCAL-00098" summary="clean pom">
-      <created>1647478171494</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1647478171494</updated>
     </task>
     <task id="LOCAL-00099" summary="clean pom">
       <created>1647478729685</created>
@@ -994,7 +987,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650634077955</updated>
     </task>
-    <option name="localTasksCounter" value="147" />
+    <task id="LOCAL-00147" summary="ok last modification notification handle">
+      <created>1650977432432</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1650977432432</updated>
+    </task>
+    <option name="localTasksCounter" value="148" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1128,12 +1128,12 @@
     <MESSAGE value="Centralisation generation message notification.Good" />
     <MESSAGE value="clean" />
     <MESSAGE value="Gestion notification suppression annonce" />
-    <MESSAGE value="ok last modification notification handle" />
     <MESSAGE value="OTP configuration service" />
     <MESSAGE value="Correction cote FE de la visualisation d'une annonce deja completée" />
     <MESSAGE value="Gestion de la visualisation de l'annonce expirée" />
     <MESSAGE value="Deploy du 22/04/2022 après gestion affichage annonces en mobile" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deploy du 22/04/2022 après gestion affichage annonces en mobile" />
+    <MESSAGE value="ok last modification notification handle" />
+    <option name="LAST_COMMIT_MESSAGE" value="ok last modification notification handle" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
