@@ -1,7 +1,6 @@
 package cm.travelpost.tp;
 
 
-import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -22,7 +21,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@EnableEncryptableProperties
 @EnableBatchProcessing
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true)

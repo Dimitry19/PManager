@@ -130,7 +130,7 @@
 
 .aw_cursor_pointer,
 .awselect .back_face ul li a {
-    -webkit-transition: .4s cubic-bezier(.19, 1, .22, 1);
+    transition: .4s cubic-bezier(.19, 1, .22, 1);
     -moz-transition: .4s cubic-bezier(.19, 1, .22, 1);
     -o-transition: .4s cubic-bezier(.19, 1, .22, 1);
     float: left
@@ -150,7 +150,8 @@
 .awselect .back_face ul li {
     float: left;
     width: 100%;
-    display: block
+    display: block;
+    padding: 0.5em;
 }
 
 .awselect .back_face ul li a {

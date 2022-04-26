@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="HOME">
   <database-model serializer="dbm" dbms="H2" family-id="H2" format-version="4.23">
-    <root id="1">
-      <ServerVersion>1.4.200</ServerVersion>
-    </root>
+    <root id="1"/>
     <database id="2" parent="1" name="MANAGER">
       <Current>1</Current>
     </database>
@@ -1389,18 +1387,18 @@ USERNAME</ColNames>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="312" parent="28" name="CONSTRAINT_27E3_INDEX_4">
+    <key id="312" parent="28" name="UK_31RMPFLL2ABII4QBEFW4B6O2P_INDEX_2">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>USERNAME</ColNames>
+      <ColNames>EMAIL
+USERNAME</ColNames>
     </key>
     <key id="313" parent="28" name="CONSTRAINT_27E_INDEX_4">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>EMAIL</ColNames>
     </key>
-    <key id="314" parent="28" name="UK_31RMPFLL2ABII4QBEFW4B6O2P_INDEX_2">
+    <key id="314" parent="28" name="CONSTRAINT_27E3_INDEX_4">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>EMAIL
-USERNAME</ColNames>
+      <ColNames>USERNAME</ColNames>
     </key>
     <foreign-key id="315" parent="28" name="FKPKUUKDHP1VI4PQWEMNYGTNO1T">
       <ColNames>IMAGE_ID</ColNames>
