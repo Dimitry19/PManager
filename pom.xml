@@ -382,8 +382,6 @@
 			<version>3.0.3</version>
 		</dependency>
 		<!-- Encrypt properties End-->
-
-
 	</dependencies>
 
 	<build>
