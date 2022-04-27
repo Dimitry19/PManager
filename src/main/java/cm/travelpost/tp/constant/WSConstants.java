@@ -141,6 +141,7 @@ public class WSConstants extends CommonProperties {
     /*******************SMS TWILLO ******************/
     public static final String SMS_WS = "/ws/sms/*";
     public static final String SMS_SEND = "/send";
+    public static final String TM_SMS_SEND = "/tmsend";
     public static final String SMS_CALLBACK = "/smscallback";
 
 

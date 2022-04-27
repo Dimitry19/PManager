@@ -25,6 +25,7 @@ import javax.validation.Valid;
 import javax.validation.ValidationException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 
 @RestController
@@ -57,6 +58,38 @@ public class SmsController extends CommonController {
 
 			smsService.send(sms);
 			//socket.convertAndSend(SUSCRIBE_QUEUE_ITEM_SEND, getTimeStamp() + ": SMS has been sent!: "+sms.getTo());
+			return new ResponseEntity<>(true,HttpStatus.OK);
+		}
+		catch(Exception e){
+			logger.error("Erreur survenue durant l'envoi du code OTP {}",e);
+			return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+		}finally {
+			finishOpentracingSpan();
+		}
+	}
+
+
+	@ApiOperation(value = "Send OTP Code ", response = Response.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful OTP Code sent",
+					response = Boolean.class, responseContainer = "Boolean")})
+	@RequestMapping(value = TM_SMS_SEND, method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> tmSmsSend(@RequestBody SmsDTO sms) {
+
+		logger.info("tmSmsSend request in");
+
+		createOpentracingSpan("SmsController - tmSmsSend");
+
+		try{
+
+			tmSmsService.otp(Arrays.asList(new String[]{sms.getTo()}));
+
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e){

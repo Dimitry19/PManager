@@ -7,6 +7,7 @@ import cm.travelpost.tp.city.ent.service.CityService;
 import cm.travelpost.tp.common.mail.ent.service.MailService;
 import cm.travelpost.tp.common.mail.sendgrid.MailSenderSendGrid;
 import cm.travelpost.tp.common.sms.ent.service.SmsService;
+import cm.travelpost.tp.common.sms.ent.service.TextMagicService;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.FileUtils;
 import cm.travelpost.tp.constant.WSConstants;
@@ -108,8 +109,15 @@ public class CommonController  extends WSConstants {
     @Autowired
     protected MessageService messageService;
 
+
+    /** SMS Services **/
     @Autowired
     protected SmsService smsService;
+
+    @Autowired
+    protected TextMagicService tmSmsService;
+
+    /** SMS Services **/
 
 
     @Autowired
