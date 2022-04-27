@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es2015.5bee67244522b88a538d.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es5.5bee67244522b88a538d.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/styles.bff9f2ce2f0b661cda4d.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/awselect.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/awselect.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.e238caae363a51505138.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/styles.e238caae363a51505138.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.efd6452bd327bb2492c6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.efd6452bd327bb2492c6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.e238caae363a51505138.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -277,7 +283,9 @@
     <option name="height" value="900" />
   </component>
   <component name="ProjectId" id="26NIITASinlHudPOvdCo5Fw5A25" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -384,6 +392,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="h2&#10;mysql" />
     <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
@@ -650,13 +659,7 @@
       <workItem from="1650125118548" duration="17230000" />
       <workItem from="1650557290301" duration="347000" />
       <workItem from="1650612371205" duration="16061000" />
-    </task>
-    <task id="LOCAL-00099" summary="clean pom">
-      <created>1647478729685</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1647478729685</updated>
+      <workItem from="1651044159919" duration="1402000" />
     </task>
     <task id="LOCAL-00100" summary="clean pom">
       <created>1647478811059</created>
@@ -994,7 +997,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650977432432</updated>
     </task>
-    <option name="localTasksCounter" value="148" />
+    <task id="LOCAL-00148" summary="rollback FE last modification ok">
+      <created>1650978127778</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1650978127778</updated>
+    </task>
+    <option name="localTasksCounter" value="149" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1105,10 +1115,10 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="Resolution probleme reservation" />
     <MESSAGE value="push" />
     <MESSAGE value="Ajout du control sur le debut du job des notifications" />
     <MESSAGE value="Correction bug ajournement annonce" />
@@ -1133,7 +1143,8 @@
     <MESSAGE value="Gestion de la visualisation de l'annonce expirée" />
     <MESSAGE value="Deploy du 22/04/2022 après gestion affichage annonces en mobile" />
     <MESSAGE value="ok last modification notification handle" />
-    <option name="LAST_COMMIT_MESSAGE" value="ok last modification notification handle" />
+    <MESSAGE value="rollback FE last modification ok" />
+    <option name="LAST_COMMIT_MESSAGE" value="rollback FE last modification ok" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1367,11 +1378,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/ErrorResponse.java</url>
           <line>123</line>
           <option name="timeStamp" value="361" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java</url>
-          <line>203</line>
-          <option name="timeStamp" value="373" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
