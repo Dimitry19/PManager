@@ -11,6 +11,7 @@ import cm.travelpost.tp.common.utils.CommonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import org.apache.http.HttpStatus;
+import org.jasypt.encryption.StringEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -81,6 +83,8 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
     @Value("${tp.travelpost.postman.enable}")
     private boolean postman;
 
+    @Resource(name ="encryptorBean")
+    private  StringEncryptor encryptorBean;
 
 
 
@@ -143,7 +147,9 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
         String uri=request.getRequestURI();
 
-        String apiKey=request.getHeader(tokenName);
+        String tk1=request.getHeader(tokenName);
+        String apiKey=StringUtils.isNotEmpty(tk1) ?encryptorBean.decrypt(tk1):null;
+
         String username=request.getHeader(sessionHeader);
 
         boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(token));
@@ -185,11 +191,12 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
         }
 
         if(isServiceLogout){
+
             sessionManager.removeToSession(user.getUsername());
             return Boolean.TRUE;
         }
 
-        if(isService && !isRegister && !isServiceLogin && !isServiceLogout && !isFind){
+        if(isService && !isRegister && !isServiceLogin && !isFind){
 
             if(user==null) return Boolean.FALSE;
 

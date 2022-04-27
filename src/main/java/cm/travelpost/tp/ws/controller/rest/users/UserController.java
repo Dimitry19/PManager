@@ -1,11 +1,12 @@
 package cm.travelpost.tp.ws.controller.rest.users;
 
 
-import cm.framework.ds.hibernate.enums.CountBy;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
+import cm.framework.ds.hibernate.enums.CountBy;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
+import cm.travelpost.tp.common.sms.ent.service.TotpService;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
@@ -23,6 +24,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.web.PageableDefault;
@@ -50,10 +54,12 @@ import java.util.List;
 public class UserController extends CommonController {
 
     protected final Log logger = LogFactory.getLog(UserController.class);
+    private static Logger log = LoggerFactory.getLogger(UserController.class);
 
 
     @Value("${tp.travelpost.active.registration.enable}")
     protected boolean enableAutoActivateRegistration;
+
 
 
     @ApiOperation(value = "Register an user ", response = Response.class)
@@ -195,7 +201,7 @@ public class UserController extends CommonController {
 
 
         try {
-            createOpentracingSpan("UserController -login");
+            createOpentracingSpan("UserController - login");
 
             if (login != null) {
                 user = userService.login(login);
@@ -794,4 +800,5 @@ public class UserController extends CommonController {
         return PasswordGenerator.encrypt(username).concat(password.substring(0, password.length()-4).concat(password.substring(2,password.length()-1)));
 
     }
+
 }

@@ -9,10 +9,13 @@ import javax.validation.constraints.Size;
 public class LoginDTO {
 
     @ApiModelProperty(notes = "An email for login", required = true)
-    private String email;
-    private String provider;
+    protected String email;
+
+    protected String provider;
+
     @ApiModelProperty(notes = "A password for login", required = true)
     private String password;
+
     private String socialId;
 
     @NotNull(message = "username ne peut pas etre vide")

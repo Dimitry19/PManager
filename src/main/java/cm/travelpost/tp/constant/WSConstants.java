@@ -143,4 +143,9 @@ public class WSConstants extends CommonProperties {
     public static final String SMS_SEND = "/send";
     public static final String SMS_CALLBACK = "/smscallback";
 
+
+
+    /************ TOTP REQUEST*************/
+    public static final String TOTP_WS = "/ws/totp/*";
+
 }

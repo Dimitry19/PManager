@@ -13,7 +13,6 @@ import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -88,4 +87,6 @@ public interface UserService {
     boolean deleteReview(Long reviewId) throws Exception;
 
     ReviewsSummaryBO getReviewSummary(UserVO user);
+
+    String verify(String username, String code) throws Exception;
 }

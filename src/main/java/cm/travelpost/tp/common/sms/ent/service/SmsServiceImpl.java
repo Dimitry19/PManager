@@ -7,6 +7,7 @@ import cm.travelpost.tp.common.sms.ent.vo.SmsOTPVO;
 import cm.travelpost.tp.common.utils.DateUtils;
 import cm.travelpost.tp.ws.requests.users.otp.SmsDTO;
 import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.rest.api.v2010.account.MessageCreator;
 import com.twilio.type.PhoneNumber;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.logging.Log;
@@ -20,7 +21,7 @@ import org.springframework.util.MultiValueMap;
 /**
  *
  */
-@Service
+@Service("smsService")
 @Transactional
 public class SmsServiceImpl implements SmsService {
 
@@ -44,10 +45,15 @@ public class SmsServiceImpl implements SmsService {
 		int max = 999999;
 		int number=(int)(Math.random()*(max-min+1)+min);
 
+
+
+		PhoneNumber to = new PhoneNumber(dto.getTo());
+		PhoneNumber from = new PhoneNumber(twilloConfig.getFrom());
+
 		String msg ="OTP Code : "+number+ " Please verify this OTP in Travel Post Services";
 
-		Message message = Message.creator(new PhoneNumber(dto.getTo()), new PhoneNumber(twilloConfig.getFrom()), msg).create();
-
+		MessageCreator creator=Message.creator(to, from, msg);
+		Message message =creator.create();
 
 		SmsOTPVO sms = new SmsOTPVO();
 		sms.setOtp(number);
@@ -76,5 +82,10 @@ public class SmsServiceImpl implements SmsService {
 		}
 
 		return response;
+	}
+
+	@Override
+	public boolean validate(String username, int otpCode) throws Exception {
+		return false;
 	}
 }

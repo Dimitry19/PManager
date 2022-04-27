@@ -61,6 +61,8 @@ public class HibernateConfiguration {
     private int POOL_SIZE;
 
 
+
+
     @Bean
     @ConfigurationProperties(prefix = "hibernate.datasource")
     public DataSource dataSource() {

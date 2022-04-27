@@ -8,6 +8,7 @@ import cm.travelpost.tp.common.mail.MailType;
 import cm.travelpost.tp.common.mail.PersonalMailSender;
 import cm.travelpost.tp.common.mail.ent.service.IGoogleMailSenderService;
 import cm.travelpost.tp.common.mail.sendgrid.MailSenderSendGrid;
+import cm.travelpost.tp.common.sms.ent.service.TotpService;
 import cm.travelpost.tp.common.utils.MailUtils;
 import cm.travelpost.tp.rating.ent.vo.RatingCountVO;
 import cm.travelpost.tp.rating.enums.Rating;
@@ -35,6 +36,7 @@ import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
+import javax.ws.rs.BadRequestException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,6 +71,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private IGoogleMailSenderService googleMailSenderService;
+
+    @Autowired
+    TotpService  totpService;
 
 
     @PostConstruct
@@ -331,6 +336,18 @@ public class UserServiceImpl implements UserService {
             Long count = this.ratingCount.get(rating);
             return count == null ? 0 : count;
         }
+    }
+
+
+    @Override
+    public String verify(String username, String code) throws Exception {
+        UserVO user = findByUsername(username, false);
+
+        if(!totpService.verifyCode(code, user.getSecret())) {
+            throw new BadRequestException("Code is incorrect");
+        }
+
+        return "";
     }
 }
 

@@ -4,6 +4,8 @@ package cm.travelpost.tp;
 import cm.travelpost.tp.common.mail.mailjet.MailJetSender;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.jasypt.iv.RandomIvGenerator;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 
@@ -13,6 +15,7 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
 
 
 
+    private static final String secret ="tr@v3lP0st";
 
 
 
@@ -35,8 +38,31 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
     }
 
 
+    public  static void  secure(){
+
+
+        PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
+        //SimpleStringPBEConfig config = new SimpleStringPBEConfig();
+        encryptor.setIvGenerator(new RandomIvGenerator());
+        encryptor.setPassword(secret);
+        encryptor.setAlgorithm("PBEWithHmacSHA512AndAES_256");
+        encryptor.setPoolSize(4);
+       // encryptor.setKeyObtentionIterations(1000);
+       // encryptor.setProviderName("SunJCE");
+        //encryptor.setStringOutputType("base64");
+        //encryptor.setConfig(config);
+
+
+        System.out.println("59ba0f382c4873d8c019dab9ec913d95 :"+encryptor.encrypt("59ba0f382c4873d8c019dab9ec913d95"));
+        System.out.println("8f6e5efce6ed7c8d392f2e75d76c9899 :"+encryptor.encrypt("8f6e5efce6ed7c8d392f2e75d76c9899"));
+        System.out.println("+19379143415 :"+encryptor.encrypt("+19379143415"));
+
+    }
+
+
     @Override
     public void run(String... args) throws Exception {
-        runMail();
+        secure();
     }
+
 }

@@ -236,7 +236,7 @@ create table ANNOUNCE
     ARRIVAL VARCHAR(255) not null,
     START_DATE TIMESTAMP(26,6) not null,
     END_DATE TIMESTAMP(26,6) not null,
-    DESCRIPTION VARCHAR(255) not null,
+    DESCRIPTION VARCHAR(500) not null,
     TRANSPORT VARCHAR(255) not null,
     ANNOUNCE_TYPE VARCHAR(10),
     WEIGHT DECIMAL(19,2) not null,

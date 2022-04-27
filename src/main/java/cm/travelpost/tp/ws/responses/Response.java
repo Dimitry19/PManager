@@ -8,6 +8,8 @@ public class Response {
     public Response() {
     }
 
+
+
     public long getRetCode() {
         return retCode;
     }

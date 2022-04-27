@@ -5,7 +5,8 @@ import cm.travelpost.tp.common.utils.StringUtils;
 public enum Gender {
 
     MALE("Male"),
-    FEMALE("Feminin");
+    FEMALE("Feminin"),
+    NOT_DEFINE("Indefini");
 
     String value;
 
