@@ -1,4 +1,4 @@
-create schema tp_manager collate utf8mb4_0900_ai_ci;
+create schema cl6j8lyroz9fs4ut;
 
 create table administrator
 (

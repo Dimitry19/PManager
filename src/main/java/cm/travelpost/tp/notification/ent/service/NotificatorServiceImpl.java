@@ -6,6 +6,7 @@
 package cm.travelpost.tp.notification.ent.service;
 
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.event.Event;
 import cm.travelpost.tp.common.session.SessionNotificationManager;
@@ -57,6 +58,8 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
     private boolean applicationStarted=false;
 
+    private int page=0;
+
 
 
     final List<Event> events = new ArrayList();
@@ -79,14 +82,16 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
         logger.info(" dispatch !");
         try {
 
-
-           List<NotificationVO> notifications= notificationDAO.all(NotificationVO.class);
+           PageBy pageBy = new PageBy(page,10);
+           List<NotificationVO> notifications= notificationDAO.all(NotificationVO.class, pageBy);
 
            if(CollectionsUtils.isEmpty(notifications)) return;
 
             notifications.stream().filter(n->!n.getStatus().equals(StatusEnum.COMPLETED)).forEach(n -> {
                 elaborate(n);
             });
+
+            incrementPage();
 
         } catch (Exception e) {
             logger.error("Erreur durant l'elaboration de la notification {}", e);
@@ -156,11 +161,10 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
     @Scheduled(fixedRate = 100000,initialDelay = 75000)
     public void doNotify() throws Exception {
 
-        if(!applicationStarted) return;
+        if(!applicationStarted || !enableNotification) return;
 
         logger.info(" doNotify");
 
-        if (!enableNotification) return;
 
         List<Event> deadEvents = new ArrayList<>();
         events.forEach(event -> {
@@ -306,6 +310,10 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
         StringBuilder tb = new StringBuilder("Notification ");
         tb.append(type.toValue());
         return tb.toString();
+    }
+
+    void incrementPage(){
+        page++;
     }
 
 }
