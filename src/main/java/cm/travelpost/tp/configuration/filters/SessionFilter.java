@@ -83,7 +83,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
     @Value("${tp.travelpost.postman.enable}")
     private boolean postman;
 
-    @Resource(name ="encryptorBean")
+    @Resource(name ="jasyptStringEncryptor")
     private  StringEncryptor encryptorBean;
 
 
@@ -96,7 +96,9 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
         try{
             // JWT Token is in the form "Bearer token". Remove Bearer word and
             // get  only the Token
-            logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
+            if(logger.isDebugEnabled()){
+                logger.debug("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
+            }
 
 
             if(!validate(request) && !postman){

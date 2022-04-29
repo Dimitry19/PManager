@@ -36,7 +36,7 @@ public class AuthenticationFilter extends CommonFilter {
     @Value("${tp.travelpost.postman.enable}")
     private boolean postman;
 
-    @Resource(name ="encryptorBean")
+    @Resource(name ="jasyptStringEncryptor")
     private StringEncryptor encryptorBean;
 
 
@@ -50,8 +50,10 @@ public class AuthenticationFilter extends CommonFilter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        if(logger.isDebugEnabled()){
+            logger.debug("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
+        }
 
-        logger.info("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
 
         try {
             if(postman){
@@ -67,7 +69,9 @@ public class AuthenticationFilter extends CommonFilter {
         //call next filter in the filter chain
         filterChain.doFilter(request, response);
 
-        logger.info("Logging Response :{}", response.getContentType());
+        if(logger.isDebugEnabled()){
+            logger.debug("Logging Response :{}", response.getContentType());
+        }
 
     }
 

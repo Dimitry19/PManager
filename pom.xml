@@ -40,17 +40,7 @@
 		<!--<java.version>11</java.version>-->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<!--<hibernate.version>4.1.0.Final</hibernate.version>-->
-		<!--remplace la version embarquée de Tomcat &ndash;&gt;-->
-<!--
-		<tomcat.version>8.0.46</tomcat.version>
--->
-<!--
-		<tomcat.version>7.0.108</tomcat.version>
--->
-<!--
-		<tomcat.version>9.0.10</tomcat.version>
--->
+		<mysql.version>8.0.21</mysql.version>
 	</properties>
 
 	<dependencies>
@@ -146,7 +136,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.21</version>
+			<version>${mysql.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<!--DATABASE END -->
@@ -334,12 +324,6 @@
 		<!-- GESTION TOKEN POUR LES REQUETES WS END-->
 
 
-		<!-- send email -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
-
 		<!--app.mailjet-->
 
 		<dependency>
@@ -434,13 +418,13 @@
 				</executions>
 			</plugin>
 			<!-- Ceci permet d'exclure devtools from maven spring build plugin-->
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludeDevtools>true</excludeDevtools>
-				</configuration>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.springframework.boot</groupId>-->
+<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--				<configuration>-->
+<!--					<excludeDevtools>true</excludeDevtools>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 </project>
