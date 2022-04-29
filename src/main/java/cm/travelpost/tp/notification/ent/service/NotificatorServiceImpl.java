@@ -165,7 +165,6 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
         logger.info(" doNotify");
 
-
         List<Event> deadEvents = new ArrayList<>();
         events.forEach(event -> {
             try {
