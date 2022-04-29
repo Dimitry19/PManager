@@ -50,6 +50,7 @@ public class AuthenticationFilter extends CommonFilter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+
         if(logger.isDebugEnabled()){
             logger.debug("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
         }

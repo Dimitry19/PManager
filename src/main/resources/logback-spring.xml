@@ -53,7 +53,7 @@
 </root>
 
 
-<logger name="cm.travelpost.tp.ws.controller" level="INFO" additivity="false">
+<logger name="cm.travelpost.tp" level="INFO" additivity="false">
     <appender-ref ref="ROLLING_FILE" />
 </logger>
 
@@ -61,7 +61,7 @@
 
 <logger name="org.hibernate.stat"  level="NONE"/>
 
-<logger name="org.hibernate" level="TRACE" >
+<logger name="org.hibernate" level="ERROR" >
     <appender-ref ref="HIBERNATE" />
 </logger>
 
