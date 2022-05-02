@@ -5,12 +5,12 @@
 
 package cm.travelpost.tp.notification.ent.dao;
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,15 +18,18 @@ import java.util.List;
 @Repository
 public class NotificationDAOImpl extends Generic implements NotificationDAO {
 
-
     @Override
     public List<NotificationVO> all() throws Exception {
         return (List<NotificationVO>) all(NotificationVO.class);
     }
 
+
     @Override
-    public void persistNotification(NotificationVO notification) throws Exception {
-        persist(notification);
+    public List<NotificationVO> notificationToSend(PageBy pageBy) throws Exception {
+
+        fillValidStatus();
+        return findByStatus(NotificationVO.class, pageBy);
+
     }
 
     @Override
@@ -41,9 +44,28 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
         return notification;
     }
 
+
     @Override
-    public boolean updateDelete(Object id) throws BusinessResourceException, UserException {
-        return false;
+    public void deleteOldCompletedNotifications() throws Exception {
+
+    /*    fillCompletedStatus();
+        List<NotificationVO> notifications= findByStatus(NotificationVO.class, null);
+
+         if(CollectionsUtils.isNotEmpty(notifications)){
+           notifications.stream().forEach(n ->updateDelete(n) );
+        }*/
     }
 
+    @Override
+    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
+
+        if(o instanceof NotificationVO){
+
+            NotificationVO notification = (NotificationVO)o;
+            notification.setStatus(StatusEnum.COMPLETED);
+            update(notification);
+        }
+
+        return Boolean.TRUE;
+    }
 }

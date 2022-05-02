@@ -1,6 +1,7 @@
 package cm.framework.ds.hibernate.dao;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.event.IEvent;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public interface GenericDAO<T, ID extends Serializable, NID extends Serializable>  extends  IEvent {
 
@@ -44,6 +46,8 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     void delete(Class<T> clazz, ID id) throws RecordNotFoundException;
 
+    void delete(T clazz) throws RecordNotFoundException;
+
     List<T> findByUser(Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
 
     List<T> findByUserId(Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
@@ -56,6 +60,12 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 	List<T> all(Class<T> clazz) throws Exception;
 
     List<T> all(Class<T> clazz, PageBy pageBy, String... filters) throws Exception;
+
+    @Transactional(readOnly = true)
+    List<T> findByStatus(Class<T> clazz, PageBy pageBy);
+
+    @Transactional(readOnly = true)
+    List<T> findByStatus(Class<T> clazz, PageBy pageBy, Set<StatusEnum> states);
 
     List<T> allAndOrderBy(Class<T> clazz, String field, boolean desc, PageBy pageBy) throws Exception;
 
@@ -125,5 +135,6 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     Query search(String sqlQuery, String where,String... filters);
 
-
+    void fillCompletedStatus();
+    void fillValidStatus();
 }

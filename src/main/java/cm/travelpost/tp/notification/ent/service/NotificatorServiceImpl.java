@@ -59,8 +59,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
     private boolean applicationStarted=false;
 
     private int page=0;
-
-
+    private int maxSize=50;
 
     final List<Event> events = new ArrayList();
     Map finalMap = new HashMap();
@@ -72,27 +71,30 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
     @PostConstruct
     public void postApplicationStarted() {
-        logger.info("Started after Spring boot application !");
+        if(logger.isDebugEnabled()){
+            logger.info("Started after Spring boot application !");
+        }
         applicationStarted = true;
     }
 
     @Override
     public void dispatch() throws Exception{
 
-        logger.info(" dispatch !");
+
+        if(logger.isDebugEnabled()){
+            logger.info(" dispatch !");
+        }
         try {
 
-            PageBy pageBy = new PageBy(page,10);
-            List<NotificationVO> notifications= notificationDAO.all(NotificationVO.class, pageBy);
+            PageBy pageBy = new PageBy(page,maxSize);
+            List<NotificationVO> notifications= notificationDAO.notificationToSend(pageBy);
 
-            if(CollectionsUtils.isEmpty(notifications)) return;
-
-            notifications.stream().filter(n->!n.getStatus().equals(StatusEnum.COMPLETED)).forEach(n -> {
-                elaborate(n);
-            });
-
-            incrementPage();
-
+            if(CollectionsUtils.isNotEmpty(notifications)){
+                notifications.stream().forEach(n -> {
+                    elaborate(n);
+                });
+            }
+            incrementPage(notifications);
         } catch (Exception e) {
             logger.error("Erreur durant l'elaboration de la notification {}", e);
             throw e;
@@ -100,12 +102,11 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
     }
 
-
-
-
     private void elaborate(NotificationVO notificationVO) {
+        if(logger.isDebugEnabled()){
+            logger.info(" Elaborate notification {} ", notificationVO.getId());
+        }
 
-        logger.info(" Elaborate notification {} ", notificationVO.getId());
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
         headerAccessor.setLeaveMutable(true);
 
@@ -161,10 +162,11 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
     @Scheduled(fixedRate = 100000,initialDelay = 75000)
     public void doNotify() throws Exception {
 
+        if(logger.isDebugEnabled()){
+            logger.info("doNotify");
+        }
+
         if(!applicationStarted || !enableNotification) return;
-
-        logger.info(" doNotify");
-
 
         List<Event> deadEvents = new ArrayList<>();
         events.forEach(event -> {
@@ -187,7 +189,9 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
     @Override
     public void add(String sessionId, NotificationType notificationType) {
 
-        logger.info(" add {} type {}", sessionId, notificationType);
+        if(logger.isDebugEnabled()){
+            logger.info(" add {} type {}", sessionId, notificationType);
+        }
 
 
         switch (notificationType) {
@@ -312,8 +316,13 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
         return tb.toString();
     }
 
-    void incrementPage(){
-        page++;
+    void incrementPage(List notifications){
+
+        if (CollectionsUtils.isEmpty(notifications)) {
+            page = 0;
+        } else {
+            page++;
+        }
     }
 
 }
