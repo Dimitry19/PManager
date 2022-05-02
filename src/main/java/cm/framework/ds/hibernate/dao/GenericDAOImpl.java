@@ -2,6 +2,7 @@ package cm.framework.ds.hibernate.dao;
 
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.utils.SQLUtils;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.event.AEvent;
 import cm.travelpost.tp.common.event.Event;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
@@ -31,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * States of Entity Instances:
@@ -49,6 +51,8 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     private static Logger logger = LoggerFactory.getLogger(GenericDAOImpl.class);
 
     private static final MathContext MATH_CONTEXT = new MathContext(2, RoundingMode.HALF_UP);
+
+    protected Set<StatusEnum> states = new HashSet<>();
 
 
 
@@ -81,7 +85,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String DEPARTURE_PARAM = "departure";
     protected static final String ARRIVAL_PARAM = "arrival";
     protected static final String CATEGORY_PARAM = "category";
-    protected static final String STATUS_PARAM = "status";
+    protected static final String STATUS_PARAM = "states";
 
     protected static final String NAME_PARAM = "name";
     protected static final String SEARCH_PARAM = "search";
@@ -276,6 +280,20 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+    public void delete(T ent) {
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            if (ent != null) {
+                session.delete(ent);
+            }
+        } catch (Exception e) {
+            throw new BusinessResourceException(e.getMessage());
+        }
+
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<T> findByUser(Class<T> clazz, Long userId, PageBy pageBy) throws Exception {
 
@@ -342,6 +360,21 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         return query.getResultList();
     }
 
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<T> findByStatus(Class<T> clazz, PageBy pageBy){
+
+        return getStatus(clazz, pageBy, states);
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<T> findByStatus(Class<T> clazz, PageBy pageBy, final Set<StatusEnum> states) {
+
+        return getStatus((Class<T>) clazz, pageBy, states);
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -818,5 +851,31 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         for (String filter : filters) {
             session.enableFilter(filter);
         }
+    }
+
+    private List<T> getStatus(Class<T> clazz, PageBy pageBy, Set<StatusEnum> states) {
+        StringBuilder queryBuilder = new StringBuilder(FROM);
+        queryBuilder.append(clazz.getName());
+        Session session = this.sessionFactory.getCurrentSession();
+
+
+        session.enableFilter(FilterConstants.STATUS).setParameterList(STATUS_PARAM,
+                states.stream().map(state ->  state.toString()).collect(Collectors.toList()));
+
+        Query query = session.createQuery(queryBuilder.toString(), clazz);
+        pageBy(query, pageBy);
+        return query.getResultList();
+    }
+
+    @Override
+    public void fillCompletedStatus(){
+        states.clear();
+        states.add(StatusEnum.COMPLETED);
+    }
+
+    @Override
+    public void fillValidStatus(){
+        states.clear();
+        states.add(StatusEnum.VALID);
     }
 }
