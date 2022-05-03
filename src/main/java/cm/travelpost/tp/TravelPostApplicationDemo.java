@@ -7,13 +7,11 @@ import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.iv.RandomIvGenerator;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.test.context.SpringBootTest;
 
 
-//@SpringBootApplication
+@SpringBootTest
 public class TravelPostApplicationDemo implements CommandLineRunner {
-
-
 
     private static final String secret ="tr@v3lP0st";
 
@@ -21,7 +19,8 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
 
     public  static void main(String[] args) {
 
-       SpringApplication.run(TravelPostApplicationDemo.class, args);
+       //SpringApplication.run(TravelPostApplicationDemo.class, args);
+        secure();
     }
 
 
@@ -54,7 +53,7 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
 
 
         //System.out.println("sa :"+encryptor.encrypt("jeanclaudecarlos"));
-        System.out.println(":"+encryptor.encrypt("abcd123456"));
+        System.out.println(":"+encryptor.encrypt("x-amz-security-token"));
       //  System.out.println("+19379143415 :"+encryptor.encrypt("+19379143415"));
 
     }

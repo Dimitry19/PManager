@@ -32,7 +32,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * States of Entity Instances:
@@ -858,9 +857,13 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         queryBuilder.append(clazz.getName());
         Session session = this.sessionFactory.getCurrentSession();
 
+        List<String> statusStr = new ArrayList();
+        for(StatusEnum status : states){
+            statusStr.add(status.name());
+        }
 
-        session.enableFilter(FilterConstants.STATUS).setParameterList(STATUS_PARAM,
-                states.stream().map(state ->  state.toString()).collect(Collectors.toList()));
+
+        session.enableFilter(FilterConstants.STATUS).setParameterList(STATUS_PARAM,statusStr);
 
         Query query = session.createQuery(queryBuilder.toString(), clazz);
         pageBy(query, pageBy);

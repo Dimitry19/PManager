@@ -35,7 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui.html",
             "/ws/**",
             "/webjars/**",
-            WebSocketConstants.END_POINT
+            "/actuator/**",
+            "/health",
+            "/info",
+    WebSocketConstants.END_POINT
     };
 
 
