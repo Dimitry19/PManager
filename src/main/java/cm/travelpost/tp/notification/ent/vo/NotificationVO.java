@@ -24,7 +24,7 @@ import java.util.Set;
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
 })
-//@Where(clause = FilterConstants.FILTER_NOTIFICATION_CANC)
+@Where(clause = FilterConstants.FILTER_NOTIFICATION_CANC)
 public class NotificationVO extends CommonVO {
 
     private static final long serialVersionUID = 6473029882566244786L;
