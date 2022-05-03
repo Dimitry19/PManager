@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>cm.travelpost</groupId>
 	<artifactId>tpservices</artifactId>
-	<version>1.0.1-beta-ssl</version>
+	<version>1.0.1-beta-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>TravelPost</name>
 	<description>Travel Post Services</description>
