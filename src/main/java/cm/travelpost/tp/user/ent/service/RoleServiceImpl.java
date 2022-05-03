@@ -30,7 +30,6 @@ public class RoleServiceImpl implements RoleService {
             log.debug("Role service starts at {}", DateUtils.getDateStandardHMS(new Date()));
         }
 
-
     }
 
     @Transactional
