@@ -13,6 +13,7 @@ import cm.travelpost.tp.notification.enums.NotificationType;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Filters;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.HashSet;
