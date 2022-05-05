@@ -189,7 +189,7 @@ public class AnnounceController extends CommonController {
 
                 int count = announceService.count(dto,pageBy);
                 List<AnnounceVO> announces = announceService.search(dto, pageBy);
-                return getPaginateResponseResponseEntity(headers,paginateResponse,count,announces);
+                return getPaginateResponseSearchResponseEntity(headers,paginateResponse,count,announces,pageBy);
             }
         } catch (Exception e) {
             logger.info(" AnnounceController -find:Exception occurred while fetching the response from the database.", e);
