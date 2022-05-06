@@ -69,7 +69,9 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
 
     protected static final String ANNOUNCE_TABLE_ALIAS = "a.";
+    protected static final String ANNOUNCE_ALIAS = "a";
     protected static final String USER_TABLE_ALIAS = "u.";
+    protected static final String CATEGORY_TABLE_ALIAS = "c";
     protected static final String ID_PARAM = "id";
     protected static final String USER_PARAM = "userId";
     protected static final String TYPE_PARAM = "announceType";
@@ -818,6 +820,14 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         Session session = this.sessionFactory.getCurrentSession();
         enableFilters(session,filters);
         return session.createQuery(sqlQuery+where);
+    }
+
+    @Override
+    public Query search(String sqlQuery, String... filters) {
+
+        Session session = this.sessionFactory.getCurrentSession();
+        enableFilters(session,filters);
+        return session.createQuery(sqlQuery);
     }
 
     @Override

@@ -1,11 +1,12 @@
 package cm.travelpost.tp.common.properties;
 
+import cm.framework.ds.common.security.CommonSecurityResource;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.ManagedBean;
 
 @ManagedBean
-public class CommonProperties {
+public class CommonProperties extends CommonSecurityResource {
 
 	@Value("${server.servlet.context-path}")
 	protected String contextRoot;

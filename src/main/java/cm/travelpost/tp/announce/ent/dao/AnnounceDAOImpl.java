@@ -8,10 +8,11 @@ package cm.travelpost.tp.announce.ent.dao;
 
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
+import cm.framework.ds.hibernate.utils.IQueryBuilder;
+import cm.framework.ds.hibernate.utils.QueryBuilder;
 import cm.travelpost.tp.airline.ent.dao.AirlineDAO;
 import cm.travelpost.tp.announce.ent.vo.*;
 import cm.travelpost.tp.common.Constants;
-
 import cm.travelpost.tp.common.enums.AnnounceType;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.TransportEnum;
@@ -588,13 +589,68 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
 
-    private List commonSearchAnnounce(AnnounceSearchDTO announceSearch,PageBy pageBy) throws AnnounceException {
+    private List commonSearchAnnounce(AnnounceSearchDTO search,PageBy pageBy) throws AnnounceException {
 
-        String where = composeQuery(announceSearch, ANNOUNCE_TABLE_ALIAS);
-        Query query = search(AnnounceVO.ANNOUNCE_SEARCH , where,null);
-        composeQueryParameters(announceSearch, query);
+        //String where = composeQuery(search, ANNOUNCE_TABLE_ALIAS);
+       // Query query = search(AnnounceVO.ANNOUNCE_SEARCH_SINGLE , where,null);
+        //composeQueryParameters(search, query);
+
+
+        QueryBuilder hql = new QueryBuilder(AnnounceVO.ANNOUNCE_SEARCH_SINGLE,"from AnnounceVO as "+ANNOUNCE_ALIAS);
+
+        Query query = search(composeQuery(hql,search),null);
+        composeQueryParameters(search, query);
+
         pageBy(query,pageBy);
+
         return query.list();
+    }
+
+
+    private String composeQuery(  QueryBuilder hql,AnnounceSearchDTO search){
+
+        if(StringUtils.isNotEmpty(search.getCategory())){
+            hql.addJoin(IQueryBuilder.JoinEnum.INNER, false,ANNOUNCE_ALIAS,"categories",CATEGORY_TABLE_ALIAS);
+            hql.and().appendProperty(hql.getWhere(),CATEGORY_TABLE_ALIAS, "code", CATEGORY_PARAM);
+        }
+
+        if (StringUtils.isNotEmpty(search.getTransport())) {
+            hql.and().appendProperty(hql.getWhere(),ANNOUNCE_ALIAS,TRANSPORT_PARAM,TRANSPORT_PARAM);
+        }
+
+        if (StringUtils.isNotEmpty(search.getAnnounceType())) {
+
+            hql.and().appendProperty(hql.getWhere(),ANNOUNCE_ALIAS,ANNOUNCE_TYPE_PARAM,ANNOUNCE_TYPE_PARAM);
+        }
+
+        if (ObjectUtils.isCallable(search, PRICE_PARAM) && search.getPrice().compareTo(BigDecimal.ZERO) > 0) {
+
+            hql.and().openBracket().lessThanOrEqual(ANNOUNCE_ALIAS,PRICE_PARAM ,search.getPrice()).closeBracket();
+        }
+
+        if (ObjectUtils.isCallable(search, START_DATE_PARAM) && search.getStartDate() > 0) {
+
+            hql.and().appendProperty(hql.getWhere(),ANNOUNCE_ALIAS, START_DATE_PARAM,START_DATE_PARAM);
+        }
+
+        if (ObjectUtils.isCallable(search, END_DATE_PARAM) && search.getEndDate() > 0) {
+
+            hql.and().appendProperty(hql.getWhere(),ANNOUNCE_ALIAS, END_DATE_PARAM,END_DATE_PARAM);
+        }
+
+        if (StringUtils.isNotEmpty(search.getDeparture())) {
+            hql.and().like(ANNOUNCE_ALIAS,DEPARTURE_PARAM,search.getDeparture(),Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
+        }
+
+        if (StringUtils.isNotEmpty(search.getArrival())) {
+            hql.and().like(ANNOUNCE_ALIAS,ARRIVAL_PARAM,search.getArrival(),Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
+        }
+        hql.addGroupBy(ANNOUNCE_ALIAS,ID_PARAM);
+        hql.addOrderBy(ANNOUNCE_ALIAS,START_DATE_PARAM , Boolean.FALSE);
+
+        return  hql.createQuery();
+
+
     }
 
     @Override
@@ -605,6 +661,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         StringBuilder hql = new StringBuilder();
 
         boolean joinCategory=StringUtils.isNotEmpty(announceSearch.getCategory());
+
 
         hql.append(WHERE);
 
@@ -678,6 +735,62 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         }
         return hql.toString();
+    }
+
+
+    public void composeQueryParameters(AnnounceSearchDTO announceSearch, Query query) throws QueryParameterException {
+
+
+
+        try {
+
+            if (StringUtils.isNotEmpty(announceSearch.getTransport())) {
+                TransportEnum transport = getTransport(announceSearch.getTransport());
+                query.setParameter(TRANSPORT_PARAM, transport);
+            }
+
+            if (StringUtils.isNotEmpty(announceSearch.getAnnounceType())) {
+                AnnounceType announceType = getAnnounceType(announceSearch.getAnnounceType());
+                query.setParameter(ANNOUNCE_TYPE_PARAM, announceType);
+            }
+
+            if (ObjectUtils.isCallable(announceSearch, PRICE_PARAM)) {
+
+                BigDecimal price = announceSearch.getPrice();
+                if (price.compareTo(BigDecimal.ZERO) > 0) {
+                   // query.setParameter(GOLD_PRICE_PARAM, price);
+                    query.setParameter(PRICE_PARAM, price);
+                    //query.setParameter(PRENIUM_PRICE_PARAM, price);
+                }
+            }
+            if (ObjectUtils.isCallable(announceSearch, START_DATE_PARAM) && announceSearch.getStartDate() > 0) {
+                Date startDate = DateUtils.milliSecondToDate(announceSearch.getStartDate());
+                query.setParameter(START_DATE_PARAM, startDate);
+
+            }
+            if (ObjectUtils.isCallable(announceSearch, END_DATE_PARAM) && announceSearch.getEndDate() > 0) {
+                Date endDate = DateUtils.milliSecondToDate(announceSearch.getEndDate());
+                query.setParameter(END_DATE_PARAM, endDate);
+            }
+
+            if (StringUtils.isNotEmpty(announceSearch.getDeparture())) {
+                query.setParameter(DEPARTURE_PARAM, "%" + announceSearch.getDeparture() + "%");
+                //query.setParameter(DEPARTURE_PARAM, "%" + announceSearch.getDeparture().toUpperCase() + "%");
+            }
+
+            if (StringUtils.isNotEmpty(announceSearch.getArrival())) {
+                query.setParameter(ARRIVAL_PARAM, "%" + announceSearch.getArrival() + "%");
+               // query.setParameter(ARRIVAL_PARAM, "%" + announceSearch.getArrival().trim().toUpperCase() + "%");
+            }
+
+            if (StringUtils.isNotEmpty(announceSearch.getCategory())) {
+                query.setParameter(CATEGORY_PARAM, announceSearch.getCategory());
+            }
+        } catch (QueryParameterException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            throw new QueryParameterException("Erreur dans la fonction " + AnnounceDAO.class.getName() + " composeQueryParameters");
+        }
     }
 
     @Override

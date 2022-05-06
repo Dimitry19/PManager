@@ -4,11 +4,10 @@ package cm.travelpost.tp.configuration.filters;
 import cm.travelpost.tp.common.enums.RoleEnum;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
+import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.user.ent.service.UserService;
 import cm.travelpost.tp.user.ent.vo.RoleVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
-import cm.travelpost.tp.constant.WSConstants;
-import org.jasypt.encryption.StringEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
-import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,9 +33,6 @@ public class AuthenticationFilter extends CommonFilter {
 
     @Value("${tp.travelpost.postman.enable}")
     private boolean postman;
-
-    @Resource(name ="jasyptStringEncryptor")
-    private StringEncryptor encryptorBean;
 
 
     @Override
@@ -89,13 +84,13 @@ public class AuthenticationFilter extends CommonFilter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String uri=request.getRequestURI();
-        String tk=request.getHeader(tokenName);
+        String tk=request.getHeader(encryptorBean.decrypt(tokenName));
         String apiKey=StringUtils.isNotEmpty(tk) ?encryptorBean.decrypt(tk):null;
 
 
         boolean isService=uri.contains(service);
         boolean isConfirm=uri.contains("confirm");
-        boolean isNotApiKey=(StringUtils.isEmpty(apiKey)|| !apiKey.equals(token));
+        boolean isNotApiKey=(StringUtils.isEmpty(apiKey)|| !apiKey.equals(encryptorBean.decrypt(token)));
         boolean isNotUpload=!uri.contains(WSConstants.UPLOAD);
         boolean isDashBoard=uri.contains(WSConstants.DASHBOARD);
         String username=request.getHeader(sessionHeader);

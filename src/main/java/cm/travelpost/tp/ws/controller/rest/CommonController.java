@@ -210,7 +210,7 @@ public class CommonController  extends WSConstants {
             paginateResponse.setResults(results);
             paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 
-            if(pageBy == null || (pageBy!=null && pageBy.getPage()!=Integer.valueOf(DEFAULT_PAGE))){
+            if(pageBy == null || (pageBy!=null && pageBy.getPage()==Integer.valueOf(DEFAULT_PAGE))){
                 paginateResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL,count));
             }
             headers.add(HEADER_TOTAL, Long.toString(results.size()));

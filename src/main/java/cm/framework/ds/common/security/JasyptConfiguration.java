@@ -1,4 +1,4 @@
-package cm.travelpost.tp.configuration.cfg;
+package cm.framework.ds.common.security;
 
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;

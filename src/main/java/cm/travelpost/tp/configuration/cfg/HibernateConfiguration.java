@@ -1,5 +1,6 @@
 package cm.travelpost.tp.configuration.cfg;
 
+import cm.framework.ds.common.security.CommonSecurityResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +20,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @Component("entityManagerFactory")
-public class HibernateConfiguration {
+public class HibernateConfiguration  extends CommonSecurityResource {
 
     private static Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
 
@@ -66,7 +67,6 @@ public class HibernateConfiguration {
 
 
 
-
     @Bean
     @ConfigurationProperties(prefix = "hibernate.datasource")
     public DataSource dataSource() {
@@ -78,8 +78,8 @@ public class HibernateConfiguration {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driverClassName);
         dataSource.setUrl(url);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
+        dataSource.setUsername(encryptorBean.decrypt(username));
+        dataSource.setPassword(encryptorBean.decrypt(password));
         return dataSource;
     }
 

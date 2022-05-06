@@ -1,5 +1,6 @@
 package cm.travelpost.tp.configuration.filters;
 
+import cm.framework.ds.common.security.CommonSecurityResource;
 import cm.travelpost.tp.common.exception.ErrorResponse;
 import cm.travelpost.tp.common.session.SessionManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AFilter  implements IFilter {
+public abstract class AFilter  extends CommonSecurityResource implements IFilter {
 
     private static Logger log = LoggerFactory.getLogger(AFilter.class);
 

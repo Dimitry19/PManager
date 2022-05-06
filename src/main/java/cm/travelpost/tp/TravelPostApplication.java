@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -26,6 +27,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 //@EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = {"cm.travelpost.tp","cm.framework.ds"})
+@ComponentScan(basePackages = {"cm.travelpost.tp","cm.framework.ds"})
 public class TravelPostApplication extends SpringBootServletInitializer {
 
     private static Logger log = LoggerFactory.getLogger(TravelPostApplication.class);

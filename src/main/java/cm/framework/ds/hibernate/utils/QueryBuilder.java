@@ -24,6 +24,7 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 	private StringBuilder from = new StringBuilder();
 	private StringBuilder where = new StringBuilder();
 	private StringBuilder orderBy = new StringBuilder();
+	private StringBuilder groupBy = new StringBuilder();
 	private Stack<StringBuilder> wheres = new Stack();
 	private Map<String, Object> parameters = new LinkedHashMap();
 	private boolean useCriteria = false;
@@ -87,6 +88,10 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 
 	public StringBuilder getWhere() {
 		return this.where;
+	}
+
+	public StringBuilder getGroupBy() {
+		return this.groupBy;
 	}
 
 	public StringBuilder getOrderBy() {
@@ -366,8 +371,12 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 		}
 	}
 
-	private StringBuilder appendProperty(StringBuilder query, String alias, String propertyName) {
+	public StringBuilder appendProperty(StringBuilder query, String alias, String propertyName) {
 		return query.append(alias).append(".").append(propertyName);
+	}
+
+	public StringBuilder appendProperty(StringBuilder query, String alias, String propertyName, String parameterName) {
+		return query.append(alias).append(".").append(propertyName).append("=:").append(parameterName);
 	}
 
 	private StringBuilder appendParameter(String propertyName, Boolean isLower, MutableObject<String> parameterName) {
@@ -430,6 +439,10 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 				query.append(" where ").append(this.where);
 			}
 
+			if (StringUtils.isNotEmpty(this.groupBy)) {
+				query.append(" group by ").append(this.groupBy);
+			}
+
 			if (StringUtils.isNotEmpty(this.orderBy)) {
 				query.append(" order by ").append(this.orderBy);
 			}
@@ -448,7 +461,38 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 		}
 	}
 
-	public <T> T createQuery() {
+
+	public String createQuery() {
+
+		if (StringUtils.isNotEmpty(this.getLitteralQuery())) {
+			return this.getLitteralQuery();
+		} else {
+			StringBuilder query = new StringBuilder();
+			if (StringUtils.isNotEmpty(this.select)) {
+				query.append(this.select).append(" ").append(this.from);
+			} else {
+				query.append(this.from);
+			}
+
+			if (StringUtils.isNotEmpty(this.where)) {
+				query.append(" where ").append(this.where);
+			}
+
+
+			if (StringUtils.isNotEmpty(this.groupBy)) {
+				query.append(" group by ").append(this.groupBy);
+			}
+
+			if (StringUtils.isNotEmpty(this.orderBy)) {
+				query.append(" order by ").append(this.orderBy);
+			}
+
+			return query.toString();
+		}
+	}
+
+
+	public <T> T createQueryOld() {
 		throw new RuntimeException("not yet implemented");
 	}
 
@@ -486,6 +530,15 @@ public class QueryBuilder implements IQueryBuilder<QueryBuilder> {
 		}
 
 		this.orderBy.append(entityAlias).append(".").append(property).append(" ").append(BooleanUtils.isFalse(asc) ? "desc" : "asc");
+		return this;
+	}
+
+	public final QueryBuilder addGroupBy(String entityAlias, String property) {
+		if (this.groupBy.length() > 0) {
+			this.groupBy.append(",");
+		}
+
+		this.groupBy.append(entityAlias).append(".").append(property).append(" ");
 		return this;
 	}
 

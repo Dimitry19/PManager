@@ -149,12 +149,12 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
         String uri=request.getRequestURI();
 
-        String tk1=request.getHeader(tokenName);
+        String tk1=request.getHeader(encryptorBean.decrypt(tokenName));
         String apiKey=StringUtils.isNotEmpty(tk1) ?encryptorBean.decrypt(tk1):null;
 
         String username=request.getHeader(sessionHeader);
 
-        boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(token));
+        boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(encryptorBean.decrypt(token)));
         boolean isService=uri.contains(service) && isApiKey;
 
         boolean isLogout=uri.contains(USER_WS_LOGOUT);
@@ -166,7 +166,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
         boolean isServiceLogin=isService && isLogin;
         boolean isServiceLogout=isService && isLogout;
 
-        if(StringUtils.equals(username,guest)){
+        if(StringUtils.equals(username,encryptorBean.decrypt(guest))){
             return Boolean.TRUE;
         }
 

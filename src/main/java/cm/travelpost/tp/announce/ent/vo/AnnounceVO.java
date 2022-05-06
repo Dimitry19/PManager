@@ -29,4 +29,5 @@ public class AnnounceVO extends AnnounceMasterVO {
 	public static final String FINDBYTRANSPORT = "cm.travelpost.tp.announce.ent.vo.AnnounceVO.findByTransport";
 	public static final String SQL_FIND_BY_USER = " FROM AnnounceVO a where a.user.id =:userId order by a.startDate desc";
 	public static final String ANNOUNCE_SEARCH = "select  distinct  a from AnnounceVO  as a join a.categories as c ";
+	public static final String ANNOUNCE_SEARCH_SINGLE = "select  distinct  a ";
 }
