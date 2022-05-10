@@ -82,6 +82,8 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
     @Value("${tp.travelpost.postman.enable}")
     private boolean postman;
+    @Value("${tp.travelpost.active.session.filter.enable}")
+    private boolean enableFilter;
 
     @Resource(name ="jasyptStringEncryptor")
     private  StringEncryptor encryptorBean;
@@ -101,7 +103,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
             }
 
 
-            if(!validate(request) && !postman){
+            if(!validate(request) && !postman && enableFilter){
                 error(response);
             }else{
                 filterChain.doFilter(request, response);
