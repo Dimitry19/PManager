@@ -4,16 +4,163 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="Debut implementation TOTP authentication">
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="Config svil du 30/04/2022">
+      <change afterPath="$PROJECT_DIR$/ddl/alter_table.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/CustomOncePerRequestFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/authentication/filter/TokenAuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/constants/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/security/CommonSecurityResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/security/JasyptConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/security/jwt/TokenProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/notification/NotificationCompletedJob.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/notification/NotificationManagerJob.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/configuration/RandomOtpGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/configuration/TextMagicConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/CommonSmsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/TextMagicService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/TextMagicServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/vo/TxtMagicMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/vo/TxtMagicVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/authentication/VerificationDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/RegistrationResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/authentication/AuthenticationResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/banner.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/flags.007b2705c0a8f69dfdf6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/flags@2x.9d5328fb490cddd43f66.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es2015.957fdab963a836ffa00d.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es5.957fdab963a836ffa00d.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/scripts.269c32ad58672c4eca5d.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/styles.062994b9ceb533901478.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/angular.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/admin/admin.guard.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/alert.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app-routing.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/carousel/carousel.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/carousel/carousel.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/carousel/carousel.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/carousel/carousel.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/constancesURL.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/directive/tooltip.directive.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/footer/footer.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/footer/footer.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/footer/footer.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/header/header.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/header/header.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/nofound/nofound.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/nofound/nofound.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/nofound/nofound.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/options/options.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/search-all/search-all.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/search-all/search-all.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/search-all/search-all.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/serviceRequest.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/sharedConstants.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/assets/css/awselect.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/assets/i18n/fr.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/assets/js/villes.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/awselect.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/tsconfig.app.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/cm/packagemanager/pmanager/user/ent/TestNotification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ddl/pm-202201-my-sql.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ddl/pm-202201-my-sql.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ddl/pm-202201.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ddl/pm-202201.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/IQueryBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/IQueryBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/Gender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/Gender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/config/cron/QuartzCronConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/config/cron/QuartzCronConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/user/UserSubmitJobs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/user/UserSubmitJobs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/properties/CommonProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/properties/CommonProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/controller/SmsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/controller/SmsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceGuavaImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceGuavaImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/DateUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/DateUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/Utility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/JasyptConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/package-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificatorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificatorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/vo/NotificationVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/vo/NotificationVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/security/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/RoleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/RoleVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/RoleVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/config/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/totp/TotpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/totp/TotpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/CodeVerificationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/VerificationDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/WebServiceResponseCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/WebServiceResponseCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/logback-spring.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/awselect.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/awselect.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.efd6452bd327bb2492c6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.efd6452bd327bb2492c6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/scripts.984748f2597b1387c72b.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.e238caae363a51505138.css" beforeDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/target/" />
-    <ignored path="$PROJECT_DIR$/out/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,115 +221,6 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="61" selection-start-line="61" selection-end-line="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="197" column="14" lean-forward="true" selection-start-line="197" selection-start-column="14" selection-end-line="197" selection-end-column="14" />
-              <folding>
-                <element signature="e#0#198#1" expanded="true" />
-                <element signature="e#0#45#1" expanded="true" />
-                <element signature="e#0#39#1" expanded="true" />
-                <element signature="e#0#54#0" expanded="true" />
-                <element signature="e#0#45#0" expanded="true" />
-                <element signature="e#0#58#0" expanded="true" />
-                <element signature="e#0#55#0" expanded="true" />
-                <element signature="e#0#51#0" expanded="true" />
-                <element signature="e#0#83#1" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/Gender.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="32" column="1" lean-forward="true" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="223" column="61" lean-forward="true" selection-start-line="223" selection-start-column="61" selection-end-line="223" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/ReservationServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="47" column="24" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
-              <caret line="232" column="48" selection-start-line="232" selection-start-column="48" selection-end-line="232" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/ValidateEnum.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/admin/dashboard/DashboardController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerApiConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="168" column="67" selection-start-line="168" selection-start-column="67" selection-end-line="168" selection-end-column="67" />
-              <folding>
-                <element signature="e#4673#4674#0" expanded="true" />
-                <element signature="e#4752#4753#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2055">
-              <caret line="137" column="31" selection-start-line="137" selection-start-column="31" selection-end-line="137" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -236,17 +274,6 @@
     </dirStrings>
   </component>
   <component name="Git.Settings">
-    <option name="PREVIOUS_COMMIT_AUTHORS">
-      <list>
-        <option value="Dimitry19 &lt;orlynn1anais&gt;" />
-      </list>
-    </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="BetaVersion202203" />
-      </map>
-    </option>
     <favorite-branches>
       <branch-storage>
         <map>
@@ -267,6 +294,17 @@
         </map>
       </branch-storage>
     </favorite-branches>
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Dimitry19 &lt;orlynn1anais&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="BetaVersionSecure202204" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -367,12 +405,20 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
         <option name="downloadDocsAutomatically" value="true" />
         <option name="vmOptionsForImporter" value="-Xmx768m" />
       </MavenImportingSettings>
+    </option>
+    <option name="enabledProfiles">
+      <list>
+        <option value="sinapsi" />
+      </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
@@ -381,7 +427,9 @@
     <option name="height" value="852" />
   </component>
   <component name="ProjectId" id="26NIITASinlHudPOvdCo5Fw5A25" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -563,42 +611,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DatabaseDriversLRU" value="mysql&#10;h2&#10;azure" />
-    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
-    <property name="RequestMappingsPanelOrder0" value="0" />
-    <property name="RequestMappingsPanelOrder1" value="1" />
-    <property name="RequestMappingsPanelWidth0" value="75" />
-    <property name="RequestMappingsPanelWidth1" value="75" />
-    <property name="RunConfigurationTargetLRU" value="062e2f86-5e0d-42c8-a3ce-ed92b19a3203" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/common/ent/vo/ImageVO.java&#10;Authen&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.configuration.filters.AuthenticationFilter&#10;imag&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java&#10;aut&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.configuration.filters.AuthenticationFilter#authorized&#10;image&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java&#10;ima&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/image/ImageController.java&#10;ImageVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.ent.vo.ImageVO&#10;ratin&#9;null&#9;null&#10;ra&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManager/src/main/java/cm/packagemanager/pmanager/rating/ent/vo/RatingCountVO.java&#10;/reservation/user&#9;null&#9;null&#10;appli&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;doNoti&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl#doNotify&#10;doN&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.notification.firebase.ent.service.NotificatorServiceImpl#doNotify&#10;ws/reservation/user&#9;null&#9;null&#10;jdk&#9;ACTION&#9;SwitchBootJdk&#10;ResourceHttpHa&#9;PSI&#9;JAVA://org.springframework.web.servlet.resource.ResourceHttpRequestHandler&#10;text/html&#9;FILE&#9;jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home/jre/lib/resources.jar!/javax/swing/text/html/parser/html32.bdtd&#10;content-t&#9;null&#9;null&#10;servl&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ServletInitializer&#10;applicationCont&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.AutowiringSpringBeanJobFactory#setApplicationContext&#10;applicationContext&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.batch.config.cron.QuartzCronConfiguration#applicationContext&#10;nosni&#9;PSI&#9;JAVA://org.glassfish.jersey.jackson.internal.jackson.jaxrs.cfg.JaxRSFeature#ADD_NO_SNIFF_HEADER&#10;nosniff&#9;PSI&#9;JAVA://org.springframework.security.web.server.header.ContentTypeOptionsServerHttpHeadersWriter#NOSNIFF&#10;appl&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;app&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;Defau&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;pom&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;No&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java&#10;index&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/dist/index.html&#10;webCon&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;application.lo&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/logs/PackManager/application.log&#10;defa&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/DefaultController.java&#10;application.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application.properties&#10;weso&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;commonContro&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/CommonController.java&#10;webs&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/notification/WebSocketNotificationController.java&#10;pom.&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/pom.xml&#10;Gene&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.ent.dao.GenericDAOImpl&#10;Rese&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.dao.ReservationDAOImpl&#10;RESEVO&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.announce.ent.vo.ReservationVO&#10;Val&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.common.enums.ValidateEnum&#10;Annou&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/ws/controller/rest/announce/AnnounceController.java&#10;Reser&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.ws.controller.rest.reservation.ReservationController&#10;Announce&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;Anno&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/java/cm/packagemanager/pmanager/announce/ent/vo/AnnounceVO.java&#10;application.p&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;Web&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.websocket.config.WebSocketConfig&#10;Rest&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.administrator.exception.RestExceptionHandler&#10;applica&#9;FILE&#9;file:///Users/ludovicmarlyse/Desktop/backEnd/PManagerBE/src/main/resources/application-dev.properties&#10;swagger&#9;PSI&#9;JAVA://cm.packagemanager.pmanager.administrator.api.SwaggerConfig" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.intellij.database.dataSource.DataSourceTemplate" value="H2" />
-    <property name="database.console.LAST_STATE" value="false" />
-    <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="D:/Downloads/sonarlint-intellij-6.7.0.45926.zip" />
-    <property name="node.js.detected.package.stylelint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.stylelint" value="project" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.stylelint" value="" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "WebServerToolWindowFactoryState": "false",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "spring.configuration.checksum": "c03b77df5d77dc332c12d8ade9a70c10"
+  }
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\packagemanager\pmanager\city" />
+      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\framework\hibernate\dao" />
+      <recent name="F:\DevJava\ws\PManager" />
+      <recent name="F:\DevJava\ws\PManager\ddl" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\DevJava\ws\PManager\src\main\resources" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
@@ -607,18 +644,11 @@
       <recent name="$PROJECT_DIR$/src/main/resources/dist" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cm.travelpost.tp.ws.controller.rest.authentication" />
       <recent name="cm.travelpost.tp.ws.controller.rest.users.totp" />
       <recent name="cm.packagemanager.pmanager.city.ent.dao" />
       <recent name="cm.packagemanager.pmanager.common.exception" />
       <recent name="cm.packagemanager.pmanager.communication.ent.dao" />
-      <recent name="cm.packagemanager.pmanager.communication.ent.service" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\packagemanager\pmanager\city" />
-      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\framework\hibernate\dao" />
-      <recent name="F:\DevJava\ws\PManager" />
-      <recent name="F:\DevJava\ws\PManager\ddl" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -627,21 +657,11 @@
         <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-    <option name="contentProportion" value="0.14379562" />
   </component>
   <component name="RunManager" selected="Spring Boot.TP">
-    <configuration name="TravelPostApplicationDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="cm.travelpost.tp.TravelPostApplicationDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="cm.travelpost.tp.TravelPostApplicationDemo" />
       <module name="PManager" />
       <extension name="coverage">
@@ -759,21 +779,20 @@
       <method v="2" />
     </configuration>
     <configuration name="TP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" />
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <log_file alias="LOG" path="$PROJECT_DIR$/src/main/resources/log4j2.xml" />
       <module name="PManager" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="cm.travelpost.tp.TravelPostApplication" />
-      <option name="ACTIVE_PROFILES" value="dev" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="ALTERNATIVE_JRE_PATH" value="1.8.0_281" />
-      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
       <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.TravelPostApplicationDemo" />
+      <item itemvalue="Application.cm.travelpost.tp.TravelPostApplicationDemo" />
       <item itemvalue="Maven.clean" />
       <item itemvalue="Maven.jasyst(encrypt)" />
       <item itemvalue="Maven.jasyst(decrypt)" />
@@ -782,11 +801,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TravelPostApplicationDemo" />
+        <item itemvalue="Application.cm.travelpost.tp.TravelPostApplicationDemo" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -914,6 +933,7 @@
       <workItem from="1650360231643" duration="1289000" />
       <workItem from="1650801108969" duration="2361000" />
       <workItem from="1650897423669" duration="1573000" />
+      <workItem from="1652265073689" duration="13328000" />
     </task>
     <task id="LOCAL-00103" summary="Correction de la methode de recuperation des infos de l'utilisateur">
       <created>1648081762794</created>
@@ -1327,7 +1347,7 @@
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -1344,14 +1364,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -1374,6 +1387,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
@@ -1410,229 +1424,191 @@
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/notification/firebase/ent/service/NotificatorServiceImpl.java</url>
           <line>57</line>
-          <properties />
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/config/cron/QuartzCronConfiguration.java</url>
-          <line>45</line>
-          <properties />
+          <line>47</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.java</url>
           <line>95</line>
-          <properties />
           <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.java</url>
           <line>119</line>
-          <properties />
           <option name="timeStamp" value="121" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.java</url>
           <line>75</line>
-          <properties />
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/dao/GenericDAOImpl.java</url>
           <line>508</line>
-          <properties />
           <option name="timeStamp" value="135" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java</url>
-          <line>281</line>
-          <properties />
+          <line>286</line>
           <option name="timeStamp" value="143" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/vo/ReviewVO.java</url>
           <line>146</line>
-          <properties />
           <option name="timeStamp" value="144" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/review/ent/dao/ReviewDAOImpl.java</url>
           <line>36</line>
-          <properties />
           <option name="timeStamp" value="145" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/service/ImageServiceImpl.java</url>
           <line>78</line>
-          <properties />
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/HttpsEnforcer.java</url>
           <line>28</line>
-          <properties />
           <option name="timeStamp" value="156" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/com/sun/mail/jakarta.mail/1.6.5/jakarta.mail-1.6.5.jar!/javax/mail/Transport.class</url>
           <line>24</line>
-          <properties />
           <option name="timeStamp" value="214" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/com/sun/mail/jakarta.mail/1.6.5/jakarta.mail-1.6.5.jar!/javax/mail/Transport.class</url>
           <line>44</line>
-          <properties />
           <option name="timeStamp" value="215" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/mailjet/MailJetSender.java</url>
           <line>86</line>
-          <properties />
           <option name="timeStamp" value="249" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
           <line>76</line>
-          <properties />
           <option name="timeStamp" value="259" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
           <line>105</line>
-          <properties />
           <option name="timeStamp" value="264" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
           <line>57</line>
-          <properties />
           <option name="timeStamp" value="265" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/IGoogleMailSenderServiceImpl.java</url>
           <line>50</line>
-          <properties />
           <option name="timeStamp" value="266" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/MailServiceImpl.java</url>
           <line>62</line>
-          <properties />
           <option name="timeStamp" value="267" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/mailjet/MailJetSender.java</url>
           <line>101</line>
-          <properties />
           <option name="timeStamp" value="269" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/mailjet/MailJetSender.java</url>
           <line>145</line>
-          <properties />
           <option name="timeStamp" value="270" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/dao/AirlineDAOImpl.java</url>
           <line>35</line>
-          <properties />
           <option name="timeStamp" value="346" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/dao/AirlineDAOImpl.java</url>
           <line>40</line>
-          <properties />
           <option name="timeStamp" value="347" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/dao/AirlineDAOImpl.java</url>
           <line>74</line>
-          <properties />
           <option name="timeStamp" value="350" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/dao/AirlineDAOImpl.java</url>
           <line>119</line>
-          <properties />
           <option name="timeStamp" value="351" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/airline/ent/dao/AirlineDAOImpl.java</url>
           <line>91</line>
-          <properties />
           <option name="timeStamp" value="352" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/city/ent/dao/CityDAOImpl.java</url>
           <line>153</line>
-          <properties />
           <option name="timeStamp" value="355" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java</url>
-          <line>228</line>
-          <properties />
+          <line>233</line>
           <option name="timeStamp" value="356" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/ErrorResponse.java</url>
           <line>123</line>
-          <properties />
           <option name="timeStamp" value="361" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java</url>
           <line>182</line>
-          <properties />
           <option name="timeStamp" value="366" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java</url>
           <line>63</line>
-          <properties />
           <option name="timeStamp" value="369" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
           <line>70</line>
-          <properties />
           <option name="timeStamp" value="370" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
           <line>88</line>
-          <properties />
           <option name="timeStamp" value="371" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java</url>
-          <line>774</line>
-          <properties />
+          <line>808</line>
           <option name="timeStamp" value="373" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>310</line>
-          <properties />
+          <line>311</line>
           <option name="timeStamp" value="398" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>792</line>
-          <properties />
+          <line>905</line>
           <option name="timeStamp" value="400" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>811</line>
-          <properties />
+          <line>924</line>
           <option name="timeStamp" value="401" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/org/jasypt/jasypt/1.9.3/jasypt-1.9.3.jar!/org/jasypt/encryption/pbe/StandardPBEStringEncryptor.class</url>
           <line>127</line>
-          <properties />
           <option name="timeStamp" value="405" />
         </line-breakpoint>
         <line-breakpoint type="java-field">
@@ -1643,12 +1619,17 @@
         </line-breakpoint>
         <line-breakpoint suspend="NONE" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java</url>
-          <line>27</line>
+          <line>29</line>
           <properties class="cm.travelpost.tp.user.ent.dao.UserDAO" />
           <option name="timeStamp" value="238" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor" memberName="persistentClass" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand>
@@ -1662,6 +1643,9 @@
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/PManager$TP.ic" NAME="TP Coverage Results" MODIFIED="1651130082010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="setValue">

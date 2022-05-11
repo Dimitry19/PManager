@@ -8,6 +8,7 @@ import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -29,11 +30,12 @@ public class QuartzCronConfiguration {
 
     private static Logger log = LoggerFactory.getLogger(QuartzCronConfiguration.class);
 
+    @Autowired
     private ApplicationContext applicationContext;
 
 
     public QuartzCronConfiguration(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
+       // this.applicationContext = applicationContext;
     }
 
     @Bean
@@ -47,7 +49,6 @@ public class QuartzCronConfiguration {
     public SchedulerFactoryBean scheduler(Trigger... triggers) throws IOException {
         SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
         schedulerFactory.setQuartzProperties(quartzProperties());
-        //schedulerFactory.setDataSource((javax.sql.DataSource) dataSource);
         schedulerFactory.setJobFactory(springBeanJobFactory());
         schedulerFactory.setWaitForJobsToCompleteOnShutdown(true);
 
@@ -68,7 +69,9 @@ public class QuartzCronConfiguration {
     }
 
     public static SimpleTriggerFactoryBean createTrigger(JobDetail jobDetail, long pollFrequencyMs, String triggerName) {
-        log.debug("createTrigger(jobDetail={}, pollFrequencyMs={}, triggerName={})", jobDetail, pollFrequencyMs, triggerName);
+        if (log.isDebugEnabled()){
+            log.debug("createTrigger(jobDetail={}, pollFrequencyMs={}, triggerName={})", jobDetail, pollFrequencyMs, triggerName);
+        }
 
         SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
         factoryBean.setJobDetail(jobDetail);
@@ -82,7 +85,9 @@ public class QuartzCronConfiguration {
     }
 
     public static CronTriggerFactoryBean createCronTrigger(JobDetail jobDetail, String cronExpression, String triggerName) {
-        log.debug("createCronTrigger(jobDetail={}, cronExpression={}, triggerName={})", jobDetail, cronExpression, triggerName);
+        if (log.isDebugEnabled()){
+            log.debug("createCronTrigger(jobDetail={}, cronExpression={}, triggerName={})", jobDetail, cronExpression, triggerName);
+        }
 
         // To fix an issue with time-based cron jobs
         Calendar calendar = Calendar.getInstance();
@@ -101,7 +106,9 @@ public class QuartzCronConfiguration {
     }
 
     public static JobDetailFactoryBean createJobDetail(Class jobClass, String jobName) {
-        log.debug("createJobDetail(jobClass={}, jobName={})", jobClass.getName(), jobName);
+        if (log.isDebugEnabled()){
+            log.debug("createJobDetail(jobClass={}, jobName={})", jobClass.getName(), jobName);
+        }
 
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
         factoryBean.setName(jobName);

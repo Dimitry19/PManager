@@ -20,7 +20,6 @@ public class SmsServiceGuavaImpl implements SmsService {
     @Override
     public void send(SmsDTO sms) throws Exception {
 
-
         int otp = guavaOTPConfig.generateOTP(sms.getTo());
     }
 

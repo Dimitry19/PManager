@@ -189,7 +189,7 @@ public class AnnounceController extends CommonController {
 
                 int count = announceService.count(dto,pageBy);
                 List<AnnounceVO> announces = announceService.search(dto, pageBy);
-                return getPaginateResponseResponseEntity(headers,paginateResponse,count,announces);
+                return getPaginateResponseSearchResponseEntity(headers,paginateResponse,count,announces,pageBy);
             }
         } catch (Exception e) {
             logger.info(" AnnounceController -find:Exception occurred while fetching the response from the database.", e);
@@ -508,8 +508,8 @@ public class AnnounceController extends CommonController {
                 announces = announceService.announces(pageBy);
             }
 
+            return getPaginateResponseSearchResponseEntity(  headers, paginateResponse,   count,  announces,pageBy);
 
-            return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announces:Exception occurred while fetching the response from the database.", e);
             throw e;

@@ -18,13 +18,13 @@ public class UserSubmitJobs extends QuartzSubmitJobs {
 
     @Bean(name = "confirmInactiveUsers")
     public JobDetailFactoryBean jobConfirmInactiveUsers() {
-        return QuartzCronConfiguration.createJobDetail(UserManagerJob.class, "User comfirmation Job");
+        return QuartzCronConfiguration.createJobDetail(UserManagerJob.class, "User confirmation Job");
     }
 
     @Bean(name = "confirmUsersTrigger")
     public CronTriggerFactoryBean triggerConfirmUsers(@Qualifier("confirmInactiveUsers") JobDetail jobDetail) {
-        log.info("User comfirmation Job started...");
+        log.info("User confirmation Job started...");
 
-        return QuartzCronConfiguration.createCronTrigger(jobDetail, CRON_EVERY_SIX_HOURS, "User comfirmation Trigger");
+        return QuartzCronConfiguration.createCronTrigger(jobDetail, CRON_EVERY_SIX_HOURS, "User confirmation Trigger");
     }
 }

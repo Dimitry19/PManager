@@ -170,7 +170,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
 
         announceDAO.warning(reservation, announce.getEndDate(),announce.getWeight(),sumQtyRes);
 
-        String kg=" la reservation est passée de ["+oldWeight+" Kg ] a ["+reservationDTO.getWeight()+" Kg ] ";
+        String kg=" la reservation est passée de ["+oldWeight+" Kg ] a ["+reservationDTO.getWeight()+" Kg  ";
 
         String message=buildNotificationMessage(RESERVATION_UPD,reservation.getUser().getUsername(),
                 reservation.getAnnounce().getDeparture(),
@@ -351,9 +351,9 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
         Long id =null;
         UserVO user=null;
 
-        if(obj instanceof AnnounceVO){
+        if(obj instanceof AnnounceVO || obj instanceof AnnounceMasterVO){
 
-            AnnounceVO announce= (AnnounceVO) obj;
+            AnnounceMasterVO announce= (AnnounceMasterVO) obj;
             user= announce.getUser();
             id=announce.getId();
         }

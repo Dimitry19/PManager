@@ -200,23 +200,25 @@ create table role
 create table tp_user
 (
        ID bigint auto_increment,
+       FIRST_NAME varchar(255) not null,
+       LAST_NAME varchar(255) not null,
+       GENDER varchar(10) null,
+       PHONE varchar(35) not null,
+       EMAIL varchar(255) not null,
+       USERNAME varchar(15) not null,
+       PASSWORD varchar(255) not null,
+       MULTIPLE_FACTOR_AUTH   tinyint(1) not null,
+       MFA_SECRET  varchar(255) not null,
+       ENABLE_NOTIF tinyint(1) not null,
+       ACTIVE int not null,
+       CONFIRM_TOKEN varchar(255) null,
+       FACEBOOK_ID varchar(255) null,
+       GOOGLE_ID varchar(255) null,
+       IMAGE_ID bigint null,
+       ERROR varchar(255) null,
        DATECREATED timestamp null,
        LASTUPDATED timestamp null,
-       ACTIVE int not null,
        CANCELLED tinyint(1) not null,
-       CONFIRM_TOKEN varchar(255) null,
-       EMAIL varchar(255) not null,
-       FACEBOOK_ID varchar(255) null,
-       FIRST_NAME varchar(255) not null,
-       GENDER varchar(10) null,
-       GOOGLE_ID varchar(255) null,
-       LAST_NAME varchar(255) not null,
-       PASSWORD varchar(255) not null,
-       PHONE varchar(35) not null,
-       USERNAME varchar(15) not null,
-       IMAGE_ID bigint null,
-       ENABLE_NOTIF tinyint(1) not null,
-       ERROR varchar(255) null,
        constraint EMAIL
               unique (EMAIL),
        constraint EMAIL_2
@@ -238,26 +240,26 @@ alter table tp_user
 create table announce
 (
        ID bigint auto_increment,
-       DATECREATED timestamp null,
-       LASTUPDATED timestamp null,
        TOKEN varchar(255) not null,
        ANNOUNCE_TYPE varchar(10) null,
-       ARRIVAL varchar(255) not null,
-       CANCELLED tinyint(1) not null,
        DEPARTURE varchar(255) not null,
+       ARRIVAL varchar(255) not null,
        DESCRIPTION varchar(500) not null,
-       END_DATE timestamp not null,
-       GOLD_PRICE decimal(19,2) not null,
-       PRENIUM_PRICE decimal(19,2) not null,
-       PRICE decimal(19,2) not null,
-       START_DATE timestamp not null,
-       STATUS varchar(10) null,
        TRANSPORT varchar(255) not null,
        WEIGHT decimal(19,2) not null,
-       R_USER_ID bigint null,
        REMAIN_WEIGHT decimal(19,2) null,
+       START_DATE timestamp not null,
+       END_DATE timestamp not null,
+       PRICE decimal(19,2) not null,
+       GOLD_PRICE decimal(19,2) not null,
+       PRENIUM_PRICE decimal(19,2) not null,
+       R_USER_ID bigint null,
        IMAGE_ID bigint null,
-       COUNTRESERVATION int null,
+       STATUS varchar(10) null,
+       --COUNTRESERVATION int null,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       CANCELLED tinyint(1) not null,
        constraint PRIMARY_KEY_B9
               unique (ID),
        constraint announce_ibfk_1
@@ -293,13 +295,13 @@ create table message
 (
        ID bigint not null,
        TOKEN varchar(255) not null,
-       DATECREATED timestamp null,
-       LASTUPDATED timestamp null,
-       CANCELLED tinyint(1) not null,
        CONTENT varchar(255) null,
        R_ANNOUNCE bigint null,
        R_USER_ID bigint null,
        USERNAME varchar(255) null,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       CANCELLED tinyint(1) not null,
        primary key (ID, TOKEN),
        constraint message_ibfk_1
               foreign key (R_ANNOUNCE) references announce (ID),
@@ -317,15 +319,16 @@ create table reservation
 (
        ID bigint auto_increment
               primary key,
-       DATECREATED timestamp null,
-       LASTUPDATED timestamp null,
+
        WEIGTH decimal(19,2) not null,
+       DESCRIPTION varchar(255) null,
        R_ANNOUNCE_ID bigint null,
        R_USER_ID bigint null,
-       DESCRIPTION varchar(255) null,
-       CANCELLED tinyint(1) not null,
        VALIDATE varchar(10) default 'INSERTED' null,
        STATUS varchar(10) null,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       CANCELLED tinyint(1) not null,
        constraint reservation_ibfk_1
               foreign key (R_ANNOUNCE_ID) references announce (ID),
        constraint reservation_ibfk_2
@@ -356,16 +359,16 @@ create table review
 (
        ID bigint auto_increment
               primary key,
-       DATECREATED timestamp null,
-       LASTUPDATED timestamp null,
        TOKEN varchar(5) not null,
-       DETAILS varchar(5000) not null,
        TITLE varchar(35) not null,
+       DETAILS varchar(5000) not null,
        RATING int not null,
-       CANCELLED tinyint(1) not null,
        INDEXES int not null,
        R_USER_ID bigint not null,
        RATING_USER_ID bigint null,
+       DATECREATED timestamp null,
+       LASTUPDATED timestamp null,
+       CANCELLED tinyint(1) not null,
        constraint review_ibfk_1
               foreign key (R_USER_ID) references tp_user (ID)
 );
@@ -460,10 +463,10 @@ create index ROLE_ID
 -- auto-generated definition
 create table sms_otp(
         ID BIGINT auto_increment primary key,
-        CANCELLED    BOOLEAN      not null,
-        DATECREATED  TIMESTAMP,
-        LASTUPDATED  TIMESTAMP,
         OTP_CODE     INTEGER      not null,
         unique(OTP_CODE),
-        PHONE_NUMBER VARCHAR(255) not null
+        PHONE_NUMBER VARCHAR(255) not null,
+        DATECREATED  TIMESTAMP,
+        LASTUPDATED  TIMESTAMP,
+        CANCELLED    BOOLEAN      not null
 );

@@ -1,0 +1,832 @@
+<!-- Module login -->
+<main>
+    <!-- Banner -->
+    <section id="banner">
+        <!-- Header -->
+        <!--Navbar -->
+        <nav *ngIf="connected" id="nav" class="mb-1 navbar navbar-expand-lg navbar-dark fixed-top ">
+            <!--<a>(click)="refreshPage()" </a>-->
+            <button class="logo1 text-uppercase font-weight-bold" [routerLink]="['/home']">Tr@vel</button>
+            <span class="sr-only">(current)</span>
+            <button class="navbar-toggler customtoggle" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555" aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
+                <ul class="navbar-nav mr-auto menu">
+
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" [routerLink] = "['/vendeur']">Proposer un trajet</a> -->
+
+                        <a class="nav-link" [routerLink]="['/addAnnonce', 'vendeur']" (click)="navigate('vendeur')">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Proposer un trajet</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" [routerLink] = "['/acheteur']">Expedier un colis</a> -->
+
+                        <a class="nav-link" [routerLink]="['/addAnnonce', 'acheteur']" (click)="navigate('acheteur')">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Expedier un colis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/annonces', 0]">
+                            <i class="fa fa-globe" aria-hidden="true"></i> Voir les annonces</a>
+                    </li>
+                </ul>
+
+
+                <ul class="navbar-nav nav-flex-icons">
+
+                    <li class="nav-item avatar dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-notif" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bell fa-2x shake"><sup *ngIf="notificationList.length > 0"  class="text-danger notif" [innerText]="notificationList.length"></sup></i>
+                        </a>
+                        <div id="messages" class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-notif" *ngIf="notificationList.length > 0">
+                            <section *ngFor="let notif of notificationList; trackBy: tracbByFn ; let i=index" (click)="msg(i)" class="dropdown-item">
+                                <h4 class="" [innerHtml]="notif.title"></h4>
+                                <!--<span class="chiudi">&times;</span>-->
+                                <h5 class="text-dark" [innerHtml]="notif.message"></h5>
+                            </section>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav nav-flex-icons">
+                    <li class="nav-item avatar dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span *ngIf="!sharedService.checkImage(loggedUser)" class="position-absolute  p-2 bg-success border border-light rounded-circle"></span>
+                            <span *ngIf="sharedService.checkImage(loggedUser)" class="position-absolute p-2 bg-success border border-light rounded-circle"></span>
+                            <i *ngIf="!sharedService.checkImage(loggedUser)" class="fa fa-user-circle-o fa-2x"></i>
+                            <img class="profile-img" [src]="'data:'+loggedUser.image.origin+';base64,'+loggedUser.image.picByte" alt="profile" *ngIf="sharedService.checkImage(loggedUser)">
+                            <b class="nameuser"> {{loggedUser?.username | uppercase}}</b>
+                        </a>
+                        <div id="options" class="dropdown-menu dropdown-menu-lg-right dropdown-secondary drop-down" aria-labelledby="navbarDropdownMenuLink-55">
+                            <a class="dropdown-item fa fa-user-circle-o customcolor" [routerLink]="['/myaccount']"> Mon compte</a>
+                            <a class="dropdown-item fa fa-sign-out customcolor" href="" data-toggle="modal" data-target="#modalLogout" data-backdrop="static" data-keyboard="false"> Se déconnecter</a>
+                            <!--<a class="dropdown-item customcolor" href="#">Something else here</a>-->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+
+        </nav>
+
+        <nav *ngIf="!connected" id="nav" class="mb-1 navbar navbar-expand-lg navbar-dark fixed-top ">
+            <!--<a class="navbar-brand" [routerLink]="['/index']"><img class="logo" src="../../assets/images/travel_titre.png" alt="Tr@vel"></a>-->
+            <button class="logo1 text-uppercase font-weight-bold" [routerLink]="['/index']">Tr@vel</button>
+            <span class="sr-only">(current)</span>
+            <button class="navbar-toggler customtoggle" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555" aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
+                <ul class="navbar-nav mr-auto menu">
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="modal" data-target="#modalLRForm" data-backdrop="static" data-keyboard="false">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Proposer un trajet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="modal" data-target="#modalLRForm" data-backdrop="static" data-keyboard="false">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Expedier un colis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/annonces', 0]">
+                            <i class="fa fa-globe" aria-hidden="true"></i> Voir les annonces</a>
+                    </li>
+
+                </ul>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <button type="button" class="btn buttonStyle my-3  btn-info" data-toggle="modal" data-target="#modalLRForm" data-backdrop="static" data-keyboard="false">Connexion</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class=" btn buttonStyle my-3 inscription" data-toggle="modal" data-target="#modalLRFormR" data-backdrop="static" data-keyboard="false">Inscription</button>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <!--/.Navbar -->
+        <!-- Header -->
+    </section>
+
+    <!-- <xng-breadcrumb [separator]="separatorTemplate">
+        <ng-template #separatorTemplate>&#9758;</ng-template>
+    </xng-breadcrumb> -->
+</main>
+
+
+
+<!--  -->
+<!--Modal: Login Form-->
+<div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--Modal cascading tabs-->
+            <div class="modal-c-tabs">
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-user-circle-o mr-1"></i>
+                        Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-outline" data-toggle="tab" href="#panel8" role="tab"><i class="fa fa-user-circle-o-plus mr-1"></i>
+                        S'inscrire</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panels -->
+                <div class="tab-content">
+                    <!--Panel 7-->
+                    <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+                        <div class="modal-header mb-1">
+                            <span class="logoModal">
+                                <!--<img class="imgModal" src ="../../assets/images/travel_titre.png" alt="Tr@vel">-->
+                                <button class="logoR text-uppercase font-weight-bold">Tr@vel</button>
+								<small><sup>Move Smart Move Fast Move Safely</sup></small>
+							</span>
+
+                        </div>
+                        <!--Body-->
+                        <div class="modal-body mb-1">
+                            <form [formGroup]="userForm" (ngSubmit)="loggedIn()">
+                                <div class="md-form form-sm mb-4">
+                                    <!-- <i class="fa fa-user-circle-o prefix"></i> -->
+                                    <input [class.is-invalid]="userForm.get('username').invalid && userForm.get('username').touched" type="text" id="modalLogusername2" class="form-control form-control-md displaystyle" placeholder="Votre nom d'utilisateur" name="username" formControlName="username"
+                                        required>
+                                    <div *ngIf="(userForm.get('username').invalid && userForm.get('username').touched) || userForm.get('username').dirty">
+                                        <small *ngIf="userForm.get('username').errors?.required" class="text-danger">Le nom d'utilisateur est requis</small>
+                                        <!--question mark(?) is a safe navigation operator-->
+                                    </div>
+                                </div>
+
+                                <div class="md-form form-sm mb-4">
+                                    <!-- <i class="fa fa-lock prefix"></i> -->
+                                    <input [class.is-invalid]="userForm.get('password').invalid && userForm.get('password').touched" type="password" id="modalLogPwd2" class="form-control form-control-md displaystyle" placeholder="Votre mot de passe" name="password" formControlName="password"
+                                        required #psw>
+                                    <div *ngIf="(userForm.get('password').invalid && userForm.get('password').touched) || userForm.get('password').dirty">
+                                        <small *ngIf="userForm.get('password').errors?.required" class="text-danger">Le mot de passe est requis</small>
+                                    </div>
+                                    <label class="switch_lock">
+									<input type="checkbox" (click)="showPWD(psw)">
+									<span [class]="lock ? 'fa fa-unlock':'fa fa-unlock-alt'"></span>
+								    </label>Voir le mot de passe
+
+                                </div>
+
+                                <div *ngIf="false" class="md-form form-sm mb-4">
+                                    <!-- <i class="fa fa-envelope prefix"></i>-->
+                                    <input [class.is-invalid]="userForm.get('email').invalid && userForm.get('email').touched" type="email" id="modalLogEmail2" class="form-control form-control-md displaystyle" placeholder="Votre email" name="email" formControlName="email" required>
+                                    <div *ngIf="(userForm.get('email').invalid && userForm.get('email').touched) || userForm.get('email').dirty">
+                                        <small *ngIf="userForm.get('email').errors?.required" class="text-danger">L'email est requis</small>
+                                        <small *ngIf="userForm.get('email').errors?.email || userForm.get('email').errors?.pattern" class="text-danger">Veuillez fournir une adresse email valide</small>
+                                    </div>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <label class="switch_small">
+										<input type="checkbox" id="autoSizingCheck" (click)="checkR($event)">
+										<span class="slider_small round_small"></span>
+                                        </label>Souviens-toi de moi<label class="float-right">
+										<a href="" class="blue-text" data-toggle="modal" data-target="#modalForgot" data-dismiss="modal" data-backdrop="static" data-keyboard="false">Mot de passe oubli&eacute;?</a>
+									</label>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-info" type="submit" [disabled]="userForm.invalid">Connexion <i class="fa fa-sign-in ml-1"></i></button>
+                                </div>
+                            </form>
+                            <!-- <p class="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"> or Sign in with:</p>
+
+             <div class="row my-3 d-flex justify-content-center">
+
+               <button type="button" class="btn btn-white btn-rounded mr-md-3 z-depth-1a" (click)="signInFacebook('Facebook');" data-dismiss="modal"><i class="fa fa-facebook-f text-center"></i></button>
+
+               <button type="button" class="btn btn-white btn-rounded z-depth-1a" data-toggle="modal" data-target=".modalDialogb" (click)="singInGoogle('Google');" data-dismiss="modal"><i class="fa fa-google"></i></button>
+             </div> -->
+
+                        </div>
+                        <!--Footer-->
+                        <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Fermer</button>
+            </div> -->
+
+                    </div>
+                    <!--/.Panel 7-->
+
+                    <!--Panel 8-->
+                    <div class="tab-pane fade" id="panel8" role="tabpanel">
+                        <!--Body-->
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="text-center espace">
+                                        <div class="px-0 pt-4 pb-0 mt-3 mb-3">
+                                            <form id="form" [formGroup]="userFormR" (ngSubmit)="registerIn()">
+                                                <ul id="progressbar">
+                                                    <li class="active" id="stepR1"><strong><small>Noms</small></strong>
+                                                    </li>
+                                                    <li id="stepR2"><strong><small>Password</small></strong></li>
+                                                    <li id="stepR3"><strong><small>Contacts</small></strong></li>
+                                                    <li id="stepR4"><strong><small>Fin</small></strong></li>
+                                                </ul>
+                                                <!-- <div class="progress">
+												<div class="progress-bar"></div>
+											</div>  -->
+                                                <br>
+                                                <fieldset>
+                                                    <h2>Noms</h2>
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-user-circle-o prefix"></i> -->
+                                                        <input [class.is-invalid]="userFormR.get('firstName').invalid && userFormR.get('firstName').touched" type="text" id="modalRegfirstName2" class="form-control form-control-md displaystyle" placeholder="Votre nom" name="firstName" formControlName="firstName"
+                                                            required>
+                                                        <div *ngIf="(userFormR.get('firstName').invalid && userFormR.get('firstName').touched) || userFormR.get('firstName').dirty">
+                                                            <small *ngIf="userFormR.get('firstName').errors?.required" class="text-danger">Le nom est requis</small>
+                                                            <small *ngIf="userFormR.get('firstName').errors?.minlength?.requiredLength" class="text-danger">Le nom doit avoir au moins 5 caractères</small>
+                                                            <small *ngIf="userFormR.get('firstName').errors?.firstName" class="text-danger">Veuillez fournir un nom valide</small>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-user-circle-o prefix"></i> -->
+                                                        <input [class.is-invalid]="userFormR.get('lastName').invalid && userFormR.get('lastName').touched" type="text" id="modalReglastName2" class="form-control form-control-md displaystyle" placeholder="Votre pr&eacute;nom" name="lastName" formControlName="lastName"
+                                                            required>
+                                                        <div *ngIf="(userFormR.get('lastName').invalid && userFormR.get('lastName').touched) || userFormR.get('lastName').dirty">
+                                                            <small *ngIf="userFormR.get('lastName').errors?.required" class="text-danger">Le pr&eacute;nom est requis</small>
+                                                            <small *ngIf="userFormR.get('lastName').errors?.minlength?.requiredLength" class="text-danger">Le pr&eacute;nom doit avoir au moins 5 caractères</small>
+                                                            <small *ngIf="userFormR.get('lastName').errors?.lastName" class="text-danger">Veuillez fournir un pr&eacute;nom valide</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-user-circle-o prefix"></i> -->
+                                                        <input [class.is-invalid]="userFormR.get('username').invalid && userFormR.get('username').touched" type="text" id="modalRegusername2" class="form-control form-control-md displaystyle" placeholder="Votre nom d'utilisateur" name="username" formControlName="username"
+                                                            required>
+                                                        <div *ngIf="(userFormR.get('username').invalid && userFormR.get('username').touched) || userFormR.get('username').dirty">
+                                                            <small *ngIf="userFormR.get('username').errors?.required" class="text-danger">Le nom de l'utilisateur est requis</small>
+                                                            <small *ngIf="userFormR.get('username').errors?.minlength?.requiredLength" class="text-danger">Le nom de l'utilisateur  doit avoir au moins 3 caractères</small>
+                                                            <small *ngIf="userFormR.get('username').errors?.username" class="text-danger">Veuillez fournir un nom d'utilisateur valide</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="md-form form-sm mb-4">
+                                                        <input [class.is-invalid]="userFormR.get('gender').invalid && userFormR.get('gender').touched" type="radio" id="modalReggender2m" class="" name="gender" formControlName="gender" value="MALE" required>                                                        Homme
+                                                        <input [class.is-invalid]="userFormR.get('gender').invalid && userFormR.get('gender').touched" type="radio" id="modalReggender2f" class="" name="gender" formControlName="gender" value="FEMALE" required>                                                        Femme
+                                                        <div *ngIf="(userFormR.get('gender').invalid && userFormR.get('gender').touched) || userFormR.get('gender').dirty">
+                                                            <small *ngIf="userFormR.get('gender').errors?.required" class="text-danger">Le genre est requis</small>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="next-step" class="next-step btn btn-default btn-rounded my-3  btn-info" value="Suivant" />
+                                                </fieldset>
+                                                <fieldset>
+                                                    <h2>Password</h2>
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-lock prefix"></i> -->
+                                                        <input [class.is-invalid]="userFormR.get('password1').invalid && userFormR.get('password1').touched" type="password" id="modalRegPwd3" class="form-control form-control-md displaystyle" placeholder="Your password" name="password1" formControlName="password1"
+                                                            required>
+                                                        <div *ngIf="(userFormR.get('password1').invalid && userFormR.get('password1').touched) || userFormR.get('password1').dirty">
+                                                            <small *ngIf="userFormR.get('password1').errors?.required" class="text-danger">Le mot de passe est requis</small>
+                                                        </div>
+                                                    </div>
+                                                    <!--caratteristique della password-->
+                                                    <div class="message" id="message">
+                                                        <i [class]="number ? 'fa fa-check iconYes' : 'fa fa-times iconNo'" id="numberIcon"></i>
+                                                        <p class="password-contain" id="number">Doit contenir un chiffre !</p>
+
+                                                        <i [class]="specialCHAR ? 'fa fa-check iconYes' : 'fa fa-times iconNo'" id="charIcon"></i>
+                                                        <p class="password-contain" id="specialCHAR">Doit contenir un caractère special !</p>
+
+                                                        <i [class]="capital ? 'fa fa-check iconYes' : 'fa fa-times iconNo'" id="capitalIcon"></i>
+                                                        <p class="password-contain" id="capital">Doit contenir une majuscule !</p>
+
+                                                        <i [class]="lenght ? 'fa fa-check iconYes' : 'fa fa-times iconNo'" id="lengthIcon"></i>
+                                                        <p class="password-contain" id="length">Doit avoir au moins 8 caractères !</p>
+                                                    </div>
+                                                    <div *ngIf="!userFormR.get('password1').invalid" class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-lock prefix"></i> -->
+                                                        <input [class.is-invalid]="userFormR.get('confirmPassword').invalid && userFormR.get('confirmPassword').touched " type="password" id="modalRegPwd33" class="form-control form-control-md confirmPassword displaystyle" placeholder="Repeat password" name="confirmPassword"
+                                                            formControlName="confirmPassword" required>
+                                                        <div *ngIf="(userFormR.get('confirmPassword').invalid && userFormR.get('confirmPassword').touched) || userFormR.get('confirmPassword').dirty">
+                                                            <small *ngIf="userFormR.get('confirmPassword').errors?.required" class="text-danger">Le mot de passe est requis</small><br>
+                                                            <!--<small *ngIf="userFormR.get(['password1']).value != userFormR.get(['confirmPassword']).value && userFormR.get(['confirmPassword']).value != null" class="text-danger">Le mot password ne correspond pas</small>-->
+                                                            <small *ngIf="userFormR.get('confirmPassword').errors?.invalid" class="text-danger">Le mot password ne correspond pas</small>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="next-step" class="next-step btn btn-default btn-rounded my-3 btn-primary btn-info" value="Suivant" />
+                                                    <input type="button" name="previous-step" class="previous-step btn btn-default btn-rounded my-3" value="Précedent" />
+                                                </fieldset>
+                                                <fieldset>
+                                                    <h2>Contacts</h2>
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-envelope prefix"></i>-->
+                                                        <input [class.is-invalid]="userFormR.get('email1').invalid && userFormR.get('email1').touched" type="email" id="modalRegEmail3" class="form-control form-control-md displaystyle" placeholder="Votre email" name="email1" formControlName="email1" required>
+                                                        <div *ngIf="(userFormR.get('email1').invalid && userFormR.get('email1').touched) || userFormR.get('email1').dirty">
+                                                            <small *ngIf="userFormR.get('email1').errors?.required" class="text-danger">L'email est requis</small>
+                                                            <!--question mark(?) is a safe navigation operator-->
+                                                            <small *ngIf="userFormR.get('email1').errors?.email || userFormR.get('email1').errors?.pattern" class="text-danger">Veuillez fournir une adresse email valide</small>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-phone prefix"></i> -->
+                                                        <input [class.is-invalid]="userFormR.get('phone').invalid && userFormR.get('phone').touched" type="text" id="modalRegPhone2" class="form-control form-control-md displaystyle" placeholder="Votre cellulaire" name="phone" formControlName="phone" maxlength="10"
+                                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required>
+                                                        <div *ngIf="(userFormR.get('phone').invalid && userFormR.get('phone').touched) || userFormR.get('phone').dirty">
+                                                            <small *ngIf="userFormR.get('phone').errors?.required" class="text-danger">Le numero de cellulaire est requis</small>
+                                                            <small *ngIf="userFormR.get('phone').errors?.minlength?.requiredLength" class="text-danger">Le numero de cellulaire  doit avoir au moins 10 chiffres</small>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="next-step" class="next-step btn btn-default btn-rounded my-3  btn-info" value="Suivant" />
+                                                    <input type="button" name="previous-step" class="previous-step btn btn-default btn-rounded my-3 btn-primary btn-info" value="Précedent" />
+                                                </fieldset>
+                                                <fieldset>
+
+                                                    <!--<div class="finish">
+                                                        <label class="switch">
+													<input type="checkbox" (click)="checkA($event)">
+													<span class="slider round"></span>
+													</label>J'accepte les conditions et la confidentialité<br><br> -->
+                                                    <!--</div>-->
+                                                    <!-- new code -->
+                                                    <div class="finish">
+                                                        <input type="checkbox" id="option-one" [checked]="consenso1" (click)="consenso1 = !consenso1">
+                                                        <label for="option-one">
+															<span class="name">J'accepte les conditions et la confidentialité</span>
+															<span class="icon"> <i class="fa fa-check" aria-hidden="true"></i></span>
+														</label>
+                                                        <input type="checkbox" id="option-two" [checked]="consenso2" (click)="consenso2 = !consenso2">
+                                                        <label for="option-two">
+															<span class="name">J'accepte de recevoir des notifications via mail</span>
+															<span class="icon"> <i class="fa fa-check" aria-hidden="true"></i></span>
+														</label>
+                                                        <input type="checkbox" id="option-three" [checked]="consenso3" (click)="consenso3 = !consenso3">
+                                                        <label for="option-three">
+															<span class="name">J'accepte de rendre visible mon numéro</span>
+															<span class="icon"> <i class="fa fa-check" aria-hidden="true"></i></span>
+														</label>
+                                                    </div>
+                                                    <div class="mtCustom">
+                                                        <h4 class="text text-center">
+                                                            <strong>Enregistrez-vous</strong>
+                                                        </h4>
+                                                        <div class="text-center">
+                                                            <button class="btn btn-info" type="submit" [disabled]="userFormR.invalid || !consenso1">Sign up <i class="fa fa-sign-in ml-1"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="previous-step" class="previous-step btn btn-default btn-rounded my-3" value="Précedent" />
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Footer-->
+                        <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Fermer</button>
+            </div>
+          </div> -->
+                        <!--/.Panel 8-->
+                    </div>
+
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+</div>
+<!--Modal: Login-->
+
+<!--Modal: Register Form-->
+<div class="modal fade" id="modalLRFormR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--Modal cascading tabs-->
+            <div class="modal-c-tabs">
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link btn-outline" data-toggle="tab" href="#panel6" role="tab"><i class="fa fa-user-circle-o mr-1"></i>
+                        Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#panel9" role="tab"><i class="fa fa-user-circle-o-plus mr-1"></i>
+                            S'inscrire</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panels -->
+                <div class="tab-content">
+                    <!--Panel 7-->
+                    <div class="tab-pane fade" id="panel6" role="tabpanel">
+
+                        <!--Body-->
+                        <div class="modal-body mb-1">
+                            <form [formGroup]="userForm" (ngSubmit)="loggedIn()">
+                                <div class="md-form form-sm mb-4">
+                                    <!-- <i class="fa fa-user-circle-o prefix"></i> -->
+                                    <input [class.is-invalid]="userForm.get('username').invalid && userForm.get('username').touched" type="text" id="modalLogusername3" class="form-control form-control-md displaystyle" placeholder="Votre nom d'utilisateur" name="username" formControlName="username"
+                                        required>
+                                    <div *ngIf="(userForm.get('username').invalid && userForm.get('username').touched) || userForm.get('username').dirty">
+                                        <small *ngIf="userForm.get('username').errors?.required" class="text-danger">Le nom d'utilisateur est requis</small>
+                                        <!--question mark(?) is a safe navigation operator-->
+                                    </div>
+                                </div>
+                                <div class="md-form form-sm mb-4">
+                                    <!-- <i class="fa fa-lock prefix"></i> -->
+                                    <input [class.is-invalid]="userForm.get('password').invalid && userForm.get('password').touched" type="password" id="modalLogPwd3" class="form-control form-control-md displaystyle" placeholder="Repeat password" name="password" formControlName="password"
+                                        required #psw1>
+                                    <div *ngIf="(userForm.get('password').invalid && userForm.get('password').touched) || userForm.get('password').dirty">
+                                        <small *ngIf="userForm.get('password').errors?.required" class="text-danger">Le mot de passe est requis</small>
+                                    </div>
+                                    <label class="switch_lock">
+								<input type="checkbox" (click)="showPWD(psw1)">
+								<span [class]="lock ? 'fa fa-unlock':'fa fa-unlock-alt'"></span>
+							</label>Voir le mot de passe
+                                </div>
+                                <div *ngIf="false" class="md-form form-sm mb-4">
+                                    <!-- <i class="fa fa-envelope prefix"></i>-->
+                                    <input [class.is-invalid]="userForm.get('email').invalid && userForm.get('email').touched" type="email" id="modalLogEmail3" class="form-control form-control-md displaystyle" placeholder="Your email" name="email" formControlName="email" required>
+                                    <div *ngIf="(userForm.get('email').invalid && userForm.get('email').touched) || userForm.get('email').dirty">
+                                        <small *ngIf="userForm.get('email').errors?.required" class="text-danger">L'email est requis</small>
+                                        <!--question mark(?) is a safe navigation operator-->
+                                        <small *ngIf="userForm.get('email').errors?.email || userForm.get('email').errors?.pattern" class="text-danger">Veuillez fournir une adresse email valide</small>
+                                    </div>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <label class="switch_small">
+									<input type="checkbox" id="autoSizingCheck1" (click)="checkR($event)">
+									<span class="slider_small round_small"></span>
+								</label>Souviens-toi de moi
+                                </div>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-info" [disabled]="userForm.invalid">Connexion <i class="fa fa-sign-in ml-1"></i></button>
+                                </div>
+                            </form>
+                            <!-- <p class="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"> or Sign in with:</p> -->
+
+                            <!-- <div class="row my-3 d-flex justify-content-center"> -->
+                            <!--Facebook-->
+                            <!-- <button type="button" class="btn btn-white btn-rounded mr-md-3 z-depth-1a" (click)="signInFacebook('Facebook');" data-dismiss="modal"><i class="fa fa-facebook-f text-center"></i></button> -->
+                            <!--Google +-->
+                            <!-- <button type="button" class="btn btn-white btn-rounded z-depth-1a" data-toggle="modal" data-target=".modalDialogb" (click)="singInGoogle('Google');" data-dismiss="modal"><i class="fa fa-google"></i></button> -->
+                            <!-- </div> -->
+                        </div>
+                        <!--Footer-->
+                        <!-- <div class="modal-footer">
+              <div class="options text-center text-md-right mt-1">
+                <p><a href="" class="blue-text" data-toggle="modal" data-target="#modalForgot" data-dismiss="modal">Mot de passe oubli&eacute;?</a></p>
+              </div>
+              <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Fermer</button>
+            </div> -->
+
+                    </div>
+                    <!--/.Panel 7-->
+
+                    <!--Panel 8-->
+                    <div class="tab-pane fade in show active" id="panel9" role="tabpanel">
+
+                        <!--Body-->
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="text-center espace">
+                                        <div class="px-0 pt-4 pb-0 mt-3 mb-3">
+                                            <form id="formR" [formGroup]="userFormR" (ngSubmit)="registerIn()">
+                                                <ul id="progressbar">
+                                                    <li class="active" id="stepR1"><strong><small>Noms</small></strong>
+                                                    </li>
+                                                    <li id="stepR2"><strong><small>Password</small></strong></li>
+                                                    <li id="stepR3"><strong><small>Contacts</small></strong></li>
+                                                    <li id="stepR4"><strong><small>Fin</small></strong></li>
+                                                </ul>
+                                                <!-- <div class="progress">
+													<div class="progress-bar"></div>
+												</div>  -->
+                                                <br>
+                                                <fieldset>
+                                                    <h2>Noms</h2>
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-user-circle-o prefix"></i> -->
+                                                        <input [class.is-invalid]="userFormR.get('firstName').invalid && userFormR.get('firstName').touched" type="text" id="modalRegfirstName3" class="form-control form-control-md displaystyle" placeholder="Votre nom" name="firstName" formControlName="firstName"
+                                                            required>
+                                                        <div *ngIf="(userFormR.get('firstName').invalid && userFormR.get('firstName').touched) || userFormR.get('firstName').dirty">
+                                                            <small *ngIf="userFormR.get('firstName').errors?.required" class="text-danger">Le nom est requis</small>
+                                                            <small *ngIf="userFormR.get('firstName').errors?.minlength?.requiredLength" class="text-danger">Le nom doit avoir au moins 5 caractères</small>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-user-circle-o prefix"></i> -->
+                                                        <input [class.is-invalid]="userFormR.get('lastName').invalid && userFormR.get('lastName').touched" type="text" id="modalReglastName3" class="form-control form-control-md displaystyle" placeholder="Votre pr&eacute;nom" name="lastName" formControlName="lastName"
+                                                            required>
+                                                        <div *ngIf="(userFormR.get('lastName').invalid && userFormR.get('lastName').touched) || userFormR.get('lastName').dirty">
+                                                            <small *ngIf="userFormR.get('lastName').errors?.required" class="text-danger">Le pr&eacute;nom est requis</small>
+                                                            <small *ngIf="userFormR.get('lastName').errors?.minlength?.requiredLength" class="text-danger">Le pr&eacute;nom doit avoir au moins 5 caractères</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-user-circle-o prefix"></i> -->
+                                                        <input [class.is-invalid]="userFormR.get('username').invalid && userFormR.get('username').touched" type="text" id="modalRegusername3" class="form-control form-control-md displaystyle" placeholder="Votre nom d'utilisateur" name="username" formControlName="username"
+                                                            required>
+                                                        <div *ngIf="(userFormR.get('username').invalid && userFormR.get('username').touched) || userFormR.get('username').dirty">
+                                                            <small *ngIf="userFormR.get('username').errors?.required" class="text-danger">Le nom de l'utilisateur est requis</small>
+                                                            <small *ngIf="userFormR.get('username').errors?.minlength?.requiredLength" class="text-danger">Le nom de l'utilisateur  doit avoir au moins 3 caractères</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="md-form form-sm mb-4">
+                                                        <input [class.is-invalid]="userFormR.get('gender').invalid && userFormR.get('gender').touched" type="radio" id="modalReggender3m" class="" name="gender" formControlName="gender" value="MALE" required>                                                        Homme
+                                                        <input [class.is-invalid]="userFormR.get('gender').invalid && userFormR.get('gender').touched" type="radio" id="modalReggender3f" class="" name="gender" formControlName="gender" value="FEMALE" required>                                                        Femme
+                                                        <div *ngIf="(userFormR.get('gender').invalid && userFormR.get('gender').touched) || userFormR.get('gender').dirty">
+                                                            <small *ngIf="userFormR.get('gender').errors?.required" class="text-danger">Le genre est requis</small>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="next-step" class="next-step btn btn-default btn-rounded my-3  btn-info" value="Suivant" />
+                                                </fieldset>
+                                                <fieldset>
+                                                    <h2>Password</h2>
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-lock prefix"></i> -->
+                                                        <input [class.is-invalid]="userFormR.get('password1').invalid && userFormR.get('password1').touched" type="password" id="modalRegPwd4" class="form-control form-control-md displaystyle" placeholder="Your password" name="password1" formControlName="password1"
+                                                            required>
+                                                        <div *ngIf="(userFormR.get('password1').invalid && userFormR.get('password1').touched) || userFormR.get('password1').dirty">
+                                                            <small *ngIf="userFormR.get('password1').errors?.required" class="text-danger">Le mot de passe est requis</small>
+                                                        </div>
+                                                    </div>
+                                                    <!--caratteristique della password-->
+                                                    <div class="message" id="message">
+                                                        <i [class]="number ? 'fa fa-check iconYes text-success' : 'fa fa-times iconNo text-danger '" id="numberIcon"></i>
+                                                        <p class="password-contain" id="number">Doit contenir un chiffre !</p>
+
+                                                        <i [class]="specialCHAR ? 'fa fa-check iconYes text-success' : 'fa fa-times iconNo text-danger'" id="charIcon"></i>
+                                                        <p class="password-contain" id="specialCHAR">Doit contenir un caractère special !</p>
+
+                                                        <i [class]="capital ? 'fa fa-check iconYes text-success' : 'fa fa-times iconNo text-danger'" id="capitalIcon"></i>
+                                                        <p class="password-contain" id="capital">Doit contenir une majuscule !</p>
+
+                                                        <i [class]="lenght ? 'fa fa-check iconYes text-success' : 'fa fa-times iconNo text-danger'" id="lengthIcon"></i>
+                                                        <p class="password-contain" id="length">Doit avoir au moins 8 caractères !</p>
+                                                    </div>
+
+                                                    <div *ngIf="!userFormR.get('password1').invalid" class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-lock prefix"></i> -->
+                                                        <input [class.is-invalid]="userFormR.get('confirmPassword').invalid && userFormR.get('confirmPassword').touched " type="password" id="modalRegPwd44" class="form-control form-control-md confirmPassword displaystyle" placeholder="Repeat password" name="confirmPassword"
+                                                            formControlName="confirmPassword" required>
+                                                        <div *ngIf="(userFormR.get('confirmPassword').invalid && userFormR.get('confirmPassword').touched) || userFormR.get('confirmPassword').dirty">
+                                                            <small *ngIf="userFormR.get('confirmPassword').errors?.required" class="text-danger">Le mot de passe est requis</small><br>
+                                                            <small *ngIf="userFormR.get(['password1']).value != userFormR.get(['confirmPassword']).value && userFormR.get(['confirmPassword']).value != null" class="text-danger">Le mot password ne correspond pas</small>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="next-step" class="next-step btn btn-default btn-rounded my-3 btn-primary btn-info" value="Suivant" />
+                                                    <input type="button" name="previous-step" class="previous-step btn btn-default btn-rounded my-3" value="Précedent" />
+                                                </fieldset>
+                                                <fieldset>
+                                                    <h2>Contacts</h2>
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-envelope prefix"></i>-->
+                                                        <input [class.is-invalid]="userFormR.get('email1').invalid && userFormR.get('email1').touched" type="email" id="modalRegEmail4" class="form-control form-control-md displaystyle" placeholder="Votre email" name="email1" formControlName="email1" required>
+                                                        <div *ngIf="(userFormR.get('email1').invalid && userFormR.get('email1').touched) || userFormR.get('email1').dirty">
+                                                            <small *ngIf="userFormR.get('email1').errors?.required" class="text-danger">L'email est requis</small>
+                                                            <!--question mark(?) is a safe navigation operator-->
+                                                            <small *ngIf="userFormR.get('email1').errors?.email || userFormR.get('email1').errors?.pattern" class="text-danger">Veuillez fournir une adresse email valide</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="md-form form-sm mb-4">
+                                                        <!-- <i class="fa fa-envelope prefix"></i>-->
+                                                        <input [class.is-invalid]="userFormR.get('phone').invalid && userFormR.get('phone').touched" type="text" id="modalRegPhone3" class="form-control form-control-md displaystyle" placeholder="Votre cellulaire" name="phone" formControlName="phone" maxlength="10"
+                                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required>
+                                                        <div *ngIf="(userFormR.get('phone').invalid && userFormR.get('phone').touched) || userFormR.get('phone').dirty">
+                                                            <small *ngIf="userFormR.get('phone').errors?.required" class="text-danger">Le numero de cellulaire est requis</small>
+                                                            <small *ngIf="userFormR.get('phone').errors?.minlength?.requiredLength" class="text-danger">Le numero de cellulaire  doit avoir au moins 10 chiffres</small>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="next-step" class="next-step btn btn-default btn-rounded my-3  btn-info" value="Suivant" />
+                                                    <input type="button" name="previous-step" class="previous-step btn btn-default btn-rounded my-3 btn-primary btn-info" value="Précedent" />
+                                                </fieldset>
+                                                <fieldset>
+                                                    <div class="finish">
+                                                        <input type="checkbox" id="option-one" [checked]="consenso1" (click)="consenso1 = !consenso1">
+                                                        <label for="option-one">
+															<span class="name">J'accepte les conditions et la confidentialité</span>
+															<span class="icon"> <i class="fa fa-check" aria-hidden="true"></i></span>
+														</label>
+                                                        <input type="checkbox" id="option-two" [checked]="consenso2" (click)="consenso2 = !consenso2">
+                                                        <label for="option-two">
+															<span class="name">J'accepte de recevoir des notifications via mail</span>
+															<span class="icon"> <i class="fa fa-check" aria-hidden="true"></i></span>
+														</label>
+                                                        <input type="checkbox" id="option-three" [checked]="consenso3" (click)="consenso3 = !consenso3">
+                                                        <label for="option-three">
+															<span class="name">J'accepte de rendre visible mon numéro</span>
+															<span class="icon"> <i class="fa fa-check" aria-hidden="true"></i></span>
+														</label>
+                                                    </div>
+                                                    <div class="mtCustom">
+                                                        <h4 class="text text-center">
+                                                            <strong>Enregistrez-vous</strong>
+                                                        </h4>
+                                                        <div class="text-center">
+                                                            <button class="btn btn-info" type="submit" [disabled]="userFormR.invalid || !consenso1">Sign up <i class="fa fa-sign-in ml-1"></i></button>
+                                                        </div>
+                                                    </div>
+
+                                                    <input type="button" name="previous-step" class="previous-step btn btn-default btn-rounded my-3" value="Précedent" />
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Footer-->
+                        <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Fermer</button>
+            </div>
+          </div> -->
+                        <!--/.Panel 8-->
+                    </div>
+
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+</div>
+<!--Modal:Register Form-->
+<!-- Modal: Forgot -->
+<div class="modal fade" id="modalForgot" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabelForgot">R&eacute;cup&eacute;rer le mot de passe</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="userFormF">
+                    <div class="md-form form-sm mb-4">
+                        <div class="input-group mb-2">
+                            <!-- <div class="input-group-prepend">
+             <div class="input-group-text"><i class="fa fa-envelope prefix"></div>
+           </div> -->
+                            <input [class.is-invalid]="userFormF.get('email2').invalid && userFormF.get('email2').touched" type="email" id="modalLRInput121F" class="form-control form-control-md displaystyle" placeholder="Votre email" name="email2" formControlName="email2" required>
+                        </div>
+                        <div *ngIf="(userFormF.get('email2').invalid && userFormF.get('email2').touched) || userFormF.get('email2').dirty">
+                            <small *ngIf="userFormF.get('email2').errors?.required" class="text-danger">L'email est requis</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            <small *ngIf="userFormF.get('email2').errors?.email || userFormF.get('email2').errors?.pattern" class="text-danger">Veuillez fournir une adresse email valide</small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-info ml-auto" data-dismiss="modal" (click)="forgotPwd()" [disabled]="userFormF.invalid">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal: Forgot -->
+
+<!-- message Registration sucess-->
+<div class="modal fade" id="dialogA" tabindex="-1" role="dialogA" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-top" role="document">
+        <!-- <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabelForgot">Registration</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+				<h4 [innerHTML] = "msg_regis"></h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+
+      </div>
+    </div> -->
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <h4 [innerHTML]="msg_regis"></h4>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="refreshPage()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+
+<!-- message Registration wrong -->
+<div class="modal fade modalDialogb" id="dialogb" tabindex="-1" role="dialogb" aria-labelledby="modalLabelb" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-top" role="document">
+        <!-- <div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title w-100" id="myModalLabelForgot">Registration Error</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body ">
+							<h4 [innerHTML] = "msg_regis"></h4>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+
+					</div>
+				</div> -->
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <h4 [innerHTML]="msg_regis"></h4>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button>
+        </div>
+    </div>
+</div>
+
+<!-- end modal -->
+
+<!-- Modal: logout -->
+
+<div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center" id="myModalLabelLogout">Se déconnecter</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <div class="modal-body text-center">
+                Vous partez ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-danger waves-effect ml-auto" (click)="signOut()" data-dismiss="modal">OUI</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal: logout -->
+
+<div class="modal fade" id="disclaimerModal" tabindex="-1" role="dialog" aria-labelledby="disclaimerModaltitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="disclaimerModalLongTitle">DISCLAIMER</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                La plateforme <strong>Travel Post</strong> se charge uniquement de mettre en contact deux parties qui sont le prestataire de service et le client, nous ne pouvons en aucun cas être tenus responsables des eventuels désagremments causés
+                par l'une des parties. Tout dommage, litige ou non fourniture de service ne relève pas de la responsabilité de <strong>Travel Post</strong> Les droits de propriété intellectuelle sur les informations et données fournies appartiennent à
+                <strong>Travel Post</strong> Sous réserve de l’autorisation expresse écrite et préalable de l’auteur ou de ses ayants droit, le transfert, la vente, la diffusion ou la reproduction, sous quelque forme ou par quelque moyen que ce soit,de
+                ces informations, publications ou données sont interdits.
+                <br><br><br><strong>POLITIQUE RELATIVE AU TRAITEMENT DES DONNÉES</strong><br> Lors de votre inscription sur la plateforme <strong>Travel Post</strong> ou prise de contact à travers le formulaire Contact us, toute donnée sera traitée dans
+                le juste respect des lois en vigueur sur la protection des données. Un certain nombre de cookies ont été placés sur le site Internet dans le seul but de faciliter votre visite, de l’optimiser. Pour plus d’informations sur les cookies,
+                vous pouvez vous référer au site WordPress (version > 3.0 et données ne se rapportant pas à une version spécifique). La loi sur le traitement des données à caractère personnel vous donne la possibilité de consulter vos données et de les
+                corriger si nécessaire. À cette fin, vous pouvez nous contacter directement au moyen de votre profil utilisateur.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- cookies -->
+<div id="cookiesSideModalRightBottom" class="oldcookie modal-frame" style="display:none">
+    <p>
+        En utilisant notre site Web, vous acceptez notre
+        <span style="text-decoration-line: underline;">politique en matière de cookies</span>
+    </p>
+    <button class="btn btn-outline-success" aria-hidden="true" (click)="closeCookies()">OK</button>
+</div>
+<!-- <div class="modal fade" id="cookiesSideModalRightBottom" tabindex="-1" role="dialog" aria-labelledby="disclaimerModaltitle" aria-hidden="true">
+    <div class="modal-dialog modal-frame modal-bottom" role="document">
+        <div class="modal-content">
+            <div class="modal-body oldcookie">
+                <p>
+                    En utilisant notre site Web, vous acceptez notre
+                    <span style="text-decoration-line: underline;">politique en matière de cookies</span>
+                </p>
+                <span type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeCookies()">OK</span>
+            </div>
+
+        </div>
+    </div>
+</div> -->

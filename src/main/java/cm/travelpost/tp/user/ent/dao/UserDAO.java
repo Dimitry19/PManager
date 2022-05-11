@@ -19,6 +19,8 @@ public interface UserDAO extends CommonDAO {
 
     UserVO findByOnlyUsername(String username, boolean isRegistration) throws Exception;
 
+
+
     List<UserVO> search(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException;
 
     UserVO findByToken(String token) throws Exception;

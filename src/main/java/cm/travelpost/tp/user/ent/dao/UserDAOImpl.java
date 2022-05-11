@@ -59,7 +59,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public int count(Object o,Long id,PageBy pageBy) throws BusinessResourceException {
-        logger.info("User - count ");
+        if(logger.isDebugEnabled()){
+            logger.debug("User - count ");
+        }
 
         if (o ==null){
             return count(UserVO.class, pageBy);
@@ -83,7 +85,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserVO login(String username, String password) throws Exception {
 
-        logger.info("User: login");
+        if(logger.isDebugEnabled()){
+            logger.debug("User: login");
+        }
 
         return internalLogin(username, password);
 
@@ -136,7 +140,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     public List<UserVO> subscriptions(Long userId) throws UserException {
 
         if(logger.isDebugEnabled()){
-            logger.info("Retrieve subscriptions for the user with id {}", userId);
+            logger.debug("Retrieve subscriptions for the user with id {}", userId);
         }
 
         UserVO user = findById(userId);
@@ -262,6 +266,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
 
+            user.setMultipleFactorAuthentication(Boolean.TRUE);
+            user.setSecret(UUID.randomUUID().toString());
             Long id=(Long)save(user);
             user=findById(id);
             setRole(user, register.getRole());
@@ -269,7 +275,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error(e.getMessage());
+            logger.error("Une erreur est survenue durant l'enregistrement {}",e.getMessage());
             throw new UserException("Erreur durant l'inscription de l'utilisateur");
         }
     }
@@ -312,7 +318,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
     public boolean deleteUser(Long id) throws UserException {
         if(logger.isDebugEnabled()){
-            logger.info("Delete user with id {}", id);
+            logger.debug("Delete user with id {}", id);
         }
         //delete(UserVO.class,id,false);
         return updateDelete(id);
@@ -333,7 +339,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     public UserVO findByUsername(String username) throws Exception {
 
         if(logger.isDebugEnabled()){
-            logger.info("User: find by username {}", username);
+            logger.debug("User: find by username {}", username);
         }
 
         filters = new String[2];
@@ -348,7 +354,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     public UserVO findByOnlyUsername(String username, boolean disableFilter) throws Exception {
 
         if(logger.isDebugEnabled()){
-            logger.info("User: find by only username {}", username);
+            logger.debug("User: find by only username {}", username);
         }
         if (!disableFilter) {
             filters = new String[2];
@@ -357,7 +363,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
 
         return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, filters);
-
     }
 
     @Override
@@ -385,7 +390,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     public UserVO findByToken(String token) throws Exception {
 
         if(logger.isDebugEnabled()){
-            logger.info("User: find token  {}", token);
+            logger.debug("User: find token  {}", token);
         }
 
         filters = new String[1];
@@ -436,7 +441,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public UserVO findByFacebookId(String facebookId) throws Exception {
-        logger.info("User: find by facebook");
+        if(logger.isDebugEnabled()){
+            logger.debug("User: find by facebook");
+        }
         filters = new String[2];
         filters[0] = FilterConstants.CANCELLED;
         filters[1] = FilterConstants.ACTIVE_MBR;
@@ -445,7 +452,10 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public UserVO findByGoogleId(String googleId) throws Exception {
-        logger.info("User: find by google");
+
+        if(logger.isDebugEnabled()){
+            logger.debug("User: find by google");
+        }
         filters = new String[2];
         filters[0] = FilterConstants.CANCELLED;
         filters[1] = FilterConstants.ACTIVE_MBR;
@@ -455,7 +465,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public boolean setRole(UserVO user, RoleEnum roleId) throws Exception {
-        logger.info("User:  set role");
+        if(logger.isDebugEnabled()){
+            logger.info("User:  set role");
+        }
 
         RoleVO role = roleDAO.findByDescription(roleId.name());
 
@@ -479,8 +491,10 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, UserException.class})
     public boolean deleteUser(UserVO user) throws BusinessResourceException, UserException {
+        if(logger.isDebugEnabled()){
+            logger.debug("User: update delete");
+        }
         if (user != null) {
-            logger.info("User: update delete");
             return updateDelete(user.getId());
         }
         return false;
@@ -489,7 +503,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public boolean checkLogin(LoginDTO lr) throws Exception {
-        logger.info("User: check login");
+        if(logger.isDebugEnabled()){
+            logger.info("User: check login");
+        }
         UserVO user = findByOnlyUsername(lr.getUsername(), true);
         return user != null;
     }
@@ -535,7 +551,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
                 return (UserVO) get(UserVO.class, userId);
             }
         } catch (UserException e) {
-            logger.error("Erreur durant la modification de la gestion des notifications");
+            logger.error("Erreur durant la modification de la gestion des notifications {}", e.getMessage());
             throw e;
         }
         return user;
@@ -544,7 +560,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional
     public boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException {
-        logger.info("Modification du mot de passe");
+        if(logger.isDebugEnabled()){
+            logger.info("Modification du mot de passe");
+        }
         UserVO user = findById(userId);
         if (user == null) {
             logger.error("Erreur : aucun utilisateur correspondant a l'id{}" , userId);
@@ -575,7 +593,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     private UserVO internalLogin(String username, String password) throws BusinessResourceException {
         try {
-            logger.info("User: internal login");
+            if(logger.isDebugEnabled()){
+                logger.info("User: internal login");
+            }
             String encryptedPassword = PasswordGenerator.encrypt(password);
 
             UserVO userFound = findByUsername(username);
@@ -594,10 +614,10 @@ public class UserDAOImpl extends Generic implements UserDAO {
             throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
 
         } catch (BusinessResourceException ex) {
-            logger.error("Login ou mot de passe incorrect", ex);
+            logger.error("Login ou mot de passe incorrect {}", ex.getMessage());
             throw new BusinessResourceException("UserNotFound", " Nom utilisateur ou mot de passe incorrect", HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
-            logger.error("Une erreur technique est survenue", ex);
+            logger.error("Une erreur technique est survenue {}", ex.getMessage());
             throw new BusinessResourceException("TechnicalError", "Une erreur technique est survenue", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

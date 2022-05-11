@@ -1,7 +1,6 @@
 package cm.travelpost.tp.common.sms.ent.service;
 
 import cm.travelpost.tp.common.sms.configuration.TwilloConfig;
-import cm.travelpost.tp.common.sms.ent.dao.SmsDAO;
 import cm.travelpost.tp.common.sms.ent.vo.OPTNumber;
 import cm.travelpost.tp.common.sms.ent.vo.SmsOTPVO;
 import cm.travelpost.tp.common.utils.DateUtils;
@@ -17,40 +16,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 
+import java.text.MessageFormat;
+
 
 /**
  *
  */
 @Service("smsService")
 @Transactional
-public class SmsServiceImpl implements SmsService {
-
-
+public class SmsServiceImpl extends  CommonSmsService implements SmsService {
 
 	protected final Log logger = LogFactory.getLog(SmsServiceImpl.class);
 
-
-	@Autowired
-	SmsDAO dao;
-
 	@Autowired
 	TwilloConfig twilloConfig;
+
+
 
 	@Override
 	public void send(SmsDTO dto) throws Exception {
 
 		twilloConfig.init();
 
-		int min = 100000;
-		int max = 999999;
-		int number=(int)(Math.random()*(max-min+1)+min);
 
-
-
+		int number = generator.generate();
 		PhoneNumber to = new PhoneNumber(dto.getTo());
 		PhoneNumber from = new PhoneNumber(twilloConfig.getFrom());
 
-		String msg ="OTP Code : "+number+ " Please verify this OTP in Travel Post Services";
+		String msg  = MessageFormat.format(otpPattern, number);
 
 		MessageCreator creator=Message.creator(to, from, msg);
 		Message message =creator.create();

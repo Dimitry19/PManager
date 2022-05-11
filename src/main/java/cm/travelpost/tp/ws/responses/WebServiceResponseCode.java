@@ -16,7 +16,7 @@ public class WebServiceResponseCode {
     public static final String USER_REGISTER_ACTIVE_LABEL = "Votre compte est  actif dès à présent.. Connectez vous maintenant";
 
     public static final String UPDATE_LABEL = "Données ajournées correctement";
-    public static final String PAGINATE_RESPONSE_LABEL = "Données recupérées correctement";
+    public static final String PAGINATE_RESPONSE_LABEL = "{0} resultat(s) trouvé(s)";
     public static final String PAGINATE_EMPTY_RESPONSE_LABEL = "Aucun resultat trouvé";
 
 

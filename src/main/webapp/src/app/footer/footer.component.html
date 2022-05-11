@@ -1,0 +1,129 @@
+<footer class="page-footer font-small unique-color-dark spikes">
+
+    <div class="marque">
+        <div class="container">
+            <marquee><em>Move Smart, Fast and Safely</em></marquee>
+        </div>
+    </div>
+
+
+    <div class="container text-center text-md-left mt-5">
+
+        <span>
+            <img class="imgModal" src="assets/images/travel_titre.png" alt="Tr@vel">
+            <small><sup>Move Smart, Fast and Safely</sup></small>
+        </span>
+        <div class="row mt-3">
+            <div class="col-md-3 col-lg-8 col-md-8 mx-auto mb-4">
+
+
+                <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <a href="" data-toggle="modal" data-target="#modalContact">Contact us</a>
+                </p>
+
+            </div>
+
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+                <h6 class="text-uppercase font-weight-bold">Contact</h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <i class="fa fa-home mr-3"></i> Parma, PR 43100, IT</p>
+                <p>
+                    <i class="fa fa-envelope mr-3"></i> travelpostservices@gmail.com</p>
+                <p>
+                    <i class="fa fa-phone mr-3"></i> + 39 234 567 88</p>
+                <p>
+                    <i class="fa fa-print mr-3"></i> + 39 234 567 89</p>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <div class="footer-copyright text-center py-3">© 2022 Travel Post All Rigths reserved
+
+    </div>
+
+
+</footer>
+<!-- Modal: contact -->
+<div class="modal fade" id="modalContact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center" id="myModalLabelLogout">Contact US</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <div class="modal-body bgColor">
+                <div class="mb-1">
+                    <span class="logoModal">
+                        <img class="imgModal" src="assets/images/travel_titre.png" alt="Tr@vel">
+                        <small><sup>Move Smart, Fast and Safely</sup></small>
+                    </span>
+                </div>
+                <div class="container">
+                    <form [formGroup]="userForm" (ngSubmit)="sendMessage()">
+                        <div class="md-form form-sm my-2">
+                            <!-- <label for="name" class="labelName">Nom</label> -->
+                            <span [class]="(userForm.get('name').invalid && userForm.get('name').touched) ? 'fa fa-user-circle-o iconPositionInvalid':'fa fa-user-circle-o iconPosition'"></span>
+                            <input type="text" name="name" placeholder="nom" [class.is-invalid]="userForm.get('name').invalid && userForm.get('name').touched" class=" form-control inputName" formControlName="name" required>
+                            <span *ngIf="(userForm.get('name').invalid && userForm.get('name').touched) || userForm.get('name').dirty" class="errorMessage">
+                                <small *ngIf="userForm.get('name').errors?.required" class="text-danger">Le nom est requis</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            </span>
+                        </div>
+
+                        <div class="md-form form-sm my-2">
+                            <!-- <label for="email" class="labelEmail">Email</label> -->
+                            <span [class]="(userForm.get('email').invalid && userForm.get('email').touched) ? 'fa fa-envelope-o iconPositionInvalid':'fa fa-envelope-o iconPosition'"></span>
+                            <input [class.is-invalid]="userForm.get('email').invalid && userForm.get('email').touched" type="email" name="email" placeholder="votre adresse email" class="form-control inputName" formControlName="email" required>
+                            <span *ngIf="(userForm.get('email').invalid && userForm.get('email').touched) || userForm.get('email').dirty" class="errorMessage">
+                                <small *ngIf="userForm.get('email').errors?.required" class="text-danger">L'email est requis</small>
+                                <small *ngIf="userForm.get('email').errors?.email || userForm.get('email').errors?.pattern" class="text-danger">Veuillez fournir une adresse email valide</small>
+                            </span>
+                        </div>
+
+                        <div class="md-form form-sm my-2">
+                            <!-- <label for="title" class="labelName">Titre</label> -->
+                            <span [class]="(userForm.get('title').invalid && userForm.get('title').touched) ? 'fa fa-comment-o  iconPositionInvalid':'fa fa-comment-o  iconPosition'"></span>
+                            <input type="text" name="title" placeholder="Titre" [class.is-invalid]="userForm.get('title').invalid && userForm.get('title').touched" class=" form-control inputName" formControlName="title" required>
+                            <span *ngIf="(userForm.get('title').invalid && userForm.get('title').touched) || userForm.get('title').dirty" class="errorMessage">
+                                <small *ngIf="userForm.get('title').errors?.required" class="text-danger">Le titre est requis</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            </span>
+                        </div>
+
+                        <div class="md-form form-sm mb-4">
+                            <!-- <i class="fa fa-envelope prefix"></i>-->
+                            <!-- <label for="message" class="labelMessage">Message</label> -->
+                            <!-- <span class="fa fa-comment-o iconPositionInvalid"></span> -->
+                            <textarea [class.is-invalid]="userForm.get('message').invalid && userForm.get('message').touched" type="text" name="message" placeholder="message" class="form-control inputName" rows="8" formControlName="message" spellcheck="true" required></textarea>
+                            <span *ngIf="(userForm.get('message').invalid && userForm.get('message').touched) || userForm.get('message').dirty" class="errorMessage">
+                                <small *ngIf="userForm.get('message').errors?.required" class="text-danger">Le message est requis</small>
+                                <small *ngIf="userForm.get('message').errors?.minlength?.requiredLength" class="text-danger">Le nombre de charactère requis est 20</small>
+                            </span>
+                        </div>
+
+                        <div class="text-center mt-2">
+                            <button class="btn btn-outline-primary rounded-circle" type="submit" [disabled]="userForm.invalid">Envoyer<i class="fa fa-comments-o ml-1"></i></button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" aria-label="Close" data-dismiss="modal">Fermer</button>
+				<button type="button" class="btn btn-danger waves-effect ml-auto" data-dismiss="modal">OUI</button>
+			</div> -->
+        </div>
+    </div>
+</div>
+<!-- Modal: contact -->

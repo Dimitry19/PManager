@@ -6,6 +6,7 @@
 package cm.travelpost.tp.notification.ent.service;
 
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.event.Event;
 import cm.travelpost.tp.common.session.SessionNotificationManager;
@@ -57,7 +58,8 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
     private boolean applicationStarted=false;
 
-
+    private int page=0;
+    private int maxSize=50;
 
     final List<Event> events = new ArrayList();
     Map finalMap = new HashMap();
@@ -69,25 +71,30 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
     @PostConstruct
     public void postApplicationStarted() {
-        logger.info("Started after Spring boot application !");
+        if(logger.isDebugEnabled()){
+            logger.info("Started after Spring boot application !");
+        }
         applicationStarted = true;
     }
 
     @Override
     public void dispatch() throws Exception{
 
-        logger.info(" dispatch !");
+
+        if(logger.isDebugEnabled()){
+            logger.info(" dispatch !");
+        }
         try {
 
+            PageBy pageBy = new PageBy(page,maxSize);
+            List<NotificationVO> notifications= notificationDAO.notificationToSend(pageBy);
 
-           List<NotificationVO> notifications= notificationDAO.all(NotificationVO.class);
-
-           if(CollectionsUtils.isEmpty(notifications)) return;
-
-            notifications.stream().filter(n->!n.getStatus().equals(StatusEnum.COMPLETED)).forEach(n -> {
-                elaborate(n);
-            });
-
+            if(CollectionsUtils.isNotEmpty(notifications)){
+                notifications.stream().forEach(n -> {
+                    elaborate(n);
+                });
+            }
+            incrementPage(notifications);
         } catch (Exception e) {
             logger.error("Erreur durant l'elaboration de la notification {}", e);
             throw e;
@@ -95,12 +102,11 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
     }
 
-
-
-
     private void elaborate(NotificationVO notificationVO) {
+        if(logger.isDebugEnabled()){
+            logger.info(" Elaborate notification {} ", notificationVO.getId());
+        }
 
-        logger.info(" Elaborate notification {} ", notificationVO.getId());
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
         headerAccessor.setLeaveMutable(true);
 
@@ -108,46 +114,46 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
         Map map= new HashMap();
 
-           switch (notificationVO.getType()) {
-               case RESERVATION:
-               case ANNOUNCE:
-               case COMMENT:
+        switch (notificationVO.getType()) {
+            case RESERVATION:
+            case ANNOUNCE:
+            case COMMENT:
 
-                   notification = new Notification(notificationVO.getId(),notificationVO.getAnnounceId(),notificationVO.getTitle(), notificationVO.getMessage(), notificationVO.getType(), notificationVO.getRandom());
+                notification = new Notification(notificationVO.getId(),notificationVO.getAnnounceId(),notificationVO.getTitle(), notificationVO.getMessage(), notificationVO.getType(), notificationVO.getRandom());
 
-                   map= announceListeners;
-                   break;
+                map= announceListeners;
+                break;
 
-               case USER:
-                    notification = new Notification(notificationVO.getId(),notificationVO.getUserId(),notificationVO.getTitle(), notificationVO.getMessage(), notificationVO.getType(), notificationVO.getRandom());
+            case USER:
+                notification = new Notification(notificationVO.getId(),notificationVO.getUserId(),notificationVO.getTitle(), notificationVO.getMessage(), notificationVO.getType(), notificationVO.getRandom());
 
-                   map= userListeners;
-                   break;
-            }
+                map= userListeners;
+                break;
+        }
 
-            List<String> listeners = (List<String>) map.keySet().stream().collect(Collectors.toList());
-            Set<UserVO> subscribers= notificationVO.getUsers();
-            Set users = subscribers.stream().map(UserVO::getUsername).collect(Collectors.toSet());
+        List<String> listeners = (List<String>) map.keySet().stream().collect(Collectors.toList());
+        Set<UserVO> subscribers= notificationVO.getUsers();
+        Set users = subscribers.stream().map(UserVO::getUsername).collect(Collectors.toSet());
 
-            finalMap=map;
-            Notification finalNotification = notification;
+        finalMap=map;
+        Notification finalNotification = notification;
 
         listeners.stream().filter(l->users.contains(l)).forEach(l->{
 
-                String sessionId = (String) finalMap.get(l);
-                headerAccessor.setSessionId(sessionId);
+            String sessionId = (String) finalMap.get(l);
+            headerAccessor.setSessionId(sessionId);
 
-                finalNotification.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
-                List alreadySentForUser= (List)sessionManager.getFromSession(l);
+            finalNotification.setTopic(SUSCRIBE_QUEUE_ITEM_SEND);
+            List alreadySentForUser= (List)sessionManager.getFromSession(l);
 
-                if(CollectionsUtils.isEmpty(alreadySentForUser) ||
-                        (CollectionsUtils.isNotEmpty(alreadySentForUser) && !alreadySentForUser.contains(finalNotification))){
-                    messagingTemplate.convertAndSendToUser(sessionId, finalNotification.getTopic(), finalNotification, headerAccessor.getMessageHeaders());
-                    alreadySentForUser.add(finalNotification);
-                    sessionManager.removeToSession(l);
-                    sessionManager.addToSession(l,alreadySentForUser);
-                }
-            });
+            if(CollectionsUtils.isEmpty(alreadySentForUser) ||
+                    (CollectionsUtils.isNotEmpty(alreadySentForUser) && !alreadySentForUser.contains(finalNotification))){
+                messagingTemplate.convertAndSendToUser(sessionId, finalNotification.getTopic(), finalNotification, headerAccessor.getMessageHeaders());
+                alreadySentForUser.add(finalNotification);
+                sessionManager.removeToSession(l);
+                sessionManager.addToSession(l,alreadySentForUser);
+            }
+        });
 
         removeNotification(notification);
     }
@@ -156,11 +162,11 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
     @Scheduled(fixedRate = 100000,initialDelay = 75000)
     public void doNotify() throws Exception {
 
-        if(!applicationStarted) return;
+        if(logger.isDebugEnabled()){
+            logger.info("doNotify");
+        }
 
-        logger.info(" doNotify");
-
-        if (!enableNotification) return;
+        if(!applicationStarted || !enableNotification) return;
 
         List<Event> deadEvents = new ArrayList<>();
         events.forEach(event -> {
@@ -183,7 +189,9 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
     @Override
     public void add(String sessionId, NotificationType notificationType) {
 
-        logger.info(" add {} type {}", sessionId, notificationType);
+        if(logger.isDebugEnabled()){
+            logger.info(" add {} type {}", sessionId, notificationType);
+        }
 
 
         switch (notificationType) {
@@ -232,7 +240,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
                 notificationDAO.save(notification);
             } catch (Exception e) {
                 logger.error(" Erreur durant la sauvegarde de la notification {}",notification.getMessage());
-               e.printStackTrace();
+                e.printStackTrace();
             }
         });
 
@@ -247,20 +255,20 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
     protected void createNotification(Event event) {
 
-            NotificationVO notification = new NotificationVO();
+        NotificationVO notification = new NotificationVO();
 
-            notification.setTitle(_title(event.getType()));
-            notification.setAnnounceId(event.getId());
-            notification.setUserId(event.getUserId());
-            notification.setMessage(event.getMessage());
-            notification.setUsername(event.getUsername());
+        notification.setTitle(_title(event.getType()));
+        notification.setAnnounceId(event.getId());
+        notification.setUserId(event.getUserId());
+        notification.setMessage(event.getMessage());
+        notification.setUsername(event.getUsername());
 
-            notification.getUsers().addAll(event.getUsers());
-            notification.setStatus(StatusEnum.VALID);
-            notification.setType(event.getType());
-            notification.setRandom(SecRandom.randomLong());
+        notification.getUsers().addAll(event.getUsers());
+        notification.setStatus(StatusEnum.VALID);
+        notification.setType(event.getType());
+        notification.setRandom(SecRandom.randomLong());
 
-            notifications.add(notification);
+        notifications.add(notification);
     }
 
 
@@ -306,6 +314,15 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
         StringBuilder tb = new StringBuilder("Notification ");
         tb.append(type.toValue());
         return tb.toString();
+    }
+
+    void incrementPage(List notifications){
+
+        if (CollectionsUtils.isEmpty(notifications)) {
+            page = 0;
+        } else {
+            page++;
+        }
     }
 
 }

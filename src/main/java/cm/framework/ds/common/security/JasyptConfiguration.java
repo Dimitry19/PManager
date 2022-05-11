@@ -1,4 +1,4 @@
-package cm.travelpost.tp.configuration.cfg;
+package cm.framework.ds.common.security;
 
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
@@ -18,7 +18,7 @@ public class JasyptConfiguration {
 
 
 
-	@Bean(name = "encryptorBean")
+	@Bean(name = "jasyptStringEncryptor")
 	public StringEncryptor stringEncryptor() {
 
 		PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();

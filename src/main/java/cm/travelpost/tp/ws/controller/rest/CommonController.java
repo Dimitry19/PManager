@@ -1,5 +1,6 @@
 package cm.travelpost.tp.ws.controller.rest;
 
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.airline.ent.service.AirlineService;
 import cm.travelpost.tp.announce.ent.service.AnnounceService;
 import cm.travelpost.tp.announce.ent.service.ReservationService;
@@ -7,6 +8,7 @@ import cm.travelpost.tp.city.ent.service.CityService;
 import cm.travelpost.tp.common.mail.ent.service.MailService;
 import cm.travelpost.tp.common.mail.sendgrid.MailSenderSendGrid;
 import cm.travelpost.tp.common.sms.ent.service.SmsService;
+import cm.travelpost.tp.common.sms.ent.service.TextMagicService;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.FileUtils;
 import cm.travelpost.tp.constant.WSConstants;
@@ -108,8 +110,15 @@ public class CommonController  extends WSConstants {
     @Autowired
     protected MessageService messageService;
 
+
+    /** SMS Services **/
     @Autowired
     protected SmsService smsService;
+
+    @Autowired
+    protected TextMagicService tmSmsService;
+
+    /** SMS Services **/
 
 
     @Autowired
@@ -181,7 +190,29 @@ public class CommonController  extends WSConstants {
             }
             paginateResponse.setResults(results);
             paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-            paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
+            paginateResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL,count));
+            headers.add(HEADER_TOTAL, Long.toString(results.size()));
+        }
+        return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
+    }
+
+    protected ResponseEntity<PaginateResponse> getPaginateResponseSearchResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, int count, List results, PageBy pageBy ) {
+
+        if (count == 0) {
+            headers.add(HEADER_TOTAL, Long.toString(count));
+            paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_EMPTY_RESPONSE_LABEL);
+        } else {
+
+            if (CollectionsUtils.isNotEmpty(results)) {
+                paginateResponse.setCount(count);
+            }
+            paginateResponse.setResults(results);
+            paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+
+            if(pageBy == null || (pageBy!=null && pageBy.getPage()==Integer.valueOf(DEFAULT_PAGE))){
+                paginateResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL,count));
+            }
             headers.add(HEADER_TOTAL, Long.toString(results.size()));
         }
         return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
@@ -198,7 +229,7 @@ public class CommonController  extends WSConstants {
             paginateResponse.setCount(results.size());
             paginateResponse.setResults(results);
             paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-            paginateResponse.setRetDescription(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL);
+            paginateResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL, CollectionsUtils.size(results)));
             headers.add(HEADER_TOTAL, Long.toString(results.size()));
         }
         return new ResponseEntity<>(paginateResponse, HttpStatus.OK);

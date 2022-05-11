@@ -1,7 +1,6 @@
 package cm.travelpost.tp;
 
 
-import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -12,6 +11,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -22,12 +22,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@EnableEncryptableProperties
 @EnableBatchProcessing
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 //@EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = {"cm.travelpost.tp","cm.framework.ds"})
+@ComponentScan(basePackages = {"cm.travelpost.tp","cm.framework.ds"})
 public class TravelPostApplication extends SpringBootServletInitializer {
 
     private static Logger log = LoggerFactory.getLogger(TravelPostApplication.class);

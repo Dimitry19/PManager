@@ -185,78 +185,78 @@ public class Utility {
 
     // Using PreparedStatement
     public static void setPreparedStatementBoolean(PreparedStatement statement, int parameterIndex, Boolean x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.BOOLEAN);
+        if (x == null) statement.setNull(parameterIndex, Types.BOOLEAN);
         else statement.setBoolean(parameterIndex, x);
     }
 
     public static void setPreparedStatementInteger(PreparedStatement statement, int parameterIndex, Integer x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.INTEGER);
+        if (x == null) statement.setNull(parameterIndex, Types.INTEGER);
         else statement.setInt(parameterIndex, x);
     }
 
     public static void setPreparedStatementLong(PreparedStatement statement, int parameterIndex, Long x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.BIGINT);
+        if (x == null) statement.setNull(parameterIndex, Types.BIGINT);
         else statement.setLong(parameterIndex, x);
     }
 
     public static void setPreparedStatementFloat(PreparedStatement statement, int parameterIndex, Float x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.FLOAT);
+        if (x == null) statement.setNull(parameterIndex, Types.FLOAT);
         else statement.setFloat(parameterIndex, x);
     }
 
     public static void setPreparedStatementFloat(PreparedStatement statement, int parameterIndex, Double x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.DOUBLE);
+        if (x == null) statement.setNull(parameterIndex, Types.DOUBLE);
         else statement.setDouble(parameterIndex, x);
     }
 
     public static void setPreparedStatementString(PreparedStatement statement, int parameterIndex, String x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.VARCHAR);
+        if (x == null) statement.setNull(parameterIndex, Types.VARCHAR);
         else statement.setString(parameterIndex, x);
     }
 
     public static void setPreparedStatementDate(PreparedStatement statement, int parameterIndex, Date x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.DATE);
+        if (x == null) statement.setNull(parameterIndex, Types.DATE);
         else statement.setTimestamp(parameterIndex, new Timestamp(x.getTime()));
     }
 
     public static void setPreparedStatementTime(PreparedStatement statement, int parameterIndex, Time x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.TIME);
+        if (x == null) statement.setNull(parameterIndex, Types.TIME);
         else statement.setTime(parameterIndex, x);
     }
 
     // Using CallableStatement
     public static void setCallableStatementBoolean(CallableStatement statement, int parameterIndex, Boolean x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.BOOLEAN);
+        if (x == null) statement.setNull(parameterIndex, Types.BOOLEAN);
         else statement.setBoolean(parameterIndex, x);
     }
 
     public static void setCallableStatementInteger(CallableStatement statement, int parameterIndex, Integer x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.INTEGER);
+        if (x == null) statement.setNull(parameterIndex, Types.INTEGER);
         else statement.setInt(parameterIndex, x);
     }
 
     public static void setCallableStatementLong(CallableStatement statement, int parameterIndex, Long x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.BIGINT);
+        if (x == null) statement.setNull(parameterIndex, Types.BIGINT);
         else statement.setLong(parameterIndex, x);
     }
 
     public static void setCallableStatementFloat(CallableStatement statement, int parameterIndex, Float x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.FLOAT);
+        if (x == null) statement.setNull(parameterIndex, Types.FLOAT);
         else statement.setFloat(parameterIndex, x);
     }
 
     public static void setCallableStatementFloat(CallableStatement statement, int parameterIndex, Double x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.DOUBLE);
+        if (x == null) statement.setNull(parameterIndex, Types.DOUBLE);
         else statement.setDouble(parameterIndex, x);
     }
 
     public static void setCallableStatementString(CallableStatement statement, int parameterIndex, String x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.VARCHAR);
+        if (x == null) statement.setNull(parameterIndex, Types.VARCHAR);
         else statement.setString(parameterIndex, x);
     }
 
     public static void setCallableStatementDate(CallableStatement statement, int parameterIndex, Date x) throws SQLException {
-        if (x == null) statement.setNull(parameterIndex, java.sql.Types.DATE);
+        if (x == null) statement.setNull(parameterIndex, Types.DATE);
         else statement.setTimestamp(parameterIndex, new Timestamp(x.getTime()));
     }
 

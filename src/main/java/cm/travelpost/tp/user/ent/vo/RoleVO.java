@@ -25,6 +25,8 @@ public class RoleVO extends WSCommonResponseVO {
     public static final String FINDBYID = "cm.travelpost.tp.user.ent.vo.RoleVO.findById";
     public static final String FINDBYDESC = "cm.travelpost.tp.user.ent.vo.RoleVO.findByDesc";
 
+    public static final String ROLE_PRE_VERIFICATION_USER = "ROLE_PRE_VERIFICATION_USER";
+
     private int id;
 
     private RoleEnum description;

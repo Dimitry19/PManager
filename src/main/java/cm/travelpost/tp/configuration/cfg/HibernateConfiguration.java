@@ -1,5 +1,8 @@
 package cm.travelpost.tp.configuration.cfg;
 
+import cm.framework.ds.common.security.CommonSecurityResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -17,60 +20,66 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @Component("entityManagerFactory")
-public class HibernateConfiguration {
+public class HibernateConfiguration  extends CommonSecurityResource {
+
+    private static Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
 
     @Value("${db.driver}")
-    private String DRIVER;
+    private String driverClassName;
 
     @Value("${db.password}")
-    private String PASSWORD;
+    private String password;
 
     @Value("${hibernate.datasource.url}")
-    private String URL;
+    private String url;
 
     @Value("${db.username}")
-    private String USERNAME;
+    private String username;
 
     @Value("${spring.jpa.database-platform}")
-    private String DIALECT;
+    private String dialect;
 
     @Value("${hibernate.show_sql}")
-    private String SHOW_SQL;
+    private String showSql;
 
     @Value("${hibernate.hbm2ddl.auto}")
-    private String HBM2DDL_AUTO;
+    private String hbm2DdlAuto;
 
     @Value("${entitymanager.packagesToScan}")
-    private String PACKAGES_TO_SCAN;
+    private String packagesToScan;
 
     @Value("${hibernate.default_schema}")
     private String SCHEMA;
 
 
     @Value("${transaction.factory_class}")
-    private String TRANSACTION_FACTORY_CLASS;
+    private String transactionFactoryClass;
 
     @Value("${current_session_context_class}")
-    private String CURRENT_SESSION_CONEXT_CLASS;
+    private String currentSessionContextClass;
 
     @Value("${hibernate.enable_lazy_load_no_trans}")
-    private boolean ENABLE_LAZY_TRANS;
+    private boolean enableLazyTrans;
 
 
     @Value("${connection.pool_size}")
-    private int POOL_SIZE;
-
+    private int poolSize;
 
 
 
     @Bean
     @ConfigurationProperties(prefix = "hibernate.datasource")
     public DataSource dataSource() {
+
+        if(logger.isDebugEnabled()){
+            logger.info("Loading datasource...");
+        }
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(DRIVER);
-        dataSource.setUrl(URL);
-        dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername(encryptorBean.decrypt(username));
+        dataSource.setPassword(encryptorBean.decrypt(password));
         return dataSource;
     }
 
@@ -78,17 +87,17 @@ public class HibernateConfiguration {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(PACKAGES_TO_SCAN);
+        sessionFactory.setPackagesToScan(packagesToScan);
         Properties hibernateProperties = new Properties();
-        hibernateProperties.put("hibernate.dialect", DIALECT);
-        hibernateProperties.put("hibernate.show_sql", SHOW_SQL);
-        hibernateProperties.put("hibernate.hbm2ddl.auto", HBM2DDL_AUTO);
+        hibernateProperties.put("hibernate.dialect", dialect);
+        hibernateProperties.put("hibernate.show_sql", showSql);
+        hibernateProperties.put("hibernate.hbm2ddl.auto", hbm2DdlAuto);
         // Ajouer par moi
        // hibernateProperties.put("hibernate.default_schema", SCHEMA);
-        hibernateProperties.put("hibernate.enable_lazy_load_no_trans", ENABLE_LAZY_TRANS);
-        hibernateProperties.put("connection.pool_size", POOL_SIZE);
-        hibernateProperties.put("transaction.factory_class", TRANSACTION_FACTORY_CLASS);
-        hibernateProperties.put("current_session_context_class", CURRENT_SESSION_CONEXT_CLASS);
+        hibernateProperties.put("hibernate.enable_lazy_load_no_trans", enableLazyTrans);
+        hibernateProperties.put("connection.pool_size", poolSize);
+        hibernateProperties.put("transaction.factory_class", transactionFactoryClass);
+        hibernateProperties.put("current_session_context_class", currentSessionContextClass);
 
         sessionFactory.setHibernateProperties(hibernateProperties);
         return sessionFactory;

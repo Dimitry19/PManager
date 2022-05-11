@@ -21,13 +21,16 @@ import java.util.Set;
 
 @Entity
 @Table(name = "notification")
+
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
 })
-@Where(clause = FilterConstants.FILTER_NOTIFICATION_CANC_COMPLETED)
+@Where(clause = FilterConstants.FILTER_NOTIFICATION_CANC)
 public class NotificationVO extends CommonVO {
 
     private static final long serialVersionUID = 6473029882566244786L;
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -40,6 +40,14 @@ public class DateUtils {
         }
     }
 
+    public static String getDateStandardHMS(Date date) {
+        try {
+            return new SimpleDateFormat(STD_PATTERN_HMS).format(date);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     public static Date currentDate() {
         try {
             return  dateWithoutTime( new Date());
@@ -114,11 +122,11 @@ public class DateUtils {
         return java.sql.Date.valueOf(dateToConvert);
     }
 
-    public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert) {
-        return convertToLocalDateTimeViaMilisecond(dateToConvert.getTime());
+    public static LocalDateTime convertToLocalDateTimeViaMillisecond(Date dateToConvert) {
+        return convertToLocalDateTimeViaMillisecond(dateToConvert.getTime());
     }
 
-    public static LocalDateTime convertToLocalDateTimeViaMilisecond(long milliseconds) {
+    public static LocalDateTime convertToLocalDateTimeViaMillisecond(long milliseconds) {
         return Instant.ofEpochMilli(milliseconds)
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();

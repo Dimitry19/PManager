@@ -1,0 +1,14 @@
+
+-- MySql
+ALTER TABLE tp_user
+    ADD COLUMN MULTIPLE_FACTOR_AUTH   tinyint(1) not null AFTER PASSWORD;
+ALTER TABLE tp_user
+    ADD COLUMN MFA_SECRET  varchar(255) not null  AFTER MULTIPLE_FACTOR_AUTH;
+
+
+--H2----
+
+ALTER TABLE tp_user
+    ADD COLUMN MULTIPLE_FACTOR_AUTH   BOOLEAN not null default true;
+ALTER TABLE tp_user
+    ADD COLUMN MFA_SECRET  varchar(255) ;
