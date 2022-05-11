@@ -22,9 +22,9 @@ public class WebServiceResponseCode {
 
 
 
-    public static final String CREATE_LABEL = "{0} correctement inserée";
-    public static final String CANCELLED_LABEL = "{0} correctement éliminé(e) ";
-    public static final String UPDATED_LABEL = "{0}  correctement ajourné(e) ";
+    public static final String CREATE_LABEL = "{0}  inserée";
+    public static final String CANCELLED_LABEL = "{0}  éliminé(e) ";
+    public static final String UPDATED_LABEL = "{0}  ajourné(e) ";
 
 
     public static final String SUBSCRIBE_LABEL = "Abonnement reussi";
@@ -32,7 +32,7 @@ public class WebServiceResponseCode {
     public static final String UPDATE_PASSWORD_LABEL = "Mot de passe ajourné correctement";
 
     public static final String CONTACT_US_LABEL = "Merci pour votre correspondance, vous serez recontacté";
-    public static final String UPDATED_RESERV_LABEL = "La reservation été correctement {0}";
+    public static final String UPDATED_RESERV_LABEL = "La reservation a été {0}";
 
 
     // NOK LABEL
