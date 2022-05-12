@@ -17,6 +17,12 @@ public class CommonSecurityResource {
     @Value("${jwt.expirationDateInMs}")
     protected int jwtExpirationInMs;
 
+    @Value("${jwt.short.expirationDateInMs}")
+    protected int jwtShortExpirationInMs;
+
     @Value("${custom.api.auth.http.tokenValue}")
     protected String token;
+
+
+
 }

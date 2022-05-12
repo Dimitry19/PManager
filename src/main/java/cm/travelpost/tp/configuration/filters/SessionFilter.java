@@ -142,9 +142,9 @@ public class SessionFilter extends CustomOncePerRequestFilter implements IFilter
         boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(decryptToken));
         boolean isService=uri.contains(service) && isApiKey;
 
-        boolean isLogout=uri.contains(USER_WS_LOGOUT);
+        boolean isLogout=uri.contains(LOGOUT);
         boolean isLogin=uri.contains(USER_WS_LOGIN);
-        boolean isRegister=uri.contains(USER_WS_REGISTRATION);
+        boolean isRegister=uri.contains(REGISTRATION);
         boolean isFind=uri.contains(FIND);
 
 
