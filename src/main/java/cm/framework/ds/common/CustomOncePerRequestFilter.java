@@ -21,6 +21,10 @@ public abstract class CustomOncePerRequestFilter  extends OncePerRequestFilter {
 
 	@Autowired
 	protected UserService userService;
+
+	@Autowired
+	protected SessionManager sessionManager;
+
 	@Resource(name ="jasyptStringEncryptor")
 	protected StringEncryptor encryptorBean;
 
@@ -33,7 +37,6 @@ public abstract class CustomOncePerRequestFilter  extends OncePerRequestFilter {
 	@Value("${custom.user.guest}")
 	protected String guest;
 
-
 	@Value("${custom.api.auth.http.tokenName}")
 	protected String tokenName;
 
@@ -43,8 +46,10 @@ public abstract class CustomOncePerRequestFilter  extends OncePerRequestFilter {
 	@Value("${url.service}")
 	protected String service;
 
-	@Autowired
-	protected SessionManager sessionManager;
+	@Value("${tp.travelpost.postman.enable}")
+	protected boolean postman;
+	@Value("${tp.travelpost.active.session.filter.enable}")
+	protected boolean enableFilter;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

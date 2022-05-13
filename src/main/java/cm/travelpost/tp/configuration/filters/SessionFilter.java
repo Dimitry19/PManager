@@ -9,7 +9,6 @@ import cm.travelpost.tp.user.ent.vo.UserVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import org.apache.http.HttpStatus;
-import org.jasypt.encryption.StringEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +25,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -55,17 +53,6 @@ public class SessionFilter extends CustomOncePerRequestFilter implements IFilter
     @Value("${tp.travelpost.app.escape.home}")
     private String escapeHome;
 
-    @Value("${tp.travelpost.postman.enable}")
-    private boolean postman;
-    @Value("${tp.travelpost.active.session.filter.enable}")
-    private boolean enableFilter;
-
-    @Resource(name ="jasyptStringEncryptor")
-    private  StringEncryptor encryptorBean;
-
-
-
-
     private  String decryptToken=null;
 
     @PostConstruct
@@ -79,12 +66,10 @@ public class SessionFilter extends CustomOncePerRequestFilter implements IFilter
 
 
         try{
-            // JWT Token is in the form "Bearer token". Remove Bearer word and
-            // get  only the Token
+
             if(logger.isDebugEnabled()){
                 logger.debug("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
             }
-
 
             if(!validate(request) && !postman && enableFilter){
                 error(response);
@@ -134,8 +119,8 @@ public class SessionFilter extends CustomOncePerRequestFilter implements IFilter
 
         String uri=request.getRequestURI();
 
-        String tk1=request.getHeader(encryptorBean.decrypt(tokenName));
-        String apiKey=StringUtils.isNotEmpty(tk1) ?encryptorBean.decrypt(tk1):null;
+        String decryptedTokenName=request.getHeader(encryptorBean.decrypt(tokenName));
+        String apiKey=StringUtils.isNotEmpty(decryptedTokenName) ?encryptorBean.decrypt(decryptedTokenName):null;
 
         String username=request.getHeader(sessionHeader);
 

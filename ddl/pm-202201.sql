@@ -233,6 +233,7 @@ create table ANNOUNCE
 (
     ID BIGINT  auto_increment
         primary key,
+    CODE VARCHAR(10) not null,
     TOKEN VARCHAR(255) not null,
     DEPARTURE VARCHAR(255) not null,
     ARRIVAL VARCHAR(255) not null,

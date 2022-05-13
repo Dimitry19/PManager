@@ -27,7 +27,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 //@EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = {"cm.travelpost.tp","cm.framework.ds"})
-@ComponentScan(basePackages = {"cm.travelpost.tp","cm.framework.ds", "dev.samstevens.totp.qr"})
+@ComponentScan(basePackages = {"cm.travelpost.tp","cm.framework.ds"})
 public class TravelPostApplication extends SpringBootServletInitializer {
 
     private static Logger log = LoggerFactory.getLogger(TravelPostApplication.class);

@@ -240,6 +240,7 @@ alter table tp_user
 create table announce
 (
        ID bigint auto_increment,
+       CODE varchar(10) not null,
        TOKEN varchar(255) not null,
        ANNOUNCE_TYPE varchar(10) null,
        DEPARTURE varchar(255) not null,
