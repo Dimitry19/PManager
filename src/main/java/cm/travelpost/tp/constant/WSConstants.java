@@ -15,6 +15,7 @@ public class WSConstants extends CommonProperties {
     public static final String BASE_PATTERN= "/ws/*";
 
 
+    public static final String ONLY_SERVICE = "/services";
     public static final String DASHBOARD = "/dashboard";
     public static final String CREATE = "/create";
     public static final String ADD = "/add";

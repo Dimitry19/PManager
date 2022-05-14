@@ -1,8 +1,8 @@
 package cm.travelpost.tp.security;
 
 
+import cm.framework.ds.common.authentication.filter.TokenAuthenticationFilter;
 import cm.travelpost.tp.configuration.filters.AuthenticationFilter;
-import cm.travelpost.tp.configuration.filters.SessionFilter;
 import cm.travelpost.tp.websocket.constants.WebSocketConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,11 +124,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public FilterRegistrationBean  sessionFilterBean() {
+    public FilterRegistrationBean  tokenFilterBean() {
         FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
-        SessionFilter sessionFilter = new SessionFilter();
+        TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter();
 
-        registrationBean.setFilter(sessionFilter);
+        registrationBean.setFilter(tokenAuthenticationFilter);
         registrationBean.addUrlPatterns("/user/*");
         registrationBean.setOrder(2);
         return registrationBean;
