@@ -36,7 +36,7 @@ public class WSConstants extends CommonProperties {
     public static final String USER_WS = "/ws/user/*";
     public static final String USER_WS_REGISTRATION = "/register";
     public static final String USER_WS_CONFIRMATION = "/confirm";
-    public static final String USER_WS_LOGIN = "/ulogin";
+    public static final String USER_WS_LOGIN = "/authenticate";
     public static final String USER_WS_LOGOUT = "/logout";
     public static final String USER_WS_USERS = "/users";
     public static final String USER_WS_USERS_PAGE_NO = "/users/{pageno}";
