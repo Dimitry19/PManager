@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "e756f0af-9a25-4258-90b5-eda7a625940c",
+		"name": "TP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "TP - OTP",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-amz-security-token",
+						"value": "QDKCi8Z8UzmGtVKqoT4sqcDLXeiX2JJaXExlJOvOqhF6zevs3fo+wGWg7DPfveND",
+						"type": "text"
+					},
+					{
+						"key": "session-user",
+						"value": "Guest",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"to\":\"+393887576185\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/services/ws/sms/tmsend",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"services",
+						"ws",
+						"sms",
+						"tmsend"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TP - authenticate - register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "926D9.6C90030DD58429D27.51AC1BDBBC",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "QDKCi8Z8UzmGtVKqoT4sqcDLXeiX2JJaXExlJOvOqhF6zevs3fo+wGWg7DPfveND",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "session-user",
+						"value": "7xssksbptxg/vjWJvgz9fKBP8Fp++FkR5j9pJIoYLZ1ipdAsi6t37MLqx3Vla6D/",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"patrickmboma@yahoo.fr\",\r\n  \"firstName\": \"patrick\",\r\n  \"gender\": \"NOT_DEFINE\",\r\n  \"lastName\": \"mboma\",\r\n  \"password\": \"!Gen22KE\",\r\n  \"phone\": \"3887006185\",\r\n  \"provider\": \"\",\r\n  \"role\": \"USER\",\r\n  \"socialId\": \"\",\r\n \"username\": \"mboma\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/services/ws/authenticate/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"services",
+						"ws",
+						"authenticate",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Announce user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "AUTH_API_KEY",
+						"value": "abcd123456",
+						"type": "text"
+					},
+					{
+						"key": "session-user",
+						"value": "gennesis",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/services/ws/announce/user?page=0&size=12&userId=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"services",
+						"ws",
+						"announce",
+						"user"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "12"
+						},
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

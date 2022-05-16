@@ -23,6 +23,11 @@ set B.CODE = A.CODE
 update  message set TOKEN ='TP';
 update  review set TOKEN ='TP';
 update  airline set TOKEN ='TP';
+
+
+
+
+
 --Scripts à executer sur H2----
 
 ALTER TABLE tp_user
