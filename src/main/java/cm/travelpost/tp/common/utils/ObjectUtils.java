@@ -57,6 +57,8 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
             throw new RuntimeException("Erreur, veuillez verifier le path valorisé", th);
         }
     }
+
+
     public static boolean isNotNullable(Object obj) {
         return obj!=null;
     }

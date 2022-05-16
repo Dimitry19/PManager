@@ -5,14 +5,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="Config svil du 30/04/2022">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_2_3_0_RELEASE.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es2015.957fdab963a836ffa00d.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es5.957fdab963a836ffa00d.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/scripts.269c32ad58672c4eca5d.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/security/CommonSecurityResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/security/CommonSecurityResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerApiConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceMasterVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceMasterVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/notification/NotificationCompletedJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/notification/NotificationCompletedJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/DateUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/DateUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/HTMLEntities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/HTMLEntities.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/ObjectUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/ObjectUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/FieldConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/FieldConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/security/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/RoleVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/RoleVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/totp/TotpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/totp/TotpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/AnnounceSearchDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/AnnounceSearchDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/CodeVerificationDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/WebServiceResponseCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/WebServiceResponseCode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.b91cbf1c75ec802d97e4.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/main-es2015.b91cbf1c75ec802d97e4.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.b91cbf1c75ec802d97e4.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/main-es5.b91cbf1c75ec802d97e4.js" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,18 +104,6 @@
         <item name="cl6j8lyroz9fs4ut: schema" type="76f4a085:MysqlImplModel$Schema" />
         <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="DB MYSQL [AWS] [2]" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="cl6j8lyroz9fs4ut: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="user_notification: table" type="285a2a93:MysqlImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="HOME" type="feb32156:DbDataSourceImpl" />
-      </path>
     </expand>
     <select />
   </component>
@@ -89,96 +113,40 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="41" column="31" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
+              <folding>
+                <element signature="e#2125#2170#1" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="675">
+              <caret line="45" column="57" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/logs/tp-application-hbn.log">
-          <provider selected="true" editor-type-id="LogFileEditorProvider" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/logs/tp-application.log">
-          <provider selected="true" editor-type-id="LogFileEditorProvider">
-            <state relative-caret-position="585">
-              <caret line="39" selection-start-line="39" selection-end-line="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="62" column="54" selection-start-line="62" selection-start-column="54" selection-end-line="62" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="355" column="24" selection-start-line="355" selection-start-column="24" selection-end-line="355" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/package-info.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceMasterVO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1362">
-              <caret line="48" column="13" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#83#1" expanded="true" />
-                <element signature="e#0#94#1" expanded="true" />
-                <element signature="e#0#88#1" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/listeners/WebSocketEventListener.java">
-          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="31" selection-start-line="31" selection-end-line="31" />
+              <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="861" selection-start-line="861" selection-end-line="861" />
-              <folding>
-                <element signature="e#1#11#0" expanded="true" />
-                <element signature="e#1#5#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificatorServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2145">
-              <caret line="174" selection-start-line="174" selection-end-line="174" />
+            <state relative-caret-position="-309">
+              <caret line="144" column="28" selection-start-line="144" selection-start-column="28" selection-end-line="144" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -196,17 +164,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>fi</find>
-      <find>devt</find>
-      <find>response.setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);</find>
-      <find>comparator</find>
-      <find>swagg</find>
-      <find>https://trave</find>
-      <find>travelpost-cm.herokuapp.com</find>
-      <find>PUBLI</find>
       <find>dele</find>
       <find>travelpost</find>
-      <find>create</find>
       <find>amz</find>
       <find>TRA</find>
       <find>announcesSt</find>
@@ -218,7 +177,6 @@
       <find>tomc</find>
       <find>login</find>
       <find>actuator</find>
-      <find>http://tra</find>
       <find>travel.post.stomp.notification.origin.localhost</find>
       <find>stopm</find>
       <find>show</find>
@@ -226,6 +184,16 @@
       <find>server</find>
       <find>http://localhost:8080</find>
       <find>service.port.aws</find>
+      <find>http://tra</find>
+      <find>delete</find>
+      <find>local</find>
+      <find>server.port</find>
+      <find>postman</find>
+      <find>where</find>
+      <find>create</find>
+      <find>AND</find>
+      <find>joinCategory</find>
+      <find>gues</find>
     </findStrings>
     <replaceStrings>
       <replace>localhost</replace>
@@ -286,57 +254,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/enums/NotificationType.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/main-es5.efd6452bd327bb2492c6.js" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/main-es2015.efd6452bd327bb2492c6.js" />
-        <option value="$PROJECT_DIR$/src/main/resources/encrypted.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/configuration/TwilloConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/JasyptConfiguration.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/config.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/dao/SmsDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/configuration/GuavaOTPConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/TotpService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/otp/SignupResponse.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/LoginDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/SignupDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/CodeVerificationDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/Response.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/TotpServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceGuavaImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/totp/TotpController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerApiConfig.java" />
-        <option value="$PROJECT_DIR$/ddl/pm-202201.sql" />
-        <option value="$PROJECT_DIR$/ddl/pm-202201-my-sql.sql" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/Gender.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/logback-spring.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java" />
-        <option value="$PROJECT_DIR$/logs/tp-application.log" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/security/WebSecurityConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/main-es5.1475b467c248c4b3940c.js" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/main-es2015.1475b467c248c4b3940c.js" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/vo/NotificationVO.java" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAOImpl.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/main-es5.b91cbf1c75ec802d97e4.js" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/main-es2015.b91cbf1c75ec802d97e4.js" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" />
       </list>
     </option>
   </component>
@@ -379,9 +300,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="852" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectId" id="26NIITASinlHudPOvdCo5Fw5A25" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -392,6 +312,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="CatdeaLogs" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -399,60 +320,12 @@
               <item name="Travel Post" type="b2602c69:ProjectViewProjectNode" />
               <item name="PManager" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Travel Post" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="logs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Travel Post" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Travel Post" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Travel Post" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Travel Post" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Travel Post" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Travel Post" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="CatdeaLogs" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -477,7 +350,7 @@
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="H2" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="D:/Downloads/sonarlint-intellij-6.7.0.45926.zip" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.stylelint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.stylelint" value="project" />
@@ -485,7 +358,7 @@
     <property name="node.js.selected.package.stylelint" value="" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -495,12 +368,15 @@
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\DevJava\ws\PManager\src\main\resources" />
-      <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/main/resources/templates" />
-      <recent name="$PROJECT_DIR$/src/main/resources/dist" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="cm.framework.ds.common.security" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\packagemanager\pmanager\city" />
+      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\framework\hibernate\dao" />
+      <recent name="F:\DevJava\ws\PManager" />
+      <recent name="F:\DevJava\ws\PManager\ddl" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="cm.travelpost.tp.ws.controller.rest.users.totp" />
@@ -509,12 +385,12 @@
       <recent name="cm.packagemanager.pmanager.communication.ent.dao" />
       <recent name="cm.packagemanager.pmanager.communication.ent.service" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\packagemanager\pmanager\city" />
-      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\framework\hibernate\dao" />
-      <recent name="F:\DevJava\ws\PManager" />
-      <recent name="F:\DevJava\ws\PManager\ddl" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\DevJava\ws\PManager\src\main\resources" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/main/resources/templates" />
+      <recent name="$PROJECT_DIR$/src/main/resources/dist" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -533,9 +409,9 @@
         </RuleState>
       </list>
     </option>
-    <option name="contentProportion" value="0.16107872" />
+    <option name="contentProportion" value="0.19606414" />
   </component>
-  <component name="RunManager" selected="Maven.clean">
+  <component name="RunManager" selected="Maven.package">
     <configuration name="TravelPostApplicationDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="MAIN_CLASS_NAME" value="cm.travelpost.tp.TravelPostApplicationDemo" />
@@ -813,63 +689,22 @@
       <workItem from="1651247329122" duration="1822000" />
       <workItem from="1651278158398" duration="3660000" />
       <workItem from="1651282213157" duration="7742000" />
-      <workItem from="1651509942423" duration="12527000" />
-    </task>
-    <task id="LOCAL-00108" summary="Modifications Variées">
-      <created>1648256419859</created>
-      <option name="number" value="00108" />
-      <option name="presentableId" value="LOCAL-00108" />
-      <option name="project" value="LOCAL" />
-      <updated>1648256419862</updated>
-    </task>
-    <task id="LOCAL-00109" summary="Modifications Variées">
-      <created>1648257781635</created>
-      <option name="number" value="00109" />
-      <option name="presentableId" value="LOCAL-00109" />
-      <option name="project" value="LOCAL" />
-      <updated>1648257781635</updated>
-    </task>
-    <task id="LOCAL-00110" summary="Modifications Variées">
-      <created>1648259372490</created>
-      <option name="number" value="00110" />
-      <option name="presentableId" value="LOCAL-00110" />
-      <option name="project" value="LOCAL" />
-      <updated>1648259372490</updated>
-    </task>
-    <task id="LOCAL-00111" summary="Modifications Variées">
-      <created>1648260343048</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1648260343048</updated>
-    </task>
-    <task id="LOCAL-00112" summary="Modifications Variées">
-      <created>1648260533812</created>
-      <option name="number" value="00112" />
-      <option name="presentableId" value="LOCAL-00112" />
-      <option name="project" value="LOCAL" />
-      <updated>1648260533812</updated>
-    </task>
-    <task id="LOCAL-00113" summary="Correction de la notification">
-      <created>1648261341818</created>
-      <option name="number" value="00113" />
-      <option name="presentableId" value="LOCAL-00113" />
-      <option name="project" value="LOCAL" />
-      <updated>1648261341818</updated>
-    </task>
-    <task id="LOCAL-00114" summary="Correction de la notification">
-      <created>1648489172691</created>
-      <option name="number" value="00114" />
-      <option name="presentableId" value="LOCAL-00114" />
-      <option name="project" value="LOCAL" />
-      <updated>1648489172693</updated>
-    </task>
-    <task id="LOCAL-00115" summary="Gestion envoi mail avec google">
-      <created>1648510244252</created>
-      <option name="number" value="00115" />
-      <option name="presentableId" value="LOCAL-00115" />
-      <option name="project" value="LOCAL" />
-      <updated>1648510244252</updated>
+      <workItem from="1651509942423" duration="12556000" />
+      <workItem from="1651607697123" duration="2348000" />
+      <workItem from="1651617697437" duration="34000" />
+      <workItem from="1651617796534" duration="448000" />
+      <workItem from="1651618795328" duration="2473000" />
+      <workItem from="1651775235913" duration="20625000" />
+      <workItem from="1651929568353" duration="179000" />
+      <workItem from="1651929808089" duration="1478000" />
+      <workItem from="1652012611492" duration="123000" />
+      <workItem from="1652019378046" duration="143000" />
+      <workItem from="1652122466792" duration="108000" />
+      <workItem from="1652126122472" duration="4000" />
+      <workItem from="1652166299228" duration="21000" />
+      <workItem from="1652472999439" duration="208000" />
+      <workItem from="1652631801212" duration="1479000" />
+      <workItem from="1652731971549" duration="212000" />
     </task>
     <task id="LOCAL-00116" summary="Mail senders Configuration">
       <created>1648687311583</created>
@@ -1158,11 +993,67 @@
       <option name="project" value="LOCAL" />
       <updated>1651528360148</updated>
     </task>
-    <option name="localTasksCounter" value="157" />
+    <task id="LOCAL-00157" summary="Config svil du 03/05/2022">
+      <created>1651529332819</created>
+      <option name="number" value="00157" />
+      <option name="presentableId" value="LOCAL-00157" />
+      <option name="project" value="LOCAL" />
+      <updated>1651529332819</updated>
+    </task>
+    <task id="LOCAL-00158" summary="Config svil du 03/05/2022">
+      <created>1651609452985</created>
+      <option name="number" value="00158" />
+      <option name="presentableId" value="LOCAL-00158" />
+      <option name="project" value="LOCAL" />
+      <updated>1651609452987</updated>
+    </task>
+    <task id="LOCAL-00159" summary="Notification VO">
+      <created>1651611345460</created>
+      <option name="number" value="00159" />
+      <option name="presentableId" value="LOCAL-00159" />
+      <option name="project" value="LOCAL" />
+      <updated>1651611345460</updated>
+    </task>
+    <task id="LOCAL-00160" summary="Config svil du 30/04/2022">
+      <created>1651613345823</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1651613345823</updated>
+    </task>
+    <task id="LOCAL-00161" summary="Insert cities into tables aws">
+      <created>1651622805070</created>
+      <option name="number" value="00161" />
+      <option name="presentableId" value="LOCAL-00161" />
+      <option name="project" value="LOCAL" />
+      <updated>1651622805071</updated>
+    </task>
+    <task id="LOCAL-00162" summary="Refactoring methode de recherche des annonces - conf. home">
+      <created>1651796727668</created>
+      <option name="number" value="00162" />
+      <option name="presentableId" value="LOCAL-00162" />
+      <option name="project" value="LOCAL" />
+      <updated>1651796727670</updated>
+    </task>
+    <task id="LOCAL-00163" summary="Config svil du 15/05/2022">
+      <created>1652633661220</created>
+      <option name="number" value="00163" />
+      <option name="presentableId" value="LOCAL-00163" />
+      <option name="project" value="LOCAL" />
+      <updated>1652633661221</updated>
+    </task>
+    <task id="LOCAL-00164" summary="Config svil du 15/05/2022">
+      <created>1652633731453</created>
+      <option name="number" value="00164" />
+      <option name="presentableId" value="LOCAL-00164" />
+      <option name="project" value="LOCAL" />
+      <updated>1652633731454</updated>
+    </task>
+    <option name="localTasksCounter" value="165" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="734937000" />
+    <option name="totallyTimeSpent" value="1899000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1176,54 +1067,48 @@
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8467742" visible="true" weight="0.18285714" />
-      <window_info id="Structure" order="1" sideWeight="0.15845825" side_tool="true" weight="0.17381974" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Web" order="5" side_tool="true" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info id="Capture Tool" order="7" />
-      <window_info id="Persistence" order="8" sideWeight="0.15322581" side_tool="true" visible="true" weight="0.18285714" />
-      <window_info id="Learn" order="9" />
-      <window_info id="aws.explorer" order="10" side_tool="true" />
-      <window_info id="DB Browser" order="11" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25714287" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Persistence" order="2" side_tool="true" />
+      <window_info id="Designer" order="3" />
+      <window_info id="Learn" order="4" />
+      <window_info id="Image Layers" order="5" />
+      <window_info id="aws.explorer" order="6" side_tool="true" />
+      <window_info id="DB Browser" order="7" />
+      <window_info id="Capture Tool" order="8" />
+      <window_info id="UI Designer" order="9" />
+      <window_info id="Favorites" order="10" side_tool="true" />
+      <window_info id="Web" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32178217" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5965665" visible="true" weight="0.53960395" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6888412" weight="0.5049505" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49928573" weight="0.32920793" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
-      <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
-      <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.32655826" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.40343347" side_tool="true" weight="0.38166046" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.48211733" weight="0.48886138" />
-      <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
-      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.6251788" weight="0.43360433" />
-      <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49785408" weight="0.29491946" />
-      <window_info anchor="bottom" id="TypeScript" order="15" />
-      <window_info anchor="bottom" id="Inspection Results" order="16" weight="0.32917705" />
-      <window_info anchor="bottom" id="Docker" order="17" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Hibernate Console" order="18" weight="0.32971507" />
-      <window_info anchor="bottom" id="JPA Console" order="19" weight="0.32971507" />
-      <window_info anchor="bottom" id="Run Dashboard" order="20" weight="0.50866336" />
-      <window_info anchor="bottom" id="DB Execution Console" order="21" />
-      <window_info anchor="bottom" id="SonarLint" order="22" />
-      <window_info anchor="bottom" id="DB Diagnostics" order="23" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="DB Execution Console" order="7" />
+      <window_info anchor="bottom" id="Spring" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5007143" side_tool="true" visible="true" weight="0.32920793" />
+      <window_info anchor="bottom" id="SonarLint" order="12" />
+      <window_info anchor="bottom" id="Java Enterprise" order="13" />
+      <window_info anchor="bottom" id="Database Changes" order="14" />
+      <window_info anchor="bottom" id="Version Control" order="15" />
+      <window_info anchor="bottom" id="DB Diagnostics" order="16" />
+      <window_info anchor="bottom" id="Run Dashboard" order="17" weight="0.32920793" />
+      <window_info anchor="bottom" id="Thumbnails" order="18" weight="0.32920793" />
+      <window_info anchor="bottom" id="Messages" order="19" weight="0.32920793" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49810606" weight="0.24964234" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" weight="0.3297568" />
-      <window_info anchor="right" id="Database" order="6" sideWeight="0.49810606" visible="true" weight="0.09071428" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="right" id="Maven" order="4" />
+      <window_info anchor="right" id="Palette" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49810606" weight="0.3297568" />
-      <window_info anchor="right" id="Coverage" order="10" sideWeight="0.50189394" side_tool="true" weight="0.24964234" />
-      <window_info anchor="right" id="Maven" order="11" />
+      <window_info anchor="right" id="Bean Validation" order="9" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1277,10 +1162,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="Configuration intellij boulot + gestion ville" />
-    <MESSAGE value="Refactoring du package + config home" />
-    <MESSAGE value="Refactoring du package + modifications variées +config home" />
-    <MESSAGE value="Deploy Heroku 10/04/2022" />
     <MESSAGE value="Deploy Heroku 10/04/2022 + script mysql" />
     <MESSAGE value="Deploy Heroku 10/04/2022 + logback config correct" />
     <MESSAGE value="Centralisation generation message notification" />
@@ -1299,10 +1180,40 @@
     <MESSAGE value="Implementation encrypt mot de passe file config." />
     <MESSAGE value="Debut implementation TOTP authentication" />
     <MESSAGE value="Modification de la classe NotificatorServiceImpl" />
-    <MESSAGE value="Config svil du 30/04/2022" />
     <MESSAGE value="Config svil du 02/05/2022" />
     <MESSAGE value="Config svil du 03/05/2022" />
-    <option name="LAST_COMMIT_MESSAGE" value="Config svil du 03/05/2022" />
+    <MESSAGE value="Notification VO" />
+    <MESSAGE value="Config svil du 30/04/2022" />
+    <MESSAGE value="Insert cities into tables aws" />
+    <MESSAGE value="Refactoring methode de recherche des annonces - conf. home" />
+    <MESSAGE value="Config svil du 15/05/2022" />
+    <option name="LAST_COMMIT_MESSAGE" value="Config svil du 15/05/2022" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1049" height="405" key="GridCell.Tab.0.bottom" />
+    <state width="1049" height="405" key="GridCell.Tab.0.bottom/0.23.1440.852@0.23.1440.852" />
+    <state width="1049" height="405" key="GridCell.Tab.0.center" />
+    <state width="1049" height="405" key="GridCell.Tab.0.center/0.23.1440.852@0.23.1440.852" />
+    <state width="1049" height="405" key="GridCell.Tab.0.left" />
+    <state width="1049" height="405" key="GridCell.Tab.0.left/0.23.1440.852@0.23.1440.852" />
+    <state width="1049" height="405" key="GridCell.Tab.0.right" />
+    <state width="1049" height="405" key="GridCell.Tab.0.right/0.23.1440.852@0.23.1440.852" />
+    <state width="1049" height="405" key="GridCell.Tab.1.bottom" />
+    <state width="1049" height="405" key="GridCell.Tab.1.bottom/0.23.1440.852@0.23.1440.852" />
+    <state width="1049" height="405" key="GridCell.Tab.1.center" />
+    <state width="1049" height="405" key="GridCell.Tab.1.center/0.23.1440.852@0.23.1440.852" />
+    <state width="1049" height="405" key="GridCell.Tab.1.left" />
+    <state width="1049" height="405" key="GridCell.Tab.1.left/0.23.1440.852@0.23.1440.852" />
+    <state width="1049" height="405" key="GridCell.Tab.1.right" />
+    <state width="1049" height="405" key="GridCell.Tab.1.right/0.23.1440.852@0.23.1440.852" />
+    <state width="1049" height="405" key="GridCell.Tab.2.bottom" />
+    <state width="1049" height="405" key="GridCell.Tab.2.bottom/0.23.1440.852@0.23.1440.852" />
+    <state width="1049" height="405" key="GridCell.Tab.2.center" />
+    <state width="1049" height="405" key="GridCell.Tab.2.center/0.23.1440.852@0.23.1440.852" />
+    <state width="1049" height="405" key="GridCell.Tab.2.left" />
+    <state width="1049" height="405" key="GridCell.Tab.2.left/0.23.1440.852@0.23.1440.852" />
+    <state width="1049" height="405" key="GridCell.Tab.2.right" />
+    <state width="1049" height="405" key="GridCell.Tab.2.right/0.23.1440.852@0.23.1440.852" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1339,7 +1250,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java</url>
-          <line>281</line>
+          <line>286</line>
           <properties />
           <option name="timeStamp" value="143" />
         </line-breakpoint>
@@ -1465,7 +1376,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java</url>
-          <line>231</line>
+          <line>236</line>
           <properties />
           <option name="timeStamp" value="356" />
         </line-breakpoint>
@@ -1495,21 +1406,15 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java</url>
-          <line>806</line>
+          <line>811</line>
           <properties />
           <option name="timeStamp" value="373" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>310</line>
+          <line>325</line>
           <properties />
           <option name="timeStamp" value="398" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java</url>
-          <line>92</line>
-          <properties />
-          <option name="timeStamp" value="413" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/5.4.15.Final/hibernate-core-5.4.15.Final-sources.jar!/org/hibernate/query/internal/AbstractProducedQuery.java</url>
@@ -1565,6 +1470,42 @@
           <properties />
           <option name="timeStamp" value="446" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>618</line>
+          <properties />
+          <option name="timeStamp" value="447" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>628</line>
+          <properties />
+          <option name="timeStamp" value="448" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java</url>
+          <line>830</line>
+          <properties />
+          <option name="timeStamp" value="449" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryBuilder.java</url>
+          <line>427</line>
+          <properties />
+          <option name="timeStamp" value="457" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>718</line>
+          <properties />
+          <option name="timeStamp" value="459" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>191</line>
+          <properties />
+          <option name="timeStamp" value="460" />
+        </line-breakpoint>
         <line-breakpoint type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/ImageVO.java</url>
           <line>26</line>
@@ -1573,7 +1514,7 @@
         </line-breakpoint>
         <line-breakpoint suspend="NONE" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java</url>
-          <line>27</line>
+          <line>29</line>
           <properties class="cm.travelpost.tp.user.ent.dao.UserDAO" />
           <option name="timeStamp" value="238" />
         </line-breakpoint>
@@ -1615,6 +1556,11 @@
       </expression>
     </expressions>
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>hql.createLitteralQuery()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>stringBuilder.toString()</expression-string>
         <language-id>JAVA</language-id>
@@ -1663,375 +1609,35 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/totp/TotpController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/admin/dashboard/DashboardController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/tp-application.log" />
     <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2055">
-          <caret line="137" column="31" selection-start-line="137" selection-start-column="31" selection-end-line="137" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ddl/pm-202201-my-sql.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="243" column="38" lean-forward="true" selection-start-line="243" selection-start-column="38" selection-end-line="243" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ddl/pm-202201.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="234" column="36" lean-forward="true" selection-start-line="234" selection-start-column="36" selection-end-line="234" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://f4547c19-2370-4905-92cf-dedaa2788436/schema/cl6j8lyroz9fs4ut/table/announce" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerApiConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="168" column="67" selection-start-line="168" selection-start-column="67" selection-end-line="168" selection-end-column="67" />
-          <folding>
-            <element signature="e#4673#4674#0" expanded="true" />
-            <element signature="e#4752#4753#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="197" column="14" lean-forward="true" selection-start-line="197" selection-start-column="14" selection-end-line="197" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#198#1" expanded="true" />
-            <element signature="e#0#45#1" expanded="true" />
-            <element signature="e#0#39#1" expanded="true" />
-            <element signature="e#0#54#0" expanded="true" />
-            <element signature="e#0#45#0" expanded="true" />
-            <element signature="e#0#58#0" expanded="true" />
-            <element signature="e#0#55#0" expanded="true" />
-            <element signature="e#0#51#0" expanded="true" />
-            <element signature="e#0#83#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/Gender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="32" column="1" lean-forward="true" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="223" column="61" lean-forward="true" selection-start-line="223" selection-start-column="61" selection-end-line="223" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/ReservationServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="47" column="24" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/ValidateEnum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="232" column="48" selection-start-line="232" selection-start-column="48" selection-end-line="232" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/travelpost.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3026" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7110">
-          <caret line="507" selection-start-line="507" selection-end-line="507" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/logback-spring.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="55" column="30" selection-start-line="55" selection-start-column="30" selection-end-line="55" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.2.6.RELEASE/spring-context-5.2.6.RELEASE.jar!/org/springframework/context/annotation/ConfigurationClassParser.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1713">
-          <caret line="564" selection-start-line="564" selection-end-line="564" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_281.jdk/Contents/Home/jre/lib/rt.jar!/sun/reflect/NativeMethodAccessorImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-dependencies/2.3.0.RELEASE/spring-boot-dependencies-2.3.0.RELEASE.pom">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="2235" column="6" selection-start-line="2235" selection-start-column="6" selection-end-line="2235" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.2.6.RELEASE/spring-context-5.2.6.RELEASE-sources.jar!/org/springframework/context/annotation/ConfigurationClassParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9135">
-          <caret line="694" column="44" selection-start-line="694" selection-start-column="44" selection-end-line="694" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1065">
-          <caret line="115" column="18" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/CommonAspect.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2430">
-          <caret line="202" column="38" selection-start-line="202" selection-start-column="38" selection-end-line="202" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="243" selection-start-line="243" selection-end-line="243" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/security/WebSecurityConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="114" lean-forward="true" selection-start-line="114" selection-end-line="114" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/idea.vmoptions">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="48" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="197" selection-start-line="197" selection-end-line="197" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://4bdcea7c-a9b1-45d5-942b-dd3546d29a9e/schema/cl6j8lyroz9fs4ut/table/user_notification">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="16" column="17" lean-forward="true" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/config/WebSocketConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-299">
-          <caret line="49" column="14" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="228" selection-start-line="228" selection-end-line="228" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/vo/NotificationVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="26" column="2" selection-start-line="26" selection-start-column="2" selection-end-line="26" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.2.6.RELEASE/spring-core-5.2.6.RELEASE.jar!/org/springframework/cglib/proxy/MethodProxy.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="102" selection-start-line="102" selection-end-line="102" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://4bdcea7c-a9b1-45d5-942b-dd3546d29a9e/schema/cl6j8lyroz9fs4ut/table/notification">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="50" column="6" selection-start-line="50" selection-start-column="4" selection-end-line="55" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/listeners/WebSocketEventListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="861" selection-start-line="861" selection-end-line="861" />
-          <folding>
-            <element signature="e#1#11#0" expanded="true" />
-            <element signature="e#1#5#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificatorServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2145">
-          <caret line="174" selection-start-line="174" selection-end-line="174" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/package-info.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="355" column="24" selection-start-line="355" selection-start-column="24" selection-end-line="355" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceMasterVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1362">
-          <caret line="48" column="13" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#83#1" expanded="true" />
-            <element signature="e#0#94#1" expanded="true" />
-            <element signature="e#0#88#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/tp-application-hbn.log">
-      <provider selected="true" editor-type-id="LogFileEditorProvider" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/tp-application.log">
-      <provider selected="true" editor-type-id="LogFileEditorProvider">
-        <state relative-caret-position="585">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="62" column="54" selection-start-line="62" selection-start-column="54" selection-end-line="62" selection-end-column="54" />
+        <state relative-caret-position="675">
+          <caret line="45" column="57" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+        <state relative-caret-position="240">
+          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-309">
+          <caret line="144" column="28" selection-start-line="144" selection-start-column="28" selection-end-line="144" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="41" column="31" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
+          <folding>
+            <element signature="e#2125#2170#1" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2057,6 +1663,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -2099,11 +1706,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Spring|PManager</last-edited>
+          <last-edited>PManager</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

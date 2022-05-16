@@ -1,5 +1,6 @@
 package cm.framework.ds.hibernate.dao;
 
+import cm.travelpost.tp.common.ent.ApplicationMessageConfig;
 import cm.travelpost.tp.common.event.IEvent;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.UserException;
@@ -7,6 +8,7 @@ import cm.travelpost.tp.notification.enums.NotificationType;
 import org.hibernate.QueryException;
 import org.hibernate.query.Query;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.MessageFormat;
 import java.util.Map;
@@ -14,6 +16,9 @@ import java.util.Set;
 
 
 public abstract class Generic extends CommonGenericDAO {
+
+    @Autowired
+    protected  ApplicationMessageConfig messageConfig;
 
     public String notificationMessagePattern = "{0} {1} {2}";
     public String notificationMessageCommentPattern = "{0} {1} {2} {3}";

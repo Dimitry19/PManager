@@ -57,6 +57,8 @@ public interface UserService {
 
     UserVO findByUsername(String username, boolean isReg) throws Exception;
 
+    UserVO findByUsername(String username) throws Exception;
+
     UserVO findByToken(String token) throws Exception;
 
     boolean checkLogin(LoginDTO lr) throws Exception;

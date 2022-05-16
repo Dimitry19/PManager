@@ -1,6 +1,7 @@
 package cm.travelpost.tp.ws.controller.rest;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.security.jwt.TokenProvider;
 import cm.travelpost.tp.airline.ent.service.AirlineService;
 import cm.travelpost.tp.announce.ent.service.AnnounceService;
 import cm.travelpost.tp.announce.ent.service.ReservationService;
@@ -109,6 +110,9 @@ public class CommonController  extends WSConstants {
 
     @Autowired
     protected MessageService messageService;
+
+    @Autowired
+    protected TokenProvider tokenProvider;
 
 
     /** SMS Services **/

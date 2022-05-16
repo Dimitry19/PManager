@@ -1,24 +1,13 @@
 package cm.travelpost.tp.configuration.filters;
 
 
-
-import cm.travelpost.tp.common.exception.ErrorResponse;
-import cm.travelpost.tp.common.session.SessionManager;
-import cm.travelpost.tp.common.utils.StringUtils;
-import cm.travelpost.tp.user.ent.service.UserService;
-import cm.travelpost.tp.user.ent.vo.UserVO;
+import cm.framework.ds.common.CustomOncePerRequestFilter;
 import cm.travelpost.tp.common.utils.CommonUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cm.travelpost.tp.common.utils.StringUtils;
+import cm.travelpost.tp.user.ent.vo.UserVO;
 import io.jsonwebtoken.*;
-import org.apache.http.HttpStatus;
-import org.jasypt.encryption.StringEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,9 +15,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.annotation.Resource;
+import javax.annotation.PostConstruct;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,55 +26,19 @@ import java.util.*;
 
 import static cm.travelpost.tp.constant.WSConstants.*;
 
-@Configuration
-@Order(Ordered.HIGHEST_PRECEDENCE)
-public class SessionFilter extends OncePerRequestFilter implements IFilter {
-
-
-
+//@Configuration
+//@Order(Ordered.HIGHEST_PRECEDENCE)
+//@ManagedBean
+public class SessionFilter extends CustomOncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(SessionFilter.class);
 
 
-    @Autowired
-    UserService userService;
+    private  String decryptToken=null;
 
-    @Value("${custom.user.guest}")
-    private String guest;
-
-    @Value("${custom.api.auth.http.tokenValue}")
-    protected String token;
-
-    @Value("${custom.api.auth.http.tokenName}")
-    protected String tokenName;
-
-    @Value("${custom.session.user}")
-    protected String sessionHeader;
-
-    @Value("${url.service}")
-    protected String service;
-
-    @Autowired
-    protected SessionManager sessionManager;
-
-    @Value("${jwt.expirationDateInMs}")
-    private int jwtExpirationInMs;
-
-    @Value("${tp.travelpost.app.escape.announces}")
-    private String escapeAnnounce;
-
-    @Value("${tp.travelpost.app.escape.other}")
-    private String escapeOther;
-
-    @Value("${tp.travelpost.app.escape.home}")
-    private String escapeHome;
-
-    @Value("${tp.travelpost.postman.enable}")
-    private boolean postman;
-
-    @Resource(name ="jasyptStringEncryptor")
-    private  StringEncryptor encryptorBean;
-
-
+    @PostConstruct
+    public void init(){
+        this.decryptToken=encryptorBean.decrypt(token);
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -94,14 +46,16 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
 
         try{
-            // JWT Token is in the form "Bearer token". Remove Bearer word and
-            // get  only the Token
+
             if(logger.isDebugEnabled()){
                 logger.debug("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
             }
 
-
-            if(!validate(request) && !postman){
+            if(postman || !enableFilter){
+                filterChain.doFilter(request, response);
+                return;
+            }
+            if(!validate(request)  && enableFilter){
                 error(response);
             }else{
                 filterChain.doFilter(request, response);
@@ -120,46 +74,23 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
     }
 
-    @Override
-    public void error(HttpServletResponse response) throws IOException {
 
-        logger.error("Into Invalid token");
-
-        ErrorResponse errorResponse = new ErrorResponse();
-        String[] codes=new String[1];
-        codes[0]= String.valueOf(HttpStatus.SC_GATEWAY_TIMEOUT);
-        List<String> details= new ArrayList();
-        details.add("Session expiree, se connecter de nouveau ");
-        errorResponse.setCode(codes);
-        errorResponse.setDetails(details);
-        errorResponse.setMessage(details.get(0));
-
-        byte[] responseToSend = restResponseBytes(errorResponse);
-        response.setHeader("Content-Type", "application/json");
-        response.setStatus(HttpStatus.SC_GATEWAY_TIMEOUT);
-        response.getOutputStream().write(responseToSend);
-    }
-
-    private byte[] restResponseBytes(ErrorResponse errorResponse) throws IOException {
-        String serialized = new ObjectMapper().writeValueAsString(errorResponse);
-        return serialized.getBytes();
-    }
 
     private boolean validate(HttpServletRequest request) throws Exception {
 
         String uri=request.getRequestURI();
 
-        String tk1=request.getHeader(encryptorBean.decrypt(tokenName));
-        String apiKey=StringUtils.isNotEmpty(tk1) ?encryptorBean.decrypt(tk1):null;
+        String decryptedToken=request.getHeader(encryptorBean.decrypt(tokenName));
+        String apiKey=StringUtils.isNotEmpty(decryptedToken) ?encryptorBean.decrypt(decryptedToken):null;
 
         String username=request.getHeader(sessionHeader);
 
-        boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(encryptorBean.decrypt(token)));
+        boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(decryptToken));
         boolean isService=uri.contains(service) && isApiKey;
 
-        boolean isLogout=uri.contains(USER_WS_LOGOUT);
+        boolean isLogout=uri.contains(LOGOUT);
         boolean isLogin=uri.contains(USER_WS_LOGIN);
-        boolean isRegister=uri.contains(USER_WS_REGISTRATION);
+        boolean isRegister=uri.contains(REGISTRATION);
         boolean isFind=uri.contains(FIND);
 
 
@@ -207,7 +138,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
             String tk= (String)sessionManager.getFromSession(user.getUsername());
 
-            //return validateToken(apiKey,tk);
+            return validateToken(apiKey,tk);
 
 
         }
@@ -236,15 +167,15 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
-                .signWith(SignatureAlgorithm.HS512, token).compact();
+                .signWith(SignatureAlgorithm.HS512, decryptToken).compact();
 
     }
 
     public boolean validateToken(String apiKey, String authToken) {
         try {
 
-            if((StringUtils.isNotEmpty(authToken) && apiKey.equals(token))){
-                Jws<Claims> claims = Jwts.parser().setSigningKey(token).parseClaimsJws(authToken);
+            if((StringUtils.isNotEmpty(authToken) && apiKey.equals(decryptToken))){
+                Jws<Claims> claims = Jwts.parser().setSigningKey(decryptToken).parseClaimsJws(authToken);
                 return claims!=null;
             }
             return false;
@@ -258,7 +189,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
     }
 
     public String getUsernameFromToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(token).parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser().setSigningKey(decryptToken).parseClaimsJws(token).getBody();
         return claims.getSubject();
 
     }

@@ -9,6 +9,7 @@ public final class FieldConstants {
 
     public static final int PHONE_LEN = 35;
     public static final int AIR_ID_LEN = 5;
+    public static final int CODE_LEN = 10;
     public static final int ENUM_LEN = 10;
     public static final int MSG_LEN = 10;
     public static final String GOOGLE_PROVIDER = "Google";

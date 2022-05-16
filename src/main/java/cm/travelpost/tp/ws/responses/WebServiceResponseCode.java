@@ -53,7 +53,7 @@ public class WebServiceResponseCode {
     public static final String ERROR_UPD_EMAIL_LABEL = "Email non valide ou deja utilise";
 
     public static final String ERROR_CREATE_LABEL = "{0} n'a pas pu etre cree";
-    public static final String ERROR_DELETE_LABEL = "{0} ne peut pas etre eliminee car inexistant";
+    public static final String ERROR_DELETE_LABEL = "{0} ne peut pas etre eliminé(e) car inexistant";
     public static final String ERROR_UPDATE_LABEL = "{0} ne peut pas etre ajournee car inexistant";
 
 

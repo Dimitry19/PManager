@@ -74,6 +74,9 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String CATEGORY_TABLE_ALIAS = "c";
     protected static final String ID_PARAM = "id";
     protected static final String USER_PARAM = "userId";
+
+    protected static final String CODE_PARAM = "code";
+
     protected static final String TYPE_PARAM = "announceType";
     protected static final String TRANSPORT_PARAM = "transport";
     protected static final String ANNOUNCE_PARAM = "announceId";

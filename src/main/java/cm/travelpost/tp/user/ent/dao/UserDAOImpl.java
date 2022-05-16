@@ -266,6 +266,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
 
+            user.setMultipleFactorAuthentication(Boolean.TRUE);
+            user.setSecret(UUID.randomUUID().toString());
             Long id=(Long)save(user);
             user=findById(id);
             setRole(user, register.getRole());
@@ -361,7 +363,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
 
         return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, filters);
-
     }
 
     @Override
