@@ -142,6 +142,57 @@ public class AuthenticationController extends CommonController {
         return null;
     }
 
+    @ApiOperation(value = " Login user ", response = UserVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful registration",
+                    response = UserVO.class, responseContainer = "Object")})
+    @PostMapping(path = WSConstants.USER_WS_LOGIN, consumes = {MediaType.APPLICATION_JSON}, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+    public @ResponseBody
+    ResponseEntity<Object> authenticate(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login) throws Exception {
+        logger.info("Authenticate request in");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+        UserVO user = null;
+
+
+
+        try {
+            createOpentracingSpan("UserController - login");
+
+            if (login != null) {
+                user = userService.login(login);
+
+                if (user != null) {
+                    AuthenticationResponse authenticationResponse= new AuthenticationResponse();
+                    String generatedToken =tokenProvider.createToken(user.getId(),false);
+                    authenticationResponse.setAuthenticated(false);
+                    authenticationResponse.setAccessToken(generatedToken);
+                    authenticationResponse.setUser(new UserInfo(user));
+                    authenticationResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    authenticationResponse.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+                    cookie(response,user.getUsername(),user.getPassword());
+                    return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
+
+                }
+                WSCommonResponseVO commonResponse = new WSCommonResponseVO();
+                commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                commonResponse.setRetDescription(WebServiceResponseCode.ERROR_LOGIN_LABEL);
+                return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
+
+            }
+        } catch (Exception e) {
+            logger.error("Erreur durant l'execution de login: ", e);
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
+        return null;
+
+    }
+
     @ApiOperation(value = "Verification  user registration ", response = Response.class)
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Server error"),
@@ -215,51 +266,7 @@ public class AuthenticationController extends CommonController {
         }
     }
 
-    @ApiOperation(value = " Login user ", response = UserVO.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 500, message = "Server error"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-            @ApiResponse(code = 200, message = "Successful registration",
-                    response = UserVO.class, responseContainer = "Object")})
-    @PostMapping(path = WSConstants.USER_WS_LOGIN, consumes = {MediaType.APPLICATION_JSON}, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
-    public @ResponseBody
-    ResponseEntity<Object> authenticate(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login) throws Exception {
-        logger.info("Authenticate request in");
-        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        UserVO user = null;
 
-
-
-        try {
-            createOpentracingSpan("UserController - login");
-
-            if (login != null) {
-                user = userService.login(login);
-
-                if (user != null) {
-                    user.setRetCode(WebServiceResponseCode.OK_CODE);
-                    user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
-                    cookie(response,user.getUsername(),user.getPassword());
-                    return new ResponseEntity<>(user, HttpStatus.OK);
-
-                } else {
-                    WSCommonResponseVO commonResponse = new WSCommonResponseVO();
-                    commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    commonResponse.setRetDescription(WebServiceResponseCode.ERROR_LOGIN_LABEL);
-                    return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
-                }
-            }
-        } catch (Exception e) {
-            logger.error("Erreur durant l'execution de login: ", e);
-            throw e;
-        } finally {
-            finishOpentracingSpan();
-        }
-        return null;
-
-    }
 
 
 

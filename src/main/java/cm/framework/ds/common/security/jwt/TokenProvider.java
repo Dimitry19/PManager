@@ -131,6 +131,14 @@ public class TokenProvider  extends CommonSecurityResource {
 				.signWith(SignatureAlgorithm.HS512, decryptToken).compact();
 	}
 
+	public String createToken(String username, boolean authenticated) {
+		Date now = new Date();
+		Date expiryDate = new Date(now.getTime() + (authenticated ? jwtExpirationInMs: jwtShortExpirationInMs));
+
+		return Jwts.builder().setSubject(username).claim(AUTHENTICATED, authenticated).setIssuedAt(new Date()).setExpiration(expiryDate)
+				.signWith(SignatureAlgorithm.HS512, decryptToken).compact();
+	}
+
 	public Boolean isAuthenticated(String token) {
 		Claims claims = Jwts.parser().setSigningKey(decryptToken).parseClaimsJws(token).getBody();
 		return claims.get(AUTHENTICATED, Boolean.class);

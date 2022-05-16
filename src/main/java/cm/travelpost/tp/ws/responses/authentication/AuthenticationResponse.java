@@ -1,14 +1,18 @@
 package cm.travelpost.tp.ws.responses.authentication;
 
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.user.ent.vo.UserInfo;
 
 
-public class AuthenticationResponse {
+public class AuthenticationResponse extends WSCommonResponseVO {
 
 	private String accessToken;
 	private boolean authenticated;
 	private UserInfo user;
 
+	public AuthenticationResponse() {
+		super();
+	}
 	public AuthenticationResponse(String accessToken, boolean authenticated, UserInfo user) {
 		this.accessToken = accessToken;
 		this.authenticated = authenticated;

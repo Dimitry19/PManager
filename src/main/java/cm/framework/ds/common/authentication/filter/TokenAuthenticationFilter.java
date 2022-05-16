@@ -61,7 +61,7 @@ public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 
 
 			boolean isGuest=StringUtils.equals(username,encryptorBean.decrypt(guest)) && isService;
-			boolean isServiceLogin=isService && isLogin;
+			boolean isServiceLogin=isLogin; //&& isService;
 			boolean isServiceLogout=isService && isLogout;
 			boolean isOnlyService= !uri.contains(service);
 			boolean activate= isOnlyService || isGuest || isRegister || isFind || isLogout || isServiceLogin || isServiceLogout;

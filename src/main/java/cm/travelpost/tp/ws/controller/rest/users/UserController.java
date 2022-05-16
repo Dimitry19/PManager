@@ -51,11 +51,8 @@ public class UserController extends CommonController {
 
     protected final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-
-
     @Value("${tp.travelpost.active.registration.enable}")
     protected boolean enableAutoActivateRegistration;
-
 
 
     @ApiOperation(value = "Register an user ", response = Response.class)
@@ -203,6 +200,7 @@ public class UserController extends CommonController {
                 user = userService.login(login);
 
                 if (user != null) {
+
                     user.setRetCode(WebServiceResponseCode.OK_CODE);
                     user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
                     cookie(response,user.getUsername(),user.getPassword());
