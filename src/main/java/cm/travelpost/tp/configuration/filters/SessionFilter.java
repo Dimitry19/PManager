@@ -209,7 +209,7 @@ public class SessionFilter extends OncePerRequestFilter implements IFilter {
 
             String tk= (String)sessionManager.getFromSession(user.getUsername());
 
-            return validateToken(apiKey,tk);
+            //return validateToken(apiKey,tk);
 
 
         }
