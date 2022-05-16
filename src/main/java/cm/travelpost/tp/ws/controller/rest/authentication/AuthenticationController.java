@@ -11,6 +11,7 @@ import cm.travelpost.tp.security.PasswordGenerator;
 import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.controller.RedirectType;
+import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.authentication.VerificationDTO;
 import cm.travelpost.tp.ws.requests.users.LoginDTO;
 import cm.travelpost.tp.ws.requests.users.RegisterDTO;
