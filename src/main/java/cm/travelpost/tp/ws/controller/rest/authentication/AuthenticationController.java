@@ -4,6 +4,7 @@ package cm.travelpost.tp.ws.controller.rest.authentication;
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.framework.ds.common.security.jwt.TokenProvider;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
+import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
@@ -48,7 +49,7 @@ import static dev.samstevens.totp.util.Utils.getDataUriForImage;
 
 @RestController
 @RequestMapping(WSConstants.AUTHENTICATION_WS)
-@Api(value = "Authentication-service", description = "Authentication Operations",tags ="user" )
+@Api(value = "Authentication-service", description = "Authentication Operations",tags ="Authenticate" )
 public class AuthenticationController extends CommonController {
 
     protected final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
@@ -324,6 +325,21 @@ public class AuthenticationController extends CommonController {
 
         return PasswordGenerator.encrypt(username).concat(password.substring(0, password.length()-4).concat(password.substring(2,password.length()-1)));
 
+    }
+
+
+    @GetMapping(path = "/qrcode",headers = WSConstants.HEADER_ACCEPT)
+    public @ResponseBody ResponseEntity<String> testQrCode(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
+
+        UserVO user= (UserVO) CollectionsUtils.getFirst(userService.getAllUsers());
+        QrData data = qrDataFactory.newBuilder()
+                .label(user.getEmail())
+                .secret(user.getSecret())
+                .issuer(issuer).build();
+        // Generate the QR code image data as a base64 string which can
+        // be used in an <img> tag:
+        String qrCodeImage = getDataUriForImage(qrGenerator.generate(data), qrGenerator.getImageMimeType());
+       return new ResponseEntity<>(qrCodeImage, HttpStatus.OK);
     }
 
 }

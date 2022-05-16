@@ -2,19 +2,12 @@ package cm.travelpost.tp.configuration.filters;
 
 
 import cm.framework.ds.common.CustomOncePerRequestFilter;
-import cm.travelpost.tp.common.exception.ErrorResponse;
 import cm.travelpost.tp.common.utils.CommonUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.user.ent.vo.UserVO;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
-import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -34,24 +26,12 @@ import java.util.*;
 
 import static cm.travelpost.tp.constant.WSConstants.*;
 
-@Configuration
-@Order(Ordered.HIGHEST_PRECEDENCE)
-@ManagedBean
-public class SessionFilter extends CustomOncePerRequestFilter implements IFilter {
+//@Configuration
+//@Order(Ordered.HIGHEST_PRECEDENCE)
+//@ManagedBean
+public class SessionFilter extends CustomOncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(SessionFilter.class);
 
-
-    @Value("${jwt.expirationDateInMs}")
-    private int jwtExpirationInMs;
-
-    @Value("${tp.travelpost.app.escape.announces}")
-    private String escapeAnnounce;
-
-    @Value("${tp.travelpost.app.escape.other}")
-    private String escapeOther;
-
-    @Value("${tp.travelpost.app.escape.home}")
-    private String escapeHome;
 
     private  String decryptToken=null;
 
@@ -71,7 +51,11 @@ public class SessionFilter extends CustomOncePerRequestFilter implements IFilter
                 logger.debug("Logging Request  {} : {}", request.getMethod(), request.getRequestURI());
             }
 
-            if(!validate(request) && !postman && enableFilter){
+            if(postman || !enableFilter){
+                filterChain.doFilter(request, response);
+                return;
+            }
+            if(!validate(request)  && enableFilter){
                 error(response);
             }else{
                 filterChain.doFilter(request, response);
@@ -90,37 +74,14 @@ public class SessionFilter extends CustomOncePerRequestFilter implements IFilter
 
     }
 
-    @Override
-    public void error(HttpServletResponse response) throws IOException {
 
-        logger.error("Into Invalid token");
-
-        ErrorResponse errorResponse = new ErrorResponse();
-        String[] codes=new String[1];
-        codes[0]= String.valueOf(HttpStatus.SC_GATEWAY_TIMEOUT);
-        List<String> details= new ArrayList();
-        details.add("Session expiree, se connecter de nouveau ");
-        errorResponse.setCode(codes);
-        errorResponse.setDetails(details);
-        errorResponse.setMessage(details.get(0));
-
-        byte[] responseToSend = restResponseBytes(errorResponse);
-        response.setHeader("Content-Type", "application/json");
-        response.setStatus(HttpStatus.SC_GATEWAY_TIMEOUT);
-        response.getOutputStream().write(responseToSend);
-    }
-
-    private byte[] restResponseBytes(ErrorResponse errorResponse) throws IOException {
-        String serialized = new ObjectMapper().writeValueAsString(errorResponse);
-        return serialized.getBytes();
-    }
 
     private boolean validate(HttpServletRequest request) throws Exception {
 
         String uri=request.getRequestURI();
 
-        String decryptedTokenName=request.getHeader(encryptorBean.decrypt(tokenName));
-        String apiKey=StringUtils.isNotEmpty(decryptedTokenName) ?encryptorBean.decrypt(decryptedTokenName):null;
+        String decryptedToken=request.getHeader(encryptorBean.decrypt(tokenName));
+        String apiKey=StringUtils.isNotEmpty(decryptedToken) ?encryptorBean.decrypt(decryptedToken):null;
 
         String username=request.getHeader(sessionHeader);
 

@@ -1,5 +1,6 @@
 package cm.framework.ds.common.authentication.filter;
 
+
 import cm.framework.ds.common.CustomOncePerRequestFilter;
 import cm.framework.ds.common.security.jwt.TokenProvider;
 import cm.travelpost.tp.common.utils.StringUtils;
@@ -8,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
@@ -17,9 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static cm.travelpost.tp.constant.WSConstants.REGISTRATION;
+import static cm.travelpost.tp.constant.WSConstants.*;
 
 @Configuration
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @ManagedBean
 public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 
@@ -29,11 +33,11 @@ public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 	TokenProvider tokenProvider;
 
 	private  String decryptedTokenName=null;
-	private  String decryptToken=null;
+	private  String decryptedToken=null;
 
 	@PostConstruct
 	public void init(){
-		this.decryptToken=encryptorBean.decrypt(token);
+		this.decryptedToken=encryptorBean.decrypt(token);
 		this.decryptedTokenName=encryptorBean.decrypt(tokenName);
 	}
 
@@ -41,19 +45,39 @@ public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 		try {
 
+			String uri =request.getRequestURI();
+			String keyName= StringUtils.isNotEmpty(decryptedTokenName) ?decryptedTokenName:null;
+			String apiKeyRequest=encryptorBean.decrypt(request.getHeader(keyName));
 
-			String apiKey= StringUtils.isNotEmpty(decryptedTokenName) ?decryptedTokenName:null;
-			boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(decryptToken));
-			boolean isRegister=request.getRequestURI().contains(REGISTRATION) &&isApiKey;
+			String apiKey= StringUtils.isNotEmpty(apiKeyRequest) ?apiKeyRequest:null;
+			boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(decryptedToken));
+			boolean isRegister=uri.contains(REGISTRATION) && isApiKey;
+			boolean isService=uri.contains(service) && isApiKey;
 
-			 if (BooleanUtils.isFalse(isRegister)){
+			boolean isLogout=uri.contains(LOGOUT);
+			boolean isLogin=uri.contains(USER_WS_LOGIN);
+			boolean isFind=uri.contains(FIND);
+			String username=request.getHeader(sessionHeader);
+
+
+			boolean isGuest=StringUtils.equals(username,encryptorBean.decrypt(guest)) && isService;
+			boolean isServiceLogin=isService && isLogin;
+			boolean isServiceLogout=isService && isLogout;
+			boolean isOnlyService= !uri.contains(service);
+			boolean activate= isOnlyService || isGuest || isRegister || isFind || isLogout || isServiceLogin || isServiceLogout;
+
+			 if (BooleanUtils.isFalse(activate)){
 				 tokenProvider.setAuthentication(request);
 			 }
 
 		} catch (Exception ex) {
 			logger.error("Could not set user authentication in security context", ex);
+			error(response);
+				throw new IOException("Token expiré, se connecter de nouveau");
+
 		}
 
 		filterChain.doFilter(request, response);
 	}
+
 }
