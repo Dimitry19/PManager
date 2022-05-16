@@ -20,6 +20,7 @@ import cm.travelpost.tp.user.ent.vo.RoleVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.users.*;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
+import dev.samstevens.totp.secret.SecretGenerator;
 import org.hibernate.QueryParameterException;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -45,6 +46,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Autowired
     RoleDAO roleDAO;
+
+    @Autowired
+    private SecretGenerator secretGenerator;
 
 
     @Value("${tp.travelpost.active.registration.enable}")
@@ -267,7 +271,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setConfirmationToken(UUID.randomUUID().toString());
 
             user.setMultipleFactorAuthentication(Boolean.TRUE);
-            user.setSecret(UUID.randomUUID().toString());
+            user.setSecret(secretGenerator.generate());
             Long id=(Long)save(user);
             user=findById(id);
             setRole(user, register.getRole());

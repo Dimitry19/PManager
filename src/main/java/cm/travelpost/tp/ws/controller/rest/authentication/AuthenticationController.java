@@ -23,6 +23,7 @@ import dev.samstevens.totp.code.CodeVerifier;
 import dev.samstevens.totp.qr.QrData;
 import dev.samstevens.totp.qr.QrDataFactory;
 import dev.samstevens.totp.qr.QrGenerator;
+import dev.samstevens.totp.secret.SecretGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -67,6 +68,8 @@ public class AuthenticationController extends CommonController {
 
     @Autowired
     private CodeVerifier verifier;
+
+
 
     @Value("${tp.travelpost.active.registration.enable}")
     protected boolean enableAutoActivateRegistration;
@@ -171,7 +174,6 @@ public class AuthenticationController extends CommonController {
                     authenticationResponse.setAccessToken(generatedToken);
                     authenticationResponse.setUser(new UserInfo(user));
                     authenticationResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    authenticationResponse.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
                     cookie(response,user.getUsername(),user.getPassword());
                     return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
 
@@ -202,15 +204,27 @@ public class AuthenticationController extends CommonController {
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(AUTHENTICATION_WS_VERIFICATION)
     @PreAuthorize("hasRole('PRE_VERIFICATION_USER')")
-    public ResponseEntity<?> verifyCode(@Valid @RequestBody VerificationDTO verification) throws Exception {
+    public ResponseEntity<AuthenticationResponse> verifyCode(@Valid @RequestBody VerificationDTO verification) throws Exception {
 
         UserVO user = userService.findByUsername(verification.getUsername());
+        AuthenticationResponse authenticationResponse= new AuthenticationResponse();
+
 
         if (user!=null && !verifier.isValidCode(user.getSecret(), verification.getCode())) {
-            return new ResponseEntity<>(  "Invalid Code!", HttpStatus.BAD_REQUEST);
+            authenticationResponse.setAccessToken(null);
+            authenticationResponse.setAuthenticated(false);
+            authenticationResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            authenticationResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_CODE_LABEL);
+            return new ResponseEntity<>(  authenticationResponse, HttpStatus.BAD_REQUEST);
         }
-        String jwt = tokenProvider.createToken(user.getId(),true);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt, true, new UserInfo(user)));
+        String generatedToken = tokenProvider.createToken(user.getUsername(),true);
+
+        authenticationResponse.setAuthenticated(true);
+        authenticationResponse.setAccessToken(generatedToken);
+        authenticationResponse.setUser(new UserInfo(user));
+        authenticationResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+        authenticationResponse.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+        return ResponseEntity.ok(authenticationResponse);
     }
 
 
