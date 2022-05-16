@@ -249,6 +249,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
+    public UserVO findByUsername(String username) throws Exception {
+        return userDAO.findByUsername(username);
+    }
+
+    @Transactional(readOnly = true)
     public UserVO findByToken(String token) throws Exception {
         return userDAO.findByToken(token);
     }

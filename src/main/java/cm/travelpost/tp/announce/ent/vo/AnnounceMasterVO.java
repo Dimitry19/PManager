@@ -35,6 +35,7 @@ import java.util.Set;
 @Entity
 @Table(name = "announce")
 @NamedQueries(value = {
+		@NamedQuery(name = AnnounceMasterVO.FINDBYCODE, query = "select a from AnnounceMasterVO a where a.code =:code order by a.startDate desc"),
 		@NamedQuery(name = AnnounceMasterVO.FINDBYUSER, query = "select a from AnnounceMasterVO a where a.user.id =:userId order by a.startDate desc"),
 		@NamedQuery(name = AnnounceMasterVO.FINDBYTYPE, query = "select a from AnnounceMasterVO a where a.announceType =:announceType order by a.startDate desc"),
 		@NamedQuery(name = AnnounceMasterVO.FINDBYTRANSPORT, query = "select a from AnnounceMasterVO a where a.transport =:transport order by a.startDate desc"),
@@ -50,15 +51,17 @@ public class AnnounceMasterVO extends CommonVO {
 
 	private static final long serialVersionUID = -6128390864869421614L;
 
-
+	public static final String FINDBYCODE = "cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO.findByCode";
 	public static final String FINDBYUSER = "cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO.findByUser";
 	public static final String FINDBYTYPE = "cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO.findByType";
 	public static final String FINDBYTRANSPORT = "cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO.findByTransport";
 	public static final String SQL_FIND_BY_USER = " FROM AnnounceMasterVO a where a.user.id =:userId order by a.startDate desc";
-	public static final String ANNOUNCE_SEARCH = "select  distinct  a from AnnounceVO  as a join a.categories as c ";
+
 
 
 	protected Long id;
+
+	protected String code;
 
 	protected String departure;
 
@@ -119,6 +122,12 @@ public class AnnounceMasterVO extends CommonVO {
 		return id;
 	}
 
+	@NaturalId
+	@Basic(optional = false)
+	@Column(name = "CODE", unique = true, nullable = false, length = FieldConstants.CODE_LEN)
+	public String getCode() {
+		return code;
+	}
 
 	@Basic(optional = false)
 	@Column(name = "START_DATE", nullable = false)
@@ -273,6 +282,8 @@ public class AnnounceMasterVO extends CommonVO {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public void setCode(String code) { 	this.code = code;}
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;

@@ -42,6 +42,8 @@ public interface AnnounceDAO extends CommonDAO {
 
     AnnounceVO announce(Long id) throws Exception;
 
+    AnnounceVO announce(String code) throws Exception;
+
 
     AnnounceCompletedVO announceCompleted(Long id) throws Exception;
 

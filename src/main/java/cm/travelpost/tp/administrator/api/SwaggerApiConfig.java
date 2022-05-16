@@ -26,9 +26,11 @@ import java.util.List;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 @EnableSwagger2
-//@ConditionalOnExpression(value = "${swagger.prod.enabled:false}")
 @Configuration
 public class SwaggerApiConfig  extends CommonProperties {
+
+    @Value("${swagger.api.groupname.authentication}")
+    private String apiGroupNameAuthentication;
 
     @Value("${swagger.api.groupname.announce}")
     private String apiGroupNameAnnounce;
@@ -73,7 +75,6 @@ public class SwaggerApiConfig  extends CommonProperties {
     private String apiGroupNameTotp;
 
 
-
     @Value("${swagger.api.contact}")
     private String apiContact;
 
@@ -95,9 +96,10 @@ public class SwaggerApiConfig  extends CommonProperties {
 
 
 
-
-
    @Bean
+    public Docket authenticationApi() {
+        return createDocket(apiGroupNameAuthentication, contextRoot+"/ws/authentication.*");
+    }
     public Docket announcesApi() {
         return createDocket(apiGroupNameAnnounce, contextRoot+"/ws/announce.*");
     }
