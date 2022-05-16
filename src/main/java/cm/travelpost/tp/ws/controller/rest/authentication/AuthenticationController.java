@@ -8,7 +8,6 @@ import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
-import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.controller.RedirectType;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
@@ -23,7 +22,6 @@ import dev.samstevens.totp.code.CodeVerifier;
 import dev.samstevens.totp.qr.QrData;
 import dev.samstevens.totp.qr.QrDataFactory;
 import dev.samstevens.totp.qr.QrGenerator;
-import dev.samstevens.totp.secret.SecretGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -172,7 +170,7 @@ public class AuthenticationController extends CommonController {
                     String generatedToken =tokenProvider.createToken(user.getId(),false);
                     authenticationResponse.setAuthenticated(false);
                     authenticationResponse.setAccessToken(generatedToken);
-                    authenticationResponse.setUser(new UserInfo(user));
+
                     authenticationResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                     cookie(response,user.getUsername(),user.getPassword());
                     return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
@@ -221,7 +219,6 @@ public class AuthenticationController extends CommonController {
 
         authenticationResponse.setAuthenticated(true);
         authenticationResponse.setAccessToken(generatedToken);
-        authenticationResponse.setUser(new UserInfo(user));
         authenticationResponse.setRetCode(WebServiceResponseCode.OK_CODE);
         authenticationResponse.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
         return ResponseEntity.ok(authenticationResponse);
