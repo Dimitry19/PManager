@@ -9,6 +9,7 @@ import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
+import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.controller.RedirectType;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
@@ -143,11 +144,12 @@ public class AuthenticationController extends CommonController {
 
             if (login != null) {
 
-                if(BooleanUtils.isFalse(userService.enableMFA(login))){
+                 UserInfo ui= userService.enableMFA(login);
+                if(BooleanUtils.isFalse(ui.isEnableMFA())){
 
                     RegistrationResponse pmResponse = new RegistrationResponse();
 
-                    String qrCodeImage = authenticationService.qrCodeGenerator(user.getEmail(),user.getSecret(),issuer);
+                    String qrCodeImage = authenticationService.qrCodeGenerator(ui.getEmail(),ui.getSecret(),issuer);
                     pmResponse.setMfa(true);
                     pmResponse.setSecretImageUri(qrCodeImage);
                     pmResponse.setRetCode(WebServiceResponseCode.MFA_NOT_ENABLED);

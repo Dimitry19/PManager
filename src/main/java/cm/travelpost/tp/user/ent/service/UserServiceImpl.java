@@ -19,12 +19,14 @@ import cm.travelpost.tp.review.ent.vo.ReviewIdVO;
 import cm.travelpost.tp.review.ent.vo.ReviewVO;
 import cm.travelpost.tp.security.PasswordGenerator;
 import cm.travelpost.tp.user.ent.dao.UserDAO;
+import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.review.ReviewDTO;
 import cm.travelpost.tp.ws.requests.review.UpdateReviewDTO;
 import cm.travelpost.tp.ws.requests.users.*;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,18 +115,18 @@ public class UserServiceImpl implements UserService {
         return userDAO.subscribers(userId);
     }
 
-    public boolean enableMFA(LoginDTO lr) throws Exception {
+    public UserInfo enableMFA(LoginDTO lr) throws Exception {
 
         UserVO user = login(lr);
         if (user == null) {
           throw new UserException("Utilisateur non trouvé");
         }
-        if(user.isMultipleFactorAuthentication()){
-            return true;
+        if(BooleanUtils.isTrue(user.isMultipleFactorAuthentication())){
+            return new UserInfo( user.getEmail(), user.getSecret(), user.isMultipleFactorAuthentication());
         }
         userDAO.generateSecret(user);
-
-        return false;
+        user =userDAO.findById(user.getId());
+        return new UserInfo( user.getEmail(), user.getSecret(), false);
     }
 
     public UserVO login(LoginDTO lr) throws Exception {
