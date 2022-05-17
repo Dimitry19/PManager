@@ -10,7 +10,6 @@ import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
 import cm.travelpost.tp.user.ent.vo.UserVO;
-import cm.travelpost.tp.ws.controller.RedirectType;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.mail.MailDTO;
 import cm.travelpost.tp.ws.requests.users.*;
@@ -44,6 +43,7 @@ import java.text.MessageFormat;
 import java.util.List;
 
 
+
 @RestController
 @RequestMapping(WSConstants.USER_WS)
 @Api(value = "user-service", description = "User Operations",tags ="user" )
@@ -54,174 +54,6 @@ public class UserController extends CommonController {
     @Value("${tp.travelpost.active.registration.enable}")
     protected boolean enableAutoActivateRegistration;
 
-
-    @ApiOperation(value = "Register an user ", response = Response.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 500, message = "Server error"),
-            @ApiResponse(code = 200, message = "Successfully retrieved list"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-            @ApiResponse(code = 200, message = "Successful registration",
-                    response = Response.class, responseContainer = "Object")})
-    @PostMapping(path = WSConstants.REGISTRATION, consumes = {MediaType.APPLICATION_JSON}, produces = {MediaType.APPLICATION_JSON}, headers = WSConstants.HEADER_ACCEPT)
-    public @ResponseBody
-    ResponseEntity<Response> register(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid RegisterDTO register) throws ValidationException, IOException {
-
-        logger.info("register request in");
-        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-
-        Response pmResponse = new Response();
-
-        try {
-            createOpentracingSpan("UserController -register");
-
-            if (register != null) {
-
-                UserVO usr = userService.register(register);
-
-                if (usr != null && StringUtils.isNotEmpty(usr.getError())) {
-
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(usr.getError());
-
-                    return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
-                }
-
-                if (usr == null) {
-
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
-                    return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
-                }
-
-                if (enableAutoActivateRegistration){
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
-                    response.setStatus(200);
-                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-                }
-                if(mailService.buildAndSendMail(request, usr)){
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
-                    response.setStatus(200);
-                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-                }else {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_CONTACT_US_LABEL);
-                    response.setStatus(401);
-                    return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
-                }
-
-            }
-        } catch (Exception e) {
-            logger.error("Erreur durant l'execution de register: ", e);
-            return getResponseMailResponseEntity(pmResponse, e,"Votre compte sera activé d'ici 24h");
-        } finally {
-            finishOpentracingSpan();
-        }
-        return null;
-    }
-
-
-    @ApiOperation(value = "Confirmation user registration ", response = Response.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 500, message = "Server error"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-            @ApiResponse(code = 200, message = "Successful registration",
-                    response = Response.class, responseContainer = "Object")})
-    //@RequestMapping(value=USER_WS_CONFIRMATION, method = RequestMethod.GET, headers =WSConstants.HEADER_ACCEPT)
-    @GetMapping(path = WSConstants.USER_WS_CONFIRMATION, headers = WSConstants.HEADER_ACCEPT)
-    public @ResponseBody void confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
-
-        Response pmResponse = new Response();
-
-
-        try {
-            logger.info("confirm request in");
-            response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-
-            createOpentracingSpan("UserController -confirmation");
-
-            UserVO user = userService.findByToken(token);
-
-            if (user == null) {
-                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
-                response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
-            } else {
-
-                if (user.getActive() == 1) {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
-                    response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
-                }
-
-                user.setActive(1);
-                if (userService.update(user) != null) {
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
-                    response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION));
-                }
-            }
-
-        } catch (Exception e) {
-            logger.error("Errore eseguendo confirm: ", e);
-            throw e;
-        } finally {
-            finishOpentracingSpan();
-        }
-    }
-
-    @ApiOperation(value = " Login user ", response = UserVO.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 500, message = "Server error"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-            @ApiResponse(code = 200, message = "Successful registration",
-                    response = UserVO.class, responseContainer = "Object")})
-    //@RequestMapping(value = USER_WS_LOGIN, method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
-    @PostMapping(path = WSConstants.USER_WS_LOGIN, consumes = {MediaType.APPLICATION_JSON}, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
-    public @ResponseBody
-    ResponseEntity<Object> login(HttpServletResponse response, HttpServletRequest request, @RequestBody LoginDTO login) throws Exception {
-        logger.info("login request in");
-        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        UserVO user = null;
-
-
-
-        try {
-            createOpentracingSpan("UserController - login");
-
-            if (login != null) {
-                user = userService.login(login);
-
-                if (user != null) {
-
-                    user.setRetCode(WebServiceResponseCode.OK_CODE);
-                    user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
-                    cookie(response,user.getUsername(),user.getPassword());
-                    return new ResponseEntity<>(user, HttpStatus.OK);
-
-                } else {
-                    WSCommonResponseVO commonResponse = new WSCommonResponseVO();
-                    commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    commonResponse.setRetDescription(WebServiceResponseCode.ERROR_LOGIN_LABEL);
-                    return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
-                }
-            }
-        } catch (Exception e) {
-            logger.error("Erreur durant l'execution de login: ", e);
-            throw e;
-        } finally {
-            finishOpentracingSpan();
-        }
-        return null;
-
-    }
 
 
     @ApiOperation(value = "En/disable notification ", response = ResponseEntity.class)

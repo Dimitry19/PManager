@@ -8,7 +8,6 @@ import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
-import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.controller.RedirectType;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
@@ -68,6 +67,8 @@ public class AuthenticationController extends CommonController {
     @Autowired
     private CodeVerifier verifier;
 
+
+
     @Value("${tp.travelpost.active.registration.enable}")
     protected boolean enableAutoActivateRegistration;
 
@@ -110,7 +111,6 @@ public class AuthenticationController extends CommonController {
                 }
 
                 if (user == null) {
-
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                     pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
                     return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
@@ -160,7 +160,7 @@ public class AuthenticationController extends CommonController {
 
 
         try {
-            createOpentracingSpan("UserController - login");
+            createOpentracingSpan("AuthenticationController - login");
 
             if (login != null) {
                 user = userService.login(login);
@@ -170,9 +170,8 @@ public class AuthenticationController extends CommonController {
                     String generatedToken =tokenProvider.createToken(user.getId(),false);
                     authenticationResponse.setAuthenticated(false);
                     authenticationResponse.setAccessToken(generatedToken);
-                    authenticationResponse.setUser(new UserInfo(user));
+
                     authenticationResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    authenticationResponse.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
                     cookie(response,user.getUsername(),user.getPassword());
                     return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
 
@@ -203,15 +202,26 @@ public class AuthenticationController extends CommonController {
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(AUTHENTICATION_WS_VERIFICATION)
     @PreAuthorize("hasRole('PRE_VERIFICATION_USER')")
-    public ResponseEntity<?> verifyCode(@Valid @RequestBody VerificationDTO verification) throws Exception {
+    public ResponseEntity<AuthenticationResponse> verifyCode(@Valid @RequestBody VerificationDTO verification) throws Exception {
 
         UserVO user = userService.findByUsername(verification.getUsername());
+        AuthenticationResponse authenticationResponse= new AuthenticationResponse();
+
 
         if (user!=null && !verifier.isValidCode(user.getSecret(), verification.getCode())) {
-            return new ResponseEntity<>(  "Invalid Code!", HttpStatus.BAD_REQUEST);
+            authenticationResponse.setAccessToken(null);
+            authenticationResponse.setAuthenticated(false);
+            authenticationResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            authenticationResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_CODE_LABEL);
+            return new ResponseEntity<>(  authenticationResponse, HttpStatus.BAD_REQUEST);
         }
-        String jwt = tokenProvider.createToken(user.getId(),true);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt, true, new UserInfo(user)));
+        String generatedToken = tokenProvider.createToken(user.getUsername(),true);
+
+        authenticationResponse.setAuthenticated(true);
+        authenticationResponse.setAccessToken(generatedToken);
+        authenticationResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+        authenticationResponse.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+        return ResponseEntity.ok(authenticationResponse);
     }
 
 
@@ -234,7 +244,7 @@ public class AuthenticationController extends CommonController {
             logger.info("confirm request in");
             response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
-            createOpentracingSpan("UserController -confirmation");
+            createOpentracingSpan("AuthenticationController -confirmation");
 
             UserVO user = userService.findByToken(token);
 
@@ -280,15 +290,15 @@ public class AuthenticationController extends CommonController {
 
         UserVO user = userService.findByUsername(username,false);
 
-       if (user!=null){
+        if (user!=null){
 
-           if(request.getCookies() == null){
-               pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-               pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
-               return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-           }
+            if(request.getCookies() == null){
+                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+            }
 
-           for (Cookie cookie : request.getCookies()) {
+            for (Cookie cookie : request.getCookies()) {
 
 //               cookie.setValue(null);
 //               cookie.setMaxAge(0);
@@ -298,28 +308,28 @@ public class AuthenticationController extends CommonController {
 //               pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
 //               return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 
-               if (StringUtils.equals(cookie.getValue(),_cookie(user.getUsername(),user.getPassword()))) {
+                if (StringUtils.equals(cookie.getValue(),_cookie(user.getUsername(),user.getPassword()))) {
 
-                   cookie.setValue(null);
-                   cookie.setMaxAge(0);
-                   cookie.setPath(request.getContextPath());
-                   response.addCookie(cookie);
-                   pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                   pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
-                   return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                    cookie.setValue(null);
+                    cookie.setMaxAge(0);
+                    cookie.setPath(request.getContextPath());
+                    response.addCookie(cookie);
+                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 
 
-               }
-                   pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                   pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
-                   return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-           }
-       }else{
-           pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-           pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
-           return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-       }
-       throw new UserNotFoundException(WebServiceResponseCode.ERROR_LOGOUT_LABEL);
+                }
+                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+            }
+        }else{
+            pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+            return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+        }
+        throw new UserNotFoundException(WebServiceResponseCode.ERROR_LOGOUT_LABEL);
     }
     private void  cookie(HttpServletResponse response,String username, String password){
         Cookie cookie =new Cookie("_tps_2P_", _cookie(username,password));
@@ -346,7 +356,6 @@ public class AuthenticationController extends CommonController {
         // Generate the QR code image data as a base64 string which can
         // be used in an <img> tag:
         String qrCodeImage = getDataUriForImage(qrGenerator.generate(data), qrGenerator.getImageMimeType());
-       return new ResponseEntity<>(qrCodeImage, HttpStatus.OK);
+        return new ResponseEntity<>(qrCodeImage, HttpStatus.OK);
     }
-
 }

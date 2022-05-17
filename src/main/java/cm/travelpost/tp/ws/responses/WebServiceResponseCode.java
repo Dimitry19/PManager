@@ -69,5 +69,6 @@ public class WebServiceResponseCode {
     public static final String ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL = "Service envoi mail actuellement indisponible.{0} ";
 
     public static final String READ_CODE_LABEL = "{0} déjà lu(e)";
+    public static final String ERROR_INVALID_CODE_LABEL = "Code invalide!";
 
 }

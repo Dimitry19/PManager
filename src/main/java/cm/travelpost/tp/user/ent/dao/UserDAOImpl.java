@@ -20,6 +20,7 @@ import cm.travelpost.tp.user.ent.vo.RoleVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.users.*;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
+import dev.samstevens.totp.secret.SecretGenerator;
 import org.hibernate.QueryParameterException;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -45,6 +46,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Autowired
     RoleDAO roleDAO;
+
+    @Autowired
+    private SecretGenerator secretGenerator;
 
 
     @Value("${tp.travelpost.active.registration.enable}")
@@ -78,7 +82,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             }
             return 0;
         }
-      return 0;
+        return 0;
     }
 
     @Override
@@ -107,7 +111,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             update(subscriber);
             update(subscription);
 
-           String message= buildNotificationMessage(NotificationType.SUBSCRIBE,subscriber.getUsername(),null, null,
+            String message= buildNotificationMessage(NotificationType.SUBSCRIBE,subscriber.getUsername(),null, null,
                     null, null, null);
 
             generateEvent(subscription,message);
@@ -267,7 +271,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setConfirmationToken(UUID.randomUUID().toString());
 
             user.setMultipleFactorAuthentication(Boolean.TRUE);
-            user.setSecret(UUID.randomUUID().toString());
+            user.setSecret(secretGenerator.generate());
             Long id=(Long)save(user);
             user=findById(id);
             setRole(user, register.getRole());
@@ -311,7 +315,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateUser(UserVO user) {
-            update(user);
+        update(user);
     }
 
     @Override
@@ -656,15 +660,15 @@ public class UserDAOImpl extends Generic implements UserDAO {
             UserSeachDTO search = (UserSeachDTO) o;
 
             if (ObjectUtils.isCallable(search,USERNAME_PARAM) && StringUtils.isNotEmpty(search.getUsername())){
-				query.setParameter(USERNAME_PARAM, search.getUsername());
-			}
+                query.setParameter(USERNAME_PARAM, search.getUsername());
+            }
 
-    } catch (
-         QueryParameterException e) {
-        logger.error(e.getMessage());
-        e.printStackTrace();
-        throw new QueryParameterException("Erreur dans la fonction " + UserDAO.class.getName() + " composeQueryParameters");
-    }
+        } catch (
+                QueryParameterException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            throw new QueryParameterException("Erreur dans la fonction " + UserDAO.class.getName() + " composeQueryParameters");
+        }
 
 
     }

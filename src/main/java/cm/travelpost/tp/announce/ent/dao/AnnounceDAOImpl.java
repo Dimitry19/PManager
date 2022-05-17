@@ -632,9 +632,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             hql.and().appendProperty(hql.getWhere(),CATEGORY_TABLE_ALIAS, "code", CATEGORY_PARAM);
         }
 
-        if (StringUtils.isNotEmpty(search.getCode())) {
-            hql.and().appendProperty(hql.getWhere(),ANNOUNCE_ALIAS, CODE_PARAM,CODE_PARAM);
-        }
 
         if (StringUtils.isNotEmpty(search.getTransport())) {
             hql.and().appendProperty(hql.getWhere(),ANNOUNCE_ALIAS,TRANSPORT_PARAM,TRANSPORT_PARAM);
@@ -667,6 +664,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if (StringUtils.isNotEmpty(search.getArrival())) {
             hql.and().like(ANNOUNCE_ALIAS,ARRIVAL_PARAM,search.getArrival(),Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
         }
+
+        if (StringUtils.isNotEmpty(search.getReference())) {
+            hql.and().like(ANNOUNCE_ALIAS, CODE_PARAM,search.getReference(),Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
+        }
         hql.addGroupBy(ANNOUNCE_ALIAS,ID_PARAM);
         hql.addOrderBy(ANNOUNCE_ALIAS,START_DATE_PARAM , Boolean.FALSE);
 
@@ -688,9 +689,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         try {
 
-            if (StringUtils.isNotEmpty(search.getCode())) {
-                query.setParameter(CODE_PARAM,search.getCode());
-            }
+
             if (StringUtils.isNotEmpty(search.getTransport())) {
                 TransportEnum transport = getTransport(search.getTransport());
                 query.setParameter(TRANSPORT_PARAM, transport);
@@ -727,6 +726,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 query.setParameter(ARRIVAL_PARAM, "%" + search.getArrival() + "%");
               }
 
+            if (StringUtils.isNotEmpty(search.getReference())) {
+                query.setParameter(CODE_PARAM,"%" +search.getReference() +"%");
+            }
             if (StringUtils.isNotEmpty(search.getCategory())) {
                 query.setParameter(CATEGORY_PARAM, search.getCategory());
             }

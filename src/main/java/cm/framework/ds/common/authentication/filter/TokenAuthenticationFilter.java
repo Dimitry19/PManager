@@ -52,28 +52,30 @@ public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 			String apiKey= StringUtils.isNotEmpty(apiKeyRequest) ?apiKeyRequest:null;
 			boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(decryptedToken));
 			boolean isRegister=uri.contains(REGISTRATION) && isApiKey;
-			boolean isService=uri.contains(service) && isApiKey;
 
 			boolean isLogout=uri.contains(LOGOUT);
-			boolean isLogin=uri.contains(USER_WS_LOGIN);
+			boolean isService=uri.contains(service) && isApiKey;
 			boolean isFind=uri.contains(FIND);
 			String username=request.getHeader(sessionHeader);
 
+			boolean isLogin=uri.contains(USER_WS_LOGIN);
 
 			boolean isGuest=StringUtils.equals(username,encryptorBean.decrypt(guest)) && isService;
 			boolean isServiceLogin=isLogin; //&& isService;
 			boolean isServiceLogout=isService && isLogout;
 			boolean isOnlyService= !uri.contains(service);
-			boolean activate= isOnlyService || isGuest || isRegister || isFind || isLogout || isServiceLogin || isServiceLogout;
+			boolean isVerifyService=uri.contains(AUTHENTICATION_WS_VERIFICATION);// && isService;
 
-			 if (BooleanUtils.isFalse(activate)){
-				 tokenProvider.setAuthentication(request);
-			 }
+			boolean activate= isVerifyService || isOnlyService || isGuest || isRegister || isFind || isLogout || isServiceLogin || isServiceLogout;
+
+			if (BooleanUtils.isFalse(activate)){
+				tokenProvider.setAuthentication(request);
+			}
 
 		} catch (Exception ex) {
 			logger.error("Could not set user authentication in security context", ex);
 			error(response);
-				throw new IOException("Token expiré, se connecter de nouveau");
+			throw new IOException("Token expiré, se connecter de nouveau");
 
 		}
 
