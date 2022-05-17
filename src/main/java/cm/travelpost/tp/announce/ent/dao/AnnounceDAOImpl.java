@@ -99,7 +99,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             AnnounceSearchDTO announceSearch =(AnnounceSearchDTO) o;
             return CollectionsUtils.size(commonSearchAnnounce(announceSearch,null));
         }
-       return 0;
+        return 0;
 
     }
 
@@ -342,7 +342,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Transactional(readOnly = true)
     public List<AnnounceVO> search(AnnounceSearchDTO announceSearch, PageBy pageBy) throws AnnounceException,Exception {
 
-          return commonSearchAnnounce(announceSearch,pageBy);
+        return commonSearchAnnounce(announceSearch,pageBy);
     }
 
 
@@ -364,7 +364,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                             logger.error("Erreur durant l''execution du Batch d''ajournement de status de l'annonce");
                             e.printStackTrace();
                         }
-                });
+                    });
         }
     }
 
@@ -418,7 +418,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         if (user != null) {
             user.addAnnounce(announce);
-             update(user);
+            update(user);
             return (UserVO) get(UserVO.class, user.getId());
         } else {
             return null;
@@ -595,7 +595,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                         .map(ReservationVO::getWeight).reduce(BigDecimal.ZERO,BigDecimal::add);
 
             }
-           return reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED)
+            return reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED)
                     &&!r.getValidate().equals(ValidateEnum.INSERTED))
                     .map(ReservationVO::getWeight).reduce(BigDecimal.ZERO,BigDecimal::add);
 
@@ -724,7 +724,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             if (StringUtils.isNotEmpty(search.getArrival())) {
                 query.setParameter(ARRIVAL_PARAM, "%" + search.getArrival() + "%");
-              }
+            }
 
             if (StringUtils.isNotEmpty(search.getReference())) {
                 query.setParameter(CODE_PARAM,"%" +search.getReference() +"%");
@@ -826,7 +826,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if(o instanceof Set){
             subscribers.addAll((Set)o);
         }else{
-             subscribers=fillSubscribers(user,announce);
+            subscribers=fillSubscribers(user,announce);
 
         }
 
@@ -877,7 +877,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         Set users=usersNotification(announce);
 
         if (CollectionsUtils.isNotEmpty(users)){
-           String message=buildNotificationMessage(ANNOUNCE_BUYER,announce.getUser().getUsername(),announce.getDeparture(),
+            String message=buildNotificationMessage(ANNOUNCE_BUYER,announce.getUser().getUsername(),announce.getDeparture(),
                     announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
                     DateUtils.getDateStandard(announce.getEndDate()),null);
 
@@ -902,9 +902,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             if(o instanceof  AnnounceVO){
                 AnnounceVO announce = (AnnounceVO) o;
-                 announce.setRetDescription(sb.toString());
-                 announce.setWarning(sb.toString());
-                 return;
+                announce.setRetDescription(sb.toString());
+                announce.setWarning(sb.toString());
+                return;
             }
 
             if(o instanceof  ReservationVO){

@@ -233,7 +233,7 @@ public class ImageUtils {
         switch (file.getContentType()){
 
             case "image/jpeg":
-                 return "jpeg";
+                return "jpeg";
 
             case "image/png":
                 return  "png";
@@ -258,17 +258,17 @@ public class ImageUtils {
                 throw new IllegalStateException("Unexpected value: " + contentType);
         }
 
-       try {
+        try {
 
-           ImageIO.write(bufferedImage,extension, os);// Passing: ​(RenderedImage im, String formatName, OutputStream output)
-           InputStream is = new ByteArrayInputStream(os.toByteArray());
+            ImageIO.write(bufferedImage,extension, os);// Passing: ​(RenderedImage im, String formatName, OutputStream output)
+            InputStream is = new ByteArrayInputStream(os.toByteArray());
 
-           return  is;
+            return  is;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-       return null;
+        return null;
     }
 
     public static byte[] getBytes(InputStream is) throws IOException {

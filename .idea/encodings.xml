@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cm/framework" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cm/travelpost" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/CustomExceptionHandler.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/ErrorResponse.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/exception/MissingHeaderInfoException.java" charset="UTF-8" />

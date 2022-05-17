@@ -82,7 +82,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             }
             return 0;
         }
-        return 0;
+      return 0;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             update(subscriber);
             update(subscription);
 
-            String message= buildNotificationMessage(NotificationType.SUBSCRIBE,subscriber.getUsername(),null, null,
+           String message= buildNotificationMessage(NotificationType.SUBSCRIBE,subscriber.getUsername(),null, null,
                     null, null, null);
 
             generateEvent(subscription,message);
@@ -315,7 +315,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateUser(UserVO user) {
-        update(user);
+            update(user);
     }
 
     @Override
@@ -660,17 +660,25 @@ public class UserDAOImpl extends Generic implements UserDAO {
             UserSeachDTO search = (UserSeachDTO) o;
 
             if (ObjectUtils.isCallable(search,USERNAME_PARAM) && StringUtils.isNotEmpty(search.getUsername())){
-                query.setParameter(USERNAME_PARAM, search.getUsername());
-            }
+				query.setParameter(USERNAME_PARAM, search.getUsername());
+			}
 
-        } catch (
-                QueryParameterException e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
-            throw new QueryParameterException("Erreur dans la fonction " + UserDAO.class.getName() + " composeQueryParameters");
+    } catch (
+         QueryParameterException e) {
+        logger.error(e.getMessage());
+        e.printStackTrace();
+        throw new QueryParameterException("Erreur dans la fonction " + UserDAO.class.getName() + " composeQueryParameters");
         }
+    }
 
+    @Override
+    public UserVO generateSecret(UserVO user) throws Exception {
 
+        user.setMultipleFactorAuthentication(Boolean.TRUE);
+        user.setSecret(secretGenerator.generate());
+        update(user);
+
+        return findById(user.getId());
     }
 
     @Override
