@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 public class AnnounceSearchDTO extends CommonSearchDTO {
 
-    private String code;
+    private String reference;
     private String departure;
 
     private String arrival;
@@ -126,7 +126,7 @@ public class AnnounceSearchDTO extends CommonSearchDTO {
         this.user = user;
     }
 
-    public String getCode() {   return code; }
+    public String getReference() { return reference;   }
 
-    public void setCode(String code) {  this.code = code; }
+    public void setReference(String reference) {  this.reference = reference; }
 }

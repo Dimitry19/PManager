@@ -17,7 +17,6 @@ import cm.travelpost.tp.ws.requests.users.RegisterDTO;
 import cm.travelpost.tp.ws.responses.RegistrationResponse;
 import cm.travelpost.tp.ws.responses.Response;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
-import cm.travelpost.tp.ws.responses.authentication.AuthenticationResponse;
 import dev.samstevens.totp.code.CodeVerifier;
 import dev.samstevens.totp.qr.QrData;
 import dev.samstevens.totp.qr.QrDataFactory;
@@ -166,14 +165,14 @@ public class AuthenticationController extends CommonController {
                 user = userService.login(login);
 
                 if (user != null) {
-                    AuthenticationResponse authenticationResponse= new AuthenticationResponse();
-                    String generatedToken =tokenProvider.createToken(user.getId(),false);
-                    authenticationResponse.setAuthenticated(false);
-                    authenticationResponse.setAccessToken(generatedToken);
 
-                    authenticationResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    String generatedToken =tokenProvider.createToken(user.getId(),false);
+                    user.setAuthenticated(false);
+                    user.setAccessToken(generatedToken);
+
+                    user.setRetCode(WebServiceResponseCode.OK_CODE);
                     cookie(response,user.getUsername(),user.getPassword());
-                    return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
+                    return new ResponseEntity<>(user, HttpStatus.OK);
 
                 }
                 WSCommonResponseVO commonResponse = new WSCommonResponseVO();
@@ -202,26 +201,25 @@ public class AuthenticationController extends CommonController {
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(AUTHENTICATION_WS_VERIFICATION)
     @PreAuthorize("hasRole('PRE_VERIFICATION_USER')")
-    public ResponseEntity<AuthenticationResponse> verifyCode(@Valid @RequestBody VerificationDTO verification) throws Exception {
+    public ResponseEntity<UserVO> verifyCode(@Valid @RequestBody VerificationDTO verification) throws Exception {
 
         UserVO user = userService.findByUsername(verification.getUsername());
-        AuthenticationResponse authenticationResponse= new AuthenticationResponse();
 
 
         if (user!=null && !verifier.isValidCode(user.getSecret(), verification.getCode())) {
-            authenticationResponse.setAccessToken(null);
-            authenticationResponse.setAuthenticated(false);
-            authenticationResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            authenticationResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_CODE_LABEL);
-            return new ResponseEntity<>(  authenticationResponse, HttpStatus.BAD_REQUEST);
+            user.setAccessToken(null);
+            user.setAuthenticated(false);
+            user.setRetCode(WebServiceResponseCode.NOK_CODE);
+            user.setRetDescription(WebServiceResponseCode.ERROR_INVALID_CODE_LABEL);
+            return new ResponseEntity<>(  user, HttpStatus.BAD_REQUEST);
         }
         String generatedToken = tokenProvider.createToken(user.getUsername(),true);
 
-        authenticationResponse.setAuthenticated(true);
-        authenticationResponse.setAccessToken(generatedToken);
-        authenticationResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-        authenticationResponse.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
-        return ResponseEntity.ok(authenticationResponse);
+        user.setAuthenticated(true);
+        user.setAccessToken(generatedToken);
+        user.setRetCode(WebServiceResponseCode.OK_CODE);
+        user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+        return ResponseEntity.ok(user);
     }
 
 

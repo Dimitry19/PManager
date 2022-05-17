@@ -126,6 +126,10 @@ public class UserVO extends CommonVO {
 
     private String secret;
 
+    private String accessToken;
+
+    private boolean authenticated;
+
 
     public UserVO() {
         super();
@@ -558,6 +562,23 @@ public class UserVO extends CommonVO {
             MessageVO message = iterMessage.next();
             message.cancel();
         }
+    }
+
+    @Transient
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+    @Transient
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
+
+    public void setAuthenticated(boolean authenticated) {
+        this.authenticated = authenticated;
     }
 
     @Override
