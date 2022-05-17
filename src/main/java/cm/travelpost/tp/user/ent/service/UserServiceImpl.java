@@ -113,6 +113,20 @@ public class UserServiceImpl implements UserService {
         return userDAO.subscribers(userId);
     }
 
+    public boolean enableMFA(LoginDTO lr) throws Exception {
+
+        UserVO user = login(lr);
+        if (user == null) {
+          throw new UserException("Utilisateur non trouvé");
+        }
+        if(user.isMultipleFactorAuthentication()){
+            return true;
+        }
+        userDAO.generateSecret(user);
+
+        return false;
+    }
+
     public UserVO login(LoginDTO lr) throws Exception {
 
         UserVO user = checkLoginAdmin(lr);

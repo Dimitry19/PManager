@@ -668,9 +668,17 @@ public class UserDAOImpl extends Generic implements UserDAO {
         logger.error(e.getMessage());
         e.printStackTrace();
         throw new QueryParameterException("Erreur dans la fonction " + UserDAO.class.getName() + " composeQueryParameters");
+        }
     }
 
+    @Override
+    public UserVO generateSecret(UserVO user) throws Exception {
 
+        user.setMultipleFactorAuthentication(Boolean.TRUE);
+        user.setSecret(secretGenerator.generate());
+        update(user);
+
+        return findById(user.getId());
     }
 
     @Override

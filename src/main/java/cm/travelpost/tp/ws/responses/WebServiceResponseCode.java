@@ -1,6 +1,7 @@
 package cm.travelpost.tp.ws.responses;
 
 public class WebServiceResponseCode {
+    public static final int MFA_NOT_ENABLED = 9;
     public static final int OK_CODE = 0;
     public static final int NOK_CODE = -1;
 
@@ -13,7 +14,7 @@ public class WebServiceResponseCode {
     public static final String LOGIN_OK_LABEL = "Login effectue correctement";
     public static final String LOGOUT_OK_LABEL = "Logout effectue correctement";
     public static final String USER_REGISTER_LABEL = "Enregistrement completeé, consultez votre email pour confirmer votre enregistrement"+MAIL_SPAM;
-    public static final String USER_REGISTER_ACTIVE_LABEL = "Votre compte est  actif dès à présent.. Connectez vous maintenant";
+    public static final String USER_REGISTER_ACTIVE_LABEL = "Connectez vous maintenant,scannez le QrCode avec l'app mobile Google Authenticator / Microsoft Authenticator";
 
     public static final String UPDATE_LABEL = "Données ajournées correctement";
     public static final String PAGINATE_RESPONSE_LABEL = "{0} resultat(s) trouvé(s)";

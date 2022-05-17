@@ -21,6 +21,7 @@ import java.util.List;
 
 public interface UserService {
 
+    boolean enableMFA(LoginDTO lr) throws Exception;
     UserVO login(LoginDTO lr) throws Exception;
 
     UserVO update(UserVO user) throws UserException;
