@@ -157,7 +157,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         UserVO user = userDAO.findById(userId);
         if (user == null) {
-            throw new UserException("Aucun utilisateur trouvé avec cet id " + userId);
+            throw new UserException(messageConfig.getUserExceptionNotFound() + userId);
         }
         return findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId, pageBy);
     }
@@ -168,7 +168,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         UserVO user = userDAO.findById(userId);
         if (user == null) {
-            throw new UserException("Aucun utilisateur trouvé avec cet id " + userId);
+            throw new UserException(messageConfig.getUserExceptionNotFound() + userId);
         }
 
         if(status == StatusEnum.COMPLETED){
@@ -260,7 +260,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             UserVO user = userDAO.findById(adto.getUserId());
 
             if (user == null) {
-                throw new UserException("Aucun utilisateur trouvé avec cet id " + adto.getUserId());
+                throw new UserException(messageConfig.getUserExceptionNotFound() + adto.getUserId());
             }
 
             AnnounceVO announce = new AnnounceVO();
@@ -301,7 +301,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         UserVO user = userDAO.findById(dto.getUserId());
 
         if (user == null) {
-            throw new RecordNotFoundException("Aucun utilisateur trouvé");
+            throw new RecordNotFoundException(messageConfig.getUserExceptionNotFound());
         }
 
         AnnounceVO announce = announce(dto.getId());
@@ -568,7 +568,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
     public List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception {
 
         try {
@@ -580,8 +579,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
-    public BigDecimal checkQtyReservations(Long id, boolean onlyRefused) throws AnnounceException,Exception {
+     public BigDecimal checkQtyReservations(Long id, boolean onlyRefused) throws AnnounceException,Exception {
 
         try {
 
@@ -605,7 +603,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
+
     protected void checkReservations(AnnounceVO announce, boolean onlyRefused) throws Exception {
         BigDecimal sumQtyRes= checkQtyReservations(announce.getId(),onlyRefused);
         warning( announce , announce.getEndDate(), announce.getWeight(),  sumQtyRes);
@@ -740,9 +738,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
 
-    private boolean addCondition(String val){
-        return  StringUtils.isNotEmpty(val) && !StringUtils.equals(val,  WHERE);
-    }
 
     private void handleCategories(AnnounceMasterVO announce, List<String> categories) throws AnnounceException {
 
@@ -815,7 +810,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         return subscribers;
     }
 
-    @Transactional(readOnly = true,propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
+
     public void generateEvent(AnnounceVO announce , String message, Object o)throws Exception {
 
 
@@ -904,25 +899,22 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 AnnounceVO announce = (AnnounceVO) o;
                 announce.setRetDescription(sb.toString());
                 announce.setWarning(sb.toString());
-                return;
             }
 
             if(o instanceof  ReservationVO){
                 ReservationVO reservation = (ReservationVO) o;
                 reservation.setWarning(sb.toString());
-                return;
             }
 
             if(o instanceof  ReservationUserVO){
                 ReservationUserVO reservation = (ReservationUserVO) o;
                 reservation.setWarning(sb.toString());
-                return;
             }
 
             if(o instanceof  ReservationReceivedUserVO){
                 ReservationReceivedUserVO reservation = (ReservationReceivedUserVO) o;
                 reservation.setWarning(sb.toString());
-                return;
+
             }
         }
 

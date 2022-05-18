@@ -7,6 +7,8 @@ import cm.travelpost.tp.common.utils.CommonUtils;
 import cm.travelpost.tp.user.ent.vo.RoleVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.servlet.*;
@@ -17,15 +19,15 @@ import java.util.List;
 
 public class CommonFilter extends AFilter{
 
-
+    private static Logger logger = LoggerFactory.getLogger(CommonFilter.class);
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+        logger.debug(" ");
     }
 
     @Override
     public void destroy() {
-
+        logger.debug("Destroy CommonFilter filter");
     }
 
     public  static List getRolesAuthoritiesUser(UserVO user){

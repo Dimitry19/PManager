@@ -10,8 +10,6 @@ import cm.travelpost.tp.message.ent.vo.MessageIdVO;
 import cm.travelpost.tp.message.ent.vo.MessageVO;
 import cm.travelpost.tp.ws.requests.messages.MessageDTO;
 import cm.travelpost.tp.ws.requests.messages.UpdateMessageDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,9 +20,6 @@ import java.util.List;
 @Service("messageService")
 @Transactional
 public class MessageServiceImpl implements MessageService {
-    private static Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
-
-
 
     @Autowired
     MessageDAO messageDAO;
