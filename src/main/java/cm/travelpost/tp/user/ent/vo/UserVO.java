@@ -122,7 +122,7 @@ public class UserVO extends CommonVO {
 
     private double rating = 0;
 
-    private boolean multipleFactorAuthentication= true;
+    private boolean multipleFactorAuthentication;
 
     private String secret;
 
@@ -426,7 +426,7 @@ public class UserVO extends CommonVO {
         this.confirmationToken = confirmationToken;
     }
 
-    public void setMultipleFactorAuthentication(boolean mfa) {     this.multipleFactorAuthentication = multipleFactorAuthentication;  }
+    public void setMultipleFactorAuthentication(boolean multipleFactorAuthentication) {     this.multipleFactorAuthentication = multipleFactorAuthentication;  }
 
     public void setSecret(String secret) {
         this.secret = secret;

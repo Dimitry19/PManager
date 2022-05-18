@@ -33,5 +33,10 @@ public class DefaultController extends CommonController {
 
 	}
 
-
+	@GetMapping(value = "/index")
+	public void  index(HttpServletResponse response) throws Exception {
+	 	int totalUsers=userService.count(null, null,null);
+		response.setIntHeader("totalUsers", totalUsers);
+		response.sendRedirect(getRedirectPage(RedirectType.INDEX));
+	}
 }

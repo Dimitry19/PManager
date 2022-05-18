@@ -36,6 +36,8 @@ import static cm.travelpost.tp.administrator.ent.enums.DashBoardObjectType.AIRLI
 public class DashboardController extends CommonController {
 
  	protected final Log logger = LogFactory.getLog(DashboardController.class);
+
+	 public final static String LA_COMPAGNIE_AERIENNE ="La compagnie aerienne";
 	/**
 	 * Cette methode cree une compagnie aerienne ou une ville
 	 *
@@ -138,7 +140,7 @@ public class DashboardController extends CommonController {
 
 			if (airline != null) {
 				airline.setRetCode(WebServiceResponseCode.OK_CODE);
-				airline.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "La compagnie aerienne"));
+				airline.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, LA_COMPAGNIE_AERIENNE));
 				return new ResponseEntity<>(airline, HttpStatus.OK);
 			}
 
@@ -190,7 +192,7 @@ public class DashboardController extends CommonController {
 
 				if (airlineService.delete(id)) {
 					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La compagnie aerienne"));
+					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, LA_COMPAGNIE_AERIENNE));
 					return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 				}
 
@@ -215,6 +217,6 @@ public class DashboardController extends CommonController {
 		}
 	}
 	private String getMessage(DashBoardObjectType objectType){
-		return (objectType == AIRLINE)?"La compagnie aerienne":"La ville";
+		return (objectType == AIRLINE)? LA_COMPAGNIE_AERIENNE :"La ville";
 	}
 }

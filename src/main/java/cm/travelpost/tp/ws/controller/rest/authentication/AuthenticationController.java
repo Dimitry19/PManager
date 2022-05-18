@@ -1,9 +1,7 @@
 package cm.travelpost.tp.ws.controller.rest.authentication;
 
 
-import cm.framework.ds.common.authentication.service.AuthenticationService;
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
-import cm.framework.ds.common.security.jwt.TokenProvider;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
@@ -26,7 +24,6 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
 
 
 @RestController
@@ -48,15 +44,6 @@ import java.io.IOException;
 public class AuthenticationController extends CommonController {
 
     protected final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
-
-
-    @Autowired
-    TokenProvider tokenProvider;
-
-    @Autowired
-    AuthenticationService  authenticationService;
-
-
 
     @Value("${tp.travelpost.active.registration.enable}")
     protected boolean enableAutoActivateRegistration;
@@ -77,7 +64,7 @@ public class AuthenticationController extends CommonController {
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(path = WSConstants.REGISTRATION, consumes = {MediaType.APPLICATION_JSON}, produces = {MediaType.APPLICATION_JSON}, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
-    ResponseEntity<Response> register(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid RegisterDTO register) throws ValidationException, IOException {
+    ResponseEntity<Response> register(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid RegisterDTO register) throws ValidationException {
 
         logger.info("register request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -192,8 +179,11 @@ public class AuthenticationController extends CommonController {
 
         UserVO user = userService.findByUsername(verification.getUsername());
 
+        if(user == null){
+            return new ResponseEntity<>(new UserVO(), HttpStatus.BAD_REQUEST);
+        }
 
-        if (user!=null && BooleanUtils.isFalse(authenticationService.verifyCode(verification.getCode(), user.getSecret()))) {
+        if (BooleanUtils.isFalse(authenticationService.verifyCode(verification.getCode(), user.getSecret()))) {
             user.setAccessToken(null);
             user.setAuthenticated(false);
             user.setRetCode(WebServiceResponseCode.NOK_CODE);
@@ -266,7 +256,7 @@ public class AuthenticationController extends CommonController {
 
 
 
-    @RequestMapping(value = WSConstants.LOGOUT, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = WSConstants.LOGOUT, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
     public @ResponseBody
     ResponseEntity<Response> logout(HttpServletRequest request, HttpServletResponse response, @RequestParam  @Valid String username) throws Exception {
 
@@ -286,15 +276,8 @@ public class AuthenticationController extends CommonController {
 
            for (Cookie cookie : request.getCookies()) {
 
-//               cookie.setValue(null);
-//               cookie.setMaxAge(0);
-//               cookie.setPath(request.getContextPath());
-//               response.addCookie(cookie);
-//               pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-//               pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
-//               return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 
-               if (StringUtils.equals(cookie.getValue(),_cookie(user.getUsername(),user.getPassword()))) {
+               if (StringUtils.equals(cookie.getValue(),builCookiePart(user.getUsername(),user.getPassword()))) {
 
                    cookie.setValue(null);
                    cookie.setMaxAge(0);
@@ -303,12 +286,10 @@ public class AuthenticationController extends CommonController {
                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                    pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-
-
                }
-                   pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                   pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
-                   return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+               pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+               pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+               return new ResponseEntity<>(pmResponse, HttpStatus.OK);
            }
        }else{
            pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -318,13 +299,13 @@ public class AuthenticationController extends CommonController {
        throw new UserNotFoundException(WebServiceResponseCode.ERROR_LOGOUT_LABEL);
     }
     private void  cookie(HttpServletResponse response,String username, String password){
-        Cookie cookie =new Cookie("_tps_2P_", _cookie(username,password));
+        Cookie cookie =new Cookie("_tps_2P_", builCookiePart(username,password));
         cookie.setSecure(true);
         cookie.setDomain(travelPostDomain);
         cookie.setMaxAge(3600);
         response.addCookie(cookie);
     }
-    private String _cookie(String username, String password){
+    private String builCookiePart(String username, String password){
 
         return PasswordGenerator.encrypt(username).concat(password.substring(0, password.length()-4).concat(password.substring(2,password.length()-1)));
 

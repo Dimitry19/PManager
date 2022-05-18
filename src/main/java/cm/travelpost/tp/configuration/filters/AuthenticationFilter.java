@@ -73,23 +73,22 @@ public class AuthenticationFilter extends CommonFilter {
 
     @Override
     public void destroy() {
-
+        logger.debug("Destroy Authentication filter");
     }
 
     private boolean authorized(ServletRequest servletRequest,ServletResponse servletResponse) throws Exception {
-
-
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String uri=request.getRequestURI();
         String tk=request.getHeader(encryptorBean.decrypt(tokenName));
-        String apiKey=StringUtils.isNotEmpty(tk) ?encryptorBean.decrypt(tk):null;
+
+        String apiKey=StringUtils.isNotEmpty(tk) ? encryptorBean.decrypt(tk):"null";
 
 
         boolean isService=uri.contains(service);
-        boolean isConfirm=uri.contains("confirm");
+        boolean isConfirm=uri.contains(confirm);
         boolean isNotApiKey=(StringUtils.isEmpty(apiKey)|| !apiKey.equals(encryptorBean.decrypt(token)));
         boolean isNotUpload=!uri.contains(WSConstants.UPLOAD);
         boolean isDashBoard=uri.contains(WSConstants.DASHBOARD);

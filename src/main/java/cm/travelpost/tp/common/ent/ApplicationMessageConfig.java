@@ -24,6 +24,9 @@ public class ApplicationMessageConfig {
 	@Value("${message.announce.warning.delete}")
 	private String announceWarningDelete;
 
+	@Value("${message.user.exception.not.found}")
+	private String userExceptionNotFound;
+
 	public String getAnnounceWarning() {
 		return announceWarning;
 	}
@@ -39,4 +42,6 @@ public class ApplicationMessageConfig {
 	public String getAnnounceWarningQtyReduction() {return announceWarningQtyReduction;	}
 
 	public String getAnnounceWarningDelete() { return announceWarningDelete;}
+
+	public String getUserExceptionNotFound() {return userExceptionNotFound;}
 }

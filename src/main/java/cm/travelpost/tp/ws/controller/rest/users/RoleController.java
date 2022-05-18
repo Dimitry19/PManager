@@ -4,6 +4,8 @@ package cm.travelpost.tp.ws.controller.rest.users;
 import cm.travelpost.tp.user.ent.vo.RoleVO;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.users.RoleDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,16 +19,18 @@ import static cm.travelpost.tp.constant.WSConstants.ROLE_WS;
 @RequestMapping(ROLE_WS)
 public class RoleController extends CommonController {
 
+    private static Logger logger = LoggerFactory.getLogger(RoleController.class);
 
     @PostMapping(value = ROLE_WS_ADD)
     public ResponseEntity<RoleVO> add(@RequestBody RoleDTO role) throws Exception {
         try {
-            log.info("add  role  request in");
+            logger.info("add  role  request in");
             createOpentracingSpan("RoleController -add");
             RoleVO roleCreated = roleService.add(role);
             return new ResponseEntity<>(roleCreated, HttpStatus.CREATED);
         } catch (Exception e) {
-            throw e;
+            logger.error("Erreur durant l'ajout du role {}", e.getMessage());
+               throw e;
         } finally {
             finishOpentracingSpan();
         }

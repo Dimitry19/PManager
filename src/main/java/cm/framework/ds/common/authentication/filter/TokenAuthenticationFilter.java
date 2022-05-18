@@ -27,7 +27,7 @@ import static cm.travelpost.tp.constant.WSConstants.*;
 @ManagedBean
 public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 
-	private static final Logger logger = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
+	private static final Logger log = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
 
 	@Autowired
 	TokenProvider tokenProvider;
@@ -49,7 +49,7 @@ public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 			String keyName= StringUtils.isNotEmpty(decryptedTokenName) ?decryptedTokenName:null;
 			String apiKeyRequest=encryptorBean.decrypt(request.getHeader(keyName));
 
-			String apiKey= StringUtils.isNotEmpty(apiKeyRequest) ?apiKeyRequest:null;
+			String apiKey= StringUtils.isNotEmpty(apiKeyRequest) ?apiKeyRequest:"null";
 			String username=request.getHeader(sessionHeader);
 
 			boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(decryptedToken));
@@ -70,7 +70,7 @@ public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 				 tokenProvider.setAuthentication(request);
 			 }
 		} catch (Exception ex) {
-			logger.error("Could not set user authentication in security context", ex);
+			log.error("Could not set user authentication in security context", ex);
 			error(response);
 			throw new IOException("Token expiré, se connecter de nouveau");
 		}

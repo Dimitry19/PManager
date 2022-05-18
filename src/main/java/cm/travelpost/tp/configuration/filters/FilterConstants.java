@@ -2,6 +2,9 @@ package cm.travelpost.tp.configuration.filters;
 
 public class FilterConstants {
 
+    private FilterConstants() {
+    }
+
     public static final String CANCELLED = "cancelled";
     public static final String COMPLETED = "completed";
     public static final String STATUS = "byStatus";
