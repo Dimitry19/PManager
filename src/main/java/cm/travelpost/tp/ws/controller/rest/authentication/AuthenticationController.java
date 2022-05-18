@@ -1,6 +1,7 @@
 package cm.travelpost.tp.ws.controller.rest.authentication;
 
 
+import cm.framework.ds.common.authentication.service.AuthenticationService;
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.framework.ds.common.security.jwt.TokenProvider;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
@@ -8,6 +9,7 @@ import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
+import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.controller.RedirectType;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
@@ -17,14 +19,11 @@ import cm.travelpost.tp.ws.requests.users.RegisterDTO;
 import cm.travelpost.tp.ws.responses.RegistrationResponse;
 import cm.travelpost.tp.ws.responses.Response;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
-import dev.samstevens.totp.code.CodeVerifier;
-import dev.samstevens.totp.qr.QrData;
-import dev.samstevens.totp.qr.QrDataFactory;
-import dev.samstevens.totp.qr.QrGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +41,6 @@ import javax.validation.ValidationException;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 
-import static dev.samstevens.totp.util.Utils.getDataUriForImage;
-
 
 @RestController
 @RequestMapping(WSConstants.AUTHENTICATION_WS)
@@ -53,18 +50,11 @@ public class AuthenticationController extends CommonController {
     protected final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
 
-
     @Autowired
     TokenProvider tokenProvider;
 
     @Autowired
-    private QrDataFactory qrDataFactory;
-
-    @Autowired
-    private QrGenerator qrGenerator;
-
-    @Autowired
-    private CodeVerifier verifier;
+    AuthenticationService  authenticationService;
 
 
 
@@ -116,14 +106,7 @@ public class AuthenticationController extends CommonController {
                 }
 
                 if (enableAutoActivateRegistration){
-
-                    QrData data = qrDataFactory.newBuilder()
-                            .label(user.getEmail())
-                            .secret(user.getSecret())
-                            .issuer(issuer).build();
-                    // Generate the QR code image data as a base64 string which can
-                    // be used in an <img> tag:
-                    String qrCodeImage = getDataUriForImage(qrGenerator.generate(data), qrGenerator.getImageMimeType());
+                    String qrCodeImage = authenticationService.qrCodeGenerator(user.getEmail(),user.getSecret(),issuer);
                     pmResponse.setMfa(true);
                     pmResponse.setSecretImageUri(qrCodeImage);
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -156,25 +139,29 @@ public class AuthenticationController extends CommonController {
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         UserVO user = null;
 
-
-
         try {
             createOpentracingSpan("AuthenticationController - login");
 
             if (login != null) {
-                user = userService.login(login);
 
-                if (user != null) {
+                 UserInfo ui= userService.enableMFA(login);
+                if(BooleanUtils.isFalse(ui.isEnableMFA())){
 
-                    String generatedToken =tokenProvider.createToken(user.getId(),false);
-                    user.setAuthenticated(false);
-                    user.setAccessToken(generatedToken);
+                    RegistrationResponse pmResponse = new RegistrationResponse();
 
-                    user.setRetCode(WebServiceResponseCode.OK_CODE);
-                    cookie(response,user.getUsername(),user.getPassword());
-                    return new ResponseEntity<>(user, HttpStatus.OK);
-
+                    String qrCodeImage = authenticationService.qrCodeGenerator(ui.getEmail(),ui.getSecret(),issuer);
+                    pmResponse.setMfa(true);
+                    pmResponse.setSecretImageUri(qrCodeImage);
+                    pmResponse.setRetCode(WebServiceResponseCode.MFA_NOT_ENABLED);
+                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                }else{
+                    user = userService.login(login);
+                    if (user != null) {
+                        user.setRetCode(WebServiceResponseCode.OK_CODE);
+                       return new ResponseEntity<>(user, HttpStatus.OK);
+                    }
                 }
+
                 WSCommonResponseVO commonResponse = new WSCommonResponseVO();
                 commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 commonResponse.setRetDescription(WebServiceResponseCode.ERROR_LOGIN_LABEL);
@@ -191,27 +178,27 @@ public class AuthenticationController extends CommonController {
 
     }
 
-    @ApiOperation(value = "Verification  user registration ", response = Response.class)
+    @ApiOperation(value = "Verification  user token to login ", response = Response.class)
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Server error"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-            @ApiResponse(code = 200, message = "Successful registration",
+            @ApiResponse(code = 200, message = "Successful login",
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(AUTHENTICATION_WS_VERIFICATION)
     @PreAuthorize("hasRole('PRE_VERIFICATION_USER')")
-    public ResponseEntity<UserVO> verifyCode(@Valid @RequestBody VerificationDTO verification) throws Exception {
+    public ResponseEntity<UserVO> verifyCode(HttpServletResponse response, HttpServletRequest request,@Valid @RequestBody VerificationDTO verification) throws Exception {
 
         UserVO user = userService.findByUsername(verification.getUsername());
 
 
-        if (user!=null && !verifier.isValidCode(user.getSecret(), verification.getCode())) {
+        if (user!=null && BooleanUtils.isFalse(authenticationService.verifyCode(verification.getCode(), user.getSecret()))) {
             user.setAccessToken(null);
             user.setAuthenticated(false);
             user.setRetCode(WebServiceResponseCode.NOK_CODE);
             user.setRetDescription(WebServiceResponseCode.ERROR_INVALID_CODE_LABEL);
-            return new ResponseEntity<>(  user, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
         }
         String generatedToken = tokenProvider.createToken(user.getUsername(),true);
 
@@ -219,6 +206,7 @@ public class AuthenticationController extends CommonController {
         user.setAccessToken(generatedToken);
         user.setRetCode(WebServiceResponseCode.OK_CODE);
         user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+        cookie(response,user.getUsername(),user.getPassword());
         return ResponseEntity.ok(user);
     }
 
@@ -347,13 +335,7 @@ public class AuthenticationController extends CommonController {
     public @ResponseBody ResponseEntity<String> testQrCode(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
 
         UserVO user= (UserVO) CollectionsUtils.getFirst(userService.getAllUsers());
-        QrData data = qrDataFactory.newBuilder()
-                .label(user.getEmail())
-                .secret(user.getSecret())
-                .issuer(issuer).build();
-        // Generate the QR code image data as a base64 string which can
-        // be used in an <img> tag:
-        String qrCodeImage = getDataUriForImage(qrGenerator.generate(data), qrGenerator.getImageMimeType());
+        String qrCodeImage = authenticationService.qrCodeGenerator(user.getEmail(),user.getSecret(),issuer);
        return new ResponseEntity<>(qrCodeImage, HttpStatus.OK);
     }
 

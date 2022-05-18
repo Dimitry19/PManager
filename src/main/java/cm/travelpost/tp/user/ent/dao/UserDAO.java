@@ -88,5 +88,5 @@ public interface UserDAO extends CommonDAO {
 
     List<CommunicationVO> communications(Long userId) throws Exception;
 
-
+    UserVO generateSecret(UserVO user) throws Exception;
 }

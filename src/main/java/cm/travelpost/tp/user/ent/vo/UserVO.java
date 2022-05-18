@@ -122,7 +122,7 @@ public class UserVO extends CommonVO {
 
     private double rating = 0;
 
-    private boolean multipleFactorAuthentication= true;
+    private boolean multipleFactorAuthentication;
 
     private String secret;
 

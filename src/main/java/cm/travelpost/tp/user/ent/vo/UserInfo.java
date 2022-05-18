@@ -4,6 +4,7 @@ import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.DateUtils;
 import cm.travelpost.tp.configuration.filters.CommonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -37,7 +38,17 @@ public class UserInfo implements Serializable {
 
     private List<RoleVO> roles;
 
+    private boolean enableMFA;
 
+    private String secret ;
+
+    public UserInfo( String email, String secret, boolean enableMFA) {
+        this.enableMFA = enableMFA;
+        this.email = email;
+        this.secret = secret;
+
+
+    }
     public UserInfo(Long id, String firstName, String username, String lastName, String email, String phone, int count) {
         this.id = id;
         this.firstName = firstName;
@@ -171,4 +182,13 @@ public class UserInfo implements Serializable {
     public void setRoles(List<RoleVO> roles) {
         this.roles = roles;
     }
+
+    @JsonIgnore
+    public boolean isEnableMFA() {  return enableMFA; }
+    public void setEnableMFA(boolean enableMFA) {    this.enableMFA = enableMFA;  }
+
+    @JsonIgnore
+    public String getSecret() { return secret;}
+
+    public void setSecret(String secret) {  this.secret = secret;  }
 }
