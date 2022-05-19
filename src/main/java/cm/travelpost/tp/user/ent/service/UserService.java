@@ -5,6 +5,7 @@ import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.review.ent.bo.ReviewsSummaryBO;
 import cm.travelpost.tp.review.ent.vo.ReviewDetailsVO;
 import cm.travelpost.tp.review.ent.vo.ReviewVO;
+import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.review.ReviewDTO;
 import cm.travelpost.tp.ws.requests.review.UpdateReviewDTO;
@@ -21,6 +22,7 @@ import java.util.List;
 
 public interface UserService {
 
+    UserInfo enableMFA(LoginDTO lr) throws Exception;
     UserVO login(LoginDTO lr) throws Exception;
 
     UserVO update(UserVO user) throws UserException;
@@ -56,6 +58,8 @@ public interface UserService {
     boolean setRoleToUser(RoleToUserDTO roleToUser) throws Exception;
 
     UserVO findByUsername(String username, boolean isReg) throws Exception;
+
+    UserVO findByUsername(String username) throws Exception;
 
     UserVO findByToken(String token) throws Exception;
 

@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 
 public class AnnounceSearchDTO extends CommonSearchDTO {
 
+    private String reference;
     private String departure;
 
     private String arrival;
@@ -22,7 +23,7 @@ public class AnnounceSearchDTO extends CommonSearchDTO {
     @JsonFormat(pattern = DateUtils.STD_PATTERN)
     private long endDate;
 
-    private String weigth;
+    private String weight;
 
     private String announceType;
 
@@ -92,12 +93,12 @@ public class AnnounceSearchDTO extends CommonSearchDTO {
         this.endDate = endDate;
     }
 
-    public String getWeigth() {
-        return weigth;
+    public String getWeight() {
+        return weight;
     }
 
-    public void setWeigth(String weigth) {
-        this.weigth = weigth;
+    public void setWeight(String weight) {
+        this.weight = weight;
     }
 
     public String getAnnounceType() {
@@ -117,7 +118,6 @@ public class AnnounceSearchDTO extends CommonSearchDTO {
         this.transport = transport;
     }
 
-
     public String getUser() {
         return user;
     }
@@ -125,4 +125,8 @@ public class AnnounceSearchDTO extends CommonSearchDTO {
     public void setUser(String user) {
         this.user = user;
     }
+
+    public String getReference() { return reference;   }
+
+    public void setReference(String reference) {  this.reference = reference; }
 }

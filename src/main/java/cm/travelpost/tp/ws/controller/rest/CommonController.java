@@ -1,6 +1,8 @@
 package cm.travelpost.tp.ws.controller.rest;
 
+import cm.framework.ds.common.authentication.service.AuthenticationService;
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.security.jwt.TokenProvider;
 import cm.travelpost.tp.airline.ent.service.AirlineService;
 import cm.travelpost.tp.announce.ent.service.AnnounceService;
 import cm.travelpost.tp.announce.ent.service.ReservationService;
@@ -56,7 +58,7 @@ import java.util.List;
 public class CommonController  extends WSConstants {
 
 
-    protected final Log log = LogFactory.getLog(CommonController.class);
+    private final Log log = LogFactory.getLog(CommonController.class);
 
     public static final String HEADER_TOTAL = "x-total-count";
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
@@ -74,8 +76,6 @@ public class CommonController  extends WSConstants {
 
     @Value("${redirect.confirm.error.page}")
     protected String redirectConfirmErrorPage;
-
-
 
 
     @Autowired
@@ -109,6 +109,13 @@ public class CommonController  extends WSConstants {
 
     @Autowired
     protected MessageService messageService;
+
+    @Autowired
+    protected TokenProvider tokenProvider;
+
+
+    @Autowired
+    protected AuthenticationService authenticationService;
 
 
     /** SMS Services **/
@@ -247,7 +254,7 @@ public class CommonController  extends WSConstants {
     }
 
     @NotNull
-    public static ResponseEntity<Response> getResponseDeleteResponseEntity(@RequestParam @Valid Long id, Response pmResponse, boolean delete, String label) throws Exception {
+    public static ResponseEntity<Response> getResponseDeleteResponseEntity(@RequestParam @Valid Long id, Response pmResponse, boolean delete, String label)  {
         if (id != null) {
             if (delete) {
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);

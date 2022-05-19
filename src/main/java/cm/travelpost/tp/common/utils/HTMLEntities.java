@@ -522,10 +522,7 @@ public class HTMLEntities {
 
 
     public static String buildUrl(HttpServletRequest request, String params) {
-
-        //String appUrl = request.getScheme() + "://" + request.getServerName()+":"+request.getServerPort() +request.getContextPath()+params;
-        String appUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + params;
-        return appUrl;
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + params;
     }
 
 

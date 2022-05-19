@@ -20,6 +20,9 @@ public abstract class AFilter  extends CommonSecurityResource implements IFilter
     private static Logger log = LoggerFactory.getLogger(AFilter.class);
 
 
+    @Autowired
+    protected SessionManager sessionManager;
+
     @Value("${custom.api.auth.http.tokenValue}")
     protected String token;
 
@@ -32,8 +35,10 @@ public abstract class AFilter  extends CommonSecurityResource implements IFilter
     @Value("${url.service}")
     protected String service;
 
-    @Autowired
-    protected SessionManager sessionManager;
+    @Value("confirm")
+    protected String confirm;
+
+
 
     @Override
     public void error(HttpServletResponse response) throws Exception {

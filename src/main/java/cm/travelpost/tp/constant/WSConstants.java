@@ -15,6 +15,7 @@ public class WSConstants extends CommonProperties {
     public static final String BASE_PATTERN= "/ws/*";
 
 
+    public static final String ONLY_SERVICE = "/services";
     public static final String DASHBOARD = "/dashboard";
     public static final String CREATE = "/create";
     public static final String ADD = "/add";
@@ -29,17 +30,21 @@ public class WSConstants extends CommonProperties {
     public static final String UPDATE_ID = "/update/{id}";
     public static final String AUTOCOMPLETE = "/autocomplete/{search}";
 
+    public static final String REGISTRATION = "/register";
+    public static final String LOGOUT = "/logout";
 
+    /************ AUTHENTICATION REQUEST*************/
+    public static final String AUTHENTICATION_WS = "/ws/authentication/*";
+    public static final String AUTHENTICATION_WS_REGISTRATION = "/register";
+    public static final String AUTHENTICATION_WS_VERIFICATION = "/verify";
 
 
     /************ USER REQUEST*************/
     public static final String USER_WS = "/ws/user/*";
-    public static final String USER_WS_REGISTRATION = "/register";
+
     public static final String USER_WS_CONFIRMATION = "/confirm";
-    public static final String USER_WS_LOGIN = "/ulogin";
-    public static final String USER_WS_LOGOUT = "/logout";
+    public static final String USER_WS_LOGIN = "/authenticate";
     public static final String USER_WS_USERS = "/users";
-    public static final String USER_WS_USERS_PAGE_NO = "/users/{pageno}";
     public static final String USER_WS_MAIL = "/mail";
     public static final String USER_WS_ROLE = "/role";
     public static final String USER_WS_UPDATE_ID = "/update/{userId}";

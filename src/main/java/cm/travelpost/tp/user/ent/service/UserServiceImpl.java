@@ -19,12 +19,14 @@ import cm.travelpost.tp.review.ent.vo.ReviewIdVO;
 import cm.travelpost.tp.review.ent.vo.ReviewVO;
 import cm.travelpost.tp.security.PasswordGenerator;
 import cm.travelpost.tp.user.ent.dao.UserDAO;
+import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.review.ReviewDTO;
 import cm.travelpost.tp.ws.requests.review.UpdateReviewDTO;
 import cm.travelpost.tp.ws.requests.users.*;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +113,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserVO> subscribers(Long userId) throws UserException {
         return userDAO.subscribers(userId);
+    }
+
+    public UserInfo enableMFA(LoginDTO lr) throws Exception {
+
+        UserVO user = login(lr);
+        if (user == null) {
+          throw new UserException("Utilisateur non trouvé");
+        }
+        if(BooleanUtils.isTrue(user.isMultipleFactorAuthentication())){
+            return new UserInfo( user.getEmail(), user.getSecret(), user.isMultipleFactorAuthentication());
+        }
+        userDAO.generateSecret(user);
+        user =userDAO.findById(user.getId());
+        return new UserInfo( user.getEmail(), user.getSecret(), false);
     }
 
     public UserVO login(LoginDTO lr) throws Exception {
@@ -246,6 +262,11 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public UserVO findByUsername(String username, boolean isReg) throws Exception {
         return userDAO.findByOnlyUsername(username, isReg);
+    }
+
+    @Transactional(readOnly = true)
+    public UserVO findByUsername(String username) throws Exception {
+        return userDAO.findByUsername(username);
     }
 
     @Transactional(readOnly = true)

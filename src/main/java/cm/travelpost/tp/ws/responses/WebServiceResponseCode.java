@@ -1,6 +1,7 @@
 package cm.travelpost.tp.ws.responses;
 
 public class WebServiceResponseCode {
+    public static final int MFA_NOT_ENABLED = 9;
     public static final int OK_CODE = 0;
     public static final int NOK_CODE = -1;
 
@@ -13,7 +14,7 @@ public class WebServiceResponseCode {
     public static final String LOGIN_OK_LABEL = "Login effectue correctement";
     public static final String LOGOUT_OK_LABEL = "Logout effectue correctement";
     public static final String USER_REGISTER_LABEL = "Enregistrement completeé, consultez votre email pour confirmer votre enregistrement"+MAIL_SPAM;
-    public static final String USER_REGISTER_ACTIVE_LABEL = "Votre compte est  actif dès à présent.. Connectez vous maintenant";
+    public static final String USER_QRCODE_CONNECTION_LABEL = "Scannez le QrCode avec l'app mobile Google Authenticator / Microsoft Authenticator / Authy pour vous connecter";
 
     public static final String UPDATE_LABEL = "Données ajournées correctement";
     public static final String PAGINATE_RESPONSE_LABEL = "{0} resultat(s) trouvé(s)";
@@ -53,7 +54,7 @@ public class WebServiceResponseCode {
     public static final String ERROR_UPD_EMAIL_LABEL = "Email non valide ou deja utilise";
 
     public static final String ERROR_CREATE_LABEL = "{0} n'a pas pu etre cree";
-    public static final String ERROR_DELETE_LABEL = "{0} ne peut pas etre eliminee car inexistant";
+    public static final String ERROR_DELETE_LABEL = "{0} ne peut pas etre eliminé(e) car inexistant";
     public static final String ERROR_UPDATE_LABEL = "{0} ne peut pas etre ajournee car inexistant";
 
 
@@ -69,5 +70,7 @@ public class WebServiceResponseCode {
     public static final String ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL = "Service envoi mail actuellement indisponible.{0} ";
 
     public static final String READ_CODE_LABEL = "{0} déjà lu(e)";
+    public static final String ERROR_INVALID_CODE_LABEL = "Code invalide!";
+
 
 }

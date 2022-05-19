@@ -20,7 +20,7 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
 
     @Override
     public List<NotificationVO> all() throws Exception {
-        return (List<NotificationVO>) all(NotificationVO.class);
+        return all(NotificationVO.class);
     }
 
 

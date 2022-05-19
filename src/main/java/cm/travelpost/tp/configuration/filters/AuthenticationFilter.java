@@ -73,39 +73,27 @@ public class AuthenticationFilter extends CommonFilter {
 
     @Override
     public void destroy() {
-
+        logger.debug("Destroy Authentication filter");
     }
 
     private boolean authorized(ServletRequest servletRequest,ServletResponse servletResponse) throws Exception {
-
-
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String uri=request.getRequestURI();
         String tk=request.getHeader(encryptorBean.decrypt(tokenName));
-        String apiKey=StringUtils.isNotEmpty(tk) ?encryptorBean.decrypt(tk):null;
+
+        String apiKey=StringUtils.isNotEmpty(tk) ? encryptorBean.decrypt(tk):"null";
 
 
         boolean isService=uri.contains(service);
-        boolean isConfirm=uri.contains("confirm");
+        boolean isConfirm=uri.contains(confirm);
         boolean isNotApiKey=(StringUtils.isEmpty(apiKey)|| !apiKey.equals(encryptorBean.decrypt(token)));
         boolean isNotUpload=!uri.contains(WSConstants.UPLOAD);
         boolean isDashBoard=uri.contains(WSConstants.DASHBOARD);
         String username=request.getHeader(sessionHeader);
         boolean isAdminRole=false;
-
-
-//        System.out.println("uri: "+uri);
-//        System.out.println("apiKey: "+apiKey);
-//        System.out.println("isService: "+isService);
-//        System.out.println("isConfirm: "+isConfirm);
-//        System.out.println("isNotApiKey: "+isNotApiKey);
-//        System.out.println("isNotUpload: "+isNotUpload);
-//        System.out.println("isDashBoard: "+isDashBoard);
-//        System.out.println("username: "+username);
-
 
         if(StringUtils.isNotEmpty(username)){
             // Ici  je verifie si l'utilisateur a le role ADMIN pour pouvoir acceder à la dashboard

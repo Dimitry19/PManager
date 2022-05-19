@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class DateUtils {
@@ -275,6 +276,18 @@ public class DateUtils {
     static void printDate(Date date){
 
         System.out.println("converted Date: " + dateWithoutTime(date));
+
+    }
+
+    /**
+     *  return date, month or year
+     * @param elementType
+     * @return int
+     */
+    public static int  gregorianCalendar(int elementType){
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+
+        return gregorianCalendar.get(elementType);
 
     }
 }

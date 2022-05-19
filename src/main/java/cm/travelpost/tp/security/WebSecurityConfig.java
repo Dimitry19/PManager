@@ -1,8 +1,8 @@
 package cm.travelpost.tp.security;
 
 
+import cm.framework.ds.common.authentication.filter.TokenAuthenticationFilter;
 import cm.travelpost.tp.configuration.filters.AuthenticationFilter;
-import cm.travelpost.tp.configuration.filters.SessionFilter;
 import cm.travelpost.tp.websocket.constants.WebSocketConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,20 +38,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/actuator/**",
             "/health",
             "/info",
-    WebSocketConstants.END_POINT
+                WebSocketConstants.END_POINT
     };
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       /* http.csrf().disable();
-        http.httpBasic().disable().requiresChannel()
-                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-                .requiresSecure();*/
+
 
        logger.info("into configure");
-//        http.csrf().disable();
-//        http.httpBasic().disable();
 
         http
         .authorizeRequests()
@@ -72,21 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .requiresChannel()
                 .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
                 .requiresSecure();
-                //.addFilterBefore(sessionFilter,UsernamePasswordAuthenticationFilter.class);
 
-
-
-            /* http
-                .cors()
-                .and()
-                .headers()
-                .frameOptions().disable()
-                .and()
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/stomp").permitAll() // On autorise l'appel handshake entre le client et le serveur
-                .anyRequest()
-                .authenticated();*/
     }
 
     @Bean
@@ -124,11 +105,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public FilterRegistrationBean  sessionFilterBean() {
+    public FilterRegistrationBean  tokenFilterBean() {
         FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
-        SessionFilter sessionFilter = new SessionFilter();
+        TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter();
 
-        registrationBean.setFilter(sessionFilter);
+        registrationBean.setFilter(tokenAuthenticationFilter);
         registrationBean.addUrlPatterns("/user/*");
         registrationBean.setOrder(2);
         return registrationBean;

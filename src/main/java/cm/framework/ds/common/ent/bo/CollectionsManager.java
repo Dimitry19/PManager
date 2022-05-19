@@ -11,7 +11,7 @@ public abstract class CollectionsManager<T extends CommonVO, E extends CommonVO,
     protected E e;
     protected C c;
 
-    public CollectionsManager(T t, E e, C c) {
+    protected CollectionsManager(T t, E e, C c) {
         this.t = t;
         this.e = e;
         this.c = c;

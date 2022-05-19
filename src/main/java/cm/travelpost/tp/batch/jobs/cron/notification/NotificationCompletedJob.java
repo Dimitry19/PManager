@@ -25,6 +25,6 @@ public class NotificationCompletedJob extends QuartzSubmitJobs {
     public CronTriggerFactoryBean triggerDeleteOldCompletedNotifications(@Qualifier("deleteOldCompletedNotifications") JobDetail jobDetail) {
         log.info("Delete old completed notifications Job started...");
 
-        return QuartzCronConfiguration.createCronTrigger(jobDetail, CRON_EVERY_FIVE_MINUTES, "Delete old completed notifications Trigger");
+        return QuartzCronConfiguration.createCronTrigger(jobDetail, CRON_EVERY_SIX_HOURS, "Delete old completed notifications Trigger");
     }
 }

@@ -278,7 +278,7 @@ public class AnnounceController extends CommonController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Successful retrieval announces by type",
                     response = ResponseEntity.class, responseContainer = "List")})
-    @RequestMapping(value = ANNOUNCE_WS_BY_TYPE, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+    @GetMapping(value = ANNOUNCE_WS_BY_TYPE, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announcesByType(HttpServletResponse response, HttpServletRequest request,
                                                             @RequestParam @Valid AnnounceType type,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
@@ -327,7 +327,7 @@ public class AnnounceController extends CommonController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Successful retrieval announces by transport",
                     response = ResponseEntity.class, responseContainer = "List")})
-    @RequestMapping(value = ANNOUNCE_WS_BY_TRANSPORT, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT)
+    @GetMapping(value = ANNOUNCE_WS_BY_TRANSPORT,   headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announcesByTransport(HttpServletResponse response, HttpServletRequest request,
                                                             @RequestParam @Valid TransportEnum transport,
                                                             @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,

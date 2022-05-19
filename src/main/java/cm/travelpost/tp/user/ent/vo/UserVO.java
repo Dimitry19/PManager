@@ -122,9 +122,13 @@ public class UserVO extends CommonVO {
 
     private double rating = 0;
 
-    private boolean mfa;
+    private boolean multipleFactorAuthentication;
 
     private String secret;
+
+    private String accessToken;
+
+    private boolean authenticated;
 
 
     public UserVO() {
@@ -299,6 +303,22 @@ public class UserVO extends CommonVO {
     }
 
 
+    @Basic(optional = false)
+    @Column(name = "MULTIPLE_FACTOR_AUTH")
+    @JsonIgnore
+    public boolean isMultipleFactorAuthentication() {
+        return multipleFactorAuthentication;
+    }
+
+
+    @Basic(optional = false)
+    @Column(name = "MFA_SECRET")
+    @JsonIgnore
+    public String getSecret() {
+        return secret;
+    }
+
+
     @Transient
     @JsonProperty
     public double getRating() {
@@ -406,20 +426,7 @@ public class UserVO extends CommonVO {
         this.confirmationToken = confirmationToken;
     }
 
-
-    @Transient
-    public boolean isMfa() {
-        return mfa;
-    }
-
-    public void setMfa(boolean mfa) {
-        this.mfa = mfa;
-    }
-
-    @Transient
-    public String getSecret() {
-        return secret;
-    }
+    public void setMultipleFactorAuthentication(boolean multipleFactorAuthentication) {     this.multipleFactorAuthentication = multipleFactorAuthentication;  }
 
     public void setSecret(String secret) {
         this.secret = secret;
@@ -555,6 +562,23 @@ public class UserVO extends CommonVO {
             MessageVO message = iterMessage.next();
             message.cancel();
         }
+    }
+
+    @Transient
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+    @Transient
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
+
+    public void setAuthenticated(boolean authenticated) {
+        this.authenticated = authenticated;
     }
 
     @Override

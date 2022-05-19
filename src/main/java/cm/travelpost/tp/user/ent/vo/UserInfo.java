@@ -2,11 +2,14 @@ package cm.travelpost.tp.user.ent.vo;
 
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.DateUtils;
+import cm.travelpost.tp.configuration.filters.CommonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class UserInfo implements Serializable {
     private static final long serialVersionUID = 1905122041532201207L;
@@ -33,7 +36,19 @@ public class UserInfo implements Serializable {
 
     private Timestamp dateCreated;
 
+    private List<RoleVO> roles;
 
+    private boolean enableMFA;
+
+    private String secret ;
+
+    public UserInfo( String email, String secret, boolean enableMFA) {
+        this.enableMFA = enableMFA;
+        this.email = email;
+        this.secret = secret;
+
+
+    }
     public UserInfo(Long id, String firstName, String username, String lastName, String email, String phone, int count) {
         this.id = id;
         this.firstName = firstName;
@@ -57,7 +72,7 @@ public class UserInfo implements Serializable {
         this.count = CollectionsUtils.size(user.getAnnounces());
         this.picByte=user.getImage()!=null?user.getImage().getPicByte():null;
         this.origin=user.getImage()!=null?user.getImage().getOrigin():null;
-
+        this.roles=CommonFilter.getRolesAuthoritiesUser(user);
     }
 
     @JsonProperty
@@ -159,4 +174,21 @@ public class UserInfo implements Serializable {
     public void setOrigin(String origin) {
         this.origin = origin;
     }
+    @JsonProperty
+    public List<RoleVO> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleVO> roles) {
+        this.roles = roles;
+    }
+
+    @JsonIgnore
+    public boolean isEnableMFA() {  return enableMFA; }
+    public void setEnableMFA(boolean enableMFA) {    this.enableMFA = enableMFA;  }
+
+    @JsonIgnore
+    public String getSecret() { return secret;}
+
+    public void setSecret(String secret) {  this.secret = secret;  }
 }

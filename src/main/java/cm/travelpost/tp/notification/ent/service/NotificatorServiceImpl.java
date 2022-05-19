@@ -90,13 +90,11 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
             List<NotificationVO> notifications= notificationDAO.notificationToSend(pageBy);
 
             if(CollectionsUtils.isNotEmpty(notifications)){
-                notifications.stream().forEach(n -> {
-                    elaborate(n);
-                });
+                notifications.stream().forEach(this::elaborate);
             }
             incrementPage(notifications);
         } catch (Exception e) {
-            logger.error("Erreur durant l'elaboration de la notification {}", e);
+            logger.error("Erreur durant l'elaboration de la notification {} - {}", e, e.getMessage());
             throw e;
         }
 
@@ -129,6 +127,8 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
                 map= userListeners;
                 break;
+            default:
+                break;
         }
 
         List<String> listeners = (List<String>) map.keySet().stream().collect(Collectors.toList());
@@ -138,7 +138,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
         finalMap=map;
         Notification finalNotification = notification;
 
-        listeners.stream().filter(l->users.contains(l)).forEach(l->{
+        listeners.stream().filter(users::contains).forEach(l->{
 
             String sessionId = (String) finalMap.get(l);
             headerAccessor.setSessionId(sessionId);
@@ -177,7 +177,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
                 deadEvents.add(event);
 
             } catch (Exception e) {
-                logger.error("Erreur durant la creation de la notification {}", e);
+                logger.error("Erreur durant la creation de la notification {} - {}", e, e.getMessage());
                 deadEvents.add(event);
             }
         });
@@ -203,6 +203,8 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
             case USER:
                 userListeners.put(sessionUserMap.get(sessionId), sessionId);
+                break;
+            default:
                 break;
         }
     }
@@ -246,18 +248,12 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
     }
 
-    private void updateNotification(NotificationVO n, StatusEnum statusEnum) {
-
-        n.setStatus(statusEnum);
-
-        notificationDAO.update(n);
-    }
 
     protected void createNotification(Event event) {
 
         NotificationVO notification = new NotificationVO();
 
-        notification.setTitle(_title(event.getType()));
+        notification.setTitle(buildTitle(event.getType()));
         notification.setAnnounceId(event.getId());
         notification.setUserId(event.getUserId());
         notification.setMessage(event.getMessage());
@@ -310,7 +306,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
         }
     }
 
-    String _title(NotificationType type){
+    String buildTitle(NotificationType type){
         StringBuilder tb = new StringBuilder("Notification ");
         tb.append(type.toValue());
         return tb.toString();

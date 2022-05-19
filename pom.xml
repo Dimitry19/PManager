@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>cm.travelpost</groupId>
 	<artifactId>tpservices</artifactId>
-	<version>1.0.1-beta-SNAPSHOT</version>
+	<version>1.0.1-beta-secure202204</version>
 	<packaging>jar</packaging>
 	<name>TravelPost</name>
 	<description>Travel Post Services</description>
@@ -349,10 +349,9 @@
 
 		<dependency>
 			<groupId>dev.samstevens.totp</groupId>
-			<artifactId>totp</artifactId>
+			<artifactId>totp-spring-boot-starter</artifactId>
 			<version>1.7.1</version>
 		</dependency>
-
 		<!-- OTP End -->
 
 

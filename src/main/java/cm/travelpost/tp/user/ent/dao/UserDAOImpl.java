@@ -20,6 +20,7 @@ import cm.travelpost.tp.user.ent.vo.RoleVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.users.*;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
+import dev.samstevens.totp.secret.SecretGenerator;
 import org.hibernate.QueryParameterException;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -45,6 +46,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Autowired
     RoleDAO roleDAO;
+
+    @Autowired
+    private SecretGenerator secretGenerator;
 
 
     @Value("${tp.travelpost.active.registration.enable}")
@@ -266,6 +270,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
 
+            user.setMultipleFactorAuthentication(Boolean.TRUE);
+            user.setSecret(secretGenerator.generate());
             Long id=(Long)save(user);
             user=findById(id);
             setRole(user, register.getRole());
@@ -361,7 +367,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
 
         return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, filters);
-
     }
 
     @Override
@@ -663,9 +668,17 @@ public class UserDAOImpl extends Generic implements UserDAO {
         logger.error(e.getMessage());
         e.printStackTrace();
         throw new QueryParameterException("Erreur dans la fonction " + UserDAO.class.getName() + " composeQueryParameters");
+        }
     }
 
+    @Override
+    public UserVO generateSecret(UserVO user) throws Exception {
 
+        user.setMultipleFactorAuthentication(Boolean.TRUE);
+        user.setSecret(secretGenerator.generate());
+        update(user);
+
+        return findById(user.getId());
     }
 
     @Override

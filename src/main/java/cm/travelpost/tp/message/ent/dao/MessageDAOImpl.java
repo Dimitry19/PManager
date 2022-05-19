@@ -162,8 +162,6 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
     @Override
     public boolean delete(Long id) throws BusinessResourceException {
         logger.info("Message: delete");
-        //MessageIdVO messageId= new MessageIdVO(id, Constants.DEFAULT_TOKEN);
-        //delete(MessageVO.class,messageId,true);
         return updateDelete(id);
     }
 
