@@ -14,7 +14,7 @@ public class WebServiceResponseCode {
     public static final String LOGIN_OK_LABEL = "Login effectue correctement";
     public static final String LOGOUT_OK_LABEL = "Logout effectue correctement";
     public static final String USER_REGISTER_LABEL = "Enregistrement completeé, consultez votre email pour confirmer votre enregistrement"+MAIL_SPAM;
-    public static final String USER_QRCODE_CONNECTION_LABEL = "Scannez le QrCode avec l'app mobile Google Authenticator / Microsoft Authenticator / Authy pour vous connecter";
+    public static final String USER_QRCODE_LABEL = "Scannez le QrCode avec l'app mobile Google Authenticator / Microsoft Authenticator / Authy pour vous connecter";
 
     public static final String UPDATE_LABEL = "Données ajournées correctement";
     public static final String PAGINATE_RESPONSE_LABEL = "{0} resultat(s) trouvé(s)";
@@ -34,6 +34,8 @@ public class WebServiceResponseCode {
 
     public static final String CONTACT_US_LABEL = "Merci pour votre correspondance, vous serez recontacté";
     public static final String UPDATED_RESERV_LABEL = "La reservation été correctement {0}";
+
+    public static final String READ_CODE_LABEL = "{0} déjà lu(e)";
 
 
     // NOK LABEL
@@ -69,8 +71,9 @@ public class WebServiceResponseCode {
 
     public static final String ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL = "Service envoi mail actuellement indisponible.{0} ";
 
-    public static final String READ_CODE_LABEL = "{0} déjà lu(e)";
     public static final String ERROR_INVALID_CODE_LABEL = "Code invalide!";
+
+    public static final String ERROR_USER_QRCODE_LABEL = "Erreur durant la generation du QrCode, verifiez les identifiants inserés";
 
 
 }

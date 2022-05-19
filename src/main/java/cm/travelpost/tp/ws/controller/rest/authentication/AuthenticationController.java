@@ -3,7 +3,6 @@ package cm.travelpost.tp.ws.controller.rest.authentication;
 
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
-import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
@@ -14,7 +13,7 @@ import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.authentication.VerificationDTO;
 import cm.travelpost.tp.ws.requests.users.LoginDTO;
 import cm.travelpost.tp.ws.requests.users.RegisterDTO;
-import cm.travelpost.tp.ws.responses.RegistrationResponse;
+import cm.travelpost.tp.ws.responses.QrCodeResponse;
 import cm.travelpost.tp.ws.responses.Response;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
 import io.swagger.annotations.Api;
@@ -69,7 +68,7 @@ public class AuthenticationController extends CommonController {
         logger.info("register request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
-        RegistrationResponse pmResponse = new RegistrationResponse();
+        QrCodeResponse pmResponse = new QrCodeResponse();
 
         try {
             createOpentracingSpan("AuthenticationController -register");
@@ -97,7 +96,7 @@ public class AuthenticationController extends CommonController {
                     pmResponse.setMfa(true);
                     pmResponse.setSecretImageUri(qrCodeImage);
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_CONNECTION_LABEL);
+                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_LABEL);
                     response.setStatus(200);
                     return new ResponseEntity<>(pmResponse, HttpStatus.OK);
                 }
@@ -134,13 +133,13 @@ public class AuthenticationController extends CommonController {
                  UserInfo ui= userService.enableMFA(login);
                 if(BooleanUtils.isFalse(ui.isEnableMFA())){
 
-                    RegistrationResponse pmResponse = new RegistrationResponse();
+                    QrCodeResponse pmResponse = new QrCodeResponse();
 
                     String qrCodeImage = authenticationService.qrCodeGenerator(ui.getEmail(),ui.getSecret(),issuer);
                     pmResponse.setMfa(true);
                     pmResponse.setSecretImageUri(qrCodeImage);
                     pmResponse.setRetCode(WebServiceResponseCode.MFA_NOT_ENABLED);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_CONNECTION_LABEL);
+                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_LABEL);
                     return new ResponseEntity<>(pmResponse, HttpStatus.OK);
                 }else{
                     user = userService.login(login);
@@ -185,6 +184,7 @@ public class AuthenticationController extends CommonController {
         }
 
         if (BooleanUtils.isFalse(authenticationService.verifyCode(verification.getCode(), user.getSecret()))) {
+            //TODO Controler le nombre de tentative de login
             user.setAccessToken(null);
             user.setAuthenticated(false);
             user.setRetCode(WebServiceResponseCode.NOK_CODE);
@@ -240,7 +240,7 @@ public class AuthenticationController extends CommonController {
                 user.setActive(1);
                 if (userService.update(user) != null) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_CONNECTION_LABEL);
+                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_LABEL);
                     response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION));
                 }
             }
@@ -253,7 +253,26 @@ public class AuthenticationController extends CommonController {
         }
     }
 
+    @PostMapping(path = AUTHENTICATION_WS_QRCODE,headers = WSConstants.HEADER_ACCEPT)
+    public @ResponseBody ResponseEntity<QrCodeResponse> generateQrCode(HttpServletResponse response, HttpServletRequest request,  @RequestBody LoginDTO login) throws Exception {
 
+        UserVO user =userService.login(login);
+        QrCodeResponse pmResponse = new QrCodeResponse();
+
+        if(user == null){
+            pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_QRCODE_LABEL);
+            return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+        }
+        //TODO Controler le nombre de tentative de login
+        pmResponse.setMfa(true);
+        String qrCodeImage = authenticationService.qrCodeGenerator(user.getEmail(),user.getSecret(),issuer);
+        pmResponse.setSecretImageUri(qrCodeImage);
+        pmResponse.setRetCode(WebServiceResponseCode.MFA_NOT_ENABLED);
+        pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_LABEL);
+        return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+
+    }
 
 
 
@@ -313,12 +332,6 @@ public class AuthenticationController extends CommonController {
     }
 
 
-    @GetMapping(path = "/qrcode",headers = WSConstants.HEADER_ACCEPT)
-    public @ResponseBody ResponseEntity<String> testQrCode(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
 
-        UserVO user= (UserVO) CollectionsUtils.getFirst(userService.getAllUsers());
-        String qrCodeImage = authenticationService.qrCodeGenerator(user.getEmail(),user.getSecret(),issuer);
-       return new ResponseEntity<>(qrCodeImage, HttpStatus.OK);
-    }
 
 }

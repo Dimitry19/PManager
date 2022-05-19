@@ -2,6 +2,7 @@ package cm.travelpost.tp.user.ent.vo;
 
 import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
+import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.enums.Gender;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
@@ -129,6 +130,9 @@ public class UserVO extends CommonVO {
     private String accessToken;
 
     private boolean authenticated;
+
+
+    private AuthenticationVO authentication;
 
 
     public UserVO() {
@@ -318,6 +322,12 @@ public class UserVO extends CommonVO {
         return secret;
     }
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   // @JoinColumn(name = "AUTHENTICATION_ID")
+    public AuthenticationVO getAuthentication() {
+        return authentication;
+    }
+
 
     @Transient
     @JsonProperty
@@ -431,6 +441,8 @@ public class UserVO extends CommonVO {
     public void setSecret(String secret) {
         this.secret = secret;
     }
+    public void setAuthentication(AuthenticationVO authentication) {    this.authentication = authentication;  }
+
 
     public void addAnnounce(AnnounceMasterVO announce) {
         this.announces.add(announce);

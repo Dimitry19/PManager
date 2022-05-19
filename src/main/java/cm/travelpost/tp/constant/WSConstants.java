@@ -37,6 +37,7 @@ public class WSConstants extends CommonProperties {
     public static final String AUTHENTICATION_WS = "/ws/authentication/*";
     public static final String AUTHENTICATION_WS_REGISTRATION = "/register";
     public static final String AUTHENTICATION_WS_VERIFICATION = "/verify";
+    public static final String AUTHENTICATION_WS_QRCODE = "/qrCode";
 
 
     /************ USER REQUEST*************/
