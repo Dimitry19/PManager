@@ -97,7 +97,7 @@ public class AuthenticationController extends CommonController {
                     pmResponse.setMfa(true);
                     pmResponse.setSecretImageUri(qrCodeImage);
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
+                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_CONNECTION_LABEL);
                     response.setStatus(200);
                     return new ResponseEntity<>(pmResponse, HttpStatus.OK);
                 }
@@ -140,6 +140,7 @@ public class AuthenticationController extends CommonController {
                     pmResponse.setMfa(true);
                     pmResponse.setSecretImageUri(qrCodeImage);
                     pmResponse.setRetCode(WebServiceResponseCode.MFA_NOT_ENABLED);
+                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_CONNECTION_LABEL);
                     return new ResponseEntity<>(pmResponse, HttpStatus.OK);
                 }else{
                     user = userService.login(login);
@@ -239,7 +240,7 @@ public class AuthenticationController extends CommonController {
                 user.setActive(1);
                 if (userService.update(user) != null) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_ACTIVE_LABEL);
+                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_CONNECTION_LABEL);
                     response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION));
                 }
             }
