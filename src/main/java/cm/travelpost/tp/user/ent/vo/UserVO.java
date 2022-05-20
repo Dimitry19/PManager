@@ -55,7 +55,6 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 @Filters({
         @Filter(name = FilterConstants.CANCELLED),
         @Filter(name = FilterConstants.ACTIVE_MBR)
-        //@Filter(name = FilterConstants.ACTIVE_MBR_WORK)
 })
 @Where(clause = FilterConstants.FILTER_WHERE_USER_CANCELLED)
 public class UserVO extends CommonVO {
@@ -130,7 +129,6 @@ public class UserVO extends CommonVO {
     private String accessToken;
 
     private boolean authenticated;
-
 
     private AuthenticationVO authentication;
 
@@ -322,8 +320,8 @@ public class UserVO extends CommonVO {
         return secret;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-   // @JoinColumn(name = "AUTHENTICATION_ID")
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "AUTHENTICATION_ID", updatable = true)
     public AuthenticationVO getAuthentication() {
         return authentication;
     }

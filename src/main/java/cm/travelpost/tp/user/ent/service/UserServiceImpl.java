@@ -30,6 +30,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -76,6 +77,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     TotpService  totpService;
+
+    @Value("${tp.travelpost.authentication.attempt}")
+    private int attemptLimit;
 
 
     @PostConstruct
@@ -134,6 +138,18 @@ public class UserServiceImpl implements UserService {
         UserVO user = checkLoginAdmin(lr);
         if (user == null) {
             user = userDAO.login(lr.getUsername(), lr.getPassword());
+        }
+        if (user == null) {
+            user = userDAO.findByUsername(lr.getUsername());
+            if (user !=null){
+                int attempt =user.getAuthentication().getAttempt();
+                user.getAuthentication().setAttempt(attempt++);
+                if (attempt == attemptLimit){
+                    user.getAuthentication().setDesactivate(Boolean.TRUE);
+                }
+                update(user);
+                return null;
+            }
         }
         return user;
     }
