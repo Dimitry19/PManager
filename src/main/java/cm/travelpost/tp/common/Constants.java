@@ -12,6 +12,7 @@ public class Constants {
 
     public static final String SUBJECT = "SUBJECT";
     public static final String DEFAULT_TOKEN = "TP";
+    public static final int TP_ACTIVATE_ACCOUNT =1;
 
     public static final int CONTENT_LENGTH = 500;
 

@@ -66,7 +66,7 @@ public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 
 			boolean activate= isVerifyService || isOnlyService || isGuest || isRegister || isFind || isLogout || isServiceLogin || isServiceLogout;
 
-			 if (BooleanUtils.isFalse(activate)){
+			 if (BooleanUtils.isFalse(postman) && BooleanUtils.isFalse(activate)){
 				 tokenProvider.setAuthentication(request);
 			 }
 		} catch (Exception ex) {

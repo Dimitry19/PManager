@@ -1,6 +1,7 @@
 package cm.travelpost.tp.user.ent.service;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.review.ent.bo.ReviewsSummaryBO;
 import cm.travelpost.tp.review.ent.vo.ReviewDetailsVO;
@@ -22,7 +23,12 @@ import java.util.List;
 
 public interface UserService {
 
+    AuthenticationVO checkAuthenticationAttempt(String username) throws Exception;
+
+    AuthenticationVO checkAttempt(String username) throws Exception;
+
     UserInfo enableMFA(LoginDTO lr) throws Exception;
+
     UserVO login(LoginDTO lr) throws Exception;
 
     UserVO update(UserVO user) throws UserException;

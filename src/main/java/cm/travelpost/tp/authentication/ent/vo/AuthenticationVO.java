@@ -21,7 +21,7 @@ public class AuthenticationVO extends CommonVO {
 	public Long getId() { return id;}
 
 	@JsonIgnore
-	@OneToOne(mappedBy = "authentication", cascade = CascadeType.REMOVE)
+	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	public UserVO getUser() {	return user;	}
 
 	@Basic(optional = false)
@@ -37,6 +37,4 @@ public class AuthenticationVO extends CommonVO {
 	public void setUser(UserVO user) {	this.user = user;	}
 	public void setAttempt(int attempt) {	this.attempt = attempt;	}
 	public void setDesactivate(boolean desactivate) {this.desactivate = desactivate;}
-
-
 }

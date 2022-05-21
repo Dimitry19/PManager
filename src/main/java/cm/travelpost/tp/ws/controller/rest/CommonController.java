@@ -2,6 +2,7 @@ package cm.travelpost.tp.ws.controller.rest;
 
 import cm.framework.ds.common.authentication.service.AuthenticationService;
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.framework.ds.common.security.jwt.TokenProvider;
 import cm.travelpost.tp.airline.ent.service.AirlineService;
 import cm.travelpost.tp.announce.ent.service.AnnounceService;
@@ -103,7 +104,6 @@ public class CommonController  extends WSConstants {
     @Autowired
     protected AnnounceService announceService;
 
-
     @Autowired
     protected MailService mailService;
 
@@ -112,7 +112,6 @@ public class CommonController  extends WSConstants {
 
     @Autowired
     protected TokenProvider tokenProvider;
-
 
     @Autowired
     protected AuthenticationService authenticationService;
@@ -270,8 +269,15 @@ public class CommonController  extends WSConstants {
         return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
     }
 
-    public String getRedirectPage(RedirectType type) {
 
+    protected  ResponseEntity<Object> getResponseLoginErrorResponseEntity(String errorDescription){
+        WSCommonResponseVO commonResponse = new WSCommonResponseVO();
+        commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+        commonResponse.setRetDescription(errorDescription);
+        return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
+    }
+
+    public String getRedirectPage(RedirectType type) {
         StringBuilder redirectSb = new StringBuilder(contextRoot);
         switch (type){
             case INDEX:
@@ -286,7 +292,7 @@ public class CommonController  extends WSConstants {
             case ERROR:
                 redirectSb.append(redirectPageError);
                 break;
-                default:
+            default:
                     break;
         }
         return redirectSb.toString();

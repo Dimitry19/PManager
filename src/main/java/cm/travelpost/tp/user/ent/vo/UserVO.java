@@ -320,8 +320,7 @@ public class UserVO extends CommonVO {
         return secret;
     }
 
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "AUTHENTICATION_ID", updatable = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
     public AuthenticationVO getAuthentication() {
         return authentication;
     }

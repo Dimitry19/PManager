@@ -2,7 +2,7 @@ package cm.travelpost.tp.common.mail.sendgrid;
 
 
 import cm.travelpost.tp.common.Constants;
-import cm.travelpost.tp.common.mail.PersonalMailSender;
+import cm.travelpost.tp.common.mail.TravelPostMailSender;
 import cm.travelpost.tp.common.mail.ent.vo.ContactUSVO;
 import cm.travelpost.tp.common.utils.MailUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
@@ -37,7 +37,7 @@ public class MailSenderSendGrid{
     String EmailSendAddressesBCC = null;
 
     @Autowired
-    PersonalMailSender personalMailSender;
+    TravelPostMailSender personalMailSender;
 
 
     @Value("${sendgrid.mail.sender.user}")

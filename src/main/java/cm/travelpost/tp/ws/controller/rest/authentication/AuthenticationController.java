@@ -1,8 +1,9 @@
 package cm.travelpost.tp.ws.controller.rest.authentication;
 
 
-import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
+import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
+import cm.travelpost.tp.common.mail.TravelPostMailSender;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
@@ -23,6 +24,7 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.ws.rs.core.MediaType;
+import java.text.MessageFormat;
+
+import static cm.travelpost.tp.common.Constants.TP_ACTIVATE_ACCOUNT;
 
 
 @RestController
@@ -47,8 +52,17 @@ public class AuthenticationController extends CommonController {
     @Value("${tp.travelpost.active.registration.enable}")
     protected boolean enableAutoActivateRegistration;
 
+    @Value("${tp.travelpost.active.registration.qr.code.enable}")
+    protected boolean enableQrCodeRegistration;
+
     @Value("${tp.travelpost.qr.code.issuer}")
     protected String issuer;
+
+    @Value("${tp.travelpost.authentication.attempt}")
+    private int attemptLimit;
+
+    @Autowired
+    private TravelPostMailSender postMailSender;
 
 
 
@@ -71,17 +85,15 @@ public class AuthenticationController extends CommonController {
         QrCodeResponse pmResponse = new QrCodeResponse();
 
         try {
-            createOpentracingSpan("AuthenticationController -register");
+            createOpentracingSpan("AuthenticationController - register");
 
             if (register != null) {
 
                 UserVO user = userService.register(register);
 
                 if (user != null && StringUtils.isNotEmpty(user.getError())) {
-
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                     pmResponse.setRetDescription(user.getError());
-
                     return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
                 }
 
@@ -91,15 +103,15 @@ public class AuthenticationController extends CommonController {
                     return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
                 }
 
-                if (enableAutoActivateRegistration){
+                if(BooleanUtils.isTrue(enableQrCodeRegistration)){
                     String qrCodeImage = authenticationService.qrCodeGenerator(user.getEmail(),user.getSecret(),issuer);
                     pmResponse.setMfa(true);
                     pmResponse.setSecretImageUri(qrCodeImage);
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_LABEL);
-                    response.setStatus(200);
-                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
                 }
+                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                pmResponse.setRetDescription(enableAutoActivateRegistration?WebServiceResponseCode.USER_REGISTER_LABEL:WebServiceResponseCode.USER_REGISTER_MAIL_LABEL);
+                response.setStatus(200);
+                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
             }
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de register: ", e);
@@ -108,6 +120,56 @@ public class AuthenticationController extends CommonController {
             finishOpentracingSpan();
         }
         return null;
+    }
+
+    @ApiOperation(value = "Confirmation user registration ", response = Response.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful registration",
+                    response = Response.class, responseContainer = "Object")})
+    @GetMapping(path = WSConstants.USER_WS_CONFIRMATION, headers = WSConstants.HEADER_ACCEPT)
+    public @ResponseBody void confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
+
+        Response pmResponse = new Response();
+
+
+        try {
+            logger.info("confirm request in");
+            response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+
+            createOpentracingSpan("AuthenticationController - confirmation");
+
+            UserVO user = userService.findByToken(token);
+
+            if (user == null) {
+                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                pmResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
+                response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
+            } else {
+
+                if (user.getActive() == TP_ACTIVATE_ACCOUNT) {
+                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
+                    response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
+                }
+
+                user.setActive(TP_ACTIVATE_ACCOUNT);
+                if (userService.update(user) != null) {
+                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    pmResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
+                    response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION));
+                }
+            }
+
+        } catch (Exception e) {
+            logger.error("Errore eseguendo confirm: ", e);
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
     }
 
     @ApiOperation(value = " Login user ", response = UserVO.class)
@@ -130,39 +192,41 @@ public class AuthenticationController extends CommonController {
 
             if (login != null) {
 
-                 UserInfo ui= userService.enableMFA(login);
-                if(BooleanUtils.isFalse(ui.isEnableMFA())){
+                if(BooleanUtils.isFalse(login.isMultipleFactorAuthentication())){
 
+                    AuthenticationVO authentication = userService.checkAttempt(login.getUsername());
+                    if(authentication !=null){
+                        if(BooleanUtils.isTrue(authentication.isDesactivate())) {
+                            return getResponseLoginErrorResponseEntity(MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_KO_LABEL,attemptLimit, postMailSender.getDefaultContactUs()));
+                        }
+                    }
+                    user = userService.login(login);
+                    if (user != null) {
+                        user.setRetCode(BooleanUtils.isTrue(user.isMultipleFactorAuthentication())?WebServiceResponseCode.MFA_ENABLED:WebServiceResponseCode.OK_CODE);
+                        return new ResponseEntity<>(user, HttpStatus.OK);
+                    }
+                }else {
+                    UserInfo ui= userService.enableMFA(login);
+                    if(ui==null){
+                        return getResponseLoginErrorResponseEntity(WebServiceResponseCode.ERROR_LOGIN_LABEL);
+                    }
                     QrCodeResponse pmResponse = new QrCodeResponse();
-
                     String qrCodeImage = authenticationService.qrCodeGenerator(ui.getEmail(),ui.getSecret(),issuer);
                     pmResponse.setMfa(true);
                     pmResponse.setSecretImageUri(qrCodeImage);
                     pmResponse.setRetCode(WebServiceResponseCode.MFA_NOT_ENABLED);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_LABEL);
+                    pmResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
                     return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-                }else{
-                    user = userService.login(login);
-                    if (user != null) {
-                        user.setRetCode(WebServiceResponseCode.OK_CODE);
-                       return new ResponseEntity<>(user, HttpStatus.OK);
-                    }
                 }
-
-                WSCommonResponseVO commonResponse = new WSCommonResponseVO();
-                commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                commonResponse.setRetDescription(WebServiceResponseCode.ERROR_LOGIN_LABEL);
-                return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
-
+                return getResponseLoginErrorResponseEntity(WebServiceResponseCode.ERROR_LOGIN_LABEL);
             }
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de login: ", e);
-            throw e;
+            return attempt(login.getUsername(),  e);
         } finally {
             finishOpentracingSpan();
         }
         return null;
-
     }
 
     @ApiOperation(value = "Verification  user token to login ", response = Response.class)
@@ -201,58 +265,6 @@ public class AuthenticationController extends CommonController {
         return ResponseEntity.ok(user);
     }
 
-
-
-    @ApiOperation(value = "Confirmation user registration ", response = Response.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 500, message = "Server error"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
-            @ApiResponse(code = 200, message = "Successful registration",
-                    response = Response.class, responseContainer = "Object")})
-    @GetMapping(path = WSConstants.USER_WS_CONFIRMATION, headers = WSConstants.HEADER_ACCEPT)
-    public @ResponseBody void confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
-
-        Response pmResponse = new Response();
-
-
-        try {
-            logger.info("confirm request in");
-            response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-
-            createOpentracingSpan("AuthenticationController -confirmation");
-
-            UserVO user = userService.findByToken(token);
-
-            if (user == null) {
-                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
-                response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
-            } else {
-
-                if (user.getActive() == 1) {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
-                    response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
-                }
-
-                user.setActive(1);
-                if (userService.update(user) != null) {
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_LABEL);
-                    response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION));
-                }
-            }
-
-        } catch (Exception e) {
-            logger.error("Errore eseguendo confirm: ", e);
-            throw e;
-        } finally {
-            finishOpentracingSpan();
-        }
-    }
-
     @PostMapping(path = AUTHENTICATION_WS_QRCODE,headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody ResponseEntity<QrCodeResponse> generateQrCode(HttpServletResponse response, HttpServletRequest request,  @RequestBody LoginDTO login) throws Exception {
 
@@ -264,12 +276,11 @@ public class AuthenticationController extends CommonController {
             pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_QRCODE_LABEL);
             return new ResponseEntity<>(pmResponse, HttpStatus.OK);
         }
-        //TODO Controler le nombre de tentative de login
         pmResponse.setMfa(true);
         String qrCodeImage = authenticationService.qrCodeGenerator(user.getEmail(),user.getSecret(),issuer);
         pmResponse.setSecretImageUri(qrCodeImage);
         pmResponse.setRetCode(WebServiceResponseCode.MFA_NOT_ENABLED);
-        pmResponse.setRetDescription(WebServiceResponseCode.USER_QRCODE_LABEL);
+        pmResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
         return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 
     }
@@ -328,10 +339,21 @@ public class AuthenticationController extends CommonController {
     private String builCookiePart(String username, String password){
 
         return PasswordGenerator.encrypt(username).concat(password.substring(0, password.length()-4).concat(password.substring(2,password.length()-1)));
-
     }
 
 
+    private ResponseEntity<Object>  attempt(String username, Exception e) throws Exception {
+        AuthenticationVO authentication = userService.checkAuthenticationAttempt(username);
 
-
+        if(authentication !=null){
+            int attempt = authentication.getAttempt();
+            if(BooleanUtils.isTrue(attempt >=0)){
+                int diff=attemptLimit-attempt;
+                String attemptMessage= (diff<=0)? MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_KO_LABEL, attemptLimit,postMailSender.getDefaultContactUs())
+                        :MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_LABEL,diff, attemptLimit);
+                return getResponseLoginErrorResponseEntity(attemptMessage);
+            }
+        }
+        throw e;
+    }
 }

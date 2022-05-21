@@ -3,7 +3,7 @@ package cm.travelpost.tp.common.mail.ent.service;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.mail.CommonMailSenderService;
 import cm.travelpost.tp.common.mail.MailType;
-import cm.travelpost.tp.common.mail.PersonalMailSender;
+import cm.travelpost.tp.common.mail.TravelPostMailSender;
 import cm.travelpost.tp.common.mail.ent.dao.ContactUSDAO;
 import cm.travelpost.tp.common.mail.ent.vo.ContactUSVO;
 import cm.travelpost.tp.common.mail.sendgrid.MailSenderSendGrid;
@@ -37,7 +37,7 @@ public class MailServiceImpl extends CommonMailSenderService implements MailServ
     public static final String USER_WS = "/ws/user";
 
     @Autowired
-    private PersonalMailSender personalMailSender;
+    private TravelPostMailSender personalMailSender;
 
     @Autowired
     MailSenderSendGrid mailSenderSendGrid;

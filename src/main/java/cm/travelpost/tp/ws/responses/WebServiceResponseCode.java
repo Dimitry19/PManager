@@ -1,6 +1,7 @@
 package cm.travelpost.tp.ws.responses;
 
 public class WebServiceResponseCode {
+    public static final int MFA_ENABLED = 8;
     public static final int MFA_NOT_ENABLED = 9;
     public static final int OK_CODE = 0;
     public static final int NOK_CODE = -1;
@@ -13,8 +14,9 @@ public class WebServiceResponseCode {
     public static final String RETRIVEVE_PASSWORD_LABEL = "Le mot de passe a été correctement envoyé ..."+MAIL_SPAM;
     public static final String LOGIN_OK_LABEL = "Login effectue correctement";
     public static final String LOGOUT_OK_LABEL = "Logout effectue correctement";
-    public static final String USER_REGISTER_LABEL = "Enregistrement completeé, consultez votre email pour confirmer votre enregistrement"+MAIL_SPAM;
-    public static final String USER_QRCODE_LABEL = "Scannez le QrCode avec l'app mobile Google Authenticator / Microsoft Authenticator / Authy pour vous connecter";
+    public static final String USER_REGISTER_MAIL_LABEL = "Enregistrement completé, consultez votre email pour confirmer votre enregistrement"+MAIL_SPAM;
+    public static final String USER_REGISTER_LABEL = "Enregistrement completé! Vous pouvez vous connecter";
+    public static final String QRCODE_LABEL = "Scannez le QrCode avec l'app mobile Google Authenticator / Microsoft Authenticator / Authy pour vous connecter";
 
     public static final String UPDATE_LABEL = "Données ajournées correctement";
     public static final String PAGINATE_RESPONSE_LABEL = "{0} resultat(s) trouvé(s)";
@@ -49,6 +51,8 @@ public class WebServiceResponseCode {
     public static final String ERROR_INVALID_TOKEN_REGISTER_LABEL = "Token invalide , peut etre le lien a deja expire";
     public static final String ERROR_USED_TOKEN_REGISTER_LABEL = "Le compte a deje ete active";
     public static final String ERROR_LOGIN_LABEL = "Verifier les données d'accès";
+    public static final String ERROR_LOGIN_ATTEMPT_LABEL = "Verifier les données d\''accès il vous reste {0} tentative(s) sur {1}";
+    public static final String ERROR_LOGIN_ATTEMPT_KO_LABEL = "Les {0} tentatives de connexion epuisées.Veuillez contacter l\''administrateur à l\'' adresse : {1} ";
     public static final String ERROR_LOGOUT_LABEL = "Erreur durant la déconnexion";
 
     public static final String ERROR_UPDATE_USER_LABEL = "Erreur durant l'ajournement des données";
