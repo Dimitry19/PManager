@@ -14,7 +14,6 @@
           <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/administrator/tracing/OpenTracingConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/config/cron/QuartzCronConfiguration.java</file>
           <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/QuartzSubmitJobs.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java</file>
           <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerApiConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java</file>
           <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/user/UserSubmitJobs.java</file>
