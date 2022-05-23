@@ -42,8 +42,8 @@ public class UserInfo implements Serializable {
 
     private String secret ;
 
-    private String pays;
-    private String ville;
+    private String country;
+    private String city;
 
     public UserInfo( String email, String secret, boolean enableMFA) {
         this.enableMFA = enableMFA;
@@ -196,19 +196,19 @@ public class UserInfo implements Serializable {
     public void setSecret(String secret) {  this.secret = secret;  }
 
 
-    public void setPays(String pays) {
-        this.pays = pays;
+    public void setcountry(String country) {
+        this.country = country;
     }
 
-    public void setVille(String ville) {
-        this.ville = ville;
+    public void setcity(String city) {
+        this.city = city;
     }
 
-    public String getPays() {
-        return pays;
+    public String getcountry() {
+        return country;
     }
 
-    public String getVille() {
-        return ville;
+    public String getcity() {
+        return city;
     }
 }

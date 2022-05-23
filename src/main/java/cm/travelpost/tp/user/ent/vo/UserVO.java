@@ -130,9 +130,9 @@ public class UserVO extends CommonVO {
 
     private boolean authenticated;
 
-    private String ville;
+    private String city;
 
-    private String pays;
+    private String country;
 
 
     public UserVO() {
@@ -336,13 +336,13 @@ public class UserVO extends CommonVO {
     }
 
     @Basic(optional = false)
-    @Column(name = "PAYS", nullable = false)
-    public String getPays() {   return pays;  }
+    @Column(name = "COUNTRY", nullable = false)
+    public String getCountry() {   return country;  }
 
 
     @Basic(optional = false)
-    @Column(name = "VILLE", nullable = false)
-    public String getVille() {  return ville; }
+    @Column(name = "CITY", nullable = false)
+    public String getCity() {  return city; }
 
     public void setSubscribers(Set<UserVO> subscribers) {
         this.subscribers = subscribers;
@@ -440,9 +440,9 @@ public class UserVO extends CommonVO {
 
     public void setMultipleFactorAuthentication(boolean multipleFactorAuthentication) {     this.multipleFactorAuthentication = multipleFactorAuthentication;  }
 
-    public void setVille(String ville) { this.ville = ville; }
+    public void setCity(String city) { this.city = city; }
 
-    public void setPays(String pays) {  this.pays = pays;   }
+    public void setCountry(String country) {  this.country = country;   }
 
     public void setSecret(String secret) {
         this.secret = secret;

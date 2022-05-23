@@ -204,8 +204,8 @@ create table tp_user
        LAST_NAME varchar(255) not null,
        GENDER varchar(10) null,
        PHONE varchar(35) not null,
-       PAYS varchar(35) not null,
-       VILLE varchar(50) not null,
+       COUNTRY varchar(35) not null,
+       CITY varchar(50) not null,
        EMAIL varchar(255) not null,
        USERNAME varchar(15) not null,
        PASSWORD varchar(255) not null,
@@ -325,6 +325,7 @@ create table reservation
               primary key,
 
        WEIGTH decimal(19,2) not null,
+       ESTIMATE_VALUE decimal(19,2),
        DESCRIPTION varchar(255) null,
        R_ANNOUNCE_ID bigint null,
        R_USER_ID bigint null,
