@@ -19,10 +19,10 @@ set B.CODE = A.CODE
     WHERE B.ID = A.ID;
 
 ALTER TABLE tp_user
-    ADD COLUMN   PAYS varchar(35) not null;
+    ADD COLUMN   COUNTRY varchar(35) not null;
 
 ALTER TABLE tp_user
-    ADD COLUMN  VILLE varchar(50) not null;
+    ADD COLUMN  CITY varchar(50) not null;
 
 
 
