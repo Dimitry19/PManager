@@ -118,7 +118,7 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
         jms.setHost("smtp.sendgrid.net");
         jms.setPort(25);
         jms.setUsername("apikey");
-        jms.setPassword("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");
+        jms.setPassword("");
 
         mailProp.put("mail.transport.protocol",  "smtp");
         mailProp.put("mail.smtp.auth", true);
