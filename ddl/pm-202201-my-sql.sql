@@ -325,6 +325,7 @@ create table reservation
               primary key,
 
        WEIGTH decimal(19,2) not null,
+       ESTIMATE_VALUE decimal(19,2),
        DESCRIPTION varchar(255) null,
        R_ANNOUNCE_ID bigint null,
        R_USER_ID bigint null,

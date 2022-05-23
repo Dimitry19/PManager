@@ -42,11 +42,11 @@ public class RegisterDTO extends LoginDTO {
 
     @NotNull(message = "Entrez une ville valide")
     @NotBlank(message = "Entrez une ville valide")
-    private String ville;
+    private String city;
 
     @NotNull(message = "Entrez un pays valide")
     @NotBlank(message = "Entrez un pays valide")
-    private String pays;
+    private String country;
 
     public Gender getGender() {
         return gender;
@@ -93,12 +93,12 @@ public class RegisterDTO extends LoginDTO {
     }
 
 
-    public void setVille(String ville) { this.ville = ville; }
+    public void setCity(String city) { this.city = city; }
 
-    public void setPays(String pays) {  this.pays = pays;   }
+    public void setCountry(String country) {  this.country = country;   }
 
-    public String getVille() { return ville;  }
+    public String getCity() { return city;  }
 
-    public String getPays() { return pays; }
+    public String getCountry() { return country; }
 
 }
