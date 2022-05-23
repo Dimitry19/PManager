@@ -107,6 +107,11 @@ public class AuthenticationController extends CommonController {
                     String qrCodeImage = authenticationService.qrCodeGenerator(user.getEmail(),user.getSecret(),issuer);
                     pmResponse.setMfa(true);
                     pmResponse.setSecretImageUri(qrCodeImage);
+                }else if(BooleanUtils.isTrue(mailService.sendConfirmationMail(request, user))){
+                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_MAIL_LABEL);
+                    response.setStatus(200);
+                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
                 }
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
                 pmResponse.setRetDescription(enableAutoActivateRegistration?WebServiceResponseCode.USER_REGISTER_LABEL:WebServiceResponseCode.USER_REGISTER_MAIL_LABEL);

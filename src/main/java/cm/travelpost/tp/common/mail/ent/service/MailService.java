@@ -19,7 +19,7 @@ public interface MailService {
 
     boolean contactUS(ContactUSDTO contactUS) throws Exception;
 
-    boolean buildAndSendMail(HttpServletRequest request, UserVO user) throws UserException, IOException, MailjetSocketTimeoutException, MailjetException, MessagingException;
+    boolean sendConfirmationMail(HttpServletRequest request, UserVO user) throws UserException, IOException, MailjetSocketTimeoutException, MailjetException, MessagingException;
 
     Response sendMail(MailDTO mr, boolean active) throws Exception;
 
