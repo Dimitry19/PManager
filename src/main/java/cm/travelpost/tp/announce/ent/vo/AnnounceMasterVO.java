@@ -104,6 +104,8 @@ public class AnnounceMasterVO extends CommonVO {
 
 	protected String descriptionTransport;
 
+	private BigDecimal estimateValue;
+
 	@Transient
 	protected UserInfo userInfo;
 
@@ -265,6 +267,11 @@ public class AnnounceMasterVO extends CommonVO {
 		return countReservation;
 	}
 
+
+	@Column(name = "ESTIMATE_VALUE", nullable = true)
+	public BigDecimal getEstimateValue() {  return estimateValue;  }
+
+	public void setEstimateValue(BigDecimal estimateValue) { this.estimateValue = estimateValue; }
 
 	@Transient
 	public UserInfo getUserInfo() {   return userInfo;  }

@@ -33,6 +33,14 @@ public class UpdateUserDTO {
 
     private String phone;
 
+    @NotNull(message = "Entrez une ville valide")
+    @NotBlank(message = "Entrez une ville valide")
+    private String ville;
+
+    @NotNull(message = "Entrez un pays valide")
+    @NotBlank(message = "Entrez un pays valide")
+    private String pays;
+
     public long getId() {
         return id;
     }
@@ -81,4 +89,12 @@ public class UpdateUserDTO {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public void setVille(String ville) { this.ville = ville; }
+
+    public void setPays(String pays) {  this.pays = pays;   }
+
+    public String getVille() { return ville;  }
+
+    public String getPays() { return pays; }
 }

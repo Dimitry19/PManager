@@ -13,6 +13,7 @@ public class CommonReservationDTO extends CategoriesDTO {
     @Positive(message = "Le poids doit etre doit etre valorisé")
     private BigDecimal weight;
 
+    private BigDecimal estimateValue;
 
     private String description;
 
@@ -39,4 +40,10 @@ public class CommonReservationDTO extends CategoriesDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public BigDecimal getEstimateValue() {  return estimateValue;  }
+
+    public void setEstimateValue(BigDecimal estimateValue) { this.estimateValue = estimateValue; }
+
+
 }

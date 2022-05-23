@@ -62,7 +62,7 @@ public class UserVO extends CommonVO {
 
     private static final long serialVersionUID = 6181438160768077660L;
 
-    public static final String FIND_BY_ID = "cm.travelpost.tp.user.ent.vo.UserVO.findById";
+    public static final String FIND_BY_ID = "cm.travelpost.tp.user.ent.vo.UserVO.<findById>";
     public static final String Q_AC_ITEM = "cm.travelpost.tp.user.ent.vo.UserVO.QAutocompleteItem";
     public static final String ALL = "cm.travelpost.tp.user.ent.vo.UserVO.All";
     public static final String USERNAME = "cm.travelpost.tp.user.ent.vo.UserVO.findLikeId";
@@ -129,6 +129,10 @@ public class UserVO extends CommonVO {
     private String accessToken;
 
     private boolean authenticated;
+
+    private String ville;
+
+    private String pays;
 
 
     public UserVO() {
@@ -331,6 +335,14 @@ public class UserVO extends CommonVO {
         return error;
     }
 
+    @Basic(optional = false)
+    @Column(name = "PAYS", nullable = false)
+    public String getPays() {   return pays;  }
+
+
+    @Basic(optional = false)
+    @Column(name = "VILLE", nullable = false)
+    public String getVille() {  return ville; }
 
     public void setSubscribers(Set<UserVO> subscribers) {
         this.subscribers = subscribers;
@@ -427,6 +439,10 @@ public class UserVO extends CommonVO {
     }
 
     public void setMultipleFactorAuthentication(boolean multipleFactorAuthentication) {     this.multipleFactorAuthentication = multipleFactorAuthentication;  }
+
+    public void setVille(String ville) { this.ville = ville; }
+
+    public void setPays(String pays) {  this.pays = pays;   }
 
     public void setSecret(String secret) {
         this.secret = secret;
@@ -631,6 +647,8 @@ public class UserVO extends CommonVO {
             return other.roles == null;
         } else return roles.equals(other.roles);
     }
+
+
 
     @Override
     public String toString() {

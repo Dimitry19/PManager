@@ -269,6 +269,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setEnableNotification(Boolean.TRUE);
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
+            user.setPays(register.getPays());
+            user.setVille(register.getVille());
 
             user.setMultipleFactorAuthentication(Boolean.TRUE);
             user.setSecret(secretGenerator.generate());
@@ -303,6 +305,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setFirstName(userDTO.getFirstName());
             user.setLastName(userDTO.getLastName());
             //setRole(user, userDTO.getRole());
+            user.setVille(userDTO.getVille());
+            user.setPays(userDTO.getPays());
             calcolateAverage(user);
             return (UserVO) merge(user);
 
