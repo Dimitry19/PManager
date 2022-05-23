@@ -81,6 +81,8 @@ public interface UserDAO extends CommonDAO {
 
     UserVO manageNotification(Long userId, boolean enableNotification) throws UserException;
 
+    UserVO manageMfa(Long userId, boolean mfa) throws UserException;
+
     boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException;
 
     List<CommunicationVO> communications(Long userId) throws Exception;

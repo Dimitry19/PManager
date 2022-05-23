@@ -114,7 +114,7 @@ public class MailSenderSendGrid extends CommonMailSenderService {
 
     @PostConstruct
     public void init() {
-        System.out.println("Personal Mail service starts....");
+        System.out.println("Sendgrid Mail service starts....");
         loadProperties();
     }
 

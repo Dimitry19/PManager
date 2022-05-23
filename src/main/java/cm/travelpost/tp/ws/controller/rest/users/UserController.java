@@ -6,9 +6,7 @@ import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.framework.ds.hibernate.enums.CountBy;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
-import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
-import cm.travelpost.tp.security.PasswordGenerator;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.mail.MailDTO;
@@ -31,7 +29,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -64,7 +61,7 @@ public class UserController extends CommonController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Successfully change status of notification",
                     response = ResponseEntity.class, responseContainer = "Object")})
-    @GetMapping(value = WSConstants.ENABLE_NOTIFICATION_WS, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+    @GetMapping(value = WSConstants.MANAGE_NOTIFICATION_WS, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<UserVO> manageNotification(HttpServletRequest request,
                                               HttpServletResponse response,
@@ -85,6 +82,35 @@ public class UserController extends CommonController {
         }
     }
 
+    @ApiOperation(value = "En/disable mfa ", response = ResponseEntity.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successfully change status of mfa",
+                    response = ResponseEntity.class, responseContainer = "Object")})
+    @GetMapping(value = WSConstants.USER_WS_MANAGE_MFA, produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+    public @ResponseBody
+    ResponseEntity<UserVO> manageMfa(HttpServletRequest request,
+                                     HttpServletResponse response,
+                                     @RequestParam("userId") @Valid Long userId,
+                                     @RequestParam("manage2FactorAuth") @Valid boolean manage2FactorAuth) throws UserException {
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+        logger.info(" Manage MFA request in");
+        try {
+            createOpentracingSpan("AuthenticationController - Manage mfa");
+            UserVO user = userService.manageMfa(userId, manage2FactorAuth);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.error("Erreur durant l'upload de l'image", e);
+            throw e;
+        } finally {
+            finishOpentracingSpan();
+        }
+    }
+
 
     @ApiOperation(value = " Update user ", response = UserVO.class)
     @ApiResponses(value = {
@@ -94,7 +120,6 @@ public class UserController extends CommonController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Successful update",
                     response = UserVO.class, responseContainer = "Object")})
-    //@RequestMapping(value =UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
     @PutMapping(value = WSConstants.USER_WS_UPDATE_ID, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<UserVO> update(HttpServletResponse response, HttpServletRequest request, @PathVariable long userId,

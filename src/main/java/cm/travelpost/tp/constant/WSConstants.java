@@ -40,9 +40,11 @@ public class WSConstants extends CommonProperties {
     public static final String AUTHENTICATION_WS_QRCODE = "/qrCode";
 
 
+
     /************ USER REQUEST*************/
     public static final String USER_WS = "/ws/user/*";
 
+    public static final String USER_WS_MANAGE_MFA = "/mfauth";
     public static final String USER_WS_CONFIRMATION = "/confirm";
     public static final String USER_WS_LOGIN = "/authenticate";
     public static final String USER_WS_USERS = "/users";
@@ -58,7 +60,7 @@ public class WSConstants extends CommonProperties {
     public static final String COMMUNICATIONS_WS = "/communications/{userId}";
     public static final String U_MESSAGES_WS = "/messages/{userId}";
     public static final String U_NOTIFICATIONS_WS = "/notifications/{userId}";
-    public static final String ENABLE_NOTIFICATION_WS = "/notification";
+    public static final String MANAGE_NOTIFICATION_WS = "/notification";
 
     public static final String USER_ADD_SUBSCRIPTION_WS = "/subscriptions/add";
     public static final String USER_ADD_SUBSCRIBER_WS = "/subscribers/add";

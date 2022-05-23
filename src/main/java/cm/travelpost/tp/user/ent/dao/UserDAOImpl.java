@@ -35,6 +35,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static cm.travelpost.tp.common.Constants.TP_ACTIVATE_ACCOUNT;
+import static cm.travelpost.tp.common.Constants.TP_INACTIVATE_ACCOUNT;
+
 
 @Repository
 public class UserDAOImpl extends Generic implements UserDAO {
@@ -265,7 +268,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setFirstName(register.getFirstName());
             user.setLastName(register.getLastName());
             user.setPhone(register.getPhone());
-            user.setActive(enableAutoActivateRegistration?1:0); // TODO remettre à 0 quand le service d'envoi mail sera de nouveau disponible
+            user.setActive(enableAutoActivateRegistration?TP_ACTIVATE_ACCOUNT:TP_INACTIVATE_ACCOUNT); // TODO remettre à 0 quand le service d'envoi mail sera de nouveau disponible
             user.setEnableNotification(Boolean.TRUE);
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
@@ -302,8 +305,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
             //setRole(user, userDTO.getRole());
             calcolateAverage(user);
             return (UserVO) merge(user);
-
-
         } else throw new UserException(USER_NOT_FOUND);
 
     }
@@ -553,6 +554,28 @@ public class UserDAOImpl extends Generic implements UserDAO {
             }
         } catch (UserException e) {
             logger.error("Erreur durant la modification de la gestion des notifications {}", e.getMessage());
+            throw e;
+        }
+        return user;
+    }
+
+    @Override
+    @Transactional(rollbackFor = {UserException.class, Exception.class})
+    public UserVO manageMfa(Long userId, boolean mfa) throws UserException {
+        UserVO user = findById(userId);
+        if (user == null){
+            throw new UserException("Utilisateur non trouvé");
+        }
+        try {
+
+            boolean precedent = user.isEnableNotification();
+            if (precedent != mfa) {
+                user.setMultipleFactorAuthentication(mfa);
+                update(user);
+                return (UserVO) get(UserVO.class, userId);
+            }
+        } catch (UserException e) {
+            logger.error("Erreur durant la modification de la gestion mfa {}", e.getMessage());
             throw e;
         }
         return user;

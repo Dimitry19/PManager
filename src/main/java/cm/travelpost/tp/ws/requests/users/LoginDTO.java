@@ -23,9 +23,6 @@ public class LoginDTO {
     @ApiModelProperty(notes = "The username for login", required = true)
     private String username;
 
-    @ApiModelProperty(notes = "Flag to enable 2 factors authentication", required = false)
-    private boolean multipleFactorAuthentication;
-
     @Email(message = "Email : format non valide")
     public String getEmail() {
         return email;
@@ -65,11 +62,5 @@ public class LoginDTO {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public boolean isMultipleFactorAuthentication() { return multipleFactorAuthentication; }
-
-    public void setMultipleFactorAuthentication(boolean multipleFactorAuthentication) {
-        this.multipleFactorAuthentication = multipleFactorAuthentication;
     }
 }

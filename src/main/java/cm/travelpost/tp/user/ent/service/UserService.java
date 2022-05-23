@@ -29,6 +29,8 @@ public interface UserService {
 
     UserInfo enableMFA(LoginDTO lr) throws Exception;
 
+    boolean checkMFA(LoginDTO lr) throws Exception;
+
     UserVO login(LoginDTO lr) throws Exception;
 
     UserVO update(UserVO user) throws UserException;
@@ -36,6 +38,8 @@ public interface UserService {
     boolean delete(UserVO user) throws UserException;
 
     boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException;
+
+    UserVO manageMfa(Long userId, boolean enableNotification) throws UserException;
 
     UserVO manageNotification(Long userId, boolean enableNotification) throws UserException;
 

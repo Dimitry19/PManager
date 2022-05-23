@@ -3,7 +3,6 @@ package cm.travelpost.tp.ws.controller.rest.authentication;
 
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
-import cm.travelpost.tp.common.mail.TravelPostMailSender;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
@@ -24,7 +23,6 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,8 +59,8 @@ public class AuthenticationController extends CommonController {
     @Value("${tp.travelpost.authentication.attempt}")
     private int attemptLimit;
 
-    @Autowired
-    private TravelPostMailSender postMailSender;
+    @Value("${mail.admin.username}")
+    protected String defaultContactUs;
 
 
 
@@ -114,7 +112,7 @@ public class AuthenticationController extends CommonController {
                     return new ResponseEntity<>(pmResponse, HttpStatus.OK);
                 }
                 pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                pmResponse.setRetDescription(enableAutoActivateRegistration?WebServiceResponseCode.USER_REGISTER_LABEL:WebServiceResponseCode.USER_REGISTER_MAIL_LABEL);
+                pmResponse.setRetDescription(BooleanUtils.isTrue(enableQrCodeRegistration)?WebServiceResponseCode.USER_REGISTER_LABEL:WebServiceResponseCode.USER_REGISTER_MAIL_LABEL);
                 response.setStatus(200);
                 return new ResponseEntity<>(pmResponse, HttpStatus.OK);
             }
@@ -170,7 +168,7 @@ public class AuthenticationController extends CommonController {
             }
 
         } catch (Exception e) {
-            logger.error("Errore eseguendo confirm: ", e);
+            logger.error("Erreur durant l'execution de  confirm: ", e);
             throw e;
         } finally {
             finishOpentracingSpan();
@@ -197,17 +195,17 @@ public class AuthenticationController extends CommonController {
 
             if (login != null) {
 
-                if(BooleanUtils.isFalse(login.isMultipleFactorAuthentication())){
+                if(BooleanUtils.isFalse(userService.checkMFA(login))){
 
                     AuthenticationVO authentication = userService.checkAttempt(login.getUsername());
                     if(authentication !=null){
                         if(BooleanUtils.isTrue(authentication.isDesactivate())) {
-                            return getResponseLoginErrorResponseEntity(MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_KO_LABEL,attemptLimit, postMailSender.getDefaultContactUs()));
+                            return getResponseLoginErrorResponseEntity(MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_KO_LABEL,attemptLimit, defaultContactUs));
                         }
                     }
                     user = userService.login(login);
                     if (user != null) {
-                        user.setRetCode(BooleanUtils.isTrue(user.isMultipleFactorAuthentication())?WebServiceResponseCode.MFA_ENABLED:WebServiceResponseCode.OK_CODE);
+                        user.setRetCode(WebServiceResponseCode.OK_CODE);
                         return new ResponseEntity<>(user, HttpStatus.OK);
                     }
                 }else {
@@ -215,6 +213,7 @@ public class AuthenticationController extends CommonController {
                     if(ui==null){
                         return getResponseLoginErrorResponseEntity(WebServiceResponseCode.ERROR_LOGIN_LABEL);
                     }
+
                     QrCodeResponse pmResponse = new QrCodeResponse();
                     String qrCodeImage = authenticationService.qrCodeGenerator(ui.getEmail(),ui.getSecret(),issuer);
                     pmResponse.setMfa(true);
@@ -246,28 +245,56 @@ public class AuthenticationController extends CommonController {
     @PreAuthorize("hasRole('PRE_VERIFICATION_USER')")
     public ResponseEntity<UserVO> verifyCode(HttpServletResponse response, HttpServletRequest request,@Valid @RequestBody VerificationDTO verification) throws Exception {
 
-        UserVO user = userService.findByUsername(verification.getUsername());
 
-        if(user == null){
-            return new ResponseEntity<>(new UserVO(), HttpStatus.BAD_REQUEST);
+        createOpentracingSpan("AuthenticationController - verifyCode");
+        try{
+                UserVO user = userService.findByUsername(verification.getUsername());
+                StringBuilder retDescription = new StringBuilder();
+
+                if(user == null){
+                    return new ResponseEntity<>(new UserVO(), HttpStatus.BAD_REQUEST);
+                }
+
+                if (BooleanUtils.isFalse(authenticationService.verifyCode(verification.getCode(), user.getSecret()))) {
+
+                    AuthenticationVO authentication = userService.checkAuthenticationAttempt(verification.getUsername());
+                    retDescription.append(WebServiceResponseCode.ERROR_INVALID_CODE_LABEL);
+
+                    if(authentication !=null){
+
+                        if(BooleanUtils.isTrue(authentication.isDesactivate())){
+                            retDescription.append(MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_KO_LABEL,attemptLimit,defaultContactUs));
+                        }
+
+                        int attempt = authentication.getAttempt();
+                        if(BooleanUtils.isFalse(authentication.isDesactivate()) && BooleanUtils.isTrue(attempt >=0 && attempt<5)){
+                            int diff=attemptLimit-attempt;
+                            String attemptMessage= (diff<=0)? MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_KO_LABEL, attemptLimit,defaultContactUs)
+                                    :MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_LABEL,diff, attemptLimit);
+                            retDescription.append(attemptMessage);
+                        }
+                    }
+                    user.setAccessToken(null);
+                    user.setAuthenticated(false);
+                    user.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    user.setRetDescription(retDescription.toString());
+                    return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
+                }
+                String generatedToken = tokenProvider.createToken(user.getUsername(),true);
+
+                user.setAuthenticated(true);
+                user.setAccessToken(generatedToken);
+                user.setRetCode(WebServiceResponseCode.OK_CODE);
+                user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+                cookie(response,user.getUsername(),user.getPassword());
+                return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            logger.error("Erreur durant l'execution de verifyCode: {}", e.getMessage());
+            throw e;
+        } finally {
+            finishOpentracingSpan();
         }
 
-        if (BooleanUtils.isFalse(authenticationService.verifyCode(verification.getCode(), user.getSecret()))) {
-            //TODO Controler le nombre de tentative de login
-            user.setAccessToken(null);
-            user.setAuthenticated(false);
-            user.setRetCode(WebServiceResponseCode.NOK_CODE);
-            user.setRetDescription(WebServiceResponseCode.ERROR_INVALID_CODE_LABEL);
-            return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
-        }
-        String generatedToken = tokenProvider.createToken(user.getUsername(),true);
-
-        user.setAuthenticated(true);
-        user.setAccessToken(generatedToken);
-        user.setRetCode(WebServiceResponseCode.OK_CODE);
-        user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
-        cookie(response,user.getUsername(),user.getPassword());
-        return ResponseEntity.ok(user);
     }
 
     @PostMapping(path = AUTHENTICATION_WS_QRCODE,headers = WSConstants.HEADER_ACCEPT)
@@ -334,6 +361,7 @@ public class AuthenticationController extends CommonController {
        }
        throw new UserNotFoundException(WebServiceResponseCode.ERROR_LOGOUT_LABEL);
     }
+
     private void  cookie(HttpServletResponse response,String username, String password){
         Cookie cookie =new Cookie("_tps_2P_", builCookiePart(username,password));
         cookie.setSecure(true);
@@ -354,7 +382,7 @@ public class AuthenticationController extends CommonController {
             int attempt = authentication.getAttempt();
             if(BooleanUtils.isTrue(attempt >=0)){
                 int diff=attemptLimit-attempt;
-                String attemptMessage= (diff<=0)? MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_KO_LABEL, attemptLimit,postMailSender.getDefaultContactUs())
+                String attemptMessage= (diff<=0)? MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_KO_LABEL, attemptLimit,defaultContactUs)
                         :MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_LABEL,diff, attemptLimit);
                 return getResponseLoginErrorResponseEntity(attemptMessage);
             }
