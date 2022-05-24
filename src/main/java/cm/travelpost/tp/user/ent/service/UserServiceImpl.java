@@ -180,7 +180,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UserException("Utilisateur non trouvé");
         }
-       return new UserInfo(user.getEmail(),user.getSecret(),user.isEnableNotification());
+       return new UserInfo(user.getEmail(),user.getSecret(),user.isMultipleFactorAuthentication());
     }
     public UserVO login(LoginDTO lr) throws Exception {
 

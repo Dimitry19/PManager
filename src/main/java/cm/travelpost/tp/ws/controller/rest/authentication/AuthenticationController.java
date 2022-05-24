@@ -233,6 +233,11 @@ public class AuthenticationController extends CommonController {
                     pmResponse.setSecretImageUri(qrCodeImage);
                     pmResponse.setRetCode(WebServiceResponseCode.QR_CODE_MFA_ENABLED);
                     pmResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
+
+                    user = userService.findByUsername(login.getUsername());
+                    if(user.getAuthentication()==null){
+                        user.setAuthentication(new AuthenticationVO());
+                    }
                     user.getAuthentication().setAttempt(0);
                     user.getAuthentication().setDesactivate(Boolean.FALSE);
                     userService.update(user);
@@ -242,6 +247,9 @@ public class AuthenticationController extends CommonController {
 
                     if(user != null) {
                         user.setRetCode(WebServiceResponseCode.OK_CODE);
+                        if(user.getAuthentication()==null){
+                            user.setAuthentication(new AuthenticationVO());
+                        }
                         user.getAuthentication().setAttempt(0);
                         user.getAuthentication().setDesactivate(Boolean.FALSE);
                         userService.update(user);
@@ -269,13 +277,12 @@ public class AuthenticationController extends CommonController {
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(AUTHENTICATION_WS_VERIFICATION)
     @PreAuthorize("hasRole('PRE_VERIFICATION_USER')")
-    public ResponseEntity<UserVO> verifyCode(HttpServletResponse response, HttpServletRequest request,@Valid @RequestBody VerificationDTO verification) throws Exception {
+    public ResponseEntity<Object> verifyCode(HttpServletResponse response, HttpServletRequest request,@Valid @RequestBody VerificationDTO verification) throws Exception {
 
 
-        createOpentracingSpan("AuthenticationController - verifyCode");
+                createOpentracingSpan("AuthenticationController - verifyCode");
         try{
-                String username ="claude";
-                verification.setUsername(username);
+
                 UserVO user = userService.findByUsername(verification.getUsername());
                 StringBuilder retDescription = new StringBuilder();
 
@@ -307,7 +314,7 @@ public class AuthenticationController extends CommonController {
                     authenticationResponse.setAuthenticated(false);
                     authenticationResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                     authenticationResponse.setMessage(retDescription.toString());
-                    return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>(authenticationResponse, HttpStatus.BAD_REQUEST);
                 }
                 String generatedToken = tokenProvider.createToken(user.getUsername(),true);
 
@@ -315,6 +322,10 @@ public class AuthenticationController extends CommonController {
                 user.setAccessToken(generatedToken);
                 user.setRetCode(WebServiceResponseCode.OK_CODE);
                 user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+
+                if(user.getAuthentication()==null){
+                    user.setAuthentication(new AuthenticationVO());
+                }
                 user.getAuthentication().setAttempt(0);
                 user.getAuthentication().setDesactivate(Boolean.FALSE);
                 userService.update(user);

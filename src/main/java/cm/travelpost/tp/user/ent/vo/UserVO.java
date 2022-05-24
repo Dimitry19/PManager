@@ -263,7 +263,7 @@ public class UserVO extends CommonVO {
         return announces;
     }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     public Set<RoleVO> getRoles() {
         return roles;
@@ -320,7 +320,7 @@ public class UserVO extends CommonVO {
         return secret;
     }
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     public AuthenticationVO getAuthentication() {
         return authentication;
