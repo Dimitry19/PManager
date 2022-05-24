@@ -22,7 +22,7 @@ ALTER TABLE tp_user
     ADD COLUMN   COUNTRY varchar(35) ;
 
 ALTER TABLE tp_user
-    ADD COLUMN  CITY varchar(50) ;
+    ADD COLUMN  CITY varchar(50)  ;
 
 ALTER TABLE announce
     ADD COLUMN ESTIMATE_VALUE decimal(19,2);
