@@ -39,6 +39,15 @@ public class RegisterDTO extends LoginDTO {
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
+
+    @NotNull(message = "Entrez une ville valide")
+    @NotBlank(message = "Entrez une ville valide")
+    private String city;
+
+    @NotNull(message = "Entrez un pays valide")
+    @NotBlank(message = "Entrez un pays valide")
+    private String country;
+
     public Gender getGender() {
         return gender;
     }
@@ -82,5 +91,14 @@ public class RegisterDTO extends LoginDTO {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+
+    public void setCity(String city) { this.city = city; }
+
+    public void setCountry(String country) {  this.country = country;   }
+
+    public String getCity() { return city;  }
+
+    public String getCountry() { return country; }
 
 }

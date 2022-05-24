@@ -18,7 +18,7 @@ public class AnnounceInfo implements Serializable {
     private String departure;
     private String arrival;
     private String warning;
-
+    private BigDecimal estimateValue;
 
     @JsonFormat(pattern = DateUtils.STD_PATTERN)
     private Date startDate;
@@ -50,6 +50,7 @@ public class AnnounceInfo implements Serializable {
         this.countReservation = announce.getCountReservation();
         this.warning=announce.getWarning();
         this.categories.addAll(announce.getCategories());
+        this.estimateValue = announce.getEstimateValue();
     }
 
     public Long getId() {
@@ -150,4 +151,8 @@ public class AnnounceInfo implements Serializable {
     public String getWarning() {  return warning; }
 
     public void setWarning(String warning) {  this.warning = warning; }
+
+    public BigDecimal getEstimateValue() {  return estimateValue;  }
+
+    public void setEstimateValue(BigDecimal estimateValue) { this.estimateValue = estimateValue; }
 }

@@ -5,6 +5,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Embeddable
@@ -14,6 +15,9 @@ public class ReservationUserIdVO implements Serializable {
     private Long id;
 
     private Long userId;
+
+    private BigDecimal estimateValue;
+
 
     @Column(name = "ID")
     public Long getId() {
@@ -32,6 +36,11 @@ public class ReservationUserIdVO implements Serializable {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    @Column(name = "ESTIMATE_VALUE")
+    public BigDecimal getEstimateValue() {  return estimateValue;  }
+
+    public void setEstimateValue(BigDecimal estimateValue) { this.estimateValue = estimateValue; }
 
     @Override
     public boolean equals(Object o) {

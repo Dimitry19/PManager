@@ -18,6 +18,17 @@ update announce B,
 set B.CODE = A.CODE
     WHERE B.ID = A.ID;
 
+ALTER TABLE tp_user
+    ADD COLUMN   COUNTRY varchar(35) ;
+
+ALTER TABLE tp_user
+    ADD COLUMN  CITY varchar(50) ;
+
+ALTER TABLE announce
+    ADD COLUMN ESTIMATE_VALUE decimal(19,2);
+
+ALTER TABLE reservation
+    ADD COLUMN ESTIMATE_VALUE decimal(19,2);
 
 
 update  message set TOKEN ='TP';
@@ -53,3 +64,10 @@ WHERE EXISTS(
 update  message set TOKEN ='TP';
 update  review set TOKEN ='TP';
 update  airline set TOKEN ='TP';
+
+
+ALTER TABLE announce
+    ADD COLUMN ESTIMATE_VALUE decimal(19,2);
+
+ALTER TABLE reservation
+    ADD COLUMN ESTIMATE_VALUE decimal(19,2);
