@@ -270,6 +270,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setPhone(register.getPhone());
             user.setActive(enableAutoActivateRegistration?TP_ACTIVATE_ACCOUNT:TP_INACTIVATE_ACCOUNT); // TODO remettre à 0 quand le service d'envoi mail sera de nouveau disponible
             user.setEnableNotification(Boolean.TRUE);
+            user.setMultipleFactorAuthentication(Boolean.FALSE);
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
             Long id=(Long)save(user);
@@ -568,7 +569,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
         try {
 
-            boolean precedent = user.isEnableNotification();
+            boolean precedent = user.isMultipleFactorAuthentication();
             if (precedent != mfa) {
                 user.setMultipleFactorAuthentication(mfa);
                 update(user);
@@ -659,13 +660,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
             if (StringUtils.isNotEmpty(search.getUsername())) {
                 hql.append(alias +USERNAME_PARAM+"=:"+USERNAME_PARAM);
             }
-//            and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(),WHERE);
-//            if (StringUtils.isNotEmpty(search.getUsername())) {
-//                if (and) {
-//                    hql.append(AND);
-//                }
-//                hql.append(alias + ANNOUNCE_TYPE_PARAM +"=:" + ANNOUNCE_TYPE_PARAM);
-//            }
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();

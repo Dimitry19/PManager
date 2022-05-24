@@ -168,18 +168,19 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
           throw new UserException("Utilisateur non trouvé");
         }
+
         userDAO.generateSecret(user);
         user =userDAO.findById(user.getId());
         return new UserInfo( user.getEmail(), user.getSecret(), false);
     }
 
-    public boolean checkMFA(LoginDTO lr) throws Exception {
+    public UserInfo checkMFA(LoginDTO lr) throws Exception {
 
         UserVO user = login(lr);
         if (user == null) {
             throw new UserException("Utilisateur non trouvé");
         }
-       return user.isMultipleFactorAuthentication();
+       return new UserInfo(user.getEmail(),user.getSecret(),user.isEnableNotification());
     }
     public UserVO login(LoginDTO lr) throws Exception {
 
@@ -223,7 +224,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVO manageMfa(Long userId, boolean mfa) throws UserException {
-        return userDAO.manageNotification(userId, mfa);
+        return userDAO.manageMfa(userId, mfa);
     }
     @Override
     public UserVO manageNotification(Long userId, boolean enableNotification) throws UserException {

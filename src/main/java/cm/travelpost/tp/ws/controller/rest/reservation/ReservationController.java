@@ -67,7 +67,7 @@ public class ReservationController extends CommonController {
             if (reservation == null) {
 
                 reservation = new ReservationVO();
-                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, RESERVATION_LABEL));
+                reservation.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, RESERVATION_LABEL));
                 reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
 
                 return new ResponseEntity<>(reservation, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -151,7 +151,7 @@ public class ReservationController extends CommonController {
             } else {
 
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, RESERVATION_LABEL));
+                pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, RESERVATION_LABEL));
 
             }
             return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
@@ -190,7 +190,7 @@ public class ReservationController extends CommonController {
             }
             reservation = new ReservationVO();
             reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
-            reservation.setRetDescription(WebServiceResponseCode.ERROR_GET_RESERV_CODE_LABEL);
+            reservation.setMessage(WebServiceResponseCode.ERROR_GET_RESERV_CODE_LABEL);
 
             return new ResponseEntity<>(reservation, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -233,7 +233,7 @@ public class ReservationController extends CommonController {
                 reservation = new ReservationVO();
                 response.setStatus(org.apache.http.HttpStatus.SC_NOT_FOUND);
                 reservation.setRetCode(WebServiceResponseCode.NOK_CODE);
-                reservation.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, RESERVATION_LABEL));
+                reservation.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, RESERVATION_LABEL));
 
             }
             return new ResponseEntity<>(reservation, HttpStatus.NOT_FOUND);

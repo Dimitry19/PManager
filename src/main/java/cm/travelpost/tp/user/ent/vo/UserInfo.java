@@ -38,12 +38,12 @@ public class UserInfo implements Serializable {
 
     private List<RoleVO> roles;
 
-    private boolean enableMFA;
+    private boolean multipleFactorAuthentication;
 
     private String secret ;
 
     public UserInfo( String email, String secret, boolean enableMFA) {
-        this.enableMFA = enableMFA;
+        this.multipleFactorAuthentication = enableMFA;
         this.email = email;
         this.secret = secret;
 
@@ -69,9 +69,10 @@ public class UserInfo implements Serializable {
         this.phone = user.getPhone();
         this.dateCreated = user.getDateCreated();
         this.rating = user.getRating();
-        this.count = CollectionsUtils.size(user.getAnnounces());
         this.picByte=user.getImage()!=null?user.getImage().getPicByte():null;
         this.origin=user.getImage()!=null?user.getImage().getOrigin():null;
+        this.multipleFactorAuthentication=user.isMultipleFactorAuthentication();
+        this.count = CollectionsUtils.size(user.getAnnounces());
         this.roles=CommonFilter.getRolesAuthoritiesUser(user);
     }
 
@@ -184,8 +185,8 @@ public class UserInfo implements Serializable {
     }
 
     @JsonIgnore
-    public boolean isEnableMFA() {  return enableMFA; }
-    public void setEnableMFA(boolean enableMFA) {    this.enableMFA = enableMFA;  }
+    public boolean isMultipleFactorAuthentication() {  return multipleFactorAuthentication; }
+    public void setMultipleFactorAuthentication(boolean multipleFactorAuthentication) {    this.multipleFactorAuthentication = multipleFactorAuthentication;  }
 
     @JsonIgnore
     public String getSecret() { return secret;}

@@ -1,8 +1,8 @@
 package cm.travelpost.tp.ws.responses;
 
 public class WebServiceResponseCode {
-    public static final int MFA_ENABLED = 8;
-    public static final int MFA_NOT_ENABLED = 9;
+    public static final int LOGIN_MFA_ENABLED = 8;
+    public static final int QR_CODE_MFA_ENABLED = 9;
     public static final int OK_CODE = 0;
     public static final int NOK_CODE = -1;
 
@@ -22,13 +22,9 @@ public class WebServiceResponseCode {
     public static final String PAGINATE_RESPONSE_LABEL = "{0} resultat(s) trouvé(s)";
     public static final String PAGINATE_EMPTY_RESPONSE_LABEL = "Aucun resultat trouvé";
 
-
-
-
     public static final String CREATE_LABEL = "{0} correctement inserée";
     public static final String CANCELLED_LABEL = "{0} correctement éliminé(e) ";
     public static final String UPDATED_LABEL = "{0}  correctement ajourné(e) ";
-
 
     public static final String SUBSCRIBE_LABEL = "Abonnement reussi";
     public static final String UNSUBSCRIBE_LABEL = "Désabonnement reussi";
@@ -39,6 +35,14 @@ public class WebServiceResponseCode {
 
     public static final String READ_CODE_LABEL = "{0} déjà lu(e)";
 
+    public static final String MFA_ENABLE_OK_LABEL = "L'authentification à deux facteurs activée ";
+    public static final String MFA_DISABLE_OK_LABEL = "L'authentification à deux facteurs desactivée ";
+
+    public static final String NOTIFICATION_ENABLE_OK_LABEL = "Notification activée ";
+    public static final String NOTIFICATION_DISABLE_OK_LABEL = "Notification desactivée ";
+
+
+
 
     // NOK LABEL
     public static final String ERROR_PAGINATE_RESPONSE_LABEL = "Une erreur est survenue durant la recuperation des données";
@@ -47,7 +51,7 @@ public class WebServiceResponseCode {
     public static final String ERROR_RETRIEVE_PASSWORD_LABEL = "Le mot de posse n'a pas été envoye ";
     public static final String ERROR_EMAIL_REGISTER_LABEL = "Cette adresse email a deja été utilise";
     public static final String ERROR_USERNAME_REGISTER_LABEL = "Nom utilisateur non disponible";
-    public static final String ERROR_USER_REGISTER_LABEL = "Enregistrement non complete";
+    public static final String ERROR_USER_REGISTER_LABEL = "Enregistrement non complété";
     public static final String ERROR_INVALID_TOKEN_REGISTER_LABEL = "Token invalide , peut etre le lien a deja expire";
     public static final String ERROR_USED_TOKEN_REGISTER_LABEL = "Le compte a deje ete active";
     public static final String ERROR_LOGIN_LABEL = "Verifier les données d'accès";

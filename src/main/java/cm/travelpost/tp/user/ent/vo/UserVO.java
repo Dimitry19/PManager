@@ -272,6 +272,7 @@ public class UserVO extends CommonVO {
     @Access(AccessType.PROPERTY)
     @Fetch(value = SELECT)
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     public Set<ReviewVO> getReviews() {
         return reviews;
     }
@@ -307,7 +308,6 @@ public class UserVO extends CommonVO {
 
     @Basic(optional = false)
     @Column(name = "MULTIPLE_FACTOR_AUTH")
-    @JsonIgnore
     public boolean isMultipleFactorAuthentication() {
         return multipleFactorAuthentication;
     }
@@ -321,6 +321,7 @@ public class UserVO extends CommonVO {
     }
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     public AuthenticationVO getAuthentication() {
         return authentication;
     }

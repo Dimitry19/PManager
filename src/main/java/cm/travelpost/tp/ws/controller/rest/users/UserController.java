@@ -18,6 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -72,6 +73,8 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController - Manage notification");
             UserVO user = userService.manageNotification(userId, enable);
+            user.setRetCode(WebServiceResponseCode.OK_CODE);
+            user.setRetDescription(BooleanUtils.isTrue(user.isEnableNotification()) ?WebServiceResponseCode.NOTIFICATION_ENABLE_OK_LABEL:WebServiceResponseCode.NOTIFICATION_DISABLE_OK_LABEL);
             return new ResponseEntity<>(user, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -101,6 +104,8 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("AuthenticationController - Manage mfa");
             UserVO user = userService.manageMfa(userId, manage2FactorAuth);
+            user.setRetCode(WebServiceResponseCode.OK_CODE);
+            user.setRetDescription(BooleanUtils.isTrue(user.isMultipleFactorAuthentication()) ?WebServiceResponseCode.MFA_ENABLE_OK_LABEL:WebServiceResponseCode.MFA_DISABLE_OK_LABEL);
             return new ResponseEntity<>(user, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -136,8 +141,8 @@ public class UserController extends CommonController {
                 if (user == null) {
                     WSCommonResponseVO commonResponse = new WSCommonResponseVO();
                     commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    commonResponse.setRetDescription(WebServiceResponseCode.ERROR_UPDATE_USER_LABEL);
-                    throw new UserNotFoundException("Utilisateur non trouv&egrave;");
+                    commonResponse.setMessage(WebServiceResponseCode.ERROR_UPDATE_USER_LABEL);
+                    //throw new UserNotFoundException("Utilisateur non trouv&egrave;");
                 }
 
                 user.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -222,7 +227,7 @@ public class UserController extends CommonController {
                     return new ResponseEntity<>(pmResponse, HttpStatus.OK);
                 } else {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL);
+                    pmResponse.setMessage(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL);
                     return new ResponseEntity<>(pmResponse, HttpStatus.OK);
                 }
             }
@@ -290,12 +295,12 @@ public class UserController extends CommonController {
                     pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_USER_LABEL);
                 } else {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_USER_CODE_LABEL);
+                    pmResponse.setMessage(WebServiceResponseCode.ERROR_DELETE_USER_CODE_LABEL);
                 }
             }
         } catch (Exception e) {
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setRetDescription(e.getMessage());
+            pmResponse.setMessage(e.getMessage());
             logger.error("Erreur durant la delete de l'utilisateur ayant id:" + id + "{}", e);
             e.printStackTrace();
             throw e;
@@ -360,7 +365,7 @@ public class UserController extends CommonController {
                     return new ResponseEntity<>(pmResponse, HttpStatus.OK);
                 } else {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL, "Veuillez reessayez plutard , Merci!"));
+                    pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL, "Veuillez reessayez plutard , Merci!"));
                     return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
                 }
 
@@ -441,7 +446,7 @@ public class UserController extends CommonController {
 
                 if (subscribe.getSubscriberId().equals(subscribe.getSubscriptionId())) {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
+                    pmResponse.setMessage(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
                     response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
                     return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
                 }
@@ -456,7 +461,7 @@ public class UserController extends CommonController {
         } catch (UserException e) {
             logger.error("Erreur durant l'execution de  subscribe: ", e);
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setRetDescription(WebServiceResponseCode.ERROR_SUBSCRIBE_LABEL);
+            pmResponse.setMessage(WebServiceResponseCode.ERROR_SUBSCRIBE_LABEL);
             return new ResponseEntity<>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 
         } finally {
@@ -490,7 +495,7 @@ public class UserController extends CommonController {
 
                 if (subscribe.getSubscriberId().equals(subscribe.getSubscriptionId())) {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
+                    pmResponse.setMessage(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
                     response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
                     return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
                 }
@@ -505,7 +510,7 @@ public class UserController extends CommonController {
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de  unsubscribe: ", e);
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setRetDescription(WebServiceResponseCode.ERROR_UNSUBSCRIBE_LABEL);
+            pmResponse.setMessage(WebServiceResponseCode.ERROR_UNSUBSCRIBE_LABEL);
             return new ResponseEntity<>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
             finishOpentracingSpan();
@@ -544,7 +549,7 @@ public class UserController extends CommonController {
             logger.error("Erreur durant l'execution de subscriptions: ", e);
             response.setStatus(500);
             paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+            paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
             return new ResponseEntity<>(paginateResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 
         } finally {
@@ -581,7 +586,7 @@ public class UserController extends CommonController {
             logger.error("Erreur durant l'execution de subscribers: ", e);
             response.setStatus(500);
             paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+            paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
             return new ResponseEntity<>(paginateResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
             finishOpentracingSpan();

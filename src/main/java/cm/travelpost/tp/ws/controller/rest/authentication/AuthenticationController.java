@@ -16,6 +16,7 @@ import cm.travelpost.tp.ws.requests.users.RegisterDTO;
 import cm.travelpost.tp.ws.responses.QrCodeResponse;
 import cm.travelpost.tp.ws.responses.Response;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
+import cm.travelpost.tp.ws.responses.authentication.AuthenticationResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -91,13 +92,13 @@ public class AuthenticationController extends CommonController {
 
                 if (user != null && StringUtils.isNotEmpty(user.getError())) {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(user.getError());
+                    pmResponse.setMessage(user.getError());
                     return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
                 }
 
                 if (user == null) {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
+                    pmResponse.setMessage(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
                     return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
                 }
 
@@ -149,13 +150,13 @@ public class AuthenticationController extends CommonController {
 
             if (user == null) {
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setRetDescription(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
+                pmResponse.setMessage(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
                 response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
             } else {
 
                 if (user.getActive() == TP_ACTIVATE_ACCOUNT) {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
+                    pmResponse.setMessage(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
                     response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
                 }
 
@@ -195,7 +196,13 @@ public class AuthenticationController extends CommonController {
 
             if (login != null) {
 
-                if(BooleanUtils.isFalse(userService.checkMFA(login))){
+                UserInfo ui=userService.checkMFA(login);
+
+                boolean partialMfaEnabled=ui!=null && BooleanUtils.isTrue(ui.isMultipleFactorAuthentication());
+                boolean mfaEnabled= BooleanUtils.isTrue(partialMfaEnabled) &&  StringUtils.isNotEmpty(ui.getSecret());
+                boolean generateQrCode= BooleanUtils.isTrue(partialMfaEnabled) &&  StringUtils.isEmpty(ui.getSecret());
+
+                if(BooleanUtils.isTrue(mfaEnabled)){
 
                     AuthenticationVO authentication = userService.checkAttempt(login.getUsername());
                     if(authentication !=null){
@@ -203,24 +210,43 @@ public class AuthenticationController extends CommonController {
                             return getResponseLoginErrorResponseEntity(MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_KO_LABEL,attemptLimit, defaultContactUs));
                         }
                     }
-                    user = userService.login(login);
+                    user = userService.findByUsername(login.getUsername());
                     if (user != null) {
-                        user.setRetCode(WebServiceResponseCode.OK_CODE);
+                        user.setRetCode(WebServiceResponseCode.LOGIN_MFA_ENABLED);
+                        user.getAuthentication().setAttempt(0);
+                        user.getAuthentication().setDesactivate(Boolean.FALSE);
+                        userService.update(user);
                         return new ResponseEntity<>(user, HttpStatus.OK);
                     }
-                }else {
-                    UserInfo ui= userService.enableMFA(login);
-                    if(ui==null){
+                }
+
+                if(BooleanUtils.isTrue(generateQrCode)) {
+
+                    ui = userService.enableMFA(login);
+                    if (ui == null) {
                         return getResponseLoginErrorResponseEntity(WebServiceResponseCode.ERROR_LOGIN_LABEL);
                     }
 
                     QrCodeResponse pmResponse = new QrCodeResponse();
-                    String qrCodeImage = authenticationService.qrCodeGenerator(ui.getEmail(),ui.getSecret(),issuer);
+                    String qrCodeImage = authenticationService.qrCodeGenerator(ui.getEmail(), ui.getSecret(), issuer);
                     pmResponse.setMfa(true);
                     pmResponse.setSecretImageUri(qrCodeImage);
-                    pmResponse.setRetCode(WebServiceResponseCode.MFA_NOT_ENABLED);
+                    pmResponse.setRetCode(WebServiceResponseCode.QR_CODE_MFA_ENABLED);
                     pmResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
+                    user.getAuthentication().setAttempt(0);
+                    user.getAuthentication().setDesactivate(Boolean.FALSE);
+                    userService.update(user);
                     return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                }else{
+                    user = userService.login(login);
+
+                    if(user != null) {
+                        user.setRetCode(WebServiceResponseCode.OK_CODE);
+                        user.getAuthentication().setAttempt(0);
+                        user.getAuthentication().setDesactivate(Boolean.FALSE);
+                        userService.update(user);
+                        return new ResponseEntity<>(user, HttpStatus.OK);
+                    }
                 }
                 return getResponseLoginErrorResponseEntity(WebServiceResponseCode.ERROR_LOGIN_LABEL);
             }
@@ -248,6 +274,8 @@ public class AuthenticationController extends CommonController {
 
         createOpentracingSpan("AuthenticationController - verifyCode");
         try{
+                String username ="claude";
+                verification.setUsername(username);
                 UserVO user = userService.findByUsername(verification.getUsername());
                 StringBuilder retDescription = new StringBuilder();
 
@@ -267,17 +295,18 @@ public class AuthenticationController extends CommonController {
                         }
 
                         int attempt = authentication.getAttempt();
-                        if(BooleanUtils.isFalse(authentication.isDesactivate()) && BooleanUtils.isTrue(attempt >=0 && attempt<5)){
+                        if(BooleanUtils.isFalse(authentication.isDesactivate()) && BooleanUtils.isTrue(attempt >=0 && attempt<attemptLimit)){
                             int diff=attemptLimit-attempt;
                             String attemptMessage= (diff<=0)? MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_KO_LABEL, attemptLimit,defaultContactUs)
                                     :MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_LABEL,diff, attemptLimit);
                             retDescription.append(attemptMessage);
                         }
                     }
-                    user.setAccessToken(null);
-                    user.setAuthenticated(false);
-                    user.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    user.setRetDescription(retDescription.toString());
+                    AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+                    authenticationResponse.setAccessToken(null);
+                    authenticationResponse.setAuthenticated(false);
+                    authenticationResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    authenticationResponse.setMessage(retDescription.toString());
                     return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
                 }
                 String generatedToken = tokenProvider.createToken(user.getUsername(),true);
@@ -286,6 +315,9 @@ public class AuthenticationController extends CommonController {
                 user.setAccessToken(generatedToken);
                 user.setRetCode(WebServiceResponseCode.OK_CODE);
                 user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
+                user.getAuthentication().setAttempt(0);
+                user.getAuthentication().setDesactivate(Boolean.FALSE);
+                userService.update(user);
                 cookie(response,user.getUsername(),user.getPassword());
                 return ResponseEntity.ok(user);
         } catch (Exception e) {
@@ -305,13 +337,13 @@ public class AuthenticationController extends CommonController {
 
         if(user == null){
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_QRCODE_LABEL);
+            pmResponse.setMessage(WebServiceResponseCode.ERROR_USER_QRCODE_LABEL);
             return new ResponseEntity<>(pmResponse, HttpStatus.OK);
         }
         pmResponse.setMfa(true);
         String qrCodeImage = authenticationService.qrCodeGenerator(user.getEmail(),user.getSecret(),issuer);
         pmResponse.setSecretImageUri(qrCodeImage);
-        pmResponse.setRetCode(WebServiceResponseCode.MFA_NOT_ENABLED);
+        pmResponse.setRetCode(WebServiceResponseCode.QR_CODE_MFA_ENABLED);
         pmResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
         return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 

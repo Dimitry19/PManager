@@ -31,7 +31,7 @@ update  airline set TOKEN ='TP';
 --Scripts à executer sur H2----
 
 ALTER TABLE tp_user
-    ADD COLUMN MULTIPLE_FACTOR_AUTH   BOOLEAN not null default true;
+    ADD COLUMN MULTIPLE_FACTOR_AUTH   BOOLEAN not null default false;
 
 ALTER TABLE tp_user
     ADD COLUMN MFA_SECRET  varchar(255) ;

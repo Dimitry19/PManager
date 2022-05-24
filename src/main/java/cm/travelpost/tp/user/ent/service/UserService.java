@@ -29,7 +29,7 @@ public interface UserService {
 
     UserInfo enableMFA(LoginDTO lr) throws Exception;
 
-    boolean checkMFA(LoginDTO lr) throws Exception;
+    UserInfo checkMFA(LoginDTO lr) throws Exception;
 
     UserVO login(LoginDTO lr) throws Exception;
 

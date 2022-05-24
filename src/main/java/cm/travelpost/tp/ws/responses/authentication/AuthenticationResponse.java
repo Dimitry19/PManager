@@ -1,13 +1,14 @@
 package cm.travelpost.tp.ws.responses.authentication;
 
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.user.ent.vo.UserInfo;
-import cm.travelpost.tp.user.ent.vo.UserVO;
 
 
-public class AuthenticationResponse extends UserVO {
+public class AuthenticationResponse extends WSCommonResponseVO {
 
 	private String accessToken;
 	private boolean authenticated;
+	private String message;
 
 
 	public AuthenticationResponse() {
@@ -33,5 +34,7 @@ public class AuthenticationResponse extends UserVO {
 	public void setAuthenticated(boolean authenticated) {
 		this.authenticated = authenticated;
 	}
+
+
 
 }
