@@ -37,11 +37,14 @@ public class WSConstants extends CommonProperties {
     public static final String AUTHENTICATION_WS = "/ws/authentication/*";
     public static final String AUTHENTICATION_WS_REGISTRATION = "/register";
     public static final String AUTHENTICATION_WS_VERIFICATION = "/verify";
+    public static final String AUTHENTICATION_WS_QRCODE = "/qrCode";
+
 
 
     /************ USER REQUEST*************/
     public static final String USER_WS = "/ws/user/*";
 
+    public static final String USER_WS_MANAGE_MFA = "/mfauth";
     public static final String USER_WS_CONFIRMATION = "/confirm";
     public static final String USER_WS_LOGIN = "/authenticate";
     public static final String USER_WS_USERS = "/users";
@@ -57,7 +60,7 @@ public class WSConstants extends CommonProperties {
     public static final String COMMUNICATIONS_WS = "/communications/{userId}";
     public static final String U_MESSAGES_WS = "/messages/{userId}";
     public static final String U_NOTIFICATIONS_WS = "/notifications/{userId}";
-    public static final String ENABLE_NOTIFICATION_WS = "/notification";
+    public static final String MANAGE_NOTIFICATION_WS = "/notification";
 
     public static final String USER_ADD_SUBSCRIPTION_WS = "/subscriptions/add";
     public static final String USER_ADD_SUBSCRIBER_WS = "/subscribers/add";
@@ -109,6 +112,7 @@ public class WSConstants extends CommonProperties {
     /************ NOTIFICATION REQUEST*************/
     public static final String NOTIFICATION_WS = "/ws/notification/*";
     public static final String NOTIFICATIION_WS_BY_ID = "/notification";
+    public static final String NOTIFICATIIONS_WS_READ_ALL = "/readallnotification";
 
     /************ SOCKET NOTIFICATION REQUEST*************/
     public static final String SOCKET_NOTIFICATION_WS = "/ws/socket/notification/*";

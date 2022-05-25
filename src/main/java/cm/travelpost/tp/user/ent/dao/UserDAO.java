@@ -19,14 +19,11 @@ public interface UserDAO extends CommonDAO {
 
     UserVO findByOnlyUsername(String username, boolean isRegistration) throws Exception;
 
-
-
     List<UserVO> search(UserSeachDTO userSeachDTO, PageBy pageBy) throws BusinessResourceException;
 
     UserVO findByToken(String token) throws Exception;
 
     UserVO findById(Long userId) throws UserException;
-
 
     UserVO login(String username) throws UserException;
 
@@ -83,6 +80,8 @@ public interface UserDAO extends CommonDAO {
     boolean checkLogin(LoginDTO lr) throws Exception;
 
     UserVO manageNotification(Long userId, boolean enableNotification) throws UserException;
+
+    UserVO manageMfa(Long userId, boolean mfa) throws UserException;
 
     boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException;
 

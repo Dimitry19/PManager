@@ -16,8 +16,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ import static cm.travelpost.tp.administrator.ent.enums.DashBoardObjectType.AIRLI
 @Api(value = "Dashboard-service", description = "Dashboard admin Operations")
 public class DashboardController extends CommonController {
 
- 	protected final Log logger = LogFactory.getLog(DashboardController.class);
+	protected final Logger logger = LoggerFactory.getLogger(DashboardController.class);
 
 	 public final static String LA_COMPAGNIE_AERIENNE ="La compagnie aerienne";
 	/**
@@ -100,8 +100,8 @@ public class DashboardController extends CommonController {
 			finishOpentracingSpan();
 		}
 		WSCommonResponseVO wsCommonResponse = new WSCommonResponseVO();
-		wsCommonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "L'element"));
 		wsCommonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+		wsCommonResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, "L'element"));
 		return  new ResponseEntity<>(wsCommonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 
 	}
@@ -149,7 +149,7 @@ public class DashboardController extends CommonController {
 			}else {
 				WSCommonResponseVO  commonResponse = new WSCommonResponseVO();
 				commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-				commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, getMessage(dto.getObjectType())));
+				commonResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, getMessage(dto.getObjectType())));
 				return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
 			}
 		} catch (DashboardException e) {
@@ -204,13 +204,11 @@ public class DashboardController extends CommonController {
 					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La ville"));
 					return new ResponseEntity<>(pmResponse, HttpStatus.OK);
 			}
-
-
 			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-			pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, o));
+			pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, o));
 			return new ResponseEntity<>(pmResponse, HttpStatus.METHOD_NOT_ALLOWED);
 		} catch (Exception e) {
-			logger.error("Erreur durant l'elimination de l'element avec id" +o+"", e);
+			logger.error("Erreur durant l'elimination de element avec id {} - {}", o, e);
 			throw e;
 		} finally {
 			finishOpentracingSpan();

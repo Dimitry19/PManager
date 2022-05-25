@@ -8,6 +8,15 @@ import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.iv.RandomIvGenerator;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 
 @SpringBootTest
@@ -17,10 +26,11 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
 
 
 
-    public  static void main(String[] args) {
+    public  static void main(String[] args) throws MessagingException {
 
        //SpringApplication.run(TravelPostApplicationDemo.class, args);
         secure();
+        sendMailSendGridSmtp();
     }
 
 
@@ -52,16 +62,74 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
         //encryptor.setConfig(config);
 
 
-        //System.out.println("sa :"+encryptor.encrypt("jeanclaudecarlos"));
-        System.out.println(":"+encryptor.encrypt("x-amz-security-token"));
-      //  System.out.println("+19379143415 :"+encryptor.encrypt("+19379143415"));
+        System.out.println("sa :"+encryptor.encrypt("travelpostservices@gmail.com"));
+        //System.out.println(":"+encryptor.encrypt("apikey"));
+        System.out.println("Decrypt :"+encryptor.decrypt("gfrdM8DgU+ydD/1/rDqbo3DYOmJgArx9C/qWbMtAx3c3jdwqwWblQBf6N0UpgWc7"));
+
+    }
+
+    public  static void  sendMailSendGridSmtp() throws MessagingException {
+
+        JavaMailSenderImpl jms= loadProperties();
+
+        MimeMessage msg = jms.createMimeMessage();
+
+        // true = multipart message
+        MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+
+        helper.setTo("dimipasc@yahoo.fr");
+
+        helper.setSubject("Testing from Spring Boot");
+
+        //  default = text/plain
+        //helper.setText("Check attachment for image!");
+
+        // true = text/html
+        helper.setText("<h1>Check attachment for image!</h1>", true);
+
+        // hard coded a file path
+        //FileSystemResource file = new FileSystemResource(new File("path/android.png"));
+
+        helper.addAttachment("my_photo.png", new ClassPathResource("android.png"));
+        msg.setSubject("test");
+        msg.setHeader("From", "dimipasc@hotmail.com");
+        msg.setText("Sendgrid mail sender");
+        msg.setRecipient(Message.RecipientType.TO, new InternetAddress("dimipasc@yahoo.fr"));
+        jms.send(msg);
+
+
 
     }
 
 
     @Override
     public void run(String... args) throws Exception {
-        secure();
+        //secure();
+        sendMailSendGridSmtp();
+    }
+
+
+    protected static JavaMailSenderImpl loadProperties() {
+
+        JavaMailSenderImpl jms = new JavaMailSenderImpl();
+        Properties mailProp = jms.getJavaMailProperties();
+        //session = Session.getDefaultInstance(mailProp, new MailUtils.SMTPAuthenticator(ADMIN_USERNAME,ADMIN_PASS));
+
+        jms.setHost("smtp.sendgrid.net");
+        jms.setPort(25);
+        jms.setUsername("apikey");
+        jms.setPassword("");
+
+        mailProp.put("mail.transport.protocol",  "smtp");
+        mailProp.put("mail.smtp.auth", true);
+        mailProp.put("mail.smtp.starttls.enable", true);
+        mailProp.put("mail.smtp.starttls.required", true);
+        mailProp.put("mail.debug", true);
+        mailProp.put("mail.smtp.ssl.enable",false);
+        jms.setJavaMailProperties(mailProp);
+
+      return jms;
+
     }
 
 }

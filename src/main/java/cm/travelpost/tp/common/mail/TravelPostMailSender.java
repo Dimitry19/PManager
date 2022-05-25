@@ -23,9 +23,9 @@ import java.util.Properties;
 
 
 @Component("personalMailSender")
-public class PersonalMailSender extends CommonMailSenderService{
+public class TravelPostMailSender extends CommonMailSenderService{
 
-	private Logger logger = LoggerFactory.getLogger(PersonalMailSender.class);
+	private Logger logger = LoggerFactory.getLogger(TravelPostMailSender.class);
 
 	public static final String TEXT_PLAIN = "text/plain";
 
@@ -55,7 +55,7 @@ public class PersonalMailSender extends CommonMailSenderService{
 	protected boolean SSL_ENABLED;
 
 	@Value("${mail.admin.username}")
-	protected String ADMIN_USERNAME;
+	protected String appEmail;
 
 	@Value("${mail.admin.password}")
 	protected String ADMIN_PASS;
@@ -69,9 +69,6 @@ public class PersonalMailSender extends CommonMailSenderService{
 
 	private JavaMailSenderImpl jms;
 
-
-
-
 	public String getDefaultContactUs() {
 		return defaultContactUs;
 	}
@@ -80,7 +77,7 @@ public class PersonalMailSender extends CommonMailSenderService{
 		this.jms = jms;
 	}
 
-	public PersonalMailSender(){
+	public TravelPostMailSender(){
 
 	}
 
@@ -103,7 +100,7 @@ public class PersonalMailSender extends CommonMailSenderService{
 
 		jms.setHost(HOST);
 		jms.setPort(PORT);
-		jms.setUsername(ADMIN_USERNAME);
+		jms.setUsername(appEmail);
 		jms.setPassword(ADMIN_PASS);
 
 		mailProp.put("mail.transport.protocol",  PROTOCOL);

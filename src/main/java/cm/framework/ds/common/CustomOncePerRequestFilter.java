@@ -53,6 +53,7 @@ public abstract class CustomOncePerRequestFilter  extends OncePerRequestFilter  
 
 	@Value("${tp.travelpost.postman.enable}")
 	protected boolean postman;
+
 	@Value("${tp.travelpost.active.session.filter.enable}")
 	protected boolean enableFilter;
 

@@ -2,7 +2,8 @@ package cm.travelpost.tp.common.mail.sendgrid;
 
 
 import cm.travelpost.tp.common.Constants;
-import cm.travelpost.tp.common.mail.PersonalMailSender;
+import cm.travelpost.tp.common.mail.CommonMailSenderService;
+import cm.travelpost.tp.common.mail.TravelPostMailSender;
 import cm.travelpost.tp.common.mail.ent.vo.ContactUSVO;
 import cm.travelpost.tp.common.utils.MailUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
@@ -11,10 +12,14 @@ import com.sendgrid.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -26,18 +31,13 @@ import java.util.*;
 /*https://github.com/sendgrid/sendgrid-java/*/
 
 @Service
-public class MailSenderSendGrid{
+@PropertySource("classpath:sendgrid.properties")
+public class MailSenderSendGrid extends CommonMailSenderService {
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(MailSenderSendGrid.class);
 
-    String EmailSendAddresses = null;
-
-    String EmailSendAddressesCC = null;
-
-    String EmailSendAddressesBCC = null;
-
     @Autowired
-    PersonalMailSender personalMailSender;
+    TravelPostMailSender personalMailSender;
 
 
     @Value("${sendgrid.mail.sender.user}")
@@ -57,10 +57,95 @@ public class MailSenderSendGrid{
 
     @Value("${sendgrid.api.key}")
     private String SENDGRID_API_KEY;
+    private String SENDGRID_END_POINT = "mail/send";
 
+    String EmailSendAddresses = null;
+
+    String EmailSendAddressesCC = null;
+
+    String EmailSendAddressesBCC = null;
+
+
+    //SMTP CONFIG
+
+    @Value("${sendgrid.smtp.relay.server}")
+    protected String host;
+
+    @Value("${sendgrid.smtp.relay.port.unencrypted.tls.connection.25}")
+    protected int  port25;
+
+    @Value("${sendgrid.smtp.relay.port.unencrypted.tls.connection.587}")
+    protected int  port587;
+
+    @Value("${sendgrid.smtp.relay.port.ssl.connection}")
+    protected int  port465;
+
+    @Value("${sendgrid.smtp.relay.username}")
+    protected String smtpUsername;
+
+    @Value("${sendgrid.smtp.relay.password}")
+    protected String smtpPassword;
+
+    @Value("${sendgrid.mail.transport.protocol}")
+    protected String smtpProtocol;
+
+    @Value("${sendgrid.mail.smtp.auth}")
+    protected String smtpAuth;
+    @Value("${sendgrid.mail.smtp.starttls.enable}")
+    protected boolean enableTls;
+
+    @Value("${sendgrid.mail.smtp.starttls.required}")
+    protected boolean requiredTls;
+
+    @Value("${sendgrid.mail.debug}")
+    protected boolean enableDebug;
+
+    @Value("${sendgrid.mail.smtp.ssl.enable}")
+    protected boolean enableSsl;
+
+    private JavaMailSenderImpl jms;
+    private void setJms(JavaMailSenderImpl jms) {
+        this.jms = jms;
+    }
+
+    public JavaMailSenderImpl getJms(){
+        return this.jms;
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("Sendgrid Mail service starts....");
+        loadProperties();
+    }
 
     public MailSenderSendGrid() {
 
+    }
+    protected void loadProperties() {
+
+    JavaMailSenderImpl jms = new JavaMailSenderImpl();
+    Properties mailProp = jms.getJavaMailProperties();
+    //session = Session.getDefaultInstance(mailProp, new MailUtils.SMTPAuthenticator(ADMIN_USERNAME,ADMIN_PASS));
+
+		jms.setHost(host);
+		jms.setPort(port25);
+		jms.setUsername(smtpUsername);
+		jms.setPassword(smtpPassword);
+
+		mailProp.put("mail.transport.protocol",  smtpProtocol);
+		mailProp.put("mail.smtp.auth", smtpAuth);
+		mailProp.put("mail.smtp.starttls.enable", enableTls);
+		mailProp.put("mail.smtp.starttls.required", requiredTls);
+		mailProp.put("mail.debug", enableDebug);
+		mailProp.put("mail.smtp.ssl.enable",enableSsl);
+		jms.setJavaMailProperties(mailProp);
+
+        setJms(jms);
+
+}
+
+    public void send(SimpleMailMessage mail){
+        jms.send(mail);
     }
 
 
@@ -321,13 +406,14 @@ public class MailSenderSendGrid{
         final SendGrid sg = new SendGrid(SENDGRID_API_KEY);
         final Request request = new Request();
         request.setMethod(Method.POST);
-        request.setEndpoint("mail/send");
+        request.setEndpoint(SENDGRID_END_POINT);
         request.setBody(mail.build());
 
         final Response response = sg.api(request);
         return response;
 
     }
+
 
 
     void testRemoveDomain() throws IOException {

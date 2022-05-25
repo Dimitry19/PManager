@@ -30,7 +30,7 @@ public class NotificationVO extends CommonVO {
 
     private static final long serialVersionUID = 6473029882566244786L;
 
-
+    public static String byStatusNativeQuery=" select n.* from notification as n where n.status =";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

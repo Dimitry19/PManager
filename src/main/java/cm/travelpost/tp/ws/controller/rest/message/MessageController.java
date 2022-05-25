@@ -55,7 +55,10 @@ public class MessageController extends CommonController {
                     message.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, COMMENT_LABEL));
                     return new ResponseEntity<>(message, headers, HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<>(null, headers, HttpStatus.NOT_FOUND);
+                    message = new MessageVO();
+                    message.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    message.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, COMMENT_LABEL));
+                    return new ResponseEntity<>(message, headers, HttpStatus.NOT_FOUND);
                 }
             }
         } catch (Exception e) {
@@ -79,11 +82,11 @@ public class MessageController extends CommonController {
             MessageVO message = messageService.update(umr);
             if (message != null) {
                 message.setRetCode(WebServiceResponseCode.OK_CODE);
-                message.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, "Le commentaire"));
+                message.setRetDescription(MessageFormat.format(WebServiceResponseCode.UPDATED_LABEL, COMMENT_LABEL));
             } else {
                 message = new MessageVO();
                 message.setRetCode(WebServiceResponseCode.NOK_CODE);
-                message.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, "Le commentaire"));
+                message.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, COMMENT_LABEL));
             }
             return message;
         } catch (Exception e) {
@@ -124,7 +127,7 @@ public class MessageController extends CommonController {
                 return getPaginateResponseResponseEntity(headers,paginateResponse,count,messages);
             }else{
                 paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+                paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
             }
         } catch (Exception e) {
             logger.error("MessageController- error {}", e);
@@ -166,7 +169,7 @@ public class MessageController extends CommonController {
                 return getPaginateResponseResponseEntity(headers,paginateResponse,count,messages);
             }else{
                 paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+                paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
             }
         } catch (Exception e) {
             logger.error("MessageController- error {}", e);
