@@ -317,7 +317,7 @@ public class UserVO extends CommonVO {
     }
 
 
-    @Basic(optional = false)
+    @Basic(optional = true)
     @Column(name = "MFA_SECRET")
     @JsonIgnore
     public String getSecret() {

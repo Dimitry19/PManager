@@ -275,9 +275,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setConfirmationToken(UUID.randomUUID().toString());
             user.setCountry(register.getCountry());
             user.setCity(register.getCity());
-
-            user.setMultipleFactorAuthentication(Boolean.TRUE);
-            user.setSecret(secretGenerator.generate());
             Long id=(Long)save(user);
             user=findById(id);
             setRole(user, register.getRole());

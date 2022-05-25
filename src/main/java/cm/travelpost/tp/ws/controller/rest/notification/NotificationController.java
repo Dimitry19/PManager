@@ -11,10 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,8 +58,8 @@ public class  NotificationController extends CommonController {
     }
 
     @ApiOperation(value = "Read all notifications with an ID", response = Object.class)
-    @GetMapping(value = NOTIFICATIIONS_WS_READ_ALL, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<Object> readAll(HttpServletResponse response, HttpServletRequest request, @RequestParam List<Long> ids) throws Exception {
+    @PostMapping(value = NOTIFICATIIONS_WS_READ_ALL, headers = WSConstants.HEADER_ACCEPT)
+    public ResponseEntity<Object> readAll(HttpServletResponse response, HttpServletRequest request, @RequestBody List<Long> ids) throws Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
