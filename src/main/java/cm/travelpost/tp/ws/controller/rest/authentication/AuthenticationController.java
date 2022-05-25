@@ -38,6 +38,10 @@ import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
 
 import static cm.travelpost.tp.common.Constants.TP_ACTIVATE_ACCOUNT;
+import static cm.travelpost.tp.ws.controller.rest.CommonController.ACCESS_CONTROL_ALLOW_ORIGIN;
+import static cm.travelpost.tp.ws.controller.rest.CommonController.ACCESS_CONTROL_ALLOW_ORIGIN;
+import static cm.travelpost.tp.ws.controller.rest.CommonController.ACCESS_CONTROL_ALLOW_ORIGIN_VALUE;
+import static cm.travelpost.tp.ws.controller.rest.CommonController.ACCESS_CONTROL_ALLOW_ORIGIN_VALUE;
 
 
 @RestController
