@@ -204,12 +204,12 @@ create table TP_AUTHENTICATION
     ID BIGINT auto_increment,
     ATTEMPT INTEGER not null,
     DESACTIVATE BOOLEAN not null,
-    R_USER_ID BIGINT,
+    USER_ID BIGINT,
     CANCELLED BOOLEAN not null,
     DATECREATED TIMESTAMP,
     LASTUPDATED TIMESTAMP,
     constraint FKJNCOUJR31O2JK1YQY9F6NFPFJ
-        foreign key (R_USER_ID) references TP_USER (ID)
+        foreign key (USER_ID) references TP_USER (ID)
 );
 
 drop table IF EXISTS  TP_USER;

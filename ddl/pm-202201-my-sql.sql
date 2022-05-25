@@ -202,11 +202,11 @@ create table tp_authentication
     ID BIGINT auto_increment,
     ATTEMPT INTEGER not null,
     DESACTIVATE BOOLEAN not null,
-    R_USER_ID BIGINT,
+    USER_ID BIGINT,
     CANCELLED BOOLEAN not null,
     DATECREATED TIMESTAMP,
     LASTUPDATED TIMESTAMP,
-    foreign key (R_USER_ID) references TP_USER (ID)
+    foreign key (USER_ID) references TP_USER (ID)
 );
 
 create table tp_user
