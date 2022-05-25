@@ -112,6 +112,7 @@ public class WSConstants extends CommonProperties {
     /************ NOTIFICATION REQUEST*************/
     public static final String NOTIFICATION_WS = "/ws/notification/*";
     public static final String NOTIFICATIION_WS_BY_ID = "/notification";
+    public static final String NOTIFICATIIONS_WS_READ_ALL = "/readallnotification";
 
     /************ SOCKET NOTIFICATION REQUEST*************/
     public static final String SOCKET_NOTIFICATION_WS = "/ws/socket/notification/*";

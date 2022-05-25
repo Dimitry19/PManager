@@ -61,6 +61,12 @@ public class HibernateConfiguration  extends CommonSecurityResource {
     @Value("${hibernate.enable_lazy_load_no_trans}")
     private boolean enableLazyTrans;
 
+    @Value("${hibernate.order_updates}")
+    private boolean orderUpdates;
+
+    @Value("${hibernate.batch_versioned_data}")
+    private boolean batchVersionedData;
+
 
     @Value("${connection.pool_size}")
     private int poolSize;
@@ -98,6 +104,11 @@ public class HibernateConfiguration  extends CommonSecurityResource {
         hibernateProperties.put("connection.pool_size", poolSize);
         hibernateProperties.put("transaction.factory_class", transactionFactoryClass);
         hibernateProperties.put("current_session_context_class", currentSessionContextClass);
+
+
+        hibernateProperties.put("hibernate.order_updates", orderUpdates);
+        hibernateProperties.put("hibernate.batch_versioned_data", batchVersionedData);
+
 
         sessionFactory.setHibernateProperties(hibernateProperties);
         return sessionFactory;

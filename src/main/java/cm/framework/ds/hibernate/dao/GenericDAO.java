@@ -1,12 +1,12 @@
 package cm.framework.ds.hibernate.dao;
 
 import cm.framework.ds.common.ent.vo.PageBy;
-import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.event.IEvent;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
 import cm.travelpost.tp.rating.ent.vo.RatingCountVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
+import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +15,10 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 public interface GenericDAO<T, ID extends Serializable, NID extends Serializable>  extends  IEvent {
 
+    Session getCurrentSession();
     List autocomplete(String namedQuery,ID search,boolean caseInsensitive);
 
     Optional<T> find(Class<T> clazz, ID id);
@@ -60,12 +60,6 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 	List<T> all(Class<T> clazz) throws Exception;
 
     List<T> all(Class<T> clazz, PageBy pageBy, String... filters) throws Exception;
-
-    @Transactional(readOnly = true)
-    List<T> findByStatus(Class<T> clazz, PageBy pageBy);
-
-    @Transactional(readOnly = true)
-    List<T> findByStatus(Class<T> clazz, PageBy pageBy, Set<StatusEnum> states);
 
     List<T> allAndOrderBy(Class<T> clazz, String field, boolean desc, PageBy pageBy) throws Exception;
 
@@ -136,6 +130,4 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     Query search(String sqlQuery, String where,String... filters);
     Query search(String sqlQuery,String... filters);
 
-    void fillCompletedStatus();
-    void fillValidStatus();
 }

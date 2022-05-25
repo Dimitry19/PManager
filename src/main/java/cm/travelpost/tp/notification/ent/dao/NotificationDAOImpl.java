@@ -10,8 +10,12 @@ import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.UserException;
+import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,34 +30,41 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
 
     @Override
     public List<NotificationVO> notificationToSend(PageBy pageBy) throws Exception {
-
-        fillValidStatus();
-        return findByStatus(NotificationVO.class, pageBy);
-
+        return findByStatus(StatusEnum.VALID);
     }
 
     @Override
-    public NotificationVO read(Long id) throws Exception {
-         NotificationVO notification=(NotificationVO) findById(NotificationVO.class,id);
+    public NotificationVO read(Long id)  {
+        NotificationVO notification=(NotificationVO) findById(NotificationVO.class,id);
 
-         if(notification==null){
-             return null;
-         }
-         notification.setStatus(StatusEnum.COMPLETED);
-         update(notification);
+        if(notification==null){
+            return null;
+        }
+        notification.setStatus(StatusEnum.COMPLETED);
+        update(notification);
         return notification;
+    }
+
+    @Override
+    public  void readAll(List<Long> ids)  {
+        if (CollectionsUtils.isNotEmpty(ids)){
+           ids.stream().filter(id->findById(NotificationVO.class, id)!=null)
+                .forEach(id->{
+                      NotificationVO notification = (NotificationVO) findById(NotificationVO.class, id);
+                      notification.setStatus(StatusEnum.COMPLETED);
+            } );
+        }
     }
 
 
     @Override
     public void deleteOldCompletedNotifications() throws Exception {
 
-    /*    fillCompletedStatus();
-        List<NotificationVO> notifications= findByStatus(NotificationVO.class, null);
+        List<NotificationVO> notifications= findByStatus(StatusEnum.COMPLETED);
 
          if(CollectionsUtils.isNotEmpty(notifications)){
-           notifications.stream().forEach(n ->updateDelete(n) );
-        }*/
+           notifications.stream().forEach(this::delete);
+        }
     }
 
     @Override
@@ -67,5 +78,17 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
         }
 
         return Boolean.TRUE;
+    }
+    @Transactional(readOnly = true)
+    protected List<NotificationVO> findByStatus(StatusEnum status) throws Exception{
+        StringBuilder queryBuilder = new StringBuilder(NotificationVO.byStatusNativeQuery);
+        Session session = getCurrentSession();
+        queryBuilder.append(APPLICE);
+        queryBuilder.append(status.name());
+        queryBuilder.append(APPLICE);
+
+        Query query = session.createNativeQuery(queryBuilder.toString()).addEntity(NotificationVO.class);
+
+        return query.getResultList();
     }
 }

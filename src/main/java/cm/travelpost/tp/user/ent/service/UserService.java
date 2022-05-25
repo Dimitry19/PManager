@@ -27,6 +27,8 @@ public interface UserService {
 
     AuthenticationVO checkAttempt(String username) throws Exception;
 
+    void resetUserAuthentication(String username) throws Exception;
+
     UserInfo enableMFA(LoginDTO lr) throws Exception;
 
     UserInfo checkMFA(LoginDTO lr) throws Exception;

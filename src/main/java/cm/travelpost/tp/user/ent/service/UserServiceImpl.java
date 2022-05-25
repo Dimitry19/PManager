@@ -162,6 +162,17 @@ public class UserServiceImpl implements UserService {
         return authentication;
     }
 
+    @Override
+    public void resetUserAuthentication(String username) throws Exception {
+
+        UserVO  user = findByUsername(username);
+        if(user.getAuthentication()!=null){
+            user.getAuthentication().setAttempt(0);
+            user.getAuthentication().setDesactivate(Boolean.FALSE);
+            update(user);
+        }
+    }
+
     public UserInfo enableMFA(LoginDTO lr) throws Exception {
 
         UserVO user = login(lr);

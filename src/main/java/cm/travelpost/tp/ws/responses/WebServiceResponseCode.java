@@ -34,6 +34,7 @@ public class WebServiceResponseCode {
     public static final String UPDATED_RESERV_LABEL = "La reservation été correctement {0}";
 
     public static final String READ_CODE_LABEL = "{0} déjà lu(e)";
+    public static final String READ_ALL_CODE_LABEL = " Notifications lues";
 
     public static final String MFA_ENABLE_OK_LABEL = "L'authentification à deux facteurs activée ";
     public static final String MFA_DISABLE_OK_LABEL = "L'authentification à deux facteurs desactivée ";

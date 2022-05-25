@@ -2,7 +2,6 @@ package cm.travelpost.tp.ws.controller.rest.authentication;
 
 
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
-import cm.travelpost.tp.common.exception.UserNotFoundException;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.security.PasswordGenerator;
@@ -205,17 +204,13 @@ public class AuthenticationController extends CommonController {
                 if(BooleanUtils.isTrue(mfaEnabled)){
 
                     AuthenticationVO authentication = userService.checkAttempt(login.getUsername());
-                    if(authentication !=null){
-                        if(BooleanUtils.isTrue(authentication.isDesactivate())) {
+                    if(authentication !=null && BooleanUtils.isTrue(authentication.isDesactivate())) {
                             return getResponseLoginErrorResponseEntity(MessageFormat.format(WebServiceResponseCode.ERROR_LOGIN_ATTEMPT_KO_LABEL,attemptLimit, defaultContactUs));
-                        }
                     }
                     user = userService.findByUsername(login.getUsername());
                     if (user != null) {
                         user.setRetCode(WebServiceResponseCode.LOGIN_MFA_ENABLED);
-                        user.getAuthentication().setAttempt(0);
-                        user.getAuthentication().setDesactivate(Boolean.FALSE);
-                        userService.update(user);
+                        userService.resetUserAuthentication(login.getUsername());
                         return new ResponseEntity<>(user, HttpStatus.OK);
                     }
                 }
@@ -233,26 +228,14 @@ public class AuthenticationController extends CommonController {
                     pmResponse.setSecretImageUri(qrCodeImage);
                     pmResponse.setRetCode(WebServiceResponseCode.QR_CODE_MFA_ENABLED);
                     pmResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
-
-                    user = userService.findByUsername(login.getUsername());
-                    if(user.getAuthentication()==null){
-                        user.setAuthentication(new AuthenticationVO());
-                    }
-                    user.getAuthentication().setAttempt(0);
-                    user.getAuthentication().setDesactivate(Boolean.FALSE);
-                    userService.update(user);
+                    userService.resetUserAuthentication(login.getUsername());
                     return new ResponseEntity<>(pmResponse, HttpStatus.OK);
                 }else{
                     user = userService.login(login);
 
                     if(user != null) {
                         user.setRetCode(WebServiceResponseCode.OK_CODE);
-                        if(user.getAuthentication()==null){
-                            user.setAuthentication(new AuthenticationVO());
-                        }
-                        user.getAuthentication().setAttempt(0);
-                        user.getAuthentication().setDesactivate(Boolean.FALSE);
-                        userService.update(user);
+                        userService.resetUserAuthentication(login.getUsername());
                         return new ResponseEntity<>(user, HttpStatus.OK);
                     }
                 }
@@ -323,12 +306,7 @@ public class AuthenticationController extends CommonController {
                 user.setRetCode(WebServiceResponseCode.OK_CODE);
                 user.setRetDescription(WebServiceResponseCode.LOGIN_OK_LABEL);
 
-                if(user.getAuthentication()==null){
-                    user.setAuthentication(new AuthenticationVO());
-                }
-                user.getAuthentication().setAttempt(0);
-                user.getAuthentication().setDesactivate(Boolean.FALSE);
-                userService.update(user);
+                userService.resetUserAuthentication(user.getUsername());
                 cookie(response,user.getUsername(),user.getPassword());
                 return ResponseEntity.ok(user);
         } catch (Exception e) {
@@ -400,9 +378,9 @@ public class AuthenticationController extends CommonController {
        }else{
            pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
            pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
-           return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+
        }
-       throw new UserNotFoundException(WebServiceResponseCode.ERROR_LOGOUT_LABEL);
+        return new ResponseEntity<>(pmResponse, HttpStatus.OK);
     }
 
     private void  cookie(HttpServletResponse response,String username, String password){

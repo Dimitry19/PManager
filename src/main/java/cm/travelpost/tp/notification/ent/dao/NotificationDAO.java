@@ -18,7 +18,9 @@ public interface NotificationDAO extends CommonDAO {
 
     List<NotificationVO> notificationToSend(PageBy pageBy) throws Exception;
 
-    NotificationVO read(Long id) throws Exception;
+    NotificationVO read(Long id) ;
+
+    void readAll(List<Long> ids) ;
 
    void  deleteOldCompletedNotifications() throws Exception;
 }
