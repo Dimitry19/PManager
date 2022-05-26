@@ -1,7 +1,7 @@
 package cm.travelpost.tp.common.mail.ent.service;
 
 import cm.travelpost.tp.common.mail.CommonMailSenderService;
-import cm.travelpost.tp.common.mail.PersonalMailSender;
+import cm.travelpost.tp.common.mail.TravelPostMailSender;
 import cm.travelpost.tp.common.mail.ent.vo.ContactUSVO;
 import cm.travelpost.tp.common.mail.ent.wrapper.MailWrapper;
 import com.sun.mail.smtp.SMTPSendFailedException;
@@ -37,7 +37,7 @@ public class IGoogleMailSenderServiceImpl extends CommonMailSenderService implem
 	protected final Log log = LogFactory.getLog(IGoogleMailSenderServiceImpl.class);
 
 	@Autowired
-	private PersonalMailSender personalMailSender;
+	private TravelPostMailSender personalMailSender;
 
 	@Override
 	public void sendMail() {

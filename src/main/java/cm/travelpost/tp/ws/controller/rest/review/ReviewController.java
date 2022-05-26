@@ -73,7 +73,7 @@ public class ReviewController extends CommonController {
             } else {
                 review = new ReviewVO();
                 review.setRetCode(WebServiceResponseCode.NOK_CODE);
-                review.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, REVIEW_LABEL));
+                review.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, REVIEW_LABEL));
 
             }
             return review;
@@ -107,18 +107,16 @@ public class ReviewController extends CommonController {
             if (id != null) {
                 if (userService.deleteReview(id)) {
                     pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_LABEL);
                     pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, REVIEW_LABEL));
 
                 } else {
                     pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.ERROR_DELETE_LABEL);
-                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, REVIEW_LABEL));
+                    pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, REVIEW_LABEL));
                 }
             }
         } catch (Exception e) {
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setRetDescription(e.getMessage());
+            pmResponse.setMessage(e.getMessage());
             logger.error("delete  review  error ", e);
             throw e;
         } finally {

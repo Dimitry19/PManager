@@ -61,7 +61,7 @@ public class MailController extends CommonController {
 
             }else{
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,"Veuillez reessayez plutard , Merci!"));
+                pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,"Veuillez reessayez plutard , Merci!"));
                 response.setStatus(503);
                 return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
             }

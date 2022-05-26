@@ -56,7 +56,10 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
 
 
-    protected static final String SELECT_FROM = " select elt  FROM";
+    protected static final String SELECT_FROM = " select elt  FROM ";
+
+    protected static final String AS= " as ";
+    protected static final String ELT= "elt";
     protected static final String SELECT  = " select elt  ";
     protected static final String FROM = " FROM ";
     protected static final String DESC = " desc ";
@@ -66,6 +69,8 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String OR = " or ";
     protected static final String WHERE = " where ";
     protected static final String LIKE = " like ";
+
+    protected static final String APPLICE="'";
 
 
     protected static final String ANNOUNCE_TABLE_ALIAS = "a.";
@@ -122,6 +127,10 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected NotificatorServiceImpl notificatorServiceImpl;
 
 
+    @Override
+    public Session  getCurrentSession(){
+        return sessionFactory.getCurrentSession();
+    }
     @Override
     public List autocomplete(String namedQuery, ID search, boolean caseInsensitive) {
         return
@@ -365,20 +374,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     }
 
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<T> findByStatus(Class<T> clazz, PageBy pageBy){
 
-        return getStatus(clazz, pageBy, states);
-    }
-
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<T> findByStatus(Class<T> clazz, PageBy pageBy, final Set<StatusEnum> states) {
-
-        return getStatus((Class<T>) clazz, pageBy, states);
-    }
 
     @Override
     @Transactional(readOnly = true)
@@ -863,35 +859,5 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         for (String filter : filters) {
             session.enableFilter(filter);
         }
-    }
-
-    private List<T> getStatus(Class<T> clazz, PageBy pageBy, Set<StatusEnum> states) {
-        StringBuilder queryBuilder = new StringBuilder(FROM);
-        queryBuilder.append(clazz.getName());
-        Session session = this.sessionFactory.getCurrentSession();
-
-        List<String> statusStr = new ArrayList();
-        for(StatusEnum status : states){
-            statusStr.add(status.name());
-        }
-
-
-        session.enableFilter(FilterConstants.STATUS).setParameterList(STATUS_PARAM,statusStr);
-
-        Query query = session.createQuery(queryBuilder.toString(), clazz);
-        pageBy(query, pageBy);
-        return query.getResultList();
-    }
-
-    @Override
-    public void fillCompletedStatus(){
-        states.clear();
-        states.add(StatusEnum.COMPLETED);
-    }
-
-    @Override
-    public void fillValidStatus(){
-        states.clear();
-        states.add(StatusEnum.VALID);
     }
 }

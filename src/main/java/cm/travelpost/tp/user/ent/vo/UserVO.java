@@ -2,6 +2,7 @@ package cm.travelpost.tp.user.ent.vo;
 
 import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
+import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.enums.Gender;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
@@ -54,7 +55,6 @@ import static org.hibernate.annotations.FetchMode.SELECT;
 @Filters({
         @Filter(name = FilterConstants.CANCELLED),
         @Filter(name = FilterConstants.ACTIVE_MBR)
-        //@Filter(name = FilterConstants.ACTIVE_MBR_WORK)
 })
 @Where(clause = FilterConstants.FILTER_WHERE_USER_CANCELLED)
 public class UserVO extends CommonVO {
@@ -62,7 +62,7 @@ public class UserVO extends CommonVO {
 
     private static final long serialVersionUID = 6181438160768077660L;
 
-    public static final String FIND_BY_ID = "cm.travelpost.tp.user.ent.vo.UserVO.<findById>";
+    public static final String FIND_BY_ID = "cm.travelpost.tp.user.ent.vo.UserVO.findById";
     public static final String Q_AC_ITEM = "cm.travelpost.tp.user.ent.vo.UserVO.QAutocompleteItem";
     public static final String ALL = "cm.travelpost.tp.user.ent.vo.UserVO.All";
     public static final String USERNAME = "cm.travelpost.tp.user.ent.vo.UserVO.findLikeId";
@@ -130,9 +130,7 @@ public class UserVO extends CommonVO {
 
     private boolean authenticated;
 
-    private String city;
-
-    private String country;
+    private AuthenticationVO authentication;
 
 
     public UserVO() {
@@ -265,7 +263,7 @@ public class UserVO extends CommonVO {
         return announces;
     }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "R_USER"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     public Set<RoleVO> getRoles() {
         return roles;
@@ -274,6 +272,7 @@ public class UserVO extends CommonVO {
     @Access(AccessType.PROPERTY)
     @Fetch(value = SELECT)
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     public Set<ReviewVO> getReviews() {
         return reviews;
     }
@@ -309,7 +308,6 @@ public class UserVO extends CommonVO {
 
     @Basic(optional = false)
     @Column(name = "MULTIPLE_FACTOR_AUTH")
-    @JsonIgnore
     public boolean isMultipleFactorAuthentication() {
         return multipleFactorAuthentication;
     }
@@ -320,6 +318,12 @@ public class UserVO extends CommonVO {
     @JsonIgnore
     public String getSecret() {
         return secret;
+    }
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    public AuthenticationVO getAuthentication() {
+        return authentication;
     }
 
 
@@ -335,14 +339,6 @@ public class UserVO extends CommonVO {
         return error;
     }
 
-    @Basic(optional = false)
-    @Column(name = "COUNTRY", nullable = false)
-    public String getCountry() {   return country;  }
-
-
-    @Basic(optional = false)
-    @Column(name = "CITY", nullable = false)
-    public String getCity() {  return city; }
 
     public void setSubscribers(Set<UserVO> subscribers) {
         this.subscribers = subscribers;
@@ -440,13 +436,11 @@ public class UserVO extends CommonVO {
 
     public void setMultipleFactorAuthentication(boolean multipleFactorAuthentication) {     this.multipleFactorAuthentication = multipleFactorAuthentication;  }
 
-    public void setCity(String city) { this.city = city; }
-
-    public void setCountry(String country) {  this.country = country;   }
-
     public void setSecret(String secret) {
         this.secret = secret;
     }
+    public void setAuthentication(AuthenticationVO authentication) {    this.authentication = authentication;  }
+
 
     public void addAnnounce(AnnounceMasterVO announce) {
         this.announces.add(announce);
@@ -647,8 +641,6 @@ public class UserVO extends CommonVO {
             return other.roles == null;
         } else return roles.equals(other.roles);
     }
-
-
 
     @Override
     public String toString() {

@@ -9,6 +9,8 @@ public class WSCommonResponseVO {
 
     private String retDescription;
 
+    private String message;
+
     @Transient
     public long getRetCode() {
         return retCode;
@@ -25,5 +27,13 @@ public class WSCommonResponseVO {
 
     public void setRetDescription(String retDescription) {
         this.retDescription = retDescription;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

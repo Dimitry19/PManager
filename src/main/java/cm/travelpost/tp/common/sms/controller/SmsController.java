@@ -137,7 +137,7 @@ public class SmsController extends CommonController {
 					return new ResponseEntity<Response>(tpResponse, HttpStatus.OK);
 				}
 				tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-				tpResponse.setRetDescription("failure otp");
+				tpResponse.setMessage("failure otp");
 				return new ResponseEntity<Response>(tpResponse, HttpStatus.UNAUTHORIZED);
 			}
 		} catch (Exception e) {

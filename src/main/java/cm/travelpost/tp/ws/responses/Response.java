@@ -1,6 +1,8 @@
 package cm.travelpost.tp.ws.responses;
 
-public class Response {
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
+
+public class Response  extends WSCommonResponseVO {
 
     private long retCode;
     private String retDescription;

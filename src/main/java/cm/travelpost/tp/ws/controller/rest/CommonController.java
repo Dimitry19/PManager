@@ -2,6 +2,7 @@ package cm.travelpost.tp.ws.controller.rest;
 
 import cm.framework.ds.common.authentication.service.AuthenticationService;
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.framework.ds.common.security.jwt.TokenProvider;
 import cm.travelpost.tp.airline.ent.service.AirlineService;
 import cm.travelpost.tp.announce.ent.service.AnnounceService;
@@ -103,7 +104,6 @@ public class CommonController  extends WSConstants {
     @Autowired
     protected AnnounceService announceService;
 
-
     @Autowired
     protected MailService mailService;
 
@@ -112,7 +112,6 @@ public class CommonController  extends WSConstants {
 
     @Autowired
     protected TokenProvider tokenProvider;
-
 
     @Autowired
     protected AuthenticationService authenticationService;
@@ -217,7 +216,7 @@ public class CommonController  extends WSConstants {
             paginateResponse.setResults(results);
             paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 
-            if(pageBy == null || (pageBy!=null && pageBy.getPage()==Integer.valueOf(DEFAULT_PAGE))){
+            if(pageBy == null ||  pageBy.getPage()==Integer.valueOf(DEFAULT_PAGE)){
                 paginateResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL,count));
             }
             headers.add(HEADER_TOTAL, Long.toString(results.size()));
@@ -246,9 +245,9 @@ public class CommonController  extends WSConstants {
     protected   ResponseEntity<Response> getResponseMailResponseEntity(Response pmResponse, Exception e, String message) {
         pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
         if(e instanceof MessagingException || e instanceof SMTPSendFailedException || e instanceof MailSendException){
-            pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,message));
+            pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,message));
         }else{
-            pmResponse.setRetDescription(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
+            pmResponse.setMessage(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
         }
         return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
     }
@@ -263,15 +262,22 @@ public class CommonController  extends WSConstants {
                 return new ResponseEntity<>(pmResponse, HttpStatus.OK);
             } else {
                 pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, label));
+                pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, label));
 
             }
         }
         return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
     }
 
-    public String getRedirectPage(RedirectType type) {
 
+    protected  ResponseEntity<Object> getResponseLoginErrorResponseEntity(String errorDescription){
+        WSCommonResponseVO commonResponse = new WSCommonResponseVO();
+        commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+        commonResponse.setMessage(errorDescription);
+        return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
+    }
+
+    public String getRedirectPage(RedirectType type) {
         StringBuilder redirectSb = new StringBuilder(contextRoot);
         switch (type){
             case INDEX:
@@ -286,7 +292,7 @@ public class CommonController  extends WSConstants {
             case ERROR:
                 redirectSb.append(redirectPageError);
                 break;
-                default:
+            default:
                     break;
         }
         return redirectSb.toString();

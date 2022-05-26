@@ -103,7 +103,7 @@ public class AnnounceController extends CommonController {
         }
         WSCommonResponseVO  commonResponse= new WSCommonResponseVO();
         commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-        commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, ANNOUNCE_LABEL));
+        commonResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_CREATE_LABEL, ANNOUNCE_LABEL));
         return new ResponseEntity<>(commonResponse, HttpStatus.NOT_ACCEPTABLE);
     }
 
@@ -136,7 +136,7 @@ public class AnnounceController extends CommonController {
             } else {
                 WSCommonResponseVO  commonResponse = new WSCommonResponseVO();
                 commonResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                commonResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, ANNOUNCE_LABEL));
+                commonResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_UPDATE_LABEL, ANNOUNCE_LABEL));
                 return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
             }
         } catch (AnnounceException e) {
@@ -247,7 +247,7 @@ public class AnnounceController extends CommonController {
 
             } else {
                 paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                paginateResponse.setRetDescription(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+                paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
             }
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
@@ -404,7 +404,7 @@ public class AnnounceController extends CommonController {
                 if (announce == null) {
                     WSCommonResponseVO wsResponse = new WSCommonResponseVO();
                     wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
+                    wsResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
                     return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
                 }
 
@@ -438,7 +438,7 @@ public class AnnounceController extends CommonController {
                 if (announce == null) {
                     WSCommonResponseVO wsResponse = new WSCommonResponseVO();
                     wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
+                    wsResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
                     return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
                 }
 
@@ -449,7 +449,7 @@ public class AnnounceController extends CommonController {
             if(source.equals(Source.NOTIFICATION)){
                 WSCommonResponseVO wsResponse = new WSCommonResponseVO();
                 wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                wsResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
+                wsResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
                 return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
             }
             throw e;

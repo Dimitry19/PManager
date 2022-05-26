@@ -3,7 +3,7 @@ package cm.travelpost.tp.ws.responses;
 import lombok.Data;
 
 @Data
-public class RegistrationResponse  extends Response{
+public class QrCodeResponse extends Response{
 
 
 	private boolean mfa;
