@@ -350,7 +350,7 @@ public class UserController extends CommonController {
             @ApiResponse(code = 200, message = "Mail sent",
                     response = Response.class, responseContainer = "Object")})
     @RequestMapping(value = WSConstants.USER_WS_MAIL, method = RequestMethod.POST, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Response> sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody MailDTO mail) throws MessagingException, IOException {
+    public ResponseEntity<Response> sendEmail(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid MailDTO mail) throws MessagingException, IOException {
 
         logger.info("send mail request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -358,17 +358,15 @@ public class UserController extends CommonController {
 
         try {
             createOpentracingSpan("UserController - sendMail");
-            if (mail != null) {
-                if (mailSenderSendGrid.manageResponse(mailService.sendMail(mail, true))) {
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
-                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-                } else {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL, "Veuillez reessayez plutard , Merci!"));
-                    return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
-                }
 
+            if (mailSenderSendGrid.manageResponse(mailService.sendMail(mail, true))) {
+                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                pmResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
+                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+            } else {
+                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL, "Veuillez reessayez plutard , Merci!"));
+                return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
             }
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de l'envoi du mail: ", e);
@@ -376,7 +374,6 @@ public class UserController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-        return null;
     }
 
 
@@ -442,33 +439,26 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController - subscribe");
 
-            if (subscribe != null) {
-
-                if (subscribe.getSubscriberId().equals(subscribe.getSubscriptionId())) {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setMessage(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
-                    response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-                    return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
-                }
-                userService.subscribe(subscribe);
-
-                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                pmResponse.setRetDescription(WebServiceResponseCode.SUBSCRIBE_LABEL);
-                response.setStatus(200);
-                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
-
+            if (subscribe.getSubscriberId().equals(subscribe.getSubscriptionId())) {
+                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                pmResponse.setMessage(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
+                response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+                return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
             }
+            userService.subscribe(subscribe);
+
+            pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            pmResponse.setRetDescription(WebServiceResponseCode.SUBSCRIBE_LABEL);
+            response.setStatus(200);
+            return new ResponseEntity<>(pmResponse, HttpStatus.OK);
         } catch (UserException e) {
             logger.error("Erreur durant l'execution de  subscribe: ", e);
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
             pmResponse.setMessage(WebServiceResponseCode.ERROR_SUBSCRIBE_LABEL);
             return new ResponseEntity<>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-
         } finally {
             finishOpentracingSpan();
         }
-
-        return null;
     }
 
     @ApiOperation(value = "Unsubscription to an user ", response = Response.class)
@@ -491,22 +481,18 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController - unsubscribe");
 
-            if (subscribe != null) {
-
-                if (subscribe.getSubscriberId().equals(subscribe.getSubscriptionId())) {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setMessage(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
-                    response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-                    return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
-                }
-                userService.unsubscribe(subscribe);
-                userService.unsubscribe(subscribe);
-
-                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                pmResponse.setRetDescription(WebServiceResponseCode.UNSUBSCRIBE_LABEL);
-                response.setStatus(200);
-                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+            if (subscribe.getSubscriberId().equals(subscribe.getSubscriptionId())) {
+                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                pmResponse.setMessage(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
+                response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+                return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
             }
+            userService.unsubscribe(subscribe);
+
+            pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            pmResponse.setRetDescription(WebServiceResponseCode.UNSUBSCRIBE_LABEL);
+            response.setStatus(200);
+            return new ResponseEntity<>(pmResponse, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de  unsubscribe: ", e);
             pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
@@ -515,7 +501,6 @@ public class UserController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-        return null;
     }
 
 

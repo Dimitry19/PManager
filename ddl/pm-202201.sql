@@ -204,12 +204,12 @@ create table TP_AUTHENTICATION
     ID BIGINT auto_increment,
     ATTEMPT INTEGER not null,
     DESACTIVATE BOOLEAN not null,
-    R_USER_ID BIGINT,
+    USER_ID BIGINT,
     CANCELLED BOOLEAN not null,
     DATECREATED TIMESTAMP,
     LASTUPDATED TIMESTAMP,
     constraint FKJNCOUJR31O2JK1YQY9F6NFPFJ
-        foreign key (R_USER_ID) references TP_USER (ID)
+        foreign key (USER_ID) references TP_USER (ID)
 );
 
 drop table IF EXISTS  TP_USER;
@@ -222,10 +222,12 @@ create table TP_USER
     FIRST_NAME VARCHAR(255) not null,
     GENDER VARCHAR(10),
     PHONE VARCHAR(35) not null,
+    COUNTRY varchar(35) not null,
+    CITY varchar(50) not null,
     EMAIL VARCHAR(255) not null unique,
     USERNAME VARCHAR(15) not null  unique,
     PASSWORD VARCHAR(255) not null,
-    MULTIPLE_FACTOR_AUTH   BOOLEAN not null default true,
+    MULTIPLE_FACTOR_AUTH   BOOLEAN not null default false,
     MFA_SECRET  varchar(255),
     ACTIVE INTEGER not null,
     ENABLE_NOTIF BOOLEAN not null ,
@@ -260,6 +262,7 @@ create table ANNOUNCE
     REMAIN_WEIGHT DECIMAL(19,2),
     PRICE DECIMAL(19,2) not null,
     GOLD_PRICE DECIMAL(19,2) not null,
+    ESTIMATE_VALUE DECIMAL (19,2),
     PRENIUM_PRICE DECIMAL(19,2) not null,
     STATUS VARCHAR(10),
     --COUNTTER_RESERVATION INTEGER,
@@ -315,6 +318,7 @@ create table RESERVATION
         primary key,
     DESCRIPTION VARCHAR(255),
     WEIGTH DECIMAL(19,2) not null,
+    ESTIMATE_VALUE DECIMAL(19,2),
     R_ANNOUNCE_ID BIGINT,
     R_USER_ID BIGINT,
     VALIDATE VARCHAR(10) default 'INSERTED',
@@ -322,6 +326,7 @@ create table RESERVATION
     CANCELLED BOOLEAN not null,
     DATECREATED TIMESTAMP(26,6),
     LASTUPDATED TIMESTAMP(26,6),
+
     constraint FK3H0SO8JJDQDGNN9PY00I83OFU
         foreign key (R_ANNOUNCE_ID) references ANNOUNCE,
     constraint FKTCN6F6DKS6UF7KRCMVV2KHAU0

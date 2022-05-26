@@ -42,6 +42,9 @@ public class UserInfo implements Serializable {
 
     private String secret ;
 
+    private String country;
+    private String city;
+
     public UserInfo( String email, String secret, boolean enableMFA) {
         this.multipleFactorAuthentication = enableMFA;
         this.email = email;
@@ -74,6 +77,8 @@ public class UserInfo implements Serializable {
         this.multipleFactorAuthentication=user.isMultipleFactorAuthentication();
         this.count = CollectionsUtils.size(user.getAnnounces());
         this.roles=CommonFilter.getRolesAuthoritiesUser(user);
+        this.city = user.getCity();
+        this.country = user.getCountry();
     }
 
     @JsonProperty
@@ -192,4 +197,21 @@ public class UserInfo implements Serializable {
     public String getSecret() { return secret;}
 
     public void setSecret(String secret) {  this.secret = secret;  }
+
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    @JsonProperty
+    public String getCountry() {  return country;  }
+
+    @JsonProperty
+    public String getCity() {
+        return city;
+    }
 }

@@ -65,6 +65,8 @@ public class AnnounceDTO extends CategoriesDTO {
     //@FutureOrPresent(message = "la date retour doit être une date dans le présent ou le futur")
     private long endDate;
 
+    private BigDecimal estimateValue;
+
     public long getStartDate() {
         return startDate;
     }
@@ -160,4 +162,8 @@ public class AnnounceDTO extends CategoriesDTO {
     public void setGoldPrice(BigDecimal goldPrice) {
         this.goldPrice = goldPrice;
     }
+
+    public BigDecimal getEstimateValue() {  return estimateValue;  }
+
+    public void setEstimateValue(BigDecimal estimateValue) { this.estimateValue = estimateValue; }
 }

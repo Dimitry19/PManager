@@ -130,6 +130,10 @@ public class UserVO extends CommonVO {
 
     private boolean authenticated;
 
+    private String city;
+
+    private String country;
+
     private AuthenticationVO authentication;
 
 
@@ -313,7 +317,7 @@ public class UserVO extends CommonVO {
     }
 
 
-    @Basic(optional = false)
+    @Basic(optional = true)
     @Column(name = "MFA_SECRET")
     @JsonIgnore
     public String getSecret() {
@@ -339,6 +343,14 @@ public class UserVO extends CommonVO {
         return error;
     }
 
+    @Basic(optional = false)
+    @Column(name = "COUNTRY", nullable = false)
+    public String getCountry() {   return country;  }
+
+
+    @Basic(optional = false)
+    @Column(name = "CITY", nullable = false)
+    public String getCity() {  return city; }
 
     public void setSubscribers(Set<UserVO> subscribers) {
         this.subscribers = subscribers;
@@ -435,6 +447,10 @@ public class UserVO extends CommonVO {
     }
 
     public void setMultipleFactorAuthentication(boolean multipleFactorAuthentication) {     this.multipleFactorAuthentication = multipleFactorAuthentication;  }
+
+    public void setCity(String city) { this.city = city; }
+
+    public void setCountry(String country) {  this.country = country;   }
 
     public void setSecret(String secret) {
         this.secret = secret;
@@ -641,6 +657,8 @@ public class UserVO extends CommonVO {
             return other.roles == null;
         } else return roles.equals(other.roles);
     }
+
+
 
     @Override
     public String toString() {

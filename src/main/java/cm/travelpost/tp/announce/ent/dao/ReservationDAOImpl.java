@@ -112,6 +112,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
         reservation.setDescription(reservationDTO.getDescription());
         reservation.setValidate(ValidateEnum.INSERTED);
         reservation.setStatus(StatusEnum.VALID);
+        reservation.setEstimateValue(reservationDTO.getEstimateValue());
         save(reservation);
 
         BigDecimal sumQtyRes=announceDAO.checkQtyReservations(announce.getId(),false);

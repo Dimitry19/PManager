@@ -1,56 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" version="4">
-  <component name="ExternalSystem" externalSystem="Maven" />
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="Spring" name="Spring">
-      <configuration>
-        <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/announce/AnnounceSubmitJobs.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/config/BatchConfig.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/CustomWebMvcConfigurerAdapter.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HttpSessionListenerConfig.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/administrator/tracing/OpenTracingConfig.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/config/cron/QuartzCronConfiguration.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/QuartzSubmitJobs.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerApiConfig.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/user/UserSubmitJobs.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/security/WebSecurityConfig.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cm/travelpost/tp/websocket/config/WebSocketConfig.java</file>
-          <file>jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/ext/jersey-spring5/2.30.1/jersey-spring5-2.30.1.jar!/jersey-spring-applicationContext.xml</file>
-          <file>file://$MAVEN_REPOSITORY$/org/glassfish/jersey/ext/jersey-spring5/2.30.1/jersey-spring5-2.30.1.jar</file>
-          <file>jar://$MAVEN_REPOSITORY$/org/springframework/batch/spring-batch-core/4.2.2.RELEASE/spring-batch-core-4.2.2.RELEASE.jar!/beanRefContext.xml</file>
-          <file>jar://$MAVEN_REPOSITORY$/org/springframework/batch/spring-batch-core/4.2.2.RELEASE/spring-batch-core-4.2.2.RELEASE.jar!/jsrBaseContext.xml</file>
-          <file>file://$MAVEN_REPOSITORY$/org/springframework/batch/spring-batch-core/4.2.2.RELEASE/spring-batch-core-4.2.2.RELEASE.jar</file>
-          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-data-rest/3.0.0/springfox-data-rest-3.0.0.jar!/springfox/documentation/spring/data/rest/schema/SpringDataRestSchemaExtensions.class</file>
-          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-data-rest/3.0.0/springfox-data-rest-3.0.0.jar</file>
-          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-oas/3.0.0/springfox-oas-3.0.0.jar!/springfox/documentation/oas/configuration/OpenApiMappingConfiguration.class</file>
-          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-oas/3.0.0/springfox-oas-3.0.0.jar!/springfox/documentation/oas/configuration/OpenApiWebFluxConfiguration.class</file>
-          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-oas/3.0.0/springfox-oas-3.0.0.jar!/springfox/documentation/oas/configuration/OpenApiWebMvcConfiguration.class</file>
-          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-oas/3.0.0/springfox-oas-3.0.0.jar</file>
-          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-schema/3.0.0/springfox-schema-3.0.0.jar!/springfox/documentation/schema/configuration/ModelsConfiguration.class</file>
-          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-schema/3.0.0/springfox-schema-3.0.0.jar</file>
-          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-web/3.0.0/springfox-spring-web-3.0.0.jar!/springfox/documentation/spring/web/SpringfoxWebConfiguration.class</file>
-          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-web/3.0.0/springfox-spring-web-3.0.0.jar</file>
-          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-webflux/3.0.0/springfox-spring-webflux-3.0.0.jar!/springfox/documentation/spring/web/SpringfoxWebFluxConfiguration.class</file>
-          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-webflux/3.0.0/springfox-spring-webflux-3.0.0.jar</file>
-          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-webmvc/3.0.0/springfox-spring-webmvc-3.0.0.jar!/springfox/documentation/spring/web/SpringfoxWebMvcConfiguration.class</file>
-          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-spring-webmvc/3.0.0/springfox-spring-webmvc-3.0.0.jar</file>
-          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-swagger-common/3.0.0/springfox-swagger-common-3.0.0.jar!/springfox/documentation/swagger/configuration/SwaggerCommonConfiguration.class</file>
-          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-swagger-common/3.0.0/springfox-swagger-common-3.0.0.jar</file>
-          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-swagger2/3.0.0/springfox-swagger2-3.0.0.jar!/springfox/documentation/swagger2/configuration/Swagger2WebFluxConfiguration.class</file>
-          <file>jar://$MAVEN_REPOSITORY$/io/springfox/springfox-swagger2/3.0.0/springfox-swagger2-3.0.0.jar!/springfox/documentation/swagger2/configuration/Swagger2WebMvcConfiguration.class</file>
-          <file>file://$MAVEN_REPOSITORY$/io/springfox/springfox-swagger2/3.0.0/springfox-swagger2-3.0.0.jar</file>
-        </fileset>
-      </configuration>
-    </facet>
     <facet type="web" name="Web">
       <configuration>
-        <webroots>
-          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
-        </webroots>
+        <webroots />
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
@@ -61,14 +14,12 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping>
-          <factory-entry name="Entities" value="5bd01531-bd90-4f79-9ad4-e345b761356f" />
-          <factory-entry name="PManager" value="f4547c19-2370-4905-92cf-dedaa2788436" />
-        </datasource-mapping>
-        <naming-strategy-map>
-          <unit-entry name="Entities" />
-        </naming-strategy-map>
+        <datasource-mapping />
+        <naming-strategy-map />
       </configuration>
+    </facet>
+    <facet type="Spring" name="Spring">
+      <configuration />
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
@@ -82,8 +33,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.3.0.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.3.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.3.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.3.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.2.6.RELEASE" level="project" />

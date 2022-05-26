@@ -2,6 +2,7 @@ package cm.travelpost.tp;
 
 
 import cm.travelpost.tp.common.mail.mailjet.MailJetSender;
+import cm.travelpost.tp.common.utils.CollectionsUtils;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
@@ -16,6 +17,8 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -29,8 +32,9 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
     public  static void main(String[] args) throws MessagingException {
 
        //SpringApplication.run(TravelPostApplicationDemo.class, args);
-        secure();
-        sendMailSendGridSmtp();
+       // secure();
+        //sendMailSendGridSmtp();
+        setFilters("fffdf","dddd");
     }
 
 
@@ -66,6 +70,25 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
         //System.out.println(":"+encryptor.encrypt("apikey"));
         System.out.println("Decrypt :"+encryptor.decrypt("gfrdM8DgU+ydD/1/rDqbo3DYOmJgArx9C/qWbMtAx3c3jdwqwWblQBf6N0UpgWc7"));
 
+    }
+
+
+
+    protected static void  setFilters(String ...filter){
+
+        String[] filters = null;
+        List<String> listFilters = Arrays.asList(filter);
+
+        int size  = CollectionsUtils.size(listFilters);
+        filters = new String[size];
+        String[] finalFilters = filters;
+        listFilters.stream().forEach(f->{
+            finalFilters[listFilters.indexOf(f)]=f;
+        });
+
+        for (String f: finalFilters ){
+            System.out.println("Decrypt :"+f);
+        }
     }
 
     public  static void  sendMailSendGridSmtp() throws MessagingException {

@@ -102,6 +102,9 @@ public class ReservationVO extends CommonVO {
     private AnnounceInfo announceInfo;
 
 
+    @Column(name = "ESTIMATE_VALUE", nullable = true)
+    private BigDecimal estimateValue;
+
     @Transient
     @JsonProperty
     private String warning;
@@ -185,6 +188,9 @@ public class ReservationVO extends CommonVO {
         this.description = description;
     }
 
+    public BigDecimal getEstimateValue() {  return estimateValue;  }
+
+    public void setEstimateValue(BigDecimal estimateValue) { this.estimateValue = estimateValue; }
 
     public String getWarning() {
         return warning;

@@ -55,6 +55,8 @@ public class ReservationReceivedUserVO extends CommonReservationTransient {
 
     private Timestamp dateCreated;
 
+    private BigDecimal estimateValue;
+
 
 
     public ReservationReceivedUserVO() {
@@ -156,6 +158,9 @@ public class ReservationReceivedUserVO extends CommonReservationTransient {
         return dateCreated;
     }
 
+    @Column(name = "ESTIMATE_VALUE")
+    public BigDecimal getEstimateValue() {  return estimateValue;  }
+
     @Transient
     @JsonProperty
     public UserInfo getUserInfo() {
@@ -231,4 +236,6 @@ public class ReservationReceivedUserVO extends CommonReservationTransient {
         this.categories = categories;
     }
 
+
+    public void setEstimateValue(BigDecimal estimateValue) { this.estimateValue = estimateValue; }
 }

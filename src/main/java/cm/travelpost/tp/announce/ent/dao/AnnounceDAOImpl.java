@@ -270,6 +270,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             announce.setAnnounceId(new AnnounceIdVO(Constants.DEFAULT_TOKEN));
             announce.setMessages(null);
             announce.setCancelled(false);
+
+
             save(announce);
             addAnnounceToUser(announce);
 
@@ -479,6 +481,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         announce.setAnnounceType(adto.getAnnounceType());
         handleCategories(announce, adto.getCategories());
         announce.setTransport(adto.getTransport());
+
+        if(announce.getAnnounceType().equals(AnnounceType.BUYER)) {
+            announce.setEstimateValue(adto.getEstimateValue());
+        }
 
         if(!ObjectUtils.isCallable(announce, "code")){
             announce.setCode(generateCode(announce.getAnnounceType().name()));

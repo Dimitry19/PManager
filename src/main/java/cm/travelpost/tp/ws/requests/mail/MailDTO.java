@@ -1,19 +1,23 @@
 package cm.travelpost.tp.ws.requests.mail;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class MailDTO {
 
     private String body;
 
+    @NotNull(message = "Valoriser le destinataire")
     private List<String> to;
 
     private List<String> cc;
 
     private List<String> bcc;
 
+    @NotNull(message = "Valoriser l'expediteur")
     private String from;
 
+    @NotNull(message = "Valoriser l'objet du mail")
     private String subject;
 
     private List<String> attachements;

@@ -249,6 +249,7 @@ public class CommonController  extends WSConstants {
         }else{
             pmResponse.setMessage(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
         }
+        pmResponse.setRetDescription(null);
         return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
