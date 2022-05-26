@@ -227,7 +227,7 @@ create table TP_USER
     EMAIL VARCHAR(255) not null unique,
     USERNAME VARCHAR(15) not null  unique,
     PASSWORD VARCHAR(255) not null,
-    MULTIPLE_FACTOR_AUTH   BOOLEAN not null default true,
+    MULTIPLE_FACTOR_AUTH   BOOLEAN not null default false,
     MFA_SECRET  varchar(255),
     ACTIVE INTEGER not null,
     ENABLE_NOTIF BOOLEAN not null ,
