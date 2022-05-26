@@ -5,161 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="Config svil du 30/04/2022">
-      <change afterPath="$PROJECT_DIR$/ddl/alter_table.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/CustomOncePerRequestFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/authentication/filter/TokenAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/constants/Constants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/security/CommonSecurityResource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/security/JasyptConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/security/jwt/TokenProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/notification/NotificationCompletedJob.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/notification/NotificationManagerJob.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/configuration/RandomOtpGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/configuration/TextMagicConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/CommonSmsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/TextMagicService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/TextMagicServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/vo/TxtMagicMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/vo/TxtMagicVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/authentication/VerificationDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/RegistrationResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/authentication/AuthenticationResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/banner.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/flags.007b2705c0a8f69dfdf6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/flags@2x.9d5328fb490cddd43f66.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es2015.957fdab963a836ffa00d.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/main-es5.957fdab963a836ffa00d.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/scripts.269c32ad58672c4eca5d.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/styles.062994b9ceb533901478.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/angular.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/add-product/add-product.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/admin/admin.guard.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/alert.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app-routing.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/app.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/carousel/carousel.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/carousel/carousel.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/carousel/carousel.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/carousel/carousel.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/constancesURL.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/directive/tooltip.directive.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/filter-products/filter-products.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/footer/footer.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/footer/footer.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/footer/footer.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/head/head.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/header/header.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/header/header.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/home/home.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/nofound/nofound.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/nofound/nofound.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/nofound/nofound.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/options/options.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/product/product.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/products/products.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/profile/profile.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/search-all/search-all.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/search-all/search-all.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/search-all/search-all.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/serviceRequest.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/sharedConstants.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/app/typed-product/typed-product.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/assets/css/awselect.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/assets/i18n/fr.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/assets/js/villes.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/awselect.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/src/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/tsconfig.app.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/cm/packagemanager/pmanager/user/ent/TestNotification.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ddl/pm-202201-my-sql.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ddl/pm-202201-my-sql.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ddl/pm-202201.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ddl/pm-202201.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/IQueryBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/IQueryBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/utils/QueryUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/config/cron/QuartzCronConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/config/cron/QuartzCronConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/user/UserSubmitJobs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/batch/jobs/cron/user/UserSubmitJobs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/properties/CommonProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/properties/CommonProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/controller/SmsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/controller/SmsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceGuavaImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceGuavaImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/DateUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/DateUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/Utility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/JasyptConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/package-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/dao/NotificationDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificatorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificatorServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/vo/NotificationVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/vo/NotificationVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/security/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/RoleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/RoleVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/RoleVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/websocket/config/WebSocketConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/totp/TotpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/totp/TotpController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/CodeVerificationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/VerificationDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/WebServiceResponseCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/WebServiceResponseCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/logback-spring.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/awselect.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/awselect.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.efd6452bd327bb2492c6.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.efd6452bd327bb2492c6.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/scripts.984748f2597b1387c72b.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.e238caae363a51505138.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,101 +25,17 @@
       <entry key="bbxnc20nyku1xg7g/32dd2d4f-ab58-49b7-85d8-9c9fa515f192:USER" value="Blue" />
     </colors>
   </component>
-  <component name="DatabaseView">
-    <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
-    <option name="GROUP_SCHEMA" value="true" />
-    <option name="GROUP_CONTENTS" value="false" />
-    <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="DB MYSQL [AWS]" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="DB MYSQL [AWS]" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="DB MYSQL [AWS]" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="cl6j8lyroz9fs4ut: schema" type="76f4a085:MysqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="DB MYSQL [AWS]" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="cl6j8lyroz9fs4ut: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="HOME" type="feb32156:DbDataSourceImpl" />
-      </path>
-    </expand>
-    <select />
-  </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>spring.devtools.add-properties=false</find>
-      <find>spring.main.allow-bean-definition-overriding</find>
-      <find>pman</find>
-      <find>my</find>
-      <find>MySQLDialect</find>
-      <find>Cookie</find>
-      <find>https://tra</find>
-      <find>Map</find>
-      <find>FindBy</find>
-      <find>findBy</find>
-      <find>findByN</find>
-      <find>fi</find>
-      <find>devt</find>
-      <find>response.setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);</find>
-      <find>comparator</find>
-      <find>swagg</find>
-      <find>https://trave</find>
-      <find>http://localhost:8080</find>
-      <find>travelpost-cm.herokuapp.com</find>
-      <find>PUBLI</find>
-      <find>dele</find>
-      <find>http://tra</find>
-      <find>travelpost</find>
-      <find>create</find>
-      <find>amz</find>
-      <find>TRA</find>
-      <find>announcesSt</find>
-      <find>2020</find>
-      <find>ANNOUNCE</find>
-      <find>validate</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>localhost</replace>
-      <replace />
-      <replace>response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>$PROJECT_DIR$/src/main/resources/static</dir>
-      <dir>$PROJECT_DIR$</dir>
-    </dirStrings>
   </component>
   <component name="Git.Settings">
     <favorite-branches>
@@ -319,63 +83,6 @@
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_USER" value="Dimitry19" />
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="PManager" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/city/ent/dao/CityDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/main-es2015.6598bc20d08b68e40853.js" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/main-es5.6598bc20d08b68e40853.js" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificatorServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/32dd2d4f-ab58-49b7-85d8-9c9fa515f192/console.sql" />
-        <option value="$PROJECT_DIR$/ddl/Views_20210207-my-sql.sql" />
-        <option value="$PROJECT_DIR$/Procfile" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/DefaultController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/ErrorController.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/logback-spring.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/enums/NotificationType.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/main-es5.efd6452bd327bb2492c6.js" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/main-es2015.efd6452bd327bb2492c6.js" />
-        <option value="$PROJECT_DIR$/src/main/resources/encrypted.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/configuration/TwilloConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/JasyptConfiguration.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/config.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/dao/SmsDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/configuration/GuavaOTPConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsService.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/TotpService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/otp/SignupResponse.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/LoginDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/SignupDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/CodeVerificationDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/Response.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/TotpServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceGuavaImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/totp/TotpController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerApiConfig.java" />
-        <option value="$PROJECT_DIR$/ddl/pm-202201.sql" />
-        <option value="$PROJECT_DIR$/ddl/pm-202201-my-sql.sql" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/Gender.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" />
-      </list>
-    </option>
-  </component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
       <map>
@@ -415,226 +122,45 @@
         <option name="vmOptionsForImporter" value="-Xmx768m" />
       </MavenImportingSettings>
     </option>
-    <option name="enabledProfiles">
-      <list>
-        <option value="sinapsi" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="y" value="23" />
-    <option name="width" value="1440" />
-    <option name="height" value="852" />
   </component>
   <component name="ProjectId" id="26NIITASinlHudPOvdCo5Fw5A25" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="ddl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-              <item name="configuration" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-              <item name="notification" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-              <item name="notification" type="462c0819:PsiDirectoryNode" />
-              <item name="ent" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-              <item name="ws" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-              <item name="ws" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-              <item name="ws" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="rest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-              <item name="ws" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="rest" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-              <item name="ws" type="462c0819:PsiDirectoryNode" />
-              <item name="requests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cm" type="462c0819:PsiDirectoryNode" />
-              <item name="tp" type="462c0819:PsiDirectoryNode" />
-              <item name="ws" type="462c0819:PsiDirectoryNode" />
-              <item name="responses" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PManager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="CatdeaLogs" />
-    </panes>
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;c03b77df5d77dc332c12d8ade9a70c10&quot;
-  }
-}</component>
+  <component name="PropertiesComponent">
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ddl/ddl-1.0.1-beta-secure202204" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ddl/ddl-1.0.1-beta-secure202204" />
       <recent name="F:\DevJava\ws\PManager\src\main\java\cm\packagemanager\pmanager\city" />
       <recent name="F:\DevJava\ws\PManager\src\main\java\cm\framework\hibernate\dao" />
       <recent name="F:\DevJava\ws\PManager" />
       <recent name="F:\DevJava\ws\PManager\ddl" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cm.travelpost.tp.authentication.ent.dao" />
+      <recent name="cm.travelpost.tp.ws.controller.rest.authentication" />
+      <recent name="cm.travelpost.tp.ws.controller.rest.users.totp" />
+      <recent name="cm.packagemanager.pmanager.city.ent.dao" />
+      <recent name="cm.packagemanager.pmanager.common.exception" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\DevJava\ws\PManager\src\main\resources" />
@@ -642,13 +168,6 @@
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/resources/templates" />
       <recent name="$PROJECT_DIR$/src/main/resources/dist" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="cm.travelpost.tp.ws.controller.rest.authentication" />
-      <recent name="cm.travelpost.tp.ws.controller.rest.users.totp" />
-      <recent name="cm.packagemanager.pmanager.city.ent.dao" />
-      <recent name="cm.packagemanager.pmanager.common.exception" />
-      <recent name="cm.packagemanager.pmanager.communication.ent.dao" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -659,21 +178,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.TP">
-    <configuration name="cm.travelpost.tp.TravelPostApplicationDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="11" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="cm.travelpost.tp.TravelPostApplicationDemo" />
-      <module name="PManager" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cm.travelpost.tp.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="clean" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -779,33 +283,27 @@
       <method v="2" />
     </configuration>
     <configuration name="TP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <option name="ACTIVE_PROFILES" />
-      <option name="ALTERNATIVE_JRE_PATH" value="11" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <log_file alias="LOG" path="$PROJECT_DIR$/src/main/resources/log4j2.xml" />
       <module name="PManager" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="cm.travelpost.tp.TravelPostApplication" />
+      <option name="ACTIVE_PROFILES" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.cm.travelpost.tp.TravelPostApplicationDemo" />
       <item itemvalue="Maven.clean" />
       <item itemvalue="Maven.jasyst(encrypt)" />
       <item itemvalue="Maven.jasyst(decrypt)" />
       <item itemvalue="Maven.package" />
       <item itemvalue="Spring Boot.TP" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.cm.travelpost.tp.TravelPostApplicationDemo" />
-      </list>
-    </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -934,48 +432,16 @@
       <workItem from="1650801108969" duration="2361000" />
       <workItem from="1650897423669" duration="1573000" />
       <workItem from="1652265073689" duration="13328000" />
-    </task>
-    <task id="LOCAL-00103" summary="Correction de la methode de recuperation des infos de l'utilisateur">
-      <created>1648081762794</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1648081762797</updated>
-    </task>
-    <task id="LOCAL-00104" summary="Correction de la methode de recuperation des infos de l'utilisateur">
-      <created>1648082298915</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1648082298917</updated>
-    </task>
-    <task id="LOCAL-00105" summary="Correction de la methode de recuperation des infos de l'utilisateur">
-      <created>1648082408566</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1648082408566</updated>
-    </task>
-    <task id="LOCAL-00106" summary="Modifications partie FE">
-      <created>1648197184159</created>
-      <option name="number" value="00106" />
-      <option name="presentableId" value="LOCAL-00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1648197184159</updated>
-    </task>
-    <task id="LOCAL-00107" summary="Modifications partie FE">
-      <created>1648198983200</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1648198983200</updated>
-    </task>
-    <task id="LOCAL-00108" summary="Modifications Variées">
-      <created>1648256419859</created>
-      <option name="number" value="00108" />
-      <option name="presentableId" value="LOCAL-00108" />
-      <option name="project" value="LOCAL" />
-      <updated>1648256419862</updated>
+      <workItem from="1652731418422" duration="293000" />
+      <workItem from="1652731772574" duration="4404000" />
+      <workItem from="1652920180962" duration="80000" />
+      <workItem from="1653037003084" duration="4093000" />
+      <workItem from="1653069175681" duration="25044000" />
+      <workItem from="1653101901980" duration="513000" />
+      <workItem from="1653337361839" duration="10485000" />
+      <workItem from="1653428758068" duration="4906000" />
+      <workItem from="1653435972858" duration="277000" />
+      <workItem from="1653501509097" duration="1857000" />
     </task>
     <task id="LOCAL-00109" summary="Modifications Variées">
       <created>1648257781635</created>
@@ -1278,11 +744,50 @@
       <option name="project" value="LOCAL" />
       <updated>1650802647556</updated>
     </task>
-    <option name="localTasksCounter" value="152" />
+    <task id="LOCAL-00152" summary="Config svil du 16/05/2022.&#10;Complete announce search with a reference">
+      <created>1652749617684</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1652749617685</updated>
+    </task>
+    <task id="LOCAL-00153" summary="Authentication attempt">
+      <created>1653041675367</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1653041675368</updated>
+    </task>
+    <task id="LOCAL-00154" summary="Modification gestion inscription et login/ requete de generation de QrCode">
+      <created>1653101464661</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1653101464661</updated>
+    </task>
+    <task id="LOCAL-00155" summary="Modification gestion inscription et login/ requete de generation de QrCode:postman disabled">
+      <created>1653102458756</created>
+      <option name="number" value="00155" />
+      <option name="presentableId" value="LOCAL-00155" />
+      <option name="project" value="LOCAL" />
+      <updated>1653102458757</updated>
+    </task>
+    <task id="LOCAL-00156" summary="Gestion autentication">
+      <created>1653348444379</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1653348444380</updated>
+    </task>
+    <task id="LOCAL-00157" summary="Modification gestion type de login">
+      <created>1653435699790</created>
+      <option name="number" value="00157" />
+      <option name="presentableId" value="LOCAL-00157" />
+      <option name="project" value="LOCAL" />
+      <updated>1653435699790</updated>
+    </task>
+    <option name="localTasksCounter" value="158" />
     <servers />
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="708762000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1293,61 +798,8 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.87246376" visible="true" weight="0.225" />
-      <window_info id="Structure" order="1" sideWeight="0.15845825" side_tool="true" weight="0.17381974" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Web" order="5" side_tool="true" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info id="Capture Tool" order="7" />
-      <window_info id="Persistence" order="8" sideWeight="0.12753624" side_tool="true" visible="true" weight="0.225" />
-      <window_info id="Learn" order="9" />
-      <window_info id="aws.explorer" order="10" side_tool="true" />
-      <window_info id="DB Browser" order="11" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32218093" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5965665" weight="0.22493225" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6888412" weight="0.66260165" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32843792" />
-      <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.49928468" weight="0.32917705" />
-      <window_info anchor="bottom" auto_hide="true" id="Terminal" internal_type="SLIDING" order="8" sideWeight="0.49570817" type="SLIDING" weight="0.32655826" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.40343347" side_tool="true" weight="0.38166046" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.48211733" weight="0.37533876" />
-      <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.49928468" weight="0.32793018" />
-      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.6251788" weight="0.43440595" />
-      <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49785408" weight="0.29491946" />
-      <window_info anchor="bottom" id="TypeScript" order="15" />
-      <window_info anchor="bottom" id="Inspection Results" order="16" weight="0.32917705" />
-      <window_info anchor="bottom" id="Docker" order="17" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Hibernate Console" order="18" weight="0.32971507" />
-      <window_info anchor="bottom" id="JPA Console" order="19" weight="0.32971507" />
-      <window_info anchor="bottom" id="Run Dashboard" order="20" visible="true" weight="0.1460396" />
-      <window_info anchor="bottom" id="DB Execution Console" order="21" />
-      <window_info anchor="bottom" id="SonarLint" order="22" />
-      <window_info anchor="bottom" id="DB Diagnostics" order="23" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49810606" weight="0.24964234" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" weight="0.3297568" />
-      <window_info anchor="right" id="Database" order="6" sideWeight="0.49810606" weight="0.17857143" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info anchor="right" id="Bean Validation" order="9" sideWeight="0.49810606" weight="0.3297568" />
-      <window_info anchor="right" id="Coverage" order="10" sideWeight="0.50189394" side_tool="true" weight="0.24964234" />
-      <window_info anchor="right" id="Maven" order="11" />
-    </layout>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -1383,6 +835,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -1391,12 +844,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="First Demo deployment" />
-    <MESSAGE value="First Demo deployment-fix" />
-    <MESSAGE value="Configuration intellij boulot + gestion erreur envoi mail" />
-    <MESSAGE value="Configuration intellij boulot + gestion recuperation des annonces selon le mode de transport" />
-    <MESSAGE value="Configuration intellij boulot + gestion ville" />
-    <MESSAGE value="Refactoring du package + config home" />
     <MESSAGE value="Refactoring du package + modifications variées +config home" />
     <MESSAGE value="Deploy Heroku 10/04/2022" />
     <MESSAGE value="Deploy Heroku 10/04/2022 + script mysql" />
@@ -1416,7 +863,151 @@
     <MESSAGE value="Implementation encrypt mot de passe file config" />
     <MESSAGE value="Implementation encrypt mot de passe file config." />
     <MESSAGE value="Debut implementation TOTP authentication" />
-    <option name="LAST_COMMIT_MESSAGE" value="Debut implementation TOTP authentication" />
+    <MESSAGE value="Config svil du 16/05/2022.&#10;Complete announce search with a reference" />
+    <MESSAGE value="Authentication attempt" />
+    <MESSAGE value="Modification gestion inscription et login/ requete de generation de QrCode" />
+    <MESSAGE value="Modification gestion inscription et login/ requete de generation de QrCode:postman disabled" />
+    <MESSAGE value="Gestion autentication" />
+    <MESSAGE value="Modification gestion type de login" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modification gestion type de login" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="611" y="348" key="#Assign_Data_Sources" timestamp="1653082139622">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="611" y="348" key="#Assign_Data_Sources/0.0.1440.900@0.0.1440.900" timestamp="1653082139622" />
+    <state x="208" y="31" key="#Project_Structure" timestamp="1653102398961">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="208" y="31" key="#Project_Structure/0.0.1440.900@0.0.1440.900" timestamp="1653102398961" />
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1653098890287">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1653098890287" />
+    <state x="533" y="141" key="#com.intellij.ide.util.MemberChooser" timestamp="1653093010209">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="533" y="141" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1653093010209" />
+    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1653088083683">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1440.900@0.0.1440.900" timestamp="1653088083683" />
+    <state x="483" y="160" key="#xdebugger.evaluate" timestamp="1653094207947">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="483" y="160" key="#xdebugger.evaluate/0.0.1440.900@0.0.1440.900" timestamp="1653094207947" />
+    <state x="468" y="311" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1652731487488">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="468" y="311" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1440.900@0.0.1440.900" timestamp="1652731487488" />
+    <state x="303" y="25" key="CommitChangelistDialog2" timestamp="1653435699165">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="303" y="25" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1653435699165" />
+    <state width="447" height="466" key="DebuggerActiveHint" timestamp="1653433529356">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="447" height="466" key="DebuggerActiveHint/0.0.1440.900@0.0.1440.900" timestamp="1653433529356" />
+    <state width="1082" height="295" key="GridCell.Tab.0.bottom" timestamp="1653503088224">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="295" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1653503088224" />
+    <state width="1082" height="295" key="GridCell.Tab.0.bottom/0.23.1440.852@0.23.1440.852" timestamp="1653434559285" />
+    <state width="1082" height="295" key="GridCell.Tab.0.center" timestamp="1653503088222">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="295" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1653503088222" />
+    <state width="1082" height="295" key="GridCell.Tab.0.center/0.23.1440.852@0.23.1440.852" timestamp="1653434559284" />
+    <state width="1082" height="295" key="GridCell.Tab.0.left" timestamp="1653503088221">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="295" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1653503088221" />
+    <state width="1082" height="295" key="GridCell.Tab.0.left/0.23.1440.852@0.23.1440.852" timestamp="1653434559282" />
+    <state width="1082" height="295" key="GridCell.Tab.0.right" timestamp="1653503088223">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="295" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1653503088223" />
+    <state width="1082" height="295" key="GridCell.Tab.0.right/0.23.1440.852@0.23.1440.852" timestamp="1653434559285" />
+    <state width="1082" height="295" key="GridCell.Tab.1.bottom" timestamp="1653435717338">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="295" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1653435717338" />
+    <state width="1082" height="295" key="GridCell.Tab.1.bottom/0.23.1440.852@0.23.1440.852" timestamp="1653434094437" />
+    <state width="1082" height="295" key="GridCell.Tab.1.center" timestamp="1653435717336">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="295" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1653435717336" />
+    <state width="1082" height="295" key="GridCell.Tab.1.center/0.23.1440.852@0.23.1440.852" timestamp="1653434094435" />
+    <state width="1082" height="295" key="GridCell.Tab.1.left" timestamp="1653435717334">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="295" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1653435717334" />
+    <state width="1082" height="295" key="GridCell.Tab.1.left/0.23.1440.852@0.23.1440.852" timestamp="1653434094435" />
+    <state width="1082" height="295" key="GridCell.Tab.1.right" timestamp="1653435717337">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="295" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1653435717337" />
+    <state width="1082" height="295" key="GridCell.Tab.1.right/0.23.1440.852@0.23.1440.852" timestamp="1653434094436" />
+    <state width="1082" height="265" key="GridCell.Tab.2.bottom" timestamp="1652731380985">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="265" key="GridCell.Tab.2.bottom/0.0.1440.900@0.0.1440.900" timestamp="1652731380985" />
+    <state width="1082" height="424" key="GridCell.Tab.2.bottom/0.23.1440.852@0.23.1440.852" timestamp="1652727666777" />
+    <state width="1082" height="265" key="GridCell.Tab.2.center" timestamp="1652731380983">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="265" key="GridCell.Tab.2.center/0.0.1440.900@0.0.1440.900" timestamp="1652731380983" />
+    <state width="1082" height="424" key="GridCell.Tab.2.center/0.23.1440.852@0.23.1440.852" timestamp="1652727666775" />
+    <state width="1082" height="265" key="GridCell.Tab.2.left" timestamp="1652731380982">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="265" key="GridCell.Tab.2.left/0.0.1440.900@0.0.1440.900" timestamp="1652731380982" />
+    <state width="1082" height="424" key="GridCell.Tab.2.left/0.23.1440.852@0.23.1440.852" timestamp="1652727666773" />
+    <state width="1082" height="265" key="GridCell.Tab.2.right" timestamp="1652731380984">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1082" height="265" key="GridCell.Tab.2.right/0.0.1440.900@0.0.1440.900" timestamp="1652731380984" />
+    <state width="1082" height="424" key="GridCell.Tab.2.right/0.23.1440.852@0.23.1440.852" timestamp="1652727666776" />
+    <state width="259" height="457" key="HiddenNamespacesPopup" timestamp="1653437258963">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="259" height="457" key="HiddenNamespacesPopup/0.0.1440.900@0.0.1440.900" timestamp="1653437258963" />
+    <state x="468" y="160" key="RollbackChangesDialog" timestamp="1653037118641">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="468" y="160" key="RollbackChangesDialog/0.0.1440.900@0.0.1440.900" timestamp="1653037118641" />
+    <state x="320" y="177" key="Vcs.Push.Dialog.v2" timestamp="1653435702620">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="177" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1653435702620" />
+    <state width="720" height="450" key="XDebugger.FullValuePopup" timestamp="1653433521378">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="720" height="450" key="XDebugger.FullValuePopup/0.0.1440.900@0.0.1440.900" timestamp="1653433521378" />
+    <state x="574" y="344" width="337" height="232" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1653079000643">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="574" y="344" width="337" height="232" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1440.900@0.0.1440.900" timestamp="1653079000643" />
+    <state x="551" y="230" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1653079139605">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="551" y="230" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1440.900@0.0.1440.900" timestamp="1653079139605" />
+    <state x="131" y="85" width="1151" height="729" key="find.popup" timestamp="1652730323891">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="131" y="85" width="1151" height="729" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1652730323891" />
+    <state x="419" y="245" key="git4idea.merge.GitPullDialog" timestamp="1653503126798">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="419" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1653503126798" />
+    <state width="600" height="428" key="javadoc.popup" timestamp="1652745749235">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="600" height="428" key="javadoc.popup/0.0.1440.900@0.0.1440.900" timestamp="1652745749235" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1653501715334">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1653501715334" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1453,7 +1044,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java</url>
-          <line>286</line>
+          <line>370</line>
           <option name="timeStamp" value="143" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -1512,11 +1103,6 @@
           <option name="timeStamp" value="266" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/ent/service/MailServiceImpl.java</url>
-          <line>62</line>
-          <option name="timeStamp" value="267" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/mailjet/MailJetSender.java</url>
           <line>101</line>
           <option name="timeStamp" value="269" />
@@ -1558,7 +1144,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java</url>
-          <line>233</line>
+          <line>242</line>
           <option name="timeStamp" value="356" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -1588,7 +1174,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java</url>
-          <line>808</line>
+          <line>804</line>
           <option name="timeStamp" value="373" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1598,12 +1184,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>905</line>
+          <line>901</line>
           <option name="timeStamp" value="400" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>924</line>
+          <line>918</line>
           <option name="timeStamp" value="401" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1611,23 +1197,22 @@
           <line>127</line>
           <option name="timeStamp" value="405" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java</url>
+          <line>224</line>
+          <option name="timeStamp" value="437" />
+        </line-breakpoint>
         <line-breakpoint type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/ImageVO.java</url>
           <line>26</line>
           <properties field="id" class="cm.packagemanager.pmanager.common.ent.vo.ImageVO" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
-        <line-breakpoint suspend="NONE" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAO.java</url>
-          <line>29</line>
-          <properties class="cm.travelpost.tp.user.ent.dao.UserDAO" />
-          <option name="timeStamp" value="238" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
-        <PinnedItemInfo parentTag="org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor" memberName="persistentClass" />
+        <PinnedItemInfo />
       </pinned-members>
     </pin-to-top-manager>
   </component>
@@ -1646,571 +1231,5 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/PManager$TP.ic" NAME="TP Coverage Results" MODIFIED="1651130082010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-  </component>
-  <component name="debuggerHistoryManager">
-    <expressions id="setValue">
-      <expression>
-        <expression-string>467</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>&quot;pmanager2020&quot;</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>&quot;packagemanager2020@gmail.com&quot;</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
-    <expressions id="evaluateExpression">
-      <expression>
-        <expression-string>stringBuilder.toString()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>res.getAnnounce().getId()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>PasswordGenerator.encrypt(user.getUsername().concat(user.getPassword()))</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>cookie.getValue()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>cookie.getName().value</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>cookie.getName()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>sumQtyRes</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>sumQtyRes.compareTo(BigDecimal.ZERO)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>alreadySentForUser=null</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
-          <folding>
-            <element signature="e#952#968#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="21" column="48" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
-          <folding>
-            <element signature="e#703#739#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/mail/mailjet/MailJetSender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="37" column="14" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1385">
-          <caret line="336" column="27" selection-start-line="336" selection-start-column="16" selection-end-line="336" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jasypt/jasypt/1.9.3/jasypt-1.9.3-sources.jar!/org/jasypt/encryption/pbe/StandardPBEStringEncryptor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="637" selection-start-line="637" selection-end-line="637" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/JasyptConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/config.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="91" selection-start-column="91" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="55" column="115" selection-start-line="55" selection-start-column="115" selection-end-line="55" selection-end-column="115" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/AuthenticationFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="85" selection-start-line="85" selection-end-line="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/vo/SmsOTPVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-371">
-          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#41#1" expanded="true" />
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/dao/SmsDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="11" column="54" selection-start-line="11" selection-start-column="54" selection-end-line="11" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/dao/SmsDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/configuration/TwilloConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="26" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/SmsDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/configuration/GuavaOTPConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="28" column="15" selection-start-line="28" selection-start-column="15" selection-end-line="28" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#638#802#0" expanded="true" />
-            <element signature="e#801#802#0" expanded="true" />
-            <element signature="e#1148#1149#0" expanded="true" />
-            <element signature="e#1188#1189#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="365" column="21" selection-start-line="365" selection-start-column="21" selection-end-line="365" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/otp/SignupResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/CodeVerificationDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/Response.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificatorServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificationServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/TotpServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="30" column="25" lean-forward="true" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceGuavaImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="11" column="25" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/SmsServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/controller/SmsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1125">
-          <caret line="99" column="45" selection-start-line="99" selection-start-column="45" selection-end-line="99" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/otp/SignupDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="6" column="34" selection-start-line="6" selection-start-column="34" selection-end-line="6" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/users/LoginDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/session/SessionManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/sms/ent/service/TotpService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="253" column="36" lean-forward="true" selection-start-line="253" selection-start-column="36" selection-end-line="253" selection-end-column="100" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="86" column="19" selection-start-line="86" selection-start-column="19" selection-end-line="86" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="60" column="20" selection-start-line="60" selection-start-column="20" selection-end-line="60" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="42" column="78" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/totp/TotpController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/admin/dashboard/DashboardController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2055">
-          <caret line="137" column="31" selection-start-line="137" selection-start-column="31" selection-end-line="137" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ddl/pm-202201-my-sql.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="243" column="38" lean-forward="true" selection-start-line="243" selection-start-column="38" selection-end-line="243" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ddl/pm-202201.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="234" column="36" lean-forward="true" selection-start-line="234" selection-start-column="36" selection-end-line="234" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceMasterVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="48" column="13" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#83#1" expanded="true" />
-            <element signature="e#0#94#1" expanded="true" />
-            <element signature="e#0#88#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://f4547c19-2370-4905-92cf-dedaa2788436/schema/cl6j8lyroz9fs4ut/table/announce">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/SessionFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="147" selection-start-line="147" selection-end-line="147" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/administrator/api/SwaggerApiConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="168" column="67" selection-start-line="168" selection-start-column="67" selection-end-line="168" selection-end-column="67" />
-          <folding>
-            <element signature="e#4673#4674#0" expanded="true" />
-            <element signature="e#4752#4753#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="61" selection-start-line="61" selection-end-line="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="197" column="14" lean-forward="true" selection-start-line="197" selection-start-column="14" selection-end-line="197" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#198#1" expanded="true" />
-            <element signature="e#0#45#1" expanded="true" />
-            <element signature="e#0#39#1" expanded="true" />
-            <element signature="e#0#54#0" expanded="true" />
-            <element signature="e#0#45#0" expanded="true" />
-            <element signature="e#0#58#0" expanded="true" />
-            <element signature="e#0#55#0" expanded="true" />
-            <element signature="e#0#51#0" expanded="true" />
-            <element signature="e#0#83#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/Gender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="32" column="1" lean-forward="true" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="223" column="61" lean-forward="true" selection-start-line="223" selection-start-column="61" selection-end-line="223" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/ReservationServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="47" column="24" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/enums/ValidateEnum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="232" column="48" selection-start-line="232" selection-start-column="48" selection-end-line="232" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArquillianSettingsConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <last-edited>package:war</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.5" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>Spring (PManager)|Spring</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8.0_281</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>Spring|PManager</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Maven: antlr:antlr:2.7.7</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>

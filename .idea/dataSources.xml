@@ -53,14 +53,5 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="DB MYSQL [AWS] [2]" uuid="4bdcea7c-a9b1-45d5-942b-dd3546d29a9e">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://aatqhz7nh5q7zf.cpfvhls4tre4.eu-south-1.rds.amazonaws.com</jdbc-url>
-      <driver-properties>
-        <property name="autoReconnect" value="true" />
-      </driver-properties>
-    </data-source>
   </component>
 </project>
