@@ -1,6 +1,7 @@
 package cm.travelpost.tp.user.ent.dao;
 
 
+import cm.framework.ds.common.ent.vo.KeyValue;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.framework.ds.hibernate.enums.CountBy;
@@ -44,6 +45,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
 
     private static final String USER_NOT_FOUND = "Utilisateur non trouvé";
+    private static final String USER_NOT_FOUND_EX = "UserNotFound";
     private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 
 
@@ -198,14 +200,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<UserVO> getAllUsers(PageBy pageBy) throws Exception {
 
-        filters = new String[2];
-        filters[0] = FilterConstants.CANCELLED;
-        filters[1] = FilterConstants.ACTIVE_MBR;
-
+        setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
         logger.info("User: all users page by");
-        //return  helper.allUsers();
-
-        return all(UserVO.class, null, filters);
+        return all(UserVO.class, null, getFilters());
     }
 
     @Override
@@ -234,15 +231,13 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
         try {
 
-            filters = new String[2];
+            KeyValue keyValueEmail = new KeyValue(EMAIL_PARAM,register.getEmail());
+            KeyValue keyValueUsername= new KeyValue(USERNAME_PARAM,register.getUsername());
 
-            map.put(EMAIL_PARAM, register.getEmail());
-            map.put(USERNAME_PARAM, register.getUsername());
+            setMap(keyValueEmail,keyValueUsername);
+            setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
 
-            filters[1] = FilterConstants.ACTIVE_MBR;
-            filters[0] = FilterConstants.CANCELLED;
-
-            UserVO user = (UserVO) findByNaturalIds(UserVO.class, map, filters);
+            UserVO user = (UserVO) findByNaturalIds(UserVO.class, getMap(), getFilters());
             if (user != null) {
                 logger.error("User: username deja existant");
                 user.setError(WebServiceResponseCode.ERROR_USERNAME_REGISTER_LABEL + " et " + WebServiceResponseCode.ERROR_EMAIL_REGISTER_LABEL);
@@ -305,7 +300,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setGender(userDTO.getGender());
             user.setFirstName(userDTO.getFirstName());
             user.setLastName(userDTO.getLastName());
-            //setRole(user, userDTO.getRole());
             user.setCity(userDTO.getCity());
             user.setCountry(userDTO.getCountry());
             calcolateAverage(user);
@@ -327,7 +321,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
         if(logger.isDebugEnabled()){
             logger.debug("Delete user with id {}", id);
         }
-        //delete(UserVO.class,id,false);
         return updateDelete(id);
     }
 
@@ -349,10 +342,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             logger.debug("User: find by username {}", username);
         }
 
-        filters = new String[2];
-        filters[0] = FilterConstants.CANCELLED;
-        filters[1] = FilterConstants.ACTIVE_MBR;
-        return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, filters);
+        setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
+        return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, getFilters());
 
     }
 
@@ -364,12 +355,10 @@ public class UserDAOImpl extends Generic implements UserDAO {
             logger.debug("User: find by only username {}", username);
         }
         if (!disableFilter) {
-            filters = new String[2];
-            filters[0] = FilterConstants.CANCELLED;
-            filters[1] = FilterConstants.ACTIVE_MBR;
+              setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
         }
 
-        return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, filters);
+        return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, getFilters());
     }
 
     @Override
@@ -381,11 +370,10 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
 
     private List commonSearchUser(UserSeachDTO search, PageBy pageBy) throws AnnounceException {
-        filters= new String[2];
-        filters[0]= FilterConstants.CANCELLED;
-        filters[1]= FilterConstants.ACTIVE_MBR;
+        setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
+
         String where = composeQuery(search, USER_TABLE_ALIAS);
-        Query query = search(UserVO.SEARCH , where,filters);
+        Query query = search(UserVO.SEARCH , where,getFilters());
         composeQueryParameters(search, query);
         pageBy(query,pageBy);
         return query.list();
@@ -399,11 +387,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
         if(logger.isDebugEnabled()){
             logger.debug("User: find token  {}", token);
         }
-
-        filters = new String[1];
-        filters[0] = FilterConstants.CANCELLED;
-
-        return (UserVO) findByUniqueResult(UserVO.CONF_TOKEN, UserVO.class, token, CONFIRM_TOKEN_PARAM, null, filters);
+        setFilters(FilterConstants.CANCELLED);
+        return (UserVO) findByUniqueResult(UserVO.CONF_TOKEN, UserVO.class, token, CONFIRM_TOKEN_PARAM, null, getFilters());
     }
 
     @Override
@@ -415,13 +400,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
                 logger.info("User: find by id  {}", id);
             }
 
-            filters = new String[2];
-            filters[0] = FilterConstants.ACTIVE_MBR;
-            filters[1] = FilterConstants.CANCELLED;
-
-            return (UserVO) find(UserVO.class, id,filters);
-            //Hibernate.initialize(user.getMessages()); // on l'utilise quand la fetch avec message est lazy
-            //return user;
+            setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
+            return (UserVO) find(UserVO.class, id,getFilters());
         } catch (Exception e) {
             throw new UserException(e.getMessage());
         }
@@ -430,11 +410,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     public UserVO login(String username) throws UserException {
-
-        filters = new String[2];
-        filters[0] = FilterConstants.ACTIVE_MBR;
-        filters[1] = FilterConstants.CANCELLED;
-        return (UserVO) findById(UserVO.class, username,filters);
+        setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
+        return (UserVO) findById(UserVO.class, username,getFilters());
     }
 
     @Override
@@ -547,7 +524,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         UserVO user = findById(userId);
         if (user == null){
-            throw new UserException("Utilisateur non trouvé");
+            throw new UserException(USER_NOT_FOUND);
         }
         try {
 
@@ -569,7 +546,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     public UserVO manageMfa(Long userId, boolean mfa) throws UserException {
         UserVO user = findById(userId);
         if (user == null){
-            throw new UserException("Utilisateur non trouvé");
+            throw new UserException(USER_NOT_FOUND);
         }
         try {
 
@@ -630,21 +607,21 @@ public class UserDAOImpl extends Generic implements UserDAO {
             UserVO userFound = findByUsername(username);
 
             if ((encryptedPassword == null || userFound == null)) {
-                throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
+                throw new BusinessResourceException(USER_NOT_FOUND_EX, USER_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
 
             if ((StringUtils.notEquals(encryptedPassword, userFound.getPassword()))) {
-                throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
+                throw new BusinessResourceException(USER_NOT_FOUND_EX, "Mot de passe incorrect", HttpStatus.NOT_FOUND);
             }
 
             if (encryptedPassword.equals(userFound.getPassword())) {
                 return userFound;
             }
-            throw new BusinessResourceException("UserNotFound", "Mot de passe incorrect", HttpStatus.NOT_FOUND);
+            throw new BusinessResourceException(USER_NOT_FOUND_EX, "Mot de passe incorrect", HttpStatus.NOT_FOUND);
 
         } catch (BusinessResourceException ex) {
             logger.error("Login ou mot de passe incorrect {}", ex.getMessage());
-            throw new BusinessResourceException("UserNotFound", " Nom utilisateur ou mot de passe incorrect", HttpStatus.NOT_FOUND);
+            throw new BusinessResourceException(USER_NOT_FOUND_EX, " Nom utilisateur ou mot de passe incorrect", HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             logger.error("Une erreur technique est survenue {}", ex.getMessage());
             throw new BusinessResourceException("TechnicalError", "Une erreur technique est survenue", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -659,8 +636,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         StringBuilder hql = new StringBuilder(WHERE);
         try {
-            boolean and = false;
-
             if (StringUtils.isNotEmpty(search.getUsername())) {
                 hql.append(alias +USERNAME_PARAM+"=:"+USERNAME_PARAM);
             }
@@ -690,6 +665,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
     }
 
     @Override
+    @Transactional
     public UserVO generateSecret(UserVO user) throws Exception {
 
         user.setMultipleFactorAuthentication(Boolean.TRUE);

@@ -54,9 +54,14 @@ public class CollectionsUtils {
 
     }
 
+    public static int size(Class<?> [] elements) {
+
+        return isEmpty(elements) ? 0 : Arrays.asList(elements).size();
+
+    }
+
     public static boolean isUnique(Collection<?> elements) {
 
         return size(elements)== 0;
-
     }
 }
