@@ -77,6 +77,8 @@ public class UserInfo implements Serializable {
         this.multipleFactorAuthentication=user.isMultipleFactorAuthentication();
         this.count = CollectionsUtils.size(user.getAnnounces());
         this.roles=CommonFilter.getRolesAuthoritiesUser(user);
+        this.city = user.getCity();
+        this.country = user.getCountry();
     }
 
     @JsonProperty
@@ -197,19 +199,19 @@ public class UserInfo implements Serializable {
     public void setSecret(String secret) {  this.secret = secret;  }
 
 
-    public void setcountry(String country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
-    public void setcity(String city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public String getcountry() {
-        return country;
-    }
+    @JsonProperty
+    public String getCountry() {  return country;  }
 
-    public String getcity() {
+    @JsonProperty
+    public String getCity() {
         return city;
     }
 }

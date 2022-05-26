@@ -199,14 +199,15 @@ create table role
 
 create table tp_authentication
 (
-    ID BIGINT auto_increment,
-    ATTEMPT INTEGER not null,
-    DESACTIVATE BOOLEAN not null,
-    R_USER_ID BIGINT,
-    CANCELLED BOOLEAN not null,
-    DATECREATED TIMESTAMP,
-    LASTUPDATED TIMESTAMP,
-    foreign key (R_USER_ID) references TP_USER (ID)
+    ID bigint auto_increment,
+    ATTEMPT integer not null,
+    DESACTIVATE tinyint(1) not null,
+    USER_ID BIGINT,
+    CANCELLED tinyint(1) not null,
+    DATECREATED timestamp,
+    LASTUPDATED timestamp,
+    primary key (ID),
+    foreign key (USER_ID) references tp_user (ID)
 );
 
 create table tp_user
@@ -221,8 +222,8 @@ create table tp_user
        EMAIL varchar(255) not null,
        USERNAME varchar(15) not null,
        PASSWORD varchar(255) not null,
-       MULTIPLE_FACTOR_AUTH   tinyint(1) not null,
-       MFA_SECRET  varchar(255) not null,
+       MULTIPLE_FACTOR_AUTH   tinyint(1) not null default false,
+       MFA_SECRET  varchar(255) ,
        ENABLE_NOTIF tinyint(1) not null,
        ACTIVE int not null,
        CONFIRM_TOKEN varchar(255) null,

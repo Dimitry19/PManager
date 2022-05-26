@@ -2,18 +2,20 @@ package cm.travelpost.tp.ws.requests.users;
 
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@NotNull
 public class LoginDTO {
 
-    @ApiModelProperty(notes = "An email for login", required = true)
+    //@ApiModelProperty(notes = "An email for login", required = true)
+    //@NotNull(message = "Valorisez l'adresse email")
     protected String email;
 
     protected String provider;
 
     @ApiModelProperty(notes = "A password for login", required = true)
+    @NotNull(message = "Valorisez le mot de passe")
     private String password;
 
     private String socialId;
@@ -23,7 +25,7 @@ public class LoginDTO {
     @ApiModelProperty(notes = "The username for login", required = true)
     private String username;
 
-    @Email(message = "Email : format non valide")
+    //@Email(message = "Email : format non valide")
     public String getEmail() {
         return email;
     }

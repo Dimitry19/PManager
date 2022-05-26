@@ -35,6 +35,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static cm.travelpost.tp.common.Constants.TP_ACTIVATE_ACCOUNT;
+import static cm.travelpost.tp.common.Constants.TP_INACTIVATE_ACCOUNT;
+
 
 @Repository
 public class UserDAOImpl extends Generic implements UserDAO {
@@ -265,15 +268,13 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setFirstName(register.getFirstName());
             user.setLastName(register.getLastName());
             user.setPhone(register.getPhone());
-            user.setActive(enableAutoActivateRegistration?1:0); // TODO remettre à 0 quand le service d'envoi mail sera de nouveau disponible
+            user.setActive(enableAutoActivateRegistration?TP_ACTIVATE_ACCOUNT:TP_INACTIVATE_ACCOUNT); // TODO remettre à 0 quand le service d'envoi mail sera de nouveau disponible
             user.setEnableNotification(Boolean.TRUE);
+            user.setMultipleFactorAuthentication(Boolean.FALSE);
             user.setGender(register.getGender());
             user.setConfirmationToken(UUID.randomUUID().toString());
             user.setCountry(register.getCountry());
             user.setCity(register.getCity());
-
-            user.setMultipleFactorAuthentication(Boolean.TRUE);
-            user.setSecret(secretGenerator.generate());
             Long id=(Long)save(user);
             user=findById(id);
             setRole(user, register.getRole());
@@ -309,8 +310,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setCountry(userDTO.getCountry());
             calcolateAverage(user);
             return (UserVO) merge(user);
-
-
         } else throw new UserException(USER_NOT_FOUND);
 
     }
@@ -566,6 +565,28 @@ public class UserDAOImpl extends Generic implements UserDAO {
     }
 
     @Override
+    @Transactional(rollbackFor = {UserException.class, Exception.class})
+    public UserVO manageMfa(Long userId, boolean mfa) throws UserException {
+        UserVO user = findById(userId);
+        if (user == null){
+            throw new UserException("Utilisateur non trouvé");
+        }
+        try {
+
+            boolean precedent = user.isMultipleFactorAuthentication();
+            if (precedent != mfa) {
+                user.setMultipleFactorAuthentication(mfa);
+                update(user);
+                return (UserVO) get(UserVO.class, userId);
+            }
+        } catch (UserException e) {
+            logger.error("Erreur durant la modification de la gestion mfa {}", e.getMessage());
+            throw e;
+        }
+        return user;
+    }
+
+    @Override
     @Transactional
     public boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException {
         if(logger.isDebugEnabled()){
@@ -643,13 +664,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
             if (StringUtils.isNotEmpty(search.getUsername())) {
                 hql.append(alias +USERNAME_PARAM+"=:"+USERNAME_PARAM);
             }
-//            and = StringUtils.isNotEmpty(hql.toString()) && !StringUtils.equals(hql.toString(),WHERE);
-//            if (StringUtils.isNotEmpty(search.getUsername())) {
-//                if (and) {
-//                    hql.append(AND);
-//                }
-//                hql.append(alias + ANNOUNCE_TYPE_PARAM +"=:" + ANNOUNCE_TYPE_PARAM);
-//            }
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();

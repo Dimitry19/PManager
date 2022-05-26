@@ -100,7 +100,6 @@ public class SwaggerApiConfig  extends CommonProperties {
     public Docket authenticationApi() {
         return createDocket(apiGroupNameAuthentication, contextRoot+"/ws/authentication.*");
     }
-
     @Bean
     public Docket announcesApi() {
         return createDocket(apiGroupNameAnnounce, contextRoot+"/ws/announce.*");
