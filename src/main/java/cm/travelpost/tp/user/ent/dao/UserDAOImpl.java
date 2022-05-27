@@ -22,6 +22,7 @@ import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.users.*;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
 import dev.samstevens.totp.secret.SecretGenerator;
+import org.apache.commons.lang3.BooleanUtils;
 import org.hibernate.QueryParameterException;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -344,7 +345,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
         return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, getFilters());
-
     }
 
 
@@ -354,24 +354,23 @@ public class UserDAOImpl extends Generic implements UserDAO {
         if(logger.isDebugEnabled()){
             logger.debug("User: find by only username {}", username);
         }
-        if (!disableFilter) {
+        if (BooleanUtils.isFalse(disableFilter)) {
               setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
         }
 
-        return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, getFilters());
+        return (UserVO) findByUniqueResult(UserVO.USERNAME, UserVO.class, username, USERNAME_PARAM, null, BooleanUtils.isFalse(disableFilter)?getFilters():emptyFilters());
     }
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<UserVO> search(UserSeachDTO search, PageBy pageBy) throws BusinessResourceException {
-
         return commonSearchUser(search, pageBy);
     }
 
 
     private List commonSearchUser(UserSeachDTO search, PageBy pageBy) throws AnnounceException {
-        setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
 
+        setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
         String where = composeQuery(search, USER_TABLE_ALIAS);
         Query query = search(UserVO.SEARCH , where,getFilters());
         composeQueryParameters(search, query);
@@ -407,7 +406,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
     }
 
-
     @Override
     public UserVO login(String username) throws UserException {
         setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
@@ -440,7 +438,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
         }
         setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
         return (UserVO) findByUniqueResult(UserVO.FACEBOOK, UserVO.class, googleId, GOOGLE_ID_PARAM, null, getFilters());
-
     }
 
     @Override

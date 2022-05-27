@@ -120,9 +120,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if (o instanceof Long) {
             Long userId = (Long) o;
             if(status == StatusEnum.COMPLETED){
-                return countByNameQuery(AnnounceCompletedVO.FINDBYUSER,AnnounceCompletedVO.class,userId,USER_PARAM,pageBy, getFilters());
+                return countByNameQuery(AnnounceCompletedVO.FINDBYUSER,AnnounceCompletedVO.class,userId,USER_PARAM,pageBy, emptyFilters());
             }
-            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,USER_PARAM,pageBy, getFilters());
+            return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,USER_PARAM,pageBy, emptyFilters());
         }
         return 0;
     }
@@ -171,10 +171,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
 
         if(status == StatusEnum.COMPLETED){
-            return findBySqlQuery(AnnounceCompletedVO.SQL_FIND_BY_USER, AnnounceCompletedVO.class, userId,USER_PARAM, pageBy,getFilters());
+            return findBySqlQuery(AnnounceCompletedVO.SQL_FIND_BY_USER, AnnounceCompletedVO.class, userId,USER_PARAM, pageBy,emptyFilters());
         }
 
-        return findBySqlQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId,USER_PARAM, pageBy,getFilters());
+        return findBySqlQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId,USER_PARAM, pageBy,emptyFilters());
     }
 
 
@@ -629,7 +629,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         QueryBuilder hql = new QueryBuilder(AnnounceVO.ANNOUNCE_SEARCH_SINGLE,"from AnnounceVO as "+ANNOUNCE_ALIAS);
 
-        Query query = search(composeQuery(hql,search),getFilters());
+        Query query = search(composeQuery(hql,search),emptyFilters());
         composeQueryParameters(search, query);
 
         pageBy(query,pageBy);

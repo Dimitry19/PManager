@@ -28,11 +28,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
     private static final String[] AUTH_LIST = {
+            "/",
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources",
             "/configuration/security",
             "/swagger-ui.html",
+            "/services",
             "/ws/**",
             "/webjars/**",
             "/actuator/**",
@@ -67,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .requiresChannel()
                 .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
                 .requiresSecure();
+
 
     }
 
