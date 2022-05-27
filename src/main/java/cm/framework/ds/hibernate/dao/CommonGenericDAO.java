@@ -28,9 +28,9 @@ public class CommonGenericDAO extends GenericDAOImpl {
     public void setMap(KeyValue ...keyValues) {
         initializeMap();
         List<KeyValue> mapValues =Arrays.asList(keyValues);
-        mapValues.stream().forEach(k->{
-            this.map.put((String) k.getKey(), (String)k.getValue());
-        });
+        mapValues.stream().forEach(k->
+            this.map.put(k.getKey(), k.getValue())
+        );
     }
 
     public Map getMap() {
@@ -43,9 +43,9 @@ public class CommonGenericDAO extends GenericDAOImpl {
 
         int size  = CollectionsUtils.size(listFilters);
         this.filters = new String[size];
-         listFilters.stream().forEach(f->{
-             this.filters[listFilters.indexOf(f)]=f;
-         });
+         listFilters.stream().forEach(f->
+             this.filters[listFilters.indexOf(f)]=f
+         );
     }
 
     protected String [] getFilters(){

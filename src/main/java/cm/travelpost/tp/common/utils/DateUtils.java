@@ -90,7 +90,7 @@ public class DateUtils {
                 date = formatter.parse(dateStr);
             }
         } catch (Exception e) {
-            logger.trace("Impossibile representer la date " + date + ". Exception :" + e);
+            logger.trace("Impossibile représenter la date {}- Exception", date, e);
         }
         return date;
     }
@@ -242,14 +242,7 @@ public class DateUtils {
             //Converting milliseconds to Date using Calendar
             Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(currentDateTime);
-            System.out.println("Milliseconds to Date using Calendar:" + df.format(cal.getTime()));
 
-            //copying one Date's value into another Date in Java
-		/*Date now = new Date();
-		Date copiedDate = new Date(now.getTime());
-
-		System.out.println("original Date: " + df.format(now));
-		System.out.println("copied Date: " + df.format(copiedDate));*/
             return cal.getTime();
 
         } catch (Exception e) {
@@ -261,21 +254,20 @@ public class DateUtils {
 
     public static boolean isDifferenceDay(Date d1, Date d2,long numbersDays, boolean extreme){
 
-        return extreme ?differenceDay(d1,d2)==numbersDays: differenceDay(d1,d2)<=numbersDays;
+        return extreme ? differenceDay(d1,d2)>=numbersDays: differenceDay(d1,d2)==numbersDays;
     }
 
     public static Long differenceDay(Date d1, Date d2){
-
-        if(d1 == null || d2 == null ) return null;
+        if(d1 == null || d2 == null ) {
+            return null;
+        }
 
          long diff = d2.getTime() - d1.getTime();
 
          return diff / (24 * 60 * 60 * 1000);
     }
     static void printDate(Date date){
-
         System.out.println("converted Date: " + dateWithoutTime(date));
-
     }
 
     /**

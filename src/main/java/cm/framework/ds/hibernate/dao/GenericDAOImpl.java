@@ -303,7 +303,6 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         } catch (Exception e) {
             throw new BusinessResourceException(e.getMessage());
         }
-
     }
 
     @Override

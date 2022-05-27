@@ -9,6 +9,7 @@ import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
+import cm.travelpost.tp.common.exception.NotificationException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
@@ -17,7 +18,6 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
 
 
     @Override
-    public List<NotificationVO> notificationToSend(PageBy pageBy) throws Exception {
+    public List<NotificationVO> notificationToSend(PageBy pageBy) throws NotificationException {
         return findByStatus(StatusEnum.VALID);
     }
 
@@ -56,7 +56,7 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
     }
 
     @Override
-    public  void readAll(List<Long> ids)  {
+    public  void readAll(List<Long> ids) throws NotificationException {
         if (CollectionsUtils.isNotEmpty(ids)){
            ids.stream().filter(id->findById(NotificationVO.class, id)!=null)
                 .forEach(id->{
@@ -68,7 +68,7 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
 
 
     @Override
-    public void deleteOldCompletedNotifications() throws Exception {
+    public void deleteOldCompletedNotifications() throws NotificationException {
 
         List<NotificationVO> notifications= findByStatus(StatusEnum.COMPLETED);
 
@@ -89,7 +89,7 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
 
         return Boolean.TRUE;
     }
-    @Transactional(readOnly = true)
+
     public List<NotificationVO> findByStatus(StatusEnum status){
 
         try{
