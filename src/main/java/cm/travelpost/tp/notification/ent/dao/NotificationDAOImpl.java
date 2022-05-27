@@ -14,13 +14,18 @@ import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class NotificationDAOImpl extends Generic implements NotificationDAO {
+
+    private static Logger logger = LoggerFactory.getLogger(NotificationDAOImpl.class);
 
     @Override
     public List<NotificationVO> all() throws Exception {
@@ -31,6 +36,11 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
     @Override
     public List<NotificationVO> notificationToSend(PageBy pageBy) throws Exception {
         return findByStatus(StatusEnum.VALID);
+    }
+
+    @Override
+    public List<NotificationVO>  notificationByAnnounce(long id) throws Exception {
+        return findBy(NotificationVO.FINDBYANNOUNCEID,NotificationVO.class,id, ANNOUNCE_PARAM,null);
     }
 
     @Override
@@ -80,15 +90,21 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
         return Boolean.TRUE;
     }
     @Transactional(readOnly = true)
-    protected List<NotificationVO> findByStatus(StatusEnum status) throws Exception{
-        StringBuilder queryBuilder = new StringBuilder(NotificationVO.byStatusNativeQuery);
-        Session session = getCurrentSession();
-        queryBuilder.append(APPLICE);
-        queryBuilder.append(status.name());
-        queryBuilder.append(APPLICE);
+    public List<NotificationVO> findByStatus(StatusEnum status){
 
-        Query query = session.createNativeQuery(queryBuilder.toString()).addEntity(NotificationVO.class);
+        try{
+            StringBuilder queryBuilder = new StringBuilder(NotificationVO.byStatusNativeQuery);
+            Session session = getCurrentSession();
+            queryBuilder.append(APPLICE);
+            queryBuilder.append(status.name());
+            queryBuilder.append(APPLICE);
 
-        return query.getResultList();
+            Query query = session.createNativeQuery(queryBuilder.toString()).addEntity(NotificationVO.class);
+
+            return query.getResultList();
+        }catch (Exception e){
+            logger.error("Erreur durant la recuperation des notification byStatus {}", e);
+        }
+        return new ArrayList<>();
     }
 }

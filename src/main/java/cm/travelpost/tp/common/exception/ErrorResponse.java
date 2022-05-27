@@ -32,7 +32,6 @@ public class ErrorResponse extends CommonProperties {
 
     public ErrorResponse() {
         super();
-
     }
 
     public ErrorResponse(String message, List details) {

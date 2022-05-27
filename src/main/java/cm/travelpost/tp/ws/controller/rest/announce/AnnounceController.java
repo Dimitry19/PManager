@@ -83,15 +83,13 @@ public class AnnounceController extends CommonController {
             createOpentracingSpan("AnnounceController -create");
 
             logger.info("create announce request in");
-            if (ar != null) {
-                announce = announceService.create(ar);
+            announce = announceService.create(ar);
 
-                if (announce != null) {
-                    announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, ANNOUNCE_LABEL));
-                    announce.setRetCode(WebServiceResponseCode.OK_CODE);
+            if (announce != null) {
+                announce.setRetDescription(MessageFormat.format(WebServiceResponseCode.CREATE_LABEL, ANNOUNCE_LABEL));
+                announce.setRetCode(WebServiceResponseCode.OK_CODE);
 
-                    return new ResponseEntity<>(announce, HttpStatus.CREATED);
-                }
+                return new ResponseEntity<>(announce, HttpStatus.CREATED);
             }
         } catch (AnnounceException e) {
             logger.error("Erreur durant l'execution de  add announce: ", e);

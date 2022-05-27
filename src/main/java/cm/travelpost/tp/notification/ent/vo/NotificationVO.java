@@ -22,6 +22,9 @@ import java.util.Set;
 @Entity
 @Table(name = "notification")
 
+@NamedQueries(value = {
+        @NamedQuery(name = NotificationVO.FINDBYANNOUNCEID, query = "select n from NotificationVO n where n.announceId =:announceId order by n.id desc"),
+})
 @Filters({
         @Filter(name = FilterConstants.CANCELLED)
 })
@@ -31,6 +34,8 @@ public class NotificationVO extends CommonVO {
     private static final long serialVersionUID = 6473029882566244786L;
 
     public static String byStatusNativeQuery=" select n.* from notification as n where n.status =";
+    public static final String FINDBYANNOUNCEID = "cm.travelpost.tp.notification.ent.vo.NotificationVO.findByAnnounceId";
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,7 +65,6 @@ public class NotificationVO extends CommonVO {
     @Basic(optional = false)
     @Column(name = "R_USER_ID", nullable = false)
     private Long random;
-
 
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)

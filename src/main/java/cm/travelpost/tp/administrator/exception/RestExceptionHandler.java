@@ -23,10 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static cm.travelpost.tp.common.exception.ErrorCode.DEFAULT_ERROR;
+
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
-
-    protected static final int DEFAULT_ERROR=-1;
 
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<Object> handlerAnyException(Exception ex, WebRequest request) {

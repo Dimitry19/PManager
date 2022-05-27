@@ -7,6 +7,7 @@ package cm.travelpost.tp.notification.ent.dao;
 
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.CommonDAO;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 
 import java.util.List;
@@ -18,9 +19,13 @@ public interface NotificationDAO extends CommonDAO {
 
     List<NotificationVO> notificationToSend(PageBy pageBy) throws Exception;
 
+    List<NotificationVO> notificationByAnnounce(long id) throws Exception;
+
+    List<NotificationVO> findByStatus(StatusEnum status);
+
     NotificationVO read(Long id) ;
 
     void readAll(List<Long> ids) ;
 
-   void  deleteOldCompletedNotifications() throws Exception;
+    void  deleteOldCompletedNotifications() throws Exception;
 }

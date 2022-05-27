@@ -465,9 +465,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         if (StringUtils.isNotEmpty(paramName) && id != null) {
             query.setParameter(paramName, id);
         }
-
         pageBy(query, pageBy);
-
         return query.getResultList();
     }
 

@@ -428,10 +428,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
         if(logger.isDebugEnabled()){
             logger.debug("User: find by facebook");
         }
-        filters = new String[2];
-        filters[0] = FilterConstants.CANCELLED;
-        filters[1] = FilterConstants.ACTIVE_MBR;
-        return (UserVO) findByUniqueResult(UserVO.FACEBOOK, UserVO.class, facebookId, FACEBOOK_ID_PARAM, null, filters);
+        setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
+        return (UserVO) findByUniqueResult(UserVO.FACEBOOK, UserVO.class, facebookId, FACEBOOK_ID_PARAM, null, getFilters());
     }
 
     @Override
@@ -440,10 +438,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
         if(logger.isDebugEnabled()){
             logger.debug("User: find by google");
         }
-        filters = new String[2];
-        filters[0] = FilterConstants.CANCELLED;
-        filters[1] = FilterConstants.ACTIVE_MBR;
-        return (UserVO) findByUniqueResult(UserVO.FACEBOOK, UserVO.class, googleId, GOOGLE_ID_PARAM, null, filters);
+        setFilters(FilterConstants.CANCELLED,FilterConstants.ACTIVE_MBR);
+        return (UserVO) findByUniqueResult(UserVO.FACEBOOK, UserVO.class, googleId, GOOGLE_ID_PARAM, null, getFilters());
 
     }
 

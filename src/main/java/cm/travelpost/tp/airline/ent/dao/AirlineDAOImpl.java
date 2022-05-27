@@ -106,13 +106,8 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
     public AirlineVO findByCode(String code) throws Exception {
 
         logger.info(AirlineDAOImpl.class.getName() + " find by code ");
-
-        filters= new String[1];
-
-        filters[0]= FilterConstants.CANCELLED;
-
-
-        return (AirlineVO)findByUniqueResult(AirlineVO.FINDBYCODE,AirlineVO.class, code,"code",null,filters);
+        setFilters(FilterConstants.CANCELLED);
+        return (AirlineVO)findByUniqueResult(AirlineVO.FINDBYCODE,AirlineVO.class, code,"code",null,getFilters());
     }
 
     public boolean updateDelete(AirlineVO airline) throws Exception {

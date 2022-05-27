@@ -13,7 +13,6 @@ public class AnnounceManagerJob extends AAnnounceJob  {
     private static Logger log = LoggerFactory.getLogger(AnnounceManagerJob.class);
 
 
-
     @Override
     public void execute(JobExecutionContext context) {
         log.info("Job ** {} ** starting @ {}", context.getJobDetail().getKey().getName(), context.getFireTime());

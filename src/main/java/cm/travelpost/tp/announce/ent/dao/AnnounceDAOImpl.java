@@ -22,6 +22,8 @@ import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.*;
+import cm.travelpost.tp.notification.ent.dao.NotificationDAO;
+import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 import cm.travelpost.tp.notification.enums.NotificationType;
 import cm.travelpost.tp.user.ent.dao.UserDAO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
@@ -63,6 +65,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     protected CategoryDAO categoryDAO;
 
     @Autowired
+    NotificationDAO notificationDAO;
+
+    @Autowired
     protected Constants constants;
 
     @Autowired
@@ -100,7 +105,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             return CollectionsUtils.size(commonSearchAnnounce(announceSearch,null));
         }
         return 0;
-
     }
 
     @Override
@@ -113,18 +117,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
 
         if (o instanceof Long) {
-
             Long userId = (Long) o;
-
-            filters = new String[1];
             if(status == StatusEnum.COMPLETED){
                 return countByNameQuery(AnnounceCompletedVO.FINDBYUSER,AnnounceCompletedVO.class,userId,USER_PARAM,pageBy, null);
             }
             return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,USER_PARAM,pageBy, null);
         }
-
         return 0;
-
     }
 
     @Override
@@ -132,7 +131,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     public List<AnnounceVO> announces(PageBy pageBy) throws AnnounceException,Exception {
 
         return allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, pageBy);
-
     }
 
     @Override
@@ -255,8 +253,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
     public AnnounceMasterVO create(AnnounceDTO adto) throws AnnounceException,Exception {
 
-        if (adto != null) {
-
             UserVO user = userDAO.findById(adto.getUserId());
 
             if (user == null) {
@@ -271,11 +267,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             announce.setMessages(null);
             announce.setCancelled(false);
 
-
             save(announce);
             addAnnounceToUser(announce);
-
-
 
             String message=buildNotificationMessage(ANNOUNCE,announce.getUser().getUsername(),announce.getDeparture(),
                     announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
@@ -284,10 +277,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             generateEvent(announce,message);
             notificationForBuyers(announce);
-
             return announce;
-        }
-        return null;
     }
 
     /**
@@ -363,7 +353,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                             generateEvent(a,"l'annonce de " +partOneMessage(a.getDeparture(),a.getArrival()) + partTwoMessage(" et ayant", DateUtils.dateToString(a.getStartDate()),DateUtils.dateToString(a.getEndDate()))+" n'est plus disponible", true);
 
                         } catch (Exception e) {
-                            logger.error("Erreur durant l''execution du Batch d''ajournement de status de l'annonce");
+                            logger.error("Erreur durant l''execution du Batch d''ajournement de status de l'annonce {}",e.getMessage());
                             e.printStackTrace();
                         }
                     });
@@ -373,18 +363,28 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
     public void announcesToNotificate(int numberDays) throws AnnounceException,Exception {
+
         List<AnnounceVO> announces = Optional.ofNullable(allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, null)).orElseGet(Collections::emptyList);
+        List<NotificationVO> notifications= notificationDAO.findByStatus(StatusEnum.VALID);
         if (CollectionsUtils.isNotEmpty(announces)) {
-            announces.stream().filter(ann -> !ann.isCancelled() && DateUtils.isDifferenceDay(ann.getEndDate(), DateUtils.currentDate(), numberDays,false))
+            announces.stream()
+                    .filter(ann->filterAnnounceToNotificate(ann,numberDays,notifications))
                     .forEach(a -> {
                         try {
                             generateEvent(a,"Dans " + numberDays + " jours l'annonce de " +partOneMessage(a.getDeparture(),a.getArrival()) + partTwoMessage(" et ayant ", DateUtils.dateToString(a.getStartDate()),DateUtils.dateToString(a.getEndDate()))+" ne sera plus disponible");
                         } catch (Exception e) {
-                            logger.error("Erreur durant l''execution du Batch de notification des annonceurs");
+                            logger.error("Erreur durant l''execution du Batch de notification des annonceurs {}", e.getMessage());
                             e.printStackTrace();
                         }
                     });
         }
+    }
+
+    @Transactional
+    public boolean filterAnnounceToNotificate(AnnounceVO ann,int numberDays, List<NotificationVO> notifications) {
+
+        List<Long> ids=notifications.stream().map(n->n.getAnnounceId()).collect(Collectors.toList());
+        return !ids.contains(ann.getId()) && !ann.isCancelled() && DateUtils.isDifferenceDay(ann.getEndDate(), DateUtils.currentDate(), numberDays,false);
     }
 
     @Override
@@ -436,9 +436,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         BigDecimal weight = adto.getWeight();
 
         if(BooleanUtils.isFalse(DateUtils.validLongValue(adto.getStartDate())) || BooleanUtils.isFalse(DateUtils.validLongValue(adto.getEndDate()))){
-
             throw new AnnounceException("Une des dates n'est pas valide");
-
         }
 
         Date startDate=DateUtils.milliSecondToDate(adto.getStartDate());
@@ -449,8 +447,11 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             throw new AnnounceException("La date de depart ne peut pas etre superieure à celle de retour");
         }
 
-        if (BooleanUtils.isTrue(isCreate) &&DateUtils.isBefore(startDate, DateUtils.currentDate())) {
+        if (BooleanUtils.isTrue(isCreate) && DateUtils.isBefore(startDate, DateUtils.currentDate())) {
             throw new AnnounceException("La date de depart n'est pas valide, elle doit etre minimum la date d'aujourd\'hui");
+        }
+        if (BooleanUtils.isFalse(isCreate) && DateUtils.isBefore(endDate, DateUtils.currentDate())) {
+            throw new AnnounceException("Impossible de modifier  cette annonce car la date d\'arrivée est deja passée");
         }
 
         BigDecimal sumQtyRes=BigDecimal.ZERO;
@@ -485,12 +486,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if(announce.getAnnounceType().equals(AnnounceType.BUYER)) {
             announce.setEstimateValue(adto.getEstimateValue());
         }
-
         if(!ObjectUtils.isCallable(announce, "code")){
             announce.setCode(generateCode(announce.getAnnounceType().name()));
         }
     }
-
 
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteReservations(Long id) throws Exception {
@@ -676,8 +675,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         hql.addOrderBy(ANNOUNCE_ALIAS,START_DATE_PARAM , Boolean.FALSE);
 
         return  hql.createQuery();
-
-
     }
 
     @Override
@@ -801,11 +798,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 
             if(CollectionsUtils.isNotEmpty(announces)){
-                List<AnnounceVO> check = Optional.ofNullable(announces.stream().filter(ua -> ua.getStatus() != StatusEnum.COMPLETED
-                        && (StringUtils.equals(ua.getDeparture(), announce.getDeparture())
-                        && StringUtils.equals(ua.getArrival(), announce.getArrival()))
-                        ||(StringUtils.equals(ua.getArrival(), announce.getArrival())))
-                        .collect(Collectors.toList()))
+                List<AnnounceVO> check = Optional.ofNullable(
+                            announces.stream()
+                                .filter(ua -> ua.getStatus() != StatusEnum.COMPLETED
+                                    && (StringUtils.equals(ua.getDeparture(), announce.getDeparture())
+                                    && StringUtils.equals(ua.getArrival(), announce.getArrival()))
+                                    ||(StringUtils.equals(ua.getArrival(), announce.getArrival())))
+                                .collect(Collectors.toList()))
                         .orElseGet(Collections::emptyList);
 
                 if (CollectionsUtils.isNotEmpty(check)) {
@@ -818,7 +817,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 
     public void generateEvent(AnnounceVO announce , String message, Object o)throws Exception {
-
 
         UserVO user= announce.getUser();
 
@@ -850,7 +848,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             fillProps(props,announce.getId(),message, user.getId(),subscribers);
             generateEvent(NotificationType.ANNOUNCE);
         }
-
     }
 
     private Set fillSubscribers(UserVO user, AnnounceVO announce) throws Exception{
@@ -867,9 +864,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if(CollectionsUtils.isNotEmpty(announce.getMessages())) {
             announce.getMessages().stream().filter(m->m.getUser()!=user && m.getUser().isEnableNotification()).forEach(m->subscribers.add(m.getUser()));
         }
-
         return subscribers;
-
     }
 
 
@@ -883,13 +878,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                     DateUtils.getDateStandard(announce.getEndDate()),null);
 
             generateEvent(announce,message,users);
-
         }
-
     }
     @Override
     public void warning(Object o, Date endDate, BigDecimal weight, BigDecimal sumQtyRes){
-
 
         boolean closeDate= DateUtils.isBefore(endDate, DateUtils.currentDate()) || DateUtils.isSame(endDate, DateUtils.currentDate());
         boolean allReserved=(weight != null && sumQtyRes != null) && weight.compareTo(sumQtyRes)==0;
@@ -920,10 +912,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             if(o instanceof  ReservationReceivedUserVO){
                 ReservationReceivedUserVO reservation = (ReservationReceivedUserVO) o;
                 reservation.setWarning(sb.toString());
-
             }
         }
-
     }
 
     String generateCode(String announceType){

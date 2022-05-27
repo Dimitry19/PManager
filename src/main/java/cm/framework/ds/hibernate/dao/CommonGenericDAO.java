@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class CommonGenericDAO extends GenericDAOImpl {
 
-    protected Map map = new HashMap();
-    protected String[] filters = null;
+    private Map map = new HashMap();
+    private String[] filters = null;
 
 
     protected void initializeMap(){

@@ -65,6 +65,8 @@ public class CommonController  extends WSConstants {
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN_VALUE = "*";
 
+    public final static String PATH = "/error";
+
 
     @Value("${redirect.page}")
     protected String redirectPage;

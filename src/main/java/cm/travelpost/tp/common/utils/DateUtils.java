@@ -152,7 +152,6 @@ public class DateUtils {
 
     public static boolean isBefore(Date compareDateOne, Date compareDateTwo) {
         if (compareDateOne != null && compareDateTwo != null) {
-
             return compareDateOne.before(compareDateTwo);
         }
         return false;

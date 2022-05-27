@@ -1,5 +1,6 @@
 package cm.framework.ds.common;
 
+import cm.travelpost.tp.common.exception.ErrorCode;
 import cm.travelpost.tp.common.exception.ErrorResponse;
 import cm.travelpost.tp.common.session.SessionManager;
 import cm.travelpost.tp.user.ent.service.UserService;
@@ -71,10 +72,11 @@ public abstract class CustomOncePerRequestFilter  extends OncePerRequestFilter  
 		String[] codes=new String[1];
 		codes[0]= String.valueOf(HttpStatus.SC_GATEWAY_TIMEOUT);
 		List<String> details= new ArrayList();
-		details.add("Token expiré, se connecter de nouveau ");
+		details.add("Token expiré, se connecter de nouveau");
 		errorResponse.setCode(codes);
 		errorResponse.setDetails(details);
 		errorResponse.setMessage(details.get(0));
+		errorResponse.setRetCode(ErrorCode.TOKEN_EXPIRED);
 
 		byte[] responseToSend = restResponseBytes(errorResponse);
 		response.setHeader("Content-Type", "application/json");

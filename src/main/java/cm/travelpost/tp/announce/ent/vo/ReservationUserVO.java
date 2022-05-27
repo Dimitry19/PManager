@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "valid_reservation_created", schema = "views")
+@Table(name = "valid_reservation_created",schema = "views")
 @Immutable
 public class ReservationUserVO extends CommonReservationTransient {
 
@@ -78,7 +78,11 @@ public class ReservationUserVO extends CommonReservationTransient {
     @Column(name = "DATECREATED")
     private Timestamp dateCreated;
 
+    @Column(name = "ESTIMATE_VALUE")
+    private BigDecimal estimateValue;
 
+
+    public BigDecimal getEstimateValue() {  return estimateValue;  }
 
     public Timestamp getDateCreated() {
         return dateCreated;
@@ -201,4 +205,7 @@ public class ReservationUserVO extends CommonReservationTransient {
     public void setGender(Gender gender) {
         this.gender = gender;
     }
+
+    public void setEstimateValue(BigDecimal estimateValue) { this.estimateValue = estimateValue; }
+
 }

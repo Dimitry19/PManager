@@ -27,7 +27,6 @@ public class WSCommonResponseVO {
 
     public void setRetDescription(String retDescription) {
         this.retDescription = retDescription;
-        setMessage(null);
     }
 
     public String getMessage() {
@@ -36,6 +35,5 @@ public class WSCommonResponseVO {
 
     public void setMessage(String message) {
         this.message = message;
-        setRetDescription(null);
     }
 }
