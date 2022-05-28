@@ -165,6 +165,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
         if (StringUtils.isNotEmpty(reservationDTO.getDescription())) {
             reservation.setDescription(reservationDTO.getDescription());
         }
+        reservation.setEstimateValue(reservationDTO.getEstimateValue());
         update(reservation);
 
         BigDecimal sumQtyRes=announceDAO.checkQtyReservations(announce.getId(),false);
