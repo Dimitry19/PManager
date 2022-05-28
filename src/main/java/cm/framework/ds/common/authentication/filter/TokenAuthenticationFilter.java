@@ -3,6 +3,7 @@ package cm.framework.ds.common.authentication.filter;
 
 import cm.framework.ds.common.CustomOncePerRequestFilter;
 import cm.framework.ds.common.security.jwt.TokenProvider;
+import cm.framework.ds.common.utils.pattern.PatternUtils;
 import cm.travelpost.tp.common.exception.TokenExpiredException;
 import cm.travelpost.tp.common.utils.StringUtils;
 import org.apache.commons.lang3.BooleanUtils;
@@ -34,6 +35,9 @@ public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 	@Autowired
 	TokenProvider tokenProvider;
 
+	@Autowired
+	PatternUtils patternUtils;
+
 	private  String decryptedTokenName=null;
 	private  String decryptedToken=null;
 
@@ -58,15 +62,24 @@ public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 			boolean isRegister=uri.contains(REGISTRATION) && isApiKey;
 			boolean isLogout=uri.contains(LOGOUT);
 			boolean isService=uri.contains(service) && isApiKey;
-			boolean isFind=uri.contains(FIND);
-			boolean isLogin=uri.contains(USER_WS_LOGIN);
+
 			boolean isGuest=StringUtils.equals(username,encryptorBean.decrypt(guest)) && isService;
+			boolean isFind=uri.contains(FIND) && isGuest;
+			boolean isLogin=uri.contains(USER_WS_LOGIN);
 			boolean isServiceLogin=isLogin && isService;
 			boolean isServiceLogout=isService && isLogout;
 			boolean isOnlyService= !uri.contains(service);
 			boolean isVerifyService=uri.contains(AUTHENTICATION_WS_VERIFICATION) && isService;
 
-			boolean activate= isVerifyService || isOnlyService || isGuest || isRegister || isFind || isLogout || isServiceLogin || isServiceLogout;
+			String queryString= request.getQueryString();
+
+			StringBuilder stringBuilder = new StringBuilder(uri);
+			stringBuilder.append("/").append(queryString);
+
+			boolean isSharedLink= patternUtils.isShareUrl(stringBuilder.toString());
+
+
+			boolean activate= isVerifyService || isOnlyService || isSharedLink || isRegister || isFind || isLogout || isServiceLogin || isServiceLogout;
 
 			 if (BooleanUtils.isFalse(postman) && BooleanUtils.isFalse(activate)){
 				 tokenProvider.setAuthentication(request);

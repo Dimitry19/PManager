@@ -67,13 +67,14 @@ public class MailServiceImpl extends CommonMailSenderService implements MailServ
         contactUS.setSubject(contactus.getSubject());
         contactUS.setReceiver(personalMailSender.getDefaultContactUs());
 
+        Long id=(Long) contactUSDAO.save(contactUS);
 
         boolean sent = personalMailSender.contactUs(contactUS.getSender(), contactUS.getPseudo(), contactUS.getReceiver(),
                 personalMailSender.getTravelPostPseudo(), null, null,
                 null, null, contactUS.getSubject(), contactUS.getContent()+template(contactus.getSender(),true), null,true);
 
-        googleMailSenderService.contactUs(contactUS);
-        return sent;
+       // googleMailSenderService.contactUs(contactUS);
+        return sent || id!=null;
     }
 
 

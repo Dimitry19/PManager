@@ -37,6 +37,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.MailSendException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
@@ -246,7 +247,7 @@ public class CommonController  extends WSConstants {
     @NotNull
     protected   ResponseEntity<Response> getResponseMailResponseEntity(Response pmResponse, Exception e, String message) {
         pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-        if(e instanceof MessagingException || e instanceof SMTPSendFailedException || e instanceof MailSendException){
+        if(e instanceof MessagingException || e instanceof SMTPSendFailedException || e instanceof MailSendException || e instanceof MailAuthenticationException){
             pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,message));
         }else{
             pmResponse.setMessage(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
