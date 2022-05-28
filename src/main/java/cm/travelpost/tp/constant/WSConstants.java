@@ -158,4 +158,7 @@ public class WSConstants extends CommonProperties {
     /************ TOTP REQUEST*************/
     public static final String TOTP_WS = "/ws/totp/*";
 
+    /************ PRICING REQUEST*************/
+    public static final String PRICING_WS = "/ws/pricing/*";
+
 }

@@ -324,7 +324,7 @@ public class UserVO extends CommonVO {
         return secret;
     }
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval=true)
     @JsonIgnore
     public AuthenticationVO getAuthentication() {
         return authentication;

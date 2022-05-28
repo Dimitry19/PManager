@@ -433,7 +433,7 @@ public class AnnounceMasterVO extends CommonVO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AnnounceVO other = (AnnounceVO) obj;
+		AnnounceMasterVO other = (AnnounceMasterVO) obj;
 		if (id.equals(other.id))
 			return false;
 		if (user == null) {
