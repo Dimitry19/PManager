@@ -5,10 +5,10 @@ import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
 
 import cm.travelpost.tp.announce.ent.vo.*;
-import cm.travelpost.tp.common.enums.AnnounceType;
-import cm.travelpost.tp.common.enums.ReservationType;
+import cm.travelpost.tp.announce.enums.AnnounceType;
+import cm.travelpost.tp.announce.enums.ReservationType;
 import cm.travelpost.tp.common.enums.StatusEnum;
-import cm.travelpost.tp.common.enums.ValidateEnum;
+import cm.travelpost.tp.announce.enums.ValidateEnum;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
 import cm.travelpost.tp.common.exception.UserException;
@@ -36,7 +36,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static cm.travelpost.tp.common.enums.ReservationType.RECEIVED;
+import static cm.travelpost.tp.announce.enums.ReservationType.RECEIVED;
 import static cm.travelpost.tp.notification.enums.NotificationType.*;
 
 

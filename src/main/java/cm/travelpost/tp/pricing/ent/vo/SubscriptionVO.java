@@ -3,6 +3,7 @@ package cm.travelpost.tp.pricing.ent.vo;
 import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.common.utils.DateUtils;
 import cm.travelpost.tp.constant.FieldConstants;
+import cm.travelpost.tp.pricing.enums.PricingSubscriptionType;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,6 +19,7 @@ import java.util.Set;
 public class SubscriptionVO extends CommonVO {
 
     protected PricingSubscriptionEmbeddedId id;
+    protected PricingSubscriptionType type;
     protected String description;
     protected Date startDate;
     protected Date endDate;
@@ -30,6 +32,13 @@ public class SubscriptionVO extends CommonVO {
     @EmbeddedId
     public PricingSubscriptionEmbeddedId getId(){
         return this.id;
+    }
+
+    @Basic(optional = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE", nullable = false,length = FieldConstants.ENUM_LEN)
+    public PricingSubscriptionType getType() {
+        return type;
     }
 
     @Basic(optional = false)
@@ -64,6 +73,8 @@ public class SubscriptionVO extends CommonVO {
 
     public void setId(PricingSubscriptionEmbeddedId id) { this.id = id; }
 
+    public void setType(PricingSubscriptionType type) { this.type = type; }
+
     public void setDescription(String description) { this.description = description; }
 
     public void setStartDate(Date startDate) { this.startDate = startDate; }
@@ -91,7 +102,7 @@ public class SubscriptionVO extends CommonVO {
         if (getClass() != obj.getClass())
             return false;
         SubscriptionVO other = (SubscriptionVO) obj;
-        if (startDate.equals(other.startDate))
+        if (!startDate.equals(other.startDate))
             return false;
         if (id == null) {
             return other.id == null;

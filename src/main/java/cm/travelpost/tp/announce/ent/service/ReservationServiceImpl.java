@@ -5,7 +5,7 @@ import cm.framework.ds.hibernate.dao.Generic;
 import cm.framework.ds.hibernate.enums.FindBy;
 import cm.travelpost.tp.announce.ent.dao.ReservationDAO;
 import cm.travelpost.tp.announce.ent.vo.ReservationVO;
-import cm.travelpost.tp.common.enums.ReservationType;
+import cm.travelpost.tp.announce.enums.ReservationType;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;

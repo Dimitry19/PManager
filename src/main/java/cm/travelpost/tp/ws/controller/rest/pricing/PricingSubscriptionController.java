@@ -9,4 +9,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping( WSConstants.PRICING_WS)
 @Api(value = "Pricing and Subscription -service", description = "Pricing and Subscription Operations",tags ="Pricing and Subscription" )
 public class PricingSubscriptionController extends CommonController {
+
 }

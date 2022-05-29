@@ -1,6 +1,6 @@
 package cm.travelpost.tp.ws.requests.users;
 
-import cm.travelpost.tp.common.enums.RoleEnum;
+import cm.travelpost.tp.user.enums.RoleEnum;
 import cm.travelpost.tp.ws.requests.CommonSearchDTO;
 
 import javax.persistence.EnumType;
@@ -70,7 +70,5 @@ public class UserSeachDTO extends CommonSearchDTO {
         return role;
     }
 
-    public void setRole(RoleEnum role) {
-        this.role = role;
-    }
+    public void setRole(RoleEnum role) { this.role = role; }
 }

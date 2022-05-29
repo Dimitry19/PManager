@@ -22,9 +22,8 @@ public class PricingVO  extends CommonVO {
 
     @EmbeddedId
     public PricingSubscriptionEmbeddedId getId(){
-        return this.id;
+        return id;
     }
-
 
     @Basic(optional = false)
     @Column(name = "PRICE", nullable = false)
@@ -64,7 +63,7 @@ public class PricingVO  extends CommonVO {
         if (getClass() != obj.getClass())
             return false;
         PricingVO other = (PricingVO) obj;
-        if (id.equals(other.id))
+        if (!id.equals(other.id))
             return false;
         if (price == null) {
             return other.price == null;

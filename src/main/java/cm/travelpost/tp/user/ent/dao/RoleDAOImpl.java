@@ -2,9 +2,9 @@ package cm.travelpost.tp.user.ent.dao;
 
 
 import cm.framework.ds.hibernate.dao.CommonGenericDAO;
-import cm.travelpost.tp.common.enums.RoleEnum;
 import cm.travelpost.tp.user.ent.vo.RoleVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
+import cm.travelpost.tp.user.enums.RoleEnum;
 import org.apache.commons.collections4.IteratorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

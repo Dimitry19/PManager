@@ -2,9 +2,9 @@ package cm.travelpost.tp.announce.ent.vo;
 
 
 import cm.framework.ds.common.ent.vo.CommonVO;
-import cm.travelpost.tp.common.enums.AnnounceType;
+import cm.travelpost.tp.announce.enums.AnnounceType;
 import cm.travelpost.tp.common.enums.StatusEnum;
-import cm.travelpost.tp.common.enums.TransportEnum;
+import cm.travelpost.tp.announce.enums.TransportEnum;
 import cm.travelpost.tp.common.utils.DateUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
@@ -434,7 +434,7 @@ public class AnnounceMasterVO extends CommonVO {
 		if (getClass() != obj.getClass())
 			return false;
 		AnnounceMasterVO other = (AnnounceMasterVO) obj;
-		if (id.equals(other.id))
+		if (!id.equals(other.id))
 			return false;
 		if (user == null) {
 			return other.user == null;

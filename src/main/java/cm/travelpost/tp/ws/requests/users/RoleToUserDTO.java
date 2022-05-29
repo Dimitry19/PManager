@@ -1,6 +1,6 @@
 package cm.travelpost.tp.ws.requests.users;
 
-import cm.travelpost.tp.common.enums.RoleEnum;
+import cm.travelpost.tp.user.enums.RoleEnum;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

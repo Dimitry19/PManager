@@ -1,4 +1,4 @@
-package cm.travelpost.tp.common.enums;
+package cm.travelpost.tp.user.enums;
 
 import cm.travelpost.tp.common.utils.StringUtils;
 
