@@ -49,7 +49,7 @@ public class MailServiceImpl extends CommonMailSenderService implements MailServ
     ContactUSDAO contactUSDAO;
 
     @Autowired
-	UserService userService;
+    UserService userService;
 
 
     @Override
@@ -67,13 +67,14 @@ public class MailServiceImpl extends CommonMailSenderService implements MailServ
         contactUS.setSubject(contactus.getSubject());
         contactUS.setReceiver(personalMailSender.getDefaultContactUs());
 
+        Long id=(Long) contactUSDAO.save(contactUS);
 
         boolean sent = personalMailSender.contactUs(contactUS.getSender(), contactUS.getPseudo(), contactUS.getReceiver(),
                 personalMailSender.getTravelPostPseudo(), null, null,
                 null, null, contactUS.getSubject(), contactUS.getContent()+template(contactus.getSender(),true), null,true);
 
-        googleMailSenderService.contactUs(contactUS);
-        return sent;
+        // googleMailSenderService.contactUs(contactUS);
+        return sent || id!=null;
     }
 
 
@@ -108,8 +109,8 @@ public class MailServiceImpl extends CommonMailSenderService implements MailServ
 
         String title=MessageFormat.format(MailType.CONFIRM_TEMPLATE_TITLE,travelPostPseudo);
 
-         googleMailSenderService.sendMail(title,emails,null,null,null,user.getUsername(),bodyNoTemplate,false);
-         personalMailSender.send(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, body, null),emailTo, null,null,null,null,false,null);
+        googleMailSenderService.sendMail(title,emails,null,null,null,user.getUsername(),bodyNoTemplate,false);
+        personalMailSender.send(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, body, null),emailTo, null,null,null,null,false,null);
 
         return mailSenderSendGrid.manageResponse(mailSenderSendGrid.sendMailMessage(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, body, null),emails, null, null, null, user.getUsername(), null, true));
     }

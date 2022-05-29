@@ -1,6 +1,7 @@
 package cm.travelpost.tp.configuration.filters;
 
 import cm.framework.ds.common.security.CommonSecurityResource;
+import cm.framework.ds.common.utils.pattern.PatternUtils;
 import cm.travelpost.tp.common.exception.ErrorResponse;
 import cm.travelpost.tp.common.session.SessionManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +24,9 @@ public abstract class AFilter  extends CommonSecurityResource implements IFilter
     @Autowired
     protected SessionManager sessionManager;
 
+    @Autowired
+    PatternUtils patternUtils;
+
     @Value("${custom.api.auth.http.tokenValue}")
     protected String token;
 
@@ -37,6 +41,8 @@ public abstract class AFilter  extends CommonSecurityResource implements IFilter
 
     @Value("confirm")
     protected String confirm;
+
+
 
 
 

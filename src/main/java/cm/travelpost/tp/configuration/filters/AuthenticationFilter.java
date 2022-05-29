@@ -8,6 +8,7 @@ import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.user.ent.service.UserService;
 import cm.travelpost.tp.user.ent.vo.RoleVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
+import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,8 @@ public class AuthenticationFilter extends CommonFilter {
                 return;
             }
             if(!authorized(servletRequest,  servletResponse)){
-                  return;
-              }
+                return;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -85,6 +86,18 @@ public class AuthenticationFilter extends CommonFilter {
         String tk=request.getHeader(encryptorBean.decrypt(tokenName));
 
         String apiKey=StringUtils.isNotEmpty(tk) ? encryptorBean.decrypt(tk):"null";
+
+        String queryString= request.getQueryString();
+
+        StringBuilder stringBuilder = new StringBuilder(uri);
+        stringBuilder.append("/").append(queryString);
+
+        boolean isSharedLink= patternUtils.isShareUrl(stringBuilder.toString());
+
+        if (BooleanUtils.isTrue(isSharedLink)){
+            return true;
+        }
+
 
 
         boolean isService=uri.contains(service);

@@ -3,6 +3,7 @@ package cm.travelpost.tp.ws.responses;
 public class WebServiceResponseCode {
     public static final int LOGIN_MFA_ENABLED = 8;
     public static final int QR_CODE_MFA_ENABLED = 9;
+    public static final int SHARE = 7;
     public static final int OK_CODE = 0;
     public static final int NOK_CODE = -1;
 
