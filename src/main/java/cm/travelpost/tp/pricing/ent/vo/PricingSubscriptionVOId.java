@@ -9,12 +9,17 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-public class PricingSubscriptionEmbeddedId implements Serializable {
+public class PricingSubscriptionVOId implements Serializable {
 
     private String code;
     private String token;
 
-    @NaturalId
+	public PricingSubscriptionVOId(String code, String token) {
+		this.code=code;
+		this.token=token;
+	}
+
+	@NaturalId
     @Basic(optional = false)
     @Column(name = "CODE", nullable = false, unique = true, length = FieldConstants.CODE_LEN)
     public String getCode() { return code; }

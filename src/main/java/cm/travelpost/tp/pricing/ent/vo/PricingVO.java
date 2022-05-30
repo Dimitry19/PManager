@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "pricing")
 public class PricingVO  extends CommonVO {
 
-    private PricingSubscriptionEmbeddedId id;
+    private PricingSubscriptionVOId id;
     private BigDecimal price;
     private Set<SubscriptionVO> subscriptions = new HashSet();
 
@@ -20,8 +20,12 @@ public class PricingVO  extends CommonVO {
         super();
     }
 
+    public PricingVO(String code, String token) {
+        this.id= new PricingSubscriptionVOId(code,token);
+    }
+
     @EmbeddedId
-    public PricingSubscriptionEmbeddedId getId(){
+    public PricingSubscriptionVOId getId(){
         return id;
     }
 
@@ -38,7 +42,7 @@ public class PricingVO  extends CommonVO {
         return subscriptions;
     }
 
-    public void setId(PricingSubscriptionEmbeddedId id) { this.id = id; }
+    public void setId(PricingSubscriptionVOId id) { this.id = id; }
 
     public void setPrice(BigDecimal price) { this.price = price; }
 

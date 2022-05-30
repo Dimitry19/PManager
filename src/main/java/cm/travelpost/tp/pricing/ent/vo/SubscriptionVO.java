@@ -18,19 +18,21 @@ import java.util.Set;
 @Table(name = "pricing_subscription")
 public class SubscriptionVO extends CommonVO {
 
-    protected PricingSubscriptionEmbeddedId id;
+    protected PricingSubscriptionVOId id;
     protected PricingSubscriptionType type;
     protected String description;
     protected Date startDate;
     protected Date endDate;
     protected Set<UserVO> users= new HashSet<>();
+    protected PricingVO pricing;
+
 
     public SubscriptionVO() {
         super();
     }
 
     @EmbeddedId
-    public PricingSubscriptionEmbeddedId getId(){
+    public PricingSubscriptionVOId getId(){
         return this.id;
     }
 
@@ -71,7 +73,16 @@ public class SubscriptionVO extends CommonVO {
         return users;
     }
 
-    public void setId(PricingSubscriptionEmbeddedId id) { this.id = id; }
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "R_PRICING_CODE", referencedColumnName = "CODE"),
+            @JoinColumn(name = "R_PRICING_TOKEN", referencedColumnName = "TOKEN")
+    })
+    public PricingVO getPricing() {
+        return pricing;
+    }
+
+    public void setId(PricingSubscriptionVOId id) { this.id = id; }
 
     public void setType(PricingSubscriptionType type) { this.type = type; }
 
@@ -82,6 +93,8 @@ public class SubscriptionVO extends CommonVO {
     public void setEndDate(Date endDate) { this.endDate = endDate; }
 
     public void setUsers(Set<UserVO> users) { this.users = users; }
+
+    public void setPricing(PricingVO pricing) {this.pricing = pricing; }
 
 
     @Override

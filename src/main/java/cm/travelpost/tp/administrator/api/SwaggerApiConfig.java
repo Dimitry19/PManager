@@ -74,6 +74,9 @@ public class SwaggerApiConfig  extends CommonProperties {
     @Value("${swagger.api.groupname.totp}")
     private String apiGroupNameTotp;
 
+    @Value("${swagger.api.groupname.pricing}")
+    private String apiGroupNamePricingSubscription;
+
 
     @Value("${swagger.api.contact}")
     private String apiContact;
@@ -92,7 +95,7 @@ public class SwaggerApiConfig  extends CommonProperties {
 
 
     @Value("${custom.api.auth.http.tokenName}")
-    private String apiKeyPropertie;
+    private String apiKeyProperty;
 
 
 
@@ -171,6 +174,10 @@ public class SwaggerApiConfig  extends CommonProperties {
     public Docket totpApi() {
         return createDocket(apiGroupNameTotp, contextRoot+"/ws/totp.*");
     }
+   @Bean
+   public Docket pricingApi() {
+        return createDocket(apiGroupNamePricingSubscription, contextRoot+"/ws/pricing.*");
+    }
 
 
     public Docket createDocket(String groupName,String paths) {
@@ -192,7 +199,7 @@ public class SwaggerApiConfig  extends CommonProperties {
 
     private ApiKey apiToken() {
 
-        return new ApiKey("APIKey", apiKeyPropertie, SecurityScheme.In.HEADER.name());
+        return new ApiKey("APIKey", apiKeyProperty, SecurityScheme.In.HEADER.name());
     }
 
 

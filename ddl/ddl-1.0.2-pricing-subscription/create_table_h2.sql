@@ -20,6 +20,7 @@ create table PRICING_SUBSCRIPTION
             unique,
     TOKEN           VARCHAR(10)  not null,
     DESCRIPTION     VARCHAR(255) not null,
+    TYPE            VARCHAR(10)  not null,
     START_DATE      TIMESTAMP    not null,
     END_DATE        TIMESTAMP    not null,
     R_PRICING_CODE  VARCHAR(10),

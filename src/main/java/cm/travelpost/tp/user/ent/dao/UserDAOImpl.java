@@ -489,7 +489,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException {
         boolean result = false;
 
         try {

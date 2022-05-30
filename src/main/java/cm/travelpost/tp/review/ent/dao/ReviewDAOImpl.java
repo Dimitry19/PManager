@@ -2,11 +2,9 @@ package cm.travelpost.tp.review.ent.dao;
 
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
-import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.review.ent.vo.ReviewVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -72,7 +70,7 @@ public class ReviewDAOImpl extends Generic implements ReviewDAO {
 
 
     @Override
-    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException {
         boolean result = false;
 
         try {

@@ -78,7 +78,7 @@ public class UserController extends CommonController {
             return new ResponseEntity<>(user, HttpStatus.OK);
 
         } catch (Exception e) {
-            logger.error("Erreur durant l'upload de l'image", e);
+            logger.error("Erreur durant l'ajournement du gestionnaire de  notification", e);
             throw e;
         } finally {
             finishOpentracingSpan();
@@ -285,22 +285,22 @@ public class UserController extends CommonController {
     public Response delete(HttpServletResponse response, HttpServletRequest request, @Valid @RequestParam("id") Long id) throws UserException {
         logger.info("delete request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
 
         try {
             createOpentracingSpan("UserController -delete");
             if (id != null) {
                 if (userService.deleteUser(id)) {
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_USER_LABEL);
+                    tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    tpResponse.setRetDescription(WebServiceResponseCode.CANCELLED_USER_LABEL);
                 } else {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setMessage(WebServiceResponseCode.ERROR_DELETE_USER_CODE_LABEL);
+                    tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    tpResponse.setMessage(WebServiceResponseCode.ERROR_DELETE_USER_CODE_LABEL);
                 }
             }
         } catch (Exception e) {
-            pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setMessage(e.getMessage());
+            tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            tpResponse.setMessage(e.getMessage());
             logger.error("Erreur durant la delete de l'utilisateur ayant id:" + id + "{}", e);
             e.printStackTrace();
             throw e;
@@ -308,7 +308,7 @@ public class UserController extends CommonController {
             finishOpentracingSpan();
         }
 
-        return pmResponse;
+        return tpResponse;
     }
 
     @ApiOperation(value = " Retrieve user with an ID ", response = UserVO.class)

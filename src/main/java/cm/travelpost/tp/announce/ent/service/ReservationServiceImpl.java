@@ -7,7 +7,6 @@ import cm.travelpost.tp.announce.ent.dao.ReservationDAO;
 import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.travelpost.tp.announce.enums.ReservationType;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
-import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.ws.requests.announces.ReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateReservationDTO;
@@ -86,7 +85,7 @@ public class ReservationServiceImpl extends Generic implements ReservationServic
     }
 
     @Override
-    public boolean updateDelete(Object id) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object id) throws BusinessResourceException {
         return false;
     }
 

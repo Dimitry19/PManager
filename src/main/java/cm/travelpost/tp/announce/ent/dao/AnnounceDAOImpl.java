@@ -12,11 +12,11 @@ import cm.framework.ds.hibernate.utils.IQueryBuilder;
 import cm.framework.ds.hibernate.utils.QueryBuilder;
 import cm.travelpost.tp.airline.ent.dao.AirlineDAO;
 import cm.travelpost.tp.announce.ent.vo.*;
-import cm.travelpost.tp.common.Constants;
 import cm.travelpost.tp.announce.enums.AnnounceType;
-import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.announce.enums.TransportEnum;
 import cm.travelpost.tp.announce.enums.ValidateEnum;
+import cm.travelpost.tp.common.Constants;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
@@ -27,7 +27,6 @@ import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 import cm.travelpost.tp.notification.enums.NotificationType;
 import cm.travelpost.tp.user.ent.dao.UserDAO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
-import cm.travelpost.tp.utils.SecRandom;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
@@ -497,7 +496,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             announce.setEstimateValue(adto.getEstimateValue());
         }
         if(!ObjectUtils.isCallable(announce, "code")){
-            announce.setCode(generateCode(announce.getAnnounceType().name()));
+            announce.setCode(CodeGenerator.generateCode(announce.getAnnounceType().name()));
         }
     }
 
@@ -930,15 +929,4 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
     }
 
-    String generateCode(String announceType){
-
-        String  year =String.valueOf(DateUtils.gregorianCalendar(Calendar.YEAR)).substring(2);
-        String random = SecRandom.randomString(5).toUpperCase();
-        StringBuilder builder = new StringBuilder();
-        builder.append(Constants.DEFAULT_TOKEN )
-                .append(announceType.substring(0,1))
-                .append(random)
-                .append(year);
-        return builder.toString();
-    }
 }

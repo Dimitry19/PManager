@@ -336,7 +336,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
 
 
     @Override
-    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException {
         return false;
     }
 

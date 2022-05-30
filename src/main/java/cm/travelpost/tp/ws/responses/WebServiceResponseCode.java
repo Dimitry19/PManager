@@ -23,7 +23,7 @@ public class WebServiceResponseCode {
     public static final String PAGINATE_RESPONSE_LABEL = "{0} resultat(s) trouvé(s)";
     public static final String PAGINATE_EMPTY_RESPONSE_LABEL = "Aucun resultat trouvé";
 
-    public static final String CREATE_LABEL = "{0} correctement inserée";
+    public static final String CREATE_LABEL = "{0} correctement inseré(e)";
     public static final String CANCELLED_LABEL = "{0} correctement éliminé(e) ";
     public static final String UPDATED_LABEL = "{0}  correctement ajourné(e) ";
 
@@ -42,6 +42,8 @@ public class WebServiceResponseCode {
 
     public static final String NOTIFICATION_ENABLE_OK_LABEL = "Notification activée ";
     public static final String NOTIFICATION_DISABLE_OK_LABEL = "Notification desactivée ";
+
+
 
 
 
