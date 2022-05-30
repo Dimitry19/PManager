@@ -1,5 +1,6 @@
 package cm.travelpost.tp.pricing.ent.dao;
 
+import cm.framework.ds.common.ent.vo.KeyValue;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.pricing.ent.vo.PricingSubscriptionVOId;
@@ -7,6 +8,9 @@ import cm.travelpost.tp.pricing.ent.vo.PricingVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
 
 @Repository
 public class PricingDAOImpl extends Generic implements PricingDAO {
@@ -16,6 +20,13 @@ public class PricingDAOImpl extends Generic implements PricingDAO {
 	@Override
 	public boolean delete(PricingSubscriptionVOId id) throws Exception {
 		return updateDelete(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public PricingVO byPrice(BigDecimal amount) throws Exception {
+		setMap(new KeyValue(PRICE_PARAM,amount));
+		return (PricingVO) findUniqueResult(PricingVO.FINDBYPRICE,PricingVO.class,getMap());
 	}
 
 	@Override

@@ -67,6 +67,9 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     @Transactional
     T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName) throws Exception;
 
+
+    T findUniqueResult(String queryName, Class<T> clazz,Map params) throws Exception;
+
     T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception;
 
     List<T> findBy(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception;

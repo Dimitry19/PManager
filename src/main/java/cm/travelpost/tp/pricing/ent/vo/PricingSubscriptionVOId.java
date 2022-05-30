@@ -14,7 +14,11 @@ public class PricingSubscriptionVOId implements Serializable {
     private String code;
     private String token;
 
-	public PricingSubscriptionVOId(String code, String token) {
+    public PricingSubscriptionVOId() {
+        super();
+    }
+
+    public PricingSubscriptionVOId(String code, String token) {
 		this.code=code;
 		this.token=token;
 	}

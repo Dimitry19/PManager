@@ -61,6 +61,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return getObjectResponseEntity(ex.getMessage(), "announce.error");
     }
 
+    @ExceptionHandler({PricingException.class})
+    public ResponseEntity<Object> handlePricingExceptions(PricingException ex) {
+
+        return getObjectResponseEntity(ex.getMessage(), "pricing.error");
+    }
+
     @ExceptionHandler({DashboardException.class})
     public ResponseEntity<Object> handleDashboardExceptions(DashboardException ex) {
 

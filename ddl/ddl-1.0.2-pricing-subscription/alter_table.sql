@@ -1,0 +1,13 @@
+--Scripts à executer sur H2----
+
+ALTER TABLE tp_user
+    ADD COLUMN R_SUBSCRIPTION_CODE varchar(10);
+
+ALTER TABLE tp_user
+    ADD COLUMN R_SUBSCRIPTION_TOKEN  varchar(10) ;
+
+ALTER TABLE tp_user
+add constraint FKFEAYMOJE1KLV7N4D76BTLMYMG
+		foreign key (R_SUBSCRIPTION_CODE, R_SUBSCRIPTION_TOKEN) references SUBSCRIPTION_PRICING (CODE, TOKEN)
+
+

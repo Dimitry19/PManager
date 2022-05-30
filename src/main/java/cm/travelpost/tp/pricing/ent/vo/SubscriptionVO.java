@@ -14,8 +14,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-@Entity
-@Table(name = "pricing_subscription")
+@Entity(name = "SubscriptionVO")
+@Table(name = "subscription_pricing")
 public class SubscriptionVO extends CommonVO {
 
     protected PricingSubscriptionVOId id;
@@ -65,10 +65,9 @@ public class SubscriptionVO extends CommonVO {
         return endDate;
     }
 
-
+    @Access(AccessType.PROPERTY)
     @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY )
-    @JoinTable(name = "tp_user_pricing_subscriptions", joinColumns = {@JoinColumn(name = "R_SUBSCRIPTION_CODE"),@JoinColumn(name ="R_SUBSCRIPTION_TOKEN")} , inverseJoinColumns = @JoinColumn(name = "R_USER_ID"))
+    @OneToMany(mappedBy = "subscription", fetch = FetchType.LAZY )
     public Set<UserVO> getUsers() {
         return users;
     }
@@ -95,6 +94,15 @@ public class SubscriptionVO extends CommonVO {
     public void setUsers(Set<UserVO> users) { this.users = users; }
 
     public void setPricing(PricingVO pricing) {this.pricing = pricing; }
+
+    public void addUser(UserVO user) {
+        this.users.add(user);
+        user.setSubscription(this);
+    }
+    public void removeAnnounce(UserVO user) {
+        user.setSubscription(null);
+        this.users.remove(user);
+    }
 
 
     @Override

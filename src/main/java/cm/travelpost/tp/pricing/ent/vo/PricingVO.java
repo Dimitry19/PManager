@@ -1,16 +1,24 @@
 package cm.travelpost.tp.pricing.ent.vo;
 
 import cm.framework.ds.common.ent.vo.CommonVO;
+import cm.travelpost.tp.configuration.filters.FilterConstants;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity(name = "PricingVO")
 @Table(name = "pricing")
+@NamedQueries(value = {
+        @NamedQuery(name =PricingVO.FINDBYPRICE,query = "select p from PricingVO p where p.price=:price")
+        })
+@Where(clause = FilterConstants.FILTER_PRICING_CANC)
 public class PricingVO  extends CommonVO {
+
+    public final static String FINDBYPRICE="cm.travelpost.tp.pricing.ent.vo.findByPrice";
 
     private PricingSubscriptionVOId id;
     private BigDecimal price;
@@ -30,7 +38,7 @@ public class PricingVO  extends CommonVO {
     }
 
     @Basic(optional = false)
-    @Column(name = "PRICE", nullable = false)
+    @Column(name = "PRICE", nullable = false, unique = true)
     public BigDecimal getPrice() {
         return price;
     }

@@ -53,9 +53,6 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     protected Set<StatusEnum> states = new HashSet<>();
 
-
-
-
     protected static final String SELECT_FROM = " select elt  FROM ";
 
     protected static final String AS= " as ";
@@ -79,7 +76,6 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String CATEGORY_TABLE_ALIAS = "c";
     protected static final String ID_PARAM = "id";
     protected static final String USER_PARAM = "userId";
-
     protected static final String CODE_PARAM = "code";
 
     protected static final String TYPE_PARAM = "announceType";
@@ -419,6 +415,19 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         if (StringUtils.isNotEmpty(paramName) && id != null) {
             query.setParameter(paramName, id);
         }
+
+        return (T) query.uniqueResult();
+    }
+
+    @Override
+    @Transactional
+    public T findUniqueResult(String queryName, Class<T> clazz,Map params) throws Exception {
+        Session session = this.sessionFactory.getCurrentSession();
+        Query query = session.createNamedQuery(queryName, clazz);
+
+        params.forEach((k, v) ->
+                query.setParameter((String) k, v)
+        );
 
         return (T) query.uniqueResult();
     }

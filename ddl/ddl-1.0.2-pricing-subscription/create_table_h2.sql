@@ -6,40 +6,31 @@ create table PRICING
         constraint UK_T9XMR1J134GUU76H39O9I2R2J
             unique,
     TOKEN       VARCHAR(10)    not null,
-    PRICE       DECIMAL(19, 2) not null,
+    PRICE DECIMAL(19,2) not null,
     CANCELLED   BOOLEAN        not null,
     DATECREATED TIMESTAMP,
     LASTUPDATED TIMESTAMP
 );
+create unique index PRICING_PRICE_UINDEX
+    on PRICING (PRICE);
 
--- auto-generated definition
-create table PRICING_SUBSCRIPTION
+
+create table SUBSCRIPTION_PRICING
 (
-    CODE            VARCHAR(10)  not null
-        constraint UK_4UEGN3MNXQ1LMFV8UU10HTWSI
+    CODE VARCHAR(10) not null
+        constraint UK_5WHEFM9QUU8FAS8GWNUGMF62N
             unique,
-    TOKEN           VARCHAR(10)  not null,
-    DESCRIPTION     VARCHAR(255) not null,
-    TYPE            VARCHAR(10)  not null,
-    START_DATE      TIMESTAMP    not null,
-    END_DATE        TIMESTAMP    not null,
-    R_PRICING_CODE  VARCHAR(10),
+    TOKEN VARCHAR(10) not null,
+    CANCELLED BOOLEAN not null,
+    DATECREATED TIMESTAMP,
+    LASTUPDATED TIMESTAMP,
+    DESCRIPTION VARCHAR(255) not null,
+    END_DATE TIMESTAMP not null,
+    START_DATE TIMESTAMP not null,
+    TYPE VARCHAR(10) not null,
+    R_PRICING_CODE VARCHAR(10),
     R_PRICING_TOKEN VARCHAR(10),
-    CANCELLED       BOOLEAN      not null,
-    DATECREATED     TIMESTAMP,
-    LASTUPDATED     TIMESTAMP,
-    constraint FK4LG4P1U4RVT6EM7N3RH96P67B
+    constraint FKPSP4KF7RYUQ6POS6CQW713D0C
         foreign key (R_PRICING_CODE, R_PRICING_TOKEN) references PRICING (CODE, TOKEN)
-);
-
-create table TP_USER_PRICING_SUBSCRIPTIONS
-(
-    R_SUBSCRIPTION_CODE  VARCHAR(10) not null,
-    R_SUBSCRIPTION_TOKEN VARCHAR(10) not null,
-    R_USER_ID            BIGINT      not null,
-    constraint FKH06LFEF41OKSXAWM9QJNBX7QF
-        foreign key (R_USER_ID) references TP_USER (ID),
-    constraint FKSUBKI4747TSUPBHE7G4HRI01M
-        foreign key (R_SUBSCRIPTION_CODE, R_SUBSCRIPTION_TOKEN) references PRICING_SUBSCRIPTION (CODE, TOKEN)
 );
 

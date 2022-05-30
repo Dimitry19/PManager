@@ -9,6 +9,7 @@ import cm.travelpost.tp.constant.FieldConstants;
 import cm.travelpost.tp.image.ent.vo.ImageVO;
 import cm.travelpost.tp.message.ent.vo.MessageVO;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
+import cm.travelpost.tp.pricing.ent.vo.SubscriptionVO;
 import cm.travelpost.tp.review.ent.vo.ReviewVO;
 import cm.travelpost.tp.user.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -136,6 +137,8 @@ public class UserVO extends CommonVO {
 
     private AuthenticationVO authentication;
 
+    private SubscriptionVO subscription;
+
 
     public UserVO() {
         super();
@@ -259,7 +262,6 @@ public class UserVO extends CommonVO {
     @Access(AccessType.PROPERTY)
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
-    //@Fetch(value = SELECT)
     @OrderBy(clause = "startDate DESC")
     @Where(clause = "cancelled = false")
     @JsonIgnore
@@ -309,7 +311,6 @@ public class UserVO extends CommonVO {
         return notifications;
     }
 
-
     @Basic(optional = false)
     @Column(name = "MULTIPLE_FACTOR_AUTH")
     public boolean isMultipleFactorAuthentication() {
@@ -330,6 +331,22 @@ public class UserVO extends CommonVO {
         return authentication;
     }
 
+    @Basic(optional = false)
+    @Column(name = "COUNTRY", nullable = false)
+    public String getCountry() {   return country;  }
+
+    @Basic(optional = false)
+    @Column(name = "CITY", nullable = false)
+    public String getCity() {  return city; }
+
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "R_SUBSCRIPTION_CODE",updatable = false,insertable = false),
+            @JoinColumn(name = "R_SUBSCRIPTION_TOKEN",updatable = false,insertable = false)
+    })
+    public SubscriptionVO getSubscription() { return subscription; }
 
     @Transient
     @JsonProperty
@@ -343,22 +360,9 @@ public class UserVO extends CommonVO {
         return error;
     }
 
-    @Basic(optional = false)
-    @Column(name = "COUNTRY", nullable = false)
-    public String getCountry() {   return country;  }
+    public void setSubscribers(Set<UserVO> subscribers) { this.subscribers = subscribers; }
 
-
-    @Basic(optional = false)
-    @Column(name = "CITY", nullable = false)
-    public String getCity() {  return city; }
-
-    public void setSubscribers(Set<UserVO> subscribers) {
-        this.subscribers = subscribers;
-    }
-
-    public void setSubscriptions(Set<UserVO> subscriptions) {
-        this.subscriptions = subscriptions;
-    }
+    public void setSubscriptions(Set<UserVO> subscriptions) { this.subscriptions = subscriptions; }
 
     public void setNotifications(Set<NotificationVO> notifications) {
         this.notifications = notifications;
@@ -370,13 +374,9 @@ public class UserVO extends CommonVO {
 
     public void setEnableNotification(boolean enableNotification) { this.enableNotification = enableNotification;  }
 
-    public void setCommunications(Set<CommunicationVO> communications) {
-        this.communications = communications;
-    }
+    public void setCommunications(Set<CommunicationVO> communications) { this.communications = communications; }
 
-    public void setImage(ImageVO image) {
-        this.image = image;
-    }
+    public void setImage(ImageVO image) { this.image = image; }
 
     public void setRating(double rating) {
         this.rating = rating;
@@ -386,9 +386,7 @@ public class UserVO extends CommonVO {
         this.error = error;
     }
 
-    public void setActive(Integer active) {
-        this.active = active;
-    }
+    public void setActive(Integer active) { this.active = active; }
 
     public void setUsername(String username) {
         this.username = username;
@@ -430,9 +428,7 @@ public class UserVO extends CommonVO {
         this.gender = gender;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id) { this.id = id; }
 
     public void setPassword(String password) {
         this.password = password;
@@ -452,11 +448,11 @@ public class UserVO extends CommonVO {
 
     public void setCountry(String country) {  this.country = country;   }
 
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
+    public void setSecret(String secret) { this.secret = secret; }
+
     public void setAuthentication(AuthenticationVO authentication) {    this.authentication = authentication;  }
 
+    public void setSubscription(SubscriptionVO subscription) { this.subscription = subscription;    }
 
     public void addAnnounce(AnnounceMasterVO announce) {
         this.announces.add(announce);

@@ -162,5 +162,9 @@ public class WSConstants extends CommonProperties {
     public static final String PRICING_WS = "/ws/pricing/*";
     public static final String PRICING_WS_UPDATE_PRICING_CODE = "/update/{pricingCode}/{token}";
     public static final String PRICING_WS_UPDATE_SUBSCRIPTION_CODE = "/update/{subscriptionCode}/{token}";
+    public static final String PRICING_WS_GET = "/pricing";
+    public static final String PRICING_WS_ALL = "/pricings";
+    public static final String PRICING_WS_BY_PRICE = "/price";
+
 
 }
