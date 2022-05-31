@@ -61,8 +61,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return getObjectResponseEntity(ex.getMessage(), "announce.error");
     }
 
-    @ExceptionHandler({PricingException.class})
-    public ResponseEntity<Object> handlePricingExceptions(PricingException ex) {
+    @ExceptionHandler({PricingException.class, SubscriptionException.class})
+    public ResponseEntity<Object> handlePricingExceptions(Exception ex) {
 
         return getObjectResponseEntity(ex.getMessage(), "pricing.error");
     }

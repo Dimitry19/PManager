@@ -339,12 +339,10 @@ public class UserVO extends CommonVO {
     @Column(name = "CITY", nullable = false)
     public String getCity() {  return city; }
 
-
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
-            @JoinColumn(name = "R_SUBSCRIPTION_CODE",updatable = false,insertable = false),
-            @JoinColumn(name = "R_SUBSCRIPTION_TOKEN",updatable = false,insertable = false)
+            @JoinColumn(name = "R_SUBSCRIPTION_CODE",updatable = true,insertable = false),
+            @JoinColumn(name = "R_SUBSCRIPTION_TOKEN",updatable = true,insertable = false)
     })
     public SubscriptionVO getSubscription() { return subscription; }
 
@@ -476,12 +474,12 @@ public class UserVO extends CommonVO {
     }
 
     public void addRole(RoleVO role) {
-        roles.add(role);
+        this.roles.add(role);
     }
 
     public void removeRole(RoleVO role) {
-        if (!roles.isEmpty())
-            roles.remove(role);
+        if (!this.roles.isEmpty())
+            this.roles.remove(role);
     }
 
     public void addMessage(MessageVO message) {

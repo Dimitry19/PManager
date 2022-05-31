@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.Date;
 
 
 public class AnnounceDTO extends CategoriesDTO {
@@ -166,4 +167,12 @@ public class AnnounceDTO extends CategoriesDTO {
     public BigDecimal getEstimateValue() {  return estimateValue;  }
 
     public void setEstimateValue(BigDecimal estimateValue) { this.estimateValue = estimateValue; }
+
+    public Date getConvertedStartDate() {
+        return DateUtils.milliSecondToDate(this.startDate);
+    }
+
+    public Date getConvertedEndDate() {
+        return DateUtils.milliSecondToDate(this.endDate);
+    }
 }

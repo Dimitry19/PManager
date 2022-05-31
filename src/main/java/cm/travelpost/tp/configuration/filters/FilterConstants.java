@@ -20,4 +20,6 @@ public class FilterConstants {
     public static final String FILTER_WHERE_RESERVATION_CANC = "exists (select id from reservation where cancelled = false)";
     public static final String FILTER_WHERE_SMS_OTP_CANCELLED = "exists (select id from sms_otp where cancelled = false)";
     public static final String FILTER_PRICING_CANC = "exists (select code, token from pricing where cancelled = false)";
+
+    public static final String FILTER_SUBSCRIPTION_CANC = "exists (select code, token from subscription_pricing where cancelled = false)";
 }

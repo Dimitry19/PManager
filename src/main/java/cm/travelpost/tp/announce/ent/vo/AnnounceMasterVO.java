@@ -37,7 +37,7 @@ import java.util.Set;
 @NamedQueries(value = {
 		@NamedQuery(name = AnnounceMasterVO.FINDBYCODE, query = "select a from AnnounceMasterVO a where a.code =:code order by a.startDate desc"),
 		@NamedQuery(name = AnnounceMasterVO.FINDBYUSER, query = "select a from AnnounceMasterVO a where a.user.id =:userId order by a.startDate desc"),
-		@NamedQuery(name = AnnounceMasterVO.FINDBYTYPE, query = "select a from AnnounceMasterVO a where a.announceType =:announceType order by a.startDate desc"),
+		@NamedQuery(name = AnnounceMasterVO.FINDBYTYPE, query = "select a from AnnounceMasterVO a where a.announceType =:type order by a.startDate desc"),
 		@NamedQuery(name = AnnounceMasterVO.FINDBYTRANSPORT, query = "select a from AnnounceMasterVO a where a.transport =:transport order by a.startDate desc"),
 })
 @Filters({

@@ -7,6 +7,7 @@ package cm.travelpost.tp.administrator.api;
 
 import cm.travelpost.tp.common.properties.CommonProperties;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,6 +30,9 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 @Configuration
 public class SwaggerApiConfig  extends CommonProperties {
+
+    @Resource(name ="jasyptStringEncryptor")
+    protected StringEncryptor encryptorBean;
 
     @Value("${swagger.api.groupname.authentication}")
     private String apiGroupNameAuthentication;
@@ -75,7 +80,10 @@ public class SwaggerApiConfig  extends CommonProperties {
     private String apiGroupNameTotp;
 
     @Value("${swagger.api.groupname.pricing}")
-    private String apiGroupNamePricingSubscription;
+    private String apiGroupNamePricing;
+
+    @Value("${swagger.api.groupname.subscription}")
+    private String apiGroupNameSubscription;
 
 
     @Value("${swagger.api.contact}")
@@ -96,7 +104,6 @@ public class SwaggerApiConfig  extends CommonProperties {
 
     @Value("${custom.api.auth.http.tokenName}")
     private String apiKeyProperty;
-
 
 
    @Bean
@@ -176,7 +183,11 @@ public class SwaggerApiConfig  extends CommonProperties {
     }
    @Bean
    public Docket pricingApi() {
-        return createDocket(apiGroupNamePricingSubscription, contextRoot+"/ws/pricing.*");
+        return createDocket(apiGroupNamePricing, contextRoot+"/ws/pricing.*");
+    }
+    @Bean
+   public Docket subscriptionApi() {
+        return createDocket(apiGroupNameSubscription, contextRoot+"/ws/subscription.*");
     }
 
 
@@ -198,8 +209,7 @@ public class SwaggerApiConfig  extends CommonProperties {
 
 
     private ApiKey apiToken() {
-
-        return new ApiKey("APIKey", apiKeyProperty, SecurityScheme.In.HEADER.name());
+        return new ApiKey("APIKey", encryptorBean.decrypt(apiKeyProperty), SecurityScheme.In.HEADER.name());
     }
 
 

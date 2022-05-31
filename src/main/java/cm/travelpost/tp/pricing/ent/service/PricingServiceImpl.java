@@ -1,12 +1,13 @@
 package cm.travelpost.tp.pricing.ent.service;
 
 import cm.framework.ds.common.ent.vo.PageBy;
-import cm.travelpost.tp.common.Constants;
 import cm.travelpost.tp.common.exception.PricingException;
 import cm.travelpost.tp.common.utils.CodeGenerator;
 import cm.travelpost.tp.pricing.ent.dao.PricingDAO;
 import cm.travelpost.tp.pricing.ent.vo.PricingSubscriptionVOId;
 import cm.travelpost.tp.pricing.ent.vo.PricingVO;
+import cm.travelpost.tp.pricing.enums.SubscriptionPricingType;
+import cm.travelpost.tp.ws.requests.pricing.CreatePricingDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,12 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static cm.travelpost.tp.common.Constants.DEFAULT_TOKEN;
+import static cm.travelpost.tp.common.Constants.PRICING_PREFIX;
+
 @Service
 @Transactional
-public class PricingServiceImpl implements PricingService{
+public class PricingServiceImpl extends APricingSubscriptionServiceImpl  implements PricingService{
 
 	private static Logger logger = LoggerFactory.getLogger(PricingServiceImpl.class);
 
@@ -29,10 +33,11 @@ public class PricingServiceImpl implements PricingService{
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public PricingVO create(BigDecimal amount) throws Exception {
+	public PricingVO create(CreatePricingDTO dto) throws Exception {
 
-		PricingVO pricing = new PricingVO(CodeGenerator.generateCode("P"), Constants.DEFAULT_TOKEN);
-		pricing.setPrice(amount);
+		PricingVO pricing = new PricingVO(CodeGenerator.generateCode(PRICING_PREFIX), DEFAULT_TOKEN);
+		pricing.setType(dto.getType());
+		pricing.setPrice(dto.getAmount());
 		PricingSubscriptionVOId id= (PricingSubscriptionVOId) dao.save(pricing);
 		return (PricingVO) dao.findById(PricingVO.class, id);
 	}
@@ -61,7 +66,7 @@ public class PricingServiceImpl implements PricingService{
 	}
 
 	@Override
-	public PricingVO pricing(@NotNull String code, @NotNull String token) throws Exception {
+	public PricingVO object(@NotNull String code, @NotNull String token) throws Exception {
 		return (PricingVO) dao.findById(PricingVO.class, new PricingSubscriptionVOId(code, token));
 	}
 
@@ -71,11 +76,11 @@ public class PricingServiceImpl implements PricingService{
 	}
 
 	@Override
-	public List pricings(PageBy pageBy) throws PricingException {
+	public List all(PageBy pageBy) throws Exception {
 		try {
 			return dao.all(PricingVO.class,pageBy);
 		} catch (Exception e) {
-			logger.error("Erreur durant la recuperation de la liste des pricings",e);
+			logger.error("Erreur durant la recuperation de la liste du pricing",e);
 			throw new PricingException(e.getMessage());
 		}
 	}
@@ -83,5 +88,10 @@ public class PricingServiceImpl implements PricingService{
 	@Override
 	public PricingVO byPrice(@NotNull BigDecimal amount) throws Exception {
 		return dao.byPrice(amount);
+	}
+
+	@Override
+	public PricingVO byType(SubscriptionPricingType type) throws Exception {
+		return dao.byType(type);
 	}
 }

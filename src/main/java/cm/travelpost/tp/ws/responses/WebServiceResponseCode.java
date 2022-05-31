@@ -43,6 +43,8 @@ public class WebServiceResponseCode {
     public static final String NOTIFICATION_ENABLE_OK_LABEL = "Notification activée ";
     public static final String NOTIFICATION_DISABLE_OK_LABEL = "Notification desactivée ";
 
+    public static final String ADD_SUBSCRIPTION_TO_USERS_OK_LABEL = "Abonnement complété pour les utilisateurs ";
+
 
 
 
@@ -86,6 +88,8 @@ public class WebServiceResponseCode {
     public static final String ERROR_INVALID_CODE_LABEL = "Code invalide!";
 
     public static final String ERROR_USER_QRCODE_LABEL = "Erreur durant la generation du QrCode, verifiez les identifiants inserés";
+
+    public static final String ERROR_ADD_SUBSCRIPTION_TO_USERS_LABEL = "Abonnement non complété pour les utilisateurs ";
 
 
 }

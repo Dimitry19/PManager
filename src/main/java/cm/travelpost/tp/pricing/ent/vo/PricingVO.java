@@ -2,6 +2,8 @@ package cm.travelpost.tp.pricing.ent.vo;
 
 import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
+import cm.travelpost.tp.constant.FieldConstants;
+import cm.travelpost.tp.pricing.enums.SubscriptionPricingType;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Where;
 
@@ -13,15 +15,19 @@ import java.util.Set;
 @Entity(name = "PricingVO")
 @Table(name = "pricing")
 @NamedQueries(value = {
-        @NamedQuery(name =PricingVO.FINDBYPRICE,query = "select p from PricingVO p where p.price=:price")
+        @NamedQuery(name =PricingVO.FINDBYPRICE,query = "select p from PricingVO p where p.price=:price"),
+        @NamedQuery(name =PricingVO.FINDBYTYPE,query = "select p from PricingVO p where p.type=:type")
         })
 @Where(clause = FilterConstants.FILTER_PRICING_CANC)
 public class PricingVO  extends CommonVO {
 
-    public final static String FINDBYPRICE="cm.travelpost.tp.pricing.ent.vo.findByPrice";
+    public final static String FINDBYPRICE="cm.travelpost.tp.pricing.ent.vo.PricingVO.findByPrice";
+    public final static String FINDBYTYPE = "cm.travelpost.tp.pricing.ent.vo.PricingVO.findByType";
 
     private PricingSubscriptionVOId id;
     private BigDecimal price;
+
+    private SubscriptionPricingType type;
     private Set<SubscriptionVO> subscriptions = new HashSet();
 
     public PricingVO() {
@@ -43,6 +49,13 @@ public class PricingVO  extends CommonVO {
         return price;
     }
 
+    @Basic(optional = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE", nullable = false,unique = true,length = FieldConstants.ENUM_LEN)
+    public SubscriptionPricingType getType() {
+        return type;
+    }
+
     @OneToMany
     @JoinColumns({@JoinColumn(name = "R_PRICING_CODE"),@JoinColumn(name ="R_PRICING_TOKEN")})
     @JsonManagedReference
@@ -54,8 +67,18 @@ public class PricingVO  extends CommonVO {
 
     public void setPrice(BigDecimal price) { this.price = price; }
 
+    public void setType(SubscriptionPricingType type) { this.type = type; }
+
     public void setSubscriptions(Set<SubscriptionVO> subscriptions) { this.subscriptions = subscriptions; }
 
+    public void addSubscription(SubscriptionVO subscription) {
+        this.subscriptions.add(subscription);
+        subscription.setPricing(this);
+    }
+    public void removeSubscription(SubscriptionVO subscription) {
+        subscription.setPricing(null);
+        this.subscriptions.remove(subscription);
+    }
 
     @Override
     public int hashCode() {

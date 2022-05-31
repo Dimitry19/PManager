@@ -448,8 +448,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             throw new AnnounceException("Une des dates n'est pas valide");
         }
 
-        Date startDate=DateUtils.milliSecondToDate(adto.getStartDate());
-        Date endDate = DateUtils.milliSecondToDate(adto.getEndDate());
+        Date startDate=adto.getConvertedStartDate();
+        Date endDate = adto.getConvertedEndDate();
 
 
         if (DateUtils.isAfter(startDate, endDate)) {
