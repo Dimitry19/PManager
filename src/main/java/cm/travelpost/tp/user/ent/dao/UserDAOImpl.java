@@ -669,6 +669,17 @@ public class UserDAOImpl extends Generic implements UserDAO {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
+    public List<UserVO> usersBySubscription(String code, String token, PageBy pageBy) throws Exception {
+
+        KeyValue keyValueCode = new KeyValue(CODE_PARAM, code);
+        KeyValue keyValueToken = new KeyValue(TOKEN_PARAM, token);
+        setMap(keyValueCode, keyValueToken);
+        setFilters(FilterConstants.CANCELLED, FilterConstants.ACTIVE_MBR);
+        return  findBy(UserVO.ALL_SUBSCRIPTION_PRICING, UserVO.class, getMap(),pageBy, getFilters());
+    }
+
+    @Override
     public void generateEvent(Object obj , String message)  throws UserException,Exception{
 
         UserVO user= (UserVO) obj;

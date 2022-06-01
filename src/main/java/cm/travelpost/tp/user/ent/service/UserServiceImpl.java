@@ -435,8 +435,12 @@ public class UserServiceImpl implements UserService {
         if(!totpService.verifyCode(code, user.getSecret())) {
             throw new BadRequestException("Code is incorrect");
         }
-
         return "";
+    }
+
+    @Override
+    public List<UserVO> usersBySubscription(String code, String token) throws Exception {
+        return null;
     }
 }
 

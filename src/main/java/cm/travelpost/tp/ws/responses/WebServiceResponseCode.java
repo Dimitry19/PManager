@@ -44,6 +44,7 @@ public class WebServiceResponseCode {
     public static final String NOTIFICATION_DISABLE_OK_LABEL = "Notification desactivée ";
 
     public static final String ADD_SUBSCRIPTION_TO_USERS_OK_LABEL = "Abonnement complété pour les utilisateurs ";
+    public static final String REMOVE_SUBSCRIPTION_TO_USERS_OK_LABEL = "Desbonnement complété pour les utilisateurs ";
 
 
 

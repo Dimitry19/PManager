@@ -101,6 +101,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String ACTIVE_PARAM ="active" ;
     protected static final String CONFIRM_TOKEN_PARAM ="ctoken" ;
     protected static final String USERNAME_PARAM = "username";
+    protected static final String TOKEN_PARAM = "token";
 
     protected static final String ALIAS_ORDER = " as t order by t. ";
     protected static final String ALIAS_BY_USER_ID = " as elt where elt.userId =:userId ";

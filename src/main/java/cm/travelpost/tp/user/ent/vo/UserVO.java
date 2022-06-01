@@ -12,10 +12,7 @@ import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 import cm.travelpost.tp.pricing.ent.vo.SubscriptionVO;
 import cm.travelpost.tp.review.ent.vo.ReviewVO;
 import cm.travelpost.tp.user.enums.Gender;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.*;
 
@@ -51,6 +48,7 @@ import static org.hibernate.annotations.FetchMode.SELECT;
         @NamedQuery(name = UserVO.FACEBOOK, query = "select u from UserVO u where  u.facebookId =:facebookId "),
         @NamedQuery(name = UserVO.GOOGLE, query = "select u from UserVO u where  u.googleId =:googleId "),
         @NamedQuery(name = UserVO.JOB_CONFIRM, query = "select u from UserVO u where u.confirmationToken is not  null and u.active =:active"),
+        @NamedQuery(name = UserVO.ALL_SUBSCRIPTION_PRICING, query = "select u from UserVO u where u.subscription.id.code =: code and u.subscription.id.token =:token"),
 })
 
 @Filters({
@@ -73,6 +71,7 @@ public class UserVO extends CommonVO {
     public static final String GOOGLE = "cm.travelpost.tp.user.ent.vo.UserVO.findByGoogleId";
     public static final String JOB_CONFIRM = "cm.travelpost.tp.user.ent.vo.UserVO.toConfirmByJob";
     public static final String SEARCH = "from UserVO as u ";
+    public static final String ALL_SUBSCRIPTION_PRICING = "cm.travelpost.tp.user.ent.vo.UserVO.subscriptionPricing";
 
 
     private Long id;
@@ -339,7 +338,8 @@ public class UserVO extends CommonVO {
     @Column(name = "CITY", nullable = false)
     public String getCity() {  return city; }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns({
             @JoinColumn(name = "R_SUBSCRIPTION_CODE",updatable = true,insertable = false),
             @JoinColumn(name = "R_SUBSCRIPTION_TOKEN",updatable = true,insertable = false)

@@ -105,4 +105,6 @@ public interface UserService {
     ReviewsSummaryBO getReviewSummary(UserVO user);
 
     String verify(String username, String code) throws Exception;
+
+    List<UserVO> usersBySubscription(String code, String token) throws Exception;
 }

@@ -171,8 +171,8 @@ public class WSConstants extends CommonProperties {
     public static final String SUBSCRIPTION_WS_GET = "/subscription";
     public static final String SUBSCRIPTION_WS_ALL = "/all";
     public static final String SUBSCRIPTION_WS_BY_TYPE = "/type";
-
-    public static final String SUBSCRIPTION_WS_ADD_USERS = "/users";
+    public static final String SUBSCRIPTION_WS_ADD_USERS = "/manage";
+    public static final String SUBSCRIPTION_WS_GET_USERS = "/users";
 
 
 }

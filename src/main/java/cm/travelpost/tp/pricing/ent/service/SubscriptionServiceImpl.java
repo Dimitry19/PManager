@@ -1,6 +1,7 @@
 package cm.travelpost.tp.pricing.ent.service;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.travelpost.tp.common.enums.OperationEnum;
 import cm.travelpost.tp.common.exception.SubscriptionException;
 import cm.travelpost.tp.common.utils.CodeGenerator;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
@@ -23,15 +24,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static cm.travelpost.tp.common.Constants.DEFAULT_TOKEN;
 import static cm.travelpost.tp.common.Constants.SUBSCRIPTION_PREFIX;
 
 @Service
+@Transactional
 public class SubscriptionServiceImpl extends APricingSubscriptionServiceImpl implements SubscriptionService{
 
 	protected final Logger logger = LoggerFactory.getLogger(SubscriptionServiceImpl.class);
@@ -59,16 +63,10 @@ public class SubscriptionServiceImpl extends APricingSubscriptionServiceImpl imp
 	@Transactional(propagation = Propagation.REQUIRED)
 	public SubscriptionVO update(String code, String token, UpdateSubscriptionDTO dto) throws Exception {
 
-		PricingSubscriptionVOId id= new PricingSubscriptionVOId(code,token);
-		SubscriptionVO subscription= (SubscriptionVO) dao.findById(SubscriptionVO.class, id);
-
-		if (subscription == null ){
-			logger.error("Aucun abonnement ayant le code {} trouvé", code);
-			throw new SubscriptionException("Aucun abonnement ayant le code ["+code+"] trouvé");
-		}
-
+		SubscriptionVO subscription= getSubscription(code,token);
 		checkPricingByType(subscription, dto.getType(), dto.getDescription(), dto.getConvertedStartDate(), dto.getConvertedEndDate());
 		dao.update(subscription);
+		PricingSubscriptionVOId id= new PricingSubscriptionVOId(code,token);
 		return (SubscriptionVO) dao.findById(SubscriptionVO.class, id);
 	}
 
@@ -103,29 +101,37 @@ public class SubscriptionServiceImpl extends APricingSubscriptionServiceImpl imp
 
 	@Override
 	public SubscriptionVO byType(SubscriptionPricingType type) throws Exception {
-
 		  return dao.byType(type);
 	}
 
 	@Override
-	public boolean addToUser(ManageSubscriptionUserDTO dto) throws Exception {
+	public boolean addOrRemoveToUser(ManageSubscriptionUserDTO dto) throws Exception {
 
 		Set<UserVO> users = new HashSet<>();
-		SubscriptionVO subscription = (SubscriptionVO) dao.findById(SubscriptionVO.class, new PricingSubscriptionVOId(dto.getCode(), dto.getToken()));
-
-		if(subscription!=null && CollectionsUtils.isNotEmpty(dto.getUsers())){
-			 // users = (Set<UserVO>) dto.getUsers().stream().forEach(id->userDAO.findByUsername((String) id)).collect(Collectors.toSet());
+		SubscriptionVO subscription= getSubscription(dto.getCode(),dto.getToken());
+		if(CollectionsUtils.isNotEmpty(dto.getUsers())){
+			users = (Set<UserVO>) dto.getUsers()
+					.stream()
+					.filter(id->getUser(String.valueOf(id))!=null)
+					.map(id->getUser(String.valueOf(id)))
+					.collect(Collectors.toSet());
 		}
-		if(subscription!=null){
-			users.stream().forEach(u->
-			{
-				u.setSubscription(subscription);
-
-			});
+		if (dto.getOperation()== OperationEnum.ADD){
+			users.stream().forEach(u-> {u.setSubscription(subscription);userDAO.updateUser(u); });
 			subscription.getUsers().addAll(users);
+		}else {
+			users.stream().forEach(u-> { u.setSubscription(null); userDAO.updateUser(u);});
+			subscription.getUsers().removeAll(users);
 		}
-		return false;
+		return true;
 	}
+
+	@Override
+	public List<UserVO> retrieveUsers(@NotNull String code, @NotNull String token, PageBy pageBy) throws Exception {
+		SubscriptionVO subscription = getSubscription( code, token );
+		return userDAO.usersBySubscription(subscription.getId().getCode(),subscription.getId().getToken(), pageBy);
+	}
+
 
 	private PricingVO getPricingByType(SubscriptionPricingType type) throws Exception {
 
@@ -144,6 +150,25 @@ public class SubscriptionServiceImpl extends APricingSubscriptionServiceImpl imp
 		subscription.setEndDate(convertedEndDate);
 		subscription.setType(type);
 		pricing.addSubscription(subscription);
+	}
+
+	private SubscriptionVO getSubscription(String code, String token ) throws SubscriptionException {
+
+		SubscriptionVO subscription= (SubscriptionVO) dao.findById(SubscriptionVO.class, new PricingSubscriptionVOId(code, token));
+		if(subscription == null){
+			logger.error("Aucun abonnement trouvé avec le code {}",code);
+			throw new SubscriptionException("Aucun abonnement trouvé avec le code "+code);
+		}
+		return subscription;
+
+	}
+	private UserVO getUser(String username){
+		try {
+			return userDAO.findByUsername(username);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	private SubscriptionPricingType getSubscriptionPricingType(String type) {
 

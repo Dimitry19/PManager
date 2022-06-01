@@ -1,11 +1,13 @@
 package cm.travelpost.tp.ws.controller.rest.pricing;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.travelpost.tp.common.enums.OperationEnum;
 import cm.travelpost.tp.common.exception.SubscriptionException;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.pricing.ent.service.SubscriptionService;
 import cm.travelpost.tp.pricing.ent.vo.SubscriptionVO;
 import cm.travelpost.tp.pricing.enums.SubscriptionPricingType;
+import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.pricing.CreateSubscriptionDTO;
 import cm.travelpost.tp.ws.requests.pricing.ManageSubscriptionUserDTO;
@@ -255,12 +257,10 @@ public class SubscriptionController extends CommonController {
 		Response tpResponse = new Response();
 		try {
 			createOpentracingSpan("SubscriptionController - Create subscription");
-
-
-			boolean added = subscriptionService.addToUser(dto);
+			boolean added = subscriptionService.addOrRemoveToUser(dto);
 			if(BooleanUtils.isTrue(added)){
 				tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-				tpResponse.setRetDescription(WebServiceResponseCode.ADD_SUBSCRIPTION_TO_USERS_OK_LABEL);
+				tpResponse.setRetDescription(dto.getOperation()== OperationEnum.ADD ? WebServiceResponseCode.ADD_SUBSCRIPTION_TO_USERS_OK_LABEL:WebServiceResponseCode.REMOVE_SUBSCRIPTION_TO_USERS_OK_LABEL);
 			} else {
 				tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 				tpResponse.setMessage(WebServiceResponseCode.ERROR_ADD_SUBSCRIPTION_TO_USERS_LABEL);
@@ -276,5 +276,42 @@ public class SubscriptionController extends CommonController {
 			finishOpentracingSpan();
 		}
 		return tpResponse;
+	}
+
+	@ApiOperation(value = "Retrieve users from subscription by ID", response = SubscriptionVO.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval announces by transport",
+					response = List.class, responseContainer = "List")})
+	@GetMapping(value = WSConstants.SUBSCRIPTION_WS_GET_USERS,produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},headers = WSConstants.HEADER_ACCEPT)
+	public @ResponseBody ResponseEntity<?>  users(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page,
+												  @RequestParam(value = "code", required = true) String code,@RequestParam(value = "token", required = true) String token) throws Exception {
+
+		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+		logger.info(" Get users request in");
+		Response tpResponse = new Response();
+
+
+		HttpHeaders headers = new HttpHeaders();
+		PaginateResponse paginateResponse = new PaginateResponse();
+		PageBy pageBy = new PageBy(page, Integer.valueOf(DEFAULT_SIZE));
+
+		try {
+			createOpentracingSpan("subscriptionSubscriptionController - Get users");
+			List<UserVO> users = subscriptionService.retrieveUsers(code,token,pageBy);
+			return getPaginateResponseResponseEntity(headers,paginateResponse, users);
+
+		} catch (Exception e) {
+			tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+			tpResponse.setMessage(e.getMessage());
+			logger.error("Erreur durant la recuperation des utilisateurs pour l'abonnement: code {} - token {}", e, code, token);
+			e.printStackTrace();
+			throw e;
+		} finally {
+			finishOpentracingSpan();
+		}
 	}
 }

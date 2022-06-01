@@ -39,7 +39,6 @@ public interface UserDAO extends CommonDAO {
 
     List<UserVO> subscribers(Long userId) throws UserException;
 
-
     List<UserVO> getAllUsers() throws Exception;
 
     List<UserVO> getAllUsersToConfirm() throws Exception;
@@ -58,18 +57,13 @@ public interface UserDAO extends CommonDAO {
 
     boolean deleteUser(Long id) throws UserException;
 
-
     void removeUser(UserVO user) throws BusinessResourceException;
-
 
     UserVO findByEmail(String email) throws Exception;
 
-
     UserVO findByFacebookId(String facebookId) throws Exception;
 
-
     UserVO findByGoogleId(String googleId) throws Exception;
-
 
     boolean setRole(UserVO user, RoleEnum roleId) throws Exception;
 
@@ -88,4 +82,6 @@ public interface UserDAO extends CommonDAO {
     List<CommunicationVO> communications(Long userId) throws Exception;
 
     UserVO generateSecret(UserVO user) throws Exception;
+
+    List<UserVO> usersBySubscription(String code, String token, PageBy pageBy) throws Exception;
 }
