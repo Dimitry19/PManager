@@ -15,6 +15,8 @@ import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.notification.enums.NotificationType;
+import cm.travelpost.tp.pricing.ent.dao.SubscriptionDAO;
+import cm.travelpost.tp.pricing.enums.SubscriptionPricingType;
 import cm.travelpost.tp.security.PasswordGenerator;
 import cm.travelpost.tp.user.ent.vo.RoleVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
@@ -52,6 +54,9 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
     @Autowired
     RoleDAO roleDAO;
+
+    @Autowired
+    SubscriptionDAO subscriptionDAO;
 
     @Autowired
     private SecretGenerator secretGenerator;
@@ -271,6 +276,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setConfirmationToken(UUID.randomUUID().toString());
             user.setCountry(register.getCountry());
             user.setCity(register.getCity());
+            user.setSubscription(subscriptionDAO.byType(SubscriptionPricingType.BASE));
             Long id=(Long)save(user);
             user=findById(id);
             setRole(user, register.getRole());

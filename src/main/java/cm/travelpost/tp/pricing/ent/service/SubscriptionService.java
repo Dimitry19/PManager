@@ -16,5 +16,6 @@ public interface SubscriptionService extends APricingSubscriptionService{
 	SubscriptionVO create(@NotNull CreateSubscriptionDTO dto) throws Exception;
 	SubscriptionVO update(@NotNull String code, @NotNull String token, @NotNull UpdateSubscriptionDTO dto) throws Exception;
 	boolean addOrRemoveToUser(@NotNull ManageSubscriptionUserDTO dto) throws Exception;
+	int countUsers(@NotNull String code, @NotNull String token, PageBy pageBy) throws Exception;
 	List<UserVO> retrieveUsers(@NotNull String code, @NotNull String token, PageBy pageBy) throws Exception;
 }

@@ -301,8 +301,9 @@ public class SubscriptionController extends CommonController {
 
 		try {
 			createOpentracingSpan("subscriptionSubscriptionController - Get users");
+			int count = subscriptionService.countUsers(code,token,null);
 			List<UserVO> users = subscriptionService.retrieveUsers(code,token,pageBy);
-			return getPaginateResponseResponseEntity(headers,paginateResponse, users);
+			return getPaginateResponseSearchResponseEntity(  headers, paginateResponse,   count,  users,pageBy);
 
 		} catch (Exception e) {
 			tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);

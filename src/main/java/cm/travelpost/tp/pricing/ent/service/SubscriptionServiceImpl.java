@@ -127,11 +127,15 @@ public class SubscriptionServiceImpl extends APricingSubscriptionServiceImpl imp
 	}
 
 	@Override
+	public int countUsers(@NotNull String code, @NotNull String token, PageBy pageBy) throws Exception {
+		SubscriptionVO subscription = getSubscription( code, token );
+		return CollectionsUtils.size(userDAO.usersBySubscription(subscription.getId().getCode(),subscription.getId().getToken(), pageBy));
+	}
+	@Override
 	public List<UserVO> retrieveUsers(@NotNull String code, @NotNull String token, PageBy pageBy) throws Exception {
 		SubscriptionVO subscription = getSubscription( code, token );
 		return userDAO.usersBySubscription(subscription.getId().getCode(),subscription.getId().getToken(), pageBy);
 	}
-
 
 	private PricingVO getPricingByType(SubscriptionPricingType type) throws Exception {
 
