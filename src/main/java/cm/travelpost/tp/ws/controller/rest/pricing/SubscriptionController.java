@@ -248,7 +248,7 @@ public class SubscriptionController extends CommonController {
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 			@ApiResponse(code = 200, message = "Successful update",
 					response = SubscriptionVO.class, responseContainer = "Object")})
-	@PostMapping(value = SUBSCRIPTION_WS_ADD_USERS, consumes = MediaType.APPLICATION_JSON,produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+	@PostMapping(value = SUBSCRIPTION_WS_MANAGE_USERS, consumes = MediaType.APPLICATION_JSON,produces = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
 	public @ResponseBody Response manageSubscriptionUser(HttpServletRequest request,
 																		   HttpServletResponse response, @RequestBody @Valid ManageSubscriptionUserDTO dto) throws Exception {
 

@@ -17,15 +17,12 @@ import cm.travelpost.tp.announce.enums.TransportEnum;
 import cm.travelpost.tp.announce.enums.ValidateEnum;
 import cm.travelpost.tp.common.Constants;
 import cm.travelpost.tp.common.enums.StatusEnum;
-import cm.travelpost.tp.common.exception.AnnounceException;
-import cm.travelpost.tp.common.exception.BusinessResourceException;
-import cm.travelpost.tp.common.exception.RecordNotFoundException;
-import cm.travelpost.tp.common.exception.UserException;
+import cm.travelpost.tp.common.exception.*;
 import cm.travelpost.tp.common.utils.*;
 import cm.travelpost.tp.notification.ent.dao.NotificationDAO;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 import cm.travelpost.tp.notification.enums.NotificationType;
-import cm.travelpost.tp.user.ent.dao.UserDAO;
+import cm.travelpost.tp.user.ent.service.UserService;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
@@ -59,9 +56,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     protected AirlineDAO airlineDAO;
 
     @Autowired
-    protected UserDAO userDAO;
-
-    @Autowired
     protected CategoryDAO categoryDAO;
 
     @Autowired
@@ -72,6 +66,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
     @Autowired
     protected QueryUtils queryUtils;
+
+    @Autowired
+    protected UserService userService;
 
     private String retrieveReservationError="Erreur durant la recuperation des reservations liées à l'annonce id={}";
 
@@ -153,7 +150,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Transactional(readOnly = true)
     public List<AnnounceVO> announcesByUser(Long userId, PageBy pageBy) throws AnnounceException,Exception {
 
-        UserVO user = userDAO.findById(userId);
+        UserVO user = userService.findById(userId);
         if (user == null) {
             throw new UserException(messageConfig.getUserExceptionNotFound() + userId);
         }
@@ -164,7 +161,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Transactional(readOnly = true)
     public List<?> announcesByUser(Long userId, StatusEnum status, PageBy pageBy) throws AnnounceException,Exception {
 
-        UserVO user = userDAO.findById(userId);
+        UserVO user = userService.findById(userId);
         if (user == null) {
             throw new UserException(messageConfig.getUserExceptionNotFound() + userId);
         }
@@ -206,11 +203,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class, BusinessResourceException.class})
     public AnnounceVO announce(Long id) throws Exception {
 
         AnnounceVO announce = (AnnounceVO) findById(AnnounceVO.class, id);
-        if (announce == null) return null;
+        if (announce == null) {
+            throw new AnnounceException("Annonce non trouvée");
+        }
         double rating = calcolateAverage(announce.getUser());
         announce.getUserInfo().setRating(rating);
 
@@ -219,11 +218,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class, BusinessResourceException.class})
     public AnnounceVO announce(String code) throws Exception {
 
         AnnounceVO announce = (AnnounceVO) findByNaturalId(AnnounceVO.class, code);
-        if (announce == null) return null;
+        if (announce == null) {
+            throw new AnnounceException("Annonce non trouvée");
+        }
         double rating = calcolateAverage(announce.getUser());
         announce.getUserInfo().setRating(rating);
 
@@ -233,11 +234,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class, BusinessResourceException.class})
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class, BusinessResourceException.class})
     public AnnounceCompletedVO announceCompleted(Long id) throws Exception {
 
         AnnounceCompletedVO announce = (AnnounceCompletedVO) findById(AnnounceCompletedVO.class, id);
-        if (announce == null) return null;
+        if (announce == null) {
+            throw new AnnounceException("Annonce non trouvée");
+        }
         double rating = calcolateAverage(announce.getUser());
         announce.getUserInfo().setRating(rating);
         return announce;
@@ -250,15 +253,15 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
      * @throws Exception
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
-    public AnnounceMasterVO create(AnnounceDTO adto) throws AnnounceException,Exception {
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class})
+    public AnnounceMasterVO create(AnnounceDTO adto) throws AnnounceException, UserException, SubscriptionException, Exception {
 
-            UserVO user = userDAO.findById(adto.getUserId());
+            UserVO user = userService.findById(adto.getUserId());
 
             if (user == null) {
                 throw new UserException(messageConfig.getUserExceptionNotFound() + adto.getUserId());
             }
-
+            userService.checkSubscription(user);
             AnnounceVO announce = new AnnounceVO();
             setAnnounce(announce, user, adto,true);
 
@@ -287,10 +290,10 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
      * @throws Exception
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,BusinessResourceException.class})
     public AnnounceVO update(UpdateAnnounceDTO dto) throws AnnounceException,Exception {
 
-        UserVO user = userDAO.findById(dto.getUserId());
+        UserVO user = userService.findById(dto.getUserId());
 
         if (user == null) {
             throw new RecordNotFoundException(messageConfig.getUserExceptionNotFound());
@@ -308,8 +311,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         announce.getUserInfo().setRating(rating);
         setAnnounce(announce, user, dto,false);
         update(announce);
-
-
 
         String message=buildNotificationMessage(ANNOUNCE_UPD,announce.getUser().getUsername(),announce.getDeparture(),
                 announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
@@ -351,17 +352,16 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                         try {
                             updateReservationsStatus(a.getId(), StatusEnum.COMPLETED);
                             generateEvent(a,"L'annonce de " +partOneMessage(a.getDeparture(),a.getArrival()) + partTwoMessage(" et ayant", DateUtils.dateToString(a.getStartDate()),DateUtils.dateToString(a.getEndDate()))+" n'est plus disponible", true);
-
                         } catch (Exception e) {
                             logger.error("Erreur durant l''execution du Batch d''ajournement de status de l'annonce {}",e.getMessage());
-                            e.printStackTrace();
+                            throw  new AnnounceException(e.getMessage());
                         }
                     });
         }
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class})
     public void announcesToNotificate(int numberDays) throws AnnounceException,Exception {
 
         List<AnnounceVO> announces = Optional.ofNullable(allAndOrderBy(AnnounceVO.class, START_DATE_PARAM, true, null)).orElseGet(Collections::emptyList);
@@ -376,7 +376,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                             generateEvent(a,"Dans " + numberDays + " jours l'annonce de " +partOneMessage(a.getDeparture(),a.getArrival()) + partTwoMessage(" et ayant ", DateUtils.dateToString(a.getStartDate()),DateUtils.dateToString(a.getEndDate()))+" ne sera plus disponible");
                         } catch (Exception e) {
                             logger.error("Erreur durant l''execution du Batch de notification des annonceurs {}", e.getMessage());
-                            e.printStackTrace();
+                            throw  new AnnounceException(e.getMessage());
                         }
                     });
         }
@@ -397,7 +397,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class,BusinessResourceException.class,AnnounceException.class})
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class,AnnounceException.class})
     public boolean delete(Long id) throws Exception {
         logger.info("Announce: delete");
 
@@ -928,5 +928,4 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             }
         }
     }
-
 }

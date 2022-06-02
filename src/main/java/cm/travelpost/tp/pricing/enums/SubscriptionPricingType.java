@@ -4,7 +4,7 @@ import cm.travelpost.tp.common.utils.StringUtils;
 
 public enum SubscriptionPricingType {
 
-    BASE("BASE","Abonnement Base",3,20),
+    BASE("BASE","Abonnement Base",3,10),
     MEDIUM("MEDIUM","Abonnement Medium",6, 50),
     PRENIUM("PRENIUM","Abonnement Prenium",12,100);
 

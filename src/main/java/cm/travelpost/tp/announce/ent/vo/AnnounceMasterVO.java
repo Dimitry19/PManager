@@ -3,10 +3,9 @@ package cm.travelpost.tp.announce.ent.vo;
 
 import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.announce.enums.AnnounceType;
-import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.announce.enums.TransportEnum;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.utils.DateUtils;
-import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.constant.FieldConstants;
 import cm.travelpost.tp.image.ent.vo.ImageVO;
@@ -37,7 +36,7 @@ import java.util.Set;
 @NamedQueries(value = {
 		@NamedQuery(name = AnnounceMasterVO.FINDBYCODE, query = "select a from AnnounceMasterVO a where a.code =:code order by a.startDate desc"),
 		@NamedQuery(name = AnnounceMasterVO.FINDBYUSER, query = "select a from AnnounceMasterVO a where a.user.id =:userId order by a.startDate desc"),
-		@NamedQuery(name = AnnounceMasterVO.FINDBYTYPE, query = "select a from AnnounceMasterVO a where a.announceType =:type order by a.startDate desc"),
+		@NamedQuery(name = AnnounceMasterVO.FINDBYTYPE, query = "select a from AnnounceMasterVO a where a.announceType =:announceType order by a.startDate desc"),
 		@NamedQuery(name = AnnounceMasterVO.FINDBYTRANSPORT, query = "select a from AnnounceMasterVO a where a.transport =:transport order by a.startDate desc"),
 })
 @Filters({
@@ -398,7 +397,6 @@ public class AnnounceMasterVO extends CommonVO {
 
 	public void addMessage(MessageVO message) {
 		messages.add(message);
-		//message.setAnnounce(this);
 	}
 
 	public void removeMessage(MessageVO message) {
@@ -411,9 +409,7 @@ public class AnnounceMasterVO extends CommonVO {
 
 	public void updateDeleteChildrens() {
 
-		this.messages.forEach(message -> {
-			message.cancel();
-		});
+		this.messages.forEach(MessageVO::cancel);
 	}
 
 	@Override
@@ -433,20 +429,12 @@ public class AnnounceMasterVO extends CommonVO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AnnounceMasterVO other = (AnnounceMasterVO) obj;
-		if (!id.equals(other.id))
+		AnnounceVO other = (AnnounceVO) obj;
+		if (id.equals(other.id))
 			return false;
 		if (user == null) {
 			return other.user == null;
 		} else return user.equals(other.user);
-	}
-
-	private String toUpperCase(String value){
-		if(StringUtils.isNotEmpty(value)){
-			return value.toUpperCase();
-		}
-		return value;
-
 	}
 
 }

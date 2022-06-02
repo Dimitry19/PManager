@@ -3,23 +3,19 @@ package cm.travelpost.tp.announce.ent.dao;
 import cm.framework.ds.common.ent.vo.KeyValue;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
-
 import cm.travelpost.tp.announce.ent.vo.*;
 import cm.travelpost.tp.announce.enums.AnnounceType;
 import cm.travelpost.tp.announce.enums.ReservationType;
-import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.announce.enums.ValidateEnum;
-import cm.travelpost.tp.common.exception.BusinessResourceException;
-import cm.travelpost.tp.common.exception.RecordNotFoundException;
-import cm.travelpost.tp.common.exception.UserException;
-import cm.travelpost.tp.common.exception.UserNotFoundException;
+import cm.travelpost.tp.common.enums.StatusEnum;
+import cm.travelpost.tp.common.exception.*;
 import cm.travelpost.tp.common.utils.BigDecimalUtils;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.DateUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.FieldConstants;
 import cm.travelpost.tp.notification.enums.NotificationType;
-import cm.travelpost.tp.user.ent.dao.UserDAO;
+import cm.travelpost.tp.user.ent.service.UserService;
 import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.announces.ReservationDTO;
@@ -49,7 +45,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
     private AnnounceDAO announceDAO;
 
     @Autowired
-    private UserDAO userDAO;
+    private UserService userService;
 
     @Autowired
     CategoryDAO categoryDAO;
@@ -69,14 +65,15 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
      */
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = {Exception.class, UserNotFoundException.class})
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = {Exception.class, AnnounceException.class,UserNotFoundException.class})
     public ReservationVO addReservation(ReservationDTO dto) throws Exception {
         logger.info("add reservation ");
 
-        UserVO user = userDAO.findById(dto.getUserId());
+        UserVO user = userService.findById(dto.getUserId());
         if (user == null)
             throw new UserNotFoundException("Utilisateur de la reservation non trouve");
 
+        userService.checkSubscription(user);
         AnnounceVO announce = announceDAO.announce(dto.getAnnounceId());
         if (announce == null) {
             logger.error("add reservation {},{} non trouvé ou {} non trouvée", "La reservation n'a pas été ajoutée", "Utilisateur avec id=" + dto.getUserId(), " Annonce avec id=" + dto.getAnnounceId());
@@ -145,7 +142,7 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public ReservationVO updateReservation(UpdateReservationDTO reservationDTO) throws Exception {
 
-        UserVO user = userDAO.findById(reservationDTO.getUserId());
+        UserVO user = userService.findById(reservationDTO.getUserId());
         if (user == null) {
             throw new RecordNotFoundException("Aucun utilisateur trouvé");
         }

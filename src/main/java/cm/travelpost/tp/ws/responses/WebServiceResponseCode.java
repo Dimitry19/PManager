@@ -53,9 +53,9 @@ public class WebServiceResponseCode {
 
     // NOK LABEL
     public static final String ERROR_PAGINATE_RESPONSE_LABEL = "Une erreur est survenue durant la recuperation des données";
-    public static final String ERROR_DELETE_USER_CODE_LABEL = "L'utilisateur ne peut pas etre elimine car inexistant";
+    public static final String ERROR_DELETE_USER_CODE_LABEL = "L\''utilisateur ne peut pas etre elimine car inexistant";
     public static final String ERROR_MAIL_SENT_LABEL = "Le mail n'a pas pu etre envoye";
-    public static final String ERROR_RETRIEVE_PASSWORD_LABEL = "Le mot de posse n'a pas été envoye ";
+    public static final String ERROR_RETRIEVE_PASSWORD_LABEL = "Le mot de posse n\''a pas été envoye ";
     public static final String ERROR_EMAIL_REGISTER_LABEL = "Cette adresse email a deja été utilise";
     public static final String ERROR_USERNAME_REGISTER_LABEL = "Nom utilisateur non disponible";
     public static final String ERROR_USER_REGISTER_LABEL = "Enregistrement non complété";
@@ -66,21 +66,21 @@ public class WebServiceResponseCode {
     public static final String ERROR_LOGIN_ATTEMPT_KO_LABEL = "Les {0} tentatives de connexion epuisées.Veuillez contacter l\''administrateur à l\'' adresse : {1} ";
     public static final String ERROR_LOGOUT_LABEL = "Erreur durant la déconnexion";
 
-    public static final String ERROR_UPDATE_USER_LABEL = "Erreur durant l'ajournement des données";
+    public static final String ERROR_UPDATE_USER_LABEL = "Erreur durant l\''ajournement des données";
 
     public static final String ERROR_UPD_EMAIL_LABEL = "Email non valide ou deja utilise";
 
-    public static final String ERROR_CREATE_LABEL = "{0} n'a pas pu etre cree";
+    public static final String ERROR_CREATE_LABEL = "{0} n\''a pas pu etre cree";
     public static final String ERROR_DELETE_LABEL = "{0} ne peut pas etre eliminé(e) car inexistant";
     public static final String ERROR_UPDATE_LABEL = "{0} ne peut pas etre ajournee car inexistant";
 
 
     public static final String ERROR_SUBSCRIBE_LABEL = "Abonnement non reussi";
     public static final String ERROR_UNSUBSCRIBE_LABEL = "Desabonnement non reussi";
-    public static final String CONFLICT_SUBSCRIBE_LABEL = "Impossible de/s'abonner a son propre compte";
+    public static final String CONFLICT_SUBSCRIBE_LABEL = "Impossible de/s\''abonner a son propre compte";
 
 
-    public static final String ERROR_CONTACT_US_LABEL = "Impossible d'envoyer le message pour le moment";
+    public static final String ERROR_CONTACT_US_LABEL = "Impossible d\''envoyer le message pour le moment";
     public static final String ERROR_GET_RESERV_CODE_LABEL = "La reservation inexistante";
     public static final String ERROR_INEXIST_CODE_LABEL = "{0} inexistant(e)";
 

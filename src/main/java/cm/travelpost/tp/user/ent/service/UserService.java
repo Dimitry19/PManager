@@ -2,6 +2,7 @@ package cm.travelpost.tp.user.ent.service;
 
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
+import cm.travelpost.tp.common.exception.SubscriptionException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.review.ent.bo.ReviewsSummaryBO;
 import cm.travelpost.tp.review.ent.vo.ReviewDetailsVO;
@@ -67,6 +68,8 @@ public interface UserService {
 
     UserVO findByEmail(String email) throws Exception;
 
+    UserVO findById(Long id) throws Exception;
+
     boolean setRoleToUser(RoleToUserDTO roleToUser) throws Exception;
 
     UserVO findByUsername(String username, boolean isReg) throws Exception;
@@ -106,5 +109,7 @@ public interface UserService {
 
     String verify(String username, String code) throws Exception;
 
-    List<UserVO> usersBySubscription(String code, String token) throws Exception;
+    List<UserVO> usersBySubscription(String code, String token, PageBy pageBy) throws Exception;
+
+    void checkSubscription(UserVO user) throws Exception;
 }

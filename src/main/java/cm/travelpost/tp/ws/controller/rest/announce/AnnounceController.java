@@ -1,16 +1,15 @@
 package cm.travelpost.tp.ws.controller.rest.announce;
 
 
-import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.framework.ds.common.ent.vo.PageBy;
-
+import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceCompletedVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
-import cm.travelpost.tp.announce.enums.Source;
 import cm.travelpost.tp.announce.enums.AnnounceType;
-import cm.travelpost.tp.common.enums.StatusEnum;
+import cm.travelpost.tp.announce.enums.Source;
 import cm.travelpost.tp.announce.enums.TransportEnum;
+import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
@@ -91,11 +90,9 @@ public class AnnounceController extends CommonController {
 
                 return new ResponseEntity<>(announce, HttpStatus.CREATED);
             }
-        } catch (AnnounceException e) {
+        } catch ( Exception  e) {
             logger.error("Erreur durant l'execution de  add announce: ", e);
-            throw e;
-        } catch (Exception e) {
-            e.printStackTrace();
+            throw new AnnounceException(e.getMessage());
         } finally {
             finishOpentracingSpan();
         }

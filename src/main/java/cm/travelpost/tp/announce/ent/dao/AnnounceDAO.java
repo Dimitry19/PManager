@@ -7,9 +7,7 @@ import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.travelpost.tp.common.enums.StatusEnum;
-import cm.travelpost.tp.common.exception.AnnounceException;
-import cm.travelpost.tp.common.exception.BusinessResourceException;
-import cm.travelpost.tp.common.exception.RecordNotFoundException;
+import cm.travelpost.tp.common.exception.*;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
@@ -47,7 +45,7 @@ public interface AnnounceDAO extends CommonDAO {
 
     AnnounceCompletedVO announceCompleted(Long id) throws Exception;
 
-    AnnounceMasterVO create(AnnounceDTO announce) throws AnnounceException,Exception;
+    AnnounceMasterVO create(AnnounceDTO announce) throws AnnounceException, UserException, SubscriptionException,Exception;
 
     AnnounceVO delete(AnnounceVO announce) throws BusinessResourceException, RecordNotFoundException;
 

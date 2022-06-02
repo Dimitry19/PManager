@@ -7,6 +7,7 @@ import cm.travelpost.tp.announce.ent.dao.ReservationDAO;
 import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.travelpost.tp.announce.enums.ReservationType;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
+import cm.travelpost.tp.common.exception.SubscriptionException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.ws.requests.announces.ReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateReservationDTO;
@@ -28,7 +29,7 @@ public class ReservationServiceImpl extends Generic implements ReservationServic
 	ReservationDAO dao;
 
     @Override
-    public ReservationVO addReservation(ReservationDTO reservationDTO) throws Exception {
+    public ReservationVO addReservation(ReservationDTO reservationDTO) throws SubscriptionException, Exception {
         return dao.addReservation(reservationDTO);
     }
 

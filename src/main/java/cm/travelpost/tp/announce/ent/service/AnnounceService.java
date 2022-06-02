@@ -7,6 +7,8 @@ import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
+import cm.travelpost.tp.common.exception.SubscriptionException;
+import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
@@ -18,7 +20,7 @@ import java.util.List;
 
 public interface AnnounceService extends InitializingBean {
 
-    AnnounceMasterVO create(AnnounceDTO announceDTO) throws AnnounceException,Exception;
+    AnnounceMasterVO create(AnnounceDTO announceDTO) throws AnnounceException, UserException, SubscriptionException,Exception;
 
     List<AnnounceVO> search(AnnounceSearchDTO announceSearchDTO, PageBy pageBy) throws AnnounceException,Exception;
 

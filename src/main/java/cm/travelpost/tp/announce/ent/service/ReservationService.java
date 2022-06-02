@@ -4,6 +4,7 @@ import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.enums.FindBy;
 import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.travelpost.tp.announce.enums.ReservationType;
+import cm.travelpost.tp.common.exception.SubscriptionException;
 import cm.travelpost.tp.ws.requests.announces.ReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateReservationDTO;
 import cm.travelpost.tp.ws.requests.announces.ValidateReservationDTO;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public interface ReservationService {
 
-    ReservationVO addReservation(ReservationDTO reservationDTO) throws Exception;
+    ReservationVO addReservation(ReservationDTO reservationDTO) throws SubscriptionException,Exception;
 
     ReservationVO updateReservation(UpdateReservationDTO reservationDTO) throws Exception;
 
