@@ -12,9 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "image")
-@NamedQueries({
-        @NamedQuery(name = ImageVO.IMG_BY_NAME, query = " select i from ImageVO  as i where i.name=: name"),
-})
+@NamedQuery(name = ImageVO.IMG_BY_NAME, query = " select i from ImageVO  as i where i.name=: name")
 public class ImageVO extends WSCommonResponseVO {
 
     private static final long serialVersionUID = 1554805356908332718L;

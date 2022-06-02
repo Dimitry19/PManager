@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
@@ -74,7 +73,7 @@ public class AnnounceController extends CommonController {
     @PostMapping(value = CREATE, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<Object> create(HttpServletResponse response, HttpServletRequest request,
-                                      @RequestBody @Valid AnnounceDTO ar) throws AnnounceException {
+                                  @RequestBody @Valid AnnounceDTO ar) throws AnnounceException {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         AnnounceMasterVO announce = null;
@@ -91,11 +90,9 @@ public class AnnounceController extends CommonController {
 
                 return new ResponseEntity<>(announce, HttpStatus.CREATED);
             }
-        } catch (AnnounceException e) {
+        } catch ( Exception  e) {
             logger.error("Erreur durant l'execution de  add announce: ", e);
-            throw e;
-        } catch (Exception e) {
-            e.printStackTrace();
+            throw new AnnounceException(e.getMessage());
         } finally {
             finishOpentracingSpan();
         }
@@ -115,7 +112,7 @@ public class AnnounceController extends CommonController {
                     response = AnnounceVO.class, responseContainer = "Object")})
     @PutMapping(value = UPDATE_ID, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
     ResponseEntity<Object> update(HttpServletResponse response, HttpServletRequest request, @PathVariable("id") @Valid long id,
-                                      @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
+                                  @RequestBody @Valid UpdateAnnounceDTO uar) throws Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
@@ -327,9 +324,9 @@ public class AnnounceController extends CommonController {
                     response = ResponseEntity.class, responseContainer = "List")})
     @GetMapping(value = ANNOUNCE_WS_BY_TRANSPORT,   headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announcesByTransport(HttpServletResponse response, HttpServletRequest request,
-                                                            @RequestParam @Valid TransportEnum transport,
-                                                            @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
-                                                            @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException,Exception {
+                                                                 @RequestParam @Valid TransportEnum transport,
+                                                                 @RequestParam(required = false, defaultValue = DEFAULT_PAGE) @Valid @Positive(message = "la page doit etre nombre positif") int page,
+                                                                 @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException,Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         HttpHeaders headers = new HttpHeaders();
@@ -388,7 +385,7 @@ public class AnnounceController extends CommonController {
 
     @ApiOperation(value = "Retrieve an announce completed with an ID ", response = AnnounceVO.class)
     @GetMapping(value = ANNOUNCE_WS_COMPLETED_BY_ID, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<Object> getAnnounceCompleted(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid @NotNull(message = "Valoriser l'id de l'annonce") Long id ) throws AnnounceException {
+    public ResponseEntity<Object> getAnnounceCompleted(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id ) throws AnnounceException {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
@@ -396,12 +393,16 @@ public class AnnounceController extends CommonController {
             logger.info("retrieve announce request in");
             createOpentracingSpan("AnnounceController -get announce completed");
 
-            AnnounceCompletedVO announce = announceService.announceCompleted(id);
-            if (announce == null) {
-                WSCommonResponseVO wsResponse = new WSCommonResponseVO();
-                wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                wsResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
-                return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
+            AnnounceCompletedVO announce = null;
+            if (id != null) {
+                announce = announceService.announceCompleted(id);
+                if (announce == null) {
+                    WSCommonResponseVO wsResponse = new WSCommonResponseVO();
+                    wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    wsResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
+                    return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
+                }
+
             }
             return new ResponseEntity<>(announce, HttpStatus.OK);
         } catch (AnnounceException e) {
@@ -417,7 +418,7 @@ public class AnnounceController extends CommonController {
     }
     @ApiOperation(value = "Retrieve an announce with an ID and Source", response = AnnounceVO.class)
     @GetMapping(value = ANNOUNCE_WS_BY_ID_AND_SOURCE, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid @NotNull(message = "Valoriser l'id de l'annonce")  Long id , @RequestParam @Valid Source source , @RequestParam(name = "share",required = false) String share) throws AnnounceException {
+    public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id , @RequestParam @Valid Source source) throws AnnounceException {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
@@ -426,17 +427,17 @@ public class AnnounceController extends CommonController {
             createOpentracingSpan("AnnounceController -get announce");
 
 
-            AnnounceVO announce = announceService.announce(id);
+            AnnounceVO announce = null;
+            if (id != null) {
+                announce = announceService.announce(id);
+                if (announce == null) {
+                    WSCommonResponseVO wsResponse = new WSCommonResponseVO();
+                    wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    wsResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
+                    return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
+                }
 
-            if (announce == null) {
-                WSCommonResponseVO wsResponse = new WSCommonResponseVO();
-                wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                wsResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
-                return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
             }
-            announce.setRetCode(StringUtils.isNotEmpty(share) ? WebServiceResponseCode.SHARE:WebServiceResponseCode.OK_CODE);
-
-
             return new ResponseEntity<>(announce, HttpStatus.OK);
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);
@@ -473,7 +474,7 @@ public class AnnounceController extends CommonController {
                     response = ResponseEntity.class, responseContainer = "List")})
     @GetMapping(value = ANNOUNCES_WS, produces = MediaType.APPLICATION_JSON, headers = HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announces(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page
-                                                        ,@RequestParam  Source source) throws AnnounceException,Exception {
+            ,@RequestParam  Source source) throws AnnounceException,Exception {
 
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
