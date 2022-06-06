@@ -37,11 +37,14 @@ public class WebServiceResponseCode {
     public static final String READ_CODE_LABEL = "{0} déjà lu(e)";
     public static final String READ_ALL_CODE_LABEL = " Notifications lues";
 
+
     public static final String MFA_ENABLE_OK_LABEL = "L'authentification à deux facteurs activée ";
     public static final String MFA_DISABLE_OK_LABEL = "L'authentification à deux facteurs desactivée ";
 
     public static final String NOTIFICATION_ENABLE_OK_LABEL = "Notification activée ";
     public static final String NOTIFICATION_DISABLE_OK_LABEL = "Notification desactivée ";
+    public static final String ANNOUNCE_FAVORITE_ADD_OK = "announce favorite ajouté correctement ";
+    public static final String ANNOUNCE_FAVORITE_ALREADY_EXIST = "announce favorite deja existante ";
 
 
 

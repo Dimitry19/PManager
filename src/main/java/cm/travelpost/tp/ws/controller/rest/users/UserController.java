@@ -577,4 +577,42 @@ public class UserController extends CommonController {
             finishOpentracingSpan();
         }
     }
+
+
+
+    @ApiOperation(value = " Add Announce Favoris ", response = UserVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful update",
+                    response = UserVO.class, responseContainer = "Object")})
+    @RequestMapping( value=WSConstants.USER_ADD_ANNOUNCE_FAVORITE,method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+    public @ResponseBody
+    ResponseEntity<Response> AddAnnounceFavorites( HttpServletRequest request,HttpServletResponse response,
+                                          @RequestBody @Valid UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
+
+        logger.info("add a favorite announce into this users" + userAnnounceFavoriteDTO.getIdUser());
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+        try {
+              createOpentracingSpan("UserController - new announce favorite");
+              boolean result = userService.AddAnnounceFavorites(userAnnounceFavoriteDTO);
+               Response pmresponse = new Response();
+              if(result)
+              {
+                  pmresponse.setRetCode(0);
+                  pmresponse.setRetDescription(WebServiceResponseCode.ANNOUNCE_FAVORITE_ADD_OK);
+                  return new ResponseEntity<>(pmresponse,HttpStatus.OK);
+              }
+
+            }
+        catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            finishOpentracingSpan();
+        }
+
+        return null;
+    }
 }

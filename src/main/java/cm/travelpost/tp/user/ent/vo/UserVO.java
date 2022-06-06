@@ -1,6 +1,7 @@
 package cm.travelpost.tp.user.ent.vo;
 
 import cm.framework.ds.common.ent.vo.CommonVO;
+import cm.travelpost.tp.announce.ent.vo.UserAnnounceFavoriteVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.enums.Gender;
@@ -135,6 +136,9 @@ public class UserVO extends CommonVO {
     private String country;
 
     private AuthenticationVO authentication;
+
+    private UserAnnounceFavoriteVO userAnnounceFavorite;
+
 
 
     public UserVO() {
@@ -352,6 +356,24 @@ public class UserVO extends CommonVO {
     @Column(name = "CITY", nullable = false)
     public String getCity() {  return city; }
 
+
+
+    /*@Access(AccessType.PROPERTY)
+    @ManyToMany( fetch = FetchType.LAZY)
+    @JoinTable(name = "user_announce_favoris", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ANNOUNCE_ID"))
+    @JsonProperty
+    public Set<AnnounceMasterVO> getAnnounceFavories() {
+        return announceFavories;
+
+    }*/
+
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "announceFavorite_id", referencedColumnName = "id")
+    public UserAnnounceFavoriteVO getUserAnnounceFavorite() {
+        return userAnnounceFavorite;
+    }
+
     public void setSubscribers(Set<UserVO> subscribers) {
         this.subscribers = subscribers;
     }
@@ -565,6 +587,11 @@ public class UserVO extends CommonVO {
             review.setUser(null);
             iterator.remove();
         }
+    }
+
+
+    public void setUserAnnounceFavorite(UserAnnounceFavoriteVO userAnnounceFavorite) {
+        this.userAnnounceFavorite = userAnnounceFavorite;
     }
 
     public void updateDeleteChildrens() {
