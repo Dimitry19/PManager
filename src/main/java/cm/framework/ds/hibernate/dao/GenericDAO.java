@@ -19,6 +19,7 @@ import java.util.Optional;
 public interface GenericDAO<T, ID extends Serializable, NID extends Serializable>  extends  IEvent {
 
     Session getCurrentSession();
+
     List autocomplete(String namedQuery,ID search,boolean caseInsensitive);
 
     Optional<T> find(Class<T> clazz, ID id);

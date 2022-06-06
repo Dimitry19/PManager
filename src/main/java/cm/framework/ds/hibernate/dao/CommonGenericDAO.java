@@ -36,6 +36,7 @@ public class CommonGenericDAO extends GenericDAOImpl {
     public Map getMap() {
         return map;
     }
+
     protected void setFilters(String ...filters){
 
         initializeFilters();
@@ -50,6 +51,10 @@ public class CommonGenericDAO extends GenericDAOImpl {
 
     protected String [] getFilters(){
         return this.filters;
+    }
+
+    protected String [] emptyFilters(){
+        return null;
     }
 
 }

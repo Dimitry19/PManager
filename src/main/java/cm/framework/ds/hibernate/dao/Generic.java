@@ -39,7 +39,7 @@ public abstract class Generic extends CommonGenericDAO {
 
     /**
      * @param notificationType
-     * @param username
+     * @param userName
      * @param departure
      * @param arrival
      * @param startDate
