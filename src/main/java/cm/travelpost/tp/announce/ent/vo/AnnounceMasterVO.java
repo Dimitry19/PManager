@@ -6,7 +6,6 @@ import cm.travelpost.tp.common.enums.AnnounceType;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.TransportEnum;
 import cm.travelpost.tp.common.utils.DateUtils;
-import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.constant.FieldConstants;
 import cm.travelpost.tp.image.ent.vo.ImageVO;
@@ -398,7 +397,6 @@ public class AnnounceMasterVO extends CommonVO {
 
 	public void addMessage(MessageVO message) {
 		messages.add(message);
-		//message.setAnnounce(this);
 	}
 
 	public void removeMessage(MessageVO message) {
@@ -411,9 +409,7 @@ public class AnnounceMasterVO extends CommonVO {
 
 	public void updateDeleteChildrens() {
 
-		this.messages.forEach(message -> {
-			message.cancel();
-		});
+		this.messages.forEach(MessageVO::cancel);
 	}
 
 	@Override
@@ -439,14 +435,6 @@ public class AnnounceMasterVO extends CommonVO {
 		if (user == null) {
 			return other.user == null;
 		} else return user.equals(other.user);
-	}
-
-	private String toUpperCase(String value){
-		if(StringUtils.isNotEmpty(value)){
-			return value.toUpperCase();
-		}
-		return value;
-
 	}
 
 }
