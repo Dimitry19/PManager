@@ -46,6 +46,9 @@ public class WebServiceResponseCode {
     public static final String ANNOUNCE_FAVORITE_ADD_OK = "announce favorite ajouté correctement ";
     public static final String ANNOUNCE_FAVORITE_ALREADY_EXIST = "announce favorite deja existante ";
 
+    public static final String REMOVE_FAVORITE_ANNOUNCE = "announce favorite retirée correctement ";
+    public static final String REMOVE_NOT_OK= "announce retire avec probleme ";
+
 
 
 

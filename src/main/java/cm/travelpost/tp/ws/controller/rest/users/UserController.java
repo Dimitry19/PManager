@@ -53,7 +53,6 @@ public class UserController extends CommonController {
     protected boolean enableAutoActivateRegistration;
 
 
-
     @ApiOperation(value = "En/disable notification ", response = ResponseEntity.class)
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Server error"),
@@ -74,7 +73,7 @@ public class UserController extends CommonController {
             createOpentracingSpan("UserController - Manage notification");
             UserVO user = userService.manageNotification(userId, enable);
             user.setRetCode(WebServiceResponseCode.OK_CODE);
-            user.setRetDescription(BooleanUtils.isTrue(user.isEnableNotification()) ?WebServiceResponseCode.NOTIFICATION_ENABLE_OK_LABEL:WebServiceResponseCode.NOTIFICATION_DISABLE_OK_LABEL);
+            user.setRetDescription(BooleanUtils.isTrue(user.isEnableNotification()) ? WebServiceResponseCode.NOTIFICATION_ENABLE_OK_LABEL : WebServiceResponseCode.NOTIFICATION_DISABLE_OK_LABEL);
             return new ResponseEntity<>(user, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -105,7 +104,7 @@ public class UserController extends CommonController {
             createOpentracingSpan("AuthenticationController - Manage mfa");
             UserVO user = userService.manageMfa(userId, manage2FactorAuth);
             user.setRetCode(WebServiceResponseCode.OK_CODE);
-            user.setRetDescription(BooleanUtils.isTrue(user.isMultipleFactorAuthentication()) ?WebServiceResponseCode.MFA_ENABLE_OK_LABEL:WebServiceResponseCode.MFA_DISABLE_OK_LABEL);
+            user.setRetDescription(BooleanUtils.isTrue(user.isMultipleFactorAuthentication()) ? WebServiceResponseCode.MFA_ENABLE_OK_LABEL : WebServiceResponseCode.MFA_DISABLE_OK_LABEL);
             return new ResponseEntity<>(user, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -233,7 +232,7 @@ public class UserController extends CommonController {
             }
         } catch (Exception e) {
             logger.error("Erreur durant la recuperation du mot de passe de l'utilisateur  " + password.toString() + "{}", e);
-            return getResponseMailResponseEntity(pmResponse, e,"Veuillez reessayer dans quelques instants!");
+            return getResponseMailResponseEntity(pmResponse, e, "Veuillez reessayer dans quelques instants!");
         } finally {
             finishOpentracingSpan();
         }
@@ -319,8 +318,8 @@ public class UserController extends CommonController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Successful user retrieving",
                     response = ResponseEntity.class, responseContainer = "Object")})
-    @RequestMapping(value = WSConstants.USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT,produces = MediaType.APPLICATION_JSON)
-   // @GetMapping(value = USER_WS_USER_ID, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
+    @RequestMapping(value = WSConstants.USER_WS_USER_ID, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
+    // @GetMapping(value = USER_WS_USER_ID, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<UserVO> infosUser(HttpServletResponse response, HttpServletRequest request, @PathVariable("userId") @Valid Long id) throws UserNotFoundException, IOException {
         try {
             createOpentracingSpan("UserController -getUser");
@@ -370,7 +369,7 @@ public class UserController extends CommonController {
             }
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de l'envoi du mail: ", e);
-            return getResponseMailResponseEntity(pmResponse, e,"Veuillez reessayez plutard , Merci!");
+            return getResponseMailResponseEntity(pmResponse, e, "Veuillez reessayez plutard , Merci!");
         } finally {
             finishOpentracingSpan();
         }
@@ -399,9 +398,9 @@ public class UserController extends CommonController {
 
         try {
             createOpentracingSpan("UserController -users");
-            int count = userService.count(null,null,pageBy);
+            int count = userService.count(null, null, pageBy);
             List<UserVO> users = userService.getAllUsers(pageBy);
-            return getPaginateResponseResponseEntity(headers, paginateResponse,count, users);
+            return getPaginateResponseResponseEntity(headers, paginateResponse, count, users);
         } catch (Exception e) {
             response.getWriter().write(e.getMessage());
             logger.info(" UserController -users:Exception occurred while fetching the response from the database.", e);
@@ -429,7 +428,7 @@ public class UserController extends CommonController {
             @ApiResponse(code = 200, message = "Successful subscription",
                     response = Response.class, responseContainer = "Object")})
     @PostMapping(value = WSConstants.USER_ADD_SUBSCRIBER_WS, produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML}, consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ResponseEntity<Response> subscribe(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, UserException,Exception {
+    public ResponseEntity<Response> subscribe(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid SubscribeDTO subscribe) throws ValidationException, UserException, Exception {
 
         logger.info("subscribe request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -525,10 +524,10 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController - subscriptions");
 
-            int count = userService.count(CountBy.SUBSCRIPTIONS,userId,null);
+            int count = userService.count(CountBy.SUBSCRIPTIONS, userId, null);
             List<UserVO> users = userService.subscriptions(userId);
 
-            return getPaginateResponseResponseEntity(headers, paginateResponse, count,users);
+            return getPaginateResponseResponseEntity(headers, paginateResponse, count, users);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de subscriptions: ", e);
@@ -563,9 +562,9 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController - subscribers");
 
-            int count= userService.count(CountBy.SUBSCRIBERS,userId,null);
+            int count = userService.count(CountBy.SUBSCRIBERS, userId, null);
             List<UserVO> users = userService.subscribers(userId);
-            return getPaginateResponseResponseEntity(headers, paginateResponse,count, users);
+            return getPaginateResponseResponseEntity(headers, paginateResponse, count, users);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de subscribers: ", e);
@@ -579,7 +578,6 @@ public class UserController extends CommonController {
     }
 
 
-
     @ApiOperation(value = " Add Announce Favoris ", response = UserVO.class)
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Server error"),
@@ -587,27 +585,28 @@ public class UserController extends CommonController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Successful update",
-                    response = UserVO.class, responseContainer = "Object")})
-    @RequestMapping( value=WSConstants.USER_ADD_ANNOUNCE_FAVORITE,method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON,headers = WSConstants.HEADER_ACCEPT)
+                    response = String.class, responseContainer = "Object")})
+    @RequestMapping(value = WSConstants.USER_ADD_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
-    ResponseEntity<Response> AddAnnounceFavorites( HttpServletRequest request,HttpServletResponse response,
-                                          @RequestBody @Valid UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
+    ResponseEntity<Response> AddAnnounceFavorites(HttpServletRequest request, HttpServletResponse response,
+                                                  @RequestBody @Valid UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
 
         logger.info("add a favorite announce into this users" + userAnnounceFavoriteDTO.getIdUser());
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
-              createOpentracingSpan("UserController - new announce favorite");
-              boolean result = userService.AddAnnounceFavorites(userAnnounceFavoriteDTO);
-               Response pmresponse = new Response();
-              if(result)
-              {
-                  pmresponse.setRetCode(0);
-                  pmresponse.setRetDescription(WebServiceResponseCode.ANNOUNCE_FAVORITE_ADD_OK);
-                  return new ResponseEntity<>(pmresponse,HttpStatus.OK);
-              }
-
+            createOpentracingSpan("UserController - new announce favorite");
+            boolean result = userService.AddAnnounceFavorites(userAnnounceFavoriteDTO);
+            Response pmresponse = new Response();
+            if (result) {
+                pmresponse.setRetCode(0);
+                pmresponse.setRetDescription(WebServiceResponseCode.ANNOUNCE_FAVORITE_ADD_OK);
+                return new ResponseEntity<>(pmresponse, HttpStatus.OK);
             }
-        catch (Exception e) {
+
+            pmresponse.setRetDescription(WebServiceResponseCode.ANNOUNCE_FAVORITE_ALREADY_EXIST);
+            return new ResponseEntity<>(pmresponse, HttpStatus.CONFLICT);
+
+        } catch (UserException e) {
             e.printStackTrace();
         } finally {
             finishOpentracingSpan();
@@ -615,4 +614,81 @@ public class UserController extends CommonController {
 
         return null;
     }
-}
+
+
+    @ApiOperation(value = " Remove Announce Favoris ", response = UserVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful update",
+                    response = String.class, responseContainer = "Object")})
+    @RequestMapping(value = WSConstants.DELETE_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+    public @ResponseBody
+    ResponseEntity<Response> deleteAnnounceFavoriteByUser(HttpServletRequest request, HttpServletResponse response,
+                                                          @RequestBody @Valid UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
+
+        logger.info("remove a favorite announce into this users" + userAnnounceFavoriteDTO.getIdUser());
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+        try {
+            createOpentracingSpan("UserController - remove announce favorite");
+            boolean result = userService.removeAnnounceFavorites(userAnnounceFavoriteDTO);
+            Response pmresponse = new Response();
+            if (result) {
+                pmresponse.setRetCode(0);
+                pmresponse.setRetDescription(WebServiceResponseCode.REMOVE_FAVORITE_ANNOUNCE);
+                return new ResponseEntity<>(pmresponse, HttpStatus.OK);
+            }
+
+            pmresponse.setRetDescription(WebServiceResponseCode.REMOVE_NOT_OK);
+            return new ResponseEntity<>(pmresponse, HttpStatus.OK);
+
+        } catch (UserException e) {
+            e.printStackTrace();
+        } finally {
+            finishOpentracingSpan();
+        }
+
+        return null;
+    }
+
+    @ApiOperation(value = " list All Announce Favoris By Users ", response = UserVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful update",
+                    response = ResponseEntity.class, responseContainer = "List")})
+    @GetMapping(value =WSConstants.LIST_ANNOUNCE_FAVORITE_BY_USER, headers = WSConstants.HEADER_ACCEPT)
+    public ResponseEntity<PaginateResponse> getAllAnnounceFavoriteByUser(HttpServletResponse response, HttpServletRequest request,
+                                                          @RequestParam @Valid Long idUser,
+                                                          @RequestParam(required = false, defaultValue = DEFAULT_PAGE)@Valid @Positive(message = "la page doit etre nombre positif") int page,
+                                                          @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws Exception {
+
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+        HttpHeaders headers = new HttpHeaders();
+        PaginateResponse paginateResponse = new PaginateResponse();
+        PageBy pageBy = new PageBy(page, size);
+        logger.info("find announce favorite by user request in");
+
+        try {
+            createOpentracingSpan("AnnounceController -announcesByUser");
+            if (idUser != null) {
+                int count = userService.count(null, null,pageBy);
+                List announces = userService.listAnnounceFavoriteByUser(idUser);
+                return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
+
+            } else {
+                paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+            }
+        }catch (UserException e) {
+            logger.error("Erreur pour recuperer l'utilisateur "+ idUser);
+            throw new UserException("Erreur pour recuperer l'utilisateur "+ idUser);
+        }
+
+        return null;
+    }
+    }

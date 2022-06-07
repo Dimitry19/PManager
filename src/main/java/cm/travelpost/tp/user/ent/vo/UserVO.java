@@ -1,7 +1,6 @@
 package cm.travelpost.tp.user.ent.vo;
 
 import cm.framework.ds.common.ent.vo.CommonVO;
-import cm.travelpost.tp.announce.ent.vo.UserAnnounceFavoriteVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.enums.Gender;
@@ -137,7 +136,7 @@ public class UserVO extends CommonVO {
 
     private AuthenticationVO authentication;
 
-    private UserAnnounceFavoriteVO userAnnounceFavorite;
+    private Set<AnnounceMasterVO> listAnnounceFavorites = new HashSet<>();
 
 
 
@@ -356,23 +355,13 @@ public class UserVO extends CommonVO {
     @Column(name = "CITY", nullable = false)
     public String getCity() {  return city; }
 
-
-
-    /*@Access(AccessType.PROPERTY)
     @ManyToMany( fetch = FetchType.LAZY)
-    @JoinTable(name = "user_announce_favoris", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ANNOUNCE_ID"))
+    @JoinTable(name = "user_List_announce_favoris", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ANNOUNCE_ID"))
     @JsonProperty
-    public Set<AnnounceMasterVO> getAnnounceFavories() {
-        return announceFavories;
-
-    }*/
-
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "announceFavorite_id", referencedColumnName = "id")
-    public UserAnnounceFavoriteVO getUserAnnounceFavorite() {
-        return userAnnounceFavorite;
+    public Set<AnnounceMasterVO> getListAnnounceFavorites() {
+        return listAnnounceFavorites;
     }
+
 
     public void setSubscribers(Set<UserVO> subscribers) {
         this.subscribers = subscribers;
@@ -590,9 +579,6 @@ public class UserVO extends CommonVO {
     }
 
 
-    public void setUserAnnounceFavorite(UserAnnounceFavoriteVO userAnnounceFavorite) {
-        this.userAnnounceFavorite = userAnnounceFavorite;
-    }
 
     public void updateDeleteChildrens() {
 
@@ -632,6 +618,10 @@ public class UserVO extends CommonVO {
 
     public void setAuthenticated(boolean authenticated) {
         this.authenticated = authenticated;
+    }
+
+    public void setListAnnounceFavorites(Set<AnnounceMasterVO> listAnnounceFavorites) {
+        this.listAnnounceFavorites = listAnnounceFavorites;
     }
 
     @Override

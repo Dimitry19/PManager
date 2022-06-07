@@ -1,6 +1,7 @@
 package cm.travelpost.tp.user.ent.service;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.travelpost.tp.announce.ent.vo.AnnounceInfo;
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.review.ent.bo.ReviewsSummaryBO;
@@ -106,5 +107,9 @@ public interface UserService {
 
     String verify(String username, String code) throws Exception;
 
-    boolean AddAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO);
+    boolean AddAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException;
+
+    boolean removeAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException;
+
+    List<AnnounceInfo> listAnnounceFavoriteByUser(long idUser)throws UserException;
 }
