@@ -5,7 +5,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="Config svil du 30/04/2022">
+      <change afterPath="$PROJECT_DIR$/ddl/ddl-1.0.1-beta-secure202204/create_table_user_list_announce_favoris.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/.npmignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/.npmignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/HELP-US-OUT.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/HELP-US-OUT.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/css/font-awesome.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/fonts/fontawesome-webfont.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/animated.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/animated.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/bordered-pulled.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/bordered-pulled.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/core.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/core.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/fixed-width.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/fixed-width.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/font-awesome.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/font-awesome.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/icons.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/icons.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/larger.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/larger.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/list.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/list.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/mixins.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/mixins.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/path.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/path.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/rotated-flipped.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/rotated-flipped.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/screen-reader.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/screen-reader.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/stacked.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/stacked.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/variables.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/less/variables.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_animated.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_animated.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_bordered-pulled.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_bordered-pulled.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_core.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_core.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_fixed-width.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_fixed-width.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_icons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_icons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_larger.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_larger.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_list.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_list.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_mixins.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_path.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_path.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_rotated-flipped.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_rotated-flipped.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_screen-reader.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_screen-reader.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_stacked.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_stacked.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/font-awesome.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/font-awesome/scss/font-awesome.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.f40548cffa5793c753d6.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/styles.f40548cffa5793c753d6.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +139,17 @@
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_USER" value="Dimitry19" />
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="PManager" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/consoles/db/f4547c19-2370-4905-92cf-dedaa2788436/console.sql" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonGenericDAO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CategoriesDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CommonReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/UpdateReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/resources/application.properties" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
       <map>
@@ -180,39 +235,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
-    <property name="RequestMappingsPanelOrder0" value="0" />
-    <property name="RequestMappingsPanelOrder1" value="1" />
-    <property name="RequestMappingsPanelWidth0" value="75" />
-    <property name="RequestMappingsPanelWidth1" value="75" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ddl/ddl-1.0.1-beta-secure202204" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "last_opened_file_path": "F:/DevJava/ws/PManager/ddl/ddl-1.0.1-beta-secure202204"
+  }
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\DevJava\ws\PManager\ddl\ddl-1.0.1-beta-secure202204" />
       <recent name="$PROJECT_DIR$/ddl/ddl-1.0.1-beta-secure202204" />
       <recent name="F:\DevJava\ws\PManager\src\main\java\cm\packagemanager\pmanager\city" />
       <recent name="F:\DevJava\ws\PManager\src\main\java\cm\framework\hibernate\dao" />
       <recent name="F:\DevJava\ws\PManager" />
-      <recent name="F:\DevJava\ws\PManager\ddl" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="cm.travelpost.tp.authentication.ent.dao" />
-      <recent name="cm.travelpost.tp.ws.controller.rest.authentication" />
-      <recent name="cm.travelpost.tp.ws.controller.rest.users.totp" />
-      <recent name="cm.packagemanager.pmanager.city.ent.dao" />
-      <recent name="cm.packagemanager.pmanager.common.exception" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\DevJava\ws\PManager\src\main\resources" />
@@ -220,6 +261,13 @@
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/resources/templates" />
       <recent name="$PROJECT_DIR$/src/main/resources/dist" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cm.travelpost.tp.authentication.ent.dao" />
+      <recent name="cm.travelpost.tp.ws.controller.rest.authentication" />
+      <recent name="cm.travelpost.tp.ws.controller.rest.users.totp" />
+      <recent name="cm.packagemanager.pmanager.city.ent.dao" />
+      <recent name="cm.packagemanager.pmanager.common.exception" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -978,82 +1026,6 @@
     <MESSAGE value="Config svil du 30/04/2022" />
     <option name="LAST_COMMIT_MESSAGE" value="Config svil du 30/04/2022" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="611" y="348" key="#Assign_Data_Sources" />
-    <state x="611" y="348" key="#Assign_Data_Sources/0.0.1440.900@0.0.1440.900" />
-    <state x="208" y="31" key="#Project_Structure" />
-    <state x="208" y="31" key="#Project_Structure/0.0.1440.900@0.0.1440.900" />
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" />
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" />
-    <state x="533" y="141" key="#com.intellij.ide.util.MemberChooser" />
-    <state x="533" y="141" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" />
-    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" />
-    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1440.900@0.0.1440.900" />
-    <state x="483" y="160" key="#xdebugger.evaluate" />
-    <state x="483" y="160" key="#xdebugger.evaluate/0.0.1440.900@0.0.1440.900" />
-    <state x="468" y="311" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" />
-    <state x="468" y="311" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1440.900@0.0.1440.900" />
-    <state x="303" y="25" key="CommitChangelistDialog2" />
-    <state x="303" y="25" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" />
-    <state width="447" height="466" key="DebuggerActiveHint" />
-    <state width="447" height="466" key="DebuggerActiveHint/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="295" key="GridCell.Tab.0.bottom" />
-    <state width="1082" height="295" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="295" key="GridCell.Tab.0.bottom/0.23.1440.852@0.23.1440.852" />
-    <state width="1082" height="295" key="GridCell.Tab.0.center" />
-    <state width="1082" height="295" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="295" key="GridCell.Tab.0.center/0.23.1440.852@0.23.1440.852" />
-    <state width="1082" height="295" key="GridCell.Tab.0.left" />
-    <state width="1082" height="295" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="295" key="GridCell.Tab.0.left/0.23.1440.852@0.23.1440.852" />
-    <state width="1082" height="295" key="GridCell.Tab.0.right" />
-    <state width="1082" height="295" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="295" key="GridCell.Tab.0.right/0.23.1440.852@0.23.1440.852" />
-    <state width="1082" height="295" key="GridCell.Tab.1.bottom" />
-    <state width="1082" height="295" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="295" key="GridCell.Tab.1.bottom/0.23.1440.852@0.23.1440.852" />
-    <state width="1082" height="295" key="GridCell.Tab.1.center" />
-    <state width="1082" height="295" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="295" key="GridCell.Tab.1.center/0.23.1440.852@0.23.1440.852" />
-    <state width="1082" height="295" key="GridCell.Tab.1.left" />
-    <state width="1082" height="295" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="295" key="GridCell.Tab.1.left/0.23.1440.852@0.23.1440.852" />
-    <state width="1082" height="295" key="GridCell.Tab.1.right" />
-    <state width="1082" height="295" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="295" key="GridCell.Tab.1.right/0.23.1440.852@0.23.1440.852" />
-    <state width="1082" height="265" key="GridCell.Tab.2.bottom" />
-    <state width="1082" height="265" key="GridCell.Tab.2.bottom/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="424" key="GridCell.Tab.2.bottom/0.23.1440.852@0.23.1440.852" />
-    <state width="1082" height="265" key="GridCell.Tab.2.center" />
-    <state width="1082" height="265" key="GridCell.Tab.2.center/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="424" key="GridCell.Tab.2.center/0.23.1440.852@0.23.1440.852" />
-    <state width="1082" height="265" key="GridCell.Tab.2.left" />
-    <state width="1082" height="265" key="GridCell.Tab.2.left/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="424" key="GridCell.Tab.2.left/0.23.1440.852@0.23.1440.852" />
-    <state width="1082" height="265" key="GridCell.Tab.2.right" />
-    <state width="1082" height="265" key="GridCell.Tab.2.right/0.0.1440.900@0.0.1440.900" />
-    <state width="1082" height="424" key="GridCell.Tab.2.right/0.23.1440.852@0.23.1440.852" />
-    <state width="259" height="457" key="HiddenNamespacesPopup" />
-    <state width="259" height="457" key="HiddenNamespacesPopup/0.0.1440.900@0.0.1440.900" />
-    <state x="468" y="160" key="RollbackChangesDialog" />
-    <state x="468" y="160" key="RollbackChangesDialog/0.0.1440.900@0.0.1440.900" />
-    <state x="320" y="177" key="Vcs.Push.Dialog.v2" />
-    <state x="320" y="177" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" />
-    <state width="720" height="450" key="XDebugger.FullValuePopup" />
-    <state width="720" height="450" key="XDebugger.FullValuePopup/0.0.1440.900@0.0.1440.900" />
-    <state x="574" y="344" width="337" height="232" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" />
-    <state x="574" y="344" width="337" height="232" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1440.900@0.0.1440.900" />
-    <state x="551" y="230" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" />
-    <state x="551" y="230" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1440.900@0.0.1440.900" />
-    <state x="131" y="85" width="1151" height="729" key="find.popup" />
-    <state x="131" y="85" width="1151" height="729" key="find.popup/0.0.1440.900@0.0.1440.900" />
-    <state x="419" y="245" key="git4idea.merge.GitPullDialog" />
-    <state x="419" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" />
-    <state width="600" height="428" key="javadoc.popup" />
-    <state width="600" height="428" key="javadoc.popup/0.0.1440.900@0.0.1440.900" />
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" />
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -1209,23 +1181,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>70</line>
+          <line>72</line>
           <option name="timeStamp" value="370" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java</url>
-          <line>88</line>
+          <line>93</line>
           <option name="timeStamp" value="371" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java</url>
           <line>804</line>
           <option name="timeStamp" value="373" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>311</line>
-          <option name="timeStamp" value="398" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
@@ -1244,7 +1211,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java</url>
-          <line>224</line>
+          <line>225</line>
           <option name="timeStamp" value="437" />
         </line-breakpoint>
         <line-breakpoint type="java-field">
