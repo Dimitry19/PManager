@@ -113,6 +113,7 @@ public class AuthenticationController extends CommonController {
                 pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
             }
 
+
          /*   if(BooleanUtils.isFalse(enableQrCodeRegistration) && BooleanUtils.isTrue(mailService.sendConfirmationMail(request, user))){
                 pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_MAIL_LABEL);
             }*/

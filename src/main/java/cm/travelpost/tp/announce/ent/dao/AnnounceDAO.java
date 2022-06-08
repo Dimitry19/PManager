@@ -64,7 +64,6 @@ public interface AnnounceDAO extends CommonDAO {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class,Exception.class})
     void announcesToNotificate(int numberDays) throws AnnounceException,Exception;
 
-
     @Transactional
     List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception;
 
