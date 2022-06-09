@@ -2,6 +2,7 @@ package cm.travelpost.tp.user.ent.vo;
 
 import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.enums.Gender;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
@@ -136,7 +137,7 @@ public class UserVO extends CommonVO {
 
     private AuthenticationVO authentication;
 
-    private Set<AnnounceMasterVO> listAnnounceFavorites = new HashSet<>();
+    private Set<AnnounceVO> listAnnounceFavorites = new HashSet<>();
 
 
 
@@ -356,9 +357,9 @@ public class UserVO extends CommonVO {
     public String getCity() {  return city; }
 
     @ManyToMany( fetch = FetchType.LAZY)
-    @JoinTable(name = "user_List_announce_favoris", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ANNOUNCE_ID"))
+    @JoinTable(name = "user_announces_favoris", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ANNOUNCE_ID"))
     @JsonProperty
-    public Set<AnnounceMasterVO> getListAnnounceFavorites() {
+    public Set<AnnounceVO> getListAnnounceFavorites() {
         return listAnnounceFavorites;
     }
 
@@ -620,7 +621,7 @@ public class UserVO extends CommonVO {
         this.authenticated = authenticated;
     }
 
-    public void setListAnnounceFavorites(Set<AnnounceMasterVO> listAnnounceFavorites) {
+    public void setListAnnounceFavorites(Set<AnnounceVO> listAnnounceFavorites) {
         this.listAnnounceFavorites = listAnnounceFavorites;
     }
 

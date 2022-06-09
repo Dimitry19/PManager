@@ -107,9 +107,5 @@ public interface UserService {
 
     String verify(String username, String code) throws Exception;
 
-    boolean AddAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException;
 
-    boolean removeAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException;
-
-    List<AnnounceInfo> listAnnounceFavoriteByUser(long idUser)throws UserException;
 }

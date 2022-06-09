@@ -11,6 +11,7 @@ import cm.travelpost.tp.common.enums.AnnounceType;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.TransportEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
+import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.constant.WSConstants;
@@ -18,6 +19,7 @@ import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
+import cm.travelpost.tp.ws.requests.users.UsersAnnounceFavoriteDTO;
 import cm.travelpost.tp.ws.responses.PaginateResponse;
 import cm.travelpost.tp.ws.responses.Response;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
@@ -518,6 +520,125 @@ public class AnnounceController extends CommonController {
         if(CollectionsUtils.isNotEmpty(announce)){
             announces.addAll(announce);
         }
+    }
+
+
+
+    @ApiOperation(value = " Add Announce Favoris ", response = String.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful create announce favorites",
+                    response = String.class, responseContainer = "Object")})
+    @RequestMapping(value = WSConstants.USER_ADD_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+    public @ResponseBody
+    ResponseEntity<Response> addAnnounceFavorites(HttpServletRequest request, HttpServletResponse response,
+                                                  @RequestBody @Valid UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
+
+        logger.info("add a favorite announce into this users" + userAnnounceFavoriteDTO.getIdUser());
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+        try {
+            createOpentracingSpan("UserController - new announce favorite");
+            boolean result = announceService.addAnnounceFavorites(userAnnounceFavoriteDTO);
+            Response pmresponse = new Response();
+            if (result) {
+                pmresponse.setRetCode(0);
+                pmresponse.setRetDescription(WebServiceResponseCode.ANNOUNCE_FAVORITE_ADD_OK);
+                return new ResponseEntity<>(pmresponse, HttpStatus.OK);
+            }
+
+            pmresponse.setRetDescription(WebServiceResponseCode.ANNOUNCE_FAVORITE_ALREADY_EXIST);
+            return new ResponseEntity<>(pmresponse, HttpStatus.CONFLICT);
+
+        } catch (UserException e) {
+            e.printStackTrace();
+        } finally {
+            finishOpentracingSpan();
+        }
+
+        return null;
+    }
+
+
+    @ApiOperation(value = " Remove Announce Favoris ", response = String.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful delete announce favorite By user",
+                    response = String.class, responseContainer = "Object")})
+    @RequestMapping(value = WSConstants.DELETE_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+    public @ResponseBody
+    ResponseEntity<Response> deleteAnnounceFavoriteByUser(HttpServletRequest request, HttpServletResponse response,
+                                                          @RequestBody @Valid UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
+
+        logger.info("remove a favorite announce into this users" + userAnnounceFavoriteDTO.getIdUser());
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+        try {
+            createOpentracingSpan("UserController - remove announce favorite");
+            boolean result = announceService.removeAnnounceFavorites(userAnnounceFavoriteDTO);
+            Response pmresponse = new Response();
+            if (result) {
+                pmresponse.setRetCode(0);
+                pmresponse.setRetDescription(WebServiceResponseCode.REMOVE_FAVORITE_ANNOUNCE);
+                return new ResponseEntity<>(pmresponse, HttpStatus.OK);
+            }
+
+            pmresponse.setRetDescription(WebServiceResponseCode.REMOVE_NOT_OK);
+            return new ResponseEntity<>(pmresponse, HttpStatus.OK);
+
+        } catch (UserException e) {
+            e.printStackTrace();
+        } finally {
+            finishOpentracingSpan();
+        }
+
+        return null;
+    }
+
+    @ApiOperation(value = " list All Announce Favoris By Users ", response = ResponseEntity.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful retrieval announces favorites by user",
+                    response = ResponseEntity.class, responseContainer = "List")})
+    @GetMapping(value =WSConstants.LIST_ANNOUNCE_FAVORITE_BY_USER, headers = WSConstants.HEADER_ACCEPT)
+    public ResponseEntity<PaginateResponse> announcesFavoriteByUser(HttpServletResponse response, HttpServletRequest request,
+                                                                         @RequestParam @Valid Long idUser,
+                                                                         @RequestParam(required = false, defaultValue = DEFAULT_PAGE)@Valid @Positive(message = "la page doit etre nombre positif") int page,
+                                                                         @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws Exception {
+
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+        HttpHeaders headers = new HttpHeaders();
+        PaginateResponse paginateResponse = new PaginateResponse();
+        PageBy pageBy = new PageBy(page, size);
+        logger.info("find announces favorites by user request in");
+
+        try {
+            createOpentracingSpan("AnnounceController -announcesByUser");
+            if (idUser != null) {
+                int count = userService.count(null, null,pageBy);
+                List announces = announceService.announcesFavoritesByUser(idUser);
+
+                logger.info("find announces favorites by user request out");
+
+                return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
+
+            } else {
+                paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+            }
+        }catch (UserException e) {
+            logger.error("Erreur pour recuperer l'utilisateur "+ idUser);
+             e.printStackTrace();
+        }
+
+        return null;
     }
 
 }

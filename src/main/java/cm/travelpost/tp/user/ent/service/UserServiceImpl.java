@@ -2,9 +2,6 @@ package cm.travelpost.tp.user.ent.service;
 
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.announce.ent.dao.AnnounceDAO;
-import cm.travelpost.tp.announce.ent.vo.AnnounceInfo;
-import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
-import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.authentication.ent.dao.AuthenticationDAO;
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.Constants;
@@ -46,7 +43,10 @@ import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.ws.rs.BadRequestException;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -445,88 +445,6 @@ public class UserServiceImpl implements UserService {
         return "";
     }
 
-    @Override
-    public boolean AddAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException  {
 
-        long idUser = userAnnounceFavoriteDTO.getIdUser();
-        long idAnnounce = userAnnounceFavoriteDTO.getIdAnnounce();
-
-        try {
-              UserVO userVO= userDAO.findById(idUser);
-            if (userVO != null) {
-                AnnounceVO announceVO = announceDAO.announce(idAnnounce);
-
-                if(!userVO.getListAnnounceFavorites().contains(announceVO))
-                {
-                    userVO.getListAnnounceFavorites().add(announceVO);
-                    userDAO.merge(userVO);
-                    return true;
-                }
-            }
-        } catch (UserException e) {
-            logger.error("Erreur pour recuperer l'utilisateur "+ idUser);
-            throw new UserException("Erreur pour recuperer l'utilisateur "+ idUser);
-        }
-        catch (Exception e) {
-            logger.error("Erreur pour recuperer l'Annonce "+ idAnnounce);
-            throw new UserException("Erreur pour recuperer l'Annonce "+ idAnnounce);
-
-        }
-        return false;
-    }
-
-    @Override
-    public boolean removeAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException {
-
-        long idUser = userAnnounceFavoriteDTO.getIdUser();
-        long idAnnounce = userAnnounceFavoriteDTO.getIdAnnounce();
-
-        try {
-            UserVO userVO = userDAO.findById(idUser);
-            if (userVO != null) {
-                AnnounceVO announceVO = announceDAO.announce(idAnnounce);
-                if(userVO.getListAnnounceFavorites().contains(announceVO))
-                {
-                    userVO.getListAnnounceFavorites().remove(announceVO);
-                    userDAO.merge(userVO);
-                    return true;
-                }
-
-
-            }
-
-        }catch (UserException e) {
-            logger.error("Erreur pour recuperer l'utilisateur "+ idUser);
-            throw new UserException("Erreur pour recuperer l'utilisateur "+ idUser);
-        }
-        catch (Exception e) {
-            logger.error("Erreur pour recuperer l'Annonce "+ idAnnounce);
-            throw new UserException("Erreur pour recuperer l'Annonce "+ idAnnounce);
-
-        }
-        return false;
-    }
-
-    @Override
-    public List<AnnounceInfo> listAnnounceFavoriteByUser(long idUser) {
-        try {
-            UserVO userVO = userDAO.findById(idUser);
-            if(userVO != null)
-            {
-                List<AnnounceInfo> resultAnnounceFavorite = new ArrayList<AnnounceInfo>();
-                Set<AnnounceMasterVO> announceList = userVO.getListAnnounceFavorites();
-                announceList.forEach(a -> {
-                    AnnounceInfo announceInfo = new AnnounceInfo(a);
-                    resultAnnounceFavorite.add(announceInfo);
-                });
-
-                return resultAnnounceFavorite;
-            }
-        }catch (UserException e) {
-            logger.error("Erreur pour recuperer l'utilisateur "+ idUser);
-            throw new UserException("Erreur pour recuperer l'utilisateur "+ idUser);
-        }
-        return null;
-    }
 
 }
