@@ -9,14 +9,16 @@ import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.exception.UserException;
+import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.user.ent.dao.UserDAO;
+import cm.travelpost.tp.user.ent.dao.UserDAOImpl;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
 import cm.travelpost.tp.ws.requests.users.UsersAnnounceFavoriteDTO;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +34,8 @@ import java.util.Set;
 @Transactional
 public class AnnounceServiceImpl implements AnnounceService {
 
-    protected final Log logger = LogFactory.getLog(AnnounceServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
+
 
     @Autowired
     AnnounceDAO dao;
@@ -123,75 +126,69 @@ public class AnnounceServiceImpl implements AnnounceService {
     }
 
     @Override
-    public boolean addAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException {
+    public boolean addAnnounceFavorites(UsersAnnounceFavoriteDTO dto) throws UserException, AnnounceException {
 
-        long idUser = userAnnounceFavoriteDTO.getIdUser();
-        long idAnnounce = userAnnounceFavoriteDTO.getIdAnnounce();
+        long userId = dto.getUserId();
+        long announceId = dto.getAnnounceId();
 
         try {
-            UserVO userVO= userDAO.findById(idUser);
-            if (userVO != null) {
-                AnnounceVO announceVO = dao.announce(idAnnounce);
+            UserVO user= userDAO.findById(userId);
+            if (user != null) {
+                AnnounceVO announceVO = dao.announce(announceId);
 
-                if(!userVO.getListAnnounceFavorites().contains(announceVO))
-                {
-                    userVO.getListAnnounceFavorites().add(announceVO);
-                    userDAO.merge(userVO);
+                if(CollectionsUtils.notContains(user.getAnnouncesFavorites(),announceVO)) {
+                    user.getAnnouncesFavorites().add(announceVO);
+                    userDAO.merge(user);
                     return true;
                 }
             }
         } catch (UserException e) {
-            logger.error("Erreur pour recuperer l'utilisateur "+ idUser);
-            throw new UserException("Erreur pour recuperer l'utilisateur "+ idUser);
+            logger.error("Erreur pour recuperer l'utilisateur  avec id {}", userId);
+            throw new UserException("Erreur pour recuperer l'utilisateur " + userId);
         }
         catch (Exception e) {
-            logger.error("Erreur pour recuperer l'Annonce "+ idAnnounce);
-            throw new UserException("Erreur pour recuperer l'Annonce "+ idAnnounce);
+            logger.error("Erreur pour recuperer l'Annonce avec id {} ", announceId);
+            throw new UserException("Erreur pour recuperer l'Annonce "+ announceId);
 
         }
         return false;
     }
 
     @Override
-    public boolean removeAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException {
+    public boolean removeAnnounceFavorites(UsersAnnounceFavoriteDTO dto) throws UserException,AnnounceException {
 
-        long idUser = userAnnounceFavoriteDTO.getIdUser();
-        long idAnnounce = userAnnounceFavoriteDTO.getIdAnnounce();
+        long userId = dto.getUserId();
+        long announceId = dto.getAnnounceId();
 
         try {
-            UserVO userVO = userDAO.findById(idUser);
-            if (userVO != null) {
-                AnnounceVO announceVO = dao.announce(idAnnounce);
-                if(userVO.getListAnnounceFavorites().contains(announceVO))
-                {
-                    userVO.getListAnnounceFavorites().remove(announceVO);
-                    userDAO.merge(userVO);
+            UserVO user = userDAO.findById(userId);
+            if (user != null) {
+                AnnounceVO announceVO = dao.announce(announceId);
+                if(CollectionsUtils.contains(user.getAnnouncesFavorites(),announceVO)) {
+                    user.getAnnouncesFavorites().remove(announceVO);
+                    userDAO.merge(user);
                     return true;
                 }
-
-
             }
-
         }catch (UserException e) {
-            logger.error("Erreur pour recuperer l'utilisateur "+ idUser);
-            throw new UserException("Erreur pour recuperer l'utilisateur "+ idUser);
+            logger.error("Erreur pour recuperer l'utilisateur "+ userId);
+            throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
         }
         catch (Exception e) {
-            logger.error("Erreur pour recuperer l'Annonce "+ idAnnounce);
-            throw new UserException("Erreur pour recuperer l'Annonce "+ idAnnounce);
-
+            logger.error("Erreur pour recuperer l'Annonce "+ announceId);
+            throw new AnnounceException("Erreur pour recuperer l'Annonce "+ announceId);
         }
         return false;
     }
 
     @Override
-    public List<AnnounceVO> announcesFavoritesByUser(long idUser) {
+    public List<AnnounceVO> announcesFavoritesByUser(long userId) {
         try {
-            UserVO userVO = userDAO.findById(idUser);
+            UserVO userVO = userDAO.findById(userId);
             if(userVO != null)
             {
                 List<AnnounceVO> resultAnnounceFavorite = new ArrayList<AnnounceVO>();
-                Set<AnnounceVO> announceList = userVO.getListAnnounceFavorites();
+                Set<AnnounceVO> announceList = userVO.getAnnouncesFavorites();
                 announceList.forEach(a -> {
                     resultAnnounceFavorite.add(a);
                 });
@@ -199,8 +196,8 @@ public class AnnounceServiceImpl implements AnnounceService {
                 return resultAnnounceFavorite;
             }
         }catch (UserException e) {
-            logger.error("Erreur pour recuperer l'utilisateur "+ idUser);
-            throw new UserException("Erreur pour recuperer l'utilisateur "+ idUser);
+            logger.error("Erreur pour recuperer l'utilisateur "+ userId);
+            throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
         }
         return null;
     }

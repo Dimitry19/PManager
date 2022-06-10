@@ -99,29 +99,29 @@ public class ReviewController extends CommonController {
     public Response delete(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
 
         try {
             createOpentracingSpan("ReviewController -delete");
             logger.info("delete review request in");
             if (id != null) {
                 if (userService.deleteReview(id)) {
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, REVIEW_LABEL));
+                    tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    tpResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, REVIEW_LABEL));
 
                 } else {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, REVIEW_LABEL));
+                    tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    tpResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, REVIEW_LABEL));
                 }
             }
         } catch (Exception e) {
-            pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setMessage(e.getMessage());
+            tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            tpResponse.setMessage(e.getMessage());
             logger.error("delete  review  error ", e);
             throw e;
         } finally {
             finishOpentracingSpan();
         }
-        return pmResponse;
+        return tpResponse;
     }
 }

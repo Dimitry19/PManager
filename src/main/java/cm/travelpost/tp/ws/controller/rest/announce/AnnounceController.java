@@ -27,8 +27,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +51,7 @@ import static cm.travelpost.tp.constant.WSConstants.ANNOUNCE_WS;
 @Api(value = "Announce-service", description = "Announces Operations")
 public class AnnounceController extends CommonController {
 
-    protected final Log logger = LogFactory.getLog(AnnounceController.class);
+   private static Logger logger = LoggerFactory.getLogger(AnnounceController.class);
 
     private static  final String ANNOUNCE_LABEL ="L'annonce";
 
@@ -137,7 +137,7 @@ public class AnnounceController extends CommonController {
                 return new ResponseEntity<>(commonResponse, HttpStatus.NOT_FOUND);
             }
         } catch (AnnounceException e) {
-            logger.error("Erreur durant l'ajournement de l'announce " + uar.toString() + "{ }", e);
+            logger.error("Erreur durant l'ajournement de l'announce  {} - { }", uar.toString() ,e);
             throw e;
         } finally {
             finishOpentracingSpan();
@@ -237,22 +237,15 @@ public class AnnounceController extends CommonController {
                 status =StatusEnum.VALID;
             }
 
-            if (userId != null) {
-                int count = announceService.count(userId,status,pageBy);
-                List announces = announceService.announcesByUser(userId,status,pageBy);
-                return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
-
-            } else {
-                paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
-            }
+            int count = announceService.count(userId,status,pageBy);
+            List announces = announceService.announcesByUser(userId,status,pageBy);
+            return getPaginateResponseResponseEntity(  headers,count,  announces);
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
             throw e;
         } finally {
             finishOpentracingSpan();
         }
-        return new ResponseEntity<>(paginateResponse, headers, HttpStatus.OK);
     }
 
 
@@ -283,18 +276,15 @@ public class AnnounceController extends CommonController {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         HttpHeaders headers = new HttpHeaders();
-        PaginateResponse paginateResponse = new PaginateResponse();
-
         PageBy pageBy = new PageBy(page, size);
         logger.info("find announce by type request in");
-
 
         try {
             createOpentracingSpan("AnnounceController - announcesByType");
 
             int count = announceService.count(type, null);
             List<AnnounceVO> announces = announceService.announcesBy(type, pageBy);
-            return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
+            return getPaginateResponseResponseEntity(headers,count,  announces);
 
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByType:Exception occurred while fetching the response from the database.", e);
@@ -332,8 +322,6 @@ public class AnnounceController extends CommonController {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         HttpHeaders headers = new HttpHeaders();
-        PaginateResponse paginateResponse = new PaginateResponse();
-
         PageBy pageBy = new PageBy(page, size);
         logger.info("find announce by transport request in");
 
@@ -343,7 +331,7 @@ public class AnnounceController extends CommonController {
 
             int count = announceService.count(transport, null);
             List<AnnounceVO> announces = announceService.announcesBy(transport,  pageBy);
-            return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
+            return getPaginateResponseResponseEntity(headers,count,announces);
 
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByType:Exception occurred while fetching the response from the database.", e);
@@ -367,13 +355,13 @@ public class AnnounceController extends CommonController {
     public ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") @Valid Long id) throws AnnounceException {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
 
         try {
             logger.info("delete request in");
             createOpentracingSpan("AnnounceController -delete");
 
-            return getResponseDeleteResponseEntity(id, pmResponse, announceService.delete(id), ANNOUNCE_LABEL);
+            return getResponseDeleteResponseEntity(id, tpResponse, announceService.delete(id), ANNOUNCE_LABEL);
         } catch (AnnounceException e) {
             logger.error("Erreur durant l'elimination de l'annonce {}", e);
             throw e;
@@ -515,15 +503,6 @@ public class AnnounceController extends CommonController {
         }
     }
 
-    private void add(List announces, List announce){
-
-        if(CollectionsUtils.isNotEmpty(announce)){
-            announces.addAll(announce);
-        }
-    }
-
-
-
     @ApiOperation(value = " Add Announce Favoris ", response = String.class)
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Server error"),
@@ -537,20 +516,20 @@ public class AnnounceController extends CommonController {
     ResponseEntity<Response> addAnnounceFavorites(HttpServletRequest request, HttpServletResponse response,
                                                   @RequestBody @Valid UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
 
-        logger.info("add a favorite announce into this users" + userAnnounceFavoriteDTO.getIdUser());
+        logger.info("add a favorite announce into this users" + userAnnounceFavoriteDTO.getUserId());
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("UserController - new announce favorite");
             boolean result = announceService.addAnnounceFavorites(userAnnounceFavoriteDTO);
-            Response pmresponse = new Response();
+            Response tpResponse = new Response();
             if (result) {
-                pmresponse.setRetCode(0);
-                pmresponse.setRetDescription(WebServiceResponseCode.ANNOUNCE_FAVORITE_ADD_OK);
-                return new ResponseEntity<>(pmresponse, HttpStatus.OK);
+                tpResponse.setRetCode(0);
+                tpResponse.setRetDescription(WebServiceResponseCode.ANNOUNCE_FAVORITE_ADD_OK);
+                return new ResponseEntity<>(tpResponse, HttpStatus.OK);
             }
 
-            pmresponse.setRetDescription(WebServiceResponseCode.ANNOUNCE_FAVORITE_ALREADY_EXIST);
-            return new ResponseEntity<>(pmresponse, HttpStatus.CONFLICT);
+            tpResponse.setMessage(WebServiceResponseCode.ANNOUNCE_FAVORITE_ALREADY_EXIST);
+            return new ResponseEntity<>(tpResponse, HttpStatus.CONFLICT);
 
         } catch (UserException e) {
             e.printStackTrace();
@@ -575,20 +554,20 @@ public class AnnounceController extends CommonController {
     ResponseEntity<Response> deleteAnnounceFavoriteByUser(HttpServletRequest request, HttpServletResponse response,
                                                           @RequestBody @Valid UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
 
-        logger.info("remove a favorite announce into this users" + userAnnounceFavoriteDTO.getIdUser());
+        logger.info("remove a favorite announce into this users" + userAnnounceFavoriteDTO.getUserId());
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("UserController - remove announce favorite");
             boolean result = announceService.removeAnnounceFavorites(userAnnounceFavoriteDTO);
-            Response pmresponse = new Response();
+            Response tpResponse = new Response();
             if (result) {
-                pmresponse.setRetCode(0);
-                pmresponse.setRetDescription(WebServiceResponseCode.REMOVE_FAVORITE_ANNOUNCE);
-                return new ResponseEntity<>(pmresponse, HttpStatus.OK);
+                tpResponse.setRetCode(0);
+                tpResponse.setRetDescription(WebServiceResponseCode.REMOVE_FAVORITE_ANNOUNCE);
+                return new ResponseEntity<>(tpResponse, HttpStatus.OK);
             }
 
-            pmresponse.setRetDescription(WebServiceResponseCode.REMOVE_NOT_OK);
-            return new ResponseEntity<>(pmresponse, HttpStatus.OK);
+            tpResponse.setMessage(WebServiceResponseCode.REMOVE_NOT_OK);
+            return new ResponseEntity<>(tpResponse, HttpStatus.OK);
 
         } catch (UserException e) {
             e.printStackTrace();
@@ -609,31 +588,25 @@ public class AnnounceController extends CommonController {
                     response = ResponseEntity.class, responseContainer = "List")})
     @GetMapping(value =WSConstants.LIST_ANNOUNCE_FAVORITE_BY_USER, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announcesFavoriteByUser(HttpServletResponse response, HttpServletRequest request,
-                                                                         @RequestParam @Valid Long idUser,
+                                                                         @RequestParam @Valid Long userId,
                                                                          @RequestParam(required = false, defaultValue = DEFAULT_PAGE)@Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                                          @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         HttpHeaders headers = new HttpHeaders();
-        PaginateResponse paginateResponse = new PaginateResponse();
+
         PageBy pageBy = new PageBy(page, size);
         logger.info("get announces favorites by user request in");
 
         try {
             createOpentracingSpan("AnnounceController -announcesFavoriteByUser");
-            if (idUser != null) {
-                int count = announceService.count(null, null,null);
-                List announces = announceService.announcesFavoritesByUser(idUser);
+            int count = announceService.count(null, null,null);
+            List announces = announceService.announcesFavoritesByUser(userId);
 
-
-                logger.info("find announces favorites by user request out");
-                return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
-            } else {
-                paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
-            }
+            logger.info("find announces favorites by user request out");
+            return getPaginateResponseResponseEntity(  headers,      count,  announces);
         }catch (UserException e) {
-            logger.error("Erreur pour recuperer l'utilisateur "+ idUser);
+            logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ userId);
              e.printStackTrace();
         }finally {
             finishOpentracingSpan();
@@ -642,4 +615,10 @@ public class AnnounceController extends CommonController {
         return null;
     }
 
+    private void add(List announces, List announce){
+
+        if(CollectionsUtils.isNotEmpty(announce)){
+            announces.addAll(announce);
+        }
+    }
 }

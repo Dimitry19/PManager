@@ -137,7 +137,7 @@ public class UserVO extends CommonVO {
 
     private AuthenticationVO authentication;
 
-    private Set<AnnounceVO> listAnnounceFavorites = new HashSet<>();
+    private Set<AnnounceVO> announcesFavorites = new HashSet<>();
 
 
 
@@ -359,8 +359,8 @@ public class UserVO extends CommonVO {
     @ManyToMany( fetch = FetchType.LAZY)
     @JoinTable(name = "user_announces_favoris", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ANNOUNCE_ID"))
     @JsonProperty
-    public Set<AnnounceVO> getListAnnounceFavorites() {
-        return listAnnounceFavorites;
+    public Set<AnnounceVO> getAnnouncesFavorites() {
+        return announcesFavorites;
     }
 
 
@@ -621,8 +621,8 @@ public class UserVO extends CommonVO {
         this.authenticated = authenticated;
     }
 
-    public void setListAnnounceFavorites(Set<AnnounceVO> listAnnounceFavorites) {
-        this.listAnnounceFavorites = listAnnounceFavorites;
+    public void setAnnouncesFavorites(Set<AnnounceVO> announcesFavorites) {
+        this.announcesFavorites = announcesFavorites;
     }
 
     @Override

@@ -29,8 +29,8 @@ import cm.travelpost.tp.ws.requests.review.UpdateReviewDTO;
 import cm.travelpost.tp.ws.requests.users.*;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -60,7 +60,7 @@ Le fait d’avoir des singletons a un impact en environnement multi-threadé
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    protected final Log logger = LogFactory.getLog(UserServiceImpl.class);
+    protected final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserDAO userDAO;
@@ -441,10 +441,6 @@ public class UserServiceImpl implements UserService {
         if (!totpService.verifyCode(code, user.getSecret())) {
             throw new BadRequestException("Code is incorrect");
         }
-
         return "";
     }
-
-
-
 }

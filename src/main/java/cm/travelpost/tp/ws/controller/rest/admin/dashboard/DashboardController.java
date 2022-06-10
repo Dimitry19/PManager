@@ -175,7 +175,7 @@ public class DashboardController extends CommonController {
 
 		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
-		Response pmResponse = new Response();
+		Response tpResponse = new Response();
 
 		try {
 			createOpentracingSpan("DashboardController - delete");
@@ -191,22 +191,22 @@ public class DashboardController extends CommonController {
 
 
 				if (airlineService.delete(id)) {
-					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, LA_COMPAGNIE_AERIENNE));
-					return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+					tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+					tpResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, LA_COMPAGNIE_AERIENNE));
+					return new ResponseEntity<>(tpResponse, HttpStatus.OK);
 				}
 
 
 			}else{
 
 				    cityService.delete(o);
-					pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-					pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La ville"));
-					return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+					tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+					tpResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La ville"));
+					return new ResponseEntity<>(tpResponse, HttpStatus.OK);
 			}
-			pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-			pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, o));
-			return new ResponseEntity<>(pmResponse, HttpStatus.METHOD_NOT_ALLOWED);
+			tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+			tpResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, o));
+			return new ResponseEntity<>(tpResponse, HttpStatus.METHOD_NOT_ALLOWED);
 		} catch (Exception e) {
 			logger.error("Erreur durant l'elimination de element avec id {} - {}", o, e);
 			throw e;

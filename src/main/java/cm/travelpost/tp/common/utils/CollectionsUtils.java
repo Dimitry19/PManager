@@ -64,4 +64,12 @@ public class CollectionsUtils {
 
         return size(elements)== 0;
     }
+
+    public static boolean contains(Collection<?> elements,Object o){
+         return  isNotEmpty(elements) && elements.contains(o);
+    }
+
+    public static boolean notContains(Collection<?> elements,Object o){
+        return  !contains(elements,o);
+    }
 }

@@ -134,7 +134,7 @@ public class ReservationController extends CommonController {
     public ResponseEntity<Response> deleteReservation(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id) throws Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
 
 
         try {
@@ -143,18 +143,18 @@ public class ReservationController extends CommonController {
 
             if (reservationService.deleteReservation(id)) {
 
-                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, RESERVATION_LABEL));
+                tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                tpResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, RESERVATION_LABEL));
 
-                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                return new ResponseEntity<>(tpResponse, HttpStatus.OK);
 
             } else {
 
-                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, RESERVATION_LABEL));
+                tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                tpResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, RESERVATION_LABEL));
 
             }
-            return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(tpResponse, HttpStatus.NOT_FOUND);
 
         } catch (Exception e) {
             logger.error(" ReservationController - delete reservation:Exception occurred while fetching the response from the database.", e);

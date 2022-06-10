@@ -52,9 +52,9 @@ public interface AnnounceService extends InitializingBean {
 
     void destroy() throws Exception;
 
-    boolean addAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException;
+    boolean addAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException,AnnounceException;
 
-    boolean removeAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException;
+    boolean removeAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException, AnnounceException;
 
     List<AnnounceVO> announcesFavoritesByUser(long idUser)throws UserException;
 }

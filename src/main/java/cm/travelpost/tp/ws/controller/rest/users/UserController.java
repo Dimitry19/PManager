@@ -149,7 +149,7 @@ public class UserController extends CommonController {
                 return new ResponseEntity<>(user, HttpStatus.OK);
             }
         } catch (UserException e) {
-            logger.error("Erreur durant l'ajournement de l'utilisateur  " + userDTO.toString() + "{}", e);
+            logger.error("Erreur durant l'ajournement de l'utilisateur  {} - {}",userDTO.toString(), e);
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,18 +177,18 @@ public class UserController extends CommonController {
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("UserController - edit password");
-            Response pmresponse = new Response();
+            Response tpResponse = new Response();
 
             if (managePassword != null) {
                 boolean edited = userService.editPassword(userId, managePassword.getOldPassword(), managePassword.getNewPassword());
                 if (edited) {
-                    pmresponse.setRetCode(0);
-                    pmresponse.setRetDescription(WebServiceResponseCode.UPDATE_PASSWORD_LABEL);
+                    tpResponse.setRetCode(0);
+                    tpResponse.setRetDescription(WebServiceResponseCode.UPDATE_PASSWORD_LABEL);
                 }
-                return new ResponseEntity<>(pmresponse, HttpStatus.OK);
+                return new ResponseEntity<>(tpResponse, HttpStatus.OK);
             }
         } catch (UserException e) {
-            logger.error("Erreur durant l'ajournement de l'utilisateur  " + managePassword.toString() + "{}", e);
+            logger.error("Erreur durant l'ajournement de l'utilisateur  {} - {}", managePassword.toString(),e);
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
@@ -214,25 +214,25 @@ public class UserController extends CommonController {
 
         logger.info("password request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
 
         try {
             createOpentracingSpan("UserController -password");
             if (password != null) {
 
                 if (userService.managePassword(password.getEmail())) {
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.RETRIVEVE_PASSWORD_LABEL + " " + password.getEmail());
-                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                    tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    tpResponse.setRetDescription(WebServiceResponseCode.RETRIVEVE_PASSWORD_LABEL + " " + password.getEmail());
+                    return new ResponseEntity<>(tpResponse, HttpStatus.OK);
                 } else {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setMessage(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL);
-                    return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                    tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    tpResponse.setMessage(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL);
+                    return new ResponseEntity<>(tpResponse, HttpStatus.OK);
                 }
             }
         } catch (Exception e) {
-            logger.error("Erreur durant la recuperation du mot de passe de l'utilisateur  " + password.toString() + "{}", e);
-            return getResponseMailResponseEntity(pmResponse, e, "Veuillez reessayer dans quelques instants!");
+            logger.error("Erreur durant la recuperation du mot de passe de l'utilisateur  {} - {}",password.toString(), e);
+            return getResponseMailResponseEntity(tpResponse, e, "Veuillez reessayer dans quelques instants!");
         } finally {
             finishOpentracingSpan();
         }
@@ -261,10 +261,10 @@ public class UserController extends CommonController {
                 return new ResponseEntity<>(userService.findByEmail(roleToUser.getEmail()), HttpStatus.NOT_FOUND);
             }
         } catch (UserException e) {
-            logger.error("Erreur durant l'ajournement  du role de l'utilisateur  " + roleToUser.toString() + "{}", e);
+            logger.error("Erreur durant l'ajournement  du role de l'utilisateur {} - {}",roleToUser.toString(), e);
             throw e;
         } catch (Exception e) {
-            logger.error("Erreur durant l'ajournement  du role de l'utilisateur  " + roleToUser.toString() + "{}", e);
+            logger.error("Erreur durant l'ajournement  du role de l'utilisateur {} - {}",roleToUser.toString(), e);
             throw e;
         } finally {
             finishOpentracingSpan();
@@ -284,30 +284,30 @@ public class UserController extends CommonController {
     public Response delete(HttpServletResponse response, HttpServletRequest request, @Valid @RequestParam("id") Long id) throws UserException {
         logger.info("delete request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
 
         try {
             createOpentracingSpan("UserController -delete");
             if (id != null) {
                 if (userService.deleteUser(id)) {
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.CANCELLED_USER_LABEL);
+                    tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    tpResponse.setRetDescription(WebServiceResponseCode.CANCELLED_USER_LABEL);
                 } else {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setMessage(WebServiceResponseCode.ERROR_DELETE_USER_CODE_LABEL);
+                    tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    tpResponse.setMessage(WebServiceResponseCode.ERROR_DELETE_USER_CODE_LABEL);
                 }
             }
         } catch (Exception e) {
-            pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setMessage(e.getMessage());
-            logger.error("Erreur durant la delete de l'utilisateur ayant id:" + id + "{}", e);
+            tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            tpResponse.setMessage(e.getMessage());
+            logger.error("Erreur durant la delete de l'utilisateur ayant id:{}-{}",id, e);
             e.printStackTrace();
             throw e;
         } finally {
             finishOpentracingSpan();
         }
 
-        return pmResponse;
+        return tpResponse;
     }
 
     @ApiOperation(value = " Retrieve user with an ID ", response = UserVO.class)
@@ -353,23 +353,23 @@ public class UserController extends CommonController {
 
         logger.info("send mail request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
 
         try {
             createOpentracingSpan("UserController - sendMail");
 
             if (mailSenderSendGrid.manageResponse(mailService.sendMail(mail, true))) {
-                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                pmResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
-                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                tpResponse.setRetDescription(WebServiceResponseCode.MAIL_SENT_LABEL);
+                return new ResponseEntity<>(tpResponse, HttpStatus.OK);
             } else {
-                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL, "Veuillez reessayez plutard , Merci!"));
-                return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
+                tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                tpResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL, "Veuillez reessayez plutard , Merci!"));
+                return new ResponseEntity<>(tpResponse, HttpStatus.SERVICE_UNAVAILABLE);
             }
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de l'envoi du mail: ", e);
-            return getResponseMailResponseEntity(pmResponse, e, "Veuillez reessayez plutard , Merci!");
+            return getResponseMailResponseEntity(tpResponse, e, "Veuillez reessayez plutard , Merci!");
         } finally {
             finishOpentracingSpan();
         }
@@ -394,17 +394,16 @@ public class UserController extends CommonController {
         logger.info("get all users request in");
         HttpHeaders headers = new HttpHeaders();
         PageBy pageBy = new PageBy(page, size);
-        PaginateResponse paginateResponse = new PaginateResponse();
 
         try {
             createOpentracingSpan("UserController -users");
             int count = userService.count(null, null, pageBy);
             List<UserVO> users = userService.getAllUsers(pageBy);
-            return getPaginateResponseResponseEntity(headers, paginateResponse, count, users);
+            return getPaginateResponseResponseEntity(headers,  count, users);
         } catch (Exception e) {
             response.getWriter().write(e.getMessage());
             logger.info(" UserController -users:Exception occurred while fetching the response from the database.", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return getPaginateResponseErrorResponseEntity(headers);
         } finally {
             finishOpentracingSpan();
         }
@@ -433,28 +432,28 @@ public class UserController extends CommonController {
         logger.info("subscribe request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
 
         try {
             createOpentracingSpan("UserController - subscribe");
 
             if (subscribe.getSubscriberId().equals(subscribe.getSubscriptionId())) {
-                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setMessage(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
+                tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                tpResponse.setMessage(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
                 response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-                return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
+                return new ResponseEntity<>(tpResponse, HttpStatus.NOT_ACCEPTABLE);
             }
             userService.subscribe(subscribe);
 
-            pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-            pmResponse.setRetDescription(WebServiceResponseCode.SUBSCRIBE_LABEL);
+            tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            tpResponse.setRetDescription(WebServiceResponseCode.SUBSCRIBE_LABEL);
             response.setStatus(200);
-            return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+            return new ResponseEntity<>(tpResponse, HttpStatus.OK);
         } catch (UserException e) {
             logger.error("Erreur durant l'execution de  subscribe: ", e);
-            pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setMessage(WebServiceResponseCode.ERROR_SUBSCRIBE_LABEL);
-            return new ResponseEntity<>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            tpResponse.setMessage(WebServiceResponseCode.ERROR_SUBSCRIBE_LABEL);
+            return new ResponseEntity<>(tpResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
             finishOpentracingSpan();
         }
@@ -475,28 +474,28 @@ public class UserController extends CommonController {
         logger.info("unsubscribe request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
 
         try {
             createOpentracingSpan("UserController - unsubscribe");
 
             if (subscribe.getSubscriberId().equals(subscribe.getSubscriptionId())) {
-                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setMessage(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
+                tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                tpResponse.setMessage(WebServiceResponseCode.CONFLICT_SUBSCRIBE_LABEL);
                 response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-                return new ResponseEntity<>(pmResponse, HttpStatus.NOT_ACCEPTABLE);
+                return new ResponseEntity<>(tpResponse, HttpStatus.NOT_ACCEPTABLE);
             }
             userService.unsubscribe(subscribe);
 
-            pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-            pmResponse.setRetDescription(WebServiceResponseCode.UNSUBSCRIBE_LABEL);
+            tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            tpResponse.setRetDescription(WebServiceResponseCode.UNSUBSCRIBE_LABEL);
             response.setStatus(200);
-            return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+            return new ResponseEntity<>(tpResponse, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de  unsubscribe: ", e);
-            pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setMessage(WebServiceResponseCode.ERROR_UNSUBSCRIBE_LABEL);
-            return new ResponseEntity<>(pmResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            tpResponse.setMessage(WebServiceResponseCode.ERROR_UNSUBSCRIBE_LABEL);
+            return new ResponseEntity<>(tpResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
             finishOpentracingSpan();
         }
@@ -519,7 +518,6 @@ public class UserController extends CommonController {
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
         HttpHeaders headers = new HttpHeaders();
-        PaginateResponse paginateResponse = new PaginateResponse();
 
         try {
             createOpentracingSpan("UserController - subscriptions");
@@ -527,14 +525,12 @@ public class UserController extends CommonController {
             int count = userService.count(CountBy.SUBSCRIPTIONS, userId, null);
             List<UserVO> users = userService.subscriptions(userId);
 
-            return getPaginateResponseResponseEntity(headers, paginateResponse, count, users);
+            return getPaginateResponseResponseEntity(headers,  count, users);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de subscriptions: ", e);
             response.setStatus(500);
-            paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
-            return new ResponseEntity<>(paginateResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            return getPaginateResponseErrorResponseEntity(headers);
 
         } finally {
             finishOpentracingSpan();
@@ -557,25 +553,21 @@ public class UserController extends CommonController {
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
         HttpHeaders headers = new HttpHeaders();
-        PaginateResponse paginateResponse = new PaginateResponse();
+
 
         try {
             createOpentracingSpan("UserController - subscribers");
 
             int count = userService.count(CountBy.SUBSCRIBERS, userId, null);
             List<UserVO> users = userService.subscribers(userId);
-            return getPaginateResponseResponseEntity(headers, paginateResponse, count, users);
+            return getPaginateResponseResponseEntity(headers, count, users);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de subscribers: ", e);
             response.setStatus(500);
-            paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
-            return new ResponseEntity<>(paginateResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            return getPaginateResponseErrorResponseEntity(headers);
         } finally {
             finishOpentracingSpan();
         }
     }
-
-
-    }
+}

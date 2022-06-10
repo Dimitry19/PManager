@@ -100,15 +100,15 @@ public class ImageController extends CommonController {
         logger.info(" delete user image request in");
         try {
             createOpentracingSpan("ImageController - delete user or announce image");
-            Response pmResponse = new Response();
+            Response tpResponse = new Response();
             if (imageService.delete(filename, id)) {
-                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, " L'image"));
-                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                tpResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, " L'image"));
+                return new ResponseEntity<>(tpResponse, HttpStatus.OK);
             }
-            pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, " L'image"));
-            return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
+            tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            tpResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, " L'image"));
+            return new ResponseEntity<>(tpResponse, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logger.error("Erreur durant l'upload de l'image", e);
             throw e;
