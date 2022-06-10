@@ -617,18 +617,17 @@ public class AnnounceController extends CommonController {
         HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
         PageBy pageBy = new PageBy(page, size);
-        logger.info("find announces favorites by user request in");
+        logger.info("get announces favorites by user request in");
 
         try {
-            createOpentracingSpan("AnnounceController -announcesByUser");
+            createOpentracingSpan("AnnounceController -announcesFavoriteByUser");
             if (idUser != null) {
-                int count = userService.count(null, null,pageBy);
+                int count = announceService.count(null, null,null);
                 List announces = announceService.announcesFavoritesByUser(idUser);
 
+
                 logger.info("find announces favorites by user request out");
-
                 return getPaginateResponseResponseEntity(  headers,   paginateResponse,   count,  announces);
-
             } else {
                 paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
@@ -636,6 +635,8 @@ public class AnnounceController extends CommonController {
         }catch (UserException e) {
             logger.error("Erreur pour recuperer l'utilisateur "+ idUser);
              e.printStackTrace();
+        }finally {
+            finishOpentracingSpan();
         }
 
         return null;
