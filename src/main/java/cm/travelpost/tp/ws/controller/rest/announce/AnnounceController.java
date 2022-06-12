@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
@@ -408,7 +409,7 @@ public class AnnounceController extends CommonController {
     }
     @ApiOperation(value = "Retrieve an announce with an ID and Source", response = AnnounceVO.class)
     @GetMapping(value = ANNOUNCE_WS_BY_ID_AND_SOURCE, headers = WSConstants.HEADER_ACCEPT)
-    public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid Long id , @RequestParam @Valid Source source) throws AnnounceException {
+    public ResponseEntity<Object> getAnnounce(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid @NotNull(message = "Valoriser l'id de l'annonce")  Long id , @RequestParam @Valid Source source ) throws AnnounceException {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
@@ -417,17 +418,17 @@ public class AnnounceController extends CommonController {
             createOpentracingSpan("AnnounceController -get announce");
 
 
-            AnnounceVO announce = null;
-            if (id != null) {
-                announce = announceService.announce(id);
-                if (announce == null) {
-                    WSCommonResponseVO wsResponse = new WSCommonResponseVO();
-                    wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    wsResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
-                    return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
-                }
+            AnnounceVO announce = announceService.announce(id);
 
+            if (announce == null) {
+                WSCommonResponseVO wsResponse = new WSCommonResponseVO();
+                wsResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                wsResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_INEXIST_CODE_LABEL, ANNOUNCE_LABEL));
+                return new ResponseEntity<>(wsResponse, HttpStatus.NOT_FOUND);
             }
+            announce.setRetCode(source== Source.SHARE ? WebServiceResponseCode.SHARE:WebServiceResponseCode.OK_CODE);
+
+
             return new ResponseEntity<>(announce, HttpStatus.OK);
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -get announce:Exception occurred while fetching the response from the database.", e);

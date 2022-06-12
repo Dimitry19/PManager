@@ -35,6 +35,10 @@ public class AuthenticationFilter extends CommonFilter {
     @Value("${tp.travelpost.postman.enable}")
     private boolean postman;
 
+    @Value("${custom.user.guest}")
+    protected String guest;
+
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -58,8 +62,8 @@ public class AuthenticationFilter extends CommonFilter {
                 return;
             }
             if(!authorized(servletRequest,  servletResponse)){
-                  return;
-              }
+                return;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,25 +91,30 @@ public class AuthenticationFilter extends CommonFilter {
 
         String apiKey=StringUtils.isNotEmpty(tk) ? encryptorBean.decrypt(tk):"null";
 
+        String username=request.getHeader(sessionHeader);
+
+        boolean isApiKey=(StringUtils.isNotEmpty(apiKey) && apiKey.equals(encryptorBean.decrypt(token)));
+        boolean isService=uri.contains(service) && isApiKey;
+
+        boolean isGuest=StringUtils.equals(username,encryptorBean.decrypt(guest)) && isService;
+
         String queryString= request.getQueryString();
 
         StringBuilder stringBuilder = new StringBuilder(uri);
-        stringBuilder.append("/").append(queryString);
+        //stringBuilder.append("/").append(queryString);
 
-        boolean isSharedLink= patternUtils.isShareUrl(stringBuilder.toString());
+        boolean isSharedLink= patternUtils.isShareUrl(stringBuilder.toString()) && isGuest ;
 
-       if (BooleanUtils.isTrue(isSharedLink)){
-           return true;
-       }
+        if (BooleanUtils.isTrue(isSharedLink)){
+            return true;
+        }
 
 
 
-        boolean isService=uri.contains(service);
         boolean isConfirm=uri.contains(confirm);
         boolean isNotApiKey=(StringUtils.isEmpty(apiKey)|| !apiKey.equals(encryptorBean.decrypt(token)));
         boolean isNotUpload=!uri.contains(WSConstants.UPLOAD);
         boolean isDashBoard=uri.contains(WSConstants.DASHBOARD);
-        String username=request.getHeader(sessionHeader);
         boolean isAdminRole=false;
 
         if(StringUtils.isNotEmpty(username)){
