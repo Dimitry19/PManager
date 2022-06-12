@@ -601,11 +601,8 @@ public class AnnounceController extends CommonController {
 
         try {
             createOpentracingSpan("AnnounceController -announcesFavoriteByUser");
-            int count = announceService.count(null, null,null);
-            List announces = announceService.announcesFavoritesByUser(userId);
-
-            logger.info("find announces favorites by user request out");
-            return getPaginateResponseResponseEntity(  headers,      count,  announces);
+            logger.info("get announces favorites by user request out");
+            return getPaginateResponseResponseEntity(headers,  announceService.announcesFavoritesByUser(userId));
         }catch (UserException e) {
             logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ userId);
              e.printStackTrace();

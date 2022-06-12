@@ -237,8 +237,9 @@ public class CommonController  extends WSConstants {
     }
 
 
-    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse,List results) {
+    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers,List results) {
 
+        PaginateResponse paginateResponse = new PaginateResponse();
         if (CollectionsUtils.isEmpty(results)) {
             headers.add(HEADER_TOTAL, Long.toString(0));
             paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -248,7 +249,7 @@ public class CommonController  extends WSConstants {
             paginateResponse.setResults(results);
             paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
             paginateResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL, CollectionsUtils.size(results)));
-            headers.add(HEADER_TOTAL, Long.toString(results.size()));
+            headers.add(HEADER_TOTAL, Long.toString(CollectionsUtils.size(results)));
         }
         return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
     }
