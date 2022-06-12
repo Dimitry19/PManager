@@ -63,7 +63,7 @@ public class CollectionsUtils {
 
     public static boolean isUnique(Collection<?> elements) {
 
-        return size(elements)== 0;
+        return size(elements)== 1;
     }
 
     public static boolean contains(Collection<?> elements,Object o){

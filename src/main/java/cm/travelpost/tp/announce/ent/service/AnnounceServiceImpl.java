@@ -131,13 +131,11 @@ public class AnnounceServiceImpl implements AnnounceService {
 
         try {
             UserVO user= userDAO.findById(userId);
-            if (user != null) {
-                AnnounceVO announceVO = dao.announce(announceId);
-
-                if(CollectionsUtils.notContains(user.getAnnouncesFavorites(),announceVO)) {
-                    user.getAnnouncesFavorites().add(announceVO);
-                    return userDAO.merge(user)!=null;
-                }
+            AnnounceVO announce = dao.announce(announceId);
+            checkForFavoris(user, announce);
+            if(CollectionsUtils.notContains(user.getAnnouncesFavorites(),announce)) {
+                user.getAnnouncesFavorites().add(announce);
+                return userDAO.merge(user)!=null;
             }
         } catch (UserException e) {
             logger.error("Erreur pour recuperer l'utilisateur  avec id {}", userId);
@@ -145,7 +143,7 @@ public class AnnounceServiceImpl implements AnnounceService {
         }
         catch (Exception e) {
             logger.error("Erreur pour recuperer l'Annonce avec id {} ", announceId);
-            throw new UserException("Erreur pour recuperer l'Annonce "+ announceId);
+            throw new AnnounceException("Erreur pour recuperer l'Annonce "+ announceId);
 
         }
         return false;
@@ -159,12 +157,12 @@ public class AnnounceServiceImpl implements AnnounceService {
 
         try {
             UserVO user = userDAO.findById(userId);
-            if (user != null) {
-                AnnounceVO announceVO = dao.announce(announceId);
-                if(CollectionsUtils.contains(user.getAnnouncesFavorites(),announceVO)) {
-                    user.getAnnouncesFavorites().remove(announceVO);
-                    return userDAO.merge(user)!=null;
-                }
+            AnnounceVO announce = dao.announce(announceId);
+            checkForFavoris(user, announce);
+
+            if(CollectionsUtils.contains(user.getAnnouncesFavorites(),announce)) {
+                user.getAnnouncesFavorites().remove(announce);
+                return userDAO.merge(user)!=null;
             }
         }catch (UserException e) {
             logger.error("Erreur pour recuperer l'utilisateur "+ userId);
@@ -192,6 +190,14 @@ public class AnnounceServiceImpl implements AnnounceService {
         }
     }
 
+    private void checkForFavoris(UserVO user , AnnounceVO announce) throws UserException, AnnounceException{
+        if(user ==null) {
+            throw new UserException("Erreur pour recuperer l'utilisateur ");
+        }
+        if(announce == null){
+            throw new AnnounceException("Erreur pour recuperer l'Annonce ");
+        }
+    }
     /**
      * Permet de verifier que le bean a été detruit  et ne fonctionne que pour les beans avec scope
      * different de prototype
