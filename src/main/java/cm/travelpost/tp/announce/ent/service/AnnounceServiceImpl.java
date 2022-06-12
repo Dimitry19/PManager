@@ -25,9 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 @Service("announceService")
@@ -138,8 +136,7 @@ public class AnnounceServiceImpl implements AnnounceService {
 
                 if(CollectionsUtils.notContains(user.getAnnouncesFavorites(),announceVO)) {
                     user.getAnnouncesFavorites().add(announceVO);
-                    userDAO.merge(user);
-                    return true;
+                    return userDAO.merge(user)!=null;
                 }
             }
         } catch (UserException e) {
@@ -166,8 +163,7 @@ public class AnnounceServiceImpl implements AnnounceService {
                 AnnounceVO announceVO = dao.announce(announceId);
                 if(CollectionsUtils.contains(user.getAnnouncesFavorites(),announceVO)) {
                     user.getAnnouncesFavorites().remove(announceVO);
-                    userDAO.merge(user);
-                    return true;
+                    return userDAO.merge(user)!=null;
                 }
             }
         }catch (UserException e) {
@@ -184,22 +180,16 @@ public class AnnounceServiceImpl implements AnnounceService {
     @Override
     public List<AnnounceVO> announcesFavoritesByUser(long userId) {
         try {
-            UserVO userVO = userDAO.findById(userId);
-            if(userVO != null)
-            {
-                List<AnnounceVO> resultAnnounceFavorite = new ArrayList<AnnounceVO>();
-                Set<AnnounceVO> announceList = userVO.getAnnouncesFavorites();
-                announceList.forEach(a -> {
-                    resultAnnounceFavorite.add(a);
-                });
-
-                return resultAnnounceFavorite;
+            UserVO user = userDAO.findById(userId);
+            if(user ==null) {
+                throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
             }
+            return (List<AnnounceVO>) CollectionsUtils.convertToList(user.getAnnouncesFavorites());
+
         }catch (UserException e) {
             logger.error("Erreur pour recuperer l'utilisateur "+ userId);
             throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
         }
-        return null;
     }
 
     /**

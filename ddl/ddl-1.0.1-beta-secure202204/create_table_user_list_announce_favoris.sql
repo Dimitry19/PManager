@@ -1,5 +1,5 @@
 -- Recuperer le script de creation de la table H2 ou MySql
-create table user_list_announce_favoris
+create table user_announces_favoris
 (
     USER_ID     BIGINT not null,
     ANNOUNCE_ID BIGINT not null,

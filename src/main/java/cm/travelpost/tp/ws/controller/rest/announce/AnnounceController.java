@@ -586,7 +586,7 @@ public class AnnounceController extends CommonController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Successful retrieval announces favorites by user",
                     response = ResponseEntity.class, responseContainer = "List")})
-    @GetMapping(value =WSConstants.LIST_ANNOUNCE_FAVORITE_BY_USER, headers = WSConstants.HEADER_ACCEPT)
+    @GetMapping(value =WSConstants.ANNOUNCES_FAVORITE_BY_USER, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announcesFavoriteByUser(HttpServletResponse response, HttpServletRequest request,
                                                                          @RequestParam @Valid Long userId,
                                                                          @RequestParam(required = false, defaultValue = DEFAULT_PAGE)@Valid @Positive(message = "la page doit etre nombre positif") int page,

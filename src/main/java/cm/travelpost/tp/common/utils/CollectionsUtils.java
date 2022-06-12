@@ -2,6 +2,7 @@ package cm.travelpost.tp.common.utils;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class CollectionsUtils {
@@ -71,5 +72,12 @@ public class CollectionsUtils {
 
     public static boolean notContains(Collection<?> elements,Object o){
         return  !contains(elements,o);
+    }
+
+    public static List<?> convertToList(Collection<?> elements){
+        if(isEmpty(elements)){
+            return new ArrayList<>();
+        }
+        return elements.stream().collect(Collectors.toList());
     }
 }

@@ -475,6 +475,17 @@ create table user_role
               foreign key (ROLE_ID) references role (ID)
 );
 
+create table user_announces_favoris
+(
+    USER_ID     BIGINT not null,
+    ANNOUNCE_ID BIGINT not null,
+    primary key (USER_ID, ANNOUNCE_ID),
+    constraint user_announces_favoris_ibfk_1
+        foreign key (USER_ID) references TP_USER (ID),
+    constraint user_announces_favoris_ibfk_2
+        foreign key (ANNOUNCE_ID) references ANNOUNCE (ID)
+);
+
 create index ROLE_ID
        on user_role (ROLE_ID);
 

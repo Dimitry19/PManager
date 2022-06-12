@@ -4,11 +4,17 @@ import javax.validation.constraints.NotNull;
 
 public class UsersAnnounceFavoriteDTO {
 
-    @NotNull
+    //@NotNull
     private Long announceId;
 
-    @NotNull
+    //@NotNull
     private Long userId;
+
+    @NotNull
+    private Long idAnnounce;
+
+    @NotNull
+    private Long idUser;
 
     public Long getAnnounceId() {
         return announceId;
@@ -24,5 +30,24 @@ public class UsersAnnounceFavoriteDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+
+    public Long getIdAnnounce() {
+        return idAnnounce;
+    }
+
+    public void setIdAnnounce(Long idAnnounce) {
+        this.idAnnounce = idAnnounce;
+        this.announceId=idAnnounce;
+    }
+
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+        this.userId=idUser;
     }
 }
