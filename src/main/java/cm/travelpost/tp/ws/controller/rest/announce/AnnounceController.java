@@ -589,7 +589,7 @@ public class AnnounceController extends CommonController {
                     response = ResponseEntity.class, responseContainer = "List")})
     @GetMapping(value =WSConstants.ANNOUNCES_FAVORITE_BY_USER, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announcesFavoriteByUser(HttpServletResponse response, HttpServletRequest request,
-                                                                         @RequestParam @Valid Long userId,
+                                                                         @RequestParam @Valid Long idUser,
                                                                          @RequestParam(required = false, defaultValue = DEFAULT_PAGE)@Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                                          @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws Exception {
 
@@ -602,9 +602,10 @@ public class AnnounceController extends CommonController {
         try {
             createOpentracingSpan("AnnounceController -announcesFavoriteByUser");
             logger.info("get announces favorites by user request out");
-            return getPaginateResponseResponseEntity(headers,  announceService.announcesFavoritesByUser(userId));
+            int count = CollectionsUtils.size(announceService.announcesFavoritesByUser(idUser));
+            return getPaginateResponseResponseEntity(headers, count, announceService.announcesFavoritesByUser(idUser, pageBy));
         }catch (UserException e) {
-            logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ userId);
+            logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ idUser);
              e.printStackTrace();
         }finally {
             finishOpentracingSpan();

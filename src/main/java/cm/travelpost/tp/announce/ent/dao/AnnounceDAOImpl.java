@@ -38,6 +38,8 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -125,6 +127,26 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             return countByNameQuery(AnnounceVO.FINDBYUSER,AnnounceVO.class,userId,USER_PARAM,pageBy, emptyFilters());
         }
         return 0;
+    }
+
+    @Override
+    public List<AnnounceVO> announcesFavoris(UserVO user, PageBy pageBy) throws AnnounceException, Exception {
+
+        int pageSize = pageBy.getSize();
+        int currentPage = pageBy.getPage();
+        int startItem = currentPage * pageSize;
+
+        int size= CollectionsUtils.size(CollectionsUtils.convertToList(user.getAnnouncesFavorites()));
+        List<AnnounceVO> favorites ;
+
+        if (size< startItem) {
+            favorites = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, size);
+            favorites = (List<AnnounceVO>) CollectionsUtils.convertToList(user.getAnnouncesFavorites()).subList(startItem, toIndex);
+        }
+        PageImpl pi= new PageImpl<>(favorites, PageRequest.of(currentPage, pageSize), size);
+        return pi.getContent();
     }
 
     @Override
