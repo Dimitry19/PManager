@@ -8,13 +8,19 @@ package cm.travelpost.tp.announce.ent.vo;
 
 import org.hibernate.annotations.DiscriminatorOptions;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 
 
 @Entity
+//@SqlResultSetMapping(
+//		name = "AnnounceFavoriteMapping",
+//		entities = @EntityResult(
+//				entityClass = AnnounceVO.class,
+//				fields = {
+//						@FieldResult(name = "id",        column = "id"),
+//						@FieldResult(name = "firstName", column = "firstName"),
+//						@FieldResult(name = "lastName", column = "lastName"),
+//						@FieldResult(name = "version", column = "version")}))
 @NamedQueries(value = {
 		@NamedQuery(name = AnnounceVO.FINDBYUSER, query = "select a from AnnounceVO a where a.user.id =:userId order by a.startDate desc"),
 		@NamedQuery(name = AnnounceVO.FINDBYTYPE, query = "select a from AnnounceVO a where a.announceType =:announceType order by a.startDate desc"),

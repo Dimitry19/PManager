@@ -604,14 +604,17 @@ public class AnnounceController extends CommonController {
             logger.info("get announces favorites by user request out");
             int count = CollectionsUtils.size(announceService.announcesFavoritesByUser(idUser));
             return getPaginateResponseResponseEntity(headers, count, announceService.announcesFavoritesByUser(idUser, pageBy));
-        }catch (UserException e) {
+        }catch (AnnounceException e) {
             logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ idUser);
              e.printStackTrace();
+             throw e;
+        }catch (Exception e) {
+            logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ idUser);
+            e.printStackTrace();
+            throw e;
         }finally {
             finishOpentracingSpan();
         }
-
-        return null;
     }
 
     private void add(List announces, List announce){

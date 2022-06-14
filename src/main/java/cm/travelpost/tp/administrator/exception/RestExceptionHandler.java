@@ -49,6 +49,17 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ErrorResponse((String) CollectionsUtils.getFirst(details), details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler({NullPointerException.class})
+    public ResponseEntity<Object> handleNullPointerExceptions(NullPointerException ex) {
+        List<String> details = new ArrayList<>();
+        details.add("Null Pointer Exception");
+        String[] code = new String[2];
+        code[0] = String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        code[1] = "npe";
+
+        return new ResponseEntity<>(new ErrorResponse((String) CollectionsUtils.getFirst(details), details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler({UserNotFoundException.class})
     public ResponseEntity<Object> handleNotFoundExceptions(UserNotFoundException ex) {
 

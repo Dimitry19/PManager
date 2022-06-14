@@ -191,7 +191,7 @@ public class AnnounceServiceImpl implements AnnounceService {
     }
 
     @Override
-    public List<AnnounceVO> announcesFavoritesByUser(long userId, PageBy pageBy) {
+    public List<AnnounceVO> announcesFavoritesByUser(long userId, PageBy pageBy) throws Exception {
         try {
             UserVO user = userDAO.findById(userId);
             if(user ==null) {
@@ -203,7 +203,7 @@ public class AnnounceServiceImpl implements AnnounceService {
             logger.error("Erreur pour recuperer l'utilisateur "+ userId);
             throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
         } catch (Exception e) {
-            throw new AnnounceException(e.getMessage());
+            throw e;
         }
     }
 

@@ -57,5 +57,5 @@ public interface AnnounceService extends InitializingBean {
     boolean removeAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException, AnnounceException;
 
     List<AnnounceVO> announcesFavoritesByUser(long idUser)throws UserException;
-    List<AnnounceVO> announcesFavoritesByUser(long idUser, PageBy pageBy)throws UserException;
+    List<AnnounceVO> announcesFavoritesByUser(long idUser, PageBy pageBy) throws Exception;
 }

@@ -134,7 +134,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Override
     public List autocomplete(String namedQuery, ID search, boolean caseInsensitive) {
         return
-                sessionFactory.getCurrentSession()
+                getCurrentSession()
                 .getNamedQuery(namedQuery)
                 .setParameter(SEARCH_PARAM, SQLUtils.forLike((String) search,caseInsensitive,true,true))
                 .getResultList();
@@ -149,7 +149,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
             throw new IllegalArgumentException("ID cannot be null");
         }
 
-        return Optional.ofNullable(sessionFactory.getCurrentSession().find(clazz, id));
+        return Optional.ofNullable( getCurrentSession().find(clazz, id));
     }
 
     @Override
@@ -159,7 +159,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         if (id == null) {
             throw new IllegalArgumentException("ID cannot be null");
         }
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session =  getCurrentSession();
 
         enableFilters(session,filters);
 
@@ -174,7 +174,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
             throw new IllegalArgumentException("ID cannot be null");
         }
 
-        Session session = sessionFactory.getCurrentSession();
+        Session session =  getCurrentSession();
 
         return Optional.ofNullable(session.get(clazz, id));
     }
@@ -189,7 +189,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     public T findByNaturalIds(Class<T> clazz, Map naturalIds, String... filters) throws BusinessResourceException {
 
         logger.info(" find by NaturalIds");
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session =  getCurrentSession();
         enableFilters(session,filters);
 
         NaturalIdLoadAccess x = session.byNaturalId(clazz);
@@ -206,7 +206,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         if (CollectionsUtils.isEmpty(Arrays.asList(filters))) {
             return findByNaturalId(clazz, naturalId);
         }
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session =  getCurrentSession();
         enableFilters(session,filters);
 
         return session.bySimpleNaturalId(clazz).load(naturalId);
@@ -215,7 +215,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Override
     public T findByNaturalId(Class<T> clazz, NID naturalId) throws BusinessResourceException {
         logger.info(" find by NaturalId");
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session =  getCurrentSession();
         return session.bySimpleNaturalId(clazz).load(naturalId);
     }
 
@@ -248,7 +248,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
             throw new IllegalArgumentException("ID cannot be null");
         }
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session =  getCurrentSession();
         enableFilters(session,filters);
 
         return session.get(clazz, id);
@@ -258,7 +258,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional
     public void remove(Class<T> clazz, ID id, boolean enableFlushSession) {
         try {
-            Session session = sessionFactory.getCurrentSession();
+            Session session =  getCurrentSession();
 
             T ent = findByIdViaSession(clazz, id).get();
             if (ent != null) {
@@ -280,7 +280,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void delete(Class<T> clazz, ID id) {
         try {
-            Session session = sessionFactory.getCurrentSession();
+            Session session =  getCurrentSession();
 
             T ent = findByIdViaSession(clazz, id).get();
             if (ent != null) {
@@ -296,7 +296,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void delete(T ent) {
         try {
-            Session session = sessionFactory.getCurrentSession();
+            Session session =  getCurrentSession();
             if (ent != null) {
                 session.delete(ent);
             }
@@ -309,7 +309,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional(readOnly = true)
     public List<T> findByUser(Class<T> clazz, Long userId, PageBy pageBy) throws Exception {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session =  getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
         return commonFindByUser(clazz,userId,ALIAS_BY_USER_ID,pageBy,session);
     }
@@ -318,7 +318,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional(readOnly = true)
     public List<T> findByUserId(Class<T> clazz, Long userId, PageBy pageBy) throws Exception {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session =  getCurrentSession();
         return commonFindByUser(clazz,userId,ALIAS_BY_USER_ID,pageBy,session);
     }
 
@@ -334,7 +334,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional(readOnly = true)
     public List<T> all(Class<T> clazz) throws Exception {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = getCurrentSession();
         StringBuilder queryBuilder = new StringBuilder(FROM);
         queryBuilder.append(clazz.getName());
 
@@ -346,7 +346,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional(readOnly = true)
     public List<T> all(Class<T> clazz, PageBy pageBy) throws Exception {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
         StringBuilder queryBuilder = new StringBuilder(FROM);
         queryBuilder.append(clazz.getName());
@@ -364,7 +364,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         StringBuilder queryBuilder = new StringBuilder(FROM);
         queryBuilder.append(clazz.getName());
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = getCurrentSession();
         enableFilters(session,filters);
         Query query = session.createQuery(queryBuilder.toString(), clazz);
 
@@ -379,7 +379,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional(readOnly = true)
     public List<T> allAndOrderBy(Class<T> clazz, String field, boolean desc, PageBy pageBy) throws Exception {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = getCurrentSession();
         StringBuilder queryBuilder = new StringBuilder(FROM);
         queryBuilder.append(clazz.getName());
 
@@ -413,7 +413,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Override
     @Transactional
     public T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName) throws Exception {
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = getCurrentSession();
         Query query = session.createNamedQuery(queryName, clazz);
 
         if (StringUtils.isNotEmpty(paramName) && id != null) {
@@ -439,7 +439,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional
     public T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = getCurrentSession();
         Query query = session.createNamedQuery(queryName, clazz);
 
         enableFilters(session,filters);
@@ -457,7 +457,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional
     public List<T> findBy(String namedQuery, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session =getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
         Query query = session.createNamedQuery(namedQuery, clazz);
 
@@ -472,15 +472,11 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional
     public List<T> findBy(String namedQuery, Class<T> clazz, Map params, PageBy pageBy,String... filters) throws Exception {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = getCurrentSession();
         enableFilters(session,filters);
 
         Query query = session.createNamedQuery(namedQuery, clazz);
-
-        params.forEach((k, v) ->
-            query.setParameter((String) k, v)
-        );
-
+        setParameters(query,params);
         pageBy(query, pageBy);
 
         return query.getResultList();
@@ -504,7 +500,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     @Transactional(readOnly = true)
     public List<T> findBySqlQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String ...filters) throws Exception {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session =  getCurrentSession();
         session.enableFilter(FilterConstants.CANCELLED);
         enableFilters(session,filters);
         Query query = session.createQuery(queryName, clazz);
@@ -512,6 +508,18 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         pageBy(query, pageBy);
 
         return query.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public List<T> findBySqlNativeQuery(Class<T> clazz,String queryName,  Map params, PageBy pageBy, String... filters) throws Exception {
+        Session session = getCurrentSession();
+        enableFilters(session,filters);
+      //  Query query=session.createSQLQuery(queryName);
+        Query query=session.createNativeQuery(queryName, clazz);
+        setParameters(query,params);
+        pageBy(query,pageBy);
+        return  query.getResultList();
     }
 
     @Override
@@ -856,5 +864,11 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         for (String filter : filters) {
             session.enableFilter(filter);
         }
+    }
+
+    private void setParameters(Query query, Map params){
+        params.forEach((k, v) ->
+                query.setParameter((String) k, v)
+        );
     }
 }

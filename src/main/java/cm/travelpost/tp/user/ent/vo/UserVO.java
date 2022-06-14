@@ -74,6 +74,8 @@ public class UserVO extends CommonVO {
     public static final String JOB_CONFIRM = "cm.travelpost.tp.user.ent.vo.UserVO.toConfirmByJob";
     public static final String SEARCH = "from UserVO as u ";
 
+    public static final String ANNOUNCES_FAVORIS = "select a.* from announce as a inner join user_announces_favoris as uaf on a.id=uaf.announce_id where uaf.user_id=:userId ";
+
 
     private Long id;
 

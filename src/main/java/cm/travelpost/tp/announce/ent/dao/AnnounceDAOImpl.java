@@ -6,6 +6,7 @@ package cm.travelpost.tp.announce.ent.dao;
  * et aussi eviter HibernateException: Found two representations of same collection
  */
 
+import cm.framework.ds.common.ent.vo.KeyValue;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.framework.ds.hibernate.utils.IQueryBuilder;
@@ -22,6 +23,7 @@ import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.*;
+import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.notification.ent.dao.NotificationDAO;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 import cm.travelpost.tp.notification.enums.NotificationType;
@@ -38,8 +40,6 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -130,23 +130,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
+    @Transactional
     public List<AnnounceVO> announcesFavoris(UserVO user, PageBy pageBy) throws AnnounceException, Exception {
-
-        int pageSize = pageBy.getSize();
-        int currentPage = pageBy.getPage();
-        int startItem = currentPage * pageSize;
-
-        int size= CollectionsUtils.size(CollectionsUtils.convertToList(user.getAnnouncesFavorites()));
-        List<AnnounceVO> favorites ;
-
-        if (size< startItem) {
-            favorites = Collections.emptyList();
-        } else {
-            int toIndex = Math.min(startItem + pageSize, size);
-            favorites = (List<AnnounceVO>) CollectionsUtils.convertToList(user.getAnnouncesFavorites()).subList(startItem, toIndex);
-        }
-        PageImpl pi= new PageImpl<>(favorites, PageRequest.of(currentPage, pageSize), size);
-        return pi.getContent();
+          setMap(new KeyValue(USER_PARAM, user.getId()));
+          setFilters(FilterConstants.CANCELLED);
+          List<AnnounceVO> announces= (List<AnnounceVO>) findBySqlNativeQuery(AnnounceVO.class,UserVO.ANNOUNCES_FAVORIS, getMap(), pageBy, getFilters());
+          return announces;
     }
 
     @Override
