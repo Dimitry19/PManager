@@ -601,7 +601,7 @@ public class AnnounceController extends CommonController {
         try {
             createOpentracingSpan("AnnounceController -announcesFavoriteByUser");
             logger.info("get announces favorites by user request out");
-            int count = CollectionsUtils.size(announceService.announcesFavoritesByUser(idUser));
+            int count = CollectionsUtils.size(announceService.announcesFavoritesByUser(idUser, null));
             return getPaginateResponseResponseEntity(headers, count, announceService.announcesFavoritesByUser(idUser, pageBy));
         }catch (AnnounceException e) {
             logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ idUser);
@@ -616,7 +616,7 @@ public class AnnounceController extends CommonController {
         }
     }
 
-    @ApiOperation(value = " verify if an announce is  a favorite announce for  this user ", response = Boolean.class)
+    @ApiOperation(value = " verify if an announce is a favorite announce for  this user ", response = Boolean.class)
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Server error"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),

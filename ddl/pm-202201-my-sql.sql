@@ -477,13 +477,13 @@ create table user_role
 
 create table user_announces_favoris
 (
-    USER_ID     BIGINT not null,
-    ANNOUNCE_ID BIGINT not null,
+    USER_ID     bigint not null,
+    ANNOUNCE_ID bigint not null,
     primary key (USER_ID, ANNOUNCE_ID),
-    constraint user_announces_favoris_ibfk_1
-        foreign key (USER_ID) references TP_USER (ID),
-    constraint user_announces_favoris_ibfk_2
-        foreign key (ANNOUNCE_ID) references ANNOUNCE (ID)
+    constraint FK1y6clure4r2yjmn2tx8ersxr8
+        foreign key (USER_ID) references tp_user (ID),
+    constraint FKf3uv1t15eikmgvasqjmq4axlc
+        foreign key (ANNOUNCE_ID) references announce (ID)
 );
 
 create index ROLE_ID
