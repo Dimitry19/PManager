@@ -537,7 +537,6 @@ public class AnnounceController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
-
         return null;
     }
 
@@ -579,7 +578,7 @@ public class AnnounceController extends CommonController {
         return null;
     }
 
-    @ApiOperation(value = " list All Announce Favoris By Users ", response = ResponseEntity.class)
+    @ApiOperation(value = " All User announces favoris ", response = ResponseEntity.class)
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Server error"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -615,6 +614,33 @@ public class AnnounceController extends CommonController {
         }finally {
             finishOpentracingSpan();
         }
+    }
+
+    @ApiOperation(value = " verify if an announce is  a favorite announce for  this user ", response = Boolean.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful create announce favorites",
+                    response = Boolean.class, responseContainer = "Object")})
+    @RequestMapping(value = WSConstants.USER_IS_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
+    public @ResponseBody
+    ResponseEntity<Boolean> isAnnounceFavorite(HttpServletRequest request, HttpServletResponse response,
+                                                  @RequestBody @Valid UsersAnnounceFavoriteDTO dto) throws Exception {
+
+        logger.info("verify if an announce is  a favorite announce for  this user" + dto.getUserId());
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+        try {
+            createOpentracingSpan("UserController - is announce favorite");
+            Boolean contains = announceService.isAnnounceFavoriteByUser(dto.getUserId(),dto.getAnnounceId());
+            return new ResponseEntity<>(contains, HttpStatus.OK);
+        } catch (UserException e) {
+            e.printStackTrace();
+        } finally {
+            finishOpentracingSpan();
+        }
+        return null;
     }
 
     private void add(List announces, List announce){

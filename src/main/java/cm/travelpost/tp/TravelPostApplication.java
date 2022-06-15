@@ -37,6 +37,7 @@ public class TravelPostApplication extends SpringBootServletInitializer {
 
     static {
         System.setProperty("jasypt.encryptor.password",secret);
+        System.setProperty("spring.devtools.restart.enabled", "false");
     }
 
     public static void main(String[] args) {

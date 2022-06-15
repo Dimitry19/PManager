@@ -77,7 +77,8 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     @Transactional(readOnly = true)
     List<T> findBySqlQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception;
-    List<T> findBySqlNativeQuery(Class<T> clazz,String queryName,Map params,PageBy pageBy, String... filters) throws Exception;
+
+    List<T> findBySqlNativeQuery(String nativeQuery,Map params,String mappingName,PageBy pageBy, String... filters) throws Exception;
 
     int countByNameQuery(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception;
 

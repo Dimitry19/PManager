@@ -512,11 +512,10 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     @Transactional
-    public List<T> findBySqlNativeQuery(Class<T> clazz,String queryName,  Map params, PageBy pageBy, String... filters) throws Exception {
+    public List<T> findBySqlNativeQuery(String nativeQuery, Map params, String mappingName, PageBy pageBy, String... filters) throws Exception {
         Session session = getCurrentSession();
         enableFilters(session,filters);
-      //  Query query=session.createSQLQuery(queryName);
-        Query query=session.createNativeQuery(queryName, clazz);
+        Query query=session.createNativeQuery(nativeQuery, mappingName);
         setParameters(query,params);
         pageBy(query,pageBy);
         return  query.getResultList();

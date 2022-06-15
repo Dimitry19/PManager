@@ -207,6 +207,23 @@ public class AnnounceServiceImpl implements AnnounceService {
         }
     }
 
+    @Override
+    public Boolean isAnnounceFavoriteByUser(Long userId, Long announceId) throws UserException {
+        try {
+            UserVO user = userDAO.findById(userId);
+            AnnounceVO announce = dao.announce(announceId);
+            checkForFavoris(user, announce);
+            return CollectionsUtils.contains(user.getAnnouncesFavorites(),announce);
+        }catch (UserException e) {
+            logger.error("Erreur pour recuperer l'utilisateur "+ userId);
+            throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
+        }
+        catch (Exception e) {
+            logger.error("Erreur pour recuperer l'Annonce "+ announceId);
+            throw new AnnounceException("Erreur pour recuperer l'Annonce "+ announceId);
+        }
+    }
+
     private void checkForFavoris(UserVO user , AnnounceVO announce) throws UserException, AnnounceException{
         if(user ==null) {
             throw new UserException("Erreur pour recuperer l'utilisateur ");
