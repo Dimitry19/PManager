@@ -2,6 +2,7 @@ package cm.travelpost.tp.user.ent.vo;
 
 import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
+import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
@@ -73,7 +74,6 @@ public class UserVO extends CommonVO {
     public static final String SEARCH = "from UserVO as u ";
     public static final String ALL_SUBSCRIPTION_PRICING = "cm.travelpost.tp.user.ent.vo.UserVO.subscriptionPricing";
 
-
     private Long id;
 
     private String firstName;
@@ -137,6 +137,9 @@ public class UserVO extends CommonVO {
     private AuthenticationVO authentication;
 
     private SubscriptionVO subscription;
+
+    private Set<AnnounceVO> announcesFavorites = new HashSet<>();
+
 
 
     public UserVO() {
@@ -358,8 +361,30 @@ public class UserVO extends CommonVO {
         return error;
     }
 
-    public void setSubscribers(Set<UserVO> subscribers) { this.subscribers = subscribers; }
+    @Basic(optional = false)
+    @Column(name = "COUNTRY", nullable = false)
+    public String getCountry() {   return country;  }
 
+
+    @Basic(optional = false)
+    @Column(name = "CITY", nullable = false)
+    public String getCity() {  return city; }
+
+    @ManyToMany( fetch = FetchType.LAZY)
+    @JoinTable(name = "user_announces_favoris", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ANNOUNCE_ID"))
+    @JsonProperty
+    public Set<AnnounceVO> getAnnouncesFavorites() {
+        return announcesFavorites;
+    }
+
+
+    public void setSubscribers(Set<UserVO> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public void setSubscriptions(Set<UserVO> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
     public void setSubscriptions(Set<UserVO> subscriptions) { this.subscriptions = subscriptions; }
 
     public void setNotifications(Set<NotificationVO> notifications) {
@@ -561,6 +586,8 @@ public class UserVO extends CommonVO {
         }
     }
 
+
+
     public void updateDeleteChildrens() {
 
         Iterator<ReviewVO> iteReview = this.reviews.iterator();
@@ -599,6 +626,10 @@ public class UserVO extends CommonVO {
 
     public void setAuthenticated(boolean authenticated) {
         this.authenticated = authenticated;
+    }
+
+    public void setAnnouncesFavorites(Set<AnnounceVO> announcesFavorites) {
+        this.announcesFavorites = announcesFavorites;
     }
 
     @Override

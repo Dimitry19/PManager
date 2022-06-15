@@ -186,8 +186,9 @@ public class CommonController  extends WSConstants {
 
 
 
-    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, int count, List results) {
+    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, int count, List results) {
 
+        PaginateResponse paginateResponse = new PaginateResponse();
         if (count == 0) {
             headers.add(HEADER_TOTAL, Long.toString(count));
             paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -203,6 +204,14 @@ public class CommonController  extends WSConstants {
             headers.add(HEADER_TOTAL, Long.toString(results.size()));
         }
         return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
+    }
+
+    protected ResponseEntity<PaginateResponse> getPaginateResponseErrorResponseEntity(HttpHeaders headers) {
+
+        PaginateResponse paginateResponse = new PaginateResponse();
+        paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+        paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
+        return new ResponseEntity<>(paginateResponse, headers, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     protected ResponseEntity<PaginateResponse> getPaginateResponseSearchResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, int count, List results, PageBy pageBy ) {
@@ -228,8 +237,9 @@ public class CommonController  extends WSConstants {
     }
 
 
-    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse,List results) {
+    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers,List results) {
 
+        PaginateResponse paginateResponse = new PaginateResponse();
         if (CollectionsUtils.isEmpty(results)) {
             headers.add(HEADER_TOTAL, Long.toString(0));
             paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
@@ -239,38 +249,38 @@ public class CommonController  extends WSConstants {
             paginateResponse.setResults(results);
             paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);
             paginateResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.PAGINATE_RESPONSE_LABEL, CollectionsUtils.size(results)));
-            headers.add(HEADER_TOTAL, Long.toString(results.size()));
+            headers.add(HEADER_TOTAL, Long.toString(CollectionsUtils.size(results)));
         }
         return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
     }
 
     @NotNull
-    protected   ResponseEntity<Response> getResponseMailResponseEntity(Response pmResponse, Exception e, String message) {
-        pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+    protected   ResponseEntity<Response> getResponseMailResponseEntity(Response tpResponse, Exception e, String message) {
+        tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
         if(e instanceof MessagingException || e instanceof SMTPSendFailedException || e instanceof MailSendException || e instanceof MailAuthenticationException){
-            pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,message));
+            tpResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,message));
         }else{
-            pmResponse.setMessage(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
+            tpResponse.setMessage(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
         }
-        pmResponse.setRetDescription(null);
-        return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
+        tpResponse.setRetDescription(null);
+        return new ResponseEntity<>(tpResponse, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @NotNull
-    public static ResponseEntity<Response> getResponseDeleteResponseEntity(@RequestParam @Valid Long id, Response pmResponse, boolean delete, String label)  {
+    public static ResponseEntity<Response> getResponseDeleteResponseEntity(@RequestParam @Valid Long id, Response tpResponse, boolean delete, String label)  {
         if (id != null) {
             if (delete) {
-                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                pmResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, label));
+                tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                tpResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, label));
 
-                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                return new ResponseEntity<>(tpResponse, HttpStatus.OK);
             } else {
-                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, label));
+                tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                tpResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, label));
 
             }
         }
-        return new ResponseEntity<>(pmResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(tpResponse, HttpStatus.NOT_FOUND);
     }
 
 

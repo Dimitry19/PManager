@@ -48,26 +48,26 @@ public class MailController extends CommonController {
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
 
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
         try {
             createOpentracingSpan("MailController - contact us");
 
 
             if(mailService.contactUS(contactusDTO)){
-                pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                pmResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
+                tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                tpResponse.setRetDescription(WebServiceResponseCode.CONTACT_US_LABEL);
                 response.setStatus(200);
-                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                return new ResponseEntity<>(tpResponse, HttpStatus.OK);
 
             }else{
-                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,"Veuillez reessayez plutard , Merci!"));
+                tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                tpResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_MAIL_SERVICE_UNAVAILABLE_LABEL,"Veuillez reessayez plutard , Merci!"));
                 response.setStatus(503);
-                return new ResponseEntity<>(pmResponse, HttpStatus.SERVICE_UNAVAILABLE);
+                return new ResponseEntity<>(tpResponse, HttpStatus.SERVICE_UNAVAILABLE);
             }
 
         } catch (Exception e) {
-            return getResponseMailResponseEntity(pmResponse, e,"Veuillez reessayez plutard , Merci!");
+            return getResponseMailResponseEntity(tpResponse, e,"Veuillez reessayez plutard , Merci!");
         } finally {
             finishOpentracingSpan();
         }

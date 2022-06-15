@@ -28,6 +28,7 @@ public interface AnnounceDAO extends CommonDAO {
     int count(Object o,PageBy pageBy) throws AnnounceException, Exception;
 
     int count(Object o, StatusEnum status,PageBy pageBy) throws AnnounceException, Exception;
+    List announcesFavoris(UserVO  user, PageBy pageBy) throws AnnounceException, Exception;
 
     List<AnnounceVO> announcesByUser(UserVO user) throws AnnounceException,Exception;
 

@@ -80,7 +80,7 @@ public class AuthenticationController extends CommonController {
         logger.info("register request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
-        QrCodeResponse pmResponse = new QrCodeResponse();
+        QrCodeResponse tpResponse = new QrCodeResponse();
 
         try {
             createOpentracingSpan("AuthenticationController - register");
@@ -89,41 +89,42 @@ public class AuthenticationController extends CommonController {
             UserVO user = userService.register(register);
 
             if (user != null && StringUtils.isNotEmpty(user.getError())) {
-                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setMessage(user.getError());
+                tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                tpResponse.setMessage(user.getError());
                 response.setStatus(400);
-                return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
+                return new ResponseEntity<>(tpResponse, HttpStatus.CONFLICT);
             }
 
             if (user == null) {
-                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setMessage(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
+                tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                tpResponse.setMessage(WebServiceResponseCode.ERROR_USER_REGISTER_LABEL);
                 response.setStatus(400);
-                return new ResponseEntity<>(pmResponse, HttpStatus.CONFLICT);
+                return new ResponseEntity<>(tpResponse, HttpStatus.CONFLICT);
             }
 
             if(BooleanUtils.isTrue(enableQrCodeRegistration)){
                 String qrCodeImage = authenticationService.qrCodeGenerator(user.getEmail(),user.getSecret(),issuer);
-                pmResponse.setMfa(true);
-                pmResponse.setSecretImageUri(qrCodeImage);
+                tpResponse.setMfa(true);
+                tpResponse.setSecretImageUri(qrCodeImage);
             }
 
 
             if(enableAutoActivateRegistration){
-                pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
+                tpResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_LABEL);
             }
 
+
          /*   if(BooleanUtils.isFalse(enableQrCodeRegistration) && BooleanUtils.isTrue(mailService.sendConfirmationMail(request, user))){
-                pmResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_MAIL_LABEL);
+                tpResponse.setRetDescription(WebServiceResponseCode.USER_REGISTER_MAIL_LABEL);
             }*/
 
-            pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+            tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
             response.setStatus(200);
-            return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+            return new ResponseEntity<>(tpResponse, HttpStatus.OK);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de register: ", e);
-            return getResponseMailResponseEntity(pmResponse, e,"Votre compte sera activé d'ici 24h");
+            return getResponseMailResponseEntity(tpResponse, e,"Votre compte sera activé d'ici 24h");
         } finally {
             finishOpentracingSpan();
         }
@@ -141,7 +142,7 @@ public class AuthenticationController extends CommonController {
     @GetMapping(path = WSConstants.USER_WS_CONFIRMATION, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody void confirmation(HttpServletResponse response, HttpServletRequest request, @RequestParam("token") String token) throws Exception {
 
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
 
 
         try {
@@ -153,21 +154,21 @@ public class AuthenticationController extends CommonController {
             UserVO user = userService.findByToken(token);
 
             if (user == null) {
-                pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                pmResponse.setMessage(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
+                tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                tpResponse.setMessage(WebServiceResponseCode.ERROR_INVALID_TOKEN_REGISTER_LABEL);
                 response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
             } else {
 
                 if (user.getActive() == TP_ACTIVATE_ACCOUNT) {
-                    pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-                    pmResponse.setMessage(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
+                    tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+                    tpResponse.setMessage(WebServiceResponseCode.ERROR_USED_TOKEN_REGISTER_LABEL);
                     response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION_ERROR));
                 }
 
                 user.setActive(TP_ACTIVATE_ACCOUNT);
                 if (userService.update(user) != null) {
-                    pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                    pmResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
+                    tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                    tpResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
                     response.sendRedirect(getRedirectPage(RedirectType.CONFIRMATION));
                 }
             }
@@ -222,14 +223,14 @@ public class AuthenticationController extends CommonController {
                     return getResponseLoginErrorResponseEntity(WebServiceResponseCode.ERROR_LOGIN_LABEL);
                 }
 
-                QrCodeResponse pmResponse = new QrCodeResponse();
+                QrCodeResponse tpResponse = new QrCodeResponse();
                 String qrCodeImage = authenticationService.qrCodeGenerator(ui.getEmail(), ui.getSecret(), issuer);
-                pmResponse.setMfa(true);
-                pmResponse.setSecretImageUri(qrCodeImage);
-                pmResponse.setRetCode(WebServiceResponseCode.QR_CODE_MFA_ENABLED);
-                pmResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
+                tpResponse.setMfa(true);
+                tpResponse.setSecretImageUri(qrCodeImage);
+                tpResponse.setRetCode(WebServiceResponseCode.QR_CODE_MFA_ENABLED);
+                tpResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
                 userService.resetUserAuthentication(login.getUsername());
-                return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                return new ResponseEntity<>(tpResponse, HttpStatus.OK);
             }else{
                 user = userService.login(login);
 
@@ -318,19 +319,19 @@ public class AuthenticationController extends CommonController {
     public @ResponseBody ResponseEntity<QrCodeResponse> generateQrCode(HttpServletResponse response, HttpServletRequest request,  @RequestBody LoginDTO login) throws Exception {
 
         UserVO user =userService.login(login);
-        QrCodeResponse pmResponse = new QrCodeResponse();
+        QrCodeResponse tpResponse = new QrCodeResponse();
 
         if(user == null){
-            pmResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
-            pmResponse.setMessage(WebServiceResponseCode.ERROR_USER_QRCODE_LABEL);
-            return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+            tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+            tpResponse.setMessage(WebServiceResponseCode.ERROR_USER_QRCODE_LABEL);
+            return new ResponseEntity<>(tpResponse, HttpStatus.OK);
         }
-        pmResponse.setMfa(true);
+        tpResponse.setMfa(true);
         String qrCodeImage = authenticationService.qrCodeGenerator(user.getEmail(),user.getSecret(),issuer);
-        pmResponse.setSecretImageUri(qrCodeImage);
-        pmResponse.setRetCode(WebServiceResponseCode.QR_CODE_MFA_ENABLED);
-        pmResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
-        return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+        tpResponse.setSecretImageUri(qrCodeImage);
+        tpResponse.setRetCode(WebServiceResponseCode.QR_CODE_MFA_ENABLED);
+        tpResponse.setRetDescription(WebServiceResponseCode.QRCODE_LABEL);
+        return new ResponseEntity<>(tpResponse, HttpStatus.OK);
 
     }
 
@@ -342,16 +343,16 @@ public class AuthenticationController extends CommonController {
 
         //TODO Gerer les cookies pour la deconnexion
 
-        Response pmResponse = new Response();
+        Response tpResponse = new Response();
 
         UserVO user = userService.findByUsername(username,false);
 
        if (user!=null){
 
            if(request.getCookies() == null){
-               pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-               pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
-               return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+               tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+               tpResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+               return new ResponseEntity<>(tpResponse, HttpStatus.OK);
            }
 
            for (Cookie cookie : request.getCookies()) {
@@ -363,19 +364,19 @@ public class AuthenticationController extends CommonController {
                    cookie.setMaxAge(0);
                    cookie.setPath(request.getContextPath());
                    response.addCookie(cookie);
-                   pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-                   pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
-                   return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+                   tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+                   tpResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+                   return new ResponseEntity<>(tpResponse, HttpStatus.OK);
                }
-               pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-               pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+               tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+               tpResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
            }
        }else{
-           pmResponse.setRetCode(WebServiceResponseCode.OK_CODE);
-           pmResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
+           tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
+           tpResponse.setRetDescription(WebServiceResponseCode.LOGOUT_OK_LABEL);
 
        }
-        return new ResponseEntity<>(pmResponse, HttpStatus.OK);
+        return new ResponseEntity<>(tpResponse, HttpStatus.OK);
     }
 
     private void  cookie(HttpServletResponse response,String username, String password){

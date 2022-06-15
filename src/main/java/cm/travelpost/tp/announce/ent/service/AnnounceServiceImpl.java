@@ -10,11 +10,17 @@ import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.exception.SubscriptionException;
 import cm.travelpost.tp.common.exception.UserException;
+import cm.travelpost.tp.common.exception.UserException;
+import cm.travelpost.tp.common.utils.CollectionsUtils;
+import cm.travelpost.tp.user.ent.dao.UserDAO;
+import cm.travelpost.tp.user.ent.dao.UserDAOImpl;
+import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import cm.travelpost.tp.ws.requests.users.UsersAnnounceFavoriteDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,10 +34,16 @@ import java.util.List;
 @Transactional
 public class AnnounceServiceImpl implements AnnounceService {
 
-    protected final Log logger = LogFactory.getLog(AnnounceServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
+
 
     @Autowired
     AnnounceDAO dao;
+
+
+    @Autowired
+    private UserDAO userDAO;
+
 
     /**
      * Permet de verifier que le bean a été instancié et ceci peut etre  fait avec afterPropertiesSet
@@ -113,7 +125,115 @@ public class AnnounceServiceImpl implements AnnounceService {
         logger.info("Spring Container is destroy! Customer clean up");
     }
 
+    @Override
+    public boolean addAnnounceFavorites(UsersAnnounceFavoriteDTO dto) throws UserException, AnnounceException {
 
+        long userId = dto.getUserId();
+        long announceId = dto.getAnnounceId();
+
+        try {
+            UserVO user= userDAO.findById(userId);
+            AnnounceVO announce = dao.announce(announceId);
+            checkForFavoris(user, announce);
+            if(CollectionsUtils.notContains(user.getAnnouncesFavorites(),announce)) {
+                user.getAnnouncesFavorites().add(announce);
+                return userDAO.merge(user)!=null;
+            }
+        } catch (UserException e) {
+            logger.error("Erreur pour recuperer l'utilisateur  avec id {}", userId);
+            throw new UserException("Erreur pour recuperer l'utilisateur " + userId);
+        }
+        catch (Exception e) {
+            logger.error("Erreur pour recuperer l'Annonce avec id {} ", announceId);
+            throw new AnnounceException("Erreur pour recuperer l'Annonce "+ announceId);
+
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removeAnnounceFavorites(UsersAnnounceFavoriteDTO dto) throws UserException,AnnounceException {
+
+        long userId = dto.getUserId();
+        long announceId = dto.getAnnounceId();
+
+        try {
+            UserVO user = userDAO.findById(userId);
+            AnnounceVO announce = dao.announce(announceId);
+            checkForFavoris(user, announce);
+
+            if(CollectionsUtils.contains(user.getAnnouncesFavorites(),announce)) {
+                user.getAnnouncesFavorites().remove(announce);
+                return userDAO.merge(user)!=null;
+            }
+        }catch (UserException e) {
+            logger.error("Erreur pour recuperer l'utilisateur "+ userId);
+            throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
+        }
+        catch (Exception e) {
+            logger.error("Erreur pour recuperer l'Annonce "+ announceId);
+            throw new AnnounceException("Erreur pour recuperer l'Annonce "+ announceId);
+        }
+        return false;
+    }
+
+    @Override
+    public List<AnnounceVO> announcesFavoritesByUser(long userId) {
+        try {
+            UserVO user = userDAO.findById(userId);
+            if(user ==null) {
+                throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
+            }
+            return (List<AnnounceVO>) CollectionsUtils.convertToList(user.getAnnouncesFavorites());
+
+        }catch (UserException e) {
+            logger.error("Erreur pour recuperer l'utilisateur "+ userId);
+            throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
+        }
+    }
+
+    @Override
+    public List<AnnounceVO> announcesFavoritesByUser(long userId, PageBy pageBy) throws Exception {
+        try {
+            UserVO user = userDAO.findById(userId);
+            if(user ==null) {
+                throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
+            }
+            return (List<AnnounceVO>) dao.announcesFavoris(user,pageBy);
+
+        }catch (UserException e) {
+            logger.error("Erreur pour recuperer l'utilisateur "+ userId);
+            throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public Boolean isAnnounceFavoriteByUser(Long userId, Long announceId) throws UserException {
+        try {
+            UserVO user = userDAO.findById(userId);
+            AnnounceVO announce = dao.announce(announceId);
+            checkForFavoris(user, announce);
+            return CollectionsUtils.contains(user.getAnnouncesFavorites(),announce);
+        }catch (UserException e) {
+            logger.error("Erreur pour recuperer l'utilisateur "+ userId);
+            throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
+        }
+        catch (Exception e) {
+            logger.error("Erreur pour recuperer l'Annonce "+ announceId);
+            throw new AnnounceException("Erreur pour recuperer l'Annonce "+ announceId);
+        }
+    }
+
+    private void checkForFavoris(UserVO user , AnnounceVO announce) throws UserException, AnnounceException{
+        if(user ==null) {
+            throw new UserException("Erreur pour recuperer l'utilisateur ");
+        }
+        if(announce == null){
+            throw new AnnounceException("Erreur pour recuperer l'Annonce ");
+        }
+    }
     /**
      * Permet de verifier que le bean a été detruit  et ne fonctionne que pour les beans avec scope
      * different de prototype

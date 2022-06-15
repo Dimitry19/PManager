@@ -265,7 +265,7 @@ create table ANNOUNCE
     ESTIMATE_VALUE DECIMAL (19,2),
     PRENIUM_PRICE DECIMAL(19,2) not null,
     STATUS VARCHAR(10),
-    --COUNTTER_RESERVATION INTEGER,
+    --COUNTRESERVATION INTEGER,
     R_USER_ID BIGINT,
     IMAGE_ID BIGINT,
     CANCELLED BOOLEAN not null,
@@ -424,6 +424,17 @@ create table USER_ROLE
         foreign key (R_USER) references TP_USER,
     constraint FKN1RN9QODD3U4LE8UF3KL33QE3
         foreign key (ROLE_ID) references ROLE
+);
+
+create table user_announces_favoris
+(
+    USER_ID     BIGINT not null,
+    ANNOUNCE_ID BIGINT not null,
+    primary key (USER_ID, ANNOUNCE_ID),
+    constraint FK1Y6CLURE4R2YJMN2TX8ERSXR8
+        foreign key (USER_ID) references TP_USER (ID),
+    constraint FKF3UV1T15EIKMGVASQJMQ4AXLC
+        foreign key (ANNOUNCE_ID) references ANNOUNCE (ID)
 );
 
 -- auto-generated definition

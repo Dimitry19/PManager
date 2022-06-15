@@ -6,6 +6,7 @@ package cm.travelpost.tp.announce.ent.dao;
  * et aussi eviter HibernateException: Found two representations of same collection
  */
 
+import cm.framework.ds.common.ent.vo.KeyValue;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.framework.ds.hibernate.utils.IQueryBuilder;
@@ -19,6 +20,7 @@ import cm.travelpost.tp.common.Constants;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.*;
 import cm.travelpost.tp.common.utils.*;
+import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.notification.ent.dao.NotificationDAO;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 import cm.travelpost.tp.notification.enums.NotificationType;
@@ -124,6 +126,14 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
+    @Transactional
+    public List<AnnounceVO> announcesFavoris(UserVO user, PageBy pageBy) throws AnnounceException, Exception {
+          setMap(new KeyValue(USER_PARAM, user.getId()));
+          setFilters(FilterConstants.CANCELLED);
+          return  (List<AnnounceVO>) findBySqlNativeQuery(AnnounceVO.ANNOUNCES_FAVORIS_BY_USER_NQ, getMap(),AnnounceVO.ANNOUNCE_FAVORITE_MAPPING , pageBy, getFilters());
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<AnnounceVO> announces(PageBy pageBy) throws AnnounceException,Exception {
 
@@ -154,7 +164,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if (user == null) {
             throw new UserException(messageConfig.getUserExceptionNotFound() + userId);
         }
-        return findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId, pageBy);
+        return findByUserNameQuery(AnnounceVO.FIND_BY_USER_SQL, AnnounceVO.class, userId, pageBy);
     }
 
     @Override
@@ -170,7 +180,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             return findBySqlQuery(AnnounceCompletedVO.SQL_FIND_BY_USER, AnnounceCompletedVO.class, userId,USER_PARAM, pageBy,emptyFilters());
         }
 
-        return findBySqlQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, userId,USER_PARAM, pageBy,emptyFilters());
+        return findBySqlQuery(AnnounceVO.FIND_BY_USER_SQL, AnnounceVO.class, userId,USER_PARAM, pageBy,emptyFilters());
     }
 
 
@@ -528,7 +538,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public List<AnnounceVO> announcesByUser(UserVO user) throws Exception {
-        return findByUserNameQuery(AnnounceVO.SQL_FIND_BY_USER, AnnounceVO.class, user.getId(), null);
+        return findByUserNameQuery(AnnounceVO.FIND_BY_USER_SQL, AnnounceVO.class, user.getId(), null);
     }
 
     @Override

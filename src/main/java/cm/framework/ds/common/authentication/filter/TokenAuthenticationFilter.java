@@ -74,9 +74,9 @@ public class TokenAuthenticationFilter  extends CustomOncePerRequestFilter {
 			String queryString= request.getQueryString();
 
 			StringBuilder stringBuilder = new StringBuilder(uri);
-			stringBuilder.append("/").append(queryString);
+			//stringBuilder.append("/").append(queryString);
 
-			boolean isSharedLink= patternUtils.isShareUrl(stringBuilder.toString());
+			boolean isSharedLink= patternUtils.isShareUrl(stringBuilder.toString()) && isGuest ;
 
 
 			boolean activate= isVerifyService || isOnlyService || isSharedLink || isRegister || isFind || isLogout || isServiceLogin || isServiceLogout;

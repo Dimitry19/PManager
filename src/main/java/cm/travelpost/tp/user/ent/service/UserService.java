@@ -1,6 +1,7 @@
 package cm.travelpost.tp.user.ent.service;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.travelpost.tp.announce.ent.vo.AnnounceInfo;
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.exception.SubscriptionException;
 import cm.travelpost.tp.common.exception.UserException;

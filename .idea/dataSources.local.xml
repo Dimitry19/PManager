@@ -10,8 +10,11 @@
       <user-name>sa</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node kind="database" qname="MANAGER">
-            <node kind="schema" qname="PUBLIC" />
+          <node kind="database" qname="@">
+            <node kind="schema">
+              <name qname="@" />
+              <name qname="VIEWS" />
+            </node>
           </node>
         </introspection-scope>
       </schema-mapping>
@@ -24,11 +27,7 @@
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
       <secret-storage>master_key</secret-storage>
       <user-name>bbxnc20nyku1xg7g</user-name>
-      <schema-mapping>
-        <introspection-scope>
-          <node kind="schema" negative="1" />
-        </introspection-scope>
-      </schema-mapping>
+      <schema-mapping />
     </data-source>
     <data-source name="Hibernate(MYSQL)" uuid="733bbb2a-507e-490b-862c-a649762e3bbe">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
@@ -41,13 +40,7 @@
       <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
       <user-name>sa</user-name>
-      <schema-mapping>
-        <introspection-scope>
-          <node kind="database" qname="@">
-            <node kind="schema" qname="@" />
-          </node>
-        </introspection-scope>
-      </schema-mapping>
+      <schema-mapping />
     </data-source>
     <data-source name="DB MYSQL [AWS]" uuid="f4547c19-2370-4905-92cf-dedaa2788436">
       <database-info product="MySQL" version="8.0.23" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.21 (Revision: 33f65445a1bcc544eb0120491926484da168f199)" dbms="MYSQL" exact-version="8.0.23" exact-driver-version="8.0">
@@ -59,7 +52,7 @@
       <user-name>travelpost</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node kind="schema" qname="cl6j8lyroz9fs4ut" />
+          <node kind="schema" qname="@" />
         </introspection-scope>
       </schema-mapping>
     </data-source>
