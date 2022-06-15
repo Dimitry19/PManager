@@ -333,14 +333,6 @@ public class UserVO extends CommonVO {
         return authentication;
     }
 
-    @Basic(optional = false)
-    @Column(name = "COUNTRY", nullable = false)
-    public String getCountry() {   return country;  }
-
-    @Basic(optional = false)
-    @Column(name = "CITY", nullable = false)
-    public String getCity() {  return city; }
-
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns({
@@ -385,7 +377,6 @@ public class UserVO extends CommonVO {
     public void setSubscriptions(Set<UserVO> subscriptions) {
         this.subscriptions = subscriptions;
     }
-    public void setSubscriptions(Set<UserVO> subscriptions) { this.subscriptions = subscriptions; }
 
     public void setNotifications(Set<NotificationVO> notifications) {
         this.notifications = notifications;

@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="Config svil du 30/04/2022">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.bd7a03e4f3ca63650c19.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/main-es2015.1221cfcf64e359ae6f7e.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.bd7a03e4f3ca63650c19.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/main-es5.1221cfcf64e359ae6f7e.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.484aa8bd7bd15cf7a24d.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/styles.b6faca0f9cb6e2c5e40f.css" afterDir="false" />
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +81,16 @@
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_USER" value="Dimitry19" />
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="PManager" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonGenericDAO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CategoriesDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CommonReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/UpdateReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/resources/application.properties" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
       <map>
@@ -126,6 +129,11 @@
         <option name="downloadDocsAutomatically" value="true" />
         <option name="vmOptionsForImporter" value="-Xmx768m" />
       </MavenImportingSettings>
+    </option>
+    <option name="enabledProfiles">
+      <list>
+        <option value="sinapsi" />
+      </list>
     </option>
   </component>
   <component name="ProjectId" id="26NIITASinlHudPOvdCo5Fw5A25" />
@@ -293,14 +301,14 @@
       <method v="2" />
     </configuration>
     <configuration name="TP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" />
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <log_file alias="LOG" path="$PROJECT_DIR$/src/main/resources/log4j2.xml" />
       <module name="PManager" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="cm.travelpost.tp.TravelPostApplication" />
-      <option name="ACTIVE_PROFILES" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -319,7 +327,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -840,11 +848,41 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="9c7a1126-791d-4e46-a5f2-93e88810e394">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State />
           </value>
         </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="9c7a1126-791d-4e46-a5f2-93e88810e394" value="TOOL_WINDOW" />
       </map>
     </option>
     <option name="RECENT_FILTERS">
@@ -861,7 +899,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -896,164 +933,6 @@
     <MESSAGE value="Refactoring et gestion du Pricing, Part 3." />
     <MESSAGE value="Completée la gestion du pricing et des abonnements" />
     <option name="LAST_COMMIT_MESSAGE" value="Completée la gestion du pricing et des abonnements" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="611" y="348" key="#Assign_Data_Sources" timestamp="1654040483346">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="611" y="348" key="#Assign_Data_Sources/0.0.1440.900@0.0.1440.900" timestamp="1654040483346" />
-    <state x="354" y="135" key="#Inspections" timestamp="1653934052652">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="354" y="135" key="#Inspections/0.0.1440.900@0.0.1440.900" timestamp="1653934052652" />
-    <state x="208" y="31" key="#Project_Structure" timestamp="1653102398961">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="208" y="31" key="#Project_Structure/0.0.1440.900@0.0.1440.900" timestamp="1653102398961" />
-    <state x="458" y="223" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog" timestamp="1653701033801">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="458" y="223" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/0.0.1440.900@0.0.1440.900" timestamp="1653701033801" />
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1653707630117">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1653707630117" />
-    <state x="533" y="141" key="#com.intellij.ide.util.MemberChooser" timestamp="1654120272431">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="533" y="141" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1654120272431" />
-    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1653950695053">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1440.900@0.0.1440.900" timestamp="1653950695053" />
-    <state x="417" y="122" key="#create_table_h2.sql" timestamp="1653788464744">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="417" y="122" key="#create_table_h2.sql/0.0.1440.900@0.0.1440.900" timestamp="1653788464744" />
-    <state x="483" y="160" key="#xdebugger.evaluate" timestamp="1653094207947">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="483" y="160" key="#xdebugger.evaluate/0.0.1440.900@0.0.1440.900" timestamp="1653094207947" />
-    <state x="468" y="311" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1652731487488">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="468" y="311" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1440.900@0.0.1440.900" timestamp="1652731487488" />
-    <state x="303" y="25" key="CommitChangelistDialog2" timestamp="1654132442351">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="303" y="25" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1654132442351" />
-    <state width="489" height="466" key="DebuggerActiveHint" timestamp="1654121570560">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="489" height="466" key="DebuggerActiveHint/0.0.1440.900@0.0.1440.900" timestamp="1654121570560" />
-    <state width="1082" height="302" key="GridCell.Tab.0.bottom" timestamp="1654132467736">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="302" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1654132467736" />
-    <state width="1082" height="302" key="GridCell.Tab.0.bottom/0.23.1440.852@0.23.1440.852" timestamp="1654045358853" />
-    <state width="1082" height="302" key="GridCell.Tab.0.center" timestamp="1654132467734">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="302" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1654132467734" />
-    <state width="1082" height="302" key="GridCell.Tab.0.center/0.23.1440.852@0.23.1440.852" timestamp="1654045358851" />
-    <state width="1082" height="302" key="GridCell.Tab.0.left" timestamp="1654132467733">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="302" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1654132467733" />
-    <state width="1082" height="302" key="GridCell.Tab.0.left/0.23.1440.852@0.23.1440.852" timestamp="1654045358850" />
-    <state width="1082" height="302" key="GridCell.Tab.0.right" timestamp="1654132467735">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="302" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1654132467735" />
-    <state width="1082" height="302" key="GridCell.Tab.0.right/0.23.1440.852@0.23.1440.852" timestamp="1654045358852" />
-    <state width="1082" height="302" key="GridCell.Tab.1.bottom" timestamp="1654132467738">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="302" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1654132467738" />
-    <state width="1082" height="302" key="GridCell.Tab.1.bottom/0.23.1440.852@0.23.1440.852" timestamp="1654126206666" />
-    <state width="1082" height="302" key="GridCell.Tab.1.center" timestamp="1654132467737">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="302" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1654132467737" />
-    <state width="1082" height="302" key="GridCell.Tab.1.center/0.23.1440.852@0.23.1440.852" timestamp="1654126206661" />
-    <state width="1082" height="302" key="GridCell.Tab.1.left" timestamp="1654132467736">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="302" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1654132467736" />
-    <state width="1082" height="302" key="GridCell.Tab.1.left/0.23.1440.852@0.23.1440.852" timestamp="1654126206660" />
-    <state width="1082" height="302" key="GridCell.Tab.1.right" timestamp="1654132467738">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="302" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1654132467738" />
-    <state width="1082" height="302" key="GridCell.Tab.1.right/0.23.1440.852@0.23.1440.852" timestamp="1654126206662" />
-    <state width="1082" height="265" key="GridCell.Tab.2.bottom" timestamp="1652731380985">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="265" key="GridCell.Tab.2.bottom/0.0.1440.900@0.0.1440.900" timestamp="1652731380985" />
-    <state width="1082" height="424" key="GridCell.Tab.2.bottom/0.23.1440.852@0.23.1440.852" timestamp="1652727666777" />
-    <state width="1082" height="265" key="GridCell.Tab.2.center" timestamp="1652731380983">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="265" key="GridCell.Tab.2.center/0.0.1440.900@0.0.1440.900" timestamp="1652731380983" />
-    <state width="1082" height="424" key="GridCell.Tab.2.center/0.23.1440.852@0.23.1440.852" timestamp="1652727666775" />
-    <state width="1082" height="265" key="GridCell.Tab.2.left" timestamp="1652731380982">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="265" key="GridCell.Tab.2.left/0.0.1440.900@0.0.1440.900" timestamp="1652731380982" />
-    <state width="1082" height="424" key="GridCell.Tab.2.left/0.23.1440.852@0.23.1440.852" timestamp="1652727666773" />
-    <state width="1082" height="265" key="GridCell.Tab.2.right" timestamp="1652731380984">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1082" height="265" key="GridCell.Tab.2.right/0.0.1440.900@0.0.1440.900" timestamp="1652731380984" />
-    <state width="1082" height="424" key="GridCell.Tab.2.right/0.23.1440.852@0.23.1440.852" timestamp="1652727666776" />
-    <state width="259" height="457" key="HiddenNamespacesPopup" timestamp="1653437258963">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="259" height="457" key="HiddenNamespacesPopup/0.0.1440.900@0.0.1440.900" timestamp="1653437258963" />
-    <state x="258" y="112" key="Maven.ArtifactSearchDialog" timestamp="1654041035054">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="258" y="112" key="Maven.ArtifactSearchDialog/0.0.1440.900@0.0.1440.900" timestamp="1654041035054" />
-    <state x="468" y="160" key="RollbackChangesDialog" timestamp="1653037118641">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="468" y="160" key="RollbackChangesDialog/0.0.1440.900@0.0.1440.900" timestamp="1653037118641" />
-    <state x="320" y="177" key="Vcs.Push.Dialog.v2" timestamp="1654132451114">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="320" y="177" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1654132451114" />
-    <state width="720" height="450" key="XDebugger.FullValuePopup" timestamp="1653433521378">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="720" height="450" key="XDebugger.FullValuePopup/0.0.1440.900@0.0.1440.900" timestamp="1653433521378" />
-    <state x="574" y="344" width="337" height="370" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1653936228926">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="574" y="344" width="337" height="370" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1440.900@0.0.1440.900" timestamp="1653936228926" />
-    <state x="252" y="230" width="637" height="666" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1653939148903">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="252" y="230" width="637" height="666" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1440.900@0.0.1440.900" timestamp="1653939148903" />
-    <state x="161" y="186" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1654124254992">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="161" y="186" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1440.900@0.0.1440.900" timestamp="1654124254992" />
-    <state x="131" y="85" width="1151" height="729" key="find.popup" timestamp="1654122004266">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="131" y="85" width="1151" height="729" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1654122004266" />
-    <state x="419" y="245" key="git4idea.merge.GitPullDialog" timestamp="1654113666120">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="419" y="245" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1654113666120" />
-    <state width="600" height="428" key="javadoc.popup" timestamp="1652745749235">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="600" height="428" key="javadoc.popup/0.0.1440.900@0.0.1440.900" timestamp="1652745749235" />
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1654129904859">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1654129904859" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1205,12 +1084,12 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java</url>
-          <line>814</line>
+          <line>821</line>
           <option name="timeStamp" value="373" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
-          <line>900</line>
+          <line>910</line>
           <option name="timeStamp" value="400" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -1220,7 +1099,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java</url>
-          <line>224</line>
+          <line>225</line>
           <option name="timeStamp" value="437" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -1230,7 +1109,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/common/utils/CollectionsUtils.java</url>
-          <line>12</line>
+          <line>13</line>
           <option name="timeStamp" value="448" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -1254,6 +1133,7 @@
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo />
+        <PinnedItemInfo parentTag="org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor" memberName="persistentClass" />
       </pinned-members>
     </pin-to-top-manager>
   </component>
@@ -1271,6 +1151,7 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Travel_Post$TP.ic" NAME="TP Coverage Results" MODIFIED="1653574813175" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/PManager$TP.ic" NAME="TP Coverage Results" MODIFIED="1651130082010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
