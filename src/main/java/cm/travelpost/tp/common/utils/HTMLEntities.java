@@ -6,6 +6,9 @@ import java.util.Hashtable;
 
 public class HTMLEntities {
 
+    public static final String AND ="&";
+    public static final String QUESTION_MARK ="?";
+
     /**
      * Translation table for HTML entities.<br/>
      * reference: W3C - Character entity references in HTML 4 [

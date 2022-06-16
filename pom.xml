@@ -366,7 +366,7 @@
 			<artifactId>spring-boot-test</artifactId>
 			<version>2.3.0.RELEASE</version>
 		</dependency>
-		<!-- Encrypt properties End-->
+        <!-- Encrypt properties End-->
 		<!--declare the client  to admin server  -->
 <!--		<dependency>-->
 <!--			<groupId>de.codecentric</groupId>-->

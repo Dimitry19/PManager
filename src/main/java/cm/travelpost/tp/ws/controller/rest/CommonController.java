@@ -20,6 +20,7 @@ import cm.travelpost.tp.message.ent.service.MessageService;
 import cm.travelpost.tp.notification.ent.service.NotificationService;
 import cm.travelpost.tp.user.ent.service.RoleService;
 import cm.travelpost.tp.user.ent.service.UserService;
+import cm.travelpost.tp.ws.client.RestClient;
 import cm.travelpost.tp.ws.controller.RedirectType;
 import cm.travelpost.tp.ws.responses.PaginateResponse;
 import cm.travelpost.tp.ws.responses.Response;
@@ -81,6 +82,9 @@ public class CommonController  extends WSConstants {
     @Value("${redirect.confirm.error.page}")
     protected String redirectConfirmErrorPage;
 
+
+    @Autowired
+    protected RestClient client;
 
     @Autowired
     protected AirlineService airlineService;
