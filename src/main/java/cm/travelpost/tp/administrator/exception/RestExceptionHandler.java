@@ -13,6 +13,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -47,6 +49,17 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         code[1] = "user.unauthorized";
 
         return new ResponseEntity<>(new ErrorResponse((String) CollectionsUtils.getFirst(details), details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({RestClientException.class, RestClientResponseException.class})
+    public ResponseEntity<Object> handleRestClientExceptions(RestClientException ex) {
+        List<String> details = new ArrayList<>();
+        details.add(ex.getMessage());
+        String[] code = new String[2];
+        code[0] = "RestClientException";
+        code[1] = "RestClient.Exception";
+
+        return new ResponseEntity<>(new ErrorResponse((String) CollectionsUtils.getFirst(details), details, code, DEFAULT_ERROR), new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler({NullPointerException.class})

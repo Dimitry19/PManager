@@ -141,7 +141,7 @@ public class WSConstants extends CommonProperties {
     /******** IMG REQUEST ********/
     public static final String IMG_WS = "/ws/image/*";
 
-    /******** IMG REQUEST ********/
+    /******** CITY REQUEST ********/
     public static final String CITY_WS = "/ws/city/*";
     public static final String CITIES_WS = "/ws/city/cities";
 
@@ -150,6 +150,9 @@ public class WSConstants extends CommonProperties {
     /************ ADMIN DASHBOARD REQUEST*************/
     public static final String DASHBOARD_WS = "/ws" + DASHBOARD+"/*";
     public static final String DASHBOARD_DELETE = "/delete/{code}";
+    public static final String DASHBOARD_COUNTRIES = "/countries";
+    public static final String DASHBOARD_CITIES_OF_COUNTRY = "/cities/{country}";
+    public static final String DASHBOARD_COUNTRIES_AND_CITIES_INFOS = "/countryInfo";
 
     /*******************SMS TWILLO ******************/
     public static final String SMS_WS = "/ws/sms/*";

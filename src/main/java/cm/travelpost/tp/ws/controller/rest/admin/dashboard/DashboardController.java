@@ -25,8 +25,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
+import java.util.Set;
 
 import static cm.travelpost.tp.administrator.ent.enums.DashBoardObjectType.AIRLINE;
 
@@ -38,6 +40,7 @@ public class DashboardController extends CommonController {
 	protected final Logger logger = LoggerFactory.getLogger(DashboardController.class);
 
 	 public final static String LA_COMPAGNIE_AERIENNE ="La compagnie aerienne";
+	 public final static String LA_VILLE ="La ville";
 	/**
 	 * Cette methode cree une compagnie aerienne ou une ville
 	 *
@@ -60,18 +63,13 @@ public class DashboardController extends CommonController {
 	ResponseEntity<Object> createCompanyOrCity(HttpServletResponse response, HttpServletRequest request, @RequestBody @Valid CommonDTO dto) throws DashboardException,Exception{
 
 		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-
-
 		try {
 			createOpentracingSpan("DashboardController - createCompanyOrCity");
 
 			logger.info("createCompanyOrCity Operation ");
 			AirlineVO airline=null;
 			CityVO city=null;
-
 			Object o=null;
-
-
 			if (dto != null) {
 
 				if (dto.getObjectType() == AIRLINE) {
@@ -79,7 +77,6 @@ public class DashboardController extends CommonController {
 				}else{
 						o  = cityService.create(dto);
 				}
-
 				if (o instanceof AirlineVO) {
 
 					airline = (AirlineVO)o;
@@ -174,7 +171,6 @@ public class DashboardController extends CommonController {
 	public @ResponseBody ResponseEntity<Response> delete(HttpServletResponse response, HttpServletRequest request, @RequestParam("id") @Valid String o) throws Exception {
 
 		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-
 		Response tpResponse = new Response();
 
 		try {
@@ -188,17 +184,12 @@ public class DashboardController extends CommonController {
 				AirlineIdVO id = new AirlineIdVO();
 				id.setToken(Constants.DEFAULT_TOKEN);
 				id.setCode(code);
-
-
 				if (airlineService.delete(id)) {
 					tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					tpResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, LA_COMPAGNIE_AERIENNE));
 					return new ResponseEntity<>(tpResponse, HttpStatus.OK);
 				}
-
-
 			}else{
-
 				    cityService.delete(o);
 					tpResponse.setRetCode(WebServiceResponseCode.OK_CODE);
 					tpResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, "La ville"));
@@ -214,7 +205,85 @@ public class DashboardController extends CommonController {
 			finishOpentracingSpan();
 		}
 	}
+	@ApiOperation(value = "All countries ", response = Set.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful countries retrieved",
+					response = Set.class, responseContainer = "Object")})
+	@GetMapping(value = WSConstants.DASHBOARD_COUNTRIES,produces = MediaType.APPLICATION_JSON)
+	public @ResponseBody ResponseEntity<?>  countries(HttpServletRequest request, HttpServletResponse response) throws Exception { client.countriesAndCities();
+
+		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+		Response tpResponse = new Response();
+
+		try {
+			createOpentracingSpan("DashboardController - countries");
+			logger.info("countries ");
+			return new ResponseEntity<>(client.countriesAndCities(), HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("Erreur durant les pays {}", e);
+			throw e;
+		} finally {
+			finishOpentracingSpan();
+		}
+	}
+	@ApiOperation(value = "All countries infos ", response = Set.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful countries infos retrieved",
+					response = Set.class, responseContainer = "Object")})
+	@GetMapping(value = WSConstants.DASHBOARD_COUNTRIES_AND_CITIES_INFOS,produces = MediaType.APPLICATION_JSON)
+	public @ResponseBody ResponseEntity<?>  countriesInfos(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+		Response tpResponse = new Response();
+
+		try {
+			createOpentracingSpan("DashboardController - countriesInfos");
+			logger.info("countriesInfos ");
+			return new ResponseEntity<>(client.countriesInfos(), HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("Erreur durant les pays {}", e);
+			throw e;
+		} finally {
+			finishOpentracingSpan();
+		}
+	}
+
+	@ApiOperation(value = "All cities of a country ", response = Set.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieved all cities of a country ",
+					response = Set.class, responseContainer = "Object")})
+	@GetMapping(value = WSConstants.DASHBOARD_CITIES_OF_COUNTRY,produces = MediaType.APPLICATION_JSON)
+	public @ResponseBody ResponseEntity<?>  cities(HttpServletRequest request, HttpServletResponse response,
+													@PathVariable(name = "country",required = true) @Valid @NotNull(message = "valorisez le nom du pays") String country) throws Exception { client.countriesAndCities();
+
+		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+		Response tpResponse = new Response();
+
+		try {
+			createOpentracingSpan("DashboardController - cities");
+			logger.info("cities of a country ");
+			return new ResponseEntity<>(client.citiesFromCountry(country), HttpStatus.OK);
+
+		} catch (Exception e) {
+			logger.error("Erreur durant la recuperation des villes du pays {} - {}",country, e);
+			throw e;
+		} finally {
+			finishOpentracingSpan();
+		}
+	}
 	private String getMessage(DashBoardObjectType objectType){
-		return (objectType == AIRLINE)? LA_COMPAGNIE_AERIENNE :"La ville";
+		return (objectType == AIRLINE)? LA_COMPAGNIE_AERIENNE :LA_VILLE;
 	}
 }
