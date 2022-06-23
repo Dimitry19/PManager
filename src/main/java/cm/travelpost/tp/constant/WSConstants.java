@@ -64,7 +64,7 @@ public class WSConstants extends CommonProperties {
     public static final String USER_ADD_ANNOUNCE_FAVORITE = "/addFavorite";
     public static final String USER_IS_ANNOUNCE_FAVORITE = "/isFavorite";
     public static final String DELETE_ANNOUNCE_FAVORITE = "/removeFavorite";
-    public static final String ANNOUNCES_FAVORITE_BY_USER = "/listFavorites";
+    public static final String ANNOUNCES_FAVORITE_BY_USER = "/favorites";
 
     public static final String USER_ADD_SUBSCRIPTION_WS = "/subscriptions/add";
     public static final String USER_ADD_SUBSCRIBER_WS = "/subscribers/add";

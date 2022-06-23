@@ -824,7 +824,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                         .orElseGet(Collections::emptyList);
 
                 if (CollectionsUtils.isNotEmpty(check)) {
-                    subscribers.addAll(check.stream().map(AnnounceVO::getUser).collect(Collectors.toSet()));
+                    subscribers.addAll(check.stream().map(AnnounceVO::getUser).filter(user->!user.equals(announce.getUser()) ).collect(Collectors.toSet()));
                 }
             }
         }
