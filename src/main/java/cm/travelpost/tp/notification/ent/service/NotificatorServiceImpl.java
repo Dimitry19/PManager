@@ -168,7 +168,7 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
         if(!applicationStarted || !enableNotification) return;
 
-        List<Event> deadEvents = new ArrayList<>();
+         List<Event> deadEvents = new ArrayList<>();
         events.forEach(event -> {
             try {
 
@@ -232,12 +232,9 @@ public class NotificatorServiceImpl implements NotificationSocketService  {
 
             NotificationVO notification =(NotificationVO)n;
             notification.getUsers().stream().forEach(u->{
-
                 u.addNotification(notification);
                 notification.getUsers().add(u);
-
             });
-
             try {
                 notificationDAO.save(notification);
             } catch (Exception e) {

@@ -63,7 +63,7 @@ public abstract class Generic extends CommonGenericDAO {
                 message =MessageFormat.format(notificationMessagePattern,username," s'est désabonné à votre profil","");
                 break;
             case ANNOUNCE:
-                message =MessageFormat.format(notificationMessagePattern,username, " a creé l'annonce " + partOneMessage(departure,arrival),partTwoMessage(pour ,startDate,(endDate)));
+                message =MessageFormat.format(notificationMessagePattern,username, " a creé l'annonce " + partOneMessage(departure,arrival),partTwoMessage(pour,startDate,(endDate)));
 
                 break;
             case ANNOUNCE_UPD:
@@ -85,12 +85,9 @@ public abstract class Generic extends CommonGenericDAO {
                 message= MessageFormat.format(notificationMessagePattern,username," a refusé votre reservation  de [" +kg+" kg ] sur l' annonce " + partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate+kg)));
                 break;
             case RESERVATION_UPD:
-
                  message= MessageFormat.format(notificationMessagePattern,username," a modifié une reservation sur votre annonce "+partOneMessage(departure,arrival), partTwoMessage(startDate,(endDate+kg)));
-
                 break;
             case RESERVATION_DEL:
-
                 message= MessageFormat.format(notificationMessagePattern,username," a supprimé une reservation  de [" +kg+" kg ] sur votre annonce " + partOneMessage(departure,arrival), partTwoMessage(startDate, endDate));
                 break;
             case COMMENT:
@@ -104,11 +101,11 @@ public abstract class Generic extends CommonGenericDAO {
     }
 
     private String partTwoMessage(String startDate, String endDate){
-        return ",date de l'annonce [" + startDate+ "]  et retour le  [ "+ endDate+"]";
+        return ",date de l'annonce [" + startDate+ "]  et retour le ["+ endDate+"]";
     }
 
     public String partTwoMessage(String start,String startDate, String endDate){
-        return start +"la  [" + startDate+ "]  et retour le  [ "+ endDate+"]";
+        return start +"le [" + startDate+ "]  et retour le  ["+ endDate+"]";
     }
 
     public String partOneMessage(String departure, String arrival){
@@ -122,17 +119,5 @@ public abstract class Generic extends CommonGenericDAO {
             props.put(IEvent.PROP_MSG,message);
             props.put(IEvent.PROP_USR_ID,userId);
             props.put(IEvent.PROP_SUBSCRIBERS,subscribers);
-
     }
-
-    public void buildAndOr(StringBuilder hql, boolean addCondition, boolean andOrOr) {
-        if (addCondition) {
-            if (!andOrOr) {
-                hql.append(OR);
-            } else {
-                hql.append(AND);
-            }
-        }
-    }
-
 }

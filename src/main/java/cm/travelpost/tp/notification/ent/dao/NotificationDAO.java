@@ -26,6 +26,9 @@ public interface NotificationDAO extends CommonDAO {
     @Transactional(readOnly = true)
     List<NotificationVO> findByStatus(StatusEnum status);
 
+    @Transactional(readOnly = true)
+    List<NotificationVO> findByStatus(StatusEnum status, PageBy pageBy);
+
     NotificationVO read(Long id) ;
 
     void readAll(List<Long> ids) throws NotificationException;

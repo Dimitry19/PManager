@@ -35,7 +35,7 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
 
     @Override
     public List<NotificationVO> notificationToSend(PageBy pageBy) throws NotificationException {
-        return findByStatus(StatusEnum.VALID);
+        return findByStatus(StatusEnum.VALID,pageBy);
     }
 
     @Override
@@ -90,21 +90,36 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
         return Boolean.TRUE;
     }
 
+    public List<NotificationVO> findByStatus(StatusEnum status, PageBy pageBy){
+
+        try{
+            Query query = internalFindByStatus(status);
+            pageBy(query,pageBy);
+            return query.getResultList();
+        }catch (Exception e){
+            logger.error("Erreur durant la recuperation des notification byStatus {}", e);
+        }
+        return new ArrayList<>();
+    }
+
     public List<NotificationVO> findByStatus(StatusEnum status){
 
         try{
-            StringBuilder queryBuilder = new StringBuilder(NotificationVO.byStatusNativeQuery);
-            Session session = getCurrentSession();
-            queryBuilder.append(APPLICE);
-            queryBuilder.append(status.name());
-            queryBuilder.append(APPLICE);
-
-            Query query = session.createNativeQuery(queryBuilder.toString()).addEntity(NotificationVO.class);
+            Query query = internalFindByStatus(status);
 
             return query.getResultList();
         }catch (Exception e){
             logger.error("Erreur durant la recuperation des notification byStatus {}", e);
         }
         return new ArrayList<>();
+    }
+
+    private Query internalFindByStatus(StatusEnum status){
+        StringBuilder queryBuilder = new StringBuilder(NotificationVO.byStatusNativeQuery);
+        Session session = getCurrentSession();
+        queryBuilder.append(APPLICE);
+        queryBuilder.append(status.name());
+        queryBuilder.append(APPLICE);
+        return session.createNativeQuery(queryBuilder.toString()).addEntity(NotificationVO.class);
     }
 }

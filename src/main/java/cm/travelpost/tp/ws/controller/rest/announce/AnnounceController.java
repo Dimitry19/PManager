@@ -515,7 +515,7 @@ public class AnnounceController extends CommonController {
     @RequestMapping(value = WSConstants.USER_ADD_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<Response> addAnnounceFavorites(HttpServletRequest request, HttpServletResponse response,
-                                                  @RequestBody @Valid UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
+                                                  @RequestBody @NotNull UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
 
         logger.info("add a favorite announce into this users" + userAnnounceFavoriteDTO.getUserId());
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -552,7 +552,7 @@ public class AnnounceController extends CommonController {
     @RequestMapping(value = WSConstants.DELETE_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<Response> deleteAnnounceFavoriteByUser(HttpServletRequest request, HttpServletResponse response,
-                                                          @RequestBody @Valid UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
+                                                          @RequestBody @NotNull UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
 
         logger.info("remove a favorite announce into this users" + userAnnounceFavoriteDTO.getUserId());
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -588,7 +588,7 @@ public class AnnounceController extends CommonController {
                     response = ResponseEntity.class, responseContainer = "List")})
     @GetMapping(value =WSConstants.ANNOUNCES_FAVORITE_BY_USER, headers = WSConstants.HEADER_ACCEPT)
     public ResponseEntity<PaginateResponse> announcesFavoriteByUser(HttpServletResponse response, HttpServletRequest request,
-                                                                         @RequestParam @Valid Long idUser,
+                                                                         @RequestParam @Positive Long userId,
                                                                          @RequestParam(required = false, defaultValue = DEFAULT_PAGE)@Valid @Positive(message = "la page doit etre nombre positif") int page,
                                                                          @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws Exception {
 
@@ -601,14 +601,14 @@ public class AnnounceController extends CommonController {
         try {
             createOpentracingSpan("AnnounceController -announcesFavoriteByUser");
             logger.info("get announces favorites by user request out");
-            int count = CollectionsUtils.size(announceService.announcesFavoritesByUser(idUser, null));
-            return getPaginateResponseResponseEntity(headers, count, announceService.announcesFavoritesByUser(idUser, pageBy));
+            int count = CollectionsUtils.size(announceService.announcesFavoritesByUser(userId, null));
+            return getPaginateResponseResponseEntity(headers, count, announceService.announcesFavoritesByUser(userId, pageBy));
         }catch (AnnounceException e) {
-            logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ idUser);
+            logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ userId);
              e.printStackTrace();
              throw e;
         }catch (Exception e) {
-            logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ idUser);
+            logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ userId);
             e.printStackTrace();
             throw e;
         }finally {
@@ -643,10 +643,9 @@ public class AnnounceController extends CommonController {
         return null;
     }
 
-    private void add(List announces, List announce){
-
-        if(CollectionsUtils.isNotEmpty(announce)){
-            announces.addAll(announce);
+    private void add(List announces, List announcesToAdd){
+        if(CollectionsUtils.isNotEmpty(announcesToAdd)){
+            announces.addAll(announcesToAdd);
         }
     }
 }

@@ -1,39 +1,26 @@
 package cm.travelpost.tp.ws.requests.users;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 public class UsersAnnounceFavoriteDTO {
+    @Positive
+    private Long announceId;
 
-    //@NotNull
-    //private Long announceId;
+    @Positive
+    private Long userId;
 
-    //@NotNull
-   // private Long userId;
-
-    @NotNull
-    private Long idAnnounce;
-
-    @NotNull
-    private Long idUser;
-
-    public Long getIdAnnounce() {  return idAnnounce;}
-
-    public Long getIdUser() {    return idUser; }
 
     public Long getAnnounceId() {
-        return getIdAnnounce();
+        return announceId;
     }
 
-    public Long getUserId() {   return getIdUser(); }
+    public Long getUserId() {   return userId; }
 
-    public void setIdAnnounce(Long idAnnounce) { this.idAnnounce = idAnnounce;}
-    public void setIdUser(Long idUser) { this.idUser = idUser;}
-
-       /*public void setAnnounceId(Long announceId) {
+     public void setAnnounceId(Long announceId) {
         this.announceId = announceId;
     }
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }*/
+    }
 }
