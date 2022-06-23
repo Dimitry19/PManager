@@ -5,21 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/package_war.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/package_war_exploded.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PManager.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ddl/pm-202201.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ddl/pm-202201.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/AnnounceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/AnnounceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/AnnounceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/AnnounceServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,14 +88,14 @@
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="PManager" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonGenericDAO.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CategoriesDTO.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CommonReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/UpdateReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonGenericDAO.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/resources/application.properties" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/UpdateReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CategoriesDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
@@ -156,6 +148,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
@@ -296,14 +289,14 @@
       <method v="2" />
     </configuration>
     <configuration name="TP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <option name="ACTIVE_PROFILES" />
-      <option name="ALTERNATIVE_JRE_PATH" value="11" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <log_file alias="LOG" path="$PROJECT_DIR$/src/main/resources/log4j2.xml" />
       <module name="PManager" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="cm.travelpost.tp.TravelPostApplication" />
+      <option name="ACTIVE_PROFILES" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -455,13 +448,9 @@
       <workItem from="1653428758068" duration="4906000" />
       <workItem from="1653435972858" duration="277000" />
       <workItem from="1653501509097" duration="1857000" />
-    </task>
-    <task id="LOCAL-00112" summary="Modifications Variées">
-      <created>1648260533812</created>
-      <option name="number" value="00112" />
-      <option name="presentableId" value="LOCAL-00112" />
-      <option name="project" value="LOCAL" />
-      <updated>1648260533812</updated>
+      <workItem from="1655929892237" duration="5761000" />
+      <workItem from="1655940529850" duration="3581000" />
+      <workItem from="1656013497329" duration="3503000" />
     </task>
     <task id="LOCAL-00113" summary="Correction de la notification">
       <created>1648261341818</created>
@@ -799,7 +788,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655136923840</updated>
     </task>
-    <option name="localTasksCounter" value="161" />
+    <task id="LOCAL-00161" summary="Modifications FE + Bug fix Notification">
+      <created>1655944120337</created>
+      <option name="number" value="00161" />
+      <option name="presentableId" value="LOCAL-00161" />
+      <option name="project" value="LOCAL" />
+      <updated>1655944120337</updated>
+    </task>
+    <option name="localTasksCounter" value="162" />
     <servers />
   </component>
   <component name="TodoView">
@@ -857,7 +853,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="Deploy Heroku 10/04/2022" />
     <MESSAGE value="Deploy Heroku 10/04/2022 + script mysql" />
     <MESSAGE value="Deploy Heroku 10/04/2022 + logback config correct" />
     <MESSAGE value="Centralisation generation message notification" />
@@ -882,49 +877,70 @@
     <MESSAGE value="Gestion autentication" />
     <MESSAGE value="Modification gestion type de login" />
     <MESSAGE value="Config svil du 30/04/2022" />
-    <option name="LAST_COMMIT_MESSAGE" value="Config svil du 30/04/2022" />
+    <MESSAGE value="Modifications FE + Bug fix Notification" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifications FE + Bug fix Notification" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="611" y="347" key="#Assign_Data_Sources" timestamp="1655233939889">
+    <state x="611" y="347" key="#Assign_Data_Sources" timestamp="1655942305326">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state x="611" y="347" key="#Assign_Data_Sources/0.23.1440.852@0.23.1440.852" timestamp="1655233939889" />
+    <state x="611" y="347" key="#Assign_Data_Sources/0.23.1440.852@0.23.1440.852" timestamp="1655942305326" />
+    <state x="320" y="114" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1656015065593">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="320" y="114" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.852@0.23.1440.852" timestamp="1656015065593" />
     <state x="533" y="140" key="#com.intellij.ide.util.MemberChooser" timestamp="1655234039959">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
     <state x="533" y="140" key="#com.intellij.ide.util.MemberChooser/0.23.1440.852@0.23.1440.852" timestamp="1655234039959" />
-    <state width="1082" height="253" key="GridCell.Tab.0.bottom" timestamp="1655251880245">
+    <state x="151" y="24" key="CommitChangelistDialog2" timestamp="1655944119340">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1082" height="253" key="GridCell.Tab.0.bottom/0.23.1440.852@0.23.1440.852" timestamp="1655251880245" />
-    <state width="1082" height="253" key="GridCell.Tab.0.center" timestamp="1655251880244">
+    <state x="151" y="24" key="CommitChangelistDialog2/0.23.1440.852@0.23.1440.852" timestamp="1655944119340" />
+    <state width="788" height="466" key="DebuggerActiveHint" timestamp="1656016218711">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1082" height="253" key="GridCell.Tab.0.center/0.23.1440.852@0.23.1440.852" timestamp="1655251880244" />
-    <state width="1082" height="253" key="GridCell.Tab.0.left" timestamp="1655251880243">
+    <state width="788" height="466" key="DebuggerActiveHint/0.23.1440.852@0.23.1440.852" timestamp="1656016218711" />
+    <state width="1082" height="253" key="GridCell.Tab.0.bottom" timestamp="1656016495903">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1082" height="253" key="GridCell.Tab.0.left/0.23.1440.852@0.23.1440.852" timestamp="1655251880243" />
-    <state width="1082" height="253" key="GridCell.Tab.0.right" timestamp="1655251880244">
+    <state width="1082" height="253" key="GridCell.Tab.0.bottom/0.23.1440.852@0.23.1440.852" timestamp="1656016495903" />
+    <state width="1082" height="253" key="GridCell.Tab.0.center" timestamp="1656016495901">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1082" height="253" key="GridCell.Tab.0.right/0.23.1440.852@0.23.1440.852" timestamp="1655251880244" />
-    <state width="1082" height="253" key="GridCell.Tab.1.bottom" timestamp="1655251291391">
+    <state width="1082" height="253" key="GridCell.Tab.0.center/0.23.1440.852@0.23.1440.852" timestamp="1656016495901" />
+    <state width="1082" height="253" key="GridCell.Tab.0.left" timestamp="1656016495901">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1082" height="253" key="GridCell.Tab.1.bottom/0.23.1440.852@0.23.1440.852" timestamp="1655251291391" />
-    <state width="1082" height="253" key="GridCell.Tab.1.center" timestamp="1655251291390">
+    <state width="1082" height="253" key="GridCell.Tab.0.left/0.23.1440.852@0.23.1440.852" timestamp="1656016495901" />
+    <state width="1082" height="253" key="GridCell.Tab.0.right" timestamp="1656016495902">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1082" height="253" key="GridCell.Tab.1.center/0.23.1440.852@0.23.1440.852" timestamp="1655251291390" />
-    <state width="1082" height="253" key="GridCell.Tab.1.left" timestamp="1655251291390">
+    <state width="1082" height="253" key="GridCell.Tab.0.right/0.23.1440.852@0.23.1440.852" timestamp="1656016495902" />
+    <state width="1082" height="253" key="GridCell.Tab.1.bottom" timestamp="1656015856942">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1082" height="253" key="GridCell.Tab.1.left/0.23.1440.852@0.23.1440.852" timestamp="1655251291390" />
-    <state width="1082" height="253" key="GridCell.Tab.1.right" timestamp="1655251291391">
+    <state width="1082" height="253" key="GridCell.Tab.1.bottom/0.23.1440.852@0.23.1440.852" timestamp="1656015856942" />
+    <state width="1082" height="253" key="GridCell.Tab.1.center" timestamp="1656015856940">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1082" height="253" key="GridCell.Tab.1.right/0.23.1440.852@0.23.1440.852" timestamp="1655251291391" />
+    <state width="1082" height="253" key="GridCell.Tab.1.center/0.23.1440.852@0.23.1440.852" timestamp="1656015856940" />
+    <state width="1082" height="253" key="GridCell.Tab.1.left" timestamp="1656015856939">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="1082" height="253" key="GridCell.Tab.1.left/0.23.1440.852@0.23.1440.852" timestamp="1656015856939" />
+    <state width="1082" height="253" key="GridCell.Tab.1.right" timestamp="1656015856941">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="1082" height="253" key="GridCell.Tab.1.right/0.23.1440.852@0.23.1440.852" timestamp="1656015856941" />
+    <state x="320" y="176" key="Vcs.Push.Dialog.v2" timestamp="1655944125059">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="320" y="176" key="Vcs.Push.Dialog.v2/0.23.1440.852@0.23.1440.852" timestamp="1655944125059" />
+    <state width="720" height="426" key="XDebugger.FullValuePopup" timestamp="1655939853500">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="720" height="426" key="XDebugger.FullValuePopup/0.23.1440.852@0.23.1440.852" timestamp="1655939853500" />
     <state x="495" y="276" width="450" height="341" key="com.intellij.database.psi.DbRenamePsiElementProcessor.DbRenameDialog" timestamp="1655249655556">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
@@ -937,14 +953,18 @@
       <screen x="0" y="23" width="1440" height="852" />
     </state>
     <state x="179" y="185" width="1082" height="559" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1440.852@0.23.1440.852" timestamp="1655232762247" />
+    <state x="421" y="206" width="598" height="486" key="find.popup" timestamp="1655936069521">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="421" y="206" width="598" height="486" key="find.popup/0.23.1440.852@0.23.1440.852" timestamp="1655936069521" />
     <state x="419" y="244" key="git4idea.merge.GitPullDialog" timestamp="1655231040552">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
     <state x="419" y="244" key="git4idea.merge.GitPullDialog/0.23.1440.852@0.23.1440.852" timestamp="1655231040552" />
-    <state x="385" y="199" width="670" height="676" key="search.everywhere.popup" timestamp="1655248610999">
+    <state x="385" y="199" width="670" height="676" key="search.everywhere.popup" timestamp="1656016034795">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state x="385" y="199" width="670" height="676" key="search.everywhere.popup/0.23.1440.852@0.23.1440.852" timestamp="1655248610999" />
+    <state x="385" y="199" width="670" height="676" key="search.everywhere.popup/0.23.1440.852@0.23.1440.852" timestamp="1656016034795" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1138,6 +1158,41 @@
           <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/AnnounceServiceImpl.java</url>
           <line>212</line>
           <option name="timeStamp" value="440" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>878</line>
+          <option name="timeStamp" value="441" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/notification/ent/service/NotificatorServiceImpl.java</url>
+          <line>142</line>
+          <option name="timeStamp" value="446" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>896</line>
+          <option name="timeStamp" value="449" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java</url>
+          <line>830</line>
+          <option name="timeStamp" value="450" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java</url>
+          <line>515</line>
+          <option name="timeStamp" value="451" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>469</line>
+          <option name="timeStamp" value="452" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java</url>
+          <line>489</line>
+          <option name="timeStamp" value="453" />
         </line-breakpoint>
         <line-breakpoint type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/cm/packagemanager/pmanager/common/ent/vo/ImageVO.java</url>
