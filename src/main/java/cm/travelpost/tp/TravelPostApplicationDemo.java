@@ -68,7 +68,7 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
 
         System.out.println("sa :"+encryptor.encrypt("bdc_d092ef590a4e40a58c1f4b2d9181517d"));
         //System.out.println(":"+encryptor.encrypt("apikey"));
-        System.out.println("Decrypt :"+encryptor.decrypt(encryptor.encrypt("bdc_d092ef590a4e40a58c1f4b2d9181517d")));
+        System.out.println("Decrypt :"+encryptor.decrypt("M6LT2BQ922KBpGjLlU8lOYoOBFSgqxCn4M/SZTTcGazIVbJM76vee/Bn0SIvjTpt"));
 
     }
 

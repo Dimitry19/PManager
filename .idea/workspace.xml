@@ -3,9 +3,45 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="ALL" />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ddl/ddl-1.0.2-pricing-subscription/04.create_view_and_table_activity.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/ent/vo/ActivityIdVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/ent/vo/ActivityVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/enums/ActivityOperation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/constants/DefaultFilterConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/constants/package-info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/ent/vo/UserPersonalDataVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/ent/vo/CommonIdVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/ent/vo/CommonIdVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/log/LogOperationVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/TravelPostApplicationDemo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/cfg/HibernateConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpservices.iml" beforeDir="false" afterPath="$PROJECT_DIR$/tpservices.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,14 +118,14 @@
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="PManager" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonGenericDAO.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CategoriesDTO.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CommonReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/UpdateReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonGenericDAO.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/resources/application.properties" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CategoriesDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
@@ -130,11 +166,6 @@
         <option name="vmOptionsForImporter" value="-Xmx768m" />
       </MavenImportingSettings>
     </option>
-    <option name="enabledProfiles">
-      <list>
-        <option value="sinapsi" />
-      </list>
-    </option>
   </component>
   <component name="ProjectId" id="26NIITASinlHudPOvdCo5Fw5A25" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -145,6 +176,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="h2.unified" />
     <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
@@ -152,7 +184,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ddl/ddl-1.0.2-pricing-subscription" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/constants" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -162,18 +194,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/constants" />
+      <recent name="$PROJECT_DIR$/src/main/java/cm/framework/ds" />
       <recent name="$PROJECT_DIR$/ddl/ddl-1.0.2-pricing-subscription" />
       <recent name="$PROJECT_DIR$/ddl" />
       <recent name="$PROJECT_DIR$/ddl/ddl-1.0.1-beta-secure202204" />
-      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\packagemanager\pmanager\city" />
-      <recent name="F:\DevJava\ws\PManager\src\main\java\cm\framework\hibernate\dao" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cm.framework.ds.common.constants" />
+      <recent name="cm.framework.ds.activity" />
       <recent name="cm.travelpost.tp.user.enums" />
       <recent name="cm.travelpost.tp.authentication.ent.dao" />
       <recent name="cm.travelpost.tp.ws.controller.rest.authentication" />
-      <recent name="cm.travelpost.tp.ws.controller.rest.users.totp" />
-      <recent name="cm.packagemanager.pmanager.city.ent.dao" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\DevJava\ws\PManager\src\main\resources" />
@@ -191,6 +223,19 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.TP">
+    <configuration name="TravelPostApplicationDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cm.travelpost.tp.TravelPostApplicationDemo" />
+      <module name="tpservices" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cm.travelpost.tp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="create_table_h2.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/ddl/ddl-1.0.2-pricing-subscription/create_table_h2.sql" />
       <script-mode>FILE</script-mode>
@@ -301,14 +346,14 @@
       <method v="2" />
     </configuration>
     <configuration name="TP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <option name="ACTIVE_PROFILES" />
-      <option name="ALTERNATIVE_JRE_PATH" value="11" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <log_file alias="LOG" path="$PROJECT_DIR$/src/main/resources/log4j2.xml" />
       <module name="PManager" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="cm.travelpost.tp.TravelPostApplication" />
+      <option name="ACTIVE_PROFILES" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -320,14 +365,16 @@
       <item itemvalue="Maven.jasyst(decrypt)" />
       <item itemvalue="Maven.package" />
       <item itemvalue="Spring Boot.TP" />
+      <item itemvalue="Application.TravelPostApplicationDemo" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TravelPostApplicationDemo" />
         <item itemvalue="Database Script.create_table_h2.sql" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -476,6 +523,8 @@
       <workItem from="1654113634748" duration="7647000" />
       <workItem from="1654124841757" duration="6256000" />
       <workItem from="1654986750516" duration="377000" />
+      <workItem from="1656022645943" duration="1703000" />
+      <workItem from="1656024424662" duration="7246000" />
     </task>
     <task id="LOCAL-00116" summary="Mail senders Configuration">
       <created>1648687311583</created>
@@ -899,6 +948,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -933,6 +983,76 @@
     <MESSAGE value="Refactoring et gestion du Pricing, Part 3." />
     <MESSAGE value="Completée la gestion du pricing et des abonnements" />
     <option name="LAST_COMMIT_MESSAGE" value="Completée la gestion du pricing et des abonnements" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="611" y="347" key="#Assign_Data_Sources" timestamp="1656026132023">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="611" y="347" key="#Assign_Data_Sources/0.23.1440.852@0.23.1440.852" timestamp="1656026132023" />
+    <state x="320" y="115" key="#Getter_Template" timestamp="1656027846536">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="320" y="115" key="#Getter_Template/0.23.1440.852@0.23.1440.852" timestamp="1656027846536" />
+    <state x="320" y="115" key="#Setter_Template" timestamp="1656027902566">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="320" y="115" key="#Setter_Template/0.23.1440.852@0.23.1440.852" timestamp="1656027902566" />
+    <state x="320" y="114" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1656025404674">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="320" y="114" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.852@0.23.1440.852" timestamp="1656025404674" />
+    <state x="533" y="140" key="#com.intellij.ide.util.MemberChooser" timestamp="1656029707948">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="533" y="140" key="#com.intellij.ide.util.MemberChooser/0.23.1440.852@0.23.1440.852" timestamp="1656029707948" />
+    <state x="49" y="74" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1656030343614">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="49" y="74" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.23.1440.852@0.23.1440.852" timestamp="1656030343614" />
+    <state width="492" height="466" key="DebuggerActiveHint" timestamp="1656031799057">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="492" height="466" key="DebuggerActiveHint/0.23.1440.852@0.23.1440.852" timestamp="1656031799057" />
+    <state width="1271" height="392" key="GridCell.Tab.0.bottom" timestamp="1656031802742">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="1271" height="392" key="GridCell.Tab.0.bottom/0.23.1440.852@0.23.1440.852" timestamp="1656031802742" />
+    <state width="1271" height="392" key="GridCell.Tab.0.center" timestamp="1656031802741">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="1271" height="392" key="GridCell.Tab.0.center/0.23.1440.852@0.23.1440.852" timestamp="1656031802741" />
+    <state width="1271" height="392" key="GridCell.Tab.0.left" timestamp="1656031802740">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="1271" height="392" key="GridCell.Tab.0.left/0.23.1440.852@0.23.1440.852" timestamp="1656031802740" />
+    <state width="1271" height="392" key="GridCell.Tab.0.right" timestamp="1656031802742">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="1271" height="392" key="GridCell.Tab.0.right/0.23.1440.852@0.23.1440.852" timestamp="1656031802742" />
+    <state width="1271" height="392" key="GridCell.Tab.1.bottom" timestamp="1656031801002">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="1271" height="392" key="GridCell.Tab.1.bottom/0.23.1440.852@0.23.1440.852" timestamp="1656031801002" />
+    <state width="1271" height="392" key="GridCell.Tab.1.center" timestamp="1656031801001">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="1271" height="392" key="GridCell.Tab.1.center/0.23.1440.852@0.23.1440.852" timestamp="1656031801001" />
+    <state width="1271" height="392" key="GridCell.Tab.1.left" timestamp="1656031801000">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="1271" height="392" key="GridCell.Tab.1.left/0.23.1440.852@0.23.1440.852" timestamp="1656031801000" />
+    <state width="1271" height="392" key="GridCell.Tab.1.right" timestamp="1656031801001">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="1271" height="392" key="GridCell.Tab.1.right/0.23.1440.852@0.23.1440.852" timestamp="1656031801001" />
+    <state width="237" height="457" key="HiddenNamespacesPopup" timestamp="1656026202971">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state width="237" height="457" key="HiddenNamespacesPopup/0.23.1440.852@0.23.1440.852" timestamp="1656026202971" />
+    <state x="385" y="199" width="670" height="676" key="search.everywhere.popup" timestamp="1656031744792">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="385" y="199" width="670" height="676" key="search.everywhere.popup/0.23.1440.852@0.23.1440.852" timestamp="1656031744792" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1133,7 +1253,6 @@
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo />
-        <PinnedItemInfo parentTag="org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor" memberName="persistentClass" />
       </pinned-members>
     </pin-to-top-manager>
   </component>
@@ -1151,7 +1270,7 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Travel_Post$TP.ic" NAME="TP Coverage Results" MODIFIED="1653574813175" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/PManager$TP.ic" NAME="TP Coverage Results" MODIFIED="1651130082010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Travel_Post$TP.ic" NAME="TP Coverage Results" MODIFIED="1653574813175" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

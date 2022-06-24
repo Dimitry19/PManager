@@ -18,7 +18,6 @@ public class CommonIdVO implements Serializable {
 
     protected String token;
 
-
     @Column(name = "TOKEN", nullable = false)
     public String getToken() {
         return token;

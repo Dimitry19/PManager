@@ -46,7 +46,7 @@ public class HibernateConfiguration  extends CommonSecurityResource {
     private String hbm2DdlAuto;
 
     @Value("${entitymanager.packagesToScan}")
-    private String packagesToScan;
+    private String [] packagesToScan;
 
     @Value("${hibernate.default_schema}")
     private String SCHEMA;
