@@ -15,12 +15,13 @@
     <file url="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/service/UserService.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/responses/WebServiceResponseCode.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/_log4j2.xml_" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/google-firebase/demonotifications.json" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/keystore" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/templates/Lost Password.html" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/templates/confirm-registration.html" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/templates/retrieve-password.html" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/templates/send-mail.html" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/_log4j2.xml_" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/google-firebase/demonotifications.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/keystore" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/Lost Password.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/confirm-registration.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/retrieve-password.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/send-mail.html" charset="UTF-8" />
   </component>
 </project>
