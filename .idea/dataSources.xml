@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="HOME" uuid="5bd01531-bd90-4f79-9ad4-e345b761356f">
-      <driver-ref>h2.unified</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.h2.Driver</jdbc-driver>
-      <jdbc-url>jdbc:h2:tcp://localhost/../../../db/manager</jdbc-url>
-    </data-source>
     <data-source source="LOCAL" name="DB MYSQL" uuid="32dd2d4f-ab58-49b7-85d8-9c9fa515f192">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
@@ -42,6 +36,12 @@
       <driver-properties>
         <property name="autoReconnect" value="true" />
       </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="HOME" uuid="4cd6bf33-0707-4796-8293-ce828ec5e703">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:tcp://localhost/../../../db/manager</jdbc-url>
     </data-source>
   </component>
 </project>

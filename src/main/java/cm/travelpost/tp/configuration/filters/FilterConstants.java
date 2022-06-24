@@ -1,14 +1,13 @@
 package cm.travelpost.tp.configuration.filters;
 
-public class FilterConstants {
+import cm.framework.ds.common.constants.DefaultFilterConstants;
+
+public class FilterConstants  extends DefaultFilterConstants {
 
     private FilterConstants() {
+        super();
     }
 
-    public static final String CANCELLED = "cancelled";
-    public static final String COMPLETED = "completed";
-    public static final String STATUS = "byStatus";
-    public static final String NOT_COMPLETED = "not_completed";
 
     public static final String ACTIVE_MBR = "active";
     public static final String ACTIVE_MBR_WORK = "active";
