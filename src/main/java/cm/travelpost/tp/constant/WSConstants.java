@@ -72,6 +72,8 @@ public class WSConstants extends CommonProperties {
     public static final String USER_SUBSCRIPTION_WS = "/subscriptions/{userId}";
     public static final String USER_SUBSCRIBER_WS = "/subscribers/{userId}";
 
+    public static final String USER_ACTIVITIES_WS = "/activities/{userId}";
+
     public static final String USER_WS_OTP = "/otp";
 
 

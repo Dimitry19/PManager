@@ -1,6 +1,7 @@
 package cm.framework.ds.hibernate.dao;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.exception.GenericCRUDEException;
 import cm.framework.ds.hibernate.utils.SQLUtils;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.event.AEvent;
@@ -608,7 +609,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public T save(T t) {
+    public T save(T t) throws GenericCRUDEException {
         Session session = sessionFactory.getCurrentSession();
         return (T)session.save(t);
     }

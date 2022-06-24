@@ -1,8 +1,8 @@
 package cm.travelpost.tp.pricing.ent.service;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.utils.CodeGenerator;
 import cm.travelpost.tp.common.exception.PricingException;
-import cm.travelpost.tp.common.utils.CodeGenerator;
 import cm.travelpost.tp.pricing.ent.dao.PricingDAO;
 import cm.travelpost.tp.pricing.ent.vo.PricingSubscriptionVOId;
 import cm.travelpost.tp.pricing.ent.vo.PricingVO;
@@ -35,7 +35,7 @@ public class PricingServiceImpl extends APricingSubscriptionServiceImpl  impleme
 	@Transactional(propagation = Propagation.REQUIRED)
 	public PricingVO create(CreatePricingDTO dto) throws Exception {
 
-		PricingVO pricing = new PricingVO(CodeGenerator.generateCode(PRICING_PREFIX), DEFAULT_TOKEN);
+		PricingVO pricing = new PricingVO(CodeGenerator.generateCode(DEFAULT_TOKEN,PRICING_PREFIX), DEFAULT_TOKEN);
 		pricing.setType(dto.getType());
 		pricing.setPrice(dto.getAmount());
 		PricingSubscriptionVOId id= (PricingSubscriptionVOId) dao.save(pricing);

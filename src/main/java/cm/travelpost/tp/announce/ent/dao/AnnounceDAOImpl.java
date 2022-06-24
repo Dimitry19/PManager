@@ -8,6 +8,7 @@ package cm.travelpost.tp.announce.ent.dao;
 
 import cm.framework.ds.common.ent.vo.KeyValue;
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.utils.CodeGenerator;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.framework.ds.hibernate.utils.IQueryBuilder;
 import cm.framework.ds.hibernate.utils.QueryBuilder;
@@ -273,10 +274,11 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             }
             userService.checkSubscription(user);
             AnnounceVO announce = new AnnounceVO();
+            announce.setAnnounceId(new AnnounceIdVO(Constants.DEFAULT_TOKEN));
             setAnnounce(announce, user, adto,true);
 
             announce.setStatus(StatusEnum.VALID);
-            announce.setAnnounceId(new AnnounceIdVO(Constants.DEFAULT_TOKEN));
+
             announce.setMessages(null);
             announce.setCancelled(false);
 
@@ -506,7 +508,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             announce.setEstimateValue(adto.getEstimateValue());
         }
         if(!ObjectUtils.isCallable(announce, "code")){
-            announce.setCode(CodeGenerator.generateCode(announce.getAnnounceType().name()));
+            announce.setCode(CodeGenerator.generateCode(announce.getAnnounceId().getToken(),announce.getAnnounceType().name()));
         }
     }
 

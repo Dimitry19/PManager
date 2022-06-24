@@ -10,5 +10,5 @@ public class DefaultFilterConstants {
     public static final String STATUS = "byStatus";
     public static final String NOT_COMPLETED = "not_completed";
 
-    public static final String FILTER_ACTIVITY_CANC = "exists (select id from activity where cancelled = false)";
+    public static final String FILTER_ACTIVITY_CANC = "exists (select code, token from activity where cancelled = false)";
 }

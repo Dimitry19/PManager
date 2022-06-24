@@ -62,7 +62,7 @@ public class UserPersonalDataVO {
 
 
     @Basic(optional = true)
-    @Column(name = "CITY")
+    @Column(name = "COUNTRY")
     public String getCountry() { return country; }
 
 

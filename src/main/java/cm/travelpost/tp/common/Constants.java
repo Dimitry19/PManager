@@ -7,7 +7,7 @@ import javax.annotation.ManagedBean;
 @ManagedBean
 public class Constants {
 
-    @Value("${constant.prod_cat_code}")
+    @Value("${tp.travelpost.constant.prod_cat_code}")
     public String defaultCategorie;
 
     public static final String SUBJECT = "SUBJECT";

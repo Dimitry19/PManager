@@ -1,5 +1,7 @@
 package cm.framework.ds.hibernate.dao;
 
+import cm.framework.ds.activity.ent.vo.ActivityVO;
+import cm.framework.ds.activity.enums.ActivityOperation;
 import cm.travelpost.tp.common.ent.ApplicationMessageConfig;
 import cm.travelpost.tp.common.event.IEvent;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
@@ -34,6 +36,8 @@ public abstract class Generic extends CommonGenericDAO {
     public  void composeQueryParameters(Object o, Query query) throws Exception{
 
     }
+
+    public abstract ActivityVO logActivity(String activityDescription, ActivityOperation operation, Long userId);
 
 
     /**

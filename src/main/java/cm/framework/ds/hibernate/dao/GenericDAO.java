@@ -1,6 +1,7 @@
 package cm.framework.ds.hibernate.dao;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.exception.GenericCRUDEException;
 import cm.travelpost.tp.common.event.IEvent;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
@@ -87,7 +88,7 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     boolean updateDelete(Class<T> clazz, ID id, boolean enableFlushSession) throws BusinessResourceException;
 
-    T save(T t) throws Exception;
+    T save(T t) throws GenericCRUDEException;
 
     void persist(T t) throws Exception;
 

@@ -1,5 +1,6 @@
 package cm.travelpost.tp.ws.controller.rest;
 
+import cm.framework.ds.activity.ent.service.ActivityService;
 import cm.framework.ds.common.authentication.service.AuthenticationService;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
@@ -124,6 +125,10 @@ public class CommonController  extends WSConstants {
     protected AuthenticationService authenticationService;
 
 
+    @Autowired
+    protected ActivityService activityService;
+
+
     /** SMS Services **/
     @Autowired
     protected SmsService smsService;
@@ -145,7 +150,7 @@ public class CommonController  extends WSConstants {
     @Autowired
     protected Tracer gTracer;
 
-    @Value("${pagination.size}")
+    @Value("${tp.travelpost.pagination.size}")
     public Integer size;
 
     @Autowired
