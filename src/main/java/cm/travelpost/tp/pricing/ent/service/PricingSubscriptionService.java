@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public interface APricingSubscriptionService<T> {
+public interface PricingSubscriptionService<T> {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	boolean delete(@NotNull String code, @NotNull  String token) throws Exception;
@@ -20,5 +20,6 @@ public interface APricingSubscriptionService<T> {
 	public int count(PageBy pageBy) throws Exception;
 
 	public List<T> all(PageBy pageBy) throws  Exception;
+
 	public T byType(@NotNull SubscriptionPricingType type) throws Exception;
 }

@@ -526,7 +526,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     public List<T> findBySqlNativeQuery(String nativeQuery, Map params, String mappingName, PageBy pageBy, String... filters) throws Exception {
         Session session = getCurrentSession();
         enableFilters(session,filters);
-        Query query=session.createNativeQuery(nativeQuery, mappingName);
+        Query query=session.createNativeQuery(nativeQuery, mappingName);//.addScalar(AnnounceMasterVO.class);
         setParameters(query,params);
         pageBy(query,pageBy);
         return  query.getResultList();

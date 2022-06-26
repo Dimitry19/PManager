@@ -24,7 +24,7 @@ public class ActivityIdVO extends CommonIdVO {
     }
 
     @Basic(optional = false)
-    @Column(name = "CODE", nullable = false, length = FieldConstants.AIR_ID_LEN)
+    @Column(name = "CODE", nullable = false, length = FieldConstants.CODE_LEN)
     public String getCode() {
         return code;
     }

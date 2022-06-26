@@ -65,6 +65,13 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
+    public ImageVO findById(Long id) throws Exception {
+        logger.info("find image by name ");
+        return (ImageVO)imageDAO.findById(ImageVO.class,id);
+
+    }
+
+    @Override
     @Transactional
     public boolean delete(String name, Long id) throws Exception {
         logger.info("delete image by name ");

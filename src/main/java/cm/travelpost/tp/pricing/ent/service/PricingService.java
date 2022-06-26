@@ -7,7 +7,7 @@ import cm.travelpost.tp.ws.requests.pricing.CreatePricingDTO;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-public interface PricingService extends APricingSubscriptionService{
+public interface PricingService extends PricingSubscriptionService<PricingVO> {
 
 	public PricingVO create(@NotNull CreatePricingDTO dto) throws Exception;
 

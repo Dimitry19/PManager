@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.List;
 
 import static cm.travelpost.tp.common.Constants.DEFAULT_TOKEN;
@@ -24,9 +25,10 @@ import static cm.travelpost.tp.common.Constants.PRICING_PREFIX;
 
 @Service
 @Transactional
-public class PricingServiceImpl extends APricingSubscriptionServiceImpl  implements PricingService{
+public class PricingServiceImpl implements PricingSubscriptionService<PricingVO>,PricingService{
 
 	private static Logger logger = LoggerFactory.getLogger(PricingServiceImpl.class);
+	private String error="Impossible de creer un pricing {0} [{1}] car il en existe déjà";
 
 	@Autowired
 	PricingDAO dao;
@@ -35,7 +37,18 @@ public class PricingServiceImpl extends APricingSubscriptionServiceImpl  impleme
 	@Transactional(propagation = Propagation.REQUIRED)
 	public PricingVO create(CreatePricingDTO dto) throws Exception {
 
-		PricingVO pricing = new PricingVO(CodeGenerator.generateCode(DEFAULT_TOKEN,PRICING_PREFIX), DEFAULT_TOKEN);
+		PricingVO pricing= byPrice(dto.getAmount());
+		if (pricing!=null){
+			throw new PricingException(MessageFormat.format(error, "montant", dto.getAmount()));
+		}
+		pricing=byType(dto.getType());
+		if (pricing!=null){
+			throw new PricingException(MessageFormat.format(error, "type", dto.getType()));
+		}
+
+
+		pricing = new PricingVO(CodeGenerator.generateCode(DEFAULT_TOKEN,PRICING_PREFIX), DEFAULT_TOKEN);
+
 		pricing.setType(dto.getType());
 		pricing.setPrice(dto.getAmount());
 		PricingSubscriptionVOId id= (PricingSubscriptionVOId) dao.save(pricing);

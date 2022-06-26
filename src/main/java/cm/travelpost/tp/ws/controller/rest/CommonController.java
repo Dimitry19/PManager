@@ -5,6 +5,7 @@ import cm.framework.ds.common.authentication.service.AuthenticationService;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.framework.ds.common.security.jwt.TokenProvider;
+import cm.travelpost.tp.administrator.tracing.service.TracingService;
 import cm.travelpost.tp.airline.ent.service.AirlineService;
 import cm.travelpost.tp.announce.ent.service.AnnounceService;
 import cm.travelpost.tp.announce.ent.service.ReservationService;
@@ -27,14 +28,10 @@ import cm.travelpost.tp.ws.responses.PaginateResponse;
 import cm.travelpost.tp.ws.responses.Response;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
 import com.sun.mail.smtp.SMTPSendFailedException;
-import io.opentracing.Span;
-import io.opentracing.Tracer;
-import io.opentracing.util.GlobalTracer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -46,7 +43,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
@@ -83,6 +79,9 @@ public class CommonController  extends WSConstants {
     @Value("${redirect.confirm.error.page}")
     protected String redirectConfirmErrorPage;
 
+
+    @Autowired
+    TracingService tracingService;
 
     @Autowired
     protected RestClient client;
@@ -126,7 +125,7 @@ public class CommonController  extends WSConstants {
 
 
     @Autowired
-    protected ActivityService activityService;
+    protected ActivityService  activityService;
 
 
     /** SMS Services **/
@@ -146,9 +145,6 @@ public class CommonController  extends WSConstants {
     @Autowired
     protected ServletContext servletContext;
 
-    @Qualifier("jaegerTracer")
-    @Autowired
-    protected Tracer gTracer;
 
     @Value("${tp.travelpost.pagination.size}")
     public Integer size;
@@ -157,25 +153,16 @@ public class CommonController  extends WSConstants {
     FileUtils fileUtils;
 
 
-    protected Span packageManagerSpan;
-
-
-    @PostConstruct
-    public void init() {
-        if (!GlobalTracer.isRegistered()){
-            GlobalTracer.register(gTracer);
-        }
-
-    }
-
     protected void createOpentracingSpan(String spanName) {
-        packageManagerSpan = GlobalTracer.get().buildSpan(spanName).start();
+        tracingService.createOpentracingSpan(spanName);
     }
 
     protected void finishOpentracingSpan() {
-        if (packageManagerSpan != null) {
-            packageManagerSpan.finish();
-        }
+        tracingService.finishOpentracingSpan();
+    }
+
+    protected void setSpanTag(String tagName, String value) {
+        tracingService.setSpanTag(tagName,value);
     }
 
 

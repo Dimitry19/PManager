@@ -1,7 +1,6 @@
 package cm.framework.ds.hibernate.dao;
 
-import cm.framework.ds.activity.ent.vo.ActivityVO;
-import cm.framework.ds.activity.enums.ActivityOperation;
+import cm.framework.ds.activity.writer.ActivityWriter;
 import cm.travelpost.tp.common.ent.ApplicationMessageConfig;
 import cm.travelpost.tp.common.event.IEvent;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
@@ -21,6 +20,9 @@ public abstract class Generic extends CommonGenericDAO {
     @Autowired
     protected  ApplicationMessageConfig messageConfig;
 
+    @Autowired
+    public ActivityWriter writer;
+
     protected String notificationMessagePattern = "{0} {1} {2}";
     protected String notificationMessageCommentPattern = "{0} {1} {2} {3}";
 
@@ -36,8 +38,6 @@ public abstract class Generic extends CommonGenericDAO {
     public  void composeQueryParameters(Object o, Query query) throws Exception{
 
     }
-
-    public abstract ActivityVO logActivity(String activityDescription, ActivityOperation operation, Long userId);
 
 
     /**

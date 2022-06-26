@@ -6,6 +6,7 @@ import cm.travelpost.tp.common.exception.PricingException;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.pricing.ent.service.PricingService;
 import cm.travelpost.tp.pricing.ent.vo.PricingVO;
+import cm.travelpost.tp.pricing.enums.SubscriptionPricingType;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.pricing.CreatePricingDTO;
 import cm.travelpost.tp.ws.requests.pricing.UpdatePricingDTO;
@@ -185,12 +186,13 @@ public class PricingController extends CommonController {
 			@ApiResponse(code = 200, message = "Successful retrieval",
 					response = ResponseEntity.class, responseContainer = "List")})
 	@GetMapping(value = PRICING_WS_ALL, produces = MediaType.APPLICATION_JSON, headers = HEADER_ACCEPT)
-	public ResponseEntity<PaginateResponse> pricings(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page) throws AnnounceException,Exception {
+	public ResponseEntity<PaginateResponse> pricings(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page,
+													 @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException,Exception {
 
 		HttpHeaders headers = new HttpHeaders();
 		PaginateResponse paginateResponse = new PaginateResponse();
 		logger.info("retrieve  pricings request in");
-		PageBy pageBy = new PageBy(page, Integer.valueOf(DEFAULT_SIZE));
+		PageBy pageBy = new PageBy(page,size);
 
 		try {
 
@@ -230,6 +232,36 @@ public class PricingController extends CommonController {
 				return new ResponseEntity<>(pricing, HttpStatus.OK);
 			}
 			throw  new PricingException("Pricing avec le prix ["+ amount +"] non trouvé");
+		} catch (Exception e) {
+			logger.info(" PricingController - pricing by price:Exception occurred while fetching the response from the database.", e);
+			throw new PricingException(e.getMessage());
+		} finally {
+			finishOpentracingSpan();
+		}
+	}
+
+	@ApiOperation(value = "Retrieve pricing by price", response = ResponseEntity.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval announces by transport",
+					response = ResponseEntity.class, responseContainer = "List")})
+	@GetMapping(value = PRICING_WS_BY_TYPE,   headers = WSConstants.HEADER_ACCEPT)
+	public ResponseEntity<PricingVO> pricingByType(HttpServletResponse response, HttpServletRequest request,
+													@RequestParam @Valid SubscriptionPricingType type) throws PricingException,Exception {
+
+		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+		logger.info("find pricing by type request in");
+
+		try {
+			createOpentracingSpan("PricingController - pricing by type");
+			PricingVO pricing = pricingService.byType(type);
+			if(pricing!=null){
+				return new ResponseEntity<>(pricing, HttpStatus.OK);
+			}
+			throw  new PricingException("Pricing avec le type ["+ type +"] non trouvé");
 		} catch (Exception e) {
 			logger.info(" PricingController - pricing by price:Exception occurred while fetching the response from the database.", e);
 			throw new PricingException(e.getMessage());

@@ -1,13 +1,10 @@
 package cm.framework.ds.common.ent.vo;
 
-import cm.framework.ds.activity.ent.vo.ActivityVO;
 import cm.travelpost.tp.common.utils.ImageUtils;
 import cm.travelpost.tp.user.enums.Gender;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "v_user_personal_data", schema = "views")
@@ -36,7 +33,7 @@ public class UserPersonalDataVO {
 
     private String email;
 
-    private Set<ActivityVO> activities;
+  //  private Set<ActivityVO> activities;
 
     @Id
     @Column(name = "ID")
@@ -88,11 +85,11 @@ public class UserPersonalDataVO {
     @Column(name = "EMAIL")
     public String getEmail() { return email; }
 
-    @Access(AccessType.PROPERTY)
+   /* @Access(AccessType.PROPERTY)
     @ManyToMany(mappedBy = "usersPersonalData",cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JsonBackReference
     public Set<ActivityVO> getActivities() { return activities; }
-
+ */
     public void setId(Long id) { this.id = id; }
 
     public void setFirstName(String firstName) { this.firstName = firstName; }
@@ -115,5 +112,5 @@ public class UserPersonalDataVO {
 
     public void setEmail(String email) { this.email = email; }
 
-    public void setActivities(Set<ActivityVO> activities) { this.activities = activities; }
+    //public void setActivities(Set<ActivityVO> activities) { this.activities = activities; }
 }

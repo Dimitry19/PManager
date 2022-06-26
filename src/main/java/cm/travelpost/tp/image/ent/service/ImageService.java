@@ -10,6 +10,8 @@ public interface ImageService<T> {
 
     ImageVO findByName(String name) throws Exception;
 
+    ImageVO findById(Long id) throws Exception;
+
     boolean delete(String name, Long id) throws Exception;
 
     ImageVO save(MultipartFile file, Long id, UploadImageType type) throws Exception;
@@ -19,5 +21,6 @@ public interface ImageService<T> {
     boolean uploadFile(MultipartFile file) throws Exception;
 
     ImageFormat compress(ImageMultipart im, String name, String path);
+
      void compress(ImageMultipart im, String name);
 }

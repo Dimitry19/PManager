@@ -5,14 +5,12 @@ import cm.framework.ds.common.utils.CodeGenerator;
 import cm.travelpost.tp.common.enums.OperationEnum;
 import cm.travelpost.tp.common.exception.SubscriptionException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
-import cm.travelpost.tp.common.utils.StringUtils;
-import cm.travelpost.tp.pricing.ent.dao.PricingDAO;
 import cm.travelpost.tp.pricing.ent.dao.SubscriptionDAO;
 import cm.travelpost.tp.pricing.ent.vo.PricingSubscriptionVOId;
 import cm.travelpost.tp.pricing.ent.vo.PricingVO;
 import cm.travelpost.tp.pricing.ent.vo.SubscriptionVO;
 import cm.travelpost.tp.pricing.enums.SubscriptionPricingType;
-import cm.travelpost.tp.user.ent.dao.UserDAO;
+import cm.travelpost.tp.user.ent.service.UserService;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.pricing.CreateSubscriptionDTO;
 import cm.travelpost.tp.ws.requests.pricing.ManageSubscriptionUserDTO;
@@ -36,7 +34,7 @@ import static cm.travelpost.tp.common.Constants.SUBSCRIPTION_PREFIX;
 
 @Service
 @Transactional
-public class SubscriptionServiceImpl extends APricingSubscriptionServiceImpl implements SubscriptionService{
+public class SubscriptionServiceImpl implements PricingSubscriptionService<SubscriptionVO>,SubscriptionService{
 
 	protected final Logger logger = LoggerFactory.getLogger(SubscriptionServiceImpl.class);
 
@@ -44,10 +42,10 @@ public class SubscriptionServiceImpl extends APricingSubscriptionServiceImpl imp
 	SubscriptionDAO dao;
 
 	@Autowired
-	PricingDAO pricingDAO;
+	PricingService pricingService;
 
 	@Autowired
-	UserDAO userDAO;
+	UserService userService;
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -109,37 +107,63 @@ public class SubscriptionServiceImpl extends APricingSubscriptionServiceImpl imp
 
 		Set<UserVO> users = new HashSet<>();
 		SubscriptionVO subscription= getSubscription(dto.getCode(),dto.getToken());
+
 		if(CollectionsUtils.isNotEmpty(dto.getUsers())){
 			users = (Set<UserVO>) dto.getUsers()
 					.stream()
-					.filter(id->getUser(String.valueOf(id))!=null)
-					.map(id->getUser(String.valueOf(id)))
+					.filter(o->getUser(o)!=null)
+					.map(o->getUser(o))
 					.collect(Collectors.toSet());
 		}
+
+		if(CollectionsUtils.isEmpty(users)){
+			throw new SubscriptionException("Utilisateur(s) non existant(s)");
+		}
 		if (dto.getOperation()== OperationEnum.ADD){
-			users.stream().forEach(u-> {u.setSubscription(subscription);userDAO.updateUser(u); });
-			subscription.getUsers().addAll(users);
+			users.stream().forEach(subscription::addUser);
 		}else {
-			users.stream().forEach(u-> { u.setSubscription(null); userDAO.updateUser(u);});
-			subscription.getUsers().removeAll(users);
+			users.stream().forEach(subscription::removeUser);
 		}
 		return true;
 	}
 
 	@Override
-	public int countUsers(@NotNull String code, @NotNull String token, PageBy pageBy) throws Exception {
-		SubscriptionVO subscription = getSubscription( code, token );
-		return CollectionsUtils.size(userDAO.usersBySubscription(subscription.getId().getCode(),subscription.getId().getToken(), pageBy));
+	public int countUsers(@NotNull Object o, PageBy pageBy) throws Exception {
+
+		if(o instanceof SubscriptionPricingType){
+			SubscriptionPricingType type = (SubscriptionPricingType) o;
+			checkSubscription(dao.byType(type));
+			return CollectionsUtils.size(userService.usersBySubscription(type, pageBy));
+		}
+		if(o instanceof PricingSubscriptionVOId){
+			PricingSubscriptionVOId id = (PricingSubscriptionVOId) o;
+			checkSubscription(getSubscription( id.getCode(), id.getToken() ));
+			return CollectionsUtils.size(userService.usersBySubscription(id, pageBy));
+		}
+		return 0;
 	}
+
+
 	@Override
-	public List<UserVO> retrieveUsers(@NotNull String code, @NotNull String token, PageBy pageBy) throws Exception {
-		SubscriptionVO subscription = getSubscription( code, token );
-		return userDAO.usersBySubscription(subscription.getId().getCode(),subscription.getId().getToken(), pageBy);
+	public List<UserVO> retrieveUsers(@NotNull Object o, PageBy pageBy) throws Exception {
+
+		if(o instanceof SubscriptionPricingType){
+			SubscriptionPricingType type = (SubscriptionPricingType) o;
+			checkSubscription(dao.byType(type));
+			return userService.usersBySubscription(type, pageBy);
+		}
+
+		if(o instanceof PricingSubscriptionVOId){
+			PricingSubscriptionVOId id = (PricingSubscriptionVOId) o;
+			checkSubscription(getSubscription( id.getCode(), id.getToken()));
+			return userService.usersBySubscription(id, pageBy);
+		}
+		return null;
 	}
 
 	private PricingVO getPricingByType(SubscriptionPricingType type) throws Exception {
 
-		return pricingDAO.byType(type);
+		return pricingService.byType(type);
 	}
 
 	private void checkPricingByType(SubscriptionVO subscription, SubscriptionPricingType type, String description, Date convertedStartDate, Date convertedEndDate) throws Exception {
@@ -166,21 +190,31 @@ public class SubscriptionServiceImpl extends APricingSubscriptionServiceImpl imp
 		return subscription;
 
 	}
-	private UserVO getUser(String username){
+	private UserVO getUser(Object o){
 		try {
-			return userDAO.findByUsername(username);
+			if(o instanceof String){
+				return userService.findByUsername(String.valueOf(o));
+			}
+
+			if(o instanceof Long ){
+				Long id = (Long) o;
+				return userService.findById(id);
+			}
+
+			if(o instanceof Integer){
+				Long id = new Long((Integer) o);
+				return userService.findById(id);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	private SubscriptionPricingType getSubscriptionPricingType(String type) {
 
-		for (SubscriptionPricingType a : SubscriptionPricingType.values()) {
-			if (StringUtils.equals(type, a.toString())) {
-				return a;
-			}
+	private SubscriptionVO checkSubscription(SubscriptionVO subscription) throws SubscriptionException {
+		if (subscription==null){
+			throw new SubscriptionException("Subscription  non existante");
 		}
-		return null;
+		return subscription;
 	}
 }

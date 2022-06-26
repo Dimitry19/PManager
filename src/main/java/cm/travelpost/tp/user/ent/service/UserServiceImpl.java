@@ -3,7 +3,7 @@ package cm.travelpost.tp.user.ent.service;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.announce.ent.dao.AnnounceDAO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceCompletedVO;
-import cm.travelpost.tp.authentication.ent.dao.AuthenticationDAO;
+import cm.travelpost.tp.authentication.ent.service.AuthenticationService;
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.Constants;
 import cm.travelpost.tp.common.exception.SubscriptionException;
@@ -16,12 +16,13 @@ import cm.travelpost.tp.common.sms.ent.service.TotpService;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.DateUtils;
 import cm.travelpost.tp.common.utils.MailUtils;
+import cm.travelpost.tp.pricing.ent.vo.PricingSubscriptionVOId;
 import cm.travelpost.tp.pricing.ent.vo.SubscriptionVO;
 import cm.travelpost.tp.pricing.enums.SubscriptionPricingType;
 import cm.travelpost.tp.rating.ent.vo.RatingCountVO;
 import cm.travelpost.tp.rating.enums.Rating;
 import cm.travelpost.tp.review.ent.bo.ReviewsSummaryBO;
-import cm.travelpost.tp.review.ent.dao.ReviewDAO;
+import cm.travelpost.tp.review.ent.service.ReviewService;
 import cm.travelpost.tp.review.ent.vo.ReviewDetailsVO;
 import cm.travelpost.tp.review.ent.vo.ReviewIdVO;
 import cm.travelpost.tp.review.ent.vo.ReviewVO;
@@ -39,6 +40,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -73,7 +75,7 @@ public class UserServiceImpl implements UserService {
     private UserDAO dao;
 
     @Autowired
-    private ReviewDAO reviewDAO;
+    private ReviewService reviewService;
 
     @Autowired
     private MailSenderSendGrid mailSenderSendGrid;
@@ -87,8 +89,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     TotpService totpService;
 
+    @Qualifier("authService")
     @Autowired
-    private AuthenticationDAO authenticationDAO;
+    private AuthenticationService authenticationService;
 
     @Value("${tp.travelpost.authentication.attempt}")
     private int attemptLimit;
@@ -147,8 +150,8 @@ public class UserServiceImpl implements UserService {
                 authentication = new AuthenticationVO();
                 authentication.setAttempt(++attempt);
                 authentication.setUser(user);
-                Long id = (Long) authenticationDAO.save(authentication);
-                AuthenticationVO auth = (AuthenticationVO) authenticationDAO.findById(AuthenticationVO.class, id);
+                Long id = authenticationService.save(authentication);
+                AuthenticationVO auth = authenticationService.findById(id);
                 user.setAuthentication(auth);
             } else {
                 attempt = user.getAuthentication().getAttempt();
@@ -217,6 +220,11 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserVO update(UserVO user) throws UserException {
+        dao.update(user);
+        return  (UserVO) dao.findById(user.getId());
+    }
+
+    public UserVO merge(UserVO user) throws UserException {
         return (UserVO) dao.merge(user);
     }
 
@@ -366,19 +374,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<ReviewVO> getReviews(UserVO user, Pageable pageable) throws Exception {
         Assert.notNull(user, "User must not be null");
-        return this.reviewDAO.findByUser(user, pageable);
+        return reviewService.findByUser(user, pageable);
     }
 
     @Override
     public ReviewVO getReview(UserVO user, int reviewNumber) throws Exception {
         Assert.notNull(user, "User must not be null");
-        return reviewDAO.findByUserAndIndex(user, reviewNumber);
+        return reviewService.findByUserAndIndex(user, reviewNumber);
     }
 
     @Override
     public ReviewVO addReview(UserVO user, ReviewDetailsVO details) throws Exception {
         ReviewVO review = new ReviewVO(user, 1, details);
-        return reviewDAO.saves(review);
+        return reviewService.save(review);
     }
 
     @Override
@@ -394,7 +402,7 @@ public class UserServiceImpl implements UserService {
         ReviewIdVO id = new ReviewIdVO();
         id.setToken(Constants.DEFAULT_TOKEN);
         review.setReviewId(id);
-        return reviewDAO.saves(review);
+        return reviewService.save(review);
     }
 
     @Override
@@ -406,16 +414,16 @@ public class UserServiceImpl implements UserService {
             throw new UserException("Un utilisateur ne peut donner un avis sur lui même");
         }
 
-        ReviewVO review = reviewDAO.findById(id);
+        ReviewVO review = reviewService.findById(id);
         if (review == null) {
             throw new UserException("Avis non existant");
         }
-        return reviewDAO.update(review);
+        return reviewService.update(review);
     }
 
     @Override
     public boolean deleteReview(Long id) throws Exception {
-        return reviewDAO.delete(id);
+        return reviewService.delete(id);
     }
 
     @Override
@@ -459,8 +467,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserVO> usersBySubscription(String code, String token, PageBy pageBy) throws Exception {
-        return dao.usersBySubscription(code,token,pageBy);
+    public List<UserVO> usersBySubscription(Object o, PageBy pageBy) throws Exception {
+
+        if(o instanceof SubscriptionPricingType){
+            SubscriptionPricingType type = (SubscriptionPricingType) o;
+            return dao.usersBySubscription(type, pageBy);
+        }
+
+        if(o instanceof PricingSubscriptionVOId){
+            PricingSubscriptionVOId id = (PricingSubscriptionVOId) o;
+            return dao.usersBySubscription(id, pageBy);
+        }
+        return null;
     }
 
     @Override

@@ -83,6 +83,7 @@ public class AnnounceController extends CommonController {
 
         try {
             createOpentracingSpan("AnnounceController -create");
+            setSpanTag("#Announce", "create");
 
             logger.info("create announce request in");
             announce = announceService.create(ar);
@@ -180,6 +181,7 @@ public class AnnounceController extends CommonController {
 
         try {
             createOpentracingSpan("AnnounceController -search");
+            setSpanTag("#Announce", "search");
 
             if (dto != null) {
 

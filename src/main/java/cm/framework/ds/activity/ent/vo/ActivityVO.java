@@ -3,11 +3,9 @@ package cm.framework.ds.activity.ent.vo;
 import cm.framework.ds.activity.enums.ActivityOperation;
 import cm.framework.ds.common.constants.DefaultFilterConstants;
 import cm.framework.ds.common.ent.vo.CommonVO;
-import cm.framework.ds.common.ent.vo.UserPersonalDataVO;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "activity")
@@ -27,8 +25,6 @@ public class ActivityVO extends CommonVO {
 
     private ActivityOperation operation;
 
-    private Set<UserPersonalDataVO> usersPersonalData;
-
     @EmbeddedId
     public ActivityIdVO getId() { return id; }
 
@@ -46,12 +42,6 @@ public class ActivityVO extends CommonVO {
         return operation;
     }
 
-
-    @ManyToMany(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
-    @JoinTable(name = "activities_user_personal_data", joinColumns = {@JoinColumn(name = "code"),@JoinColumn(name = "token")},
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    public Set<UserPersonalDataVO> getUsersPersonalData() { return usersPersonalData; }
-
     public void setId(ActivityIdVO id) { this.id = id; }
 
     public void setActivity(String activity) { this.activity = activity; }
@@ -59,8 +49,4 @@ public class ActivityVO extends CommonVO {
     public void setUserId(Long userId) {   this.userId = userId;    }
 
     public void setOperation(ActivityOperation operation) { this.operation = operation; }
-
-    public void setUsersPersonalData(Set<UserPersonalDataVO> usersPersonalData) { this.usersPersonalData = usersPersonalData; }
-
-
 }

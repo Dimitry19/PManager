@@ -83,5 +83,5 @@ public interface UserDAO extends CommonDAO {
 
     UserVO generateSecret(UserVO user) throws Exception;
 
-    List<UserVO> usersBySubscription(String code, String token, PageBy pageBy) throws Exception;
+    List<UserVO> usersBySubscription(Object o, PageBy pageBy) throws Exception;
 }

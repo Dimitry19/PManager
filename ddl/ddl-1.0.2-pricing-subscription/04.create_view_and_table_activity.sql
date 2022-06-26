@@ -18,7 +18,7 @@ WHERE U.CANCELLED IS FALSE AND U.ACTIVE=1;
 
 create table ACTIVITY
 (
-    CODE        VARCHAR(5)   not null,
+    CODE        VARCHAR(10)   not null,
     TOKEN       VARCHAR(255) not null,
     ACTIVITY    VARCHAR(255) not null,
     OPERATION   VARCHAR(10),
@@ -27,16 +27,6 @@ create table ACTIVITY
     DATECREATED TIMESTAMP,
     LASTUPDATED TIMESTAMP,
     primary key (CODE, TOKEN)
-);
-
-create table ACTIVITIES_USER_PERSONAL_DATA
-(
-    CODE    VARCHAR(5)   not null,
-    TOKEN   VARCHAR(255) not null,
-    USER_ID BIGINT       not null,
-    primary key (CODE, TOKEN, USER_ID),
-    constraint FK8TDKRATBME3G7RO07AYISKVT5
-        foreign key (CODE, TOKEN) references ACTIVITY (CODE, TOKEN)
 );
 
 --MySql Version

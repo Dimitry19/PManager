@@ -27,4 +27,15 @@ public enum GenericCRUDEEnum {
 		}
 		throw new RuntimeException("Valeur  " + value + " non valide");
 	}
+
+
+	public  static GenericCRUDEEnum getGenericCRUDEEnum(String type) {
+
+		for (GenericCRUDEEnum a : GenericCRUDEEnum.values()) {
+			if (StringUtils.equals(type, a.toString())) {
+				return a;
+			}
+		}
+		throw new RuntimeException("Valeur  " + type + " non valide");
+	}
 }

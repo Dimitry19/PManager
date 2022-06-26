@@ -6,7 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="tpservices" value="58f080d3-3614-4353-aa9f-e2db23e64868" />
+          <factory-entry name="tpservices" value="4cd6bf33-0707-4796-8293-ce828ec5e703" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

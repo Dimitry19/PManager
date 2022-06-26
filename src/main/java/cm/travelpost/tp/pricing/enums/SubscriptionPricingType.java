@@ -87,4 +87,15 @@ public enum SubscriptionPricingType {
         }
         throw new RuntimeException("Valeur  " + publications + " non valide");
     }
+
+
+    public static SubscriptionPricingType getSubscriptionPricingType(String type) {
+
+        for (SubscriptionPricingType a : SubscriptionPricingType.values()) {
+            if (StringUtils.equals(type, a.toString())) {
+                return a;
+            }
+        }
+        throw new RuntimeException("Valeur  " + type + " non valide");
+    }
 }

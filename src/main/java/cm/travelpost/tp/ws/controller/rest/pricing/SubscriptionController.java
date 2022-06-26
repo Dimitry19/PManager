@@ -5,6 +5,7 @@ import cm.travelpost.tp.common.enums.OperationEnum;
 import cm.travelpost.tp.common.exception.SubscriptionException;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.pricing.ent.service.SubscriptionService;
+import cm.travelpost.tp.pricing.ent.vo.PricingSubscriptionVOId;
 import cm.travelpost.tp.pricing.ent.vo.SubscriptionVO;
 import cm.travelpost.tp.pricing.enums.SubscriptionPricingType;
 import cm.travelpost.tp.user.ent.vo.UserVO;
@@ -287,28 +288,71 @@ public class SubscriptionController extends CommonController {
 			@ApiResponse(code = 200, message = "Successful retrieval announces by transport",
 					response = List.class, responseContainer = "List")})
 	@GetMapping(value = WSConstants.SUBSCRIPTION_WS_GET_USERS,produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},headers = WSConstants.HEADER_ACCEPT)
-	public @ResponseBody ResponseEntity<?>  users(HttpServletResponse response, HttpServletRequest request, @RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page,
+	public @ResponseBody ResponseEntity<?>  usersBySubscriptionId(HttpServletResponse response, HttpServletRequest request,
+												  @RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page,
+												  @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size,
 												  @RequestParam(value = "code", required = true) String code,@RequestParam(value = "token", required = true) String token) throws Exception {
 
 		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-		logger.info(" Get users request in");
+		logger.info(" Get users  by subscription id request in");
 		Response tpResponse = new Response();
 
 
 		HttpHeaders headers = new HttpHeaders();
 		PaginateResponse paginateResponse = new PaginateResponse();
-		PageBy pageBy = new PageBy(page, Integer.valueOf(DEFAULT_SIZE));
+		PageBy pageBy = new PageBy(page, size);
 
 		try {
-			createOpentracingSpan("subscriptionSubscriptionController - Get users");
-			int count = subscriptionService.countUsers(code,token,null);
-			List<UserVO> users = subscriptionService.retrieveUsers(code,token,pageBy);
+			createOpentracingSpan("subscriptionSubscriptionController - Get users by subscription id");
+			PricingSubscriptionVOId id = new PricingSubscriptionVOId(code,token);
+			int count = subscriptionService.countUsers(id,null);
+			List<UserVO> users = subscriptionService.retrieveUsers(id,pageBy);
 			return getPaginateResponseSearchResponseEntity(  headers, paginateResponse,   count,  users,pageBy);
 
 		} catch (Exception e) {
 			tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
 			tpResponse.setMessage(e.getMessage());
 			logger.error("Erreur durant la recuperation des utilisateurs pour l'abonnement: code {} - token {}", e, code, token);
+			e.printStackTrace();
+			throw e;
+		} finally {
+			finishOpentracingSpan();
+		}
+	}
+
+	@ApiOperation(value = "Retrieve users from subscription by type", response = SubscriptionVO.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval announces by transport",
+					response = List.class, responseContainer = "List")})
+	@GetMapping(value = WSConstants.SUBSCRIPTION_WS_GET_USERS_TYPE,produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},headers = WSConstants.HEADER_ACCEPT)
+	public @ResponseBody ResponseEntity<?>  usersBySubscriptionType(HttpServletResponse response, HttpServletRequest request,
+												  @RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page,
+												  @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size,
+												  @RequestParam(value = "type", required = true) SubscriptionPricingType type) throws Exception {
+
+		response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+		logger.info(" Get users by type request in");
+		Response tpResponse = new Response();
+
+
+		HttpHeaders headers = new HttpHeaders();
+		PaginateResponse paginateResponse = new PaginateResponse();
+		PageBy pageBy = new PageBy(page, size);
+
+		try {
+			createOpentracingSpan("subscriptionSubscriptionController - Get users by type");
+			int count = subscriptionService.countUsers(type,null);
+			List<UserVO> users = subscriptionService.retrieveUsers(type,pageBy);
+			return getPaginateResponseSearchResponseEntity(  headers, paginateResponse,   count,  users,pageBy);
+
+		} catch (Exception e) {
+			tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
+			tpResponse.setMessage(e.getMessage());
+			logger.error("Erreur durant la recuperation des utilisateurs pour l'abonnement: type {}", e, type);
 			e.printStackTrace();
 			throw e;
 		} finally {

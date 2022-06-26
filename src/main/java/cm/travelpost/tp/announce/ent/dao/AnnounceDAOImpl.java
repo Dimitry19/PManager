@@ -6,6 +6,7 @@ package cm.travelpost.tp.announce.ent.dao;
  * et aussi eviter HibernateException: Found two representations of same collection
  */
 
+import cm.framework.ds.activity.enums.ActivityOperation;
 import cm.framework.ds.common.ent.vo.KeyValue;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.common.utils.CodeGenerator;
@@ -22,6 +23,8 @@ import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.*;
 import cm.travelpost.tp.common.utils.*;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
+import cm.travelpost.tp.image.ent.dao.ImageDAO;
+import cm.travelpost.tp.image.ent.vo.ImageVO;
 import cm.travelpost.tp.notification.ent.dao.NotificationDAO;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 import cm.travelpost.tp.notification.enums.NotificationType;
@@ -42,6 +45,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -73,6 +77,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Autowired
     protected UserService userService;
 
+    @Autowired
+    protected ImageDAO imageDAO;
+
     private String retrieveReservationError="Erreur durant la recuperation des reservations liées à l'annonce id={}";
 
 
@@ -93,7 +100,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         if (o instanceof AnnounceType){
             AnnounceType type = (AnnounceType) o;
-            return countByNameQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class,type,TYPE_PARAM,pageBy);
+            return countByNameQuery(AnnounceVO.FINDBYTYPE,AnnounceVO.class,type,ANNOUNCE_TYPE_PARAM,pageBy);
         }
         if (o instanceof TransportEnum){
             TransportEnum transport = (TransportEnum) o;
@@ -129,9 +136,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Override
     @Transactional
     public List<AnnounceVO> announcesFavoris(UserVO user, PageBy pageBy) throws AnnounceException, Exception {
-          setMap(new KeyValue(USER_PARAM, user.getId()));
+
+        List<AnnounceVO> results= new ArrayList();
+        setMap(new KeyValue(USER_PARAM, user.getId()));
           setFilters(FilterConstants.CANCELLED);
-          return  (List<AnnounceVO>) findBySqlNativeQuery(AnnounceVO.ANNOUNCES_FAVORIS_BY_USER_NQ, getMap(),AnnounceVO.ANNOUNCE_FAVORITE_MAPPING , pageBy, getFilters());
+        List<Object[]> lst =findBySqlNativeQuery(AnnounceVO.ANNOUNCES_FAVORIS_BY_USER_NQ, getMap(),AnnounceVO.ANNOUNCE_FAVORITE_MAPPING , pageBy, getFilters());
+        manageAnnouncesFavorites(lst,results);
+        return results;
     }
 
     @Override
@@ -204,7 +215,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if(o instanceof AnnounceType){
 
             AnnounceType  type=(AnnounceType) o;
-            announces=findBy(AnnounceVO.FINDBYTYPE, AnnounceVO.class, type, TYPE_PARAM, pageBy);
+            announces=findBy(AnnounceVO.FINDBYTYPE, AnnounceVO.class, type, ANNOUNCE_TYPE_PARAM, pageBy);
         }
         if(o instanceof TransportEnum){
             TransportEnum transport=(TransportEnum) o;
@@ -292,6 +303,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             generateEvent(announce,message);
             notificationForBuyers(announce);
+            writer.logActivity(partOneMessage("Creation de l'annonce "+announce.getDeparture(),
+                    announce.getArrival()), ActivityOperation.CREATE,adto.getUserId(), null);
+
             return announce;
     }
 
@@ -939,5 +953,47 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                 reservation.setWarning(sb.toString());
             }
         }
+    }
+
+
+    public void manageAnnouncesFavorites(List<Object[]>lst, List<AnnounceVO> results){
+
+        lst.stream().forEach(o->{
+            int i=0;
+            AnnounceVO announce = new AnnounceVO();
+            announce.setId((Long) o[i++]);
+            announce.setCode((String) o[i++]);
+            announce.setAnnounceId(new AnnounceIdVO((String) o[i++]));
+            announce.setCancelled((boolean) o[i++]);
+            announce.setDateCreated((Timestamp) o[i++]);
+            announce.setLastUpdated((Timestamp) o[i++]);
+            announce.setAnnounceType(AnnounceType.getAnnounceType((String)o[i++]));
+            announce.setArrival((String) o[i++]);
+            announce.setDeparture((String) o[i++]);
+            announce.setDescription((String) o[i++]);
+            announce.setEndDate((Date) o[i++]);
+            announce.setGoldPrice((BigDecimal) o[i++]);
+            announce.setPreniumPrice((BigDecimal) o[i++]);
+            announce.setPrice((BigDecimal) o[i++]);
+            announce.setStartDate((Date) o[i++]);
+            announce.setStatus(StatusEnum.getStatusEnum((String)o[i++]));
+            announce.setEstimateValue((BigDecimal) o[i++]);
+            announce.setCountReservation((Integer) o[i++]);
+            announce.setRemainWeight((BigDecimal) o[i++]);
+            announce.setTransport(TransportEnum.getTransportEnum((String)o[i++]));
+            announce.setWeight((BigDecimal) o[i++]);
+
+            try {
+                Long  imageId= (Long)o[i++];
+                Long  userId= (Long)o[i++];
+                announce.setImage(imageId==null?null:(ImageVO) imageDAO.findById(ImageVO.class,imageId));
+                announce.setUser(userId== null?null:userService.findById(userId));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            results.add(announce);
+
+        });
     }
 }

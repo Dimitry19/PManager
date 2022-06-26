@@ -80,4 +80,11 @@ public class CollectionsUtils {
         }
         return elements.stream().collect(Collectors.toList());
     }
+
+    public static Set<?> convertToSet(Collection<?> elements){
+        if(isEmpty(elements)){
+            return new HashSet<>();
+        }
+        return elements.stream().collect(Collectors.toSet());
+    }
 }

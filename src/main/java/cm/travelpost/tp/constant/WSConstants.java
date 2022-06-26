@@ -10,8 +10,6 @@ public class WSConstants extends CommonProperties {
 
     public static final String HEADER_ACCEPT = "Accept=application/json";
 
-
-
     public static final String BASE_PATTERN= "/ws/*";
 
 
@@ -173,6 +171,7 @@ public class WSConstants extends CommonProperties {
         public static final String PRICING_WS_GET = "/pricing";
     public static final String PRICING_WS_ALL = "/all";
     public static final String PRICING_WS_BY_PRICE = "/price";
+    public static final String PRICING_WS_BY_TYPE = "/type";
 
     /************ SUBSCRIPTION PRICING REQUEST*************/
     public static final String SUBSCRIPTION_PRICING_WS = "/ws/subscription/*";
@@ -182,6 +181,7 @@ public class WSConstants extends CommonProperties {
     public static final String SUBSCRIPTION_WS_BY_TYPE = "/type";
     public static final String SUBSCRIPTION_WS_MANAGE_USERS = "/manage";
     public static final String SUBSCRIPTION_WS_GET_USERS = "/users";
+    public static final String SUBSCRIPTION_WS_GET_USERS_TYPE = "/users/type";
 
 
 }

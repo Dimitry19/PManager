@@ -29,4 +29,14 @@ public enum TransportEnum {
         }
         throw new RuntimeException("Valeur " + value + " invalide");
     }
+
+    public static TransportEnum getTransportEnum(String type) {
+
+        for (TransportEnum a : TransportEnum.values()) {
+            if (StringUtils.equals(type, a.toString())) {
+                return a;
+            }
+        }
+        throw new RuntimeException("Valeur  " + type + " non valide");
+    }
 }

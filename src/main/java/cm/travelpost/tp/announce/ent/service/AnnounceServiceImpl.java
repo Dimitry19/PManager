@@ -10,10 +10,9 @@ import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.exception.SubscriptionException;
 import cm.travelpost.tp.common.exception.UserException;
-import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
-import cm.travelpost.tp.user.ent.dao.UserDAO;
 import cm.travelpost.tp.user.ent.dao.UserDAOImpl;
+import cm.travelpost.tp.user.ent.service.UserService;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
@@ -28,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Service("announceService")
@@ -42,7 +42,7 @@ public class AnnounceServiceImpl implements AnnounceService {
 
 
     @Autowired
-    private UserDAO userDAO;
+    private UserService userService;
 
 
     /**
@@ -132,20 +132,22 @@ public class AnnounceServiceImpl implements AnnounceService {
         long announceId = dto.getAnnounceId();
 
         try {
-            UserVO user= userDAO.findById(userId);
+            UserVO user= userService.findById(userId);
             AnnounceVO announce = dao.announce(announceId);
             checkForFavoris(user, announce);
-            if(CollectionsUtils.notContains(user.getAnnouncesFavorites(),announce)) {
-                user.getAnnouncesFavorites().add(announce);
-                return userDAO.merge(user)!=null;
+            Set<AnnounceVO> favoris= (Set<AnnounceVO>) CollectionsUtils.convertToSet(dao.announcesFavoris(user, null));
+            if(CollectionsUtils.notContains(favoris,announce)) {
+                favoris.add(announce);
+                user.addFavorites(favoris);
+                return userService.merge(user)!=null;
             }
         } catch (UserException e) {
             logger.error("Erreur pour recuperer l'utilisateur  avec id {}", userId);
-            throw new UserException("Erreur pour recuperer l'utilisateur " + userId);
+            throw new UserException("Erreur pour recuperer l'utilisateur avec id" + userId);
         }
         catch (Exception e) {
-            logger.error("Erreur pour recuperer l'Annonce avec id {} ", announceId);
-            throw new AnnounceException("Erreur pour recuperer l'Annonce "+ announceId);
+            logger.error("Erreur pour recuperer l'annonce avec id {} - {}", announceId,e);
+            throw new AnnounceException("Erreur pour recuperer l'annonce avec id "+ announceId);
 
         }
         return false;
@@ -158,13 +160,13 @@ public class AnnounceServiceImpl implements AnnounceService {
         long announceId = dto.getAnnounceId();
 
         try {
-            UserVO user = userDAO.findById(userId);
+            UserVO user = userService.findById(userId);
             AnnounceVO announce = dao.announce(announceId);
             checkForFavoris(user, announce);
 
-            if(CollectionsUtils.contains(user.getAnnouncesFavorites(),announce)) {
+            if(CollectionsUtils.contains(dao.announcesFavoris(user, null),announce)) {
                 user.getAnnouncesFavorites().remove(announce);
-                return userDAO.merge(user)!=null;
+                return userService.merge(user)!=null;
             }
         }catch (UserException e) {
             logger.error("Erreur pour recuperer l'utilisateur "+ userId);
@@ -180,7 +182,7 @@ public class AnnounceServiceImpl implements AnnounceService {
     @Override
     public List<AnnounceVO> announcesFavoritesByUser(long userId) {
         try {
-            UserVO user = userDAO.findById(userId);
+            UserVO user = userService.findById(userId);
             if(user ==null) {
                 throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
             }
@@ -190,12 +192,15 @@ public class AnnounceServiceImpl implements AnnounceService {
             logger.error("Erreur pour recuperer l'utilisateur "+ userId);
             throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
         }
+        catch (Exception e) {
+            throw new UserException(e.getMessage());
+        }
     }
 
     @Override
     public List<AnnounceVO> announcesFavoritesByUser(long userId, PageBy pageBy) throws Exception {
         try {
-            UserVO user = userDAO.findById(userId);
+            UserVO user = userService.findById(userId);
             if(user ==null) {
                 throw new UserException("Erreur pour recuperer l'utilisateur "+ userId);
             }
@@ -212,7 +217,7 @@ public class AnnounceServiceImpl implements AnnounceService {
     @Override
     public Boolean isAnnounceFavoriteByUser(Long userId, Long announceId) throws UserException {
         try {
-            UserVO user = userDAO.findById(userId);
+            UserVO user = userService.findById(userId);
             AnnounceVO announce = dao.announce(announceId);
             checkForFavoris(user, announce);
             return CollectionsUtils.contains(user.getAnnouncesFavorites(),announce);

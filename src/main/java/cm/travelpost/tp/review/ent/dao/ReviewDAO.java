@@ -14,11 +14,7 @@ public interface ReviewDAO extends CommonDAO {
 
     ReviewVO findByUserAndIndex(UserVO user, int index) throws Exception;
 
-    ReviewVO saves(ReviewVO review) throws Exception;
-
     ReviewVO update(ReviewVO review) throws BusinessResourceException;
-
-    ReviewVO findById(Long id) throws Exception;
 
     boolean delete(Long id) throws Exception;
 
