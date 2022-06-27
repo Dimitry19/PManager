@@ -10,16 +10,16 @@ import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Date;
 
 
 @Entity
 @SqlResultSetMapping(
 		//https://thorben-janssen.com/result-set-mapping-hibernate-specific-mappings/
 	    name = AnnounceVO.ANNOUNCE_FAVORITE_MAPPING,
-		entities = {
-			/*@EntityResult(
+		/*entities = {
+			@EntityResult(
 				entityClass = AnnounceVO.class,
 					fields = {
 							@FieldResult(name = "id",   column = "id"),
@@ -46,8 +46,8 @@ import java.util.Date;
 							@FieldResult(name = "countreservation", column = "count_reservation"),
 							@FieldResult(name = "weight", column = "weight")
 						}
-					)*/
-				},
+					)
+				}*/
 		columns={
 			@ColumnResult(name="id",type = Long.class),
 			@ColumnResult(name="code", type = String.class),

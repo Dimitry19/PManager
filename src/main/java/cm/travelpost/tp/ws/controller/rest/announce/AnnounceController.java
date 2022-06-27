@@ -517,13 +517,13 @@ public class AnnounceController extends CommonController {
     @RequestMapping(value = WSConstants.USER_ADD_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<Response> addAnnounceFavorites(HttpServletRequest request, HttpServletResponse response,
-                                                  @RequestBody @NotNull UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
+                                                  @RequestBody @NotNull UsersAnnounceFavoriteDTO dto) throws Exception {
 
-        logger.info("add a favorite announce into this users" + userAnnounceFavoriteDTO.getUserId());
+        logger.info("add a favorite announce into this users" + dto.getUserId());
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("UserController - new announce favorite");
-            boolean result = announceService.addAnnounceFavorites(userAnnounceFavoriteDTO);
+            boolean result = announceService.addAnnounceFavorites(dto);
             Response tpResponse = new Response();
             if (result) {
                 tpResponse.setRetCode(0);
@@ -554,13 +554,13 @@ public class AnnounceController extends CommonController {
     @RequestMapping(value = WSConstants.DELETE_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<Response> deleteAnnounceFavoriteByUser(HttpServletRequest request, HttpServletResponse response,
-                                                          @RequestBody @NotNull UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws Exception {
+                                                          @RequestBody @NotNull UsersAnnounceFavoriteDTO dto) throws Exception {
 
-        logger.info("remove a favorite announce into this users" + userAnnounceFavoriteDTO.getUserId());
+        logger.info("remove a favorite announce into this users" + dto.getUserId());
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("UserController - remove announce favorite");
-            boolean result = announceService.removeAnnounceFavorites(userAnnounceFavoriteDTO);
+            boolean result = announceService.removeAnnounceFavorites(dto);
             Response tpResponse = new Response();
             if (result) {
                 tpResponse.setRetCode(0);

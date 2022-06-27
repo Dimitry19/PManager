@@ -16,9 +16,6 @@ import cm.travelpost.tp.common.sms.ent.service.TotpService;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.common.utils.DateUtils;
 import cm.travelpost.tp.common.utils.MailUtils;
-import cm.travelpost.tp.pricing.ent.vo.PricingSubscriptionVOId;
-import cm.travelpost.tp.pricing.ent.vo.SubscriptionVO;
-import cm.travelpost.tp.pricing.enums.SubscriptionPricingType;
 import cm.travelpost.tp.rating.ent.vo.RatingCountVO;
 import cm.travelpost.tp.rating.enums.Rating;
 import cm.travelpost.tp.review.ent.bo.ReviewsSummaryBO;
@@ -464,41 +461,6 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Code is incorrect");
         }
         return "";
-    }
-
-    @Override
-    public List<UserVO> usersBySubscription(Object o, PageBy pageBy) throws Exception {
-
-        if(o instanceof SubscriptionPricingType){
-            SubscriptionPricingType type = (SubscriptionPricingType) o;
-            return dao.usersBySubscription(type, pageBy);
-        }
-
-        if(o instanceof PricingSubscriptionVOId){
-            PricingSubscriptionVOId id = (PricingSubscriptionVOId) o;
-            return dao.usersBySubscription(id, pageBy);
-        }
-        return null;
-    }
-
-    @Override
-    public void checkSubscription(UserVO user) throws SubscriptionException,Exception {
-
-        Integer counterSubscription= SubscriptionPricingType.BASE.toPublications();
-        int countCompleted=  dao.countByNameQuery(AnnounceCompletedVO.FINDBYUSER,AnnounceCompletedVO.class,user.getId(),USER_PARAM,null, null);
-        int count = countCompleted+CollectionsUtils.size(user.getAnnounces());
-
-        SubscriptionVO subscription =user.getSubscription();
-        if(subscription != null ){
-            counterSubscription=subscription.getType().toPublications();
-            boolean expired= DateUtils.isBefore(subscription.getEndDate(), DateUtils.currentDate());
-            if(BooleanUtils.isTrue(expired)){
-                throw new SubscriptionException("Abonnement expiré, veuillez renouveller votre abonnement");
-            }
-        }
-        if(counterSubscription <= count){
-            throw new SubscriptionException("Abonnement expiré: nombre d'annonces atteint, veuillez renouveller votre abonnement");
-        }
     }
 }
 

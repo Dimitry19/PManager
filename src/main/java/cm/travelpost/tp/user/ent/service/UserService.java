@@ -110,7 +110,4 @@ public interface UserService {
 
     String verify(String username, String code) throws Exception;
 
-    List<UserVO> usersBySubscription(Object o, PageBy pageBy) throws Exception;
-
-    void checkSubscription(UserVO user) throws Exception;
 }

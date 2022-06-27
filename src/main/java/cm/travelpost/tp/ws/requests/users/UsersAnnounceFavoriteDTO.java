@@ -1,11 +1,14 @@
 package cm.travelpost.tp.ws.requests.users;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 public class UsersAnnounceFavoriteDTO {
+    @NotNull
     @Positive
     private Long announceId;
 
+    @NotNull
     @Positive
     private Long userId;
 

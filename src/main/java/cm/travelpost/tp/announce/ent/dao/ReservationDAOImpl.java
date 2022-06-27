@@ -73,7 +73,6 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
         if (user == null)
             throw new UserNotFoundException("Utilisateur de la reservation non trouve");
 
-        userService.checkSubscription(user);
         AnnounceVO announce = announceDAO.announce(dto.getAnnounceId());
         if (announce == null) {
             logger.error("add reservation {},{} non trouvé ou {} non trouvée", "La reservation n'a pas été ajoutée", "Utilisateur avec id=" + dto.getUserId(), " Annonce avec id=" + dto.getAnnounceId());

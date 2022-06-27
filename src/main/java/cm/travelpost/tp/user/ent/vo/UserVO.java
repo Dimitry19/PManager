@@ -10,10 +10,12 @@ import cm.travelpost.tp.constant.FieldConstants;
 import cm.travelpost.tp.image.ent.vo.ImageVO;
 import cm.travelpost.tp.message.ent.vo.MessageVO;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
-import cm.travelpost.tp.pricing.ent.vo.SubscriptionVO;
 import cm.travelpost.tp.review.ent.vo.ReviewVO;
 import cm.travelpost.tp.user.enums.Gender;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.*;
 
@@ -49,8 +51,8 @@ import static org.hibernate.annotations.FetchMode.SELECT;
         @NamedQuery(name = UserVO.FACEBOOK, query = "select u from UserVO u where  u.facebookId =:facebookId "),
         @NamedQuery(name = UserVO.GOOGLE, query = "select u from UserVO u where  u.googleId =:googleId "),
         @NamedQuery(name = UserVO.JOB_CONFIRM, query = "select u from UserVO u where u.confirmationToken is not  null and u.active =:active"),
-        @NamedQuery(name = UserVO.ALL_SUBSCRIPTION_PRICING, query = "select u from UserVO u where u.subscription.id.code =: code and u.subscription.id.token =:token"),
-        @NamedQuery(name = UserVO.ALL_SUBSCRIPTION_PRICING_TYPE, query = "select u from UserVO u where u.subscription.type =: type"),
+        //@NamedQuery(name = UserVO.ALL_SUBSCRIPTION_PRICING, query = "select u from UserVO u where u.subscription.id.code =: code and u.subscription.id.token =:token"),
+        //@NamedQuery(name = UserVO.ALL_SUBSCRIPTION_PRICING_TYPE, query = "select u from UserVO u where u.subscription.type =: type"),
 })
 
 @Filters({
@@ -138,7 +140,7 @@ public class UserVO extends CommonVO {
 
     private AuthenticationVO authentication;
 
-    private SubscriptionVO subscription;
+   // private SubscriptionVO subscription;
 
     private Set<AnnounceMasterVO> announcesFavorites = new HashSet<>();
 
@@ -335,13 +337,13 @@ public class UserVO extends CommonVO {
         return authentication;
     }
 
-    @JsonManagedReference
+    /*@JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns({
             @JoinColumn(name = "R_SUBSCRIPTION_CODE",updatable = true,insertable = false),
             @JoinColumn(name = "R_SUBSCRIPTION_TOKEN",updatable = true,insertable = false)
     })
-    public SubscriptionVO getSubscription() { return subscription; }
+    public SubscriptionVO getSubscription() { return subscription; }*/
 
     @Transient
     @JsonProperty
@@ -468,7 +470,7 @@ public class UserVO extends CommonVO {
 
     public void setAuthentication(AuthenticationVO authentication) {    this.authentication = authentication;  }
 
-    public void setSubscription(SubscriptionVO subscription) { this.subscription = subscription;    }
+   // public void setSubscription(SubscriptionVO subscription) { this.subscription = subscription;    }
 
     public void addAnnounce(AnnounceMasterVO announce) {
         this.announces.add(announce);

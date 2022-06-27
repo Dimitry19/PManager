@@ -137,9 +137,13 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Transactional
     public List<AnnounceVO> announcesFavoris(UserVO user, PageBy pageBy) throws AnnounceException, Exception {
 
+
         List<AnnounceVO> results= new ArrayList();
+
+
         setMap(new KeyValue(USER_PARAM, user.getId()));
-          setFilters(FilterConstants.CANCELLED);
+        setFilters(FilterConstants.CANCELLED);
+        results =findBySqlNativeQuery(AnnounceVO.ANNOUNCES_FAVORIS_BY_USER_NQ, getMap(),AnnounceVO.ANNOUNCE_FAVORITE_MAPPING , pageBy, getFilters());
         List<Object[]> lst =findBySqlNativeQuery(AnnounceVO.ANNOUNCES_FAVORIS_BY_USER_NQ, getMap(),AnnounceVO.ANNOUNCE_FAVORITE_MAPPING , pageBy, getFilters());
         manageAnnouncesFavorites(lst,results);
         return results;
@@ -283,7 +287,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             if (user == null) {
                 throw new UserException(messageConfig.getUserExceptionNotFound() + adto.getUserId());
             }
-            userService.checkSubscription(user);
+
             AnnounceVO announce = new AnnounceVO();
             announce.setAnnounceId(new AnnounceIdVO(Constants.DEFAULT_TOKEN));
             setAnnounce(announce, user, adto,true);

@@ -15,9 +15,6 @@ import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.notification.enums.NotificationType;
-import cm.travelpost.tp.pricing.ent.dao.SubscriptionDAO;
-import cm.travelpost.tp.pricing.ent.vo.PricingSubscriptionVOId;
-import cm.travelpost.tp.pricing.enums.SubscriptionPricingType;
 import cm.travelpost.tp.security.PasswordGenerator;
 import cm.travelpost.tp.user.ent.vo.RoleVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
@@ -56,8 +53,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
     @Autowired
     RoleDAO roleDAO;
 
-    @Autowired
-    SubscriptionDAO subscriptionDAO;
 
     @Autowired
     private SecretGenerator secretGenerator;
@@ -277,7 +272,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
             user.setConfirmationToken(UUID.randomUUID().toString());
             user.setCountry(register.getCountry());
             user.setCity(register.getCity());
-            user.setSubscription(subscriptionDAO.byType(SubscriptionPricingType.BASE));
             Long id=(Long)save(user);
             user=findById(id);
             setRole(user, register.getRole());
@@ -673,28 +667,6 @@ public class UserDAOImpl extends Generic implements UserDAO {
         update(user);
 
         return findById(user.getId());
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = UserException.class)
-    public List<UserVO> usersBySubscription(Object o, PageBy pageBy) throws Exception {
-
-        String namedQuery= null;
-
-        if(o instanceof SubscriptionPricingType){
-            SubscriptionPricingType type = (SubscriptionPricingType) o;
-            setMap(new KeyValue(TYPE_PARAM, type));
-            namedQuery=UserVO.ALL_SUBSCRIPTION_PRICING_TYPE;
-        }
-        if(o instanceof PricingSubscriptionVOId){
-            PricingSubscriptionVOId id = (PricingSubscriptionVOId) o;
-            KeyValue keyValueCode = new KeyValue(CODE_PARAM, id.getCode());
-            KeyValue keyValueToken = new KeyValue(TOKEN_PARAM, id.getToken());
-            setMap(keyValueCode, keyValueToken);
-            namedQuery=UserVO.ALL_SUBSCRIPTION_PRICING;
-        }
-        setFilters(FilterConstants.CANCELLED, FilterConstants.ACTIVE_MBR);
-        return  findBy(namedQuery, UserVO.class, getMap(),pageBy, getFilters());
     }
 
     @Override
