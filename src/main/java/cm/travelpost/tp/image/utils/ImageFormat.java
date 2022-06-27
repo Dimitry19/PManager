@@ -5,6 +5,7 @@ import cm.travelpost.tp.common.utils.FileUtils;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.image.ent.bo.ImageFormatBO;
 import org.imgscalr.Scalr;
+
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;

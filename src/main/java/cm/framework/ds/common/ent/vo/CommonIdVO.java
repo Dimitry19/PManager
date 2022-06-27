@@ -3,7 +3,6 @@ package cm.framework.ds.common.ent.vo;
 import cm.framework.ds.common.listener.audit.TableListener;
 import cm.travelpost.tp.airline.ent.vo.AirlineIdVO;
 
-
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;

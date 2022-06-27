@@ -46,10 +46,10 @@ public abstract class CustomOncePerRequestFilter  extends OncePerRequestFilter  
 	@Value("${custom.api.auth.http.tokenName}")
 	protected String tokenName;
 
-	@Value("${custom.session.user}")
+	@Value("${tp.travelpost.filter.custom.session.user}")
 	protected String sessionHeader;
 
-	@Value("${url.service}")
+	@Value("${tp.travelpost.filter.url.service}")
 	protected String service;
 
 	@Value("${tp.travelpost.postman.enable}")

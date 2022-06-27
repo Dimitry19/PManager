@@ -455,6 +455,19 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     @Transactional
+    public T findUniqueResult(String queryName, Class<T> clazz,Map params) throws Exception {
+        Session session = this.sessionFactory.getCurrentSession();
+        Query query = session.createNamedQuery(queryName, clazz);
+
+        params.forEach((k, v) ->
+                query.setParameter((String) k, v)
+        );
+
+        return (T) query.uniqueResult();
+    }
+
+    @Override
+    @Transactional
     public List<T> findBy(String namedQuery, Class<T> clazz, ID id, String paramName, PageBy pageBy) throws Exception {
 
         Session session =getCurrentSession();

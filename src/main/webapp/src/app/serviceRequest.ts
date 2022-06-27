@@ -1,11 +1,11 @@
 import {RxStomp} from '@stomp/rx-stomp';
 import SockJS from 'sockjs-client';
-import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { map, finalize, catchError} from 'rxjs/operators';
-import { NgxSpinnerService } from "ngx-spinner";
-import { Urlconstances } from './constancesURL';
-import { HttpClient, HttpHeaders } from  '@angular/common/http'; 
+import {Injectable} from '@angular/core';
+import {of} from 'rxjs';
+import {catchError, finalize, map} from 'rxjs/operators';
+import {NgxSpinnerService} from "ngx-spinner";
+import {Urlconstances} from './constancesURL';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 export interface notif {
   id: number;

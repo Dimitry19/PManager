@@ -40,7 +40,7 @@ import java.util.Set;
 		@NamedQuery(name = AnnounceMasterVO.FINDBYTRANSPORT, query = "select a from AnnounceMasterVO a where a.transport =:transport order by a.startDate desc"),
 })
 @Filters({
-		@Filter(name = FilterConstants.CANCELLED)
+		@Filter(name =  FilterConstants.CANCELLED)
 })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "status")

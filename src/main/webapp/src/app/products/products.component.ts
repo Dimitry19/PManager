@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { NgbCalendar, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ServiceRequest } from '../serviceRequest';
-import { AlertService } from '.././alert.service';
-import { SharedConstants, SharedService } from '.././SharedConstants';
+import {Component, OnInit} from '@angular/core';
+import {DatePipe} from '@angular/common';
+import {NgbCalendar, NgbDate, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ServiceRequest} from '../serviceRequest';
+import {AlertService} from '.././alert.service';
+import {SharedConstants, SharedService} from '.././SharedConstants';
 // import { NgxPaginationModule } from 'ngx-pagination';
 import * as _ from 'underscore';
-
 
 
 @Component({

@@ -2,7 +2,7 @@ package cm.travelpost.tp.user.ent.service;
 
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.travelpost.tp.announce.ent.dao.AnnounceDAO;
-import cm.travelpost.tp.authentication.ent.dao.AuthenticationDAO;
+import cm.travelpost.tp.authentication.ent.service.AuthenticationService;
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.Constants;
 import cm.travelpost.tp.common.enums.RoleEnum;
@@ -16,7 +16,7 @@ import cm.travelpost.tp.common.utils.MailUtils;
 import cm.travelpost.tp.rating.ent.vo.RatingCountVO;
 import cm.travelpost.tp.rating.enums.Rating;
 import cm.travelpost.tp.review.ent.bo.ReviewsSummaryBO;
-import cm.travelpost.tp.review.ent.dao.ReviewDAO;
+import cm.travelpost.tp.review.ent.service.ReviewService;
 import cm.travelpost.tp.review.ent.vo.ReviewDetailsVO;
 import cm.travelpost.tp.review.ent.vo.ReviewIdVO;
 import cm.travelpost.tp.review.ent.vo.ReviewVO;
@@ -32,6 +32,7 @@ import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,10 +64,10 @@ public class UserServiceImpl implements UserService {
     protected final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
-    private UserDAO userDAO;
+    private UserDAO dao;
 
     @Autowired
-    private ReviewDAO reviewDAO;
+    private ReviewService reviewService;
 
     @Autowired
     private MailSenderSendGrid mailSenderSendGrid;
@@ -80,14 +81,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     TotpService totpService;
 
+    @Qualifier("authService")
     @Autowired
-    private AuthenticationDAO authenticationDAO;
+    private AuthenticationService authenticationService;
 
     @Value("${tp.travelpost.authentication.attempt}")
     private int attemptLimit;
 
     @Autowired
     private AnnounceDAO announceDAO;
+
+    public static final String USER_PARAM="userId";
 
 
     @PostConstruct
@@ -97,49 +101,49 @@ public class UserServiceImpl implements UserService {
 
 
     public boolean checkLogin(LoginDTO lr) throws Exception {
-        return userDAO.checkLogin(lr);
+        return dao.checkLogin(lr);
     }
 
     @Override
     public int count(Object o, Long id, PageBy pageBy) throws Exception {
-        return userDAO.count(o, id, pageBy);
+        return dao.count(o, id, pageBy);
     }
 
     @Override
     public void subscribe(SubscribeDTO subscribe) throws Exception {
-        userDAO.subscribe(subscribe);
+        dao.subscribe(subscribe);
     }
 
 
     @Override
     public void unsubscribe(SubscribeDTO subscribe) throws Exception {
-        userDAO.unsubscribe(subscribe);
+        dao.unsubscribe(subscribe);
     }
 
     @Override
     public List<UserVO> subscriptions(Long userId) throws UserException {
 
-        return userDAO.subscriptions(userId);
+        return dao.subscriptions(userId);
     }
 
     @Override
     public List<UserVO> subscribers(Long userId) throws UserException {
-        return userDAO.subscribers(userId);
+        return dao.subscribers(userId);
     }
 
     @Override
     public AuthenticationVO checkAuthenticationAttempt(String username) throws Exception {
 
         int attempt = 0;
-        UserVO user = userDAO.findByUsername(username);
+        UserVO user = dao.findByUsername(username);
         if (user != null) {
             AuthenticationVO authentication = user.getAuthentication();
             if (authentication == null) {
                 authentication = new AuthenticationVO();
                 authentication.setAttempt(++attempt);
                 authentication.setUser(user);
-                Long id = (Long) authenticationDAO.save(authentication);
-                AuthenticationVO auth = (AuthenticationVO) authenticationDAO.findById(AuthenticationVO.class, id);
+                Long id = authenticationService.save(authentication);
+                AuthenticationVO auth = authenticationService.findById(id);
                 user.setAuthentication(auth);
             } else {
                 attempt = user.getAuthentication().getAttempt();
@@ -155,7 +159,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public AuthenticationVO checkAttempt(String username) throws Exception {
 
-        UserVO user = userDAO.findByUsername(username);
+        UserVO user = dao.findByUsername(username);
         AuthenticationVO authentication = null;
         if (user != null) {
             authentication = user.getAuthentication();
@@ -184,8 +188,8 @@ public class UserServiceImpl implements UserService {
             throw new UserException("Utilisateur non trouvé");
         }
 
-        userDAO.generateSecret(user);
-        user = userDAO.findById(user.getId());
+        dao.generateSecret(user);
+        user = dao.findById(user.getId());
         return new UserInfo(user.getEmail(), user.getSecret(), false);
     }
 
@@ -202,24 +206,29 @@ public class UserServiceImpl implements UserService {
 
         UserVO user = checkLoginAdmin(lr);
         if (user == null) {
-            user = userDAO.login(lr.getUsername(), lr.getPassword());
+            user = dao.login(lr.getUsername(), lr.getPassword());
         }
         return user;
     }
 
     public UserVO update(UserVO user) throws UserException {
-        return (UserVO) userDAO.merge(user);
+        dao.update(user);
+        return  (UserVO) dao.findById(user.getId());
+    }
+
+    public UserVO merge(UserVO user) throws UserException {
+        return (UserVO) dao.merge(user);
     }
 
     public boolean delete(UserVO user) throws UserException {
-        return userDAO.deleteUser(user);
+        return dao.deleteUser(user);
     }
 
 
     public UserVO checkLoginAdmin(LoginDTO login) throws Exception {
         AtomicBoolean found = new AtomicBoolean(false);
 
-        UserVO admin = userDAO.findByUsername(login.getUsername());
+        UserVO admin = dao.findByUsername(login.getUsername());
         if (admin != null) {
             admin.getRoles().forEach(x -> {
                 if (RoleEnum.ADMIN.equals(RoleEnum.fromValue(x.getDescription().name()))) {
@@ -235,54 +244,54 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException {
 
-        return userDAO.editPassword(userId, oldPassword, newPassword);
+        return dao.editPassword(userId, oldPassword, newPassword);
     }
 
     @Override
     public UserVO manageMfa(Long userId, boolean mfa) throws UserException {
-        return userDAO.manageMfa(userId, mfa);
+        return dao.manageMfa(userId, mfa);
     }
 
     @Override
     public UserVO manageNotification(Long userId, boolean enableNotification) throws UserException {
-        return userDAO.manageNotification(userId, enableNotification);
+        return dao.manageNotification(userId, enableNotification);
     }
 
     public void remove(UserVO user) throws UserException {
-        userDAO.remove(user);
+        dao.remove(user);
     }
 
 
     public List<UserVO> getAllUsers(PageBy pageBy) throws Exception {
-        return userDAO.getAllUsers(pageBy);
+        return dao.getAllUsers(pageBy);
     }
 
     public List<UserVO> getAllUsers() throws Exception {
-        return userDAO.getAllUsers();
+        return dao.getAllUsers();
     }
 
     public List<UserVO> getAllUsersToConfirm() throws Exception {
-        return userDAO.getAllUsersToConfirm();
+        return dao.getAllUsersToConfirm();
     }
 
     public UserVO getUser(Long id) throws UserException {
-        return userDAO.getUser(id);
+        return dao.getUser(id);
     }
 
 
     public UserVO register(RegisterDTO register) throws UserException {
 
-        return userDAO.register(register);
+        return dao.register(register);
     }
 
     @Transactional(readOnly = true)
     public List<UserVO> search(UserSeachDTO userSeachDTO, PageBy pageBy) throws UserException {
-        return userDAO.search(userSeachDTO, pageBy);
+        return dao.search(userSeachDTO, pageBy);
     }
 
     @Transactional(rollbackFor = UserException.class)
     public UserVO updateUser(UpdateUserDTO userDTO) throws Exception {
-        return userDAO.updateUser(userDTO);
+        return dao.updateUser(userDTO);
     }
 
 //    @Override
@@ -320,57 +329,62 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(rollbackFor = UserException.class)
     public boolean deleteUser(Long id) throws UserException {
-        return userDAO.deleteUser(id);
+        return dao.deleteUser(id);
     }
 
+    @Override
     public UserVO findByEmail(String email) throws Exception {
-        return userDAO.findByEmail(email);
+        return dao.findByEmail(email);
     }
 
+    @Override
+    public UserVO findById(Long id) throws Exception {
+        return dao.findById(id);
+    }
 
     public boolean setRoleToUser(RoleToUserDTO roleToUser) throws Exception {
 
-        return userDAO.setRole(roleToUser.getEmail(), roleToUser.getRole());
+        return dao.setRole(roleToUser.getEmail(), roleToUser.getRole());
     }
 
     @Transactional(readOnly = true)
     public UserVO findByUsername(String username, boolean isReg) throws Exception {
-        return userDAO.findByOnlyUsername(username, isReg);
+        return dao.findByOnlyUsername(username, isReg);
     }
 
     @Transactional(readOnly = true)
     public UserVO findByUsername(String username) throws Exception {
-        return userDAO.findByUsername(username);
+        return dao.findByUsername(username);
     }
 
     @Transactional(readOnly = true)
     public UserVO findByToken(String token) throws Exception {
-        return userDAO.findByToken(token);
+        return dao.findByToken(token);
     }
 
 
     @Override
     public Page<ReviewVO> getReviews(UserVO user, Pageable pageable) throws Exception {
         Assert.notNull(user, "User must not be null");
-        return this.reviewDAO.findByUser(user, pageable);
+        return reviewService.findByUser(user, pageable);
     }
 
     @Override
     public ReviewVO getReview(UserVO user, int reviewNumber) throws Exception {
         Assert.notNull(user, "User must not be null");
-        return reviewDAO.findByUserAndIndex(user, reviewNumber);
+        return reviewService.findByUserAndIndex(user, reviewNumber);
     }
 
     @Override
     public ReviewVO addReview(UserVO user, ReviewDetailsVO details) throws Exception {
         ReviewVO review = new ReviewVO(user, 1, details);
-        return reviewDAO.saves(review);
+        return reviewService.save(review);
     }
 
     @Override
     public ReviewVO addReview(ReviewDTO reviewDTO) throws Exception {
-        UserVO user = (UserVO) userDAO.checkAndResolve(UserVO.class, reviewDTO.getUserId());
-        UserVO ratingUser = (UserVO) userDAO.checkAndResolve(UserVO.class, reviewDTO.getRatingUserId());
+        UserVO user = (UserVO) dao.checkAndResolve(UserVO.class, reviewDTO.getUserId());
+        UserVO ratingUser = (UserVO) dao.checkAndResolve(UserVO.class, reviewDTO.getRatingUserId());
 
         if (ratingUser.equals(user)) {
             throw new UserException("Un utilisateur ne peut pas s'evaluer");
@@ -380,7 +394,7 @@ public class UserServiceImpl implements UserService {
         ReviewIdVO id = new ReviewIdVO();
         id.setToken(Constants.DEFAULT_TOKEN);
         review.setReviewId(id);
-        return reviewDAO.saves(review);
+        return reviewService.save(review);
     }
 
     @Override
@@ -392,16 +406,16 @@ public class UserServiceImpl implements UserService {
             throw new UserException("Un utilisateur ne peut donner un avis sur lui même");
         }
 
-        ReviewVO review = reviewDAO.findById(id);
+        ReviewVO review = reviewService.findById(id);
         if (review == null) {
             throw new UserException("Avis non existant");
         }
-        return reviewDAO.update(review);
+        return reviewService.update(review);
     }
 
     @Override
     public boolean deleteReview(Long id) throws Exception {
-        return reviewDAO.delete(id);
+        return reviewService.delete(id);
     }
 
     @Override
@@ -411,7 +425,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private List<RatingCountVO> findRatingCounts(UserVO user) {
-        return userDAO.findRatingCounts(user);
+        return dao.findRatingCounts(user);
     }
 
 
@@ -443,4 +457,8 @@ public class UserServiceImpl implements UserService {
         }
         return "";
     }
+
+
+
 }
+

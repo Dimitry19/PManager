@@ -1,9 +1,9 @@
-import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbCalendar, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { SharedConstants } from '../SharedConstants';
-import * as _ from 'underscore';
+import {DatePipe} from '@angular/common';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {NgbCalendar, NgbDate, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {SharedConstants} from '../SharedConstants';
+
 declare var $: any;
 
 @Component({

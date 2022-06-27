@@ -28,4 +28,14 @@ public enum AnnounceType {
         }
         throw new RuntimeException("Valeur  " + value + " non valide");
     }
+
+    public static AnnounceType getAnnounceType(String type) {
+
+        for (AnnounceType a : AnnounceType.values()) {
+            if (StringUtils.equals(type, a.toString())) {
+                return a;
+            }
+        }
+        throw new RuntimeException("Valeur  " + type + " non valide");
+    }
 }

@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import {Component, Input, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import _ from 'underscore';
-import { ServiceRequest } from '../serviceRequest';
-import { AlertService } from '../alert.service';
+import {ServiceRequest} from '../serviceRequest';
+import {AlertService} from '../alert.service';
 
 @Component({
   selector: 'app-typed-product',

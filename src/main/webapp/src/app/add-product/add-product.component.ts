@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
-import { ServiceRequest } from '../serviceRequest';
-import { AlertService } from '.././alert.service';
-import { Annonce, SharedConstants, SharedService, UsersUtils } from '../sharedConstants';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router, RoutesRecognized} from '@angular/router';
+import {ServiceRequest} from '../serviceRequest';
+import {AlertService} from '.././alert.service';
+import {Annonce, SharedConstants, SharedService, UsersUtils} from '../sharedConstants';
 import _ from 'underscore';
-import { filter, pairwise } from 'rxjs/operators';
+import {filter, pairwise} from 'rxjs/operators';
+
 declare var $: any;
 
 

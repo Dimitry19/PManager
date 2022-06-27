@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { SharedConstants } from '.././SharedConstants';
-import * as _ from 'underscore';
-import { Router } from '@angular/router';
-import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {DatePipe} from '@angular/common';
+import {SharedConstants} from '.././SharedConstants';
+import {Router} from '@angular/router';
+import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-search-all',

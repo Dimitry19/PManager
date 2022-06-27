@@ -73,6 +73,8 @@ public class UserVO extends CommonVO {
     public static final String GOOGLE = "cm.travelpost.tp.user.ent.vo.UserVO.findByGoogleId";
     public static final String JOB_CONFIRM = "cm.travelpost.tp.user.ent.vo.UserVO.toConfirmByJob";
     public static final String SEARCH = "from UserVO as u ";
+    public static final String ALL_SUBSCRIPTION_PRICING = "cm.travelpost.tp.user.ent.vo.UserVO.subscriptionPricing";
+    public static final String ALL_SUBSCRIPTION_PRICING_TYPE = "cm.travelpost.tp.user.ent.vo.UserVO.subscriptionPricingType";
 
     private Long id;
 
@@ -135,6 +137,7 @@ public class UserVO extends CommonVO {
     private String country;
 
     private AuthenticationVO authentication;
+
 
     private Set<AnnounceVO> announcesFavorites = new HashSet<>();
 
@@ -262,7 +265,6 @@ public class UserVO extends CommonVO {
     @Access(AccessType.PROPERTY)
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
-    //@Fetch(value = SELECT)
     @OrderBy(clause = "startDate DESC")
     @Where(clause = "cancelled = false")
     @JsonIgnore
@@ -312,7 +314,6 @@ public class UserVO extends CommonVO {
         return notifications;
     }
 
-
     @Basic(optional = false)
     @Column(name = "MULTIPLE_FACTOR_AUTH")
     public boolean isMultipleFactorAuthentication() {
@@ -327,11 +328,12 @@ public class UserVO extends CommonVO {
         return secret;
     }
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval=true)
     @JsonIgnore
     public AuthenticationVO getAuthentication() {
         return authentication;
     }
+
 
 
     @Transient
@@ -381,13 +383,9 @@ public class UserVO extends CommonVO {
 
     public void setEnableNotification(boolean enableNotification) { this.enableNotification = enableNotification;  }
 
-    public void setCommunications(Set<CommunicationVO> communications) {
-        this.communications = communications;
-    }
+    public void setCommunications(Set<CommunicationVO> communications) { this.communications = communications; }
 
-    public void setImage(ImageVO image) {
-        this.image = image;
-    }
+    public void setImage(ImageVO image) { this.image = image; }
 
     public void setRating(double rating) {
         this.rating = rating;
@@ -397,9 +395,7 @@ public class UserVO extends CommonVO {
         this.error = error;
     }
 
-    public void setActive(Integer active) {
-        this.active = active;
-    }
+    public void setActive(Integer active) { this.active = active; }
 
     public void setUsername(String username) {
         this.username = username;
@@ -441,9 +437,7 @@ public class UserVO extends CommonVO {
         this.gender = gender;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id) { this.id = id; }
 
     public void setPassword(String password) {
         this.password = password;
@@ -463,9 +457,8 @@ public class UserVO extends CommonVO {
 
     public void setCountry(String country) {  this.country = country;   }
 
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
+    public void setSecret(String secret) { this.secret = secret; }
+
     public void setAuthentication(AuthenticationVO authentication) {    this.authentication = authentication;  }
 
 
@@ -491,12 +484,12 @@ public class UserVO extends CommonVO {
     }
 
     public void addRole(RoleVO role) {
-        roles.add(role);
+        this.roles.add(role);
     }
 
     public void removeRole(RoleVO role) {
-        if (!roles.isEmpty())
-            roles.remove(role);
+        if (!this.roles.isEmpty())
+            this.roles.remove(role);
     }
 
     public void addMessage(MessageVO message) {
@@ -578,8 +571,6 @@ public class UserVO extends CommonVO {
         }
     }
 
-
-
     public void updateDeleteChildrens() {
 
         Iterator<ReviewVO> iteReview = this.reviews.iterator();
@@ -624,6 +615,17 @@ public class UserVO extends CommonVO {
         this.announcesFavorites = announcesFavorites;
     }
 
+    public void addFavorites(Set<AnnounceVO> announcesFavorites){
+        this.announcesFavorites.addAll(announcesFavorites);
+    }
+
+    public void addFavorite(AnnounceVO favorite){
+        this.announcesFavorites.add(favorite);
+    }
+    public void removeFavorite(AnnounceVO favorite){
+        this.announcesFavorites.remove(favorite);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -650,6 +652,8 @@ public class UserVO extends CommonVO {
         } else if (!active.equals(other.active))
             return false;
 
+        if(id.equals(other.id))
+            return true;
         if (id == null) {
             if (other.id != null)
                 return false;
