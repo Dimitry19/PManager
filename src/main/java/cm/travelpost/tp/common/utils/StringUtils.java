@@ -86,7 +86,10 @@ public class StringUtils {
         return sb.toString();
     }
 
-    public static int length(String s) {
-        return isEmpty(s)?0:s.length();
+
+    public static int length(String  str) {
+
+        return  isEmpty(str)? 0: str.length();
     }
+
 }

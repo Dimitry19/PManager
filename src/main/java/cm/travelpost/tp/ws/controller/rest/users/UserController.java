@@ -1,11 +1,13 @@
 package cm.travelpost.tp.ws.controller.rest.users;
 
 
+import cm.framework.ds.activity.ent.vo.ActivityVO;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.framework.ds.hibernate.enums.CountBy;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
+import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
@@ -77,7 +79,7 @@ public class UserController extends CommonController {
             return new ResponseEntity<>(user, HttpStatus.OK);
 
         } catch (Exception e) {
-            logger.error("Erreur durant l'upload de l'image", e);
+            logger.error("Erreur durant l'ajournement du gestionnaire de  notification", e);
             throw e;
         } finally {
             finishOpentracingSpan();
@@ -512,7 +514,9 @@ public class UserController extends CommonController {
             @ApiResponse(code = 200, message = "Successful Subscription list ",
                     response = ResponseEntity.class, responseContainer = "Object")})
     @RequestMapping(value = WSConstants.USER_SUBSCRIPTION_WS, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<PaginateResponse> subscriptions(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId) throws ValidationException, IOException {
+    public ResponseEntity<PaginateResponse> subscriptions(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId,
+                                                          @Valid @Positive(message = "la page doit etre nombre positif") @RequestParam(required = false, defaultValue = WSConstants.DEFAULT_PAGE) int page,
+                                                          @Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = WSConstants.DEFAULT_SIZE) int size) throws ValidationException, IOException {
 
         logger.info("subscriptions request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -522,7 +526,7 @@ public class UserController extends CommonController {
         try {
             createOpentracingSpan("UserController - subscriptions");
 
-            int count = userService.count(CountBy.SUBSCRIPTIONS, userId, null);
+            int count = userService.count(CountBy.SUBSCRIPTIONS, userId, null); //TODO Gerer la pagination
             List<UserVO> users = userService.subscriptions(userId);
 
             return getPaginateResponseResponseEntity(headers,  count, users);
@@ -540,14 +544,16 @@ public class UserController extends CommonController {
     @ApiOperation(value = "User subscribers ", response = Response.class)
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Server error"),
-            @ApiResponse(code = 200, message = "Successfully subscription list"),
+            @ApiResponse(code = 200, message = "Successfully Subscribers list"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 200, message = "Successful Subscribers list ",
                     response = ResponseEntity.class, responseContainer = "Object")})
     @RequestMapping(value = WSConstants.USER_SUBSCRIBER_WS, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<PaginateResponse> subscribers(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId) throws ValidationException, Exception {
+    public ResponseEntity<PaginateResponse> subscribers(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId,
+                                                        @Valid @Positive(message = "la page doit etre nombre positif") @RequestParam(required = false, defaultValue = WSConstants.DEFAULT_PAGE) int page,
+                                                        @Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = WSConstants.DEFAULT_SIZE) int size) throws ValidationException, Exception {
 
         logger.info("subscribers request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -559,11 +565,47 @@ public class UserController extends CommonController {
             createOpentracingSpan("UserController - subscribers");
 
             int count = userService.count(CountBy.SUBSCRIBERS, userId, null);
-            List<UserVO> users = userService.subscribers(userId);
+            List<UserVO> users = userService.subscribers(userId); //TODO Gerer la pagination
             return getPaginateResponseResponseEntity(headers, count, users);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de subscribers: ", e);
+            response.setStatus(500);
+            return getPaginateResponseErrorResponseEntity(headers);
+        } finally {
+            finishOpentracingSpan();
+        }
+    }
+
+    @ApiOperation(value = "User activities ", response = Response.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Server error"),
+            @ApiResponse(code = 200, message = "Successfully activities list"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+            @ApiResponse(code = 200, message = "Successful activities list ",
+                    response = ResponseEntity.class, responseContainer = "Object")})
+    @RequestMapping(value = WSConstants.USER_ACTIVITIES_WS, method = RequestMethod.GET, headers = WSConstants.HEADER_ACCEPT, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<PaginateResponse> activities(HttpServletRequest request, HttpServletResponse response, @PathVariable("userId") @Valid Long userId,
+                                                       @Valid @Positive(message = "la page doit etre nombre positif") @RequestParam(required = false, defaultValue = WSConstants.DEFAULT_PAGE) int page,
+                                                       @Valid @Positive(message = "la dimension doit etre nombre positif") @RequestParam(required = false, defaultValue = WSConstants.DEFAULT_SIZE) int size) throws ValidationException, Exception {
+
+        logger.info("activities request in");
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
+
+        HttpHeaders headers = new HttpHeaders();
+
+
+        try {
+            createOpentracingSpan("UserController - activities");
+
+            int count = CollectionsUtils.size(activityService.findByUser(userId, null));
+            List<ActivityVO> activities = activityService.findByUser(userId, new PageBy(page,size));
+            return getPaginateResponseResponseEntity(headers, count, activities);
+
+        } catch (Exception e) {
+            logger.error("Erreur durant l'execution de activities: ", e);
             response.setStatus(500);
             return getPaginateResponseErrorResponseEntity(headers);
         } finally {

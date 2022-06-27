@@ -4,8 +4,9 @@ import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.enums.FindBy;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
 import cm.travelpost.tp.announce.ent.vo.ReservationVO;
-import cm.travelpost.tp.common.enums.ReservationType;
-import cm.travelpost.tp.common.enums.ValidateEnum;
+import cm.travelpost.tp.announce.enums.ReservationType;
+import cm.travelpost.tp.announce.enums.ValidateEnum;
+import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
@@ -79,7 +80,7 @@ public class ReservationController extends CommonController {
             return new ResponseEntity<>(reservation, HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("Erreur durant la creation d'ue reservation", e);
-            throw e;
+            throw new AnnounceException(e.getMessage());
         } finally {
             finishOpentracingSpan();
         }

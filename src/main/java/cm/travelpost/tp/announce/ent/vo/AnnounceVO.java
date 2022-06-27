@@ -17,7 +17,7 @@ import java.util.Date;
 @Entity
 @SqlResultSetMapping(
 		//https://thorben-janssen.com/result-set-mapping-hibernate-specific-mappings/
-		name = AnnounceVO.ANNOUNCE_FAVORITE_MAPPING,
+	    name = AnnounceVO.ANNOUNCE_FAVORITE_MAPPING,
 		entities = {
 			/*@EntityResult(
 				entityClass = AnnounceVO.class,
@@ -47,33 +47,33 @@ import java.util.Date;
 							@FieldResult(name = "weight", column = "weight")
 						}
 					)*/
-		},
+				},
 		columns={
-				@ColumnResult(name="id",type = Long.class),
-				@ColumnResult(name="code", type = String.class),
-				@ColumnResult(name="token", type = String.class),
-				@ColumnResult(name="cancelled", type = boolean.class),
-				@ColumnResult(name="dateCreated", type = Timestamp.class),
-				@ColumnResult(name="lastUpdated", type = Timestamp.class),
-				@ColumnResult(name="announce_type", type = String.class),
-				@ColumnResult(name="arrival", type = String.class),
-				@ColumnResult(name="departure", type = String.class),
-				@ColumnResult(name="description", type = String.class),
-				@ColumnResult(name="end_date", type = Date.class),
-				@ColumnResult(name="gold_price", type = BigDecimal.class),
-				@ColumnResult(name="prenium_price", type = BigDecimal.class),
-				@ColumnResult(name="price", type = BigDecimal.class),
-				@ColumnResult(name="start_date", type = Date.class),
-				@ColumnResult(name="status", type = String.class),
-				@ColumnResult(name="estimate_value", type = BigDecimal.class),
-				@ColumnResult(name="count_reservation", type = Integer.class),
-				@ColumnResult(name="remain_weight", type = BigDecimal.class),
-				@ColumnResult(name="transport", type = String.class),
-				@ColumnResult(name="weight", type = BigDecimal.class),
-				@ColumnResult(name="image_id", type = Long.class),
-				@ColumnResult(name="r_user_id", type = Long.class)
+			@ColumnResult(name="id",type = Long.class),
+			@ColumnResult(name="code", type = String.class),
+			@ColumnResult(name="token", type = String.class),
+			@ColumnResult(name="cancelled", type = boolean.class),
+			@ColumnResult(name="dateCreated", type = Timestamp.class),
+			@ColumnResult(name="lastUpdated", type = Timestamp.class),
+			@ColumnResult(name="announce_type", type = String.class),
+			@ColumnResult(name="arrival", type = String.class),
+			@ColumnResult(name="departure", type = String.class),
+			@ColumnResult(name="description", type = String.class),
+			@ColumnResult(name="end_date", type = Date.class),
+			@ColumnResult(name="gold_price", type = BigDecimal.class),
+			@ColumnResult(name="prenium_price", type = BigDecimal.class),
+			@ColumnResult(name="price", type = BigDecimal.class),
+			@ColumnResult(name="start_date", type = Date.class),
+			@ColumnResult(name="status", type = String.class),
+			@ColumnResult(name="estimate_value", type = BigDecimal.class),
+			@ColumnResult(name="count_reservation", type = Integer.class),
+			@ColumnResult(name="remain_weight", type = BigDecimal.class),
+			@ColumnResult(name="transport", type = String.class),
+			@ColumnResult(name="weight", type = BigDecimal.class),
+			@ColumnResult(name="image_id", type = Long.class),
+			@ColumnResult(name="r_user_id", type = Long.class)
 		}
-)
+	)
 @NamedQueries(value = {
 		@NamedQuery(name = AnnounceVO.FINDBYUSER, query = "select a from AnnounceVO a where a.user.id =:userId order by a.startDate desc"),
 		@NamedQuery(name = AnnounceVO.FINDBYTYPE, query = "select a from AnnounceVO a where a.announceType =:announceType order by a.startDate desc"),
@@ -95,5 +95,5 @@ public class AnnounceVO extends AnnounceMasterVO {
 			+ " a.description ,a.end_date,a.gold_price , a.prenium_price ,a.price ,a.start_date,"
 			+ "a.status,a.transport ,a.weight,a.r_user_id,a.remain_weight,"
 			+" a.image_id, a.estimate_value,(select coalesce(count(r.r_announce_id),0)  from reservation r where a.id= r.r_announce_id and r.cancelled='0') as count_reservation from  announce a inner join user_announces_favoris "
-			+" uaf on a.id=uaf.announce_id  where uaf.user_id=:userId ";
+			+" uaf on a.id=uaf.announce_id  where uaf.user_id=:userId  and a.status='VALID'";
 }

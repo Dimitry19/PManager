@@ -3,11 +3,11 @@ package cm.travelpost.tp.user.ent.dao;
 
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.CommonDAO;
-import cm.travelpost.tp.common.enums.RoleEnum;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.communication.ent.vo.CommunicationVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
+import cm.travelpost.tp.user.enums.RoleEnum;
 import cm.travelpost.tp.ws.requests.users.*;
 
 import java.util.List;
@@ -39,7 +39,6 @@ public interface UserDAO extends CommonDAO {
 
     List<UserVO> subscribers(Long userId) throws UserException;
 
-
     List<UserVO> getAllUsers() throws Exception;
 
     List<UserVO> getAllUsersToConfirm() throws Exception;
@@ -58,18 +57,13 @@ public interface UserDAO extends CommonDAO {
 
     boolean deleteUser(Long id) throws UserException;
 
-
     void removeUser(UserVO user) throws BusinessResourceException;
-
 
     UserVO findByEmail(String email) throws Exception;
 
-
     UserVO findByFacebookId(String facebookId) throws Exception;
 
-
     UserVO findByGoogleId(String googleId) throws Exception;
-
 
     boolean setRole(UserVO user, RoleEnum roleId) throws Exception;
 
@@ -88,4 +82,6 @@ public interface UserDAO extends CommonDAO {
     List<CommunicationVO> communications(Long userId) throws Exception;
 
     UserVO generateSecret(UserVO user) throws Exception;
+
+    List<UserVO> usersBySubscription(Object o, PageBy pageBy) throws Exception;
 }

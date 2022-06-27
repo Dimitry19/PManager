@@ -7,7 +7,6 @@ import cm.travelpost.tp.common.Constants;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
-import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.ws.requests.CommonDTO;
@@ -131,7 +130,7 @@ public class AirlineDAOImpl extends Generic implements AirlineDAO {
 
 
     @Override
-    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException {
         return false;
     }
 

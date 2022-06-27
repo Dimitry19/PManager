@@ -1,6 +1,5 @@
 package cm.framework.ds.common.enums;
 
-
 import cm.travelpost.tp.common.utils.StringUtils;
 
 public enum GenericCRUDEEnum {

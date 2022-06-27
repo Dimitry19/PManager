@@ -1,4 +1,4 @@
-package cm.travelpost.tp.common.enums;
+package cm.travelpost.tp.announce.enums;
 
 import cm.travelpost.tp.common.utils.StringUtils;
 
@@ -28,6 +28,7 @@ public enum AnnounceType {
         }
         throw new RuntimeException("Valeur  " + value + " non valide");
     }
+
 
     public static AnnounceType getAnnounceType(String type) {
 

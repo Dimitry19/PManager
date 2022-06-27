@@ -1,8 +1,8 @@
 package cm.travelpost.tp.ws.requests.announces;
 
 
-import cm.travelpost.tp.common.enums.AnnounceType;
-import cm.travelpost.tp.common.enums.TransportEnum;
+import cm.travelpost.tp.announce.enums.AnnounceType;
+import cm.travelpost.tp.announce.enums.TransportEnum;
 import cm.travelpost.tp.common.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;

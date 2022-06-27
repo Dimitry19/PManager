@@ -49,7 +49,7 @@ public class MailServiceImpl extends CommonMailSenderService implements MailServ
     ContactUSDAO contactUSDAO;
 
     @Autowired
-	UserService userService;
+    UserService userService;
 
 
     @Override
@@ -73,7 +73,7 @@ public class MailServiceImpl extends CommonMailSenderService implements MailServ
                 personalMailSender.getTravelPostPseudo(), null, null,
                 null, null, contactUS.getSubject(), contactUS.getContent()+template(contactus.getSender(),true), null,true);
 
-       // googleMailSenderService.contactUs(contactUS);
+        // googleMailSenderService.contactUs(contactUS);
         return sent || id!=null;
     }
 
@@ -109,8 +109,8 @@ public class MailServiceImpl extends CommonMailSenderService implements MailServ
 
         String title=MessageFormat.format(MailType.CONFIRM_TEMPLATE_TITLE,travelPostPseudo);
 
-         googleMailSenderService.sendMail(title,emails,null,null,null,user.getUsername(),bodyNoTemplate,false);
-         personalMailSender.send(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, body, null),emailTo, null,null,null,null,false,null);
+        googleMailSenderService.sendMail(title,emails,null,null,null,user.getUsername(),bodyNoTemplate,false);
+        personalMailSender.send(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, body, null),emailTo, null,null,null,null,false,null);
 
         return mailSenderSendGrid.manageResponse(mailSenderSendGrid.sendMailMessage(MailType.CONFIRM_TEMPLATE, title, MailUtils.replace(user, labels, body, null),emails, null, null, null, user.getUsername(), null, true));
     }

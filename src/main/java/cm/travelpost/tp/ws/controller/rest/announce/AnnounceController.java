@@ -6,10 +6,10 @@ import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceCompletedVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceMasterVO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
+import cm.travelpost.tp.announce.enums.AnnounceType;
 import cm.travelpost.tp.announce.enums.Source;
-import cm.travelpost.tp.common.enums.AnnounceType;
+import cm.travelpost.tp.announce.enums.TransportEnum;
 import cm.travelpost.tp.common.enums.StatusEnum;
-import cm.travelpost.tp.common.enums.TransportEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
@@ -83,6 +83,7 @@ public class AnnounceController extends CommonController {
 
         try {
             createOpentracingSpan("AnnounceController -create");
+            setSpanTag("#Announce", "create");
 
             logger.info("create announce request in");
             announce = announceService.create(ar);
@@ -180,6 +181,7 @@ public class AnnounceController extends CommonController {
 
         try {
             createOpentracingSpan("AnnounceController -search");
+            setSpanTag("#Announce", "search");
 
             if (dto != null) {
 

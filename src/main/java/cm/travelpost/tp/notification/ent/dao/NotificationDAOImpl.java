@@ -10,7 +10,6 @@ import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.NotificationException;
-import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.notification.ent.vo.NotificationVO;
 import org.hibernate.Session;
@@ -78,7 +77,7 @@ public class NotificationDAOImpl extends Generic implements NotificationDAO {
     }
 
     @Override
-    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException {
 
         if(o instanceof NotificationVO){
 

@@ -21,5 +21,6 @@ public interface ImageService<T> {
     boolean uploadFile(MultipartFile file) throws Exception;
 
     ImageFormat compress(ImageMultipart im, String name, String path);
+
      void compress(ImageMultipart im, String name);
 }

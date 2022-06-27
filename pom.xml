@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>cm.travelpost</groupId>
 	<artifactId>tpservices</artifactId>
-	<version>1.0.1-beta-secure202204</version>
+	<version>1.0.2-pricing-subscription</version>
 	<packaging>jar</packaging>
 	<name>TravelPost</name>
 	<description>Travel Post Services</description>
@@ -366,7 +366,7 @@
 			<artifactId>spring-boot-test</artifactId>
 			<version>2.3.0.RELEASE</version>
 		</dependency>
-		<!-- Encrypt properties End-->
+        <!-- Encrypt properties End-->
 		<!--declare the client  to admin server  -->
 <!--		<dependency>-->
 <!--			<groupId>de.codecentric</groupId>-->
@@ -376,6 +376,7 @@
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-actuator</artifactId>-->
 <!--		</dependency>-->
+
 	</dependencies>
 <!--    <dependencyManagement>-->
 <!--        <dependencies>-->

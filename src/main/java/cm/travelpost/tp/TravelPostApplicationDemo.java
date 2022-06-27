@@ -32,9 +32,9 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
     public  static void main(String[] args) throws MessagingException {
 
        //SpringApplication.run(TravelPostApplicationDemo.class, args);
-       // secure();
+        secure();
         //sendMailSendGridSmtp();
-        setFilters("fffdf","dddd");
+        //setFilters("fffdf","dddd");
     }
 
 
@@ -66,9 +66,9 @@ public class TravelPostApplicationDemo implements CommandLineRunner {
         //encryptor.setConfig(config);
 
 
-        System.out.println("sa :"+encryptor.encrypt("travelpostservices@gmail.com"));
+        System.out.println("sa :"+encryptor.encrypt("bdc_d092ef590a4e40a58c1f4b2d9181517d"));
         //System.out.println(":"+encryptor.encrypt("apikey"));
-        System.out.println("Decrypt :"+encryptor.decrypt("gfrdM8DgU+ydD/1/rDqbo3DYOmJgArx9C/qWbMtAx3c3jdwqwWblQBf6N0UpgWc7"));
+        System.out.println("Decrypt :"+encryptor.decrypt("M6LT2BQ922KBpGjLlU8lOYoOBFSgqxCn4M/SZTTcGazIVbJM76vee/Bn0SIvjTpt"));
 
     }
 

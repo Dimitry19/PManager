@@ -1,4 +1,4 @@
-package cm.travelpost.tp.common.enums;
+package cm.travelpost.tp.announce.enums;
 
 import cm.travelpost.tp.common.utils.StringUtils;
 

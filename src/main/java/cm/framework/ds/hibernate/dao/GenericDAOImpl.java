@@ -1,6 +1,7 @@
 package cm.framework.ds.hibernate.dao;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.exception.GenericCRUDEException;
 import cm.framework.ds.hibernate.utils.SQLUtils;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.event.AEvent;
@@ -53,9 +54,6 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     protected Set<StatusEnum> states = new HashSet<>();
 
-
-
-
     protected static final String SELECT_FROM = " select elt  FROM ";
 
     protected static final String AS= " as ";
@@ -79,10 +77,9 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String CATEGORY_TABLE_ALIAS = "c";
     protected static final String ID_PARAM = "id";
     protected static final String USER_PARAM = "userId";
-
     protected static final String CODE_PARAM = "code";
 
-    protected static final String TYPE_PARAM = "announceType";
+    protected static final String TYPE_PARAM = "type";
     protected static final String TRANSPORT_PARAM = "transport";
     protected static final String ANNOUNCE_PARAM = "announceId";
     protected static final String ANNOUNCE_TYPE_PARAM = "announceType";
@@ -105,6 +102,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     protected static final String ACTIVE_PARAM ="active" ;
     protected static final String CONFIRM_TOKEN_PARAM ="ctoken" ;
     protected static final String USERNAME_PARAM = "username";
+    protected static final String TOKEN_PARAM = "token";
 
     protected static final String ALIAS_ORDER = " as t order by t. ";
     protected static final String ALIAS_BY_USER_ID = " as elt where elt.userId =:userId ";
@@ -423,6 +421,19 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
         return (T) query.uniqueResult();
     }
 
+    @Override
+    @Transactional
+    public T findUniqueResult(String queryName, Class<T> clazz,Map params) throws Exception {
+        Session session = this.sessionFactory.getCurrentSession();
+        Query query = session.createNamedQuery(queryName, clazz);
+
+        params.forEach((k, v) ->
+                query.setParameter((String) k, v)
+        );
+
+        return (T) query.uniqueResult();
+    }
+
     /**
      * Prend une NamedQuery et retourne un resultat unique
      *
@@ -528,7 +539,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
     public List<T> findBySqlNativeQuery(String nativeQuery, Map params, String mappingName, PageBy pageBy, String... filters) throws Exception {
         Session session = getCurrentSession();
         enableFilters(session,filters);
-        Query query=session.createNativeQuery(nativeQuery, mappingName);
+        Query query=session.createNativeQuery(nativeQuery, mappingName);//.addScalar(AnnounceMasterVO.class);
         setParameters(query,params);
         pageBy(query,pageBy);
         return  query.getResultList();
@@ -611,7 +622,7 @@ public class GenericDAOImpl<T, ID extends Serializable, NID extends Serializable
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public T save(T t) {
+    public T save(T t) throws GenericCRUDEException {
         Session session = sessionFactory.getCurrentSession();
         return (T)session.save(t);
     }

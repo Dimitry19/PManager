@@ -1,9 +1,9 @@
 package cm.framework.ds.hibernate.dao;
 
+import cm.framework.ds.activity.writer.ActivityWriter;
 import cm.travelpost.tp.common.ent.ApplicationMessageConfig;
 import cm.travelpost.tp.common.event.IEvent;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
-import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.notification.enums.NotificationType;
 import org.hibernate.QueryException;
 import org.hibernate.query.Query;
@@ -20,10 +20,13 @@ public abstract class Generic extends CommonGenericDAO {
     @Autowired
     protected  ApplicationMessageConfig messageConfig;
 
+    @Autowired
+    public ActivityWriter writer;
+
     protected String notificationMessagePattern = "{0} {1} {2}";
     protected String notificationMessageCommentPattern = "{0} {1} {2} {3}";
 
-    public abstract boolean updateDelete(Object id) throws BusinessResourceException, UserException;
+    public abstract boolean updateDelete(Object id) throws BusinessResourceException;
 
     public  String composeQuery(Object o, String alias) throws QueryException {
         if(o==null || alias == null){

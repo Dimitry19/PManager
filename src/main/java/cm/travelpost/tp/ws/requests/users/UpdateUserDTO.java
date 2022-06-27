@@ -1,6 +1,6 @@
 package cm.travelpost.tp.ws.requests.users;
 
-import cm.travelpost.tp.common.enums.Gender;
+import cm.travelpost.tp.user.enums.Gender;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.EnumType;

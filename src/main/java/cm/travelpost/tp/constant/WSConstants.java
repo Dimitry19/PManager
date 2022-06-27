@@ -10,8 +10,6 @@ public class WSConstants extends CommonProperties {
 
     public static final String HEADER_ACCEPT = "Accept=application/json";
 
-
-
     public static final String BASE_PATTERN= "/ws/*";
 
 
@@ -71,6 +69,8 @@ public class WSConstants extends CommonProperties {
 
     public static final String USER_SUBSCRIPTION_WS = "/subscriptions/{userId}";
     public static final String USER_SUBSCRIBER_WS = "/subscribers/{userId}";
+
+    public static final String USER_ACTIVITIES_WS = "/activities/{userId}";
 
     public static final String USER_WS_OTP = "/otp";
 
@@ -141,7 +141,7 @@ public class WSConstants extends CommonProperties {
     /******** IMG REQUEST ********/
     public static final String IMG_WS = "/ws/image/*";
 
-    /******** IMG REQUEST ********/
+    /******** CITY REQUEST ********/
     public static final String CITY_WS = "/ws/city/*";
     public static final String CITIES_WS = "/ws/city/cities";
 
@@ -150,6 +150,9 @@ public class WSConstants extends CommonProperties {
     /************ ADMIN DASHBOARD REQUEST*************/
     public static final String DASHBOARD_WS = "/ws" + DASHBOARD+"/*";
     public static final String DASHBOARD_DELETE = "/delete/{code}";
+    public static final String DASHBOARD_COUNTRIES = "/countries";
+    public static final String DASHBOARD_CITIES_OF_COUNTRY = "/cities/{country}";
+    public static final String DASHBOARD_COUNTRIES_AND_CITIES_INFOS = "/countryInfo";
 
     /*******************SMS TWILLO ******************/
     public static final String SMS_WS = "/ws/sms/*";
@@ -161,5 +164,24 @@ public class WSConstants extends CommonProperties {
 
     /************ TOTP REQUEST*************/
     public static final String TOTP_WS = "/ws/totp/*";
+
+    /************ PRICING REQUEST*************/
+    public static final String PRICING_WS = "/ws/pricing/*";
+    public static final String PRICING_WS_UPDATE_PRICING_CODE = "/update/{code}/{token}";
+        public static final String PRICING_WS_GET = "/pricing";
+    public static final String PRICING_WS_ALL = "/all";
+    public static final String PRICING_WS_BY_PRICE = "/price";
+    public static final String PRICING_WS_BY_TYPE = "/type";
+
+    /************ SUBSCRIPTION PRICING REQUEST*************/
+    public static final String SUBSCRIPTION_PRICING_WS = "/ws/subscription/*";
+    public static final String SUBSCRIPTION_WS_UPDATE_SUBSCRIPTION_CODE = "/update/{code}/{token}";
+    public static final String SUBSCRIPTION_WS_GET = "/subscription";
+    public static final String SUBSCRIPTION_WS_ALL = "/all";
+    public static final String SUBSCRIPTION_WS_BY_TYPE = "/type";
+    public static final String SUBSCRIPTION_WS_MANAGE_USERS = "/manage";
+    public static final String SUBSCRIPTION_WS_GET_USERS = "/users";
+    public static final String SUBSCRIPTION_WS_GET_USERS_TYPE = "/users/type";
+
 
 }

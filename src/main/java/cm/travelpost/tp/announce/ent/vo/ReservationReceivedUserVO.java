@@ -1,11 +1,11 @@
 package cm.travelpost.tp.announce.ent.vo;
 
-import cm.travelpost.tp.common.enums.Gender;
-import cm.travelpost.tp.common.enums.ValidateEnum;
+import cm.travelpost.tp.announce.enums.ValidateEnum;
 import cm.travelpost.tp.common.utils.DateUtils;
 import cm.travelpost.tp.constant.FieldConstants;
 import cm.travelpost.tp.user.ent.vo.UserInfo;
 import cm.travelpost.tp.user.ent.vo.UserVO;
+import cm.travelpost.tp.user.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

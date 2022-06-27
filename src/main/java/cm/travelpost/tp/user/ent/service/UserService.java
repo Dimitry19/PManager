@@ -37,6 +37,8 @@ public interface UserService {
 
     UserVO update(UserVO user) throws UserException;
 
+    UserVO merge(UserVO user) throws UserException;
+
     boolean delete(UserVO user) throws UserException;
 
     boolean editPassword(Long userId, String oldPassword, String newPassword) throws UserException;
@@ -67,9 +69,9 @@ public interface UserService {
 
     UserVO findByEmail(String email) throws Exception;
 
-	UserVO findById(Long id) throws Exception;
+    UserVO findById(Long id) throws Exception;
 
-	boolean setRoleToUser(RoleToUserDTO roleToUser) throws Exception;
+    boolean setRoleToUser(RoleToUserDTO roleToUser) throws Exception;
 
     UserVO findByUsername(String username, boolean isReg) throws Exception;
 
@@ -108,5 +110,7 @@ public interface UserService {
 
     String verify(String username, String code) throws Exception;
 
+    List<UserVO> usersBySubscription(Object o, PageBy pageBy) throws Exception;
 
+    void checkSubscription(UserVO user) throws Exception;
 }

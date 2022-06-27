@@ -1,6 +1,6 @@
 package cm.travelpost.tp.ws.controller.rest;
 
-
+import cm.framework.ds.activity.ent.service.ActivityService;
 import cm.framework.ds.common.authentication.service.AuthenticationService;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
@@ -22,6 +22,7 @@ import cm.travelpost.tp.message.ent.service.MessageService;
 import cm.travelpost.tp.notification.ent.service.NotificationService;
 import cm.travelpost.tp.user.ent.service.RoleService;
 import cm.travelpost.tp.user.ent.service.UserService;
+import cm.travelpost.tp.ws.client.RestClient;
 import cm.travelpost.tp.ws.controller.RedirectType;
 import cm.travelpost.tp.ws.responses.PaginateResponse;
 import cm.travelpost.tp.ws.responses.Response;
@@ -82,6 +83,8 @@ public class CommonController  extends WSConstants {
     @Autowired
     TracingService tracingService;
 
+    @Autowired
+    protected RestClient client;
 
     @Autowired
     protected AirlineService airlineService;
@@ -120,6 +123,9 @@ public class CommonController  extends WSConstants {
     @Autowired
     protected AuthenticationService authenticationService;
 
+
+    @Autowired
+    protected ActivityService  activityService;
 
 
     /** SMS Services **/

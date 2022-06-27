@@ -6,7 +6,7 @@ package cm.travelpost.tp.announce.ent.dao;
  * et aussi eviter HibernateException: Found two representations of same collection
  */
 
-
+import cm.framework.ds.activity.enums.ActivityOperation;
 import cm.framework.ds.common.ent.vo.KeyValue;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.common.utils.CodeGenerator;
@@ -15,15 +15,12 @@ import cm.framework.ds.hibernate.utils.IQueryBuilder;
 import cm.framework.ds.hibernate.utils.QueryBuilder;
 import cm.travelpost.tp.airline.ent.dao.AirlineDAO;
 import cm.travelpost.tp.announce.ent.vo.*;
+import cm.travelpost.tp.announce.enums.AnnounceType;
+import cm.travelpost.tp.announce.enums.TransportEnum;
+import cm.travelpost.tp.announce.enums.ValidateEnum;
 import cm.travelpost.tp.common.Constants;
-import cm.travelpost.tp.common.enums.AnnounceType;
 import cm.travelpost.tp.common.enums.StatusEnum;
-import cm.travelpost.tp.common.enums.TransportEnum;
-import cm.travelpost.tp.common.enums.ValidateEnum;
-import cm.travelpost.tp.common.exception.AnnounceException;
-import cm.travelpost.tp.common.exception.BusinessResourceException;
-import cm.travelpost.tp.common.exception.RecordNotFoundException;
-import cm.travelpost.tp.common.exception.UserException;
+import cm.travelpost.tp.common.exception.*;
 import cm.travelpost.tp.common.utils.*;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.image.ent.dao.ImageDAO;
@@ -142,7 +139,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         List<AnnounceVO> results= new ArrayList();
         setMap(new KeyValue(USER_PARAM, user.getId()));
-        setFilters(FilterConstants.CANCELLED);
+          setFilters(FilterConstants.CANCELLED);
         List<Object[]> lst =findBySqlNativeQuery(AnnounceVO.ANNOUNCES_FAVORIS_BY_USER_NQ, getMap(),AnnounceVO.ANNOUNCE_FAVORITE_MAPPING , pageBy, getFilters());
         manageAnnouncesFavorites(lst,results);
         return results;
@@ -279,34 +276,37 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {AnnounceException.class})
-    public AnnounceMasterVO create(AnnounceDTO adto) throws AnnounceException, UserException,  Exception {
+    public AnnounceMasterVO create(AnnounceDTO adto) throws AnnounceException, UserException, SubscriptionException, Exception {
 
-        UserVO user = userService.findById(adto.getUserId());
+            UserVO user = userService.findById(adto.getUserId());
 
-        if (user == null) {
-            throw new UserException(messageConfig.getUserExceptionNotFound() + adto.getUserId());
-        }
+            if (user == null) {
+                throw new UserException(messageConfig.getUserExceptionNotFound() + adto.getUserId());
+            }
+            userService.checkSubscription(user);
+            AnnounceVO announce = new AnnounceVO();
+            announce.setAnnounceId(new AnnounceIdVO(Constants.DEFAULT_TOKEN));
+            setAnnounce(announce, user, adto,true);
 
-        AnnounceVO announce = new AnnounceVO();
-        announce.setAnnounceId(new AnnounceIdVO(Constants.DEFAULT_TOKEN));
-        setAnnounce(announce, user, adto,true);
+            announce.setStatus(StatusEnum.VALID);
 
-        announce.setStatus(StatusEnum.VALID);
+            announce.setMessages(null);
+            announce.setCancelled(false);
 
-        announce.setMessages(null);
-        announce.setCancelled(false);
+            save(announce);
+            addAnnounceToUser(announce);
 
-        save(announce);
-        addAnnounceToUser(announce);
-
-        String message=buildNotificationMessage(ANNOUNCE,announce.getUser().getUsername(),announce.getDeparture(),
-                announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
-                DateUtils.getDateStandard(announce.getEndDate()),null);
+            String message=buildNotificationMessage(ANNOUNCE,announce.getUser().getUsername(),announce.getDeparture(),
+                    announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
+                    DateUtils.getDateStandard(announce.getEndDate()),null);
 
 
-        generateEvent(announce,message);
-        notificationForBuyers(announce);
-       return announce;
+            generateEvent(announce,message);
+            notificationForBuyers(announce);
+            writer.logActivity(partOneMessage("Creation de l'annonce "+announce.getDeparture(),
+                    announce.getArrival()), ActivityOperation.CREATE,adto.getUserId(), null);
+
+            return announce;
     }
 
     /**
@@ -374,7 +374,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             announces.stream().filter(this::filterAnnounceToComplete)
                     .forEach(a -> {
                         a.setStatus(StatusEnum.COMPLETED);
-                        //  update(a);
+                      //  update(a);
                         try {
                             updateReservationsStatus(a.getId(), StatusEnum.COMPLETED);
                             generateEvent(a,"L'annonce de " +partOneMessage(a.getDeparture(),a.getArrival()) + partTwoMessage(" et ayant", DateUtils.dateToString(a.getStartDate()),DateUtils.dateToString(a.getEndDate()))+" n'est plus disponible", true);
@@ -419,7 +419,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     @Transactional
     public boolean filterAnnounceToComplete(AnnounceVO ann) {
 
-        return !ann.isCancelled() && DateUtils.isDifferenceDay(ann.getEndDate(),DateUtils.currentDate(),7,true);
+         return !ann.isCancelled() && DateUtils.isDifferenceDay(ann.getEndDate(),DateUtils.currentDate(),7,true);
     }
 
     @Override
@@ -586,6 +586,27 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
 
+    private TransportEnum getTransport(String transport) {
+
+        for (TransportEnum t : TransportEnum.values()) {
+            if (StringUtils.equals(transport, t.toString())) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+
+    private AnnounceType getAnnounceType(String announceType) {
+
+        for (AnnounceType a : AnnounceType.values()) {
+            if (StringUtils.equals(announceType, a.toString())) {
+                return a;
+            }
+        }
+        return null;
+    }
+
     @Override
     public List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception {
 
@@ -598,7 +619,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
     @Override
-    public BigDecimal checkQtyReservations(Long id, boolean onlyRefused) throws AnnounceException,Exception {
+     public BigDecimal checkQtyReservations(Long id, boolean onlyRefused) throws AnnounceException,Exception {
 
         try {
 
@@ -613,7 +634,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
             }
             return reservations.stream().filter(r->!r.getValidate().equals(ValidateEnum.REFUSED)
-                            &&!r.getValidate().equals(ValidateEnum.INSERTED))
+                    &&!r.getValidate().equals(ValidateEnum.INSERTED))
                     .map(ReservationVO::getWeight).reduce(BigDecimal.ZERO,BigDecimal::add);
 
         } catch (AnnounceException e) {
@@ -705,12 +726,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         try {
 
             if (StringUtils.isNotEmpty(search.getTransport())) {
-                TransportEnum transport =TransportEnum.getTransportEnum(search.getTransport());
+                TransportEnum transport = getTransport(search.getTransport());
                 query.setParameter(TRANSPORT_PARAM, transport);
             }
 
             if (StringUtils.isNotEmpty(search.getAnnounceType())) {
-                AnnounceType announceType = AnnounceType.getAnnounceType(search.getAnnounceType());
+                AnnounceType announceType = getAnnounceType(search.getAnnounceType());
                 query.setParameter(ANNOUNCE_TYPE_PARAM, announceType);
             }
 
@@ -762,21 +783,21 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             categories.stream().filter(StringUtils::isNotEmpty)
                     .filter(c->StringUtils.notEquals(c,Constants.CATEGORY_INDIFFERENT))
                     .forEach(x -> {
-                        try {
-                            CategoryVO category = categoryDAO.findByCode(x);
-                            if (category == null) {
-                                throw new AnnounceException("Valoriser la categorie");
-                            }
-                            announce.addCategory(category);
-                        } catch (AnnounceException e) {
-                            logger.error("Erreur durant la recuperation des categories", e);
-                            try {
-                                throw e;
-                            } catch (Exception exception) {
-                                exception.printStackTrace();
-                            }
-                        }
-                    });
+                try {
+                    CategoryVO category = categoryDAO.findByCode(x);
+                    if (category == null) {
+                        throw new AnnounceException("Valoriser la categorie");
+                    }
+                    announce.addCategory(category);
+                } catch (AnnounceException e) {
+                    logger.error("Erreur durant la recuperation des categories", e);
+                    try {
+                        throw e;
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
+            });
         }
     }
     private void updateReservationsStatus(Long id,StatusEnum status) throws Exception {
@@ -785,7 +806,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         if(CollectionsUtils.isNotEmpty(reservations)){
             reservations.stream().forEach(r -> {
                 r.setStatus(status);
-                // update(r);
+               // update(r);
             });
         }
     }
@@ -812,9 +833,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             List<AnnounceVO>  announces= announcesBy(AnnounceType.BUYER,null);
             if(CollectionsUtils.isNotEmpty(announces)){
                 List<AnnounceVO> check = Optional.ofNullable(
-                                announces.stream()
-                                        .filter(this::filterUserNotification)
-                                        .collect(Collectors.toList()))
+                            announces.stream()
+                                .filter(this::filterUserNotification)
+                                .collect(Collectors.toList()))
                         .orElseGet(Collections::emptyList);
 
                 if (CollectionsUtils.isNotEmpty(check)) {

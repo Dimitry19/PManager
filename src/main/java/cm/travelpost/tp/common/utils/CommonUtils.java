@@ -2,7 +2,8 @@ package cm.travelpost.tp.common.utils;
 
 import cm.travelpost.tp.user.ent.vo.RoleVO;
 
-import static cm.travelpost.tp.common.enums.RoleEnum.ADMIN;
+import static cm.travelpost.tp.user.enums.RoleEnum.ADMIN;
+
 
 public class CommonUtils {
 

@@ -1,7 +1,7 @@
 package cm.travelpost.tp.ws.requests.users;
 
-import cm.travelpost.tp.common.enums.Gender;
-import cm.travelpost.tp.common.enums.RoleEnum;
+import cm.travelpost.tp.user.enums.Gender;
+import cm.travelpost.tp.user.enums.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

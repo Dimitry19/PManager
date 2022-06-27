@@ -4,7 +4,7 @@ package cm.travelpost.tp.announce.ent.vo;
 import cm.framework.ds.common.constants.DefaultFilterConstants;
 import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.common.enums.StatusEnum;
-import cm.travelpost.tp.common.enums.ValidateEnum;
+import cm.travelpost.tp.announce.enums.ValidateEnum;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.constant.FieldConstants;
 import cm.travelpost.tp.user.ent.vo.UserInfo;

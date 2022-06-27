@@ -1,8 +1,8 @@
 package cm.travelpost.tp.user.ent.vo;
 
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
-import cm.travelpost.tp.common.enums.RoleEnum;
 import cm.travelpost.tp.common.enums.RoleType;
+import cm.travelpost.tp.user.enums.RoleEnum;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;

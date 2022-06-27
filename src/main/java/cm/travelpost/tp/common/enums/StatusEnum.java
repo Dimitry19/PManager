@@ -1,6 +1,5 @@
 package cm.travelpost.tp.common.enums;
 
-
 import cm.travelpost.tp.common.utils.StringUtils;
 
 public enum StatusEnum {
