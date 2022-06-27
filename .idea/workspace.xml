@@ -22,15 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/AnnounceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/service/AnnounceServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceMasterVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceMasterVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/vo/UserVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpservices.iml" beforeDir="false" afterPath="$PROJECT_DIR$/tpservices.iml" afterDir="false" />
-    </list>
+    <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="Gestion des annonces favoris" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -436,13 +428,6 @@
       <workItem from="1656321757914" duration="10000" />
       <workItem from="1656326918798" duration="3437000" />
     </task>
-    <task id="LOCAL-00118" summary="push">
-      <created>1648739286685</created>
-      <option name="number" value="00118" />
-      <option name="presentableId" value="LOCAL-00118" />
-      <option name="project" value="LOCAL" />
-      <updated>1648739286685</updated>
-    </task>
     <task id="LOCAL-00119" summary="Ajout du control sur le debut du job des notifications">
       <created>1648746233877</created>
       <option name="number" value="00119" />
@@ -779,7 +764,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656087575037</updated>
     </task>
-    <option name="localTasksCounter" value="167" />
+    <task id="LOCAL-00167" summary="Gestion des annonces favoris">
+      <created>1656356456705</created>
+      <option name="number" value="00167" />
+      <option name="presentableId" value="LOCAL-00167" />
+      <option name="project" value="LOCAL" />
+      <updated>1656356456706</updated>
+    </task>
+    <option name="localTasksCounter" value="168" />
     <servers />
   </component>
   <component name="TodoView">
@@ -867,7 +859,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/main/resources/PMFrontend" />
     </ignored-roots>
-    <MESSAGE value="Deploy Heroku 11/04/2022" />
     <MESSAGE value=" 12/04/2022 + FE fixing" />
     <MESSAGE value="Optimisation code avec SonarLint" />
     <MESSAGE value="Merge with BetaVersion202203_SonarQube" />
@@ -892,29 +883,34 @@
     <MESSAGE value="Completée la gestion du pricing et des abonnements" />
     <MESSAGE value="Debut gestion des activités d'un user + config. home" />
     <MESSAGE value="Debut gestion des activités d'un user + config. home 2." />
-    <option name="LAST_COMMIT_MESSAGE" value="Debut gestion des activités d'un user + config. home 2." />
+    <MESSAGE value="Gestion des annonces favoris" />
+    <option name="LAST_COMMIT_MESSAGE" value="Gestion des annonces favoris" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="295" y="24" key="CommitChangelistDialog2" timestamp="1656356456082">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="295" y="24" key="CommitChangelistDialog2/0.23.1440.852@0.23.1440.852" timestamp="1656356456082" />
     <state width="432" height="466" key="DebuggerActiveHint" timestamp="1656355961740">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
     <state width="432" height="466" key="DebuggerActiveHint/0.23.1440.852@0.23.1440.852" timestamp="1656355961740" />
-    <state width="1271" height="294" key="GridCell.Tab.0.bottom" timestamp="1656356247812">
+    <state width="1271" height="294" key="GridCell.Tab.0.bottom" timestamp="1656356307379">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1271" height="294" key="GridCell.Tab.0.bottom/0.23.1440.852@0.23.1440.852" timestamp="1656356247812" />
-    <state width="1271" height="294" key="GridCell.Tab.0.center" timestamp="1656356247810">
+    <state width="1271" height="294" key="GridCell.Tab.0.bottom/0.23.1440.852@0.23.1440.852" timestamp="1656356307379" />
+    <state width="1271" height="294" key="GridCell.Tab.0.center" timestamp="1656356307377">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1271" height="294" key="GridCell.Tab.0.center/0.23.1440.852@0.23.1440.852" timestamp="1656356247810" />
-    <state width="1271" height="294" key="GridCell.Tab.0.left" timestamp="1656356247809">
+    <state width="1271" height="294" key="GridCell.Tab.0.center/0.23.1440.852@0.23.1440.852" timestamp="1656356307377" />
+    <state width="1271" height="294" key="GridCell.Tab.0.left" timestamp="1656356307377">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1271" height="294" key="GridCell.Tab.0.left/0.23.1440.852@0.23.1440.852" timestamp="1656356247809" />
-    <state width="1271" height="294" key="GridCell.Tab.0.right" timestamp="1656356247811">
+    <state width="1271" height="294" key="GridCell.Tab.0.left/0.23.1440.852@0.23.1440.852" timestamp="1656356307377" />
+    <state width="1271" height="294" key="GridCell.Tab.0.right" timestamp="1656356307378">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state width="1271" height="294" key="GridCell.Tab.0.right/0.23.1440.852@0.23.1440.852" timestamp="1656356247811" />
+    <state width="1271" height="294" key="GridCell.Tab.0.right/0.23.1440.852@0.23.1440.852" timestamp="1656356307378" />
     <state width="1271" height="294" key="GridCell.Tab.1.bottom" timestamp="1656356247815">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
@@ -931,6 +927,14 @@
       <screen x="0" y="23" width="1440" height="852" />
     </state>
     <state width="1271" height="294" key="GridCell.Tab.1.right/0.23.1440.852@0.23.1440.852" timestamp="1656356247814" />
+    <state x="320" y="176" key="Vcs.Push.Dialog.v2" timestamp="1656356460778">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="320" y="176" key="Vcs.Push.Dialog.v2/0.23.1440.852@0.23.1440.852" timestamp="1656356460778" />
+    <state x="470" y="169" key="git4idea.branch.GitSmartOperationDialog" timestamp="1656356486022">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="470" y="169" key="git4idea.branch.GitSmartOperationDialog/0.23.1440.852@0.23.1440.852" timestamp="1656356486022" />
     <state x="419" y="244" key="git4idea.merge.GitPullDialog" timestamp="1656352328792">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
