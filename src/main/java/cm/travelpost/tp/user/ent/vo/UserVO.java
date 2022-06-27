@@ -627,6 +627,13 @@ public class UserVO extends CommonVO {
         this.announcesFavorites.addAll(announcesFavorites);
     }
 
+    public void addFavorite(AnnounceVO favorite){
+        this.announcesFavorites.add(favorite);
+    }
+    public void removeFavorite(AnnounceVO favorite){
+        this.announcesFavorites.remove(favorite);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -653,6 +660,8 @@ public class UserVO extends CommonVO {
         } else if (!active.equals(other.active))
             return false;
 
+        if(id.equals(other.id))
+            return true;
         if (id == null) {
             if (other.id != null)
                 return false;

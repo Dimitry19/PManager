@@ -163,9 +163,10 @@ public class AnnounceServiceImpl implements AnnounceService {
             UserVO user = userService.findById(userId);
             AnnounceVO announce = dao.announce(announceId);
             checkForFavoris(user, announce);
+            Set<AnnounceVO> favoris= (Set<AnnounceVO>) CollectionsUtils.convertToSet(dao.announcesFavoris(user, null));
 
-            if(CollectionsUtils.contains(dao.announcesFavoris(user, null),announce)) {
-                user.getAnnouncesFavorites().remove(announce);
+            if(CollectionsUtils.contains(favoris,announce)) {
+                user.removeFavorite(announce);
                 return userService.merge(user)!=null;
             }
         }catch (UserException e) {

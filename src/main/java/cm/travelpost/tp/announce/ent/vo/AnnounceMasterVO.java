@@ -6,6 +6,7 @@ import cm.travelpost.tp.announce.enums.AnnounceType;
 import cm.travelpost.tp.announce.enums.TransportEnum;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.utils.DateUtils;
+import cm.travelpost.tp.common.utils.StringUtils;
 import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.constant.FieldConstants;
 import cm.travelpost.tp.image.ent.vo.ImageVO;
@@ -430,7 +431,12 @@ public class AnnounceMasterVO extends CommonVO {
 		if (getClass() != obj.getClass())
 			return false;
 		AnnounceVO other = (AnnounceVO) obj;
+		if(id.equals(other.id) && StringUtils.equals(code,other.code)){
+			return true;
+		}
 		if (!id.equals(other.id))
+			return false;
+		if (!StringUtils.equals(code,other.code))
 			return false;
 		if (user == null) {
 			return other.user == null;
