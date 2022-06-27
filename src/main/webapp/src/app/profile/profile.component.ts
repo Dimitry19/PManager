@@ -1,16 +1,17 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn} from '@angular/forms';
-import { ServiceRequest, notif } from '../serviceRequest';
-import { AlertService } from '.././alert.service';
-import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {notif, ServiceRequest} from '../serviceRequest';
+import {AlertService} from '.././alert.service';
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 // social network
 // import { SocialUser, AuthService } from "angularx-social-login";
 // import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 import * as _ from 'underscore';
-import { SharedService } from '../SharedConstants';
-import { DataTableDirective } from 'angular-datatables';
-import { Subject } from 'rxjs';
+import {SharedService} from '../SharedConstants';
+import {DataTableDirective} from 'angular-datatables';
+import {Subject} from 'rxjs';
+
 declare var $: any;
 
 function passwordConfirming (password): ValidatorFn{

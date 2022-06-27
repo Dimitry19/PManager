@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
-import { ServiceRequest } from '../serviceRequest';
-import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
-import * as _ from 'underscore';
-import { AlertService } from '../alert.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ServiceRequest} from '../serviceRequest';
+import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
+import {AlertService} from '../alert.service';
+
 declare var $: any;
 
 

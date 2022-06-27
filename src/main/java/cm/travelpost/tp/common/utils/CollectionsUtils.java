@@ -44,7 +44,7 @@ public class CollectionsUtils {
         if(isEmpty(destination)){
             destination = new ArrayList();
         }
-         array = Arrays.copyOf(source, source.length);
+        array = Arrays.copyOf(source, source.length);
 
         Collections.addAll(destination, source);
     }
@@ -67,7 +67,7 @@ public class CollectionsUtils {
     }
 
     public static boolean contains(Collection<?> elements,Object o){
-         return  isNotEmpty(elements) && elements.contains(o);
+        return  isNotEmpty(elements) && elements.contains(o);
     }
 
     public static boolean notContains(Collection<?> elements,Object o){
@@ -79,5 +79,12 @@ public class CollectionsUtils {
             return new ArrayList<>();
         }
         return elements.stream().collect(Collectors.toList());
+    }
+
+    public static Set<?> convertToSet(Collection<?> elements){
+        if(isEmpty(elements)){
+            return new HashSet<>();
+        }
+        return elements.stream().collect(Collectors.toSet());
     }
 }

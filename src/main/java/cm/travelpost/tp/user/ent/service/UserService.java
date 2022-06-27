@@ -1,7 +1,6 @@
 package cm.travelpost.tp.user.ent.service;
 
 import cm.framework.ds.common.ent.vo.PageBy;
-import cm.travelpost.tp.announce.ent.vo.AnnounceInfo;
 import cm.travelpost.tp.authentication.ent.vo.AuthenticationVO;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.review.ent.bo.ReviewsSummaryBO;
@@ -68,7 +67,9 @@ public interface UserService {
 
     UserVO findByEmail(String email) throws Exception;
 
-    boolean setRoleToUser(RoleToUserDTO roleToUser) throws Exception;
+	UserVO findById(Long id) throws Exception;
+
+	boolean setRoleToUser(RoleToUserDTO roleToUser) throws Exception;
 
     UserVO findByUsername(String username, boolean isReg) throws Exception;
 

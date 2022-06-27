@@ -2,11 +2,8 @@ package cm.travelpost.tp.review.ent.dao;
 
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
-import cm.travelpost.tp.common.exception.UserException;
-import cm.travelpost.tp.configuration.filters.FilterConstants;
 import cm.travelpost.tp.review.ent.vo.ReviewVO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -33,32 +30,14 @@ public class ReviewDAOImpl extends Generic implements ReviewDAO {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public ReviewVO saves(ReviewVO review) throws Exception {
-                save(review);
-        return (ReviewVO) findById(ReviewVO.class, review.getId());
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
     public ReviewVO update(ReviewVO review) throws BusinessResourceException {
         logger.info("Review: update ");
         if (review != null) {
             update(review);
-            return review;
         }
-        return null;
+        return review;
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public ReviewVO findById(Long id) throws Exception {
-        try {
-            logger.info("Review: find by id");
-            return (ReviewVO) find(ReviewVO.class, id, FilterConstants.CANCELLED);
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
-    }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
@@ -72,7 +51,7 @@ public class ReviewDAOImpl extends Generic implements ReviewDAO {
 
 
     @Override
-    public boolean updateDelete(Object o) throws BusinessResourceException, UserException {
+    public boolean updateDelete(Object o) throws BusinessResourceException {
         boolean result = false;
 
         try {

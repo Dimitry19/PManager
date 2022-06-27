@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-
 import java.util.Arrays;
 import java.util.List;
 
-import static cm.travelpost.tp.constant.WSConstants.*;
+import static cm.travelpost.tp.constant.WSConstants.SOCKET_NOTIFICATION_WS;
 
 @Controller
 @RestController

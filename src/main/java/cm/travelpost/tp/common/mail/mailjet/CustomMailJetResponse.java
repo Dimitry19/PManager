@@ -1,8 +1,5 @@
 package cm.travelpost.tp.common.mail.mailjet;
 
-import com.mailjet.client.MailjetResponse;
-import org.json.JSONObject;
-
 public class CustomMailJetResponse {
 
 	public static final int OK = 200;

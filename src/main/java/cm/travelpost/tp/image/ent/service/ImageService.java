@@ -1,14 +1,16 @@
 package cm.travelpost.tp.image.ent.service;
 
+import cm.travelpost.tp.common.enums.UploadImageType;
 import cm.travelpost.tp.image.ent.bo.ImageMultipart;
 import cm.travelpost.tp.image.ent.vo.ImageVO;
-import cm.travelpost.tp.common.enums.UploadImageType;
 import cm.travelpost.tp.image.utils.ImageFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService<T> {
 
     ImageVO findByName(String name) throws Exception;
+
+    ImageVO findById(Long id) throws Exception;
 
     boolean delete(String name, Long id) throws Exception;
 

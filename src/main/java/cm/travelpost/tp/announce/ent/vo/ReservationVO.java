@@ -1,6 +1,7 @@
 package cm.travelpost.tp.announce.ent.vo;
 
 
+import cm.framework.ds.common.constants.DefaultFilterConstants;
 import cm.framework.ds.common.ent.vo.CommonVO;
 import cm.travelpost.tp.common.enums.StatusEnum;
 import cm.travelpost.tp.common.enums.ValidateEnum;

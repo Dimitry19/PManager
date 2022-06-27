@@ -8,7 +8,10 @@ package cm.travelpost.tp.notification.ent.service;
 
 import cm.travelpost.tp.notification.enums.NotificationType;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public interface NotificationSocketService<T> {
 

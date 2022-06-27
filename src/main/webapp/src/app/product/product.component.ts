@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ServiceRequest } from '../serviceRequest';
-import { AlertService } from '.././alert.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ServiceRequest} from '../serviceRequest';
+import {AlertService} from '.././alert.service';
 import * as _ from 'underscore';
-import { SharedConstants, SharedService } from '../sharedConstants';
+import {SharedConstants, SharedService} from '../sharedConstants';
 
 declare var $: any;
 

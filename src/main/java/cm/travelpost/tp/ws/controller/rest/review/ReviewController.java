@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
 
-import static cm.travelpost.tp.constant.WSConstants.*;
+import static cm.travelpost.tp.constant.WSConstants.REVIEW_WS;
 
 
 @RestController

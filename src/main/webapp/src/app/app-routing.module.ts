@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HeaderComponent } from './header/header.component';
-import { HomeComponent } from './home/home.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ProductsComponent } from './products/products.component';
-import { ProductComponent } from './product/product.component';
-import { NofoundComponent } from './nofound/nofound.component';
-import { AdminGuard } from "./admin/admin.guard";
-import { AddProductComponent } from './add-product/add-product.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {HeaderComponent} from './header/header.component';
+import {HomeComponent} from './home/home.component';
+import {ProfileComponent} from './profile/profile.component';
+import {ProductsComponent} from './products/products.component';
+import {ProductComponent} from './product/product.component';
+import {NofoundComponent} from './nofound/nofound.component';
+import {AdminGuard} from "./admin/admin.guard";
+import {AddProductComponent} from './add-product/add-product.component';
 
 
 const routes: Routes = [

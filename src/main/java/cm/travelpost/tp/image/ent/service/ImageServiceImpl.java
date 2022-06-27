@@ -2,14 +2,14 @@ package cm.travelpost.tp.image.ent.service;
 
 import cm.travelpost.tp.announce.ent.dao.AnnounceDAO;
 import cm.travelpost.tp.announce.ent.vo.AnnounceVO;
-import cm.travelpost.tp.image.ent.bo.ImageCompressBO;
-import cm.travelpost.tp.image.ent.bo.ImageMultipart;
-import cm.travelpost.tp.image.ent.dao.ImageDAO;
-import cm.travelpost.tp.image.ent.vo.ImageVO;
 import cm.travelpost.tp.common.enums.UploadImageType;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
 import cm.travelpost.tp.common.utils.FileUtils;
 import cm.travelpost.tp.common.utils.ImageUtils;
+import cm.travelpost.tp.image.ent.bo.ImageCompressBO;
+import cm.travelpost.tp.image.ent.bo.ImageMultipart;
+import cm.travelpost.tp.image.ent.dao.ImageDAO;
+import cm.travelpost.tp.image.ent.vo.ImageVO;
 import cm.travelpost.tp.image.utils.ImageFormat;
 import cm.travelpost.tp.user.ent.dao.UserDAO;
 import cm.travelpost.tp.user.ent.vo.UserVO;
@@ -62,6 +62,13 @@ public class ImageServiceImpl implements ImageService {
         logger.info("find image by name ");
         ImageVO retrievedImage = imageDAO.findByName(name);
         return retrievedImage;
+    }
+
+    @Override
+    public ImageVO findById(Long id) throws Exception {
+        logger.info("find image by name ");
+        return (ImageVO)imageDAO.findById(ImageVO.class,id);
+
     }
 
     @Override

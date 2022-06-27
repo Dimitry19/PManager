@@ -1,6 +1,7 @@
 package cm.framework.ds.hibernate.dao;
 
 import cm.framework.ds.common.ent.vo.PageBy;
+import cm.framework.ds.common.exception.GenericCRUDEException;
 import cm.travelpost.tp.common.event.IEvent;
 import cm.travelpost.tp.common.exception.BusinessResourceException;
 import cm.travelpost.tp.common.exception.RecordNotFoundException;
@@ -55,10 +56,10 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     List<T> all(Class<T> clazz, PageBy pageBy) throws Exception;
 
-	@Transactional(readOnly = true)
-	List<T> findByJoinUserId(Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
+    @Transactional(readOnly = true)
+    List<T> findByJoinUserId(Class<T> clazz, Long userId, PageBy pageBy) throws Exception;
 
-	List<T> all(Class<T> clazz) throws Exception;
+    List<T> all(Class<T> clazz) throws Exception;
 
     List<T> all(Class<T> clazz, PageBy pageBy, String... filters) throws Exception;
 
@@ -66,6 +67,9 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     @Transactional
     T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName) throws Exception;
+
+
+    T findUniqueResult(String queryName, Class<T> clazz,Map params) throws Exception;
 
     T findByUniqueResult(String queryName, Class<T> clazz, ID id, String paramName, PageBy pageBy, String... filters) throws Exception;
 
@@ -84,7 +88,7 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
 
     boolean updateDelete(Class<T> clazz, ID id, boolean enableFlushSession) throws BusinessResourceException;
 
-    T save(T t) throws Exception;
+    T save(T t) throws GenericCRUDEException;
 
     void persist(T t) throws Exception;
 
@@ -103,7 +107,7 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     void flush() throws Exception;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
-     void update(T t) throws BusinessResourceException;
+    void update(T t) throws BusinessResourceException;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessResourceException.class, Exception.class})
     void remove(T t) throws BusinessResourceException;
@@ -121,7 +125,7 @@ public interface GenericDAO<T, ID extends Serializable, NID extends Serializable
     T load(Class<T> clazz, ID id) throws BusinessResourceException;
 
     @Transactional(propagation = Propagation.REQUIRED)
-     T  checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException,ClassCastException;
+    T  checkAndResolve(Class<T> clazz, ID id) throws BusinessResourceException,ClassCastException;
 
     void pageBy(Query query, PageBy pageBy);
 

@@ -33,10 +33,10 @@ public abstract class AFilter  extends CommonSecurityResource implements IFilter
     @Value("${custom.api.auth.http.tokenName}")
     protected String tokenName;
 
-    @Value("${custom.session.user}")
+    @Value("${tp.travelpost.filter.custom.session.user}")
     protected String sessionHeader;
 
-    @Value("${url.service}")
+    @Value("${tp.travelpost.filter.url.service}")
     protected String service;
 
     @Value("confirm")

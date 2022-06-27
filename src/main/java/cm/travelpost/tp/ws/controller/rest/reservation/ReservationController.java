@@ -34,7 +34,7 @@ import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
 import java.util.List;
 
-import static cm.travelpost.tp.constant.WSConstants.*;
+import static cm.travelpost.tp.constant.WSConstants.RESERVATION_WS;
 
 @RestController
 @RequestMapping(RESERVATION_WS)

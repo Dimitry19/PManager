@@ -1,11 +1,10 @@
-import { Component, OnInit} from '@angular/core';
-import { CookieService } from 'ngx-cookie';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn} from '@angular/forms';
-import { ServiceRequest, notif } from '../serviceRequest';
-import { AlertService } from '.././alert.service';
-import _ from 'underscore';
-import { UsersUtils, SharedService } from '../SharedConstants';
+import {Component, OnInit} from '@angular/core';
+import {CookieService} from 'ngx-cookie';
+import {Router} from '@angular/router';
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {notif, ServiceRequest} from '../serviceRequest';
+import {AlertService} from '.././alert.service';
+import {SharedService, UsersUtils} from '../SharedConstants';
 
 declare var $: any;
 // social network //prova pull
