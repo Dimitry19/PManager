@@ -95,5 +95,5 @@ public class AnnounceVO extends AnnounceMasterVO {
 			+ " a.description ,a.end_date,a.gold_price , a.prenium_price ,a.price ,a.start_date,"
 			+ "a.status,a.transport ,a.weight,a.r_user_id,a.remain_weight,"
 			+" a.image_id, a.estimate_value,(select coalesce(count(r.r_announce_id),0)  from reservation r where a.id= r.r_announce_id and r.cancelled='0') as count_reservation from  announce a inner join user_announces_favoris "
-			+" uaf on a.id=uaf.announce_id  where uaf.user_id=:userId ";
+			+" uaf on a.id=uaf.announce_id  where uaf.user_id=:userId  and a.status='VALID'";
 }
