@@ -17,7 +17,7 @@ import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
-import cm.travelpost.tp.ws.requests.users.UsersAnnounceFavoriteDTO;
+import cm.travelpost.tp.ws.requests.users.UserAnnounceFavoriteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +126,7 @@ public class AnnounceServiceImpl implements AnnounceService {
     }
 
     @Override
-    public boolean addAnnounceFavorites(UsersAnnounceFavoriteDTO dto) throws UserException, AnnounceException {
+    public boolean addAnnounceFavorites(UserAnnounceFavoriteDTO dto) throws UserException, AnnounceException {
 
         long userId = dto.getUserId();
         long announceId = dto.getAnnounceId();
@@ -154,7 +154,7 @@ public class AnnounceServiceImpl implements AnnounceService {
     }
 
     @Override
-    public boolean removeAnnounceFavorites(UsersAnnounceFavoriteDTO dto) throws UserException,AnnounceException {
+    public boolean removeAnnounceFavorites(UserAnnounceFavoriteDTO dto) throws UserException,AnnounceException {
 
         long userId = dto.getUserId();
         long announceId = dto.getAnnounceId();

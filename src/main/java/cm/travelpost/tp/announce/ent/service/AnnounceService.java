@@ -12,7 +12,7 @@ import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
-import cm.travelpost.tp.ws.requests.users.UsersAnnounceFavoriteDTO;
+import cm.travelpost.tp.ws.requests.users.UserAnnounceFavoriteDTO;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,9 +53,9 @@ public interface AnnounceService extends InitializingBean {
 
     void destroy() throws Exception;
 
-    boolean addAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException,AnnounceException;
+    boolean addAnnounceFavorites(UserAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException,AnnounceException;
 
-    boolean removeAnnounceFavorites(UsersAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException, AnnounceException;
+    boolean removeAnnounceFavorites(UserAnnounceFavoriteDTO userAnnounceFavoriteDTO) throws UserException, AnnounceException;
 
     List<AnnounceVO> announcesFavoritesByUser(long idUser)throws UserException;
     List<AnnounceVO> announcesFavoritesByUser(long idUser, PageBy pageBy) throws Exception;

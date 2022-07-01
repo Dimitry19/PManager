@@ -143,7 +143,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         setMap(new KeyValue(USER_PARAM, user.getId()));
         setFilters(FilterConstants.CANCELLED);
-        results =findBySqlNativeQuery(AnnounceVO.ANNOUNCES_FAVORIS_BY_USER_NQ, getMap(),AnnounceVO.ANNOUNCE_FAVORITE_MAPPING , pageBy, getFilters());
         List<Object[]> lst =findBySqlNativeQuery(AnnounceVO.ANNOUNCES_FAVORIS_BY_USER_NQ, getMap(),AnnounceVO.ANNOUNCE_FAVORITE_MAPPING , pageBy, getFilters());
         manageAnnouncesFavorites(lst,results);
         return results;

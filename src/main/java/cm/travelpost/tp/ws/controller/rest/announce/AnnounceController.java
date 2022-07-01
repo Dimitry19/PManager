@@ -19,7 +19,7 @@ import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.announces.AnnounceDTO;
 import cm.travelpost.tp.ws.requests.announces.AnnounceSearchDTO;
 import cm.travelpost.tp.ws.requests.announces.UpdateAnnounceDTO;
-import cm.travelpost.tp.ws.requests.users.UsersAnnounceFavoriteDTO;
+import cm.travelpost.tp.ws.requests.users.UserAnnounceFavoriteDTO;
 import cm.travelpost.tp.ws.responses.PaginateResponse;
 import cm.travelpost.tp.ws.responses.Response;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
@@ -517,7 +517,7 @@ public class AnnounceController extends CommonController {
     @RequestMapping(value = WSConstants.USER_ADD_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<Response> addAnnounceFavorites(HttpServletRequest request, HttpServletResponse response,
-                                                  @RequestBody @NotNull UsersAnnounceFavoriteDTO dto) throws Exception {
+                                                  @RequestBody @NotNull UserAnnounceFavoriteDTO dto) throws Exception {
 
         logger.info("add a favorite announce into this users" + dto.getUserId());
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -554,7 +554,7 @@ public class AnnounceController extends CommonController {
     @RequestMapping(value = WSConstants.DELETE_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<Response> deleteAnnounceFavoriteByUser(HttpServletRequest request, HttpServletResponse response,
-                                                          @RequestBody @NotNull UsersAnnounceFavoriteDTO dto) throws Exception {
+                                                          @RequestBody @NotNull UserAnnounceFavoriteDTO dto) throws Exception {
 
         logger.info("remove a favorite announce into this users" + dto.getUserId());
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
@@ -629,7 +629,7 @@ public class AnnounceController extends CommonController {
     @RequestMapping(value = WSConstants.USER_IS_ANNOUNCE_FAVORITE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = WSConstants.HEADER_ACCEPT)
     public @ResponseBody
     ResponseEntity<Boolean> isAnnounceFavorite(HttpServletRequest request, HttpServletResponse response,
-                                                  @RequestBody @Valid UsersAnnounceFavoriteDTO dto) throws Exception {
+                                                  @RequestBody @Valid UserAnnounceFavoriteDTO dto) throws Exception {
 
         logger.info("verify if an announce is  a favorite announce for  this user" + dto.getUserId());
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
