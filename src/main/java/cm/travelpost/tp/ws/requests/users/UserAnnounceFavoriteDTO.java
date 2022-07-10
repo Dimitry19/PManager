@@ -12,15 +12,6 @@ public class UserAnnounceFavoriteDTO {
     @Positive
     private Long userId;
 
-
-    @NotNull
-    @Positive
-    private Long idAnnounce;
-
-    @NotNull
-    @Positive
-    private Long idUser;
-
     public Long getAnnounceId() {
         return announceId;
     }
@@ -35,21 +26,12 @@ public class UserAnnounceFavoriteDTO {
         this.userId = userId;
     }
 
-    public Long getIdAnnounce() {
-        return idAnnounce;
-    }
 
     public void setIdAnnounce(Long idAnnounce) {
-        this.idAnnounce = idAnnounce;
         this.announceId = idAnnounce;
     }
 
-    public Long getIdUser() {
-        return idUser;
-    }
-
     public void setIdUser(Long idUser) {
-        this.idUser = idUser;
         this.userId=idUser;
     }
 }

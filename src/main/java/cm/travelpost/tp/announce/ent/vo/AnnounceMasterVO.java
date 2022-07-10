@@ -133,7 +133,7 @@ public class AnnounceMasterVO extends CommonVO {
 
 	@Basic(optional = false)
 	@Column(name = "START_DATE", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	public Date getStartDate() {
 		return startDate;
@@ -142,7 +142,7 @@ public class AnnounceMasterVO extends CommonVO {
 
 	@Basic(optional = false)
 	@Column(name = "END_DATE", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = DateUtils.STD_PATTERN)
 	public Date getEndDate() {
 		return endDate;
