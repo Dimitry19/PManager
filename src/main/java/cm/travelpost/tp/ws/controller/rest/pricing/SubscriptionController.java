@@ -24,7 +24,6 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -190,8 +189,6 @@ public class SubscriptionController extends CommonController {
 	@GetMapping(value = SUBSCRIPTION_WS_ALL, produces = MediaType.APPLICATION_JSON, headers = HEADER_ACCEPT)
 	public ResponseEntity<PaginateResponse> subscriptions(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page) throws SubscriptionException {
 
-		HttpHeaders headers = new HttpHeaders();
-		PaginateResponse paginateResponse = new PaginateResponse();
 		logger.info("retrieve  subscriptions request in");
 		PageBy pageBy = new PageBy(page, Integer.valueOf(DEFAULT_SIZE));
 
@@ -201,7 +198,7 @@ public class SubscriptionController extends CommonController {
 			int count = subscriptionService.count(null);
 			List<SubscriptionVO> subscriptions = subscriptionService.all(pageBy);
 
-			return getPaginateResponseSearchResponseEntity(  headers, paginateResponse,   count,  subscriptions,pageBy);
+			return getPaginateResponseSearchResponseEntity(count,  subscriptions,pageBy);
 
 		} catch (Exception e) {
 			logger.info(" subscriptionSubscriptionController -subscription:Exception occurred while fetching the response from the database.", e);
@@ -297,9 +294,6 @@ public class SubscriptionController extends CommonController {
 		logger.info(" Get users  by subscription id request in");
 		Response tpResponse = new Response();
 
-
-		HttpHeaders headers = new HttpHeaders();
-		PaginateResponse paginateResponse = new PaginateResponse();
 		PageBy pageBy = new PageBy(page, size);
 
 		try {
@@ -307,7 +301,7 @@ public class SubscriptionController extends CommonController {
 			PricingSubscriptionVOId id = new PricingSubscriptionVOId(code,token);
 			int count = subscriptionService.countUsers(id,null);
 			List<UserVO> users = subscriptionService.retrieveUsers(id,pageBy);
-			return getPaginateResponseSearchResponseEntity(  headers, paginateResponse,   count,  users,pageBy);
+			return getPaginateResponseSearchResponseEntity(count,  users,pageBy);
 
 		} catch (Exception e) {
 			tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
@@ -338,16 +332,13 @@ public class SubscriptionController extends CommonController {
 		logger.info(" Get users by type request in");
 		Response tpResponse = new Response();
 
-
-		HttpHeaders headers = new HttpHeaders();
-		PaginateResponse paginateResponse = new PaginateResponse();
 		PageBy pageBy = new PageBy(page, size);
 
 		try {
 			createOpentracingSpan("subscriptionSubscriptionController - Get users by type");
 			int count = subscriptionService.countUsers(type,null);
 			List<UserVO> users = subscriptionService.retrieveUsers(type,pageBy);
-			return getPaginateResponseSearchResponseEntity(  headers, paginateResponse,   count,  users,pageBy);
+			return getPaginateResponseSearchResponseEntity(count,  users,pageBy);
 
 		} catch (Exception e) {
 			tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);

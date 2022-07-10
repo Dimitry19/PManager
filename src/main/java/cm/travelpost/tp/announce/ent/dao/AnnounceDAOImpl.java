@@ -344,6 +344,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         generateEvent(announce,message);
         notificationForBuyers(announce);
+
+        writer.logActivity(partOneMessage("Modification de l'annonce "+announce.getDeparture(),
+                announce.getArrival()), ActivityOperation.UPDATE,announce.getUser().getId(), null);
         return announce;
 
     }
@@ -440,6 +443,8 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
                     announce.getArrival(),DateUtils.getDateStandard(announce.getStartDate()),
                     DateUtils.getDateStandard(announce.getEndDate()),null);
             generateEvent(announce,message,true);
+            writer.logActivity(partOneMessage("Suppression  de l'annonce "+announce.getDeparture(),
+                    announce.getArrival()), ActivityOperation.DELETE,announce.getUser().getId(), null);
         } catch (AnnounceException e) {
             logger.info("Erreur durant la suppression de l'annonce");
             throw e;
@@ -585,28 +590,6 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         return result;
     }
 
-
-    private TransportEnum getTransport(String transport) {
-
-        for (TransportEnum t : TransportEnum.values()) {
-            if (StringUtils.equals(transport, t.toString())) {
-                return t;
-            }
-        }
-        return null;
-    }
-
-
-    private AnnounceType getAnnounceType(String announceType) {
-
-        for (AnnounceType a : AnnounceType.values()) {
-            if (StringUtils.equals(announceType, a.toString())) {
-                return a;
-            }
-        }
-        return null;
-    }
-
     @Override
     public List<ReservationVO> findReservations(Long id) throws AnnounceException,Exception {
 
@@ -654,8 +637,9 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
         QueryBuilder hql = new QueryBuilder(AnnounceVO.ANNOUNCE_SEARCH_SINGLE,"from AnnounceVO as "+ANNOUNCE_ALIAS);
 
-        Query query = search(composeQuery(hql,search),emptyFilters());
-        composeQueryParameters(search, query);
+        composeQuery(hql,search);
+        Query query = search(hql.createQuery(),emptyFilters());
+        composeQueryParameters(hql,search, query);
 
         pageBy(query,pageBy);
 
@@ -663,7 +647,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
     }
 
 
-    private String composeQuery(QueryBuilder hql,AnnounceSearchDTO search){
+    private void composeQuery(QueryBuilder hql,AnnounceSearchDTO search){
 
         if(StringUtils.isNotEmpty(search.getCategory())){
             hql.addJoin(IQueryBuilder.JoinEnum.INNER, false,ANNOUNCE_ALIAS,"categories",CATEGORY_TABLE_ALIAS);
@@ -680,7 +664,7 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             hql.and().appendProperty(hql.getWhere(),ANNOUNCE_ALIAS,ANNOUNCE_TYPE_PARAM,ANNOUNCE_TYPE_PARAM);
         }
 
-        if (ObjectUtils.isCallable(search, PRICE_PARAM) && search.getPrice().compareTo(BigDecimal.ZERO) > 0) {
+        if (ObjectUtils.isCallable(search, PRICE_PARAM)) {
 
             hql.and().openBracket().lessThanOrEqual(ANNOUNCE_ALIAS,PRICE_PARAM ,search.getPrice()).closeBracket();
         }
@@ -704,12 +688,12 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
         }
 
         if (StringUtils.isNotEmpty(search.getReference())) {
-            hql.and().like(ANNOUNCE_ALIAS, CODE_PARAM,search.getReference(),Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
+            hql.and().like(ANNOUNCE_ALIAS, CODE_PARAM,search.getReference(),Boolean.TRUE, Boolean.TRUE, Boolean.TRUE);
         }
         hql.addGroupBy(ANNOUNCE_ALIAS,ID_PARAM);
         hql.addOrderBy(ANNOUNCE_ALIAS,START_DATE_PARAM , Boolean.FALSE);
 
-        return  hql.createQuery();
+        //return  hql.createQuery();
     }
 
     @Override
@@ -719,27 +703,28 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
 
 
     @Override
-    public void composeQueryParameters(Object o, Query query) throws QueryParameterException {
+    public void composeQueryParameters(Object o, Query query) throws QueryParameterException {}
+
+    public void composeQueryParameters(QueryBuilder hql,Object o, Query query) throws QueryParameterException {
 
         AnnounceSearchDTO search = (AnnounceSearchDTO)o;
 
         try {
 
             if (StringUtils.isNotEmpty(search.getTransport())) {
-                TransportEnum transport = getTransport(search.getTransport());
+                TransportEnum transport = TransportEnum.getTransportEnum(search.getTransport());
                 query.setParameter(TRANSPORT_PARAM, transport);
             }
 
             if (StringUtils.isNotEmpty(search.getAnnounceType())) {
-                AnnounceType announceType = getAnnounceType(search.getAnnounceType());
+                AnnounceType announceType = AnnounceType.getAnnounceType(search.getAnnounceType());
                 query.setParameter(ANNOUNCE_TYPE_PARAM, announceType);
             }
 
             if (ObjectUtils.isCallable(search, PRICE_PARAM)) {
 
-                BigDecimal price = search.getPrice();
-                if (price.compareTo(BigDecimal.ZERO) > 0) {
-                    query.setParameter(PRICE_PARAM, price);
+                if (search.getPrice()!=null) {
+                    query.setParameter(PRICE_PARAM, search.getPrice());
                 }
             }
             if (ObjectUtils.isCallable(search, START_DATE_PARAM) && search.getStartDate() > 0) {
@@ -753,16 +738,16 @@ public class AnnounceDAOImpl extends Generic implements AnnounceDAO {
             }
 
             if (StringUtils.isNotEmpty(search.getDeparture())) {
-                query.setParameter(DEPARTURE_PARAM, "%" + search.getDeparture() + "%");
+                query.setParameter(DEPARTURE_PARAM,  hql.getParameters().get(DEPARTURE_PARAM));
 
             }
 
             if (StringUtils.isNotEmpty(search.getArrival())) {
-                query.setParameter(ARRIVAL_PARAM, "%" + search.getArrival() + "%");
+                query.setParameter(ARRIVAL_PARAM, hql.getParameters().get(ARRIVAL_PARAM));
             }
 
             if (StringUtils.isNotEmpty(search.getReference())) {
-                query.setParameter(CODE_PARAM,"%" +search.getReference() +"%");
+                query.setParameter(CODE_PARAM,hql.getParameters().get(CODE_PARAM));
             }
             if (StringUtils.isNotEmpty(search.getCategory())) {
                 query.setParameter(CATEGORY_PARAM, search.getCategory());

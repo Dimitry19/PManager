@@ -182,8 +182,9 @@ public class CommonController  extends WSConstants {
 
 
 
-    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(HttpHeaders headers, int count, List results) {
+    protected ResponseEntity<PaginateResponse> getPaginateResponseResponseEntity(int count, List results) {
 
+        HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
         if (count == 0) {
             headers.add(HEADER_TOTAL, Long.toString(count));
@@ -202,16 +203,19 @@ public class CommonController  extends WSConstants {
         return new ResponseEntity<>(paginateResponse, HttpStatus.OK);
     }
 
-    protected ResponseEntity<PaginateResponse> getPaginateResponseErrorResponseEntity(HttpHeaders headers) {
+    protected ResponseEntity<PaginateResponse> getPaginateResponseErrorResponseEntity() {
 
+        HttpHeaders headers = new HttpHeaders();
         PaginateResponse paginateResponse = new PaginateResponse();
         paginateResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
         paginateResponse.setMessage(WebServiceResponseCode.ERROR_PAGINATE_RESPONSE_LABEL);
         return new ResponseEntity<>(paginateResponse, headers, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    protected ResponseEntity<PaginateResponse> getPaginateResponseSearchResponseEntity(HttpHeaders headers, PaginateResponse paginateResponse, int count, List results, PageBy pageBy ) {
+    protected ResponseEntity<PaginateResponse> getPaginateResponseSearchResponseEntity(int count, List results, PageBy pageBy ) {
 
+        HttpHeaders headers = new HttpHeaders();
+        PaginateResponse paginateResponse = new PaginateResponse();
         if (count == 0) {
             headers.add(HEADER_TOTAL, Long.toString(count));
             paginateResponse.setRetCode(WebServiceResponseCode.OK_CODE);

@@ -5,5 +5,8 @@ public enum ActivityOperation {
     READ,
     UPDATE,
     DELETE,
-    COMMENT
+    COMMENT,
+    SUBSCRIBE,
+    UNSUBSCRIBE,
+    OTHER
 }

@@ -1,5 +1,6 @@
 package cm.travelpost.tp.announce.ent.dao;
 
+import cm.framework.ds.activity.enums.ActivityOperation;
 import cm.framework.ds.common.ent.vo.KeyValue;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
@@ -102,6 +103,9 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
 
             rsv.setDescription(noteBuilder.toString());
 
+            writer.logActivity(partOneMessage("Modification de la reservation sur l'annonce "+announce.getDeparture(),
+                    announce.getArrival()), ActivityOperation.UPDATE,announce.getUser().getId(), null);
+
             return (ReservationVO)merge(rsv);
         }
 
@@ -126,8 +130,9 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
                 reservation.getAnnounce().getArrival(),DateUtils.getDateStandard(reservation.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),String.valueOf(reservation.getWeight()));
 
-
         generateEvent(announce,message);
+        writer.logActivity(partOneMessage("Ajout de la reservation sur l'annonce "+announce.getDeparture(),
+                announce.getArrival()), ActivityOperation.CREATE,announce.getUser().getId(), null);
         return reservation;
     }
 
@@ -180,6 +185,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
                 DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),kg);
 
        generateEvent(announce,message);
+        writer.logActivity(partOneMessage("Modification de la reservation sur l'annonce "+announce.getDeparture(),
+                announce.getArrival()), ActivityOperation.UPDATE,announce.getUser().getId(), null);
         return reservation;
     }
 
@@ -212,6 +219,8 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
                 DateUtils.getDateStandard(reservation.getAnnounce().getEndDate()),String.valueOf(reservation.getWeight()));
 
         generateEvent(announce,message);
+        writer.logActivity(partOneMessage("Suppression de la reservation sur l'annonce "+announce.getDeparture(),
+                announce.getArrival()), ActivityOperation.DELETE,announce.getUser().getId(), null);
         return updateDelete(reservation);
 
     }
@@ -250,6 +259,9 @@ public class ReservationDAOImpl extends Generic implements ReservationDAO<Reserv
 
 
         generateEvent(reservation,message);
+
+        writer.logActivity(partOneMessage("Validation de la reservation sur l'annonce "+reservation.getAnnounce().getDeparture(),
+                reservation.getAnnounce().getArrival()), ActivityOperation.UPDATE,reservation.getUser().getId(), null);
 
         return reservation.getId() != null ? reservation : null;
     }

@@ -30,4 +30,15 @@ public enum ValidateEnum {
         }
         throw new RuntimeException("Valeur " + value + " invalide");
     }
+
+
+    public static ValidateEnum getValidateEnum(String type) {
+
+        for (ValidateEnum a : ValidateEnum.values()) {
+            if (StringUtils.equals(type, a.toString())) {
+                return a;
+            }
+        }
+        throw new RuntimeException("Valeur  " + type + " non valide");
+    }
 }

@@ -21,7 +21,6 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -188,9 +187,6 @@ public class PricingController extends CommonController {
 	@GetMapping(value = PRICING_WS_ALL, produces = MediaType.APPLICATION_JSON, headers = HEADER_ACCEPT)
 	public ResponseEntity<PaginateResponse> pricings(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page,
 													 @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException,Exception {
-
-		HttpHeaders headers = new HttpHeaders();
-		PaginateResponse paginateResponse = new PaginateResponse();
 		logger.info("retrieve  pricings request in");
 		PageBy pageBy = new PageBy(page,size);
 
@@ -200,7 +196,7 @@ public class PricingController extends CommonController {
 			int count = pricingService.count(null);
 			List<PricingVO> pricings = pricingService.all(pageBy);
 
-			return getPaginateResponseSearchResponseEntity(  headers, paginateResponse,   count,  pricings,pageBy);
+			return getPaginateResponseSearchResponseEntity(count,  pricings,pageBy);
 
 		} catch (PricingException e) {
 			logger.info(" PricingController -pricing:Exception occurred while fetching the response from the database.", e);

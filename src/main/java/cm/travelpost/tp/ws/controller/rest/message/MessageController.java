@@ -114,7 +114,6 @@ public class MessageController extends CommonController {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         logger.info("get all users request in");
-        HttpHeaders headers = new HttpHeaders();
         PageBy pageBy = new PageBy(page, size);
 
         try {
@@ -123,7 +122,7 @@ public class MessageController extends CommonController {
 
             int count = messageService.count(pageBy);
             List<MessageVO> messages = messageService.messagesBy(announceId, FindBy.ANNOUNCE, pageBy);
-            return getPaginateResponseResponseEntity(headers,count,messages);
+            return getPaginateResponseResponseEntity(count,messages);
 
         } catch (Exception e) {
             logger.error("MessageController- error {}", e);
@@ -152,7 +151,7 @@ public class MessageController extends CommonController {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         logger.info("get all users request in");
-        HttpHeaders headers = new HttpHeaders();
+
         PageBy pageBy = new PageBy(page, size);
 
 
@@ -162,7 +161,7 @@ public class MessageController extends CommonController {
 
             int count = messageService.count(pageBy);
             List<MessageVO> messages = messageService.messagesBy(userId, FindBy.USER, pageBy);
-            return getPaginateResponseResponseEntity(headers,count,messages);
+            return getPaginateResponseResponseEntity(count,messages);
 
         } catch (Exception e) {
             logger.error("MessageController- error {}", e);
@@ -224,10 +223,10 @@ public class MessageController extends CommonController {
             int count = messageService.count(null);
             List<MessageVO> messages = messageService.messages(pageBy);
 
-            return getPaginateResponseResponseEntity(headers, count,  messages);
+            return getPaginateResponseResponseEntity(count,messages);
         } catch (Exception e) {
             logger.info("retrieve messages call error");
-            return getPaginateResponseErrorResponseEntity(headers);
+            return getPaginateResponseErrorResponseEntity();
         } finally {
             finishOpentracingSpan();
         }

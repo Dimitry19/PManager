@@ -7,7 +7,6 @@ import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.framework.ds.hibernate.enums.CountBy;
 import cm.travelpost.tp.common.exception.UserException;
 import cm.travelpost.tp.common.exception.UserNotFoundException;
-import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.user.ent.vo.UserVO;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -392,20 +390,18 @@ public class UserController extends CommonController {
                                                   @Valid @Positive(message = "la page doit etre nombre positif") @RequestParam(required = false, defaultValue = WSConstants.DEFAULT_PAGE) int page,
                                                   @Valid @Positive(message = "Page size should be a positive number") @RequestParam(required = false, defaultValue = WSConstants.DEFAULT_SIZE) int size) throws Exception {
 
-
         logger.info("get all users request in");
-        HttpHeaders headers = new HttpHeaders();
         PageBy pageBy = new PageBy(page, size);
 
         try {
             createOpentracingSpan("UserController -users");
             int count = userService.count(null, null, pageBy);
             List<UserVO> users = userService.getAllUsers(pageBy);
-            return getPaginateResponseResponseEntity(headers,  count, users);
+            return getPaginateResponseResponseEntity(count, users);
         } catch (Exception e) {
             response.getWriter().write(e.getMessage());
             logger.info(" UserController -users:Exception occurred while fetching the response from the database.", e);
-            return getPaginateResponseErrorResponseEntity(headers);
+            return getPaginateResponseErrorResponseEntity();
         } finally {
             finishOpentracingSpan();
         }
@@ -521,20 +517,18 @@ public class UserController extends CommonController {
         logger.info("subscriptions request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
-        HttpHeaders headers = new HttpHeaders();
-
         try {
             createOpentracingSpan("UserController - subscriptions");
 
             int count = userService.count(CountBy.SUBSCRIPTIONS, userId, null); //TODO Gerer la pagination
             List<UserVO> users = userService.subscriptions(userId);
 
-            return getPaginateResponseResponseEntity(headers,  count, users);
+            return getPaginateResponseResponseEntity(count, users);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de subscriptions: ", e);
             response.setStatus(500);
-            return getPaginateResponseErrorResponseEntity(headers);
+            return getPaginateResponseErrorResponseEntity();
 
         } finally {
             finishOpentracingSpan();
@@ -558,20 +552,17 @@ public class UserController extends CommonController {
         logger.info("subscribers request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
 
-        HttpHeaders headers = new HttpHeaders();
-
-
         try {
             createOpentracingSpan("UserController - subscribers");
 
             int count = userService.count(CountBy.SUBSCRIBERS, userId, null);
             List<UserVO> users = userService.subscribers(userId); //TODO Gerer la pagination
-            return getPaginateResponseResponseEntity(headers, count, users);
+            return getPaginateResponseResponseEntity(count, users);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de subscribers: ", e);
             response.setStatus(500);
-            return getPaginateResponseErrorResponseEntity(headers);
+            return getPaginateResponseErrorResponseEntity();
         } finally {
             finishOpentracingSpan();
         }
@@ -593,21 +584,17 @@ public class UserController extends CommonController {
 
         logger.info("activities request in");
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-
-        HttpHeaders headers = new HttpHeaders();
-
-
         try {
             createOpentracingSpan("UserController - activities");
 
-            int count = CollectionsUtils.size(activityService.findByUser(userId, null));
+ 			int count = activityService.count(userId, null);
             List<ActivityVO> activities = activityService.findByUser(userId, new PageBy(page,size));
-            return getPaginateResponseResponseEntity(headers, count, activities);
+            return getPaginateResponseResponseEntity(count, activities);
 
         } catch (Exception e) {
             logger.error("Erreur durant l'execution de activities: ", e);
             response.setStatus(500);
-            return getPaginateResponseErrorResponseEntity(headers);
+            return getPaginateResponseErrorResponseEntity();
         } finally {
             finishOpentracingSpan();
         }

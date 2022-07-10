@@ -6,6 +6,7 @@ import cm.framework.ds.activity.ent.vo.ActivityVO;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.common.exception.GenericCRUDEException;
 import cm.travelpost.tp.common.exception.UserException;
+import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.user.ent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,15 @@ public class ActivityServiceImpl  implements ActivityService<ActivityVO, Activit
 	@Autowired
 	UserService userService;
 
+
+	@Override
+	public Integer count(Object o,PageBy pageBy) throws Exception {
+		if (o == null){
+			return CollectionsUtils.size(dao.all(ActivityVO.class,null));
+		}
+		Long id= (Long)o;
+		return CollectionsUtils.size(findByUser(id,pageBy));
+	}
 
 	@Override
 	public ActivityVO create(ActivityVO activity) throws GenericCRUDEException {
@@ -61,5 +71,10 @@ public class ActivityServiceImpl  implements ActivityService<ActivityVO, Activit
 			throw new UserException("user not found with id :" + userId);
 		}
 		return dao.findBy(ActivityVO.FINDBYUSER,ActivityVO.class,userId, "userId",pageBy);
+	}
+
+	@Override
+	public List<ActivityVO> all(PageBy pageBy) throws Exception {
+		return dao.all(ActivityVO.class,pageBy);
 	}
 }

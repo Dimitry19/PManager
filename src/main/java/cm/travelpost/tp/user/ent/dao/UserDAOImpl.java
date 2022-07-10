@@ -1,6 +1,7 @@
 package cm.travelpost.tp.user.ent.dao;
 
 
+import cm.framework.ds.activity.enums.ActivityOperation;
 import cm.framework.ds.common.ent.vo.KeyValue;
 import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.hibernate.dao.Generic;
@@ -127,6 +128,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
                     null, null, null);
 
             generateEvent(subscription,message);
+            writer.logActivity("Abonnement au profil de l'utilisateur "+subscription.getId(), ActivityOperation.SUBSCRIBE,subscriber.getId(), null);
         } else throw new UserException("Une erreur survenue pendant l'abonnement, veuillez reessayer");
     }
 
@@ -148,6 +150,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             String message=buildNotificationMessage( NotificationType.UNSUBSCRIBE,subscriber.getUsername(),null, null,
                     null, null, null);
             generateEvent(subscription,message);
+            writer.logActivity("Désabonnement au profil de l'utilisateur "+subscription.getId(), ActivityOperation.UNSUBSCRIBE,subscriber.getId(), null);
+
         } else throw new UserException("Une erreur survenue pendant la desinscription, veuillez reessayer");
     }
 
@@ -532,6 +536,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
             if (precedent != enableNotification) {
                 user.setEnableNotification(enableNotification);
                 update(user);
+                writer.logActivity(enableNotification ?" Activation " : "Desactivation " +" de la reception des notifications ", ActivityOperation.OTHER,user.getId(), null);
                 return (UserVO) get(UserVO.class, userId);
             }
         } catch (UserException e) {
@@ -554,6 +559,8 @@ public class UserDAOImpl extends Generic implements UserDAO {
             if (precedent != mfa) {
                 user.setMultipleFactorAuthentication(mfa);
                 update(user);
+                writer.logActivity(mfa ?" Activation " : "Desactivation " +" d'authentication multiple facteurs' ", ActivityOperation.OTHER,user.getId(), null);
+
                 return (UserVO) get(UserVO.class, userId);
             }
         } catch (UserException e) {
@@ -582,6 +589,7 @@ public class UserDAOImpl extends Generic implements UserDAO {
 
         user.setPassword(PasswordGenerator.encrypt(newPassword));
         merge(user);
+        writer.logActivity("Modification du mot de passe ", ActivityOperation.OTHER,user.getId(), null);
         return true;
     }
 

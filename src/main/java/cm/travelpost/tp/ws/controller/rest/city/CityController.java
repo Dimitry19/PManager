@@ -48,7 +48,7 @@ public class CityController  extends CommonController {
             logger.info("city autocomplete request in");
             createOpentracingSpan("CityController - autocomplete");
 
-                List<CityVO> cities = cityService.autoComplete(search,true);
+            List<CityVO> cities = cityService.autoComplete(search,true);
 
             return new ResponseEntity<>(cities, HttpStatus.OK);
         } catch (Exception e) {

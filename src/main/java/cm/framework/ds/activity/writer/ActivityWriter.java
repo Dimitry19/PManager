@@ -22,6 +22,11 @@ public class ActivityWriter {
 
         switch (operation){
             case CREATE:
+            case UPDATE:
+            case DELETE:
+            case COMMENT:
+            case SUBSCRIBE:
+            case UNSUBSCRIBE:
                 ActivityVO activity= new ActivityVO();
                 ActivityIdVO id = new ActivityIdVO(CodeGenerator.generateCode(DEFAULT_TOKEN,ACTIVITY_PREFIX), DEFAULT_TOKEN);
                 activity.setId(id);
@@ -32,12 +37,6 @@ public class ActivityWriter {
             case READ:
                 ActivityIdVO activityId = (ActivityIdVO)o;
                 return  (ActivityVO) service.read(activityId);
-            case UPDATE:
-            break;
-            case DELETE:
-                ActivityIdVO actId = (ActivityIdVO)o;
-                service.read(actId);
-            break;
         }
         return null;
     }

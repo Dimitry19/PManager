@@ -12,4 +12,7 @@ import java.util.List;
 public interface ActivityService<A extends CommonVO, AId extends CommonIdVO> extends GenericCRUDEService<ActivityVO, ActivityIdVO> {
 
 	List<ActivityVO> findByUser(Long userId, PageBy pageBy) throws Exception;
+
+	Integer count(Object o,PageBy pageBy) throws Exception;
+
 }

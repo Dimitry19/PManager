@@ -153,6 +153,8 @@ public class WSConstants extends CommonProperties {
     public static final String DASHBOARD_COUNTRIES = "/countries";
     public static final String DASHBOARD_CITIES_OF_COUNTRY = "/cities/{country}";
     public static final String DASHBOARD_COUNTRIES_AND_CITIES_INFOS = "/countryInfo";
+    public static final String DASHBOARD_ACTIVITIES_WS = "/activities";
+
 
     /*******************SMS TWILLO ******************/
     public static final String SMS_WS = "/ws/sms/*";

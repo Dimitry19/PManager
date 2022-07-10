@@ -1,4 +1,4 @@
-1-Modifier le lien(adresse IP de la base de données) + mot de passe
+1-Modifier le lien(adresse IP de la base de données) + mot de passe + desactiver postman
 2-Activer SSL
 3-Modifier la versions dans le pom
 4-Generer les packages(jar e war)

@@ -174,9 +174,6 @@ public class AnnounceController extends CommonController {
 
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        HttpHeaders headers = new HttpHeaders();
-        PaginateResponse paginateResponse = new PaginateResponse();
-
         logger.info("Search  announces request in");
 
         try {
@@ -189,7 +186,7 @@ public class AnnounceController extends CommonController {
 
                 int count = announceService.count(dto,pageBy);
                 List<AnnounceVO> announces = announceService.search(dto, pageBy);
-                return getPaginateResponseSearchResponseEntity(headers,paginateResponse,count,announces,pageBy);
+                return getPaginateResponseSearchResponseEntity(count,announces,pageBy);
             }
         } catch (Exception e) {
             logger.info(" AnnounceController -find:Exception occurred while fetching the response from the database.", e);
@@ -197,6 +194,8 @@ public class AnnounceController extends CommonController {
         } finally {
             finishOpentracingSpan();
         }
+        HttpHeaders headers = new HttpHeaders();
+        PaginateResponse paginateResponse = new PaginateResponse();
         return new ResponseEntity<>(paginateResponse, headers, HttpStatus.PRECONDITION_FAILED);
     }
 
@@ -226,12 +225,8 @@ public class AnnounceController extends CommonController {
                                                             @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException, Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        HttpHeaders headers = new HttpHeaders();
-        PaginateResponse paginateResponse = new PaginateResponse();
-        PageBy pageBy = new PageBy(page, size);
 
         logger.info("find announce by user request in");
-
 
         try {
             createOpentracingSpan("AnnounceController -announcesByUser");
@@ -240,9 +235,10 @@ public class AnnounceController extends CommonController {
                 status =StatusEnum.VALID;
             }
 
+            PageBy pageBy = new PageBy(page, size);
             int count = announceService.count(userId,status,pageBy);
             List announces = announceService.announcesByUser(userId,status,pageBy);
-            return getPaginateResponseResponseEntity(  headers,count,  announces);
+            return getPaginateResponseResponseEntity( count,  announces);
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByUser:Exception occurred while fetching the response from the database.", e);
             throw e;
@@ -278,16 +274,17 @@ public class AnnounceController extends CommonController {
                                                             @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException,Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        HttpHeaders headers = new HttpHeaders();
-        PageBy pageBy = new PageBy(page, size);
+
+
         logger.info("find announce by type request in");
 
         try {
             createOpentracingSpan("AnnounceController - announcesByType");
 
+            PageBy pageBy = new PageBy(page, size);
             int count = announceService.count(type, null);
             List<AnnounceVO> announces = announceService.announcesBy(type, pageBy);
-            return getPaginateResponseResponseEntity(headers,count,  announces);
+            return getPaginateResponseResponseEntity(count,  announces);
 
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByType:Exception occurred while fetching the response from the database.", e);
@@ -324,17 +321,17 @@ public class AnnounceController extends CommonController {
                                                                  @RequestParam(required = false, defaultValue = DEFAULT_SIZE) Integer size) throws AnnounceException,Exception {
 
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-        HttpHeaders headers = new HttpHeaders();
-        PageBy pageBy = new PageBy(page, size);
+
         logger.info("find announce by transport request in");
 
 
         try {
             createOpentracingSpan("AnnounceController - announcesByTransport");
 
+            PageBy pageBy = new PageBy(page, size);
             int count = announceService.count(transport, null);
             List<AnnounceVO> announces = announceService.announcesBy(transport,  pageBy);
-            return getPaginateResponseResponseEntity(headers,count,announces);
+            return getPaginateResponseResponseEntity(count,announces);
 
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announcesByType:Exception occurred while fetching the response from the database.", e);
@@ -496,7 +493,7 @@ public class AnnounceController extends CommonController {
                 announces = announceService.announces(pageBy);
             }
 
-            return getPaginateResponseSearchResponseEntity(  headers, paginateResponse,   count,  announces,pageBy);
+            return getPaginateResponseSearchResponseEntity(count,  announces,pageBy);
 
         } catch (AnnounceException e) {
             logger.info(" AnnounceController -announces:Exception occurred while fetching the response from the database.", e);
@@ -604,7 +601,7 @@ public class AnnounceController extends CommonController {
             createOpentracingSpan("AnnounceController -announcesFavoriteByUser");
             logger.info("get announces favorites by user request out");
             int count = CollectionsUtils.size(announceService.announcesFavoritesByUser(idUser, null));
-            return getPaginateResponseResponseEntity(headers, count, announceService.announcesFavoritesByUser(idUser, pageBy));
+            return getPaginateResponseResponseEntity(count, announceService.announcesFavoritesByUser(idUser, pageBy));
         }catch (AnnounceException e) {
             logger.error("Erreur pour recuperer les annonces favoris de l'utilisateur "+ idUser);
              e.printStackTrace();

@@ -1,5 +1,7 @@
 package cm.travelpost.tp.ws.controller.rest.admin.dashboard;
 
+import cm.framework.ds.activity.ent.vo.ActivityVO;
+import cm.framework.ds.common.ent.vo.PageBy;
 import cm.framework.ds.common.ent.vo.WSCommonResponseVO;
 import cm.travelpost.tp.administrator.ent.enums.DashBoardObjectType;
 import cm.travelpost.tp.airline.ent.vo.AirlineIdVO;
@@ -10,6 +12,7 @@ import cm.travelpost.tp.common.exception.DashboardException;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.CommonDTO;
+import cm.travelpost.tp.ws.responses.PaginateResponse;
 import cm.travelpost.tp.ws.responses.Response;
 import cm.travelpost.tp.ws.responses.WebServiceResponseCode;
 import io.swagger.annotations.Api;
@@ -26,8 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Set;
 
 import static cm.travelpost.tp.administrator.ent.enums.DashBoardObjectType.AIRLINE;
@@ -278,6 +283,44 @@ public class DashboardController extends CommonController {
 
 		} catch (Exception e) {
 			logger.error("Erreur durant la recuperation des villes du pays {} - {}",country, e);
+			throw e;
+		} finally {
+			finishOpentracingSpan();
+		}
+	}
+
+	/**
+	 * Cette methode permet de recuperer toutes les annonces avec pagination
+	 *
+	 * @param page
+	 * @param
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "Retrieve all activities ", response = ResponseEntity.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval",
+					response = ResponseEntity.class, responseContainer = "List")})
+	@GetMapping(value = DASHBOARD_ACTIVITIES_WS, produces = MediaType.APPLICATION_JSON, headers = HEADER_ACCEPT)
+	public ResponseEntity<PaginateResponse> activities(@RequestParam @Valid @Positive(message = "la page doit etre nombre positif") int page) throws Exception {
+
+
+		logger.info("retrieve  activities request in");
+		PageBy pageBy = new PageBy(page, Integer.valueOf(DEFAULT_SIZE));
+
+		try {
+
+			createOpentracingSpan("DashboardController -activities");
+			int count = activityService.count(null, null);
+			List<ActivityVO> activities = activityService.all(pageBy);
+			return getPaginateResponseSearchResponseEntity(count,activities,pageBy);
+
+		} catch (Exception e) {
+			logger.info(" DashboardController -activities:Exception occurred while fetching the response from the database.", e);
 			throw e;
 		} finally {
 			finishOpentracingSpan();

@@ -1,5 +1,6 @@
 package cm.travelpost.tp.message.ent.dao;
 
+import cm.framework.ds.activity.enums.ActivityOperation;
 import cm.framework.ds.hibernate.dao.Generic;
 import cm.framework.ds.hibernate.enums.FindBy;
 import cm.framework.ds.common.ent.vo.PageBy;
@@ -81,6 +82,8 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
                 DateUtils.getDateStandard(comment.getAnnounce().getEndDate()),null);
 
         generateEvent(comment,message);
+        writer.logActivity(partOneMessage("Modification commentaire sur l'annonce "+comment.getAnnounce().getDeparture(),
+                comment.getAnnounce().getArrival()), ActivityOperation.COMMENT,comment.getUser().getId(), null);
         return comment;
     }
 
@@ -113,12 +116,14 @@ public class MessageDAOImpl extends Generic implements MessageDAO {
         announce.addMessage(comment);
         save(comment);
 
-
         String message=buildNotificationMessage(COMMENT,user.getUsername(),comment.getAnnounce().getDeparture(),
                 comment.getAnnounce().getArrival(),DateUtils.getDateStandard(comment.getAnnounce().getStartDate()),
                 DateUtils.getDateStandard(comment.getAnnounce().getEndDate()),null);
 
         generateEvent(comment,message);
+
+        writer.logActivity(partOneMessage("Ajout commentaire sur l'annonce "+comment.getAnnounce().getDeparture(),
+                comment.getAnnounce().getArrival()), ActivityOperation.COMMENT,comment.getUser().getId(), null);
         return comment;
 
     }

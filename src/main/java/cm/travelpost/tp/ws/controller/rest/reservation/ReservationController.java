@@ -7,7 +7,6 @@ import cm.travelpost.tp.announce.ent.vo.ReservationVO;
 import cm.travelpost.tp.announce.enums.ReservationType;
 import cm.travelpost.tp.announce.enums.ValidateEnum;
 import cm.travelpost.tp.common.exception.AnnounceException;
-import cm.travelpost.tp.common.utils.CollectionsUtils;
 import cm.travelpost.tp.constant.WSConstants;
 import cm.travelpost.tp.ws.controller.rest.CommonController;
 import cm.travelpost.tp.ws.requests.announces.ReservationDTO;
@@ -35,7 +34,7 @@ import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
 import java.util.List;
 
-import static cm.travelpost.tp.constant.WSConstants.*;
+import static cm.travelpost.tp.constant.WSConstants.RESERVATION_WS;
 
 @RestController
 @RequestMapping(RESERVATION_WS)
@@ -148,12 +147,9 @@ public class ReservationController extends CommonController {
                 tpResponse.setRetDescription(MessageFormat.format(WebServiceResponseCode.CANCELLED_LABEL, RESERVATION_LABEL));
 
                 return new ResponseEntity<>(tpResponse, HttpStatus.OK);
-
             } else {
-
                 tpResponse.setRetCode(WebServiceResponseCode.NOK_CODE);
                 tpResponse.setMessage(MessageFormat.format(WebServiceResponseCode.ERROR_DELETE_LABEL, RESERVATION_LABEL));
-
             }
             return new ResponseEntity<>(tpResponse, HttpStatus.NOT_FOUND);
 
@@ -179,7 +175,6 @@ public class ReservationController extends CommonController {
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
         try {
             createOpentracingSpan("ReservationController - retrieve reservation");
-
 
             ReservationVO reservation = reservationService.getReservation(id);
 
@@ -218,7 +213,6 @@ public class ReservationController extends CommonController {
         try {
 
             createOpentracingSpan("ReservationController - validate");
-
 
             if (vr == null) return null;
 
@@ -278,21 +272,12 @@ public class ReservationController extends CommonController {
         logger.info("find reservation by user request in");
         PageBy pageBy = new PageBy(page, size);
 
-        List reservations = null;
-
         try {
             createOpentracingSpan("ReservationController -reservationsByUser");
-            PaginateResponse res = new PaginateResponse();
             int count = reservationService.count(userId, null, FindBy.USER,type);
-            reservations =reservationService.reservationsByUser(userId, type, pageBy);
+            List reservations =reservationService.reservationsByUser(userId, type, pageBy);
 
-            if (CollectionsUtils.isNotEmpty(reservations)) {
-                res.setCount(CollectionsUtils.size(reservations));
-                res.setResults(reservations);
-            }
-            headers.add(HEADER_TOTAL, Long.toString(count));
-
-            return new ResponseEntity<>(res, headers, HttpStatus.OK);
+            return getPaginateResponseSearchResponseEntity(count,reservations,pageBy);
         } catch (Exception e) {
             logger.info(" ReservationController - reservationsByUser:Exception occurred while fetching the response from the database.", e);
             throw e;
@@ -328,25 +313,14 @@ public class ReservationController extends CommonController {
 
         try {
             response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN_VALUE);
-            HttpHeaders headers = new HttpHeaders();
-            PaginateResponse paginateResponse = new PaginateResponse();
             logger.info("find reservation by announce request in");
 
             createOpentracingSpan("ReservationController -reservations by announce");
 
             PageBy pageBy = new PageBy(page, size);
             int count = reservationService.count(announceId, null, FindBy.ANNOUNCE, null);
-            if (count == 0) {
-                headers.add(HEADER_TOTAL, Long.toString(count));
-            } else {
-                List<ReservationVO> reservations = reservationService.reservationsByAnnounce(announceId, pageBy);
-                paginateResponse.setCount(CollectionsUtils.size(reservations));
-                paginateResponse.setResults(reservations);
-                headers.add(HEADER_TOTAL, Long.toString(reservations.size()));
-            }
-
-            return new ResponseEntity<>(paginateResponse, headers, HttpStatus.OK);
-
+            List<ReservationVO> reservations = reservationService.reservationsByAnnounce(announceId, pageBy);
+            return getPaginateResponseSearchResponseEntity(count,reservations,pageBy);
         } catch (Exception e) {
             logger.info(" ReservationController - reservationsByAnnounce:Exception occurred while fetching the response from the database.", e);
             throw e;
