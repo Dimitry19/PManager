@@ -23,30 +23,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="014b9163-9820-49b1-bcf8-70ff521a46d0" name="Default" comment="Gestion des annonces favoris">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/ent/service/ActivityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/ent/service/ActivityService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/ent/service/ActivityServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/ent/service/ActivityServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/enums/ActivityOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/enums/ActivityOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/writer/ActivityWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/writer/ActivityWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/ent/GenericCRUDEService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/framework/ds/common/ent/GenericCRUDEService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/AnnounceDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/dao/ReservationDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceMasterVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/ent/vo/AnnounceMasterVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/enums/ValidateEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/announce/enums/ValidateEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/constant/WSConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/message/ent/dao/MessageDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/CommonController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/admin/dashboard/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/admin/dashboard/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/announce/AnnounceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/city/CityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/city/CityController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/message/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/message/MessageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/pricing/PricingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/pricing/PricingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/pricing/SubscriptionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/pricing/SubscriptionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/users/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpservices.iml" beforeDir="false" afterPath="$PROJECT_DIR$/tpservices.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/3rdpartylicenses.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/i18n/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/i18n/fr.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/auto.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/avion.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/cargo.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/cargo1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/find.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/loupe.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/images/zoom-lens.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/tooltip.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.1221cfcf64e359ae6f7e.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es2015.7b01f76df2def456f149.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.1221cfcf64e359ae6f7e.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/main-es5.7b01f76df2def456f149.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/runtime-es2015.a4dadbc03350107420a4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/runtime-es5.a4dadbc03350107420a4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/scripts.2ba0f3d4e741835cf52b.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles.b6faca0f9cb6e2c5e40f.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,20 +120,20 @@
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="PManager" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/common/constants/DefaultFilterConstants.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/GenericDAOImpl.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/configuration/filters/FilterConstants.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonGenericDAO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/resources/application.properties" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/activity/ent/vo/ActivityVO.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/authentication/AuthenticationController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/user/ent/dao/UserDAOImpl.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/pricing/ent/vo/PricingVO.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/UpdateReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/resources/application.properties" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/common/constants/DefaultFilterConstants.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/Generic.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/controller/rest/reservation/ReservationController.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CategoriesDTO.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/cm/framework/ds/hibernate/dao/CommonGenericDAO.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CommonReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/UpdateReservationDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/cm/travelpost/tp/ws/requests/announces/CategoriesDTO.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
@@ -181,6 +178,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
@@ -454,13 +452,10 @@
       <workItem from="1656326918798" duration="3437000" />
       <workItem from="1657466873914" duration="1264000" />
       <workItem from="1657476366216" duration="9402000" />
-    </task>
-    <task id="LOCAL-00119" summary="Ajout du control sur le debut du job des notifications">
-      <created>1648746233877</created>
-      <option name="number" value="00119" />
-      <option name="presentableId" value="LOCAL-00119" />
-      <option name="project" value="LOCAL" />
-      <updated>1648746233877</updated>
+      <workItem from="1658176955283" duration="1514000" />
+      <workItem from="1658688574851" duration="185000" />
+      <workItem from="1658872380894" duration="42000" />
+      <workItem from="1659121962949" duration="2000" />
     </task>
     <task id="LOCAL-00120" summary="Correction bug ajournement annonce">
       <created>1648830868334</created>
@@ -798,7 +793,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656356456706</updated>
     </task>
-    <option name="localTasksCounter" value="168" />
+    <task id="LOCAL-00168" summary="Gestion des annonces favoris">
+      <created>1657921520653</created>
+      <option name="number" value="00168" />
+      <option name="presentableId" value="LOCAL-00168" />
+      <option name="project" value="LOCAL" />
+      <updated>1657921520654</updated>
+    </task>
+    <option name="localTasksCounter" value="169" />
     <servers />
   </component>
   <component name="TodoView">
@@ -922,62 +924,68 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="533" y="163" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1657489073283" />
-    <state x="295" y="24" key="CommitChangelistDialog2" timestamp="1656356456082">
-      <screen x="0" y="23" width="1440" height="852" />
+    <state x="295" y="1" key="CommitChangelistDialog2" timestamp="1657921520253">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="295" y="1" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1657921520253" />
     <state x="295" y="24" key="CommitChangelistDialog2/0.23.1440.852@0.23.1440.852" timestamp="1656356456082" />
     <state width="432" height="466" key="DebuggerActiveHint" timestamp="1656355961740">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
     <state width="432" height="466" key="DebuggerActiveHint/0.23.1440.852@0.23.1440.852" timestamp="1656355961740" />
-    <state width="1271" height="274" key="GridCell.Tab.0.bottom" timestamp="1657491711466">
+    <state width="1271" height="236" key="GridCell.Tab.0.bottom" timestamp="1658688765162">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1271" height="274" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1657491711466" />
+    <state width="1271" height="236" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1658688765162" />
     <state width="1271" height="294" key="GridCell.Tab.0.bottom/0.23.1440.852@0.23.1440.852" timestamp="1656356307379" />
-    <state width="1271" height="274" key="GridCell.Tab.0.center" timestamp="1657491711464">
+    <state width="1271" height="236" key="GridCell.Tab.0.center" timestamp="1658688765160">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1271" height="274" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1657491711464" />
+    <state width="1271" height="236" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1658688765160" />
     <state width="1271" height="294" key="GridCell.Tab.0.center/0.23.1440.852@0.23.1440.852" timestamp="1656356307377" />
-    <state width="1271" height="274" key="GridCell.Tab.0.left" timestamp="1657491711462">
+    <state width="1271" height="236" key="GridCell.Tab.0.left" timestamp="1658688765159">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1271" height="274" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1657491711462" />
+    <state width="1271" height="236" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1658688765159" />
     <state width="1271" height="294" key="GridCell.Tab.0.left/0.23.1440.852@0.23.1440.852" timestamp="1656356307377" />
-    <state width="1271" height="274" key="GridCell.Tab.0.right" timestamp="1657491711465">
+    <state width="1271" height="236" key="GridCell.Tab.0.right" timestamp="1658688765161">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1271" height="274" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1657491711465" />
+    <state width="1271" height="236" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1658688765161" />
     <state width="1271" height="294" key="GridCell.Tab.0.right/0.23.1440.852@0.23.1440.852" timestamp="1656356307378" />
-    <state width="1271" height="274" key="GridCell.Tab.1.bottom" timestamp="1657491711144">
+    <state width="1271" height="236" key="GridCell.Tab.1.bottom" timestamp="1658688765166">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1271" height="274" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1657491711144" />
+    <state width="1271" height="236" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1658688765166" />
     <state width="1271" height="294" key="GridCell.Tab.1.bottom/0.23.1440.852@0.23.1440.852" timestamp="1656356247815" />
-    <state width="1271" height="274" key="GridCell.Tab.1.center" timestamp="1657491711142">
+    <state width="1271" height="236" key="GridCell.Tab.1.center" timestamp="1658688765164">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1271" height="274" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1657491711142" />
+    <state width="1271" height="236" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1658688765164" />
     <state width="1271" height="294" key="GridCell.Tab.1.center/0.23.1440.852@0.23.1440.852" timestamp="1656356247813" />
-    <state width="1271" height="274" key="GridCell.Tab.1.left" timestamp="1657491711141">
+    <state width="1271" height="236" key="GridCell.Tab.1.left" timestamp="1658688765163">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1271" height="274" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1657491711141" />
+    <state width="1271" height="236" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1658688765163" />
     <state width="1271" height="294" key="GridCell.Tab.1.left/0.23.1440.852@0.23.1440.852" timestamp="1656356247813" />
-    <state width="1271" height="274" key="GridCell.Tab.1.right" timestamp="1657491711143">
+    <state width="1271" height="236" key="GridCell.Tab.1.right" timestamp="1658688765165">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1271" height="274" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1657491711143" />
+    <state width="1271" height="236" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1658688765165" />
     <state width="1271" height="294" key="GridCell.Tab.1.right/0.23.1440.852@0.23.1440.852" timestamp="1656356247814" />
     <state x="100" y="100" width="1240" height="700" key="VCS.FileHistoryDialog" timestamp="1657491692701">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="100" y="100" width="1240" height="700" key="VCS.FileHistoryDialog/0.0.1440.900@0.0.1440.900" timestamp="1657491692701" />
-    <state x="320" y="176" key="Vcs.Push.Dialog.v2" timestamp="1656356460778">
-      <screen x="0" y="23" width="1440" height="852" />
+    <state x="320" y="162" key="Vcs.Push.Dialog.v2" timestamp="1657921526598">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="320" y="162" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1657921526598" />
     <state x="320" y="176" key="Vcs.Push.Dialog.v2/0.23.1440.852@0.23.1440.852" timestamp="1656356460778" />
+    <state x="421" y="207" width="598" height="486" key="find.popup" timestamp="1658177067063">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="421" y="207" width="598" height="486" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1658177067063" />
     <state x="470" y="169" key="git4idea.branch.GitSmartOperationDialog" timestamp="1656356486022">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
